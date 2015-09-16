@@ -16,7 +16,6 @@ fs.readFile("theGrammar.txt", 'utf8', function(err, data) {
   if (err) throw err;
   //console.log(data);
   var theOutput = reversible.feed(data).results[0];
-  console.log(theOutput)
   lang1 = theOutput[0]
   lang2 = theOutput[1]
   //console.log(theOutput[2])

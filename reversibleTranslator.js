@@ -91,7 +91,6 @@ function getOutput(theInput) {
                         arr_j1[k] = "\"" + arr_j[k] + "\""
                     }
                 }
-                console.log("arr_j1 is " + JSON.stringify(arr_j1))
                 resultString += arr_j1.join(" _ ")
             } else if (j === 3 && (arr_j !== undefined)) {
                 var arr_j1 = [];
@@ -121,10 +120,10 @@ function getOutput(theInput) {
 }
 var grammar = {
     ParserRules: [
-    {"name": "mainPattern1", "symbols": ["multiLineString", "mainPattern"], "postprocess": function(d){
-	console.log("Calling mainPattern1");
-	d[1][2] =  d[0] + d[1][2];
-	return d[1];
+    {"name": "mainPattern1", "symbols": ["_", "mainPattern", "_", "multiLineString", "_"], "postprocess": function(d){
+	//console.log("Calling mainPattern1");
+	var toReturn = [d[1][0], d[1][1], d[3] + d[1][2]];
+	return toReturn;
 }},
     {"name": " string$1", "symbols": [{"literal":"'"}, {"literal":"'"}, {"literal":"'"}], "postprocess": function joiner(d) {
         return d.join('');

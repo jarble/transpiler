@@ -1,7 +1,11 @@
-#Register for Physics class before working on this project
-#documentation is here: https://github.com/Hardmath123/nearley
-#Translate each language into EngScript, then use polyglotcodegenerator.py to translate it into other languages.
-#The grammar and output is specified in test.ne.
+#Edit this file name to specify the parser that will be generated.
+
+name1 = input("Type the name of the input language, then press enter:")
+
+name2 = input("Type the name of the output language, then press enter:")
+
+fileName = name1 + "-" + name2
+
 
 print(3+7)
 from subprocess import call
@@ -11,4 +15,4 @@ def generateParsers(parserNames):
 
 #generateParsers("test,englishToJavaScript,reversibleTranslator,reversePolishNotation")
 #generateParsers("Java-PHP,Java-C#,Java-JavaScript,Java-Ruby")
-generateParsers("Java-Haskell")
+generateParsers(fileName)

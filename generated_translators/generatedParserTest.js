@@ -5,7 +5,7 @@
 
 
 var nearley = require("nearley");
-var translator = require("./Java-Haskell.js");
+var translator = require("./Java-C#.js");
 
 var translator = new nearley.Parser(translator.ParserRules, translator.ParserStart);
 var fs = require("fs");
@@ -17,7 +17,7 @@ fs.readFile("javaExample.java", 'utf8', function(err, data) {
   var theOutput = translator.feed(data).results;
   console.log(theOutput[0])
   //console.log(theOutput[2])
-  var fileName = "javaExample.hs";
+  var fileName = "javaExample.cs";
   fs.writeFile(fileName, theOutput, function(err) {
     if(err) {
         return console.log(err);

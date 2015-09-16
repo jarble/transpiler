@@ -1,69 +1,4 @@
-'''
-#The output of the translator is still somewhat buggy. Try to fix it.
-
-chunk -> _ (_series_of_statements | class) _ {%function(d){return d[1][0];}%}
-_series_of_statements -> series_of_statements _ statement {%function(d){return d[0] +"\n"+ d[2];}%} | statement {%function(d){return d[0];}%} | null
-series_of_statements -> statement {%function(d){return d[0];}%} | series_of_statements _ statement {%function(d){return d[0] + "\n" + d[2];}%}
-expression -> "(" _ expression _ ")" | func | compareInts | lessThan | greaterThan | number | String | varName | add | subtract | multiply | divide | mod | functionCall
-statement -> print | comment | switch | setVar | initializeVariable | func | functionCallStatement | return | if | while | forLoop
-type -> boolean | int | string
-caseStatements -> caseStatements _ case {%function(d){return d[0] +"\n"+ d[2];}%} | case
-elifStatements -> elifStatements _ elif {%function(d){return d[0] +"\n"+ d[2];}%} | elif #Match a series of elif statements
-elifOrElse -> else | elifStatements _ else {%function(d){return d[0] +"\n"+ d[2];}%} #Match a series of elif statements followed by else
-parameterList -> _parameterList | null
-_parameterList -> _parameterList _ parameter_separator _ parameter {%function(d){return d[0]+d[2]+d[4]}%}
-| parameter
-functionCallParameters -> functionCallParameters _ parameter_separator _ expression | expression | null
-
-# Primitives
-# ==========
-
-identifier -> _name {% function(d) {return d[0]; } %}
-
-_name -> [a-zA-Z_] {% id %}
-	| _name [\w_] {% function(d) {return d[0] + d[1]; } %}
-
-# Numbers
-
-number -> _number {% function(d) {return parseFloat(d[0])} %}
-
-_posint ->
-	[0-9] {% id %}
-	| _posint [0-9] {% function(d) {return d[0] + d[1]} %}
-
-_int ->
-	"-" _posint {% function(d) {return d[0] + d[1]; }%}
-	| _posint {% id %}
-
-_float ->
-	_int {% id %}
-	| _int "." _posint {% function(d) {return d[0] + d[1] + d[2]; }%}
-
-_number ->
-	_float {% id %}
-	| _float "e" _int {% function(d){return d[0] + d[1] + d[2]; } %}
-
-
-#Strings
-
-String -> "\"" _string "\"" {% function(d) {return '"' + d[1] + '"'; } %}
-
-_string ->
-	null {% function() {return ""; } %}
-	| _string _stringchar {% function(d) {return d[0] + d[1];} %}
-
-_stringchar ->
-	[^\\"] {% id %}
-	| "\\" [^] {% function(d) {return JSON.parse("\"" + d[0] + d[1] + "\""); } %}
-
-# Whitespace
-_ -> null | _ [\s] {% function() {} %}
-__ -> [\s] | __ [\s] {% function() {} %}
-
-
-#The next two lines are the languages for the translator.
-'''
-Java,CoffeeScript
+Java,C#
 {
 	compareInts(expression a, expression b)
 		Java,Lua,Python,C#,C++,Ruby,C,Haskell,Erlang
@@ -415,6 +350,8 @@ Java,CoffeeScript
 			"a [ b : c ]"
 		C
 			"_"
+		C#
+			"a . Substring ( b )"
 		Haskell
 			"take ( c - b ) . drop b $ a"
 	strcmp(expression a, expression b)
@@ -424,6 +361,8 @@ Java,CoffeeScript
 			"a === b"
 		C
 			"strcmp ( a , b ) == 0"
+		C#
+			"a . Equals ( b )"
 		Java
 			"a . equals ( b )"
 	strlen(expression a)
@@ -447,3 +386,68 @@ Java,CoffeeScript
 		Hy,Scheme,Racket,Common Lisp,CLIPS,REBOL,Haskell,Racket,Clojure
 			"__"
 }
+'''
+#The output of the translator is still somewhat buggy. Try to fix it.
+
+chunk -> _ (_series_of_statements | class) _ {%function(d){return d[1][0];}%}
+_series_of_statements -> series_of_statements _ statement {%function(d){return d[0] +"\n"+ d[2];}%} | statement {%function(d){return d[0];}%} | null
+series_of_statements -> statement {%function(d){return d[0];}%} | series_of_statements _ statement {%function(d){return d[0] + "\n" + d[2];}%}
+expression -> "(" _ expression _ ")" | func | compareInts | lessThan | greaterThan | number | String | varName | add | subtract | multiply | divide | mod | functionCall
+statement -> print | comment | switch | setVar | initializeVariable | func | functionCallStatement | return | if | while | forLoop
+type -> boolean | int | string
+caseStatements -> caseStatements _ case {%function(d){return d[0] +"\n"+ d[2];}%} | case
+elifStatements -> elifStatements _ elif {%function(d){return d[0] +"\n"+ d[2];}%} | elif #Match a series of elif statements
+elifOrElse -> else | elifStatements _ else {%function(d){return d[0] +"\n"+ d[2];}%} #Match a series of elif statements followed by else
+parameterList -> _parameterList | null
+_parameterList -> _parameterList _ parameter_separator _ parameter {%function(d){return d[0]+d[2]+d[4]}%}
+| parameter
+functionCallParameters -> functionCallParameters _ parameter_separator _ expression | expression | null
+
+# Primitives
+# ==========
+
+identifier -> _name {% function(d) {return d[0]; } %}
+
+_name -> [a-zA-Z_] {% id %}
+	| _name [\w_] {% function(d) {return d[0] + d[1]; } %}
+
+# Numbers
+
+number -> _number {% function(d) {return parseFloat(d[0])} %}
+
+_posint ->
+	[0-9] {% id %}
+	| _posint [0-9] {% function(d) {return d[0] + d[1]} %}
+
+_int ->
+	"-" _posint {% function(d) {return d[0] + d[1]; }%}
+	| _posint {% id %}
+
+_float ->
+	_int {% id %}
+	| _int "." _posint {% function(d) {return d[0] + d[1] + d[2]; }%}
+
+_number ->
+	_float {% id %}
+	| _float "e" _int {% function(d){return d[0] + d[1] + d[2]; } %}
+
+
+#Strings
+
+String -> "\"" _string "\"" {% function(d) {return '"' + d[1] + '"'; } %}
+
+_string ->
+	null {% function() {return ""; } %}
+	| _string _stringchar {% function(d) {return d[0] + d[1];} %}
+
+_stringchar ->
+	[^\\"] {% id %}
+	| "\\" [^] {% function(d) {return JSON.parse("\"" + d[0] + d[1] + "\""); } %}
+
+# Whitespace
+_ -> null | _ [\s] {% function() {} %}
+__ -> [\s] | __ [\s] {% function() {} %}
+
+
+#The next two lines are the languages for the translator.
+'''

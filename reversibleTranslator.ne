@@ -87,7 +87,6 @@ function getOutput(theInput) {
                         arr_j1[k] = "\"" + arr_j[k] + "\""
                     }
                 }
-                console.log("arr_j1 is " + JSON.stringify(arr_j1))
                 resultString += arr_j1.join(" _ ")
             } else if (j === 3 && (arr_j !== undefined)) {
                 var arr_j1 = [];
@@ -120,10 +119,10 @@ function getOutput(theInput) {
 #Start parsing from here.
 #Flatten the arrays by appending them with the instructions here:
 #    http://stackoverflow.com/questions/351409/appending-to-array
-mainPattern1 -> multiLineString mainPattern {%function(d){
-	console.log("Calling mainPattern1");
-	d[1][2] =  d[0] + d[1][2];
-	return d[1];
+mainPattern1 -> _ mainPattern _ multiLineString _ {%function(d){
+	//console.log("Calling mainPattern1");
+	var toReturn = [d[1][0], d[1][1], d[3] + d[1][2]];
+	return toReturn;
 }%}
 
 multiLineString -> "'''" _multiLineString "'''" {%function(d){return d[1];}%}
