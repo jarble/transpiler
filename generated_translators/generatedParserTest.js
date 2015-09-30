@@ -5,7 +5,7 @@
 
 
 var nearley = require("nearley");
-var translator = require("./Java-C#.js");
+var translator = require("./Java-C#");
 
 var translator = new nearley.Parser(translator.ParserRules, translator.ParserStart);
 var fs = require("fs");

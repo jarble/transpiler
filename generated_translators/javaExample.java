@@ -1,5 +1,20 @@
 public class javaExample{
 	//Does this comment work?
+
+	public static boolean predicateExample(int a, int b){
+		if(a > b){
+			return a;
+		}
+		else if(a < b){
+			return b;
+		}
+		else{
+			return a + b;
+		}
+	}
+	public static boolean arrayExample(int[] a, int[] b){
+		return (a[0] + b[0]) == 1;
+	}
 	public static int doSomething (int a, int b){
 		if(b > a){
 			System.out.println(b);

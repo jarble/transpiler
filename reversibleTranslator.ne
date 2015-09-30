@@ -61,7 +61,7 @@ function getOutput(theInput) {
         for (var j = 0; j < arr_i.length; j++) {
 			var arr_j = arr_i[j];
 			if(arr_i.length < 4 || arr_j === undefined){
-				listOfErrors += arr_i[0] + " is not yet defined for " + translateFrom + " and " + translateTo + "\n";
+				listOfErrors += "    " + arr_i[0] + " is not yet defined for " + translateFrom + " and " + translateTo + "\n";
 			}
             if (j === 0) {
                 resultString += arr_j + " -> ";
@@ -110,7 +110,7 @@ function getOutput(theInput) {
         }
     }
     if(listOfErrors != ""){
-		throw listOfErrors;
+		throw "There are some errors in theGrammar.txt\n" + listOfErrors;
     }
     return [translateFrom, translateTo, resultString];
 }

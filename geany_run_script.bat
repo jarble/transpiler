@@ -1,4 +1,4 @@
-py "generateParser.py"
+node testParser
 
 pause
 del "%0"
