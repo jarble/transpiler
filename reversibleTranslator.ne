@@ -110,7 +110,7 @@ function getOutput(theInput) {
         }
     }
     if(listOfErrors != ""){
-		throw "There are some errors in theGrammar.txt\n" + listOfErrors;
+		throw "There are some errors in grammar.txt\n" + listOfErrors;
     }
     return [translateFrom, translateTo, resultString];
 }

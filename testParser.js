@@ -1,5 +1,5 @@
 //These are the input and output languages for this file.
-//The grammar is defined in theGrammar.txt in the same folder as this file.
+//The grammar is defined in grammar.txt in the same folder as this file.
 //Copy the lists of languages from polyglotcodegenerator.py to theGrammar.txt.
 
 //Don't modify any other code in this file.
@@ -12,7 +12,7 @@ var fs = require('fs');
 
 var reversible = new nearley.Parser(reversibleTranslator.ParserRules, reversibleTranslator.ParserStart);
 
-fs.readFile("theGrammar.txt", 'utf8', function(err, data) {
+fs.readFile("grammar.txt", 'utf8', function(err, data) {
   if (err) throw err;
   //console.log(data);
   var theOutput = reversible.feed(data).results[0];

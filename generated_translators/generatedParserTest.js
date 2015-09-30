@@ -1,5 +1,5 @@
 //These are the input and output languages for this file.
-//The grammar is defined in theGrammar.txt in the same folder as this file.
+//The grammar is defined in grammar.txt in the same folder as this file.
 //Copy the lists of languages from polyglotcodegenerator.py to theGrammar.txt.
 //Don't modify any other code in this file.
 
