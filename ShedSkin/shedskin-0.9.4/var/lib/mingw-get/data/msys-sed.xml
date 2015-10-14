@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<software-distribution project="MinGW" home="http://mingw.org" issue="2010072600">
+
+  <!-- File: msys-sed.xml -->
+
+  <package-collection subsystem="msys">
+    <download-host uri="http://prdownloads.sourceforge.net/mingw/%F?download" />
+
+    <package name="msys-sed">
+      <affiliate group="MSYS Base System" />
+      <description lang="en" title="sed: GNU Stream Editor" >
+        <paragraph>sed is a stream editor. A stream editor is used to
+          perform basic text transformations on an input stream (a file or
+          input from a pipeline). While in some ways similar to an editor
+          which permits scripted edits (such as ed), sed works by making
+          only one pass over the input(s), and is consequently more
+          efficient. But it is sed's ability to filter text in a pipeline
+          which particularly distinguishes it from other types of editors.
+        </paragraph>
+      </description>
+
+      <source tarname="sed-%-msys-%-src.tar" />
+      <licence tarname="sed-%-msys-%-lic.tar" />
+
+      <component class="bin">
+        <release tarname="sed-4.2.1-2-msys-1.0.13-bin.tar.lzma" >
+          <requires eq="msys-libintl-*-msys-*-dll-8.tar" />
+        </release>
+        <requires eq="msys-core-*-msys-*-bin.tar" />
+      </component>
+
+      <component class="lang">
+        <release tarname="sed-4.2.1-2-msys-1.0.13-lang.tar.lzma" />
+      </component>
+
+      <component class="doc">
+        <release tarname="sed-4.2.1-2-msys-1.0.13-doc.tar.lzma" />
+      </component>
+
+      <component class="lic">
+        <release tarname="sed-4.2.1-2-msys-1.0.13-lic.tar.lzma" />
+      </component>
+    </package>
+
+  </package-collection>
+</software-distribution>
+<!-- vim: set nocompatible expandtab fileformat=unix textwidth=80 tabstop=2 shiftwidth=2: -->

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<software-distribution project="MinGW" home="http://mingw.org" issue="2010080900">
+
+  <!-- File: msys-file.xml -->
+
+  <package-collection subsystem="msys">
+    <download-host uri="http://prdownloads.sourceforge.net/mingw/%F?download" />
+
+    <package name="msys-file">
+      <affiliate group="MSYS Base System" />
+      <description lang="en" title="file: determine file type" >
+        <paragraph>The file command is used to identify a particular file
+          according to the type of data contained by the file.  File can
+          identify many different file types, including ELF binaries,
+          system libraries, RPM packages, and different graphics formats.
+        </paragraph>
+        <paragraph>The msys-file package provides the file command and the
+          pre-compiled magic database, which describes how different file
+          types should be identified. The associated msys-libmagic package
+          provides the libmagic runtime library and development files.
+        </paragraph>
+      </description>
+
+      <source tarname="file-%-msys-%-src.tar" />
+      <licence tarname="file-%-msys-%-lic.tar" />
+
+      <component class="bin">
+        <!-- Although every MSYS package requires msys-core-bin,
+          we do not specify that here; instead, we rely on implicit
+          inclusion via the locally specified libmagic dependency.
+          -->
+        <release tarname="file-5.04-1-msys-1.0.13-bin.tar.lzma">
+          <requires eq="msys-libmagic-%-msys-%-dll-1.tar" />
+        </release>
+      </component>
+
+      <component class="doc">
+        <release tarname="file-5.04-1-msys-1.0.13-doc.tar.lzma" />
+      </component>
+
+      <component class="lic">
+        <release tarname="file-5.04-1-msys-1.0.13-lic.tar.lzma" />
+      </component>
+    </package>
+
+    <package name="msys-libmagic">
+      <description lang="en" title="libmagic: library for determining file type" >
+        <paragraph>The file command is used to identify a particular file
+          according to the type of data contained by the file.  File can
+          identify many different file types, including ELF binaries,
+          system libraries, RPM packages, and different graphics formats.
+        </paragraph>
+        <paragraph>The msys-libmagic package provides the libmagic runtime
+          library and development files. The associated msys-file package
+          provides the file command and the pre-compiled magic database,
+          which describes how different file types should be identified.
+        </paragraph>
+      </description>
+
+      <source tarname="file-%-msys-%-src.tar" />
+      <licence tarname="file-%-msys-%-lic.tar" />
+
+      <component class="dll">
+        <!-- Requirements common to all releases:
+          Every MSYS package requires msys-core-bin; this one also
+          requires zlib dll, which lacks an ABI version qualifier.
+          -->
+        <requires eq="msys-core-*-msys-*-bin.tar" />
+        <requires eq="msys-zlib-*-msys-*-dll.tar" />
+
+        <release tarname="libmagic-5.04-1-msys-1.0.13-dll-1.tar.lzma">
+          <requires eq="msys-libregex-*-msys-*-dll-1.tar" />
+        </release>
+      </component>
+
+      <component class="dev">
+        <release tarname="libmagic-5.04-1-msys-1.0.13-dev.tar.lzma">
+          <requires eq="msys-libmagic-%-msys-%-dll-1.tar" />
+        </release>
+      </component>
+    </package>
+
+  </package-collection>
+</software-distribution>
+<!-- vim: set nocompatible expandtab fileformat=unix textwidth=80 tabstop=2 shiftwidth=2: -->

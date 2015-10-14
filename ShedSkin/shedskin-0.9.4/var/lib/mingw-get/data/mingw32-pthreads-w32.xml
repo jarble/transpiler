@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<software-distribution project="MinGW" home="http://www.mingw.org" issue="2010083100">
+
+  <!-- File: mingw32-pthreads-w32.xml ~~ mingw-get package description for pthreads-w32 -->
+
+  <package-collection subsystem="mingw32">
+    <download-host uri="http://prdownloads.sourceforge.net/mingw/%F?download" />
+
+    <!-- Provides the package descriptions for the pthreads-w32 library, -->
+    <!-- which is a runtime prerequisite for modern versions of GCC.     -->
+
+    <package name="mingw32-pthreads-w32" alias="pthreads-w32 pthreads">
+      <affiliate group="MinGW Standard Libraries" />
+      <description lang="en" title="POSIX threading library for Win32" >
+        <paragraph>
+          pthreads-w32 seeks to provide a freely available and high-quality
+          implementation of pthreads for Windows.  Pthreads is an API for
+          writing multithreaded applications following the POSIX standard.
+        </paragraph>
+        <paragraph>
+          The mingw32-pthreads-w32 package provides the documentation for the
+          pthreads-w32 library, as well as the related development files.  The
+          associated mingw32-libpthread package provides the runtime library.
+        </paragraph>
+      </description>
+
+      <source tarname="pthreads-w32-%-mingw32-src.tar.lzma" />
+      <licence tarname="pthreads-w32-%-mingw32-lic.tar.lzma" />
+
+      <component class="dev">
+        <release tarname="pthreads-w32-2.8.0-3-mingw32-dev.tar.lzma" >
+          <requires eq="mingw32-libpthread-%-mingw32-dll-2.tar" />
+        </release>
+      </component>
+
+      <component class="doc">
+        <release tarname="pthreads-w32-2.8.0-3-mingw32-doc.tar.lzma" />
+      </component>
+
+      <component class="lic">
+        <release tarname="pthreads-w32-2.8.0-3-mingw32-lic.tar.lzma" />
+      </component>
+    </package>
+
+    <package name="mingw32-libpthread" alias="libpthread">
+      <affiliate group="MinGW Standard Libraries" />
+      <description lang="en" title="POSIX threading library for Win32" >
+        <paragraph>
+          pthreads-w32 seeks to provide a freely available and high-quality
+          implementation of pthreads for Windows.  Pthreads is an API for
+          writing multithreaded applications following the POSIX standard.
+        </paragraph>
+        <paragraph>
+          The mingw32-libpthread package provides the runtime library.  The
+          associated mingw32-pthreads-w32 package provides the documentation
+          for the pthreads-w32 library, as well as the related development
+          files.
+        </paragraph>
+        <paragraph>
+          This is a required component of the MinGW Compiler Suite.
+        </paragraph>
+      </description>
+
+      <source tarname="pthreads-w32-%-mingw32-src.tar.lzma" />
+      <licence tarname="pthreads-w32-%-mingw32-lic.tar.lzma" />
+
+      <component class="dll">
+        <release tarname="libpthread-2.8.0-3-mingw32-dll-2.tar.lzma" />
+      </component>
+    </package>
+
+  </package-collection>
+</software-distribution>
+<!-- vim: set nocompatible expandtab fileformat=unix textwidth=80 tabstop=2 shiftwidth=2: -->

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<software-distribution project="MinGW" home="http://mingw.org" issue="2010092500">
+
+  <!-- File: msys-bison.xml -->
+
+  <package-collection subsystem="msys">
+    <download-host uri="http://prdownloads.sourceforge.net/mingw/%F?download" />
+
+    <package name="msys-bison">
+      <affiliate group="MinGW Developer Toolkit" />
+      <description lang="en" title="bison: GNU Parser Generator" >
+        <paragraph>bison is a general-purpose parser generator that
+          converts an annotated context-free grammar into an LALR(1)
+          or GLR parser for that grammer.  Bison is upward compatible
+          with Yacc -- all properly-written Yacc grammars ought to work
+          with Bison with no change.
+        </paragraph>
+        <paragraph>The msys-bison-bin (sub)package provides the bison
+          executable and associated development files.  The msys-bison-lang
+          (sub)package provides i18n support for the bison executable,
+          while the msys-bison-rtm (sub)package provides i18n support for
+          applications created with bison.
+        </paragraph>
+      </description>
+
+      <licence tarname="bison-%-msys-%-lic.tar" />
+      <source tarname="bison-%-msys-%-src.tar" />
+
+      <component class="bin">
+        <requires eq="msys-core-*-msys-*-bin.tar" />
+        <requires eq="msys-m4-*-msys-*-bin.tar" />
+        <release tarname="bison-2.4.2-1-msys-1.0.13-bin.tar.lzma" >
+          <requires eq="msys-libintl-*-msys-*-dll-8.tar" />
+        </release>
+      </component>
+
+      <component class="rtm">
+        <release tarname="bison-2.4.2-1-msys-1.0.13-rtm.tar.lzma" />
+      </component>
+
+      <component class="lang">
+        <release tarname="bison-2.4.2-1-msys-1.0.13-lang.tar.lzma" />
+      </component>
+
+      <component class="doc">
+        <release tarname="bison-2.4.2-1-msys-1.0.13-doc.tar.lzma" />
+      </component>
+
+      <component class="lic">
+        <release tarname="bison-2.4.2-1-msys-1.0.13-lic.tar.lzma" />
+      </component>
+    </package>
+
+  </package-collection>
+</software-distribution>
+<!-- vim: set nocompatible expandtab fileformat=unix textwidth=80 tabstop=2 shiftwidth=2: -->

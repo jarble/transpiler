@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<software-distribution project="MinGW" home="http://mingw.org" issue="2010090600">
+
+  <!-- File: mingw32-pexports.xml -->
+
+  <package-collection subsystem="mingw32">
+    <download-host uri="http://prdownloads.sourceforge.net/mingw/%F?download" />
+    <package name="mingw32-pexports" alias="pexports">
+      <description lang="en" title="pexports: Generate .def files for DLLs" >
+        <paragraph>pexports can extract information from DLLs to create
+          corresponding .def files that list the symbols available in each DLL.
+          .def files can then be used by dlltool (mingw32-binutils) to generate
+          import libraries.  pexports is similar to gendef, but the two tools
+          differ in how each determines the "decoration" (or calling convention)
+          appropriate for each symbol, since that information is not always
+          available directly from the DLL's symbol table.  pexports can use a C
+          pre-processor to extract the information, provided you have the
+          appropriate header files.  gendef locates the symbol's code in the DLL,
+          and uses a disassembler to determine that information.  Neither method
+          is foolproof, so both tools are provided.
+        </paragraph>
+        <paragraph>Note that in order for pexports to detect the calling
+          convention, you must specify on the command line the headers to parse.
+          If the symbols are not declared in those headers, then the proper
+          decorations cannot be computed.  Originally written by Anders
+          Norlander, it now supports both 32bit and 64bit DLLs and EXEs thanks
+          to Tor Lillqvist.
+        </paragraph>
+      </description>
+
+      <licence tarname="pexports-%-mingw32-%-lic.tar" />
+      <source tarname="pexports-%-mingw32-%-src.tar" />
+
+      <component class="bin">
+        <requires eq="mingw32-gcc-core-*-mingw32-*-bin.tar" />
+        <requires eq="mingw32-mingwrt-*-mingw32-*-dev.tar" />
+        <requires eq="mingw32-w32api-*-mingw32-*-dev.tar" />
+        <release tarname="pexports-0.44-1-mingw32-bin.tar.lzma" />
+      </component>
+
+      <component class="doc">
+        <release tarname="pexports-0.44-1-mingw32-doc.tar.lzma" />
+      </component>
+
+      <component class="lic">
+        <release tarname="pexports-0.44-1-mingw32-lic.tar.lzma" />
+      </component>
+    </package>
+
+  </package-collection>
+</software-distribution>
+<!-- vim: set nocompatible expandtab fileformat=unix textwidth=80 tabstop=2 shiftwidth=2: -->

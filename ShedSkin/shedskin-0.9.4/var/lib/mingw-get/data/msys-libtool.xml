@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<software-distribution project="MinGW" home="http://mingw.org" issue="2010092600">
+
+  <!-- File: msys-libtool.xml ~~ mingw-get package description libtool (msys) -->
+
+  <package-collection subsystem="msys">
+    <download-host uri="http://prdownloads.sourceforge.net/mingw/%F?download" />
+
+    <package name="msys-libtool">
+      <affiliate group="MSYS System Builder" />
+      <description lang="en" title="libtool (msys): A shared library generation tool" >
+        <paragraph>This is not the libtool you are looking for.</paragraph>
+        <paragraph>GNU libtool is a generic library support package.  Libtool
+          hides the complexity of using shared libraries behind a consistent,
+          portable interface.  Libtool requires the use of Autoconf.
+        </paragraph>
+        <paragraph>This msys port of libtool has been modified specifically for
+          the MSYS System Builder (msys-dvlpr) environment; that is, it is
+          intended to be used only when producing binary packages for the MSYS
+          subsystem.  If you intend to produce executables for the native
+          "mingw32" subsystem (that is, applications that should work on
+          Microsoft Windows installations without the MSYS dll), then you should
+          install the mingw32-libtool-* package instead.
+        </paragraph>
+        <paragraph>msys-libtool provides the development files and utilities for
+          managing the creation and use of shared libraries in a platform
+          independent manner.  The associated msys-libltdl package provides the
+          runtime library and development files for using a pre-built version of
+          libtool's dlopen replacement library.
+        </paragraph>
+      </description>
+
+      <licence tarname="libtool-%-msys-%-lic.tar" />
+      <source tarname="libtool-%-msys-%-src.tar" />
+
+      <component class="bin">
+        <requires eq="msys-autoconf-*-msys-*-bin.tar" />
+        <requires eq="msys-automake-*-msys-*-bin.tar" />
+        <requires eq="msys-bash-*-msys-*-bin.tar" />
+        <requires eq="msys-core-*-msys-*-bin.tar" />
+        <requires eq="msys-coreutils-*-msys-*-bin.tar" />
+        <requires eq="msys-file-*-msys-*-bin.tar" />
+        <requires eq="msys-m4-*-msys-*-bin.tar" />
+        <requires eq="msys-sed-*-msys-*-bin.tar" />
+        <requires eq="msys-texinfo-*-msys-*-bin.tar" />
+        <!-- libtool doesn't actually depend on its own runtime library -->
+        <release tarname="libtool-2.2.7a-2-msys-1.0.13-bin.tar.lzma" />
+        <release tarname="libtool-2.4-1-msys-1.0.15-bin.tar.lzma" />
+      </component>
+
+      <component class="doc">
+        <release tarname="libtool-2.2.7a-2-msys-1.0.13-doc.tar.lzma" />
+        <release tarname="libtool-2.4-1-msys-1.0.15-doc.tar.lzma" />
+      </component>
+
+      <component class="lic">
+        <release tarname="libtool-2.2.7a-2-msys-1.0.13-lic.tar.lzma" />
+        <release tarname="libtool-2.4-1-msys-1.0.15-lic.tar.lzma" />
+      </component>
+    </package>
+
+    <package name="msys-libltdl">
+      <affiliate group="MSYS System Builder" />
+      <description lang="en" title="libltdl (msys): A portable dlopen replacement" >
+        <paragraph>This is not the libtool you are looking for.</paragraph>
+        <paragraph>GNU libtool is a generic library support package.  Libtool
+          hides the complexity of using shared libraries behind a consistent,
+          portable interface.  Libtool requires the use of Autoconf.
+        </paragraph>
+        <paragraph>This msys port of libtool has been modified specifically for
+          the MSYS System Builder (msys-dvlpr) environment; that is, it is
+          intended to be used only when producing binary packages for the MSYS
+          subsystem.  If you intend to produce executables for the native
+          "mingw32" subsystem (that is, applications that should work on
+          Microsoft Windows installations without the MSYS dll), then you should
+          install the mingw32-libtool-* package instead.
+        </paragraph>
+        <paragraph>msys-libltdl provides the runtime library and development
+          files for using a pre-built version of libtool's dlopen replacement
+          library.  The associated msys-libtool package provides the development
+          files and utilities for managing the creation and use of shared
+          libraries in a platform independent manner.
+        </paragraph>
+      </description>
+
+      <licence tarname="libtool-%-msys-%-lic.tar" />
+      <source tarname="libtool-%-msys-%-src.tar" />
+
+      <component class="dll">
+        <release tarname="libltdl-2.2.7a-2-msys-1.0.13-dll-7.tar.lzma" />
+        <release tarname="libltdl-2.4-1-msys-1.0.15-dll-7.tar.lzma" />
+
+        <!-- Every MSYS DLL package requires msys-core-bin -->
+        <requires eq="msys-core-*-msys-*-bin.tar" />
+      </component>
+
+      <component class="dev">
+        <requires eq="msys-libtool-%-msys-%-bin.tar" />
+        <release tarname="libltdl-2.2.7a-2-msys-1.0.13-dev.tar.lzma" >
+          <requires eq="msys-libltdl-%-msys-%-dll-7.tar" />
+        </release>
+        <release tarname="libltdl-2.4-1-msys-1.0.15-dev.tar.lzma" >
+          <requires eq="msys-libltdl-%-msys-%-dll-7.tar" />
+        </release>
+      </component>
+    </package>
+
+  </package-collection>
+</software-distribution>
+<!-- vim: set nocompatible expandtab fileformat=unix textwidth=80 tabstop=2 shiftwidth=2: -->

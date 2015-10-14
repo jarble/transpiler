@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<software-distribution project="MinGW" home="http://www.mingw.org" issue="2010083100">
+
+  <!-- File: mingw32-gcc3.xml ~~ mingw-get package list for GCC version 3 -->
+
+  <package-collection subsystem="mingw32">
+    <download-host uri="http://prdownloads.sourceforge.net/mingw/%F?download" />
+
+    <package name="mingw32-gcc-v3-core" alias="gcc-v3 gcc-v3-core">
+      <description lang="en" title="The GNU C Compiler">
+        <paragraph>
+          This package is specific to Version 3 of the GNU Compiler
+          Collection; it provides the MinGW implementation of the
+          GNU C language compiler; this includes the C preprocessor,
+          and the common back end processors which are necessary to
+          support all other language compilers in the GNU Compiler
+          Collection.
+        </paragraph>
+        <paragraph>
+          This is a required component of the MinGW Compiler Suite,
+          for those users who continue the use GCC Version 3.
+        </paragraph>
+      </description>
+      <affiliate group="MinGW Compiler Suite" />
+      <requires ge="mingw32-binutils-*-mingw32-bin.tar" />
+      <requires ge="mingw32-mingwrt-*-mingw32-dev.tar" />
+      <requires ge="mingw32-mingwrt-*-mingw32-dll.tar" />
+      <requires ge="mingw32-w32api-*-mingw32-dev.tar" />
+      <release tarname="gcc-v3-core-3.4.5-20060117-3-mingw32-bin.tar.gz">
+        <source tarname="gcc-core-3.4.5-20060117-2-src.tar.gz" />
+        <download tarname="gcc-core-3.4.5-20060117-3.tar.gz" />
+      </release>
+    </package>
+
+    <package name="mingw32-gcc-v3-ada" alias="gcc-v3-ada">
+      <affiliate group="MinGW Compiler Suite" />
+      <description lang="en" title="The GNU Ada Compiler">
+        <paragraph>
+          This package provides the MinGW implementation of the
+          GNU Ada language compiler for GCC Version 3.
+        </paragraph>
+        <paragraph>
+          This is an optional component of the MinGW Compiler Suite;
+          you require it only if you use GCC Version 3, and you wish
+          to compile programs written in the Ada language.
+        </paragraph>
+      </description>
+      <requires eq="mingw32-gcc-v3-core-%-mingw32-bin.tar" />
+      <release tarname="gcc-v3-ada-3.4.5-20060117-3-mingw32-bin.tar.gz">
+        <source tarname="gcc-ada-3.4.5-20060117-2-src.tar.gz" />
+        <download tarname="gcc-ada-3.4.5-20060117-3.tar.gz" />
+      </release>
+    </package>
+
+    <package name="mingw32-gcc-v3-g++" alias="gcc-v3-g++ gcc-v3-c++">
+      <description lang="en" title="The GNU C++ Compiler">
+        <paragraph>
+          This package provides the MinGW implementation of the
+          GNU C++ language compiler for GCC Version 3.
+        </paragraph>
+        <paragraph>
+          This is an optional component of the MinGW Compiler Suite;
+          you require it only if you use GCC Version 3, and you wish
+          to compile programs written in the C++ language.
+        </paragraph>
+      </description>
+      <affiliate group="MinGW Compiler Suite" />
+      <requires eq="mingw32-gcc-v3-core-%-mingw32-bin.tar" />
+      <release tarname="gcc-v3-g++-3.4.5-20060117-3-mingw32-bin.tar.gz">
+        <source tarname="gcc-g++-3.4.5-20060117-2-src.tar.gz" />
+        <download tarname="gcc-g++-3.4.5-20060117-3.tar.gz" />
+      </release>
+    </package>
+
+    <package name="mingw32-gcc-v3-fortran" alias="gcc-v3-fortran gcc-v3-g77 g77 f77">
+      <affiliate group="MinGW Compiler Suite" />
+      <description lang="en" title="The GNU FORTRAN Compiler">
+        <paragraph>
+          This package provides the MinGW implementation of the
+          GNU FORTRAN language compiler for GCC Version 3.
+        </paragraph>
+        <paragraph>
+          This is an optional component of the MinGW Compiler Suite;
+          you require it only if you use GCC Version 3, and you wish
+          to compile programs written in the FORTRAN language.
+        </paragraph>
+      </description>
+      <requires eq="mingw32-gcc-v3-core-%-mingw32-bin.tar" />
+      <release tarname="gcc-v3-g77-3.4.5-20060117-3-mingw32-bin.tar.gz">
+        <source tarname="gcc-g77-3.4.5-20060117-2-src.tar.gz" />
+        <download tarname="gcc-g77-3.4.5-20060117-3.tar.gz" />
+      </release>
+    </package>
+
+    <package name="mingw32-gcc-v3-java" alias="gcc-v3-java">
+      <affiliate group="MinGW Compiler Suite" />
+      <description lang="en" title="The GNU Java Compiler">
+        <paragraph>
+          This package provides the MinGW implementation of the
+          GNU Java language compiler for GCC Version 3.
+        </paragraph>
+        <paragraph>
+          This is an optional component of the MinGW Compiler Suite;
+          you require it only if you use GCC Version 3, and you wish
+          to compile programs written in the Java language.
+        </paragraph>
+      </description>
+      <requires eq="mingw32-gcc-v3-core-%-mingw32-bin.tar" />
+      <release tarname="gcc-v3-java-3.4.5-20060117-3-mingw32-bin.tar.gz">
+        <source tarname="gcc-java-3.4.5-20060117-2-src.tar.gz" />
+        <download tarname="gcc-java-3.4.5-20060117-3.tar.gz" />
+      </release>
+    </package>
+
+    <package name="mingw32-gcc-v3-objc" alias="gcc-v3-objc">
+      <affiliate group="MinGW Compiler Suite" />
+      <description lang="en" title="The GNU Objective-C Compiler">
+        <paragraph>
+          This package provides the MinGW implementation of the
+          GNU Objective-C language compiler for GCC Version 3.
+        </paragraph>
+        <paragraph>
+          This is an optional component of the MinGW Compiler Suite;
+          you require it only if you use GCC Version 3, and you wish
+          to compile programs written in the Objective-C language.
+        </paragraph>
+      </description>
+      <requires eq="mingw32-gcc-v3-core-%-mingw32-bin.tar" />
+      <release tarname="gcc-v3-objc-3.4.5-20060117-3-mingw32-bin.tar.gz">
+        <source tarname="gcc-objc-3.4.5-20060117-2-src.tar.gz" />
+        <download tarname="gcc-objc-3.4.5-20060117-3.tar.gz" />
+      </release>
+    </package>
+
+  </package-collection>
+</software-distribution>
+<!-- vim: set nocompatible expandtab fileformat=unix textwidth=80 tabstop=2 shiftwidth=2: -->

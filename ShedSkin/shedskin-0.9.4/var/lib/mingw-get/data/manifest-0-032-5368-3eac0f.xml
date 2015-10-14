@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<package id="manifest-0-032-5368-3eac0f">
+    <release tarname="make-3.82-3-mingw32-bin.tar.lzma" />
+    <references>
+        <sysroot id="sysroot-0-002-a7c6-d7dbb5" />
+    </references>
+    <manifest>
+        <dir path="bin" />
+        <file path="bin/mingw32-make.exe" />
+        <dir path="share" />
+        <dir path="share/info" />
+        <file path="share/info/make.info" />
+        <file path="share/info/make.info-1" />
+        <file path="share/info/make.info-2" />
+        <dir path="share/man" />
+        <dir path="share/man/man1" />
+        <file path="share/man/man1/mingw32-make.1" />
+    </manifest>
+</package>

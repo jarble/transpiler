@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<software-distribution project="MinGW" home="http://mingw.org" issue="2010090600">
+
+  <!-- File: msys-unzip.xml -->
+
+  <package-collection subsystem="msys">
+    <download-host uri="http://prdownloads.sourceforge.net/mingw/%F?download" />
+
+    <package name="msys-unzip">
+      <description lang="en" title="unzip: Command-line unpacker for .zip archives" >
+        <paragraph>UnZip from the InfoZIP project is an open-source,
+          command-line alternative to other tools, such as WinZip, for
+          unpacking zip-format archives.
+        </paragraph>
+      </description>
+
+      <licence tarname="unzip-%-msys-%-lic.tar" />
+      <source tarname="unzip-%-msys-%-src.tar" />
+
+      <component class="bin">
+        <requires eq="msys-core-*-msys-*-bin.tar" />
+        <!-- the following are required for zipgrep -->
+        <requires eq="msys-coreutils-*-msys-*-bin.tar" />
+        <requires eq="msys-sed-*-msys-*-bin.tar" />
+        <requires eq="msys-grep-*-msys-*-bin.tar" />
+        <requires eq="msys-bash-*-msys-*-bin.tar" />
+        <release tarname="unzip-6.0-1-msys-1.0.13-bin.tar.lzma" />
+      </component>
+
+      <component class="doc">
+        <release tarname="unzip-6.0-1-msys-1.0.13-doc.tar.lzma" />
+      </component>
+
+      <component class="lic">
+        <release tarname="unzip-6.0-1-msys-1.0.13-lic.tar.lzma" />
+      </component>
+    </package>
+
+  </package-collection>
+</software-distribution>
+<!-- vim: set nocompatible expandtab fileformat=unix textwidth=80 tabstop=2 shiftwidth=2: -->

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<software-distribution project="MinGW" home="http://www.mingw.org" issue="2010102900">
+
+  <!-- File: mingw32-mingw-get.xml ~~ mingw-get self-upgrade manifest -->
+
+  <package-collection subsystem="mingw32">
+    <download-host uri="http://prdownloads.sourceforge.net/mingw/%F?download" />
+
+    <package name="mingw32-mingw-get" alias="mingw-get">
+      <affiliate group="MinGW Base System" />
+
+      <description lang="en" title="MinGW Package Download and Installation Tool">
+        <paragraph>mingw-get is a tool to assist users in the management of MinGW
+          and MSYS software installations.  Configured via an online XML database,
+          which is managed by the project maintainers, it offers a command line
+          driven user interface facilitating selective download and installation
+          of packages provided by the project.
+        </paragraph>
+        <paragraph>The XML database provides maintainers with a mechanism for the
+          specification of inter-package dependencies; this permits configuration
+          of any package, such that the end user may elect to install just that
+          specific package, leaving mingw-get to ensure that all dependencies will
+          be automatically satisfied at installation time.
+        </paragraph>
+        <paragraph>A graphical user interface is planned as a future enhancement.
+        </paragraph>
+      </description>
+
+      <component class="bin">
+        <release tarname="mingw-get-0.1-mingw32-alpha-3-bin.tar.gz" />
+        <release tarname="mingw-get-0.1-mingw32-alpha-4-bin.tar.gz" />
+        <release tarname="mingw-get-0.1-mingw32-alpha-5-bin.tar.gz" />
+      </component>
+
+      <component class="lic">
+        <release tarname="mingw-get-0.1-mingw32-alpha-3-lic.tar.gz" />
+        <release tarname="mingw-get-0.1-mingw32-alpha-4-lic.tar.gz" />
+        <release tarname="mingw-get-0.1-mingw32-alpha-5-lic.tar.gz" />
+      </component>
+    </package>
+
+  </package-collection>
+</software-distribution>
+<!-- vim: set nocompatible expandtab fileformat=unix textwidth=82 tabstop=2 shiftwidth=2: -->

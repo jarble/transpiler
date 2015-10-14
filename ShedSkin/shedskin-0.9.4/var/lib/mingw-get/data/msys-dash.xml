@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<software-distribution project="MinGW" home="http://mingw.org" issue="2010090600">
+
+  <!-- File: msys-dash.xml -->
+
+  <package-collection subsystem="msys">
+    <download-host uri="http://prdownloads.sourceforge.net/mingw/%F?download" />
+
+    <package name="msys-dash">
+      <description lang="en" title="dash: The Debian Almquist Shell">
+        <paragraph>DASH is a POSIX-compliant implementation of /bin/sh
+          that aims to be as small as possible.  It does this without
+          sacrificing speed where possible.  In fact, it is significantly
+          faster than bash (the GNU Bourne-Again SHell) for most tasks.
+        </paragraph>
+        <paragraph>This version of dash has been modified to support
+          $LINENO, so it should suffice to run most configure scripts.
+          More importantly, unlike msys-bash, msys-dash has no
+          dependencies other than the MSYS runtime itself.  Therefore,
+          dash can be used (it is, in fact, required) to run the
+          rebaseall tool from the msys-rebase package.
+        </paragraph>
+      </description>
+
+      <licence tarname="dash-%-msys-%-lic.tar" />
+      <source tarname="dash-%-msys-%-src.tar" />
+
+      <component class="bin">
+        <requires eq="msys-core-*-msys-*-bin.tar" />
+        <release tarname="dash-0.5.5.1_2-1-msys-1.0.13-bin.tar.lzma" />
+      </component>
+
+      <component class="doc">
+        <release tarname="dash-0.5.5.1_2-1-msys-1.0.13-doc.tar.lzma" />
+      </component>
+
+      <component class="lic">
+        <release tarname="dash-0.5.5.1_2-1-msys-1.0.13-lic.tar.lzma" />
+      </component>
+    </package>
+
+  </package-collection>
+</software-distribution>
+<!-- vim: set nocompatible expandtab fileformat=unix textwidth=80 tabstop=2 shiftwidth=2: -->

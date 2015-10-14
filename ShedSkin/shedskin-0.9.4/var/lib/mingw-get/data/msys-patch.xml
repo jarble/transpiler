@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<software-distribution project="MinGW" home="http://mingw.org" issue="2010081000">
+
+  <!-- File: msys-patch.xml -->
+
+  <package-collection subsystem="msys">
+    <download-host uri="http://prdownloads.sourceforge.net/mingw/%F?download" />
+
+    <package name="msys-patch">
+      <affiliate group="MSYS Base System" />
+      <description lang="en" title="patch: Apply a diff file to an original" >
+        <paragraph>GNU patch is an implementation of Larry Wall's program
+          that takes "diff's" output and applies it to an original file to
+          generate a modified version of that file. Normally, the patched
+          versions are put in place of the originals. Backups can be made.
+        </paragraph>
+      </description>
+
+      <source tarname="patch-%-msys-%-src.tar" />
+      <licence tarname="patch-%-msys-%-lic.tar" />
+
+      <component class="bin">
+        <requires eq="msys-core-*-msys-*-bin.tar" />
+        <release tarname="patch-2.6.1-1-msys-1.0.13-bin.tar.lzma" />
+      </component>
+
+      <component class="doc">
+        <release tarname="patch-2.6.1-1-msys-1.0.13-doc.tar.lzma" />
+      </component>
+
+      <component class="lic">
+        <release tarname="patch-2.6.1-1-msys-1.0.13-lic.tar.lzma" />
+      </component>
+    </package>
+
+  </package-collection>
+</software-distribution>
+<!-- vim: set nocompatible expandtab fileformat=unix textwidth=80 tabstop=2 shiftwidth=2: -->

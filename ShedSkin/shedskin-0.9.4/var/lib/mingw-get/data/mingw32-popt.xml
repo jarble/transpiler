@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<software-distribution project="MinGW" home="http://mingw.org" issue="2010090600">
+
+  <!-- File: mingw32-popt.xml -->
+
+  <package-collection subsystem="mingw32">
+    <download-host uri="http://prdownloads.sourceforge.net/mingw/%F?download" />
+
+    <package name="mingw32-popt" alias="popt">
+      <description lang="en" title="popt: Command line option parsing library" >
+        <paragraph>popt is a command line option parsing library.  While popt is
+          similiar to getopt, it contains a number of enhancements.  This
+          version is based on the rpm5.org version of popt, rather than the
+          rpm.org version.  The rpm5.org implementation is more portable.
+        </paragraph>
+        <paragraph>The mingw32-popt package provides the documentation for the
+          popt library.  The associated mingw32-libpopt package provides the
+          runtime library and development files.
+        </paragraph>
+      </description>
+
+      <licence tarname="popt-%-mingw32-%-lic.tar" />
+      <source tarname="popt-%-mingw32-%-src.tar" />
+
+      <component class="doc">
+        <release tarname="popt-1.15-1-mingw32-doc.tar.lzma" />
+      </component>
+
+      <component class="lic">
+        <release tarname="popt-1.15-1-mingw32-lic.tar.lzma" />
+      </component>
+    </package>
+
+    <package name="mingw32-libpopt" alias="libpopt">
+      <description lang="en" title="libpopt: Command line option parsing library" >
+        <paragraph>popt is a command line option parsing library.  While popt is
+          similiar to getopt, it contains a number of enhancements.  This
+          version is based on the rpm5.org version of popt, rather than the
+          rpm.org version.  The rpm5.org implementation is more portable.
+        </paragraph>
+        <paragraph>The mingw32-libpopt package provides the runtime library and
+          development files.  The associated mingw32-popt package provides the
+          documentation for the popt library.
+        </paragraph>
+      </description>
+
+      <licence tarname="popt-%-mingw32-%-lic.tar" />
+      <source tarname="popt-%-mingw32-%-src.tar" />
+
+      <component class="dll">
+        <release tarname="libpopt-1.15-1-mingw32-dll-0.tar.lzma" >
+          <requires eq="mingw32-libintl-*-mingw32-*-dll-8.tar" />
+        </release>
+      </component>
+
+      <component class="dev">
+        <release tarname="libpopt-1.15-1-mingw32-dev.tar.lzma" >
+          <requires eq="mingw32-libpopt-%-mingw32-%-dll-0.tar" />
+        </release>
+      </component>
+
+      <component class="lang">
+        <release tarname="libpopt-1.15-1-mingw32-lang.tar.lzma" />
+      </component>
+    </package>
+
+  </package-collection>
+</software-distribution>
+<!-- vim: set nocompatible expandtab fileformat=unix textwidth=80 tabstop=2 shiftwidth=2: -->

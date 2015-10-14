@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<software-distribution project="MinGW" home="http://mingw.org" issue="2010102400">
+
+  <!-- File: msys-bash.xml -->
+
+  <package-collection subsystem="msys">
+    <download-host uri="http://prdownloads.sourceforge.net/mingw/%F?download" />
+
+    <package name="msys-bash" alias="msys-sh sh bash">
+      <affiliate group="MSYS Base System" />
+      <description lang="en" title="bash: The GNU Bourne Again shell" >
+        <paragraph>Bash is a GNU project sh-compatible shell or command
+          language interpreter.  Bash (Bourne Again shell) incorporates
+          useful features from the Korn shell (ksh) and the C shell (csh).
+          Bash is intended to conform to the IEEE POSIX P1003.2/ISO 9945.2
+          Shell and Tools standard.  It offers functional improvements over
+          sh for both programming and interactive use.  Most sh scripts can
+          be run by bash without modification.  Bash is the default shell
+          for MSYS.
+        </paragraph>
+      </description>
+
+      <source tarname="bash-%-msys-%-src.tar" />
+      <licence tarname="bash-%-msys-%-lic.tar" />
+
+      <component class="bin">
+        <release tarname="bash-3.1.17-4-msys-1.0.16-bin.tar.lzma">
+          <requires eq="msys-libtermcap-*-msys-*-dll-0.tar" />
+          <requires eq="msys-libregex-*-msys-*-dll-1.tar" />
+        </release>
+        <requires eq="msys-core-*-msys-*-bin.tar" />
+        <requires eq="msys-coreutils-*-msys-*-bin.tar" />
+      </component>
+
+      <component class="doc">
+        <release tarname="bash-3.1.17-4-msys-1.0.16-doc.tar.lzma" />
+      </component>
+
+      <component class="lic">
+        <release tarname="bash-3.1.17-4-msys-1.0.16-lic.tar.lzma" />
+      </component>
+    </package>
+
+  </package-collection>
+</software-distribution>
+<!-- vim: set nocompatible expandtab fileformat=unix textwidth=80 tabstop=2 shiftwidth=2: -->

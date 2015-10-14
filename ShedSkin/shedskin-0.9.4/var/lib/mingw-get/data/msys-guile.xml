@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<software-distribution project="MinGW" home="http://mingw.org" issue="2010090600">
+
+  <!-- File: msys-guile.xml -->
+
+  <package-collection subsystem="msys">
+    <download-host uri="http://prdownloads.sourceforge.net/mingw/%F?download" />
+
+    <package name="msys-guile">
+      <affiliate group="MinGW Developer Toolkit" />
+      <description lang="en" title="guile: A Scheme interpreter" >
+        <paragraph>Guile is an interpreter for the Scheme programming language,
+          with support for many SRFIs (Scheme Request For Implementations),
+          packaged as a library which can be incorporated into your programs.
+          Your users have full access to the interpreter, so Guile itself can be
+          extended, based on the needs of the user.  The result is a scripting
+          language tailored to your application.
+        </paragraph>
+        <paragraph>Guile is a library designed to help programmers create
+          flexible applications.  Using Guile in an application allows
+          programmers to write plug-ins, or modules (there are many names, but
+          the concept is essentially the same) and users to use them to have an
+          application fit their needs.
+        </paragraph>
+        <paragraph>The msys-guile package provides a standalone guile
+          interpreter and all associated documentation.  The associated
+          msys-libguile package provides the runtime libraries, development
+          files, and other runtime support.
+        </paragraph>
+      </description>
+
+      <licence tarname="guile-%-msys-%-lic.tar" />
+      <source tarname="guile-%-msys-%-src.tar" />
+
+      <component class="bin">
+        <requires eq="msys-bash-*-msys-*-bin.tar" />
+        <requires eq="msys-coreutils-*-msys-*-bin.tar" />
+        <requires eq="msys-gawk-*-msys-*-bin.tar" />
+        <requires eq="msys-grep-*-msys-*-bin.tar" />
+        <requires eq="msys-sed-*-msys-*-bin.tar" />
+        <!-- Every MSYS package requires msys-core-bin.  This dependency
+          is not explicitly stated here; rather, it is implicitly satisfied
+          as a prerequisite of the matching DLL for this package itself,
+          which is specified for each of the following releases.
+          -->
+        <release tarname="guile-1.8.7-2-msys-1.0.15-bin.tar.lzma" >
+          <requires eq="msys-libguile-%-msys-%-dll-17.tar" />
+        </release>
+      </component>
+
+      <component class="doc">
+        <release tarname="guile-1.8.7-2-msys-1.0.15-doc.tar.lzma" />
+      </component>
+
+      <component class="lic">
+        <release tarname="guile-1.8.7-2-msys-1.0.15-lic.tar.lzma" />
+      </component>
+    </package>
+
+    <package name="msys-libguile">
+      <description lang="en" title="libguile: An extensible Scheme interpreter library" >
+        <paragraph>Guile is a library designed to help programmers create
+          flexible applications.  Using Guile in an application allows
+          programmers to write plug-ins, or modules (there are many names, but
+          the concept is essentially the same) and users to use them to have an
+          application fit their needs.
+        </paragraph>
+        <paragraph>Guile is an interpreter for the Scheme programming language,
+          with support for many SRFIs (Scheme Request For Implementations),
+          packaged as a library which can be incorporated into your programs.
+          Your users have full access to the interpreter, so Guile itself can be
+          extended, based on the needs of the user.  The result is a scripting
+          language tailored to your application.
+        </paragraph>
+        <paragraph>The msys-libguile package provides the runtime libraries,
+          development files, and other runtime support for guile.  The
+          associated msys-guile package provides a standalone guile interpreter
+          and all associated documentation.
+        </paragraph>
+      </description>
+
+      <licence tarname="guile-%-msys-%-lic.tar" />
+      <source tarname="guile-%-msys-%-src.tar" />
+
+      <component class="dll">
+        <requires eq="msys-libguile-%-msys-%-rtm.tar" />
+        <release tarname="libguile-1.8.7-2-msys-1.0.15-dll-17.tar.lzma" >
+          <requires eq="msys-libcrypt-*-msys-*-dll-0.tar" />
+          <requires eq="msys-libgmp-*-msys-*-dll-10.tar" />
+          <requires eq="msys-libintl-*-msys-*-dll-8.tar" />
+          <requires eq="msys-libltdl-*-msys-*-dll-7.tar" />
+          <requires eq="msys-libregex-*-msys-*-dll-1.tar" />
+        </release>
+
+        <!-- Every MSYS DLL package requires msys-core-bin -->
+        <requires eq="msys-core-*-msys-*-bin.tar" />
+      </component>
+
+      <component class="dev">
+        <requires eq="msys-gettext-*-msys-*-dev.tar" />
+        <requires eq="msys-libcrypt-*-msys-*-dev.tar" />
+        <requires eq="msys-libgmp-*-msys-*-dev.tar" />
+        <requires eq="msys-libltdl-*-msys-*-dev.tar" />
+        <requires eq="msys-libregex-*-msys-*-dev.tar" />
+        <release tarname="libguile-1.8.7-2-msys-1.0.15-dev.tar.lzma" >
+          <requires eq="msys-libguile-%-msys-%-dll-17.tar" />
+        </release>
+      </component>
+
+      <component class="rtm">
+        <release tarname="libguile-1.8.7-2-msys-1.0.15-rtm.tar.lzma" />
+      </component>
+    </package>
+
+  </package-collection>
+</software-distribution>
+<!-- vim: set nocompatible expandtab fileformat=unix textwidth=80 tabstop=2 shiftwidth=2: -->

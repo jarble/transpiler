@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<package id="manifest-0-032-a93e-5b96f9">
+    <release tarname="gcc-4.5.0-1-mingw32-lic.tar.lzma" />
+    <references>
+        <sysroot id="sysroot-0-002-a7c6-d7dbb5" />
+    </references>
+    <manifest>
+        <file path="share/doc/gcc/4.5.0/COPYING" />
+        <file path="share/doc/gcc/4.5.0/COPYING.LIB" />
+        <file path="share/doc/gcc/4.5.0/COPYING.RUNTIME" />
+        <file path="share/doc/gcc/4.5.0/COPYING3" />
+        <file path="share/doc/gcc/4.5.0/COPYING3.LIB" />
+    </manifest>
+</package>

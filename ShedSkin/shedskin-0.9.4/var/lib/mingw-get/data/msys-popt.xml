@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<software-distribution project="MinGW" home="http://mingw.org" issue="2010080900">
+
+  <!-- File: msys-popt.xml -->
+
+  <package-collection subsystem="msys">
+    <download-host uri="http://prdownloads.sourceforge.net/mingw/%F?download" />
+
+    <package name="msys-popt">
+      <description lang="en" title="popt (msys): Command line option parsing library" >
+        <paragraph>popt is a command line option parsing library. While
+          popt is similiar to getopt, it contains a number of enhancements.
+          This version is based on the rpm5.org version of popt, rather
+          than the rpm.org version. The rpm5.org implementation is more
+          portable.
+        </paragraph>
+        <paragraph>The msys-popt package provides the documentation for the
+          popt library. The associated msys-libpopt package provides the
+          runtime library and development files.
+        </paragraph>
+      </description>
+
+      <source tarname="popt-%-msys-%-src.tar" />
+      <licence tarname="popt-%-msys-%-lic.tar" />
+
+      <component class="doc">
+        <release tarname="popt-1.15-2-msys-1.0.13-doc.tar.lzma" />
+      </component>
+
+      <component class="lic">
+        <release tarname="popt-1.15-2-msys-1.0.13-lic.tar.lzma" />
+      </component>
+    </package>
+
+    <package name="msys-libpopt">
+      <description lang="en" title="libpopt (msys): Command line option parsing library" >
+        <paragraph>popt is a command line option parsing library. While
+          popt is similiar to getopt, it contains a number of enhancements.
+          This version is based on the rpm5.org version of popt, rather
+          than the rpm.org version. The rpm5.org implementation is more
+          portable.
+        </paragraph>
+        <paragraph>The msys-libpopt package provides the runtime library
+          and development files. The associated msys-popt package provides
+          the documentation for the popt library.
+        </paragraph>
+      </description>
+
+      <source tarname="popt-%-msys-%-src.tar" />
+      <licence tarname="popt-%-msys-%-lic.tar" />
+
+      <component class="dll">
+        <requires eq="msys-core-*-msys-*-bin.tar" />
+        <release tarname="libpopt-1.15-2-msys-1.0.13-dll-0.tar.lzma" >
+          <requires eq="msys-libintl-*-msys-*-dll-8.tar" />
+        </release>
+      </component>
+
+      <component class="dev">
+        <release tarname="libpopt-1.15-2-msys-1.0.13-dev.tar.lzma">
+          <requires eq="msys-libpopt-%-msys-%-dll-0.tar" />
+        </release>
+      </component>
+
+      <component class="lang">
+        <release tarname="libpopt-1.15-2-msys-1.0.13-lang.tar.lzma" />
+      </component>
+    </package>
+
+  </package-collection>
+</software-distribution>
+<!-- vim: set nocompatible expandtab fileformat=unix textwidth=80 tabstop=2 shiftwidth=2: -->

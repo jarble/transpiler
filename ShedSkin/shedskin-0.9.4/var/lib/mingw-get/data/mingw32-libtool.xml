@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<software-distribution project="MinGW" home="http://mingw.org" issue="2010092500">
+
+  <!-- File: mingw32-libtool.xml -->
+
+  <package-collection subsystem="mingw32">
+    <download-host uri="http://prdownloads.sourceforge.net/mingw/%F?download" />
+
+    <package name="mingw32-libtool" alias="libtool">
+      <affiliate group="MinGW Autotools" />
+      <description lang="en" title="libtool: A shared library generation tool" >
+        <paragraph>GNU libtool is a generic library support package.
+          Libtool hides the complexity of using shared libraries behind
+          a consistent, portable interface.  Libtool requires the use of
+          Autoconf.
+        </paragraph>
+        <paragraph>libtool provides the development files and utilities
+          for managing the creation and use of shared libraries in a
+          platform independent manner.  The associated libltdl package
+          provides the runtime library and development files for using a
+          pre-built version of libtool's dlopen replacement library.
+        </paragraph>
+      </description>
+
+      <licence tarname="libtool-%-mingw32-%-lic.tar" />
+      <source tarname="libtool-%-mingw32-%-src.tar" />
+
+      <component class="bin">
+        <requires eq="mingw32-autoconf-*-mingw32-*-bin.tar" />
+        <requires eq="mingw32-automake-*-mingw32-*-bin.tar" />
+        <requires eq="msys-bash-*-msys-*-bin.tar" />
+        <requires eq="msys-core-*-msys-*-bin.tar" />
+        <requires eq="msys-coreutils-*-msys-*-bin.tar" />
+        <requires eq="msys-file-*-msys-*-bin.tar" />
+        <requires eq="msys-m4-*-msys-*-bin.tar" />
+        <requires eq="msys-sed-*-msys-*-bin.tar" />
+        <requires eq="msys-texinfo-*-msys-*-bin.tar" />
+        <!-- libtool doesn't actually depend on its own runtime library -->
+        <release tarname="libtool-2.2.11a-1-mingw32-bin.tar.lzma" />
+        <release tarname="libtool-2.4-1-mingw32-bin.tar.lzma" />
+      </component>
+
+      <component class="doc">
+        <release tarname="libtool-2.2.11a-1-mingw32-doc.tar.lzma" />
+        <release tarname="libtool-2.4-1-mingw32-doc.tar.lzma" />
+      </component>
+
+      <component class="lic">
+        <release tarname="libtool-2.2.11a-1-mingw32-lic.tar.lzma" />
+        <release tarname="libtool-2.4-1-mingw32-lic.tar.lzma" />
+      </component>
+    </package>
+
+    <package name="mingw32-libltdl" alias="libltdl">
+      <affiliate group="MinGW Autotools" />
+      <description lang="en" title="libltdl: A portable dlopen replacement" >
+        <paragraph>GNU libtool is a generic library support script.
+          Libtool hides the complexity of using shared libraries behind
+          a consistent, portable interface.  Libtool requires the use of
+          Autoconf.
+        </paragraph>
+        <paragraph>libltdl provides the runtime library and development
+          files for using a pre-built version of libtool's dlopen
+          replacement library.  The associated libtool package provides
+          the development files and utilities for managing the creation
+          and use of shared libraries in a platform independent manner.
+        </paragraph>
+      </description>
+
+      <licence tarname="libtool-%-mingw32-%-lic.tar" />
+      <source tarname="libtool-%-mingw32-%-src.tar" />
+
+      <component class="dll">
+        <release tarname="libltdl-2.2.11a-1-mingw32-dll-7.tar.lzma" />
+        <release tarname="libltdl-2.4-1-mingw32-dll-7.tar.lzma" />
+      </component>
+
+      <component class="dev">
+        <requires eq="mingw32-libtool-%-mingw32-%-bin.tar" />
+        <release tarname="libltdl-2.2.11a-1-mingw32-dev.tar.lzma" >
+          <requires eq="mingw32-libltdl-%-mingw32-%-dll-7.tar" />
+        </release>
+        <release tarname="libltdl-2.4-1-mingw32-dev.tar.lzma" >
+          <requires eq="mingw32-libltdl-%-mingw32-%-dll-7.tar" />
+        </release>
+      </component>
+    </package>
+
+  </package-collection>
+</software-distribution>
+<!-- vim: set nocompatible expandtab fileformat=unix textwidth=80 tabstop=2 shiftwidth=2: -->

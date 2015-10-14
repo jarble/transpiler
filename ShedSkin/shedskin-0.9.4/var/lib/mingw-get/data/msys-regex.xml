@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<software-distribution project="MinGW" home="http://mingw.org" issue="2010080500">
+
+  <!-- File: msys-regex.xml -->
+
+  <package-collection subsystem="msys">
+    <download-host uri="http://prdownloads.sourceforge.net/mingw/%F?download" />
+
+    <package name="msys-regex">
+      <description lang="en" title="regex: Regular Expressions Library Documentation" >
+        <paragraph>Regex provides an implementation of the GNU, POSIX, and
+          BSD regular expression functions. Current versions are derived
+          from the GNULIB implementation of the regex module, but an older
+          version of the runtime derived from the venerable GNU regex
+          library, with a slightly different interface, is available for
+          legacy MSYS applications.
+        </paragraph>
+        <paragraph>The msys-regex package provides the documentation
+          for the regex library, while the associated msys-libregex
+          package provides the runtime library and related development
+          files.
+        </paragraph>
+      </description>
+
+      <component class="doc">
+        <release tarname="regex-1.20090805-2-msys-1.0.13-doc.tar.lzma" />
+      </component>
+
+      <component class="lic">
+        <release tarname="regex-0.12-1-msys-1.0.11-lic.tar.lzma" />
+        <release tarname="regex-1.20090805-2-msys-1.0.13-lic.tar.lzma" />
+      </component>
+    </package>
+
+    <package name="msys-libregex">
+      <description lang="en" title="libregex: Regular Expressions Library" >
+        <paragraph>Regex provides an implementation of the GNU, POSIX, and
+          BSD regular expression functions. Current versions are derived
+          from the GNULIB implementation of the regex module, but an older
+          version of the runtime derived from the venerable GNU regex
+          library, with a slightly different interface, is available for
+          legacy MSYS applications.
+        </paragraph>
+        <paragraph>The msys-libregex package the runtime library and
+          related development files, while the associated msys-regex
+          package provides the documentation.
+        </paragraph>
+      </description>
+
+      <source tarname="regex-%-msys-%-src.tar" />
+      <licence tarname="regex-%-msys-%-lic.tar" />
+
+      <component class="dll">
+        <release tarname="libregex-0.12-1-msys-1.0.11-dll-0.tar.lzma" />
+        <release tarname="libregex-1.20090805-2-msys-1.0.13-dll-1.tar.lzma" />
+        <requires eq="msys-core-*-msys-*-bin.tar" />
+      </component>
+
+      <component class="dev">
+        <release tarname="libregex-1.20090805-2-msys-1.0.13-dev.tar.lzma">
+          <requires eq="msys-libregex-%-msys-%-dll-1.tar" />
+        </release>
+      </component>
+    </package>
+
+  </package-collection>
+</software-distribution>
+<!-- vim: set nocompatible expandtab fileformat=unix textwidth=80 tabstop=2 shiftwidth=2: -->

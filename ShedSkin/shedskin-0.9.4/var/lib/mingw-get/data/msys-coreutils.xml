@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<software-distribution project="MinGW" home="http://mingw.org" issue="2010071901">
+
+  <!-- File: msys-coreutils.xml -->
+
+  <package-collection subsystem="msys">
+    <download-host uri="http://prdownloads.sourceforge.net/mingw/%F?download" />
+
+    <package name="msys-coreutils">
+      <affiliate group="MSYS Base System" />
+      <description lang="en" title="coreutils: GNU collection of common command line utilities" >
+        <paragraph>GNU coreutils provides a collection of commonly used
+          utilities essential to a standard POSIX environment. It comprises
+          the former textutils, sh-utils, and fileutils packages.
+        </paragraph>
+        <paragraph>The msys-coreutils-bin subpackage contains those
+          applications that were historically part of the standard MSYS
+          installation. The associated msys-coreutils-ext subpackage
+          contains the rest of the coreutils applications that have been
+          (nominally) ported to MSYS -- usually these are less often used,
+          and are not guaranteed to work: e.g. `su.exe', `chroot.exe' and
+          `mkfifo.exe' are known to be broken.
+        </paragraph>
+      </description>
+
+      <source tarname="coreutils-%-msys-%-src.tar" />
+      <licence tarname="coreutils-%-msys-%-lic.tar" />
+
+      <component class="bin">
+        <release tarname="coreutils-5.97-3-msys-1.0.13-bin.tar.lzma">
+          <requires eq="msys-libintl-*-msys-*-dll-8.tar" />
+          <requires eq="msys-libiconv-*-msys-*-dll-2.tar" />
+          <requires eq="msys-libtermcap-*-msys-*-dll-0.tar" />
+        </release>
+        <requires eq="msys-core-*-msys-*-bin.tar" />
+      </component>
+
+      <component class="ext">
+        <requires eq="msys-coreutils-%-msys-%-bin.tar" />
+        <release tarname="coreutils-5.97-3-msys-1.0.13-ext.tar.lzma" />
+      </component>
+
+      <component class="lang">
+        <release tarname="coreutils-5.97-3-msys-1.0.13-lang.tar.lzma" />
+      </component>
+
+      <component class="doc">
+        <release tarname="coreutils-5.97-3-msys-1.0.13-doc.tar.lzma" />
+      </component>
+
+      <component class="lic">
+        <release tarname="coreutils-5.97-3-msys-1.0.13-lic.tar.lzma" />
+      </component>
+    </package>
+
+  </package-collection>
+</software-distribution>
+<!-- vim: set nocompatible expandtab fileformat=unix textwidth=80 tabstop=2 shiftwidth=2: -->

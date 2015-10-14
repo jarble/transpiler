@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<software-distribution project="MinGW" home="http://mingw.org" issue="2010071900">
+
+  <!-- File: msys-termcap.xml -->
+
+  <package-collection subsystem="msys">
+    <download-host uri="http://prdownloads.sourceforge.net/mingw/%F?download" />
+
+    <package name="msys-termcap">
+      <affiliate group="MSYS Base System" />
+      <description lang="en" title="termcap: The terminal feature database used by certain applications" >
+        <paragraph>The msys-termcap package provides the /etc/termcap file.
+          /etc/termcap is a database which defines the capabilities of
+          various terminals and terminal emulators.  Certain programs use
+          the /etc/termcap file to access various features of terminals
+          (the bell, colors, and graphics, etc.). The associated libtermcap
+          package provides runtime and development support libraries for
+          the applications which use the database.
+        </paragraph>
+        <paragraph>Unless you develop MSYS applications, you probably only
+          need the msys-termcap-bin package, which contains the
+          /etc/termcap database, and the msys-libtermcap-dll package, which
+          provides the runtime library.
+        </paragraph>
+      </description>
+
+      <source tarname="termcap-%-msys-%-src.tar" />
+      <licence tarname="termcap-%-msys-%-lic.tar" />
+
+      <component class="bin">
+        <release tarname="termcap-0.20050421_1-2-msys-1.0.13-bin.tar.lzma" />
+      </component>
+
+      <component class="doc">
+        <release tarname="termcap-0.20050421_1-2-msys-1.0.13-doc.tar.lzma" />
+      </component>
+
+      <component class="lic">
+        <release tarname="termcap-0.20050421_1-2-msys-1.0.13-lic.tar.lzma" />
+      </component>
+    </package>
+
+    <package name="msys-libtermcap">
+      <description lang="en" title="libtermcap: The terminal feature library used by certain applications" >
+        <paragraph>The msys-libtermcap package provides the runtime and
+          development support libraries for applications which use the
+          /etc/termcap database.  The associated msys-termcap package
+          provides that database, which defines the capabilities of various
+          terminals and terminal emulators.  Certain programs use the
+          /etc/termcap file to access various features of terminals (the
+          bell, colors, and graphics, etc.).
+        </paragraph>
+        <paragraph>Unless you develop MSYS applications, you probably only
+          need the msys-termcap-bin package, which contains the
+          /etc/termcap database, and the msys-libtermcap-dll package, which
+          provides the runtime library.
+        </paragraph>
+      </description>
+
+      <licence tarname="termcap-%-msys-%-lic.tar" />
+      <source tarname="termcap-%-msys-%-src.tar" />
+
+      <component class="dll">
+        <release tarname="libtermcap-0.20050421_1-2-msys-1.0.13-dll-0.tar.lzma" />
+        <requires eq="msys-termcap-%-msys-%-bin.tar" />
+        <requires eq="msys-core-*-msys-*-bin.tar" />
+      </component>
+
+      <component class="dev">
+        <release tarname="libtermcap-0.20050421_1-2-msys-1.0.13-dev.tar.lzma" />
+        <requires eq="msys-libtermcap-%-msys-%-dll-0.tar" />
+        <requires eq="msys-termcap-%-msys-%-bin.tar" />
+      </component>
+    </package>
+
+  </package-collection>
+</software-distribution>
+<!-- vim: set nocompatible expandtab fileformat=unix textwidth=80 tabstop=2 shiftwidth=2: -->

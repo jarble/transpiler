@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<software-distribution project="MinGW" home="http://mingw.org" issue="2010072800">
+
+  <!-- File: msys-tar.xml -->
+
+  <package-collection subsystem="msys">
+    <download-host uri="http://prdownloads.sourceforge.net/mingw/%F?download" />
+
+    <package name="msys-tar">
+      <affiliate group="MSYS Base System" />
+      <description lang="en" title="tar: GNU tar archiver tool">
+        <paragraph>GNU tar is an archiver that creates and handles file
+          archives in various formats. You can use tar to create file
+          archives, to extract files from previously created archives,
+          store additional files, or update or list files which were
+          already stored.
+        </paragraph>
+        <paragraph>The program saves many files together into a single
+          tape or disk archive, and can restore individual files from the
+          archive. It includes multivolume support, the ability to archive
+          sparse files, automatic archive compression/decompression, remote
+          archives and special features that allow 'tar' to be used for
+          incremental and full backups.
+        </paragraph>
+        <paragraph>The supported archive formats are: V7 tar, GNU, ustar
+          and POSIX (also known as pax interchange format). GNU tar can
+          also read and extract 'star' archives. Tar can direct its output
+          to available devices, files, or other programs (using pipes); tar
+          can even access remote devices or files (as archives).
+        </paragraph>
+        <paragraph>The MinGW/MSYS project provides four different tar
+          implementations: (1) msys-tar, this GNU tar implementation ported
+          for MSYS; (2) msys-bsdtar, a BSD tar implementation based on
+          libarchive and ported for MSYS; (3) mingw32-bsdtar, a BSD tar
+          implementation ported for MinGW (that is, native Win32); and
+          (4) mingw32-basic-bsdtar, a limited-functionality version of
+          mingw32-bsdtar with no external dependencies.  GNU tar (e.g.
+          msys-tar) is the de facto standard implementation, but bsdtar
+          is generally faster. Generally, any of these implementations
+          will meet most needs.
+        </paragraph>
+      </description>
+
+      <source tarname="tar-%-msys-%-src.tar" />
+      <licence tarname="tar-%-msys-%-lic.tar" />
+
+      <component class="bin">
+        <release tarname="tar-1.23-1-msys-1.0.13-bin.tar.lzma">
+          <requires eq="msys-libintl-*-msys-*-dll-8.tar" />
+          <requires eq="msys-libiconv-*-msys-*-dll-2.tar" />
+          <requires eq="msys-libregex-*-msys-*-dll-1.tar" />
+        </release>
+
+        <!-- Every MSYS package requires msys-core-bin -->
+        <requires eq="msys-core-*-msys-*-bin.tar" />
+
+        <!-- Additional packages are required, to support processing
+          of compressed archives.
+          -->
+        <requires eq="msys-bzip2-*-msys-*-bin.tar" />
+        <requires eq="msys-gzip-*-msys-*-bin.tar" />
+        <requires eq="msys-xz-*-msys-*-bin.tar" />
+      </component>
+
+      <component class="lang">
+        <release tarname="tar-1.23-1-msys-1.0.13-lang.tar.lzma" />
+      </component>
+
+      <component class="ext">
+        <release tarname="tar-1.23-1-msys-1.0.13-ext.tar.lzma" />
+        <requires eq="msys-tar-%-msys-%-bin.tar" />
+        <requires eq="msys-core-*-msys-*-bin.tar" />
+        <requires eq="msys-coreutils-*-msys-*-bin.tar" />
+        <requires eq="msys-sed-*-msys-*-bin.tar" />
+        <requires eq="msys-bash-*-msys-*-bin.tar" />
+      </component>
+
+      <component class="doc">
+        <release tarname="tar-1.23-1-msys-1.0.13-doc.tar.lzma" />
+      </component>
+
+      <component class="lic">
+        <release tarname="tar-1.23-1-msys-1.0.13-lic.tar.lzma" />
+      </component>
+    </package>
+
+  </package-collection>
+</software-distribution>
+<!-- vim: set nocompatible expandtab fileformat=unix textwidth=80 tabstop=2 shiftwidth=2: -->

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<software-distribution project="MinGW" home="http://www.mingw.org" issue="2010083100">
+
+  <!-- File: mingw32-mpc.xml ~~ mingw-get package description for mpc -->
+
+  <package-collection subsystem="mingw32">
+    <download-host uri="http://prdownloads.sourceforge.net/mingw/%F?download" />
+
+    <!-- Provides the package descriptions for the mpc library, which -->
+    <!-- is a runtime prerequisite for modern versions of GCC.        -->
+
+    <package name="mingw32-mpc" alias="mpc">
+      <affiliate group="MinGW Standard Libraries" />
+      <description lang="en" title="mpc: Arbitrary Precision Math Library for Complex Numbers">
+        <paragraph>
+          MPC is a C library for the arithmetic of complex numbers with
+          arbitrarily high precision and correct rounding of the result. It is
+          built upon and follows the same principles as MPFR.
+        </paragraph>
+        <paragraph>
+          The mingw32-mpc package provides the documentation for the mpc
+          library, as well as the related development files.  The associated
+          mingw32-libmpc package provides the C runtime library.
+        </paragraph>
+      </description>
+
+      <source tarname="mpc-%-mingw32-src.tar.lzma" />
+      <licence tarname="mpc-%-mingw32-lic.tar.lzma" />
+
+      <component class="dev">
+        <release tarname="mpc-0.8.1-1-mingw32-dev.tar.lzma" >
+          <requires eq="mingw32-libmpc-%-mingw32-dll-2.tar" />
+        </release>
+      </component>
+
+      <component class="doc">
+        <release tarname="mpc-0.8.1-1-mingw32-doc.tar.lzma" />
+      </component>
+
+      <component class="lic">
+        <release tarname="mpc-0.8.1-1-mingw32-lic.tar.lzma" />
+      </component>
+    </package>
+
+    <package name="mingw32-libmpc" alias="libmpc">
+      <affiliate group="MinGW Standard Libraries" />
+      <description lang="en" title="mpc: Arbitrary Precision Math Library for Complex Numbers">
+        <paragraph>
+          MPC is a C library for the arithmetic of complex numbers with
+          arbitrarily high precision and correct rounding of the result. It is
+          built upon and follows the same principles as MPFR. This package
+          provides the runtime library.
+        </paragraph>
+        <paragraph>
+          The mingw32-libmpc package provides the C runtime library.  The
+          associated mingw32-mpc package provides the documentation for the
+          mpc library, as well as the related development files.
+        </paragraph>
+        <paragraph>
+          This is a required component of the MinGW Compiler Suite.
+        </paragraph>
+      </description>
+
+      <source tarname="mpc-%-mingw32-src.tar.lzma" />
+      <licence tarname="mpc-%-mingw32-lic.tar.lzma" />
+
+      <component class="dll">
+        <release tarname="libmpc-0.8.1-1-mingw32-dll-2.tar.lzma" >
+          <requires eq="mingw32-libmpfr-*-mingw32-dll-1.tar" />
+          <requires eq="mingw32-libgmp-*-mingw32-dll-10.tar" />
+        </release>
+      </component>
+    </package>
+
+  </package-collection>
+</software-distribution>
+<!-- vim: set nocompatible expandtab fileformat=unix textwidth=80 tabstop=2 shiftwidth=2: -->

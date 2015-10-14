@@ -1,0 +1,335 @@
+Release Notes for mingw-get-0.1-mingw32-alpha-5
+
+$Id: README,v 1.6 2010/10/30 19:06:19 keithmarshall Exp $
+
+Preamble
+--------
+
+This is the fifth alpha release of mingw-get; this is primarily a bug
+fix release, with few user visible changes.  The installation procedure
+remains the same as for previous releases.  To upgrade from a previous
+release, simply run
+
+  mingw-get update
+  mingw-get upgrade mingw-get
+
+or alternatively, unpack the -bin package over the top of the existing
+installation.  For further information, and usage advice, see:
+
+    http://mingw.org/wiki/Getting_Started
+
+
+User Visible Changes for mingw-get-0.1-mingw32-alpha-5
+------------------------------------------------------
+
+- Improved self-upgrade support; it incorporates a work around to avoid
+  a potential race condition in mingw-get-inst; (c.f. MinGW bug 3075616);
+  mingw-get.exe and mingw-get-0.dll are renamed, (to move them out of the
+  way), only when performing an explicit upgrade of the mingw-get-bin
+  package itself.
+
+
+===============================================
+
+
+Release Notes for mingw-get-0.1-mingw32-alpha-4
+
+Preamble
+--------
+
+This is the fourth alpha release of mingw-get; this is primarily a bug
+fix release, with few user visible changes.  The installation procedure
+remains the same as for previous releases; to upgrade from a previous
+release, simply unpack the -bin package over the top of the existing
+installation.  For further information, and usage advice, see:
+
+    http://mingw.org/wiki/Getting_Started
+
+
+User Visible Changes for mingw-get-0.1-mingw32-alpha-4
+------------------------------------------------------
+
+- This release of mingw-get fixes a bug in the earlier self-upgrade
+  functionality, where any runtime error "deleted" mingw-get.  (mingw-get
+  and its support file(s) were actually only renamed, but recovery was
+  difficult).  Now, "ordinary" errors such as bad command line arguments,
+  failed downloads, missing manifests, etc, will not cause this behavior.
+  However, a catastrophic operating system error may prevent the new
+  auto-recovery code from executing, leaving mingw-get in its "deleted"
+  (e.g. renamed) state.  If this occurs, simply do the following:
+
+     cd /mingw
+     mv bin/mingw-get.exe~ bin/mingw-get.exe
+     mv libexec/mingw-get/mingw-get-0.dll~ libexec/mingw-get/mingw-get-0.dll
+
+- Add --help|-h option
+
+===============================================
+
+Release Notes for mingw-get-0.1-mingw32-alpha-3
+
+Preamble
+--------
+
+This is the third alpha release of mingw-get; this is primarily a bug
+fix release, with few user visible changes.  The installation procedure
+remains the same as for previous releases; to upgrade from a previous
+release, simply unpack the -bin package over the top of the existing
+installation.  For further information, and usage advice, see:
+
+    http://mingw.org/wiki/Getting_Started
+
+
+User Visible Changes for mingw-get-0.1-mingw32-alpha-3
+------------------------------------------------------
+
+- There is no profile.xml file shipped with this release; users who
+  are installing for the first time are advised to copy the supplied
+  var/lib/mingw-get/data/defaults.xml configuration file prototype to
+  var/lib/mingw-get/data/profile.xml, which may then be customised as
+  required; (if no customisation is required, mingw-get can use the
+  defaults.xml file directly, but will warn that profile.xml does
+  not exist).
+
+- Within defaults.xml, the %R macro has been formally adopted as the
+  mechanism for specifying the installation paths for both MinGW and
+  for MSYS; this binds the default installation paths for both MinGW
+  and MSYS to the installation directory of mingw-get itself, since
+  the absolute path to mingw-get.exe is identified as:
+
+      %R\bin\mingw-get.exe
+
+  with default base directory paths being defined for each of MinGW
+  and MSYS respectively as:
+
+      %R\
+      %R\msys\1.0\
+
+  This arrangement makes it possible for users to choose installation
+  locations for both MinGW and MSYS, simply by making the choice of
+  where to install mingw-get, without any further need to create, or
+  to modify profile.xml, (although, to avoid warnings about a missing
+  profile.xml, users may prefer to copy or rename defaults.xml).  As
+  for previous releases, the recommended directory for installation is
+  C:\MinGW\, and this should not be changed without pressing reason; in
+  any event, users who insist on changing it should be aware that, if
+  they choose any installation directory which includes white space in
+  its absolute path name, their installation may not work correctly,
+  and such installations will not be supported by the MinGW Project.
+
+- This release of mingw-get incorporates necessary infrastructure to
+  support future upgrades to itself, using its own internal upgrade 
+  facility.  This is the first release to support this capability;
+  however, the effect will not become apparent until upgrading to
+  the next release.
+
+
+===============================================
+
+
+Release Notes for mingw-get-0.1-mingw32-alpha-2
+
+Preamble
+--------
+
+This is the second alpha release of mingw-get.  The majority of changes
+since the first alpha release are developer centric, with little end
+user impact.  Thus, users are advised to review the release notes for
+mingw-get-0.1-mingw32-alpha-1, (appended below); the procedure for the
+installation and usage of the alpha-2 release is similar to that for
+alpha-1, with a few minor user-visible changes.
+
+
+User Visible Changes for mingw-get-0.1-mingw32-alpha-2
+------------------------------------------------------
+
+- The var/lib/mingw-get/data/profile.xml file is no longer included in
+  the distribution tarball, (or zipfile); instead, a prototype for this
+  file is provided as var/lib/mingw-get/data/defaults.xml
+
+- The repository section of profile.xml may now omit any specific
+  reference to a named package-list catalogue, allowing mingw-get to
+  interrogate a default catalogue on the repository host.  Users who
+  have previously installed a modified profile.xml are advised to
+  incorporate changes to the repository definition from defaults.xml
+  into their profile.xml
+
+- Users who do not wish to provide a customised profile.xml are advised
+  to copy or rename the provided defaults.xml file to profile.xml; this
+  remains the preferred name for the configuration file, and mingw-get
+  will look for it first.  If it cannot be found, mingw-get will issue
+  a warning, before looking for defaults.xml as an alternative.
+
+- The structure of the repository catalogue has changed, to more readily
+  accommodate dynamic incremental distribution updates, without requiring
+  a corresponding update to mingw-get itself.  While this affects package
+  maintainers more than end users, such users are advised to perform a
+  regular `mingw-get update', at intervals of a few weeks, to capture
+  catalogue updates.
+
+- As a consequence of the preceding change, the list of packages known
+  to mingw-get is no longer restricted, as it was previously; additional
+  or more up-to-date packages may become available from time to time, as
+  individual package maintainers add the appropriate manifests to the
+  online repository catalogue; use `mingw-get update' to capture such
+  new and updated packages.
+
+At the time of this release, the packages recorded in the distribution
+manifest remain as for the alpha-1 release.  With the improved handling
+of manifests, additional (and more up-to-date) packages will be added
+soon after this release, and will become immediately available to users,
+on running `mingw-get update'.
+
+
+===============================================
+
+
+Release Notes for mingw-get-0.1-mingw32-alpha-1
+
+Preamble
+--------
+
+This is the first alpha release of the next generation MinGW installer,
+mingw-get; it provides a more readily extensible, and more configurable
+alternative to the existing MinGW-5.1.x series of NSIS installers, for
+installing MinGW packages.
+
+mingw-get is free software.  Permission is granted to copy, modify and
+redistribute it, under the provisions of the GNU General Public License,
+Version 3, (or, at your option, any later version), as published by the
+Free Software Foundation; see the file COPYING for licensing details.
+
+Note, in particular, that mingw-get is provided "as is", in the hope
+that it may prove useful, but WITHOUT WARRANTY OF ANY KIND; not even an
+implied WARRANTY OF MERCHANTABILITY, nor of FITNESS FOR ANY PARTICULAR
+PURPOSE.  Under no circumstances will the authors, or the MinGW Project,
+accept liability for any damages, however caused, arising from the use
+of this software.
+
+At the time of this release, mingw-get is still in the early stages of
+development; this release provides an opportunity for early adopters to
+evaluate the CLI capabilities of the installer component; please report
+bugs, (but please, not the known issues identified below), to the MinGW
+bug tracker: http://sourceforge.net/tracker/?group_id=2435&atid=102435
+
+
+Installation
+------------
+
+To install mingw-get, visit the MinGW files repository at:
+
+   http://sourceforge.net/projects/mingw/files
+
+and, from the "Automated MinGW Installer/mingw-get" folder, download
+your choice of either:
+
+   mingw-get-0.1-mingw32-alpha-1-bin.zip
+
+or:
+
+   mingw-get-0.1-mingw32-alpha-1-bin.tar.gz
+
+and unpack it into the directory in which you intend to host your MinGW
+installation, (the standard default of C:\MinGW [*] is recommended), then
+use your preferred method for assignment of environmet variables to add
+the appropriate directory, (default C:\MinGW\bin), to your PATH.
+
+[*] If you insist on adopting a different directory from the recommended
+default, you are *strongly* recommended to avoid any directory which has
+white space in its absolute path name; in particular, those who choose to
+ignore this advice, and install MinGW within "C:\Program Files", usually
+discover, to their cost, that certain tools do not work correctly.
+
+
+Configuration
+-------------
+
+If you have installed mingw-get in the default location, you will find
+its primary configuration file at:
+
+   C:\MinGW\var\lib\mingw-get\data\profile.xml
+
+(if you chose a different location, replace "C:\MinGW" with your chosen
+installation prefix directory path name).
+
+This is a liberally commented XML file, which you are free to modify as
+you see fit, to suit your own installation requirements.  At the present
+time, the only entries you should consider changing are the path names
+specified by the "path" attribute associated with each of the "sysroot"
+elements within the first (only) "system-map" element.  (These specify
+the prefix directory path names for your installation; you probably want
+to make the path for the "mingw32" subsystem to match your choice for
+your mingw-get installation, if you chose not to adopt the default, in
+which case you will probably also prefer an alternative choice for the
+MSYS subsystem, if you intend to install that).
+
+If you do choose to modify the configuration, you are advised to keep a
+backup copy of your modified version, since, particularly during the
+alpha phase of development, it may be necessary to overwrite your local
+version with an updated distributed version, then fold in your changes
+once more.
+
+
+Invocation
+----------
+
+Invoking mingw-get from the command line, without arguments, is intended
+to launch a GUI variant of the application, (but currently, this mode is
+not supported; if you try it, you *will* see only an error message).
+
+To invoke the CLI variant of mingw-get, the syntax is:
+
+   mingw-get [-option ...] action [package ...]
+
+Currently supported options are:
+
+   -version                    display the version banner, and exit
+
+Currently supported actions are:
+
+   update                      synchronise the locally cached version
+                               of the distribution manifest with the
+                               version held at the repository.
+
+   install package ...         install the specified package(s), and
+                               any necessary prerequisites.
+
+   upgrade package ...         upgrade package(s) from the installed
+                               version to the newest version available,
+                               (if not already at the newest version).
+
+   remove package ...          uninstall package(s).
+
+Currently known packages are:
+
+   mingwrt                     the mingw32 runtime libraries.
+   w32api                      the MS-Windows API bindings for mingw32.
+   binutils                    the GNU binary file utilities.
+   gcc                         the GNU C Compiler (currently v3.4.5)
+   g++                         the C++ front-end for GCC-3.4.5
+   g77                         the FORTRAN-77 front-end for GCC-3.4.5
+   ada                         the Ada front-end for GCC-3.4.5
+   java                        the java front-end for GCC-3.4.5
+   objc                        the Objective-C front-end for GCC-3.4.5
+   mingw32-make                native MS-Win32 build of GNU make.
+
+
+Known Issues
+------------
+
+Please do not file bug reports, in respect of the following issues:
+
+1) Cannot start in GUI mode; the error message you see, when you try, is
+   expected behaviour, in current alpha releases.
+
+2) "remove" action does not uninstall anything; the uninstaller function
+   is currently a stub, so this is expected behaviour.
+
+3) Package list needs updating, for more recent releases; we hope to
+   address this progressively, in coming weeks.  Please check the online
+   release notes/announcements, and run "mingw-get update" periodically.
+
+4) Need an action to list available/installed packages.
+
+5) Additional features you would like to see added; we want to know your
+   ideas, but please raise them for discussion on the mailing-list first.

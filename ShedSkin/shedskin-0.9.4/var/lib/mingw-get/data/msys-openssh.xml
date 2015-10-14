@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<software-distribution project="MinGW" home="http://mingw.org" issue="2010090600">
+
+  <!-- File: msys-openssh.xml -->
+
+  <package-collection subsystem="msys">
+    <download-host uri="http://prdownloads.sourceforge.net/mingw/%F?download" />
+
+    <package name="msys-openssh">
+      <affiliate group="MinGW Developer Toolkit" />
+      <description lang="en" title="openssh: Secure Networking Clients" >
+        <paragraph>openssh is a FREE version of the SSH connectivity tools
+          that technical users of the Internet rely on.  Users of telnet,
+          rlogin, and ftp may not realize that their password is transmitted
+          across the Internet unencrypted, but it is.  OpenSSH encrypts all
+          traffic (including passwords) to effectively eliminate
+          eavesdropping, connection hijacking, and other attacks.
+          Additionally, OpenSSH provides secure tunneling capabilities and
+          several authentication methods, and supports all SSH protocol
+          versions.
+        </paragraph>
+        <paragraph>The OpenSSH suite replaces rlogin and telnet with the ssh
+          program, rcp with scp, and ftp with sftp.  Other utilities like
+          ssh-add, ssh-agent, ssh-keysign, ssh-keyscan, and ssh-keygen are
+          also included.
+        </paragraph>
+      </description>
+
+      <licence tarname="openssh-%-msys-%-lic.tar" />
+      <source tarname="openssh-%-msys-%-src.tar" />
+
+      <component class="bin">
+        <requires eq="msys-core-*-msys-*-bin.tar" />
+        <release tarname="openssh-5.4p1-1-msys-1.0.13-bin.tar.lzma" >
+          <requires eq="msys-libminires-*-msys-*-dll.tar" />
+          <requires eq="msys-libopenssl-*-msys-*-dll-100.tar" />
+          <requires eq="msys-zlib-*-msys-*-dll.tar" />
+        </release>
+      </component>
+
+      <component class="doc">
+        <release tarname="openssh-5.4p1-1-msys-1.0.13-doc.tar.lzma" />
+      </component>
+
+      <component class="lic">
+        <release tarname="openssh-5.4p1-1-msys-1.0.13-lic.tar.lzma" />
+      </component>
+    </package>
+
+  </package-collection>
+</software-distribution>
+<!-- vim: set nocompatible expandtab fileformat=unix textwidth=80 tabstop=2 shiftwidth=2: -->

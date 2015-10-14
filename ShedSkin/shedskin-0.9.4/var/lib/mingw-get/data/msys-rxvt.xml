@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<software-distribution project="MinGW" home="http://mingw.org" issue="2010090600">
+
+  <!-- File: msys-rxvt.xml -->
+
+  <package-collection subsystem="msys">
+    <download-host uri="http://prdownloads.sourceforge.net/mingw/%F?download" />
+
+    <package name="msys-rxvt">
+      <description lang="en" title="rxvt: terminal emulator" >
+        <paragraph>VT102 terminal emulator for both X and Windows. This
+          version has been modified and compiled for use in the MSYS
+          environment, and does not attempt to use an X display even if
+          available; it always operates in "native" Windows mode.
+        </paragraph>
+        <paragraph>To launch MSYS in an rxvt window, create a shortcut
+          to C:\msys\1.0\msys.bat, with the argument "--rxvt". Some
+          people find rxvt a more accomodating terminal than cmd.exe, since
+          it may be resized at will and has a larger scrollback buffer.
+          However, rxvt sometimes does not interoperate well with native
+          applications (such as MinGW gcc), so the default cmd.exe console
+          is recommended for most users.
+        </paragraph>
+        <paragraph>Another alternative console implementation that many users
+          find congenial is the "Console 2.00" project.  This replacement
+          console is not provided by the MinGW/MSYS team directly for licensing
+          reasons (Console 2.00 is GPL, but cannot currently be compiled using
+          Libre tools), but you may install the msys-console package which provides
+          the `console-config' script.  This script which will download,
+          install, and configure the Console 2.00 team's packages.
+        </paragraph>
+      </description>
+
+      <licence tarname="rxvt-%-msys-%-lic.tar" />
+      <source tarname="rxvt-%-msys-%-src.tar" />
+
+      <!-- NOTE: the rxvt-2.7.10.20050409-* versions have a serious flaw, in
+           that whenever a native application is launched from within an rxvt
+           session, a black cmd window pops up. If we ever solve this problem,
+           then add newer versions to this manifest. Until then, however... -->
+
+      <component class="bin">
+        <requires eq="msys-core-*-msys-*-bin.tar" />
+        <release tarname="rxvt-2.7.2-3-msys-1.0.14-bin.tar.lzma" />
+      </component>
+
+      <component class="doc">
+        <release tarname="rxvt-2.7.2-3-msys-1.0.14-doc.tar.lzma" />
+      </component>
+
+      <component class="lic">
+        <release tarname="rxvt-2.7.2-3-msys-1.0.14-lic.tar.lzma" />
+      </component>
+    </package>
+
+  </package-collection>
+</software-distribution>
+<!-- vim: set nocompatible expandtab fileformat=unix textwidth=80 tabstop=2 shiftwidth=2: -->

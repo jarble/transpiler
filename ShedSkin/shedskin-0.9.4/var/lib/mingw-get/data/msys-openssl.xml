@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<software-distribution project="MinGW" home="http://mingw.org" issue="2010090600">
+
+  <!-- File: msys-openssl.xml -->
+
+  <package-collection subsystem="msys">
+    <download-host uri="http://prdownloads.sourceforge.net/mingw/%F?download" />
+
+    <package name="msys-openssl">
+      <affiliate group="MinGW Developer Toolkit" />
+      <description lang="en" title="openssl: Open source crypto toolkit for TLS/SSL" >
+        <paragraph>openssl is a collaborative effort to develop a robust,
+          commercial-grade, fully featured, and Open Source toolkit
+          implementing the Secure Sockets Layer (SSL v2/v3) and Transport
+          Layer Security (TLS v1) protocols as well as a full-strength
+          general purpose cryptography library.  The project is managed by
+          a worldwide community of volunteers that use the Internet to
+          communicate, plan, and develop the OpenSSL toolkit and its
+          related documentation.
+        </paragraph>
+        <paragraph>The msys-openssl package provides the documentation
+          for the openssl library, a few pre-defined certificates, and
+          several useful utilities.  The associated msys-libopenssl package
+          provides the runtime library and related development files.
+        </paragraph>
+      </description>
+
+      <licence tarname="openssl-%-msys-%-lic.tar" />
+      <source tarname="openssl-%-msys-%-src.tar" />
+
+      <component class="bin">
+        <!-- Every MSYS package requires msys-core-bin.  This dependency
+          is not explicitly stated here; rather, it is implicitly satisfied
+          as a prerequisite of the matching DLL for this package itself,
+          which is specified for each of the following releases.
+          -->
+        <release tarname="openssl-1.0.0-1-msys-1.0.13-bin.tar.lzma" >
+          <requires eq="msys-libopenssl-%-msys-%-dll-100.tar" />
+        </release>
+      </component>
+
+      <component class="doc">
+        <release tarname="openssl-1.0.0-1-msys-1.0.13-doc.tar.lzma" />
+      </component>
+
+      <component class="lic">
+        <release tarname="openssl-1.0.0-1-msys-1.0.13-lic.tar.lzma" />
+      </component>
+    </package>
+
+    <package name="msys-libopenssl">
+      <affiliate group="MinGW Developer Toolkit" />
+      <description lang="en" title="libopenssl: Open source crypto toolkit for TLS/SSL" >
+        <paragraph>openssl is a collaborative effort to develop a robust,
+          commercial-grade, fully featured, and Open Source toolkit
+          implementing the Secure Sockets Layer (SSL v2/v3) and Transport
+          Layer Security (TLS v1) protocols as well as a full-strength
+          general purpose cryptography library.  The project is managed by
+          a worldwide community of volunteers that use the Internet to
+          communicate, plan, and develop the OpenSSL toolkit and its
+          related documentation.
+        </paragraph>
+        <paragraph>The msys-libopenssl package provides the runtime library
+          and related development files.  The associated msys-openssl package
+          provides the documentation for the openssl library, a few
+          pre-defined certificates, and several useful utilities.
+        </paragraph>
+      </description>
+
+      <licence tarname="openssl-%-msys-%-lic.tar" />
+      <source tarname="openssl-%-msys-%-src.tar" />
+
+      <component class="dll">
+        <release tarname="libopenssl-1.0.0-1-msys-1.0.13-dll-100.tar.lzma" />
+
+        <!-- Every MSYS DLL package requires msys-core-bin -->
+        <requires eq="msys-core-*-msys-*-bin.tar" />
+      </component>
+
+      <component class="dev">
+        <release tarname="libopenssl-1.0.0-1-msys-1.0.13-dev.tar.lzma" >
+          <requires eq="msys-libopenssl-%-msys-%-dll-100.tar" />
+        </release>
+      </component>
+    </package>
+
+  </package-collection>
+</software-distribution>
+<!-- vim: set nocompatible expandtab fileformat=unix textwidth=80 tabstop=2 shiftwidth=2: -->

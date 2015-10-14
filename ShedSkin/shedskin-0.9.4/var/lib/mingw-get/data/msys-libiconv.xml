@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<software-distribution project="MinGW" home="http://mingw.org" issue="2010071900">
+
+  <!-- File: msys-libiconv.xml -->
+
+  <package-collection subsystem="msys">
+    <download-host uri="http://prdownloads.sourceforge.net/mingw/%F?download" />
+
+    <package name="msys-libiconv">
+      <affiliate group="MSYS System Builder" />
+      <description lang="en" title="libiconv (msys): GNU libraries and utilities for character set conversion" >
+        <paragraph>This is not the libiconv you are looking for.</paragraph>
+        <paragraph>GNU libiconv provides an implementation of the iconv()
+          function which is used to convert between various character
+          representations for different locales.  This function is provided
+          for use on systems which don't already have iconv(), or whose
+          implementation cannot convert from/to Unicode. This package also
+          provides a tool, iconv(1), which can be used to convert character
+          sets from the command line. The associated libcharset provides a
+          mechanism to determine the canonical character set name of the
+          current locale.
+        </paragraph>
+        <paragraph>This msys port of libiconv has been modified
+          specifically for the MSYS System Builder environment; that is,
+          it is intended to be used only when producing binary packages
+          for the MSYS subsystem.  If you intend to produce executables
+          for the native "mingw32" subsystem which require character
+          set conversion (that is, applications that should work on
+          Microsoft Windows installations without the MSYS dll), then you
+          should install the mingw32-libiconv-* package(s) instead.
+        </paragraph>
+      </description>
+
+      <source tarname="libiconv-%-msys-%-src.tar" />
+      <licence tarname="libiconv-%-msys-%-lic.tar" />
+
+      <component class="bin">
+        <release tarname="libiconv-1.13.1-2-msys-1.0.13-bin.tar.lzma">
+          <requires eq="msys-libintl-*-msys-*-dll-8.tar" />
+          <requires eq="msys-libiconv-%-msys-%-dll-2.tar" />
+        </release>
+        <requires eq="msys-core-*-msys-*-bin.tar" />
+      </component>
+
+      <component class="doc">
+        <release tarname="libiconv-1.13.1-2-msys-1.0.13-doc.tar.lzma" />
+      </component>
+
+      <component class="lic">
+        <release tarname="libiconv-1.13.1-2-msys-1.0.13-lic.tar.lzma" />
+      </component>
+
+      <component class="dev">
+        <release tarname="libiconv-1.13.1-2-msys-1.0.13-dev.tar.lzma" >
+          <requires eq="msys-libiconv-%-msys-%-dll-2.tar" />
+        </release>
+      </component>
+
+      <component class="dll">
+        <release tarname="libiconv-1.13.1-2-msys-1.0.13-dll-2.tar.lzma" />
+        <requires eq="msys-core-*-msys-*-bin.tar" />
+      </component>
+    </package>
+
+    <package name="msys-libcharset">
+      <affiliate group="MSYS System Builder" />
+      <description lang="en" title="libcharset (msys): GNU libraries and utilities for character set conversion" >
+        <paragraph>This is not the libcharset you are looking for.</paragraph>
+        <paragraph>GNU libiconv provides an implementation of the iconv()
+          function which is used to convert between various character
+          representations for different locales.  This function is provided
+          for use on systems which don't already have iconv(), or whose
+          implementation cannot convert from/to Unicode. This package also
+          provides a tool, iconv(1), which can be used to convert character
+          sets from the command line. The associated libcharset provides a
+          mechanism to determine the canonical character set name of the
+          current locale.
+        </paragraph>
+        <paragraph>This msys port of libiconv has been modified
+          specifically for the MSYS System Builder environment; that is,
+          it is intended to be used only when producing binary packages
+          for the MSYS subsystem.  If you intend to produce executables
+          for the native "mingw32" subsystem which require character
+          set conversion (that is, applications that should work on
+          Microsoft Windows installations without the MSYS dll), then you
+          should install the mingw32-libiconv-* package(s) instead.
+        </paragraph>
+      </description>
+
+      <source tarname="libiconv-%-msys-%-src.tar" />
+      <licence tarname="libiconv-%-msys-%-lic.tar" />
+
+      <component class="dll">
+        <release tarname="libcharset-1.13.1-2-msys-1.0.13-dll-1.tar.lzma" />
+        <requires eq="msys-core-*-msys-*-bin.tar" />
+      </component>
+    </package>
+
+  </package-collection>
+</software-distribution>
+<!-- vim: set nocompatible expandtab fileformat=unix textwidth=80 tabstop=2 shiftwidth=2: -->

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<package id="manifest-0-030-3c99-8bb00b">
+    <release tarname="gdb-7.2-1-mingw32-bin.tar.lzma" />
+    <references>
+        <sysroot id="sysroot-0-002-a7c6-d7dbb5" />
+    </references>
+    <manifest>
+        <dir path="bin" />
+        <file path="bin/gdb-python27.exe" />
+        <file path="bin/gdb.exe" />
+        <file path="bin/gdbserver.exe" />
+    </manifest>
+</package>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<software-distribution project="MinGW" home="http://mingw.org" issue="2010092500">
+
+  <!-- File: msys-autoconf.xml ~~ mingw-get package description autoconf (msys) -->
+
+  <package-collection subsystem="msys">
+    <download-host uri="http://prdownloads.sourceforge.net/mingw/%F?download" />
+
+    <package name="msys-autoconf">
+      <affiliate group="MSYS System Builder" />
+      <description lang="en" title="autoconf (msys): Automatic Configure Script Builder">
+        <paragraph>This is not the autoconf you are looking for.</paragraph>
+        <paragraph>Autoconf is an extensible package of M4 macros
+          that produce shell scripts to automatically configure
+          software source code packages.  These scripts can adapt the
+          packages to many kinds of UNIX-like systems without manual
+          user intervention.  Autoconf creates a configuration script
+          for a package from a template file that lists the operating
+          system features that the package can use, in the form of M4
+          macro calls.
+        </paragraph>
+        <paragraph>This msys port of autoconf has been modified
+          specifically for the MSYS System Builder (msys-dvlpr) environment;
+          that is, it is intended to be used only when producing binary packages
+          for the MSYS subsystem.  If you intend to produce executables for the
+          native "mingw32" subsystem (that is, applications that should work on
+          Microsoft Windows installations without the MSYS dll), then you should
+          install the mingw32-autoconf-*, mingw32-autoconf2.5-*, and/or
+          mingw32-autoconf2.1-* packages instead.
+        </paragraph>
+      </description>
+
+      <licence tarname="autoconf-%-msys-%-lic.tar" />
+      <source tarname="autoconf-%-msys-%-src.tar" />
+
+      <component class="bin">
+        <requires eq="msys-core-*-msys-*-bin.tar" />
+        <requires eq="msys-coreutils-*-msys-*-bin.tar" />
+        <requires eq="msys-m4-*-msys-*-bin.tar" />
+        <requires eq="msys-perl-*-msys-*-bin.tar" />
+        <requires eq="msys-texinfo-*-msys-*-bin.tar" />
+        <release tarname="autoconf-2.65-1-msys-1.0.13-bin.tar.lzma" />
+        <release tarname="autoconf-2.67-1-msys-1.0.15-bin.tar.lzma" />
+      </component>
+
+      <component class="doc">
+        <release tarname="autoconf-2.65-1-msys-1.0.13-doc.tar.lzma" />
+        <release tarname="autoconf-2.67-1-msys-1.0.15-doc.tar.lzma" />
+      </component>
+
+      <component class="lic">
+        <release tarname="autoconf-2.65-1-msys-1.0.13-lic.tar.lzma" />
+        <release tarname="autoconf-2.67-1-msys-1.0.15-lic.tar.lzma" />
+      </component>
+    </package>
+
+  </package-collection>
+</software-distribution>
+<!-- vim: set nocompatible expandtab fileformat=unix textwidth=80 tabstop=2 shiftwidth=2: -->

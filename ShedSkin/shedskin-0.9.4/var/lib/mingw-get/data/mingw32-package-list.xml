@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<software-distribution project="MinGW" home="http://www.mingw.org" issue="2010102900">
+
+  <!-- File: mingw32-package-list.xml -->
+
+  <package-group-hierarchy>
+    <package-group name="MinGW" expand="true">
+      <package-group name="MinGW Base System">
+        <package-group name="MinGW Compiler Suite" />
+        <package-group name="MinGW Source-Level Debugger" />
+        <package-group name="MinGW Standard Libraries" />
+      </package-group>
+      <package-group name="MinGW Libraries">
+        <package-group name="MinGW Standard Libraries" />
+        <package-group name="MinGW Add-On Libraries" />
+      </package-group>
+      <package-group name="MinGW Autotools" />
+    </package-group>
+  </package-group-hierarchy>
+
+  <!-- "real" packages ~~ any commented out are yet to be published -->
+  <package-list catalogue="mingw32-autoconf" />
+  <package-list catalogue="mingw32-automake" />
+  <package-list catalogue="mingw32-basic-bsdtar" />
+  <package-list catalogue="mingw32-binutils" />
+  <package-list catalogue="mingw32-bzip2" />
+  <package-list catalogue="mingw32-cygutils" />
+  <package-list catalogue="mingw32-expat" />
+  <package-list catalogue="mingw32-gcc3" />
+  <package-list catalogue="mingw32-gcc4" />
+  <package-list catalogue="mingw32-gdb" />
+  <package-list catalogue="mingw32-gendef" />
+  <package-list catalogue="mingw32-gettext" />
+  <package-list catalogue="mingw32-gmp" />
+  <package-list catalogue="mingw32-libarchive" />
+  <package-list catalogue="mingw32-libiconv" />
+  <package-list catalogue="mingw32-libtool" />
+  <package-list catalogue="mingw32-make" />
+  <package-list catalogue="mingw32-mingw-get" />
+  <package-list catalogue="mingw32-mingw-utils" />
+  <package-list catalogue="mingw32-mpc" />
+  <package-list catalogue="mingw32-mpfr" />
+  <package-list catalogue="mingw32-pdcurses" />
+  <package-list catalogue="mingw32-pexports" />
+  <package-list catalogue="mingw32-popt" />
+  <package-list catalogue="mingw32-pthreads-w32" />
+  <package-list catalogue="mingw32-runtime" />
+  <package-list catalogue="mingw32-xz" />
+  <package-list catalogue="mingw32-zlib" />
+
+  <!-- "virtual" packages -->
+  <package-list catalogue="mingw32-base" />
+  <package-list catalogue="mingw32-autotools" />
+
+</software-distribution>
+<!-- vim: set nocompatible expandtab fileformat=unix textwidth=80 tabstop=2 shiftwidth=2: -->

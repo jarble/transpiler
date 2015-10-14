@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<software-distribution project="MinGW" home="http://mingw.org" issue="2010090500">
+
+  <!-- File: msys-mktemp.xml -->
+
+  <package-collection subsystem="msys">
+    <download-host uri="http://prdownloads.sourceforge.net/mingw/%F?download" />
+
+    <package name="msys-mktemp">
+      <affiliate group="MinGW Developer Toolkit" />
+      <description lang="en" title="mktemp: create a temporary file or directory" >
+        <paragraph>The mktemp utility takes the given filename template and
+          overwrites a portion of it to create a unique filename.  The
+          template may be any filename with some number of `Xs' appended
+          to it, for example /tmp/tfile.XXXXXXXXXX.  It is used by scripts
+          to safely generate temporary files and directories.
+        </paragraph>
+      </description>
+
+      <licence tarname="mktemp-%-msys-%-lic.tar" />
+      <source tarname="mktemp-%-msys-%-src.tar" />
+
+      <component class="bin">
+        <requires eq="msys-core-*-msys-*-bin.tar" />
+        <release tarname="mktemp-1.6-2-msys-1.0.13-bin.tar.lzma" />
+      </component>
+
+      <component class="doc">
+        <release tarname="mktemp-1.6-2-msys-1.0.13-doc.tar.lzma" />
+      </component>
+
+      <component class="lic">
+        <release tarname="mktemp-1.6-2-msys-1.0.13-lic.tar.lzma" />
+      </component>
+    </package>
+
+  </package-collection>
+</software-distribution>
+<!-- vim: set nocompatible expandtab fileformat=unix textwidth=80 tabstop=2 shiftwidth=2: -->

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<software-distribution project="MinGW" home="http://www.mingw.org" issue="2010090600">
+
+  <!-- File: mingw-developer-toolkit.xml -->
+
+  <!-- This is a preliminary catalogue describing the contents of a
+       relatively, if not kitchen-sink-level, complete msys installation.
+       It attempts to replicate, with certain judicious additions and
+       deletions, the set of packages originally installed by the old
+       MSYS-DTK monolithic installers, circa msysDTK-1.0.1 -->
+
+  <package-collection subsystem="msys">
+    <download-host uri="http://prdownloads.sourceforge.net/mingw/%F?download" />
+
+    <package name="mingw-developer-toolkit" alias="mingw-dtk" class="virtual">
+      <affiliate group="MinGW Developer Toolkit" />
+      <description lang="en" title="An MSYS Installation for MinGW Developers (meta)">
+        <paragraph>This meta package contains the components necessary to
+           create a relatively complete MSYS installation suitable for most
+           MinGW developers' needs.  It includes the msys-base system, as well
+           as the autotools (autoconf, automake, libtool, gettext, and libiconv)
+           configured for use in maintaining and building native win32 (MinGW)
+           programs.  It includes m4, perl, vim, patch, cvs, guile, mktemp,
+           bison, flex, lndir, and other useful command line tools. It also
+           includes networking clients for ssh, rsh, telnet, and ftp protocols.
+        </paragraph>
+        <paragraph>Note that, for certain esoteric reasons, some of the packages
+          installed by this meta package are MSYS packages, and install, as
+          expected, in the / == /usr directory (that is, into C:\msys\1.0, or
+          whatever you've chosen as the "root" MSYS path).  However, it also
+          includes some MinGW packages: the autotools are technically configured
+          for MinGW, and are installed into the /mingw directory (that is, into
+          C:\MinGW or whatever you've chosen as the "root" MinGW path).
+        </paragraph>
+      </description>
+
+      <component class="bin">
+        <release tarname="mingw-developer-toolkit-2010090600-msys-bin.meta" />
+        <requires eq="mingw32-autotools-*-mingw32-bin.meta" />
+        <requires eq="msys-base-*-msys-*-bin.meta" />
+        <requires eq="msys-autogen-*-msys-*-bin.tar" />
+        <requires eq="msys-bison-*-msys-*-bin.tar" />
+        <requires eq="msys-bsdtar-*-msys-*-bin.tar" />
+        <requires eq="msys-bsdcpio-*-msys-*-bin.tar" />
+        <requires eq="msys-coreutils-*-msys-*-ext.tar" />
+        <requires eq="msys-cvs-*-msys-*-bin.tar" />
+        <requires eq="msys-flex-*-msys-*-bin.tar" />
+        <requires eq="msys-guile-*-msys-*-bin.tar" />
+        <requires eq="msys-inetutils-*-msys-*-bin.tar" />
+        <requires eq="msys-lndir-*-msys-*-bin.tar" />
+        <requires eq="msys-m4-*-msys-*-bin.tar" />
+        <requires eq="msys-mktemp-*-msys-*-bin.tar" />
+        <requires eq="msys-openssh-*-msys-*-bin.tar" />
+        <requires eq="msys-openssl-*-msys-*-bin.tar" />
+        <requires eq="msys-patch-*-msys-*-bin.tar" />
+        <requires eq="msys-perl-*-msys-*-bin.tar" />
+        <requires eq="msys-vim-*-msys-*-bin.tar" />
+      </component>
+    </package>
+
+  </package-collection>
+</software-distribution>
+<!-- vim: set nocompatible expandtab fileformat=unix textwidth=80 tabstop=2 shiftwidth=2: -->

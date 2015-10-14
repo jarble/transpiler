@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<software-distribution project="MinGW" home="http://mingw.org" issue="2010081000">
+
+  <!-- File: msys-expat.xml -->
+
+  <package-collection subsystem="msys">
+    <download-host uri="http://prdownloads.sourceforge.net/mingw/%F?download" />
+
+    <package name="msys-expat">
+      <description lang="en" title="expat (msys): XML parsing library written in C">
+        <paragraph>expat is a C library for parsing XML written by James
+          Clark. Expat is a stream-oriented XML parser.  This means that
+          you register handlers with the parser before starting the parse.
+          These handlers are called when the parser discovers the
+          associated structures in the document being parsed.  A start tag
+          is an example of the kind of structures for which you may
+          register handlers.
+        </paragraph>
+        <paragraph>The msys-expat package provides the xmlwf validation
+          tool and documentation related to the library. The associated
+          msys-libexpat package provides the runtime library and related
+          development files.
+        </paragraph>
+      </description>
+
+      <source tarname="expat-%-msys-%-src.tar" />
+      <licence tarname="expat-%-msys-%-lic.tar" />
+
+      <component class="bin">
+        <!-- Every MSYS package requires msys-core-bin.  This dependency
+          is not explicitly stated here; rather, it is implicitly satisfied
+          as a prerequisite of the matching DLL for this package itself,
+          which is specified for each of the following releases.
+          -->
+        <release tarname="expat-2.0.1-1-msys-1.0.13-bin.tar.lzma">
+          <requires eq="msys-libexpat-*-msys-*-dll-1.tar" />
+        </release>
+      </component>
+
+      <component class="doc">
+        <release tarname="expat-2.0.1-1-msys-1.0.13-doc.tar.lzma" />
+      </component>
+
+      <component class="lic">
+        <release tarname="expat-2.0.1-1-msys-1.0.13-lic.tar.lzma" />
+      </component>
+    </package>
+
+    <package name="msys-libexpat">
+      <description lang="en" title="libexpat (msys): XML parsing library written in C">
+        <paragraph>expat is a C library for parsing XML written by James
+          Clark. Expat is a stream-oriented XML parser.  This means that
+          you register handlers with the parser before starting the parse.
+          These handlers are called when the parser discovers the
+          associated structures in the document being parsed.  A start tag
+          is an example of the kind of structures for which you may
+          register handlers.
+        </paragraph>
+        <paragraph>The msys-libexpat package provides the runtime library
+          and related development files for expat.  The associated
+          msys-expat package provides the xmlwf validation tool and
+          documentation related to the library.
+        </paragraph>
+      </description>
+
+      <source tarname="expat-%-msys-%-src.tar" />
+      <licence tarname="expat-%-msys-%-lic.tar" />
+
+      <component class="dll">
+        <!-- Specification of the mandatory msys-core-bin requirement here
+          also serves to implicitly satisfy this mandatory requirement for
+          the dependent msys-expat-bin package declared above.
+          -->
+        <requires eq="msys-core-*-msys-*-bin.tar" />
+        <release tarname="libexpat-2.0.1-1-msys-1.0.13-dll-1.tar.lzma" />
+      </component>
+
+      <component class="dev">
+        <release tarname="libexpat-2.0.1-1-msys-1.0.13-dev.tar.lzma">
+          <requires eq="msys-libexpat-*-msys-*-dll-1.tar" />
+        </release>
+      </component>
+    </package>
+
+  </package-collection>
+</software-distribution>
+<!-- vim: set nocompatible expandtab fileformat=unix textwidth=80 tabstop=2 shiftwidth=2: -->

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<software-distribution project="MinGW" home="http://mingw.org" issue="2010090600">
+
+  <!-- File: mingw32-cygutils.xml -->
+
+  <package-collection subsystem="mingw32">
+    <download-host uri="http://prdownloads.sourceforge.net/mingw/%F?download" />
+
+    <package name="mingw32-cygutils" alias="cygutils" >
+      <description lang="en" title="cygutils: A collection of simple utilities" >
+        <paragraph>The cygutils package contains a collection of simple
+          utilities from various sources.  However, this mingw32 port is a
+          stripped-down version that provides only the line-ending conversion
+          programs.
+        </paragraph>
+        <paragraph>The mingw32-cygutils package provides the documentation for
+          cygutils, but no actual utilities.  The associated
+          mingw32-cygutils-dos2unix package provides the line-ending conversion
+          programs dos2unix, unix2dos, d2u, and u2d.
+        </paragraph>
+      </description>
+
+      <licence tarname="cygutils-%-mingw32-%-lic.tar" />
+      <source tarname="cygutils-%-mingw32-%-src.tar" />
+
+      <component class="doc">
+        <release tarname="cygutils-1.3.4-1-mingw32-doc.tar.lzma" />
+      </component>
+
+      <component class="lic">
+        <release tarname="cygutils-1.3.4-1-mingw32-lic.tar.lzma" />
+      </component>
+    </package>
+
+    <package name="mingw32-cygutils-dos2unix" alias="cygutils-dos2unix">
+      <description lang="en" title="cygutils-dos2unix: line-ending conversion utilities" >
+        <paragraph>The cygutils-dos2unix package contains implementations of
+          dos2unix and unix2dos (d2u, u2d) for modifying the line-ending
+          character(s) used by text files. Each can operate on a list of files,
+          converting them in-place, or as part of a pipeline.
+        </paragraph>
+        <paragraph>The MinGW/MSYS project provides two versions of the
+          cygutils-dos2unix package: this mingw32-cygutils-dos2unix one, and the
+          msys-cygutils-dos2unix version.  The msys version requires the MSYS
+          dll, but directly understands MSYS pathnames and blends more
+          seamlessly into pipelines with other MSYS tools.  This mingw32 version
+          does not require the MSYS dll, and is a direct replacement for the old
+          d2u and u2d scripts, and for the unix2dos/dos2unix executables that
+          were long part of the mingw-utils package.
+        </paragraph>
+        <paragraph>The mingw32-cygutils-dos2unix package provides the unix2dos
+          and dos2unix (u2d, d2u) conversion programs.  The associated
+          mingw32-cygutils package provides documentation only.
+        </paragraph>
+      </description>
+
+      <licence tarname="cygutils-%-mingw32-%-lic.tar" />
+      <source tarname="cygutils-%-mingw32-%-src.tar" />
+
+      <component class="bin">
+        <release tarname="cygutils-dos2unix-1.3.4-1-mingw32-bin.tar.lzma" >
+          <requires eq="mingw32-libpopt-*-mingw32-*-dll-0.tar" />
+        </release>
+      </component>
+    </package>
+
+  </package-collection>
+</software-distribution>
+<!-- vim: set nocompatible expandtab fileformat=unix textwidth=80 tabstop=2 shiftwidth=2: -->

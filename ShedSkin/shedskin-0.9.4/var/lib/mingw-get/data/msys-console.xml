@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<software-distribution project="MinGW" home="http://mingw.org" issue="2010090600">
+
+  <!-- File: msys-console.xml -->
+
+  <package-collection subsystem="msys">
+    <download-host uri="http://prdownloads.sourceforge.net/mingw/%F?download" />
+
+    <package name="msys-console">
+      <description lang="en" title="console: A script to d/l, install, and configure `Console 2.00'">
+        <paragraph>Console 2.00 is a replacement console for win32.  The
+          console is the window in which cmd.exe (and, usually, MSYS
+          bash.exe) are executed.  The normal Windows console has some
+          drawbacks which Console 2.00 attempts to remedy: better font
+          selection, larger scrollback buffers, tabbed windows, resizable,
+          easier cut-n-paste behavior, etc.
+        </paragraph>
+        <paragraph>Unfortunately, Console 2.00 can not be compiled using
+          free (as in speech) tools; although Console 2.00 itself is GPL, it
+          requires certain proprietary compilers to build.  Since all tools
+          distributed by the MinGW/MSYS project are compiled using free
+          tools also provided by that project,  MinGW/MSYS doesn't supply a
+          binary version of Console 2.00 directly.  Instead, this package
+          contains a script that can be executed to download the Console 2.00
+          binary package from the Console 2.00 developer's site, install it,
+          and configure it as appropriate for use with MinGW and MSYS.
+        </paragraph>
+      </description>
+
+      <licence tarname="console-%-msys-%-lic.tar" />
+      <source tarname="console-%-msys-%-src.tar" />
+
+      <component class="bin">
+        <requires eq="msys-bash-*-msys-*-bin.tar" />
+        <requires eq="msys-core-*-msys-*-bin.tar" />
+        <requires eq="msys-coreutils-*-msys-*-bin.tar" />
+        <requires eq="msys-cygutils-*-msys-*-bin.tar" />
+        <requires eq="msys-mktemp-*-msys-*-bin.tar" />
+        <requires eq="msys-sed-*-msys-*-bin.tar" />
+        <requires eq="msys-unzip-*-msys-*-bin.tar" />
+        <release tarname="console-2.00b146-1-msys-1.0.14-bin.tar.lzma" />
+      </component>
+
+      <component class="doc">
+        <release tarname="console-2.00b146-1-msys-1.0.14-doc.tar.lzma" />
+      </component>
+
+      <component class="lic">
+        <release tarname="console-2.00b146-1-msys-1.0.14-lic.tar.lzma" />
+      </component>
+    </package>
+
+  </package-collection>
+</software-distribution>
+<!-- vim: set nocompatible expandtab fileformat=unix textwidth=80 tabstop=2 shiftwidth=2: -->

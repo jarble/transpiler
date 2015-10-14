@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<software-distribution project="MinGW" home="http://mingw.org" issue="2010080500">
+
+  <!-- File: msys-less.xml -->
+
+  <package-collection subsystem="msys">
+    <download-host uri="http://prdownloads.sourceforge.net/mingw/%F?download" />
+
+    <package name="msys-less">
+      <affiliate group="MSYS Base System" />
+      <description lang="en" title="less: command-line text file viewer" >
+        <paragraph>Less is a free, open-source file pager. A pager is a
+          program that displays text files. Other pagers commonly in use
+          are more and pg. Pagers are often used in command-line
+          environments like the Unix shell and the MS-DOS command prompt
+          to display files. Windowed environments like the Windows and
+          Macintosh desktops don't need pagers as much, since they have
+          other methods for viewing files.
+        </paragraph>
+        <paragraph>Less is not an editor. You can't change the contents of
+          the file you're viewing. Less is not a windowing system. It
+          doesn't have fancy scroll bars or other GUI (graphical user
+          interface) elements. It was designed to work on simple text-only
+          terminals.
+        </paragraph>
+      </description>
+
+      <source tarname="less-%-msys-%-src.tar" />
+      <licence tarname="less-%-msys-%-lic.tar" />
+
+      <component class="bin">
+        <release tarname="less-436-2-msys-1.0.13-bin.tar.lzma" >
+          <requires eq="msys-libtermcap-*-msys-*-dll-0.tar" />
+          <requires eq="msys-libregex-*-msys-*-dll-1.tar" />
+        </release>
+        <requires eq="msys-core-*-msys-*-bin.tar" />
+      </component>
+
+      <component class="doc">
+        <release tarname="less-436-2-msys-1.0.13-doc.tar.lzma" />
+      </component>
+
+      <component class="lic">
+        <release tarname="less-436-2-msys-1.0.13-lic.tar.lzma" />
+      </component>
+    </package>
+
+  </package-collection>
+</software-distribution>
+<!-- vim: set nocompatible expandtab fileformat=unix textwidth=80 tabstop=2 shiftwidth=2: -->

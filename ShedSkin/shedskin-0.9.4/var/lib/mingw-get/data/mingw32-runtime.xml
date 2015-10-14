@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<software-distribution project="MinGW" home="http://www.mingw.org" issue="2010091000">
+
+  <!-- File: mingw32-runtime.xml ~~ mingw-get package description for MinGW API -->
+
+  <package-collection subsystem="mingw32">
+    <download-host uri="http://prdownloads.sourceforge.net/mingw/%F?download" />
+
+    <!-- Provides the package descriptions for each of the two primary    -->
+    <!-- packages, which comprise the standard MinGW Runtime Library API, -->
+    <!-- namely mingwrt and w32api.                                       -->
+
+    <package name="mingw32-mingwrt" alias="mingwrt mingw-runtime" >
+      <affiliate group="MinGW Compiler Suite" />
+      <affiliate group="MinGW Standard Libraries" />
+      <description lang="en" title="The MinGW Runtime Library API">
+        <paragraph>
+          This package provides the header files, system object modules,
+          dynamic link libraries, import libraries and static libraries
+          which constitute the standard MinGW Runtime API.
+        </paragraph>
+        <paragraph>
+          This is a required component of the MinGW Compiler Suite.
+        </paragraph>
+      </description>
+
+      <source tarname="mingwrt-%-mingw32-src.tar.gz" />
+      <licence tarname="mingwrt-%-mingw32-dev.tar.gz" />
+
+      <component class="dev">
+        <requires eq="mingwrt-%-mingw32-dll.tar" />
+        <release tarname="mingwrt-3.18-mingw32-dev.tar.gz" />
+        <release tarname="mingwrt-3.17-mingw32-dev.tar.gz" />
+      </component>
+
+      <component class="dll">
+        <release tarname="mingwrt-3.18-mingw32-dll.tar.gz" />
+        <release tarname="mingwrt-3.17-mingw32-dll.tar.gz" />
+      </component>
+    </package>
+
+    <package name="mingw32-w32api" alias="w32api">
+      <affiliate group="MinGW Compiler Suite" />
+      <affiliate group="MinGW Standard Libraries" />
+      <description lang="en" title="The MinGW API for 32-Bit MS-Windows">
+        <paragraph>
+          This package provides the header files, and import libraries
+          constituting a standard API for the development of applications
+          which utilise the capabilities of the 32-bit MS-Windows system
+          dynamic link libraries.
+        </paragraph>
+        <paragraph>
+          This is a required component of the MinGW Compiler Suite.
+        </paragraph>
+      </description>
+
+      <component class="dev">
+        <release tarname="w32api-3.15-1-mingw32-dev.tar.lzma" >
+          <licence tarname="w32api-%-mingw32-dev.tar.lzma" />
+          <source tarname="w32api-%-mingw32-src.tar.lzma" />
+        </release>
+        <release tarname="w32api-3.14-mingw32-dev.tar.gz" >
+          <licence tarname="w32api-%-mingw32-dev.tar.gz" />
+          <source tarname="w32api-%-mingw32-src.tar.gz" />
+        </release>
+      </component>
+    </package>
+
+  </package-collection>
+</software-distribution>
+<!-- vim: set nocompatible expandtab fileformat=unix textwidth=80 tabstop=2 shiftwidth=2: -->

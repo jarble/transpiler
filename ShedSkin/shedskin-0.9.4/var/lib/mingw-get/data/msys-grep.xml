@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<software-distribution project="MinGW" home="http://mingw.org" issue="2010072600">
+
+  <!-- File: msys-grep.xml -->
+
+  <package-collection subsystem="msys">
+    <download-host uri="http://prdownloads.sourceforge.net/mingw/%F?download" />
+
+    <package name="msys-grep">
+      <affiliate group="MSYS Base System" />
+      <description lang="en" title="grep: print lines matching a pattern" >
+        <paragraph>grep searches the input files for lines containing a
+          match to a given pattern list.  When it finds a match in a line,
+          it copies the line to standard output (by default), or produces
+          whatever other sort of output you have requested with options.
+        </paragraph>
+      </description>
+
+      <source tarname="grep-%-msys-%-src.tar" />
+      <licence tarname="grep-%-msys-%-lic.tar" />
+
+      <component class="bin">
+        <release tarname="grep-2.5.4-2-msys-1.0.13-bin.tar.lzma" >
+          <requires eq="msys-libintl-*-msys-*-dll-8.tar" />
+        </release>
+        <requires eq="msys-core-*-msys-*-bin.tar" />
+      </component>
+
+      <component class="lang">
+        <release tarname="grep-2.5.4-2-msys-1.0.13-lang.tar.lzma" />
+      </component>
+
+      <component class="doc">
+        <release tarname="grep-2.5.4-2-msys-1.0.13-doc.tar.lzma" />
+      </component>
+
+      <component class="lic">
+        <release tarname="grep-2.5.4-2-msys-1.0.13-lic.tar.lzma" />
+      </component>
+    </package>
+
+  </package-collection>
+</software-distribution>
+<!-- vim: set nocompatible expandtab fileformat=unix textwidth=80 tabstop=2 shiftwidth=2: -->

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<software-distribution project="MinGW" home="http://mingw.org" issue="2010090600">
+
+  <!-- File: msys-flex.xml -->
+
+  <package-collection subsystem="msys">
+    <download-host uri="http://prdownloads.sourceforge.net/mingw/%F?download" />
+
+    <package name="msys-flex">
+      <affiliate group="MinGW Developer Toolkit" />
+      <description lang="en" title="flex: Fast Lexical Analyzer Generator" >
+        <paragraph>flex is a tool for generating scanners. A scanner,
+          sometimes called a tokenizer, is a program which recognizes
+          lexical patterns in text.
+        </paragraph>
+      </description>
+
+      <source tarname="flex-%-msys-%-src.tar" />
+      <licence tarname="flex-%-msys-%-lic.tar" />
+
+      <component class="bin">
+        <release tarname="flex-2.5.35-2-msys-1.0.13-bin.tar.lzma" >
+          <requires eq="msys-libintl-*-msys-*-dll-8.tar" />
+          <requires eq="msys-libregex-*-msys-*-dll-1.tar" />
+        </release>
+        <requires eq="msys-core-*-msys-*-bin.tar" />
+        <requires eq="msys-m4-*-msys-*-bin.tar" />
+      </component>
+
+      <component class="lang">
+        <release tarname="flex-2.5.35-2-msys-1.0.13-lang.tar.lzma" />
+      </component>
+
+      <component class="doc">
+        <release tarname="flex-2.5.35-2-msys-1.0.13-doc.tar.lzma" />
+      </component>
+
+      <component class="lic">
+        <release tarname="flex-2.5.35-2-msys-1.0.13-lic.tar.lzma" />
+      </component>
+    </package>
+
+  </package-collection>
+</software-distribution>
+<!-- vim: set nocompatible expandtab fileformat=unix textwidth=80 tabstop=2 shiftwidth=2: -->

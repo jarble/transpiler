@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<software-distribution project="MinGW" home="http://mingw.org" issue="2010090500">
+
+  <!-- File: msys-minires.xml -->
+
+  <package-collection subsystem="msys">
+    <download-host uri="http://prdownloads.sourceforge.net/mingw/%F?download" />
+
+    <package name="msys-minires">
+      <description lang="en" title="minires: Simple win32 DNS client" >
+        <paragraph>minires provides a simple implementation of resolver
+          functions commonly used in clients, adapted to the MSYS
+          environment.
+        </paragraph>
+        <paragraph>On Windows 2000 and above, the query functions
+          (like res_query) are implemented by calling the Win32 API
+          function DnsQuery and translating the result to wire format --
+          if the file /etc/resolv.conf (c:\msys\1.0\etc\resolv.conf) is
+          not readable or contains an options line with the token "osquery".
+        </paragraph>
+        <paragraph>Otherwise, minires works as a simple synchronous non-
+          caching stub resolver.  Instead of querying a local bind daemon,
+          this implementation attempts to reach predefined name servers.
+          Their addresses are obtained directly from Windows (except on
+          Win95 with DHCP), from /etc/resolv.conf, or from the
+          LOCALDOMAIN environment variable.
+        </paragraph>
+        <paragraph>The msys-minires package provides the documentation
+          for the minires library and test/debug applications, while the
+          associated msys-libminires package provides the runtime library
+          and related development files.
+        </paragraph>
+      </description>
+
+      <licence tarname="minires-%-msys-%-lic.tar" />
+      <source tarname="minires-%-msys-%-src.tar" />
+
+      <component class="bin">
+        <!-- Every MSYS package requires msys-core-bin.  This dependency
+          is not explicitly stated here; rather, it is implicitly satisfied
+          as a prerequisite of the matching DLL for this package itself,
+          which is specified for each of the following releases.
+          -->
+        <release tarname="minires-1.02_1-2-msys-1.0.13-bin.tar.lzma" >
+          <requires eq="msys-libminires-%-msys-%-dll.tar" />
+        </release>
+      </component>
+
+      <component class="doc">
+        <release tarname="minires-1.02_1-2-msys-1.0.13-doc.tar.lzma" />
+      </component>
+
+      <component class="lic">
+        <release tarname="minires-1.02_1-2-msys-1.0.13-lic.tar.lzma" />
+      </component>
+    </package>
+
+    <package name="msys-libminires">
+      <description lang="en" title="libminires: Simple win32 DNS client" >
+        <paragraph>minires provides a simple implementation of resolver
+          functions commonly used in clients, adapted to the MSYS
+          environment.
+        </paragraph>
+        <paragraph>On Windows 2000 and above, the query functions
+          (like res_query) are implemented by calling the Win32 API
+          function DnsQuery and translating the result to wire format --
+          if the file /etc/resolv.conf (c:\msys\1.0\etc\resolv.conf) is
+          not readable or contains an options line with the token "osquery".
+        </paragraph>
+        <paragraph>Otherwise, minires works as a simple synchronous non-
+          caching stub resolver.  Instead of querying a local bind daemon,
+          this implementation attempts to reach predefined name servers.
+          Their addresses are obtained directly from Windows (except on
+          Win95 with DHCP), from /etc/resolv.conf, or from the
+          LOCALDOMAIN environment variable.
+        </paragraph>
+        <paragraph>The msys-libminires package provides the runtime library
+          and related development files, while the associated msys-minires
+          minires package provides the documentation and test/debug
+          applications.
+        </paragraph>
+      </description>
+
+      <licence tarname="minires-%-msys-%-lic.tar" />
+      <source tarname="minires-%-msys-%-src.tar" />
+
+      <component class="dll">
+        <!-- Every MSYS DLL package requires msys-core-bin -->
+        <requires eq="msys-core-*-msys-*-bin.tar" />
+        <release tarname="libminires-1.02_1-2-msys-1.0.13-dll.tar.lzma" />
+      </component>
+
+      <component class="dev">
+        <release tarname="libminires-1.02_1-2-msys-1.0.13-dev.tar.lzma" >
+          <requires eq="msys-libminires-%-msys-%-dll.tar" />
+        </release>
+      </component>
+    </package>
+
+  </package-collection>
+</software-distribution>
+<!-- vim: set nocompatible expandtab fileformat=unix textwidth=80 tabstop=2 shiftwidth=2: -->
+

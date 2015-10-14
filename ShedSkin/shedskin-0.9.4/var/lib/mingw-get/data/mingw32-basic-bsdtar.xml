@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<software-distribution project="MinGW" home="http://mingw.org" issue="2010090600">
+
+  <!-- File: mingw32-basic-bsdtar.xml -->
+
+  <package-collection subsystem="mingw32">
+    <download-host uri="http://prdownloads.sourceforge.net/mingw/%F?download" />
+
+    <package name="mingw32-basic-bsdtar" alias="basic-bsdtar">
+      <description lang="en" title="basic-bsdtar: standalone version of bsdtar" >
+        <paragraph>The mingw32-basic-bsdtar package provides an implementation
+          of tar(1) for native Win32 platforms that is statically linked -- that
+          is, has no dependencies on external DLLs other than those provided by
+          the Win32 platform.  basic-bsdtar has somewhat limited functionality
+          compared to the other versions of bsdtar provided by the MinGW/MSYS
+          project (msys-bsdtar and mingw32-bsdtar).  However, it supports tar
+          archives in the ustar, pax, and gnutar formats, compressed using gzip,
+          bzip2, lzma, or xz.
+        </paragraph>
+      </description>
+
+      <!-- licence information is included in the -bin package -->
+      <licence tarname="basic-bsdtar-%-mingw32-%-bin.tar" />
+      <source tarname="basic-bsdtar-%-mingw32-%-src.tar" />
+
+      <component class="bin">
+        <release tarname="basic-bsdtar-2.8.3-1-mingw32-bin.tar.lzma" />
+      </component>
+    </package>
+
+  </package-collection>
+</software-distribution>
+<!-- vim: set nocompatible expandtab fileformat=unix textwidth=80 tabstop=2 shiftwidth=2: -->

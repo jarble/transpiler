@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<software-distribution project="MinGW" home="http://mingw.org" issue="2010090600">
+
+  <!-- File: msys-wget.xml -->
+
+  <package-collection subsystem="msys">
+    <download-host uri="http://prdownloads.sourceforge.net/mingw/%F?download" />
+
+    <package name="msys-wget">
+      <description lang="en" title="wget (msys): non-interactive network downloader" >
+        <paragraph>Wget is a network utility to retrieve files from the Web
+          using http(s) and ftp, the two most widely used Internet
+          protocols.  The program supports recursive retrieval of
+          web-authoring pages as well as ftp sites -- you can use wget to
+          make mirrors of archives and home pages or to travel the Web like
+          a WWW robot.
+        </paragraph>
+        <paragraph>Wget works particularly well with slow or unstable
+          connections by continuing to retrieve a document until the
+          document is fully downloaded.  Re-getting files from where it left
+          off works on servers (both http and ftp) that support it.  Both
+          http and ftp retrievals can be time stamped, so wget can see if
+          the remote file has changed since the last retrieval and
+          automatically retrieve the new version if it has.
+        </paragraph>
+        <paragraph>The MinGW/MSYS project provides two versions of wget:
+          this MSYS one supports https and understands MSYS pathnames, but
+          requires the MSYS dll (and various others) to be installed.  There
+          is also a 'mingwPORT' wget, which is a MinGW (that is, native
+          Win32) version.  That version has no external dependencies but
+          is based on an older version of wget and does not support https.
+        </paragraph>
+      </description>
+
+      <licence tarname="wget-%-msys-%-lic.tar" />
+      <source tarname="wget-%-msys-%-src.tar" />
+
+      <component class="bin">
+        <requires eq="msys-core-*-msys-*-bin.tar" />
+        <release tarname="wget-1.12-1-msys-1.0.13-bin.tar.lzma" >
+          <requires eq="msys-libopenssl-*-msys-*-dll-100.tar" />
+          <requires eq="msys-libintl-*-msys-*-dll-8.tar" />
+        </release>
+      </component>
+
+      <component class="lang">
+        <release tarname="wget-1.12-1-msys-1.0.13-lang.tar.lzma" />
+      </component>
+
+      <component class="doc">
+        <release tarname="wget-1.12-1-msys-1.0.13-doc.tar.lzma" />
+      </component>
+
+      <component class="lic">
+        <release tarname="wget-1.12-1-msys-1.0.13-lic.tar.lzma" />
+      </component>
+    </package>
+
+  </package-collection>
+</software-distribution>
+<!-- vim: set nocompatible expandtab fileformat=unix textwidth=80 tabstop=2 shiftwidth=2: -->

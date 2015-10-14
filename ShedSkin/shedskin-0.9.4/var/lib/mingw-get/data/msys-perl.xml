@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<software-distribution project="MinGW" home="http://mingw.org" issue="2010090500">
+
+  <!-- File: msys-perl.xml -->
+
+  <package-collection subsystem="msys">
+    <download-host uri="http://prdownloads.sourceforge.net/mingw/%F?download" />
+
+    <package name="msys-perl">
+      <affiliate group="MinGW Developer Toolkit" /> -->
+      <description lang="en" title="perl: The Perl programming language">
+        <paragraph>Perl is a general-purpose programming language
+          originally developed for text manipulation and now used for
+          a wide range of tasks including system administration, web
+          development, network programming, GUI development, and more.
+          Its primary utility on the MSYS platform is to run the autoconf
+          and automake developer utilities.
+        </paragraph>
+      </description>
+
+      <licence tarname="perl-%-msys-%-lic.tar" />
+      <source tarname="perl-%-msys-%-src.tar" />
+
+      <component class="bin">
+        <requires eq="msys-core-*-msys-*-bin.tar" />
+        <release tarname="perl-5.6.1_2-2-msys-1.0.13-bin.tar.lzma" >
+          <requires eq="msys-zlib-*-msys-*-dll.tar" />
+          <requires eq="msys-libgdbm-*-msys-*-dll-3.tar" />
+          <requires eq="msys-libcrypt-*-msys-*-dll-0.tar" />
+        </release>
+      </component>
+
+      <component class="doc">
+        <release tarname="perl-5.6.1_2-2-msys-1.0.13-doc.tar.lzma" />
+      </component>
+
+      <component class="html">
+        <release tarname="perl-5.6.1_2-2-msys-1.0.13-html.tar.lzma" />
+      </component>
+
+      <component class="man">
+        <release tarname="perl-5.6.1_2-2-msys-1.0.13-man.tar.lzma" />
+      </component>
+
+      <component class="lic">
+        <release tarname="perl-5.6.1_2-2-msys-1.0.13-lic.tar.lzma" />
+      </component>
+    </package>
+
+  </package-collection>
+</software-distribution>
+<!-- vim: set nocompatible expandtab fileformat=unix textwidth=80 tabstop=2 shiftwidth=2: -->

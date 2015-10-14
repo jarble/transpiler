@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<software-distribution project="MinGW" home="http://mingw.org" issue="2010090500">
+
+  <!-- File: msys-gdbm.xml -->
+
+  <package-collection subsystem="msys">
+    <download-host uri="http://prdownloads.sourceforge.net/mingw/%F?download" />
+
+    <package name="msys-gdbm">
+      <description lang="en" title="gdbm: GNU Database System">
+        <paragraph>The GNU Database System is a set of database routines
+          that use extensible hashing.  It works similarly to the standard
+          UNIX dbm routines, and provides compatibility replacement
+          interfaces for the traditional 'dbm' and 'ndbm' libraries.
+        </paragraph>
+        <paragraph>The msys-gdbm package provides the command-line
+          utilities for saving and restoring GDBM databases, other tools
+          for testing the various compatibility interfaces, and related
+          documentation.  The associated msys-libgdbm package provides the
+          runtime library and related development files.
+        </paragraph>
+      </description>
+
+      <licence tarname="gdbm-%-msys-%-lic.tar" />
+      <source tarname="gdbm-%-msys-%-src.tar" />
+
+      <component class="bin">
+        <!-- Every MSYS package requires msys-core-bin.  This dependency
+          is not explicitly stated here; rather, it is implicitly satisfied
+          as a prerequisite of the matching DLL for this package itself,
+          which is specified for each of the following releases.
+          -->
+        <release tarname="gdbm-1.8.3-3-msys-1.0.13-bin.tar.lzma" >
+          <requires eq="msys-libgdbm-%-msys-%-dll-3.tar" />
+        </release>
+      </component>
+
+      <component class="doc">
+        <release tarname="gdbm-1.8.3-3-msys-1.0.13-doc.tar.lzma" />
+      </component>
+
+      <component class="lic">
+        <release tarname="gdbm-1.8.3-3-msys-1.0.13-lic.tar.lzma" />
+      </component>
+    </package>
+
+    <package name="msys-libgdbm">
+      <description lang="en" title="libgdbm: runtime library for the GNU Database System">
+        <paragraph>The GNU Database System is a set of database routines
+          that use extensible hashing.  It works similarly to the standard
+          UNIX dbm routines, and provides compatibility replacement
+          interfaces for the traditional 'dbm' and 'ndbm' libraries.
+        </paragraph>
+        <paragraph>The msys-libgdbm package provides the runtime library
+          and related development files for the GNU Database System.  The
+          associated msys-gdbm package provides the command-line utilities
+          for saving and restoring GDBM databases, other tools for testing
+          the various compatibility interfaces, and related documentation.
+        </paragraph>
+      </description>
+
+      <licence tarname="gdbm-%-msys-%-lic.tar" />
+      <source tarname="gdbm-%-msys-%-src.tar" />
+
+      <component class="dll">
+        <!-- Every MSYS DLL package requires msys-core-bin -->
+        <requires eq="msys-core-*-msys-*-bin.tar" />
+        <release tarname="libgdbm-1.8.3-3-msys-1.0.13-dll-3.tar.lzma" />
+      </component>
+
+      <component class="dev">
+        <release tarname="libgdbm-1.8.3-3-msys-1.0.13-dev.tar.lzma" >
+          <requires eq="msys-libgdbm-%-msys-%-dll-3.tar" />
+        </release>
+      </component>
+    </package>
+
+  </package-collection>
+</software-distribution>
+<!-- vim: set nocompatible expandtab fileformat=unix textwidth=80 tabstop=2 shiftwidth=2: -->

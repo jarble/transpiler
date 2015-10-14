@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<software-distribution project="MinGW" home="http://www.mingw.org" issue="2010071900">
+
+  <!-- File: package-list.xml -->
+  <!-- This is the master package catalogue for the MinGW Project -->
+
+  <package-list catalogue="mingw32-package-list" />
+  <package-list catalogue="msys-package-list" />
+
+</software-distribution>

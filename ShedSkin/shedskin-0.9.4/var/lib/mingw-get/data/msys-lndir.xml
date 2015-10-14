@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<software-distribution project="MinGW" home="http://mingw.org" issue="2010090500">
+
+  <!-- File: msys-lndir.xml -->
+
+  <package-collection subsystem="msys">
+    <download-host uri="http://prdownloads.sourceforge.net/mingw/%F?download" />
+
+    <package name="msys-lndir">
+      <affiliate group="MinGW Developer Toolkit" />
+      <description lang="en" title="lndir: Xorg recursive directory symlink tool">
+        <paragraph>The lndir program makes a shadow copy of a directory
+          tree, except that the shadow is not populated with real files but
+          instead with symbolic links (*) pointing at the real files in the
+          original directory tree.  This is usually useful building
+          applications outside their source directory, when the build
+          machinery does not directly support that behavior.  You can build
+          in the shadow tree, and the object files will be in the shadow
+          directory, while the source files in the shadow directory are just
+          symlinks (*) to the real files.
+        </paragraph>
+        <paragraph>(*) On MSYS, instead of symbolic links the shadow tree is
+          populated with hardlinks to the original files whenever possible,
+          and with copies if not (e.g. the original and destination directories
+          are on different devices, or the file system is not NTFS).
+        </paragraph>
+      </description>
+
+      <licence tarname="lndir-%-msys-%-lic.tar" />
+      <source tarname="lndir-%-msys-%-src.tar" />
+
+      <component class="bin">
+        <requires eq="msys-core-*-msys-*-bin.tar" />
+        <release tarname="lndir-1.0.1-2-msys-1.0.13-bin.tar.lzma" />
+      </component>
+
+      <component class="doc">
+        <release tarname="lndir-1.0.1-2-msys-1.0.13-doc.tar.lzma" />
+      </component>
+
+      <component class="lic">
+        <release tarname="lndir-1.0.1-2-msys-1.0.13-lic.tar.lzma" />
+      </component>
+    </package>
+
+  </package-collection>
+</software-distribution>
+<!-- vim: set nocompatible expandtab fileformat=unix textwidth=80 tabstop=2 shiftwidth=2: -->

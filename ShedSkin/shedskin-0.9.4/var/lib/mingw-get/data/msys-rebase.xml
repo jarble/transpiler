@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<software-distribution project="MinGW" home="http://mingw.org" issue="2010090600">
+
+  <!-- File: msys-rebase.xml -->
+
+  <package-collection subsystem="msys">
+    <download-host uri="http://prdownloads.sourceforge.net/mingw/%F?download" />
+
+    <package name="msys-rebase">
+      <description lang="en" title="rebase: A tool for managing DLL address conflicts">
+        <paragraph>rebase provides various utilities that can assist
+          with the dreaded DLL initialization problem, whose primary
+          symptom is error messages of the form: "sync_with_child:
+          child state waiting for longjmp" or "fork_child:
+          recreate_mmaps_after_fork_failed".  This "rebase problem"
+          is due to fork() failing to reload DLLs in the child at
+          the same address as in the parent.  This is caused by DLLs
+          which have conflicting base addresses.  The rebase tool and
+          the associated rebaseall script allow to change those base
+          addresses for every DLL in an MSYS installation, so that
+          they hopefully do not conflict.
+        </paragraph>
+        <paragraph>The msys-rebase package also provides the peflags
+          and peflagsall tools, which can be used to change certain
+          settings in every executable and DLL in an MSYS installation.
+          On Windows Vista and above, it can be used to enable the
+          Address Space Layout Randomization (ASLR) setting, which is
+          an alternate mechanism to address the "rebase problem".  It
+          can also be used to enable the Terminal Server Aware flag,
+          which may be important on Windows Terminal Services and
+          Windows Server operating systems.
+        </paragraph>
+      </description>
+
+      <licence tarname="rebase-%-msys-%-lic.tar" />
+      <source tarname="rebase-%-msys-%-src.tar" />
+
+      <component class="bin">
+        <requires eq="msys-core-*-msys-*-bin.tar" />
+        <requires eq="msys-coreutils-*-msys-*-bin.tar" />
+        <requires eq="msys-dash-*-msys-*-bin.tar" />
+        <requires eq="msys-gawk-*-msys-*-bin.tar" />
+        <requires eq="msys-sed-*-msys-*-bin.tar" />
+        <release tarname="rebase-3.0.1_1-2-msys-1.0.15-bin.tar.lzma" />
+      </component>
+
+      <component class="doc">
+        <release tarname="rebase-3.0.1_1-2-msys-1.0.15-doc.tar.lzma" />
+      </component>
+
+      <component class="lic">
+        <release tarname="rebase-3.0.1_1-2-msys-1.0.15-lic.tar.lzma" />
+      </component>
+    </package>
+
+  </package-collection>
+</software-distribution>
+<!-- vim: set nocompatible expandtab fileformat=unix textwidth=80 tabstop=2 shiftwidth=2: -->

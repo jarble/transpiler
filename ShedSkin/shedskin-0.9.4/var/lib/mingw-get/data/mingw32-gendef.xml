@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<software-distribution project="MinGW" home="http://mingw.org" issue="2010090600">
+
+  <!-- File: mingw32-gendef.xml -->
+
+  <package-collection subsystem="mingw32">
+    <download-host uri="http://prdownloads.sourceforge.net/mingw/%F?download" />
+
+    <package name="mingw32-gendef" alias="gendef">
+      <description lang="en" title="gendef: Generate .def files for DLLs" >
+        <paragraph>gendef can extract information from DLLs to create
+          corresponding .def files that list the symbols available in each DLL.
+          .def files can then be used by dlltool (mingw32-binutils) to generate
+          import libraries.  gendef is similar to pexports, but the two tools
+          differ in how each determines the "decoration" (or calling convention)
+          appropriate for each symbol, since that information is not always
+          available directly from the DLL's symbol table.  gendef locates the
+          symbol's code in the DLL, and uses a disassembler to determine that
+          information.  pexports can use a C pre-processor to extract the
+          information, provided you have the appropriate header files.  Neither
+          method is foolproof, so both tools are provided.
+        </paragraph>
+        <paragraph>gendef was written by the MinGW64 team.  It can extract
+          symbols from 32bit or 64bit EXEs or DLLs.  It can automatically detect
+          stdcall, fastcall, and cdecl calling conventions and generate the
+          correctly decorated function names, without requiring the header files
+          or a C pre-processor.
+        </paragraph>
+      </description>
+
+      <licence tarname="gendef-%-mingw32-%-lic.tar" />
+      <source tarname="gendef-%-mingw32-%-src.tar" />
+
+      <component class="bin">
+        <release tarname="gendef-1.0.1346-1-mingw32-bin.tar.lzma" />
+      </component>
+
+      <component class="doc">
+        <release tarname="gendef-1.0.1346-1-mingw32-doc.tar.lzma" />
+      </component>
+
+      <component class="lic">
+        <release tarname="gendef-1.0.1346-1-mingw32-lic.tar.lzma" />
+      </component>
+    </package>
+
+  </package-collection>
+</software-distribution>
+<!-- vim: set nocompatible expandtab fileformat=unix textwidth=80 tabstop=2 shiftwidth=2: -->

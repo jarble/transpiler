@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<software-distribution project="MinGW" home="http://mingw.org" issue="2010090600">
+
+  <!-- File: mingw32-libarchive.xml -->
+
+  <package-collection subsystem="mingw32">
+    <download-host uri="http://prdownloads.sourceforge.net/mingw/%F?download" />
+
+    <package name="mingw32-libarchive" alias="libarchive" >
+      <description lang="en" title="libarchive: library for handling various archive formats" >
+        <paragraph>libarchive is a programming library that can create and read
+          several different streaming archive formats, including most popular
+          tar variants and several cpio formats, and ar archives. It can also
+          read shar, zip, jar, and xar archives, as well as ISO9660 CDROM
+          images.  It automatically handles gzip, bzip2, compress, xz, and lzma
+          compression and decompression, as well as uudecode decompression. The
+          bsdtar program is an implementation of tar(1) that is built on top of
+          libarchive.
+        </paragraph>
+        <paragraph>This MinGW port of libarchive differs from the MSYS version
+          also provided by the MinGW/MSYS project.  This version does not
+          require the MSYS runtime library, but does not support MSYS "unix"
+          style pathnames nor mtree data.  It does not support archives that
+          contain symbolic links. Both mingw32-libarchive and msys-libarchive
+          (and their associated bsdtar and bsdcpio subpackages) depend on
+          additional DLLs such as mingw32-liblzma (msys-liblzma), etc.  There
+          is, in addition, a MinGW package that provides a standalone version of
+          bsdtar which has no external dependencies and only limited
+          functionality: mingw32-basic-bsdtar (see its documentation for more
+          information).
+        </paragraph>
+        <paragraph>The mingw32-libarchive package provides the runtime library,
+          development files, and documentation for libarchive.  The associated
+          mingw32-bsdtar package provides an implementation of tar(1) based on
+          libarchive, while the associated mingw32-bsdcpio package provides a
+          similar implementation of cpio(1).
+        </paragraph>
+      </description>
+
+      <licence tarname="libarchive-%-mingw32-%-lic.tar" />
+      <source tarname="libarchive-%-mingw32-%-src.tar" />
+
+      <component class="doc">
+        <release tarname="libarchive-2.8.3-1-mingw32-doc.tar.bz2" />
+      </component>
+
+      <component class="lic">
+        <release tarname="libarchive-2.8.3-1-mingw32-lic.tar.bz2" />
+      </component>
+
+      <component class="dev">
+        <requires eq="mingw32-bzip2-*-mingw32-*-dev.tar" />
+        <requires eq="mingw32-libexpat-*-mingw32-*-dev.tar" />
+        <requires eq="mingw32-liblzma-*-mingw32-*-dev.tar" />
+        <requires eq="mingw32-libz-*-mingw32-*-dev.tar" />
+        <release tarname="libarchive-2.8.3-1-mingw32-dev.tar.bz2" >
+          <requires eq="mingw32-libarchive-%-mingw32-%-dll-2.tar" />
+        </release>
+      </component>
+
+      <component class="dll">
+        <release tarname="libarchive-2.8.3-1-mingw32-dll-2.tar.bz2" >
+          <requires eq="mingw32-libbz2-*-mingw32-*-dll-2.tar" />
+          <requires eq="mingw32-libexpat-*-mingw32-*-dll-1.tar" />
+          <requires eq="mingw32-liblzma-*-mingw32-*-dll-1.tar" />
+          <requires eq="mingw32-libz-*-mingw32-*-dll.tar" />
+        </release>
+      </component>
+    </package>
+
+    <package name="mingw32-bsdtar" alias="bsdtar" >
+      <description lang="en" title="bsdtar: BSD version of the tar utility" >
+        <paragraph>The mingw32-bsdtar package provides an implementation
+          of tar(1) based on libarchive, which manipulates streaming archive
+          files -- including the eponymous tar format.  However, bsdtar
+          can also extract from tar, pax, cpio, zip, jar, ar, xar, and ISO 9660
+          cdrom images, as well as create tar, pax, cpio, ar, and shar archives.
+          It supports automatic detection and handling of .gz, .bz2, .lzma, .xz,
+          and .Z decompression (and compression).  It supports ustar, pax, and
+          GNU tar formats.
+        </paragraph>
+        <paragraph>This MinGW port of bsdtar differs from the MSYS version also
+          provided by the MinGW/MSYS project.  This version does not require the
+          MSYS runtime library, but does not support MSYS "unix" style pathnames
+          nor mtree data.  It does not support archives that contain symbolic
+          links.  Both mingw32-bsdtar and msys-bsdtar depend on additional DLLs
+          such as mingw32-libarchive (msys-libarchive), etc.  There is, in
+          addition, a MinGW package that provides a standalone version of bsdtar
+          which has no external dependencies and only limited functionality:
+          mingw32-basic-bsdtar (see its documentation for more information).
+        </paragraph>
+        <paragraph>libarchive is a programming library that can create and read
+          several different streaming archive formats, including most popular
+          tar variants and several cpio formats, and ar archives.  It can also
+          read shar, zip, jar, and xar archives, as well as ISO9660 CDROM
+          images.  It automatically handles gzip, bzip2, compress, xz, and lzma
+          compression and decompression, as well as uudecode decompression.  The
+          bsdtar program is an implementation of tar(1) that is built on top of
+          libarchive.
+        </paragraph>
+        <paragraph>The mingw32-bsdtar package provides an implementation of
+          tar(1) based on libarchive, while the associated mingw32-bsdcpio
+          package provides a similar implementation of cpio(1).  The associated
+          mingw32-libarchive package provides the runtime library, development
+          files, and documentation.
+        </paragraph>
+      </description>
+
+      <licence tarname="libarchive-%-mingw32-%-lic.tar" />
+      <source tarname="libarchive-%-mingw32-%-src.tar" />
+
+      <component class="bin">
+        <release tarname="bsdtar-2.8.3-1-mingw32-bin.tar.bz2" >
+          <requires eq="mingw32-libarchive-%-mingw32-%-dll-2.tar" />
+        </release>
+      </component>
+    </package>
+
+    <package name="mingw32-bsdcpio" alias="bsdcpio" >
+      <description lang="en" title="bsdcpio: BSD version of the cpio utility" >
+        <paragraph>The mingw32-bsdcpio package provides an implementation of
+          cpio(1) based on libarchive, which copies files between archives and
+          directories.  This implementation can extract from tar, pax, cpio,
+          zip, jar, ar, xar, and ISO 9660 cdrom images, as well as create tar,
+          pax, cpio, ar, and shar archives.  It supports automatic detection and
+          handling of .gz, .bz2, .lzma, .xz, and .Z decompression (and
+          compression).  It supports the old POSIX.1 portable cpio format (odc),
+          the new SVR4 portable cpio format (newc), as well as the POSIX.1 pax
+          and ustar formats.
+        </paragraph>
+        <paragraph>This MinGW port of bsdcpio differs from the MSYS version also
+          provided by the MinGW/MSYS project.  This version does not require the
+          MSYS runtime library, but does not support MSYS "unix" style pathnames
+          nor mtree data.  It does not support archives that contain symbolic
+          links.  Both mingw32-bsdcpio and msys-bsdcpio depend on additional
+          DLLs such as mingw32-libarchive (msys-libarchive), etc.
+        </paragraph>
+        <paragraph>libarchive is a programming library that can create and read
+          several different streaming archive formats, including most popular
+          tar variants and several cpio formats, and ar archives.  It can also
+          read shar, zip, jar, and xar archives, as well as ISO9660 CDROM
+          images.  It automatically handles gzip, bzip2, compress, xz, and lzma
+          compression and decompression, as well as uudecode decompression.  The
+          bsdtar program is an implementation of tar(1) that is built on top of
+          libarchive.
+        </paragraph>
+        <paragraph>The mingw32-bsdcpio package provides an implementation of
+          cpio(1) based on libarchive, while the associated mingw32-bsdtar
+          package provides a similar implementation of tar(1).  The associated
+          mingw32-libarchive package provides the runtime library, development
+          files, and documentation.
+        </paragraph>
+      </description>
+
+      <licence tarname="libarchive-%-mingw32-%-lic.tar" />
+      <source tarname="libarchive-%-mingw32-%-src.tar" />
+
+      <component class="bin">
+        <release tarname="bsdcpio-2.8.3-1-mingw32-bin.tar.bz2" >
+          <requires eq="mingw32-libarchive-%-mingw32-%-dll-2.tar" />
+        </release>
+      </component>
+    </package>
+
+  </package-collection>
+</software-distribution>
+<!-- vim: set nocompatible expandtab fileformat=unix textwidth=80 tabstop=2 shiftwidth=2: -->

@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<software-distribution project="MinGW" home="http://mingw.org" issue="2010091200">
+
+  <!-- File: mingw32-automake.xml -->
+
+  <package-collection subsystem="mingw32">
+    <download-host uri="http://prdownloads.sourceforge.net/mingw/%F?download" />
+
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <package name="mingw32-automake" alias="automake" >
+      <affiliate group="MinGW Autotools" />
+      <description lang="en" title="automake: Wrapper scripts for automake and aclocal">
+        <paragraph>Automake is a tool for automatically generating Makefile.in
+          files compliant with the GNU Coding Standards.  Automake requires the
+          use of Autoconf.  However, THIS package is actually a simple wrapper,
+          that automatically redirects to one of the automake-[1.4 through 1.11]
+          applications as needed or requested.
+        </paragraph>
+      </description>
+
+      <licence tarname="automake-%-mingw32-%-lic.tar" />
+      <source tarname="automake-%-mingw32-%-src.tar" />
+
+      <component class="bin">
+        <requires eq="mingw32-automake1.4-*-mingw32-*-bin.tar" />
+        <requires eq="mingw32-automake1.5-*-mingw32-*-bin.tar" />
+        <requires eq="mingw32-automake1.6-*-mingw32-*-bin.tar" />
+        <requires eq="mingw32-automake1.7-*-mingw32-*-bin.tar" />
+        <requires eq="mingw32-automake1.8-*-mingw32-*-bin.tar" />
+        <requires eq="mingw32-automake1.9-*-mingw32-*-bin.tar" />
+        <requires eq="mingw32-automake1.10-*-mingw32-*-bin.tar" />
+        <requires eq="mingw32-automake1.11-*-mingw32-*-bin.tar" />
+        <requires eq="msys-bash-*-msys-*-bin.tar" />
+        <requires eq="msys-core-*-msys-*-bin.tar" />
+        <requires eq="msys-gawk-*-msys-*-bin.tar" />
+        <release tarname="automake-4-1-mingw32-bin.tar.lzma" />
+      </component>
+
+      <component class="lic">
+        <release tarname="automake-4-1-mingw32-lic.tar.lzma" />
+      </component>
+    </package>
+
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <package name="mingw32-automake1.4" alias="automake1.4">
+      <affiliate group="MinGW Autotools" />
+      <description lang="en" title="automake1.4: Automatic Makefile Builder (1.4 series)">
+        <paragraph>Automake is a tool for automatically generating
+          Makefile.in files compliant with the GNU Coding Standards.
+          Automake requires the use of Autoconf.  This package provides
+          the latest implementation of automake in the 1.4 series.
+        </paragraph>
+      </description>
+
+      <licence tarname="automake1.4-%-mingw32-%-lic.tar" />
+      <source tarname="automake1.4-%-mingw32-%-src.tar" />
+
+      <component class="bin">
+        <requires eq="mingw32-autoconf-*-mingw32-*-bin.tar" />
+        <requires eq="mingw32-autoconf2.1-*-mingw32-*-bin.tar" />
+        <requires eq="msys-core-*-msys-*-bin.tar" />
+        <requires eq="msys-coreutils-*-msys-*-bin.tar" />
+        <requires eq="msys-m4-*-msys-*-bin.tar" />
+        <requires eq="msys-perl-*-msys-*-bin.tar" />
+        <requires eq="msys-texinfo-*-msys-*-bin.tar" />
+        <release tarname="automake1.4-1.4p6-1-mingw32-bin.tar.lzma" />
+      </component>
+
+      <component class="doc">
+        <release tarname="automake1.4-1.4p6-1-mingw32-doc.tar.lzma" />
+      </component>
+
+      <component class="lic">
+        <release tarname="automake1.4-1.4p6-1-mingw32-lic.tar.lzma" />
+      </component>
+    </package>
+
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <package name="mingw32-automake1.5" alias="automake1.5">
+      <affiliate group="MinGW Autotools" />
+      <description lang="en" title="automake1.5: Automatic Makefile Builder (1.5 series)">
+        <paragraph>Automake is a tool for automatically generating
+          Makefile.in files compliant with the GNU Coding Standards.
+          Automake requires the use of Autoconf.  This package provides
+          the latest implementation of automake in the 1.5 series.
+        </paragraph>
+      </description>
+
+      <licence tarname="automake1.5-%-mingw32-%-lic.tar" />
+      <source tarname="automake1.5-%-mingw32-%-src.tar" />
+
+      <component class="bin">
+        <requires eq="mingw32-autoconf-*-mingw32-*-bin.tar" />
+        <requires eq="mingw32-autoconf2.1-*-mingw32-*-bin.tar" />
+        <requires eq="msys-core-*-msys-*-bin.tar" />
+        <requires eq="msys-coreutils-*-msys-*-bin.tar" />
+        <requires eq="msys-m4-*-msys-*-bin.tar" />
+        <requires eq="msys-perl-*-msys-*-bin.tar" />
+        <requires eq="msys-texinfo-*-msys-*-bin.tar" />
+        <release tarname="automake1.5-1.5-1-mingw32-bin.tar.lzma" />
+      </component>
+
+      <component class="doc">
+        <release tarname="automake1.5-1.5-1-mingw32-doc.tar.lzma" />
+      </component>
+
+      <component class="lic">
+        <release tarname="automake1.5-1.5-1-mingw32-lic.tar.lzma" />
+      </component>
+    </package>
+
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <package name="mingw32-automake1.6" alias="automake1.6">
+      <affiliate group="MinGW Autotools" />
+      <description lang="en" title="automake1.6: Automatic Makefile Builder (1.6 series)">
+        <paragraph>Automake is a tool for automatically generating
+          Makefile.in files compliant with the GNU Coding Standards.
+          Automake requires the use of Autoconf.  This package provides
+          the latest implementation of automake in the 1.6 series.
+        </paragraph>
+      </description>
+
+      <licence tarname="automake1.6-%-mingw32-%-lic.tar" />
+      <source tarname="automake1.6-%-mingw32-%-src.tar" />
+
+      <component class="bin">
+        <requires eq="mingw32-autoconf-*-mingw32-*-bin.tar" />
+        <requires eq="mingw32-autoconf2.5-*-mingw32-*-bin.tar" />
+        <requires eq="msys-core-*-msys-*-bin.tar" />
+        <requires eq="msys-coreutils-*-msys-*-bin.tar" />
+        <requires eq="msys-m4-*-msys-*-bin.tar" />
+        <requires eq="msys-perl-*-msys-*-bin.tar" />
+        <requires eq="msys-texinfo-*-msys-*-bin.tar" />
+        <release tarname="automake1.6-1.6.3-1-mingw32-bin.tar.lzma" />
+      </component>
+
+      <component class="doc">
+        <release tarname="automake1.6-1.6.3-1-mingw32-doc.tar.lzma" />
+      </component>
+
+      <component class="lic">
+        <release tarname="automake1.6-1.6.3-1-mingw32-lic.tar.lzma" />
+      </component>
+    </package>
+
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <package name="mingw32-automake1.7" alias="automake1.7">
+      <affiliate group="MinGW Autotools" />
+      <description lang="en" title="automake1.7: Automatic Makefile Builder (1.7 series)">
+        <paragraph>Automake is a tool for automatically generating
+          Makefile.in files compliant with the GNU Coding Standards.
+          Automake requires the use of Autoconf.  This package provides
+          the latest implementation of automake in the 1.7 series.
+        </paragraph>
+      </description>
+
+      <licence tarname="automake1.7-%-mingw32-%-lic.tar" />
+      <source tarname="automake1.7-%-mingw32-%-src.tar" />
+
+      <component class="bin">
+        <requires eq="mingw32-autoconf-*-mingw32-*-bin.tar" />
+        <requires eq="mingw32-autoconf2.5-*-mingw32-*-bin.tar" />
+        <requires eq="msys-core-*-msys-*-bin.tar" />
+        <requires eq="msys-coreutils-*-msys-*-bin.tar" />
+        <requires eq="msys-m4-*-msys-*-bin.tar" />
+        <requires eq="msys-perl-*-msys-*-bin.tar" />
+        <requires eq="msys-texinfo-*-msys-*-bin.tar" />
+        <release tarname="automake1.7-1.7.9-1-mingw32-bin.tar.lzma" />
+      </component>
+
+      <component class="doc">
+        <release tarname="automake1.7-1.7.9-1-mingw32-doc.tar.lzma" />
+      </component>
+
+      <component class="lic">
+        <release tarname="automake1.7-1.7.9-1-mingw32-lic.tar.lzma" />
+      </component>
+    </package>
+
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <package name="mingw32-automake1.8" alias="automake1.8">
+      <affiliate group="MinGW Autotools" />
+      <description lang="en" title="automake1.8: Automatic Makefile Builder (1.8 series)">
+        <paragraph>Automake is a tool for automatically generating
+          Makefile.in files compliant with the GNU Coding Standards.
+          Automake requires the use of Autoconf.  This package provides
+          the latest implementation of automake in the 1.8 series.
+        </paragraph>
+      </description>
+
+      <licence tarname="automake1.8-%-mingw32-%-lic.tar" />
+      <source tarname="automake1.8-%-mingw32-%-src.tar" />
+
+      <component class="bin">
+        <requires eq="mingw32-autoconf-*-mingw32-*-bin.tar" />
+        <requires eq="mingw32-autoconf2.5-*-mingw32-*-bin.tar" />
+        <requires eq="msys-core-*-msys-*-bin.tar" />
+        <requires eq="msys-coreutils-*-msys-*-bin.tar" />
+        <requires eq="msys-m4-*-msys-*-bin.tar" />
+        <requires eq="msys-perl-*-msys-*-bin.tar" />
+        <requires eq="msys-texinfo-*-msys-*-bin.tar" />
+        <release tarname="automake1.8-1.8.5-1-mingw32-bin.tar.lzma" />
+      </component>
+
+      <component class="doc">
+        <release tarname="automake1.8-1.8.5-1-mingw32-doc.tar.lzma" />
+      </component>
+
+      <component class="lic">
+        <release tarname="automake1.8-1.8.5-1-mingw32-lic.tar.lzma" />
+      </component>
+    </package>
+
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <package name="mingw32-automake1.9" alias="automake1.9">
+      <affiliate group="MinGW Autotools" />
+      <description lang="en" title="automake1.9: Automatic Makefile Builder (1.9 series)">
+        <paragraph>Automake is a tool for automatically generating
+          Makefile.in files compliant with the GNU Coding Standards.
+          Automake requires the use of Autoconf.  This package provides
+          the latest implementation of automake in the 1.9 series.
+        </paragraph>
+      </description>
+
+      <licence tarname="automake1.9-%-mingw32-%-lic.tar" />
+      <source tarname="automake1.9-%-mingw32-%-src.tar" />
+
+      <component class="bin">
+        <requires eq="mingw32-autoconf-*-mingw32-*-bin.tar" />
+        <requires eq="mingw32-autoconf2.5-*-mingw32-*-bin.tar" />
+        <requires eq="msys-core-*-msys-*-bin.tar" />
+        <requires eq="msys-coreutils-*-msys-*-bin.tar" />
+        <requires eq="msys-m4-*-msys-*-bin.tar" />
+        <requires eq="msys-perl-*-msys-*-bin.tar" />
+        <requires eq="msys-texinfo-*-msys-*-bin.tar" />
+        <release tarname="automake1.9-1.9.6-3-mingw32-bin.tar.lzma" />
+      </component>
+
+      <component class="doc">
+        <release tarname="automake1.9-1.9.6-3-mingw32-doc.tar.lzma" />
+      </component>
+
+      <component class="lic">
+        <release tarname="automake1.9-1.9.6-3-mingw32-lic.tar.lzma" />
+      </component>
+    </package>
+
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <package name="mingw32-automake1.10" alias="automake1.10">
+      <affiliate group="MinGW Autotools" />
+      <description lang="en" title="automake1.10: Automatic Makefile Builder (1.10 series)">
+        <paragraph>Automake is a tool for automatically generating
+          Makefile.in files compliant with the GNU Coding Standards.
+          Automake requires the use of Autoconf.  This package provides
+          the latest implementation of automake in the 1.10 series.
+        </paragraph>
+      </description>
+
+      <licence tarname="automake1.10-%-mingw32-%-lic.tar" />
+      <source tarname="automake1.10-%-mingw32-%-src.tar" />
+
+      <component class="bin">
+        <requires eq="mingw32-autoconf-*-mingw32-*-bin.tar" />
+        <requires eq="mingw32-autoconf2.5-*-mingw32-*-bin.tar" />
+        <requires eq="msys-core-*-msys-*-bin.tar" />
+        <requires eq="msys-coreutils-*-msys-*-bin.tar" />
+        <requires eq="msys-m4-*-msys-*-bin.tar" />
+        <requires eq="msys-perl-*-msys-*-bin.tar" />
+        <requires eq="msys-texinfo-*-msys-*-bin.tar" />
+        <release tarname="automake1.10-1.10.2-1-mingw32-bin.tar.lzma" />
+      </component>
+
+      <component class="doc">
+        <release tarname="automake1.10-1.10.2-1-mingw32-doc.tar.lzma" />
+      </component>
+
+      <component class="lic">
+        <release tarname="automake1.10-1.10.2-1-mingw32-lic.tar.lzma" />
+      </component>
+    </package>
+
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <package name="mingw32-automake1.11" alias="automake1.11">
+      <affiliate group="MinGW Autotools" />
+      <description lang="en" title="automake1.11: Automatic Makefile Builder (1.11 series)">
+        <paragraph>Automake is a tool for automatically generating
+          Makefile.in files compliant with the GNU Coding Standards.
+          Automake requires the use of Autoconf.  This package provides
+          the latest implementation of automake in the 1.11 series.
+        </paragraph>
+      </description>
+
+      <licence tarname="automake1.11-%-mingw32-%-lic.tar" />
+      <source tarname="automake1.11-%-mingw32-%-src.tar" />
+
+      <component class="bin">
+        <requires eq="mingw32-autoconf-*-mingw32-*-bin.tar" />
+        <requires eq="mingw32-autoconf2.5-*-mingw32-*-bin.tar" />
+        <requires eq="msys-core-*-msys-*-bin.tar" />
+        <requires eq="msys-coreutils-*-msys-*-bin.tar" />
+        <requires eq="msys-m4-*-msys-*-bin.tar" />
+        <requires eq="msys-perl-*-msys-*-bin.tar" />
+        <requires eq="msys-texinfo-*-msys-*-bin.tar" />
+        <release tarname="automake1.11-1.11-1-mingw32-bin.tar.lzma" />
+        <release tarname="automake1.11-1.11.1-1-mingw32-bin.tar.lzma" />
+      </component>
+
+      <component class="doc">
+        <release tarname="automake1.11-1.11-1-mingw32-doc.tar.lzma" />
+        <release tarname="automake1.11-1.11.1-1-mingw32-doc.tar.lzma" />
+      </component>
+
+      <component class="lic">
+        <release tarname="automake1.11-1.11-1-mingw32-lic.tar.lzma" />
+        <release tarname="automake1.11-1.11.1-1-mingw32-lic.tar.lzma" />
+      </component>
+    </package>
+
+  </package-collection>
+</software-distribution>
+<!-- vim: set nocompatible expandtab fileformat=unix textwidth=80 tabstop=2 shiftwidth=2: -->

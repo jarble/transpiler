@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<software-distribution project="MinGW" home="http://www.mingw.org" issue="2010083100">
+
+  <!-- File: mingw32-base.xml -->
+  <!-- This is a preliminary catalogue to facilitate the release of
+       mingw-get-0.1-mingw32-alpha-3. It has been modified to support
+       the deployment of gcc-4.5.0-1 and msys-base.
+    -->
+
+  <package-collection subsystem="mingw32">
+    <download-host uri="http://prdownloads.sourceforge.net/mingw/%F?download" />
+
+    <package name="mingw32-base" alias="base" class="virtual" >
+      <affiliate group="MinGW Base System" />
+      <description lang="en" title="A Basic MinGW Installation" >
+        <paragraph>This meta package provides a basic GCC installation,
+          and includes the C compiler, linker and other binary tools,
+          the runtime libraries and windows API support, mingw32-make,
+          and a debugger. Other components can be added manually as needed.
+        </paragraph>
+      </description>
+
+      <component class="bin">
+        <release tarname="mingw32-base-2010083100-mingw32-bin.meta" />
+        <requires eq="mingw32-gcc-*-mingw32-*-bin.tar" />
+        <requires eq="mingw32-gcc-*-mingw32-*-lic.tar" />
+        <requires eq="mingw32-make-*-mingw32-*-bin.tar" />
+        <requires eq="mingw32-gdb-*-mingw32-*-bin.tar" />
+      </component>
+    </package>
+
+  </package-collection>
+</software-distribution>
+<!-- vim: set nocompatible expandtab fileformat=unix textwidth=80 tabstop=2 shiftwidth=2: -->

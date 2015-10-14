@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<software-distribution project="MinGW" home="http://mingw.org" issue="2010080900">
+
+  <!-- File: msys-cygutils.xml -->
+
+  <package-collection subsystem="msys">
+    <download-host uri="http://prdownloads.sourceforge.net/mingw/%F?download" />
+    <package name="msys-cygutils">
+      <description lang="en" title="cygutils (msys): A collection of simple utilities" >
+        <paragraph>The cygutils package contains a collection of simple
+          utilities from various sources. It provides mkshortcut and
+          readshortcut, for creating and reading windows-style shortcuts.
+          It provides getclip and putclip, for copying between stdin/stdout
+          and the Windows clipboard. It also provides lpr-basic.
+        </paragraph>
+        <paragraph>A note about lpr-basic: lpr-basic spools a file to the
+          specified printer device. MSYS provides two separate
+          implementations: lpr-basic.exe and lpr-enhanced (the latter is a
+          script, not a binary executable, and is available in the
+          msys-lpr-enhanced package). lpr-basic.exe is suitable for most
+          simple printing needs; it can send "raw" data to any installed
+          Windows printer. This is most useful for raw text, for sending
+          plain PostScript files to PostScript-compatible printers, and for
+          re-sending .prn files generated using Windows' own print-to-file
+          capabilities to the specific printer for which the .prn file was
+          generated. For more information, see `man lpr-basic'. On the other
+          hand, lpr-enhanced is an MSYS extension which supports many of the
+          advanced capabilities of a true Unix-style lpr implementation.
+          However, it is more difficult to configure. See the documentation
+          embedded within the lpr-enhanced script for more information.
+        </paragraph>
+        <paragraph>The msys-cygutils package provides many of the utilities
+          included in the cygutils distribution, except that the associated
+          msys-cygutils-dos2unix package provides the line-ending conversion
+          programs.
+        </paragraph>
+      </description>
+
+      <source tarname="cygutils-%-msys-%-src.tar" />
+      <licence tarname="cygutils-%-msys-%-lic.tar" />
+
+      <component class="bin">
+        <requires eq="msys-core-*-msys-*-bin.tar" />
+        <release tarname="cygutils-1.3.4-4-msys-1.0.13-bin.tar.lzma">
+          <requires eq="msys-libpopt-*-msys-*-dll-0.tar" />
+        </release>
+      </component>
+
+      <component class="doc">
+        <release tarname="cygutils-1.3.4-4-msys-1.0.13-doc.tar.lzma" />
+      </component>
+
+      <component class="lic">
+        <release tarname="cygutils-1.3.4-4-msys-1.0.13-lic.tar.lzma" />
+      </component>
+    </package>
+
+    <package name="msys-cygutils-dos2unix" alias="msys-dos2unix">
+      <affiliate group="MSYS Base System" />
+      <description lang="en" title="cygutils-dos2unix (msys): line-ending conversion utilities" >
+        <paragraph>The cygutils-dos2unix package contains implementations of
+          dos2unix and unix2dos (d2u, u2d) for modifying the line-ending
+          character(s) used by text files. Each can operate on a list of
+          files, converting them in-place, or as part of a pipeline.
+        </paragraph>
+        <paragraph>The MinGW/MSYS project provides two versions of the
+          cygutils-dos2unix package: this msys-cygutils-dos2unix one, and
+          the mingw32-cygutils-dos2unix version. This version requires the
+          MSYS dll, but directly understands MSYS pathnames and blends more
+          seamlessly into pipelines with other MSYS tools. The mingw32
+          version does not require the MSYS dll, and is a direct replacement
+          for the old d2u and u2d scripts, and for the unix2dos/dos2unix
+          executables that were long part of the mingw-utils package.
+        </paragraph>
+        <paragraph>The msys-cygutils-dos2unix package provides the unix2dos
+          and dos2unix (u2d, d2u) conversion programs. The associated
+          msys-cygutils package provides other useful utilities and
+          documentation.
+        </paragraph>
+      </description>
+
+      <source tarname="cygutils-%-msys-%-src.tar" />
+      <licence tarname="cygutils-%-msys-%-lic.tar" />
+
+      <component class="bin">
+        <requires eq="msys-core-*-msys-*-bin.tar" />
+        <release tarname="cygutils-dos2unix-1.3.4-4-msys-1.0.13-bin.tar.lzma">
+          <requires eq="msys-libpopt-*-msys-*-dll-0.tar" />
+        </release>
+      </component>
+    </package>
+
+  </package-collection>
+</software-distribution>
+<!-- vim: set nocompatible expandtab fileformat=unix textwidth=80 tabstop=2 shiftwidth=2: -->

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<software-distribution project="MinGW" home="http://www.mingw.org" issue="2010090600">
+
+  <!-- File: msys-system-builder.xml -->
+
+  <!-- This is a preliminary catalogue listing those tools necessary to
+       build MSYS-dependent applications and libraries, as well as the
+       MSYS DLL itself.  It does not include headers or link libraries
+       needed to use those pre-build MSYS libraries distributed by the
+       MinGW/MSYS project; if desired, those should be installed as
+       needed, individually.  In a manner of speaking, this "replicates"
+       the tools installed by the old "msysDVLPR" package ~~ although
+       that package contained an obsolete version of gcc-2.95.3, and
+       the tools installed by this (meta) package are much newer. -->
+
+  <package-collection subsystem="msys">
+    <download-host uri="http://prdownloads.sourceforge.net/mingw/%F?download" />
+
+    <package name="msys-system-builder" alias="msys-dvlpr" class="virtual">
+      <affiliate group="MSYS System Builder" />
+      <description lang="en" title="Tools for Building MSYS and MSYS utilities (meta)">
+        <paragraph>
+          This meta package contains the components necessary to build
+          MSYS-dependent applications and libraries, as well as the MSYS DLL
+          itself.  It does not include headers or link libraries needed to use
+          pre-built MSYS libraries distributed by the MinGW/MSYS project; if
+          desired, those should be installed as needed, individually.  In a
+          manner of speaking, this "replicates" the tools installed by the old
+          "msysDVLPR" package ~~ although (1) that package contained an obsolete
+          version of gcc-2.95.3, while the tools installed by this (meta)
+          package are much newer, and (2) this (meta) package also adds
+          MSYS-customized versions of the autotools (autoconf, automake,
+          libtool, gettext, and libiconv).  These msys-autotools can be
+          installed and used in parallel with the normal, MinGW-flavored ones
+          installed by the MinGW Developer Toolkit (MinGW-DTK).
+        </paragraph>
+      </description>
+
+      <component class="bin">
+        <release tarname="msys-system-builder-2010090600-msys-bin.meta" />
+        <requires ge="msys-base-*-msys-*-bin.meta" />
+        <requires ge="msys-core-*-msys-*-dev.tar" />
+        <requires ge="msys-core-*-msys-*-dbg.tar" />
+        <requires ge="msys-w32api-*-msys-*-dev.tar" />
+        <requires ge="msys-binutils-*-msys-*-bin.tar" />
+        <requires ge="msys-gcc-*-msys-*-bin.tar" />
+        <requires ge="msys-autoconf-*-msys-*-bin.tar" />
+        <requires ge="msys-automake-*-msys-*-bin.tar" />
+        <requires ge="msys-libtool-*-msys-*-bin.tar" />
+        <requires ge="msys-libltdl-*-msys-*-dev.tar" />
+        <requires ge="msys-gettext-*-msys-*-bin.tar" />
+        <requires ge="msys-gettext-*-msys-*-dev.tar" />
+        <requires ge="msys-libiconv-*-msys-*-bin.tar" />
+        <requires ge="msys-libiconv-*-msys-*-dev.tar" />
+      </component>
+    </package>
+
+  </package-collection>
+</software-distribution>
+<!-- vim: set nocompatible expandtab fileformat=unix textwidth=80 tabstop=2 shiftwidth=2: -->

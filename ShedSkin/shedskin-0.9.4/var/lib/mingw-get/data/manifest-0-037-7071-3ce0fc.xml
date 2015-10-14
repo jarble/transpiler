@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<package id="manifest-0-037-7071-3ce0fc">
+    <release tarname="libexpat-2.0.1-1-mingw32-dll-1.tar.gz" />
+    <references>
+        <sysroot id="sysroot-0-002-a7c6-d7dbb5" />
+    </references>
+    <manifest>
+        <file path="bin/libexpat-1.dll" />
+    </manifest>
+</package>

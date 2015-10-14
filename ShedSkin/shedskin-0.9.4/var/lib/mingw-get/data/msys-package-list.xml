@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<software-distribution project="MinGW" home="http://www.mingw.org" issue="2010100700">
+
+  <!-- File: msys-package-list.xml -->
+
+  <!-- This is a preliminary catalogue describing the contents of the
+       MSYS distribution. -->
+
+  <package-group-hierarchy>
+    <package-group name="MSYS" expand="true">
+      <package-group name="MSYS Base System" />
+      <package-group name="MinGW Developer Toolkit" />
+      <package-group name="MSYS System Builder" />
+    </package-group>
+  </package-group-hierarchy>
+
+  <!-- "real" packages ~~ those commented out are yet to be published -->
+  <package-list catalogue="msys-autoconf" />
+  <package-list catalogue="msys-autogen" />
+  <package-list catalogue="msys-automake" />
+  <package-list catalogue="msys-bash" />
+  <package-list catalogue="msys-binutils" />
+  <package-list catalogue="msys-bison" />
+  <package-list catalogue="msys-bzip2" />
+  <package-list catalogue="msys-console" />
+  <package-list catalogue="msys-core" />
+  <package-list catalogue="msys-coreutils" />
+  <package-list catalogue="msys-crypt" />
+  <package-list catalogue="msys-cvs" />
+  <package-list catalogue="msys-cygutils" />
+  <package-list catalogue="msys-dash" />
+  <package-list catalogue="msys-diffutils" />
+  <package-list catalogue="msys-expat" />
+  <package-list catalogue="msys-file" />
+  <package-list catalogue="msys-findutils" />
+  <package-list catalogue="msys-flex" />
+  <package-list catalogue="msys-gawk" />
+  <package-list catalogue="msys-gcc" />
+  <package-list catalogue="msys-gdbm" />
+  <package-list catalogue="msys-gettext" />
+  <package-list catalogue="msys-gmp" />
+  <package-list catalogue="msys-grep" />
+  <package-list catalogue="msys-groff" />
+  <package-list catalogue="msys-guile" />
+  <package-list catalogue="msys-gzip" />
+  <package-list catalogue="msys-inetutils" />
+  <package-list catalogue="msys-less" />
+  <package-list catalogue="msys-libarchive" />
+  <package-list catalogue="msys-libiconv" />
+  <package-list catalogue="msys-libtool" />
+  <package-list catalogue="msys-libxml2" />
+  <package-list catalogue="msys-lndir" />
+  <package-list catalogue="msys-lpr-enhanced" />
+  <package-list catalogue="msys-m4" />
+  <package-list catalogue="msys-make" />
+  <package-list catalogue="msys-man" />
+  <package-list catalogue="msys-minires" />
+  <package-list catalogue="msys-mintty" />
+  <package-list catalogue="msys-mktemp" />
+  <package-list catalogue="msys-openssh" />
+  <package-list catalogue="msys-openssl" />
+  <package-list catalogue="msys-patch" />
+  <package-list catalogue="msys-perl" />
+  <package-list catalogue="msys-popt" />
+  <package-list catalogue="msys-rebase" />
+  <package-list catalogue="msys-regex" />
+  <package-list catalogue="msys-rxvt" />
+  <package-list catalogue="msys-sed" />
+  <package-list catalogue="msys-tar" />
+  <package-list catalogue="msys-termcap" />
+  <package-list catalogue="msys-texinfo" />
+  <package-list catalogue="msys-unzip" />
+  <package-list catalogue="msys-vim" />
+  <package-list catalogue="msys-w32api" />
+  <package-list catalogue="msys-wget" />
+  <package-list catalogue="msys-xz" />
+  <package-list catalogue="msys-zip" />
+  <package-list catalogue="msys-zlib" />
+
+  <!-- "virtual" packages -->
+  <package-list catalogue="msys-base" />
+  <package-list catalogue="mingw-developer-toolkit" />
+  <package-list catalogue="msys-system-builder" />
+
+</software-distribution>
+<!-- vim: set nocompatible expandtab fileformat=unix textwidth=80 tabstop=2 shiftwidth=2: -->

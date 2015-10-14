@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<software-distribution project="MinGW" home="http://mingw.org" issue="2010090600">
+
+  <!-- File: msys-xz.xml -->
+
+  <package-collection subsystem="msys">
+    <download-host uri="http://prdownloads.sourceforge.net/mingw/%F?download" />
+
+    <package name="msys-man">
+      <description lang="en" title="man: formats and displays manual pages" >
+        <paragraph>Formats and displays on-line manual pages.  Note that
+          most MinGW/MSYS packages do not, by default, install the man
+          pages; generally these documents are provided in a -doc or
+          -man subpackage.
+        </paragraph>
+      </description>
+
+      <licence tarname="man-%-msys-%-lic.tar" />
+      <source tarname="man-%-msys-%-src.tar" />
+
+      <component class="bin">
+        <requires eq="msys-bash-*-msys-*-bin.tar" />
+        <requires eq="msys-bzip2-*-msys-*-bin.tar" />
+        <requires eq="msys-core-*-msys-*-bin.tar" />
+        <requires eq="msys-coreutils-*-msys-*-bin.tar" />
+        <requires eq="msys-groff-*-msys-*-bin.tar" />
+        <requires eq="msys-gzip-*-msys-*-bin.tar" />
+        <requires eq="msys-less-*-msys-*-bin.tar" />
+        <requires eq="msys-xz-*-msys-*-bin.tar" />
+        <!-- deliberately not including perl, which is required only
+        by `manlint' -->
+        <release tarname="man-1.6f-2-msys-1.0.13-bin.tar.lzma" />
+      </component>
+
+      <component class="lang">
+        <release tarname="man-1.6f-2-msys-1.0.13-lang.tar.lzma" />
+      </component>
+
+      <component class="doc">
+        <release tarname="man-1.6f-2-msys-1.0.13-doc.tar.lzma" />
+      </component>
+
+      <component class="lic">
+        <release tarname="man-1.6f-2-msys-1.0.13-lic.tar.lzma" />
+      </component>
+    </package>
+
+  </package-collection>
+</software-distribution>
+<!-- vim: set nocompatible expandtab fileformat=unix textwidth=80 tabstop=2 shiftwidth=2: -->

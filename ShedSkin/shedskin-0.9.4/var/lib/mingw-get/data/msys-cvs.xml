@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<software-distribution project="MinGW" home="http://mingw.org" issue="2010090600">
+
+  <!-- File: msys-cvs.xml -->
+
+  <package-collection subsystem="msys">
+    <download-host uri="http://prdownloads.sourceforge.net/mingw/%F?download" />
+
+    <package name="msys-cvs">
+      <affiliate group="MinGW Developer Toolkit" />
+      <description lang="en" title="cvs: Concurrent Version System" >
+        <paragraph>CVS is a version control system, which allows you to keep
+          old versions of files (usually source code), and maintains a log of
+          who, when, and why changes occurred, etc., like RCS or SCCS.
+        </paragraph>
+      </description>
+
+      <licence tarname="cvs-%-msys-%-lic.tar" />
+      <source tarname="cvs-%-msys-%-src.tar" />
+
+      <component class="bin">
+        <requires eq="msys-core-*-msys-*-bin.tar" />
+        <release tarname="cvs-1.12.13-2-msys-1.0.13-bin.tar.lzma" >
+          <requires eq="msys-libintl-*-msys-*-dll-8.tar" />
+          <requires eq="msys-libcrypt-*-msys-*-dll-0.tar" />
+        </release>
+        <!-- Needed by rcs2log and cvsbug, even though MSYS does not actually
+             provide rcs.exe nor sendmail: bash, mktemp, gawk, sed, coreutils.
+             Other optional elements: perl, openssh, and inetutils. -->
+      </component>
+
+      <component class="lang">
+        <release tarname="cvs-1.12.13-2-msys-1.0.13-lang.tar.lzma" />
+      </component>
+
+      <component class="doc">
+        <release tarname="cvs-1.12.13-2-msys-1.0.13-doc.tar.lzma" />
+      </component>
+
+      <component class="lic">
+        <release tarname="cvs-1.12.13-2-msys-1.0.13-lic.tar.lzma" />
+      </component>
+    </package>
+
+  </package-collection>
+</software-distribution>
+<!-- vim: set nocompatible expandtab fileformat=unix textwidth=80 tabstop=2 shiftwidth=2: -->

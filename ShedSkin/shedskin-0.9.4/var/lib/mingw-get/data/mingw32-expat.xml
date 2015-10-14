@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<software-distribution project="MinGW" home="http://mingw.org" issue="2010052100">
+  <package-collection subsystem="mingw32">
+    <download-host uri="http://prdownloads.sourceforge.net/mingw/%F?download" />
+    <package name="mingw32-expat" alias="expat">
+      <description lang="en" title="expat: XML parsing library written in C">
+        <paragraph>expat is a C library for parsing XML written by James
+          Clark. Expat is a stream-oriented XML parser.  This means that
+          you register handlers with the parser before starting the parse.
+          These handlers are called when the parser discovers the
+          associated structures in the document being parsed.  A start tag
+          is an example of the kind of structures for which you may
+          register handlers.
+        </paragraph>
+        <paragraph>The mingw32-expat package provides the xmlwf validation
+          tool and documentation related to the library. The associated
+          mingw32-libexpat package provides the runtime library and related
+          development files.
+        </paragraph>
+      </description>
+      <component class="bin">
+        <release tarname="expat-2.0.1-1-mingw32-bin.tar.gz" />
+        <requires eq="mingw32-libexpat-%-mingw32-%-dll-1.tar" />
+      </component>
+      <component class="doc">
+        <release tarname="expat-2.0.1-1-mingw32-doc.tar.gz" />
+      </component>
+      <component class="lic">
+        <release tarname="expat-2.0.1-1-mingw32-lic.tar.gz" />
+      </component>
+      <licence tarname="expat-%-mingw32-%-lic.tar" />
+      <source tarname="expat-%-mingw32-%-src.tar" />
+    </package>
+    <package name="mingw32-libexpat" alias="libexpat">
+      <description lang="en" title="libexpat: XML parsing library written in C">
+        <paragraph>expat is a C library for parsing XML written by James
+          Clark. Expat is a stream-oriented XML parser.  This means that
+          you register handlers with the parser before starting the parse.
+          These handlers are called when the parser discovers the
+          associated structures in the document being parsed.  A start tag
+          is an example of the kind of structures for which you may
+          register handlers.
+        </paragraph>
+        <paragraph>The mingw32-libexpat package provides the runtime library
+          and related development files for expat.  The associated
+          mingw32-expat package provides the xmlwf validation tool and
+          documentation related to the library.
+        </paragraph>
+      </description>
+      <component class="dll">
+        <release tarname="libexpat-2.0.1-1-mingw32-dll-1.tar.gz" />
+      </component>
+      <component class="dev">
+        <release tarname="libexpat-2.0.1-1-mingw32-dev.tar.gz" />
+        <requires eq="mingw32-libexpat-%-mingw32-%-dll-1.tar" />
+      </component>
+      <licence tarname="expat-%-mingw32-%-lic.tar" />
+      <source tarname="expat-%-mingw32-%-src.tar" />
+    </package>
+  </package-collection>
+</software-distribution>
+

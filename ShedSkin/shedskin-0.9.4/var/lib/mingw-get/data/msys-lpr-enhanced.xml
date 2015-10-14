@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<software-distribution project="MinGW" home="http://mingw.org" issue="2010090600">
+
+  <!-- File: msys-lpr-enhanced.xml -->
+
+  <package-collection subsystem="msys">
+    <download-host uri="http://prdownloads.sourceforge.net/mingw/%F?download" />
+
+    <package name="msys-lpr-enhanced">
+      <description lang="en" title="lpr-enhanced: A full-featured implementation of unix lpr for MSYS" >
+        <paragraph>lpr-enhanced is an implementation of the unix lpr system
+          for MSYS, and unlike lpr-basic (msys-cygutils) supports many of
+          the advanced capabilities of a true Unix implementation.  These
+          features include format-dependent filters to pre-process data
+          before spooling to the printer.  The filters may includes nroff,
+          ditroff, or TeX pre-processors, among others.  It supports
+          /etc/printcap-style configuration, and honors both BSD options
+          (when invoked as 'lpr') and SysV options (when invoked as 'lp').
+          A sample /etc/printcap file is in /var/spool/lp/config/example,
+          but it MUST be copied to /var/spool/lp/config/.active or to
+          /etc/printcap and customized for your environment -- just like
+          on unix.
+        </paragraph>
+        <paragraph>The lpr-basic executable from the msys-cygutils package
+          (see below) is installed, by default, as both /bin/lpr.exe and
+          /bin/lpr-basic.exe.  To use lpr-enhanced, you should manually
+          remove /bin/lpr.exe, and manually copy /bin/lpr-enhanced to
+          /bin/lpr (and/or /bin/lp).  You may need to repeat this step each
+          time msys-cygutils is (re)installed or updated.
+        </paragraph>
+        <paragraph>A note about lpr-basic: lpr-basic spools a file to the
+          specified printer device.  MSYS provides two separate
+          implementations: lpr-basic.exe and lpr-enhanced.  lpr-basic.exe is
+          suitable for most simple printing needs; it can send "raw" data
+          to any installed Windows printer.  This is most useful for raw
+          text, for sending plain PostScript files to PostScript-compatible
+          printers, and for re-sending .prn files generated using Windows'
+          own print-to-file capabilities to the specific printer for which
+          the .prn file was generated.  lpr-enhanced is more capable, more
+          unix-like, and more difficult to configure.  Use lpr-enhanced if
+          you need the additional flexibility it provides, or are more
+          comfortable with traditional unix lpr and/or lp semantics.
+        </paragraph>
+      </description>
+
+      <licence tarname="lpr-enhanced-%-msys-%-lic.tar" />
+      <source tarname="lpr-enhanced-%-msys-%-src.tar" />
+
+      <component class="bin">
+        <!-- msys-coreutils-ext provides /bin/pr, which is used by
+             lpr-enhanced and the example printcap configuration.
+             msys-cygutils-dos2unix-bin provides d2u, which is used by the
+             example printcap configuration. -->
+        <requires eq="msys-bash-*-msys-*-bin.tar" />
+        <requires eq="msys-core-*-msys-*-bin.tar" />
+        <requires eq="msys-coreutils-*-msys-*-bin.tar" />
+        <requires eq="msys-coreutils-*-msys-*-ext.tar" />
+        <requires eq="msys-cygutils-dos2unix-*-msys-*-bin.tar" />
+        <requires eq="msys-grep-*-msys-*-bin.tar" />
+        <requires eq="msys-sed-*-msys-*-bin.tar" />
+        <release tarname="lpr-enhanced-1.0.2-1-msys-1.0.11-bin.tar.lzma" />
+      </component>
+
+      <component class="doc">
+        <release tarname="lpr-enhanced-1.0.2-1-msys-1.0.11-doc.tar.lzma" />
+      </component>
+
+      <component class="lic">
+        <release tarname="lpr-enhanced-1.0.2-1-msys-1.0.11-lic.tar.lzma" />
+      </component>
+    </package>
+
+  </package-collection>
+</software-distribution>
+<!-- vim: set nocompatible expandtab fileformat=unix textwidth=80 tabstop=2 shiftwidth=2: -->

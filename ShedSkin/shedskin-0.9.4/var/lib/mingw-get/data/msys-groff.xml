@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<software-distribution project="MinGW" home="http://mingw.org" issue="2010090600">
+
+  <!-- File: msys-groff.xml -->
+
+  <package-collection subsystem="msys">
+    <download-host uri="http://prdownloads.sourceforge.net/mingw/%F?download" />
+
+    <package name="msys-groff">
+      <description lang="en" title="groff: GNU troff typesetting package" >
+        <paragraph>The groff (GNU troff) software is a typesetting package
+          which reads plain text mixed with formatting commands and
+          produces formatted output.  The package is essential for viewing
+          online manual pages.  Output can be produced in a number of
+          formats including plain ASCII and PostScript. All the standard
+          macro packages are supported.
+        </paragraph>
+        <paragraph>The msys-groff package does not support the HTML nor
+          pdf output devices, becuase MSYS currently provides neither the
+          required postscript interpreter nor the pbmtools.  The gxditview
+          viewer is not included.  The msys-groff-bin subpackage provides
+          all of the components necessary for a working 'man' installation,
+          while the msys-groff-ext subpackage provides the remaining files
+          needed for supported output devices other than the console, such
+          as postscript and hpgl, as well as additional utilties.
+        </paragraph>
+      </description>
+
+      <licence tarname="groff-%-msys-%-lic.tar" />
+      <source tarname="groff-%-msys-%-src.tar" />
+
+      <component class="bin">
+        <requires eq="msys-bash-*-msys-*-bin.tar" />
+        <requires eq="msys-core-*-msys-*-bin.tar" />
+        <requires eq="msys-coreutils-*-msys-*-bin.tar" />
+        <!-- perl is required for the 'grog' script -->
+        <requires eq="msys-perl-*-msys-*-bin.tar" />
+        <release tarname="groff-1.20.1-2-msys-1.0.13-bin.tar.lzma" >
+          <requires eq="msys-libiconv-*-msys-*-dll-2.tar" />
+        </release>
+      </component>
+
+      <component class="ext">
+        <requires eq="msys-bash-*-msys-*-bin.tar" />
+        <requires eq="msys-coreutils-*-msys-*-bin.tar" />
+        <requires eq="msys-diffutils-*-msys-*-bin.tar" />
+        <requires eq="msys-grep-*-msys-*-bin.tar" />
+        <requires eq="msys-groff-%-msys-%-bin.tar" />
+        <requires eq="msys-perl-*-msys-*-bin.tar" />
+        <requires eq="msys-sed-*-msys-*-bin.tar" />
+        <release tarname="groff-1.20.1-2-msys-1.0.13-ext.tar.lzma" />
+      </component>
+
+      <component class="smp">
+        <release tarname="groff-1.20.1-2-msys-1.0.13-smp.tar.lzma" />
+      </component>
+
+      <component class="doc">
+        <release tarname="groff-1.20.1-2-msys-1.0.13-doc.tar.lzma" />
+      </component>
+
+      <component class="lic">
+        <release tarname="groff-1.20.1-2-msys-1.0.13-lic.tar.lzma" />
+      </component>
+    </package>
+
+  </package-collection>
+</software-distribution>
+<!-- vim: set nocompatible expandtab fileformat=unix textwidth=80 tabstop=2 shiftwidth=2: -->

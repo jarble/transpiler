@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<software-distribution project="MinGW" home="http://mingw.org" issue="2010090600">
+
+  <!-- File: msys-libxml2.xml -->
+
+  <package-collection subsystem="msys">
+    <download-host uri="http://prdownloads.sourceforge.net/mingw/%F?download" />
+
+    <package name="msys-libxml2">
+      <description lang="en" title="libxml2: An XML parser and toolkit" >
+        <paragraph>Libxml2 is the XML C parser and toolkit developed for
+          the Gnome project (but usable outside of the Gnome platform).  It
+          is free software available under the MIT License.  XML itself is a
+          metalanguage to design markup languages, i.e. text language where
+          semantic and structure are added to the content using extra
+          'markup' information enclosed between angle brackets.  HTML is the
+          most well-known markup language.  Though the library is written in
+          C, a variety of language bindings make it available in other
+          environments.
+        </paragraph>
+      </description>
+
+      <licence tarname="libxml2-%-msys-%-lic.tar" />
+      <source tarname="libxml2-%-msys-%-src.tar" />
+
+      <component class="bin">
+        <!-- Every MSYS package requires msys-core-bin.  This dependency
+          is not explicitly stated here; rather, it is implicitly satisfied
+          as a prerequisite of the matching DLL for this package itself,
+          which is specified for each of the following releases.
+          -->
+        <release tarname="libxml2-2.7.6-1-msys-1.0.13-bin.tar.lzma" >
+          <requires eq="msys-libxml2-%-msys-%-dll-2.tar" />
+        </release>
+      </component>
+
+      <component class="doc">
+        <release tarname="libxml2-2.7.6-1-msys-1.0.13-doc.tar.lzma" />
+      </component>
+
+      <component class="lic">
+        <release tarname="libxml2-2.7.6-1-msys-1.0.13-lic.tar.lzma" />
+      </component>
+
+      <component class="dll">
+        <release tarname="libxml2-2.7.6-1-msys-1.0.13-dll-2.tar.lzma" >
+          <requires eq="msys-zlib-*-msys-*-dll.tar" />
+          <requires eq="msys-libiconv-*-msys-*-dll-2.tar" />
+        </release>
+
+        <!-- Every MSYS DLL package requires msys-core-bin -->
+        <requires eq="msys-core-*-msys-*-bin.tar" />
+      </component>
+
+      <component class="dev">
+        <release tarname="libxml2-2.7.6-1-msys-1.0.13-dev.tar.lzma" >
+          <requires eq="msys-libxml2-%-msys-%-dll-2.tar" />
+        </release>
+      </component>
+    </package>
+
+  </package-collection>
+</software-distribution>
+<!-- vim: set nocompatible expandtab fileformat=unix textwidth=80 tabstop=2 shiftwidth=2: -->

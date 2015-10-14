@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<software-distribution project="MinGW" home="http://mingw.org" issue="2010090600">
+
+  <!-- File: mingw32-pdcurses.xml -->
+
+  <package-collection subsystem="mingw32">
+    <download-host uri="http://prdownloads.sourceforge.net/mingw/%F?download" />
+
+    <package name="mingw32-pdcurses" alias="mingw32-PDCurses pdcurses PDCurses">
+      <description lang="en" title="PDCurses: Public Domain Curses Implementation">
+        <paragraph>Public Domain Curses, aka PDCurses, is an implementation of
+          X/Open curses for multiple platforms.  This package provides normal,
+          unicode (wide char), and UTF-8 versions of the library and associated
+          demonstration programs.
+        </paragraph>
+        <paragraph>The mingw32-pdcurses package provides the documentation and
+          demonstration programs for the PDCurses library.  The associated
+          mingw32-libpdcurses package provides the runtime library and related
+          development files.
+        </paragraph>
+      </description>
+
+      <licence tarname="PDCurses-%-mingw32-%-lic.tar" />
+      <source tarname="PDCurses-%-mingw32-%-src.tar" />
+
+      <component class="bin">
+        <release tarname="PDCurses-3.4-1-mingw32-bin.tar.lzma" >
+          <requires eq="mingw32-libpdcurses-%-mingw32-%-dll.tar" />
+        </release>
+      </component>
+
+      <component class="doc">
+        <release tarname="PDCurses-3.4-1-mingw32-doc.tar.lzma" />
+      </component>
+
+      <component class="lic">
+        <release tarname="PDCurses-3.4-1-mingw32-lic.tar.lzma" />
+      </component>
+    </package>
+
+    <package name="mingw32-libpdcurses" alias="libpdcurses">
+      <description lang="en" title="libpdcurses: Public Domain Curses Implementation" >
+        <paragraph>Public Domain Curses, aka PDCurses, is an implementation of
+          X/Open curses for multiple platforms.  This package provides normal,
+          unicode (wide char), and UTF-8 versions of the library and associated
+          demonstration programs.
+        </paragraph>
+        <paragraph>The mingw32-libpdcurses package provides the runtime library
+          and related development files for pdcurses.  The associated
+          mingw32-pdcurses package provides the documentation and demonstration
+          programs related to the library.
+        </paragraph>
+      </description>
+
+      <licence tarname="PDCurses-%-mingw32-%-lic.tar" />
+      <source tarname="PDCurses-%-mingw32-%-src.tar" />
+
+      <component class="dll">
+        <release tarname="libpdcurses-3.4-1-mingw32-dll.tar.lzma" />
+      </component>
+
+      <component class="dev">
+        <release tarname="libpdcurses-3.4-1-mingw32-dev.tar.lzma" >
+          <requires eq="mingw32-libpdcurses-%-mingw32-%-dll.tar" />
+        </release>
+      </component>
+    </package>
+
+  </package-collection>
+</software-distribution>
+<!-- vim: set nocompatible expandtab fileformat=unix textwidth=80 tabstop=2 shiftwidth=2: -->

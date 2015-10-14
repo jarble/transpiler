@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<software-distribution project="MinGW" home="http://mingw.org" issue="2010082900">
+  <package-collection subsystem="mingw32">
+    <download-host uri="http://prdownloads.sourceforge.net/mingw/%F?download" />
+    <!-- NOTE: no alias declared here, because msys-make is considered
+    the "preferred" make -->
+    <package name="mingw32-make">
+      <description lang="en" title="make: GNU make utility to maintain groups of programs" >
+        <paragraph>The `make' utility automatically determines which pieces
+          of a large program need to be recompiled, and issues commands to
+          recompile them. GNU `make' was implemented by Richard Stallman
+          and Roland McGrath.  Development since Version 3.76 has been
+          handled by Paul D. Smith.
+        </paragraph>
+        <paragraph>The MinGW/MSYS project provides two versions of make:
+          the msys-make version acts generally more as make is intended
+          to operate, and gives fewer headaches during execution. However,
+          msys-make requires the MSYS dll.  This version, mingw32-make,
+          does not require the MSYS dll, but because of the lack of POSIX
+          support in "pure" Win32 has a number of known shortcomings in
+          comparison.
+        </paragraph>
+      </description>
+      <release tarname="make-3.82-3-mingw32-bin.tar.lzma">
+          <source tarname="make-3.82-3-mingw32-src.tar.lzma" />
+      </release>
+      <release tarname="make-3.81.90-20100618-1-mingw32-bin.tar.lzma">
+          <source tarname="make-3.81.90-20100618-1-mingw32-src.tar.lzma" />
+      </release>
+      <release tarname="make-3.81-20090914-mingw32-bin.tar.gz">
+          <source tarname="make-3.81-20090914-mingw32-src.tar.gz" />
+      </release>
+    </package>
+  </package-collection>
+</software-distribution>
+<!-- vim: set nocompatible expandtab tw=80 ts=2 sw=2 ff=unix: -->
+

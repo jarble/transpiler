@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<software-distribution project="MinGW" home="http://mingw.org" issue="2010081000">
+
+  <!-- File: msys-m4.xml -->
+
+  <package-collection subsystem="msys">
+    <download-host uri="http://prdownloads.sourceforge.net/mingw/%F?download" />
+
+    <package name="msys-m4">
+      <affiliate group="MSYS Base System" />
+      <description lang="en" title="m4: GNU Macro Processor" >
+        <paragraph>m4 is a macro processor, in the sense that it copies
+          its input to the output, expanding macros as it goes.  Macros
+          are either builtin or user-defined, and can take any number of
+          arguments.  Besides just doing macro expansion, `m4' has builtin
+          functions for including named files, running shell commands,
+          doing integer arithmetic, manipulating text in various ways,
+          performing recursion, etc....  `m4' can be used either as a
+          front-end to a compiler, or as a macro processor in its own
+          right. Its primary use is by autoconf, to generate configure
+          scripts from a library of m4 macros.
+        </paragraph>
+      </description>
+
+      <source tarname="m4-%-msys-%-src.tar" />
+      <licence tarname="m4-%-msys-%-lic.tar" />
+
+      <component class="bin">
+        <requires eq="msys-core-*-msys-*-bin.tar" />
+        <release tarname="m4-1.4.14-1-msys-1.0.13-bin.tar.lzma" />
+      </component>
+
+      <component class="doc">
+        <release tarname="m4-1.4.14-1-msys-1.0.13-doc.tar.lzma" />
+      </component>
+
+      <component class="lic">
+        <release tarname="m4-1.4.14-1-msys-1.0.13-lic.tar.lzma" />
+      </component>
+    </package>
+
+  </package-collection>
+</software-distribution>
+<!-- vim: set nocompatible expandtab fileformat=unix textwidth=80 tabstop=2 shiftwidth=2: -->

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<software-distribution project="MinGW" home="http://www.mingw.org" issue="2010083100">
+
+  <!-- File: mingw32-mpfr.xml ~~ mingw-get package description for mpfr -->
+
+  <package-collection subsystem="mingw32">
+    <download-host uri="http://prdownloads.sourceforge.net/mingw/%F?download" />
+
+    <!-- Provides the package descriptions for the mpfr library, which -->
+    <!-- is a runtime prerequisite for modern versions of GCC.        -->
+
+    <package name="mingw32-mpfr" alias="mpfr">
+      <affiliate group="MinGW Standard Libraries" />
+      <description lang="en" title="mpfr: Arbitrary Precision Floating Point Math Library" >
+        <paragraph>
+          The MPFR library is a C library for multiple-precision floating-point
+          computations with correct rounding. The main goal of MPFR is to
+          provide a library for multiple-precision floating-point computation
+          which is both efficient and has a well-defined semantics. It copies
+          the good ideas from the ANSI/IEEE-754 standard for double-precision
+          floating-point arithmetic (53-bit mantissa). MPFR is based on the GMP
+          multiple-precision library.
+        </paragraph>
+        <paragraph>
+          The mingw32-mpfr package provides the documentation for the mpfr
+          library, as well as the related development files.  The associated
+          mingw32-libmpfr package provides the runtime library.
+        </paragraph>
+      </description>
+
+      <source tarname="mpfr-%-mingw32-src.tar.lzma" />
+      <licence tarname="mpfr-%-mingw32-lic.tar.lzma" />
+
+      <component class="dev">
+        <release tarname="mpfr-2.4.1-1-mingw32-dev.tar.lzma" >
+          <requires eq="mingw32-libmpfr-%-mingw32-dll-1.tar" />
+        </release>
+      </component>
+
+      <component class="doc">
+        <release tarname="mpfr-2.4.1-1-mingw32-doc.tar.lzma" />
+      </component>
+
+      <component class="lic">
+        <release tarname="mpfr-2.4.1-1-mingw32-lic.tar.lzma" />
+      </component>
+    </package>
+
+    <package name="mingw32-libmpfr" alias="libmpfr">
+      <affiliate group="MinGW Standard Libraries" />
+      <description lang="en" title="Arbitrary Precision Floating Point Math Library" >
+        <paragraph>
+          The MPFR library is a C library for multiple-precision floating-point
+          computations with correct rounding. The main goal of MPFR is to
+          provide a library for multiple-precision floating-point computation
+          which is both efficient and has a well-defined semantics. It copies
+          the good ideas from the ANSI/IEEE-754 standard for double-precision
+          floating-point arithmetic (53-bit mantissa). MPFR is based on the GMP
+          multiple-precision library.
+        </paragraph>
+        <paragraph>
+          The mingw32-libmpfr package provides the runtime library.  The
+          associated mingw32-mpfr package provides the documentation for the
+          mpfr library, as well as the related development files.
+        </paragraph>
+        <paragraph>
+          This is a required component of the MinGW Compiler Suite.
+        </paragraph>
+      </description>
+
+      <source tarname="mpfr-%-mingw32-src.tar.lzma" />
+      <licence tarname="mpfr-%-mingw32-lic.tar.lzma" />
+
+      <component class="dll">
+        <release tarname="libmpfr-2.4.1-1-mingw32-dll-1.tar.lzma" >
+          <requires eq="mingw32-libgmp-*-mingw32-dll-10.tar" />
+        </release>
+      </component>
+    </package>
+
+  </package-collection>
+</software-distribution>
+<!-- vim: set nocompatible expandtab fileformat=unix textwidth=80 tabstop=2 shiftwidth=2: -->

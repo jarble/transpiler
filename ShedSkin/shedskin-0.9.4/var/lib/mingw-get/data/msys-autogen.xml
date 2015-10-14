@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<software-distribution project="MinGW" home="http://mingw.org" issue="2010090600">
+
+  <!-- File: msys-autogen.xml -->
+
+  <package-collection subsystem="msys">
+    <download-host uri="http://prdownloads.sourceforge.net/mingw/%F?download" />
+
+    <package name="msys-autogen">
+      <affiliate group="MinGW Developer Toolkit" />
+      <description lang="en" title="autogen: Simplifies the creation and maintenance of programs" >
+        <paragraph>AutoGen is a tool designed to simplify the creation and
+          maintenance of programs that contain large amounts of repetitious
+          text.  It is especially valuable in programs that have several
+          blocks of text that must be kept synchronized.  libopts provides
+          the runtime component of an autogen add-on that simplifies the
+          maintainance of that portion of your code that parses command-line
+          options.
+        </paragraph>
+        <paragraph>A common example where this would be useful is in
+          creating and maintaining the code required for processing program
+          options.  Processing options requires multiple constructs to be
+          maintained in parallel in different places in your program.
+          Options maintenance needs to be done countless times.  So, AutoGen
+          comes with an add-on package named AutoOpts that simplifies the
+          maintenance and documentation of program options.
+        </paragraph>
+        <paragraph>The msys-autogen package provides the autogen utilities
+          and documentation.  The associated msys-libopts package provides
+          the runtime library and development files for AutoOpts, a semi-
+          automated command line option parser library and toolset based on
+          AutoGen.
+        </paragraph>
+      </description>
+
+      <licence tarname="autogen-%-msys-%-lic.tar" />
+      <source tarname="autogen-%-msys-%-src.tar" />
+
+      <component class="bin">
+        <!-- Every MSYS package requires msys-core-bin.  This dependency
+          is not explicitly stated here; rather, it is implicitly satisfied
+          as a prerequisite of the matching DLL for this package itself,
+          which is specified for each of the following releases.
+          -->
+        <release tarname="autogen-5.10.1-1-msys-1.0.15-bin.tar.lzma" >
+          <requires eq="msys-libguile-*-msys-*-dll-17.tar" />
+          <requires eq="msys-libopts-%-msys-%-dll-25.tar" />
+          <requires eq="msys-libregex-*-msys-*-dll-1.tar" />
+          <requires eq="msys-libxml2-*-msys-*-dll-2.tar" />
+        </release>
+      </component>
+
+      <component class="doc">
+        <release tarname="autogen-5.10.1-1-msys-1.0.15-doc.tar.lzma" />
+      </component>
+
+      <component class="lic">
+        <release tarname="autogen-5.10.1-1-msys-1.0.15-lic.tar.lzma" />
+      </component>
+    </package>
+
+    <package name="msys-libopts">
+      <description lang="en" title="libopts: a semi-automated command line parsing library" >
+        <paragraph>AutoGen is a tool designed to simplify the creation and
+          maintenance of programs that contain large amounts of repetitious
+          text.  It is especially valuable in programs that have several
+          blocks of text that must be kept synchronized.  libopts provides
+          the runtime component of an autogen add-on that simplifies the
+          maintainance of that portion of your code that parses command-line
+          options.
+        </paragraph>
+        <paragraph>A common example where this would be useful is in
+          creating and maintaining the code required for processing program
+          options.  Processing options requires multiple constructs to be
+          maintained in parallel in different places in your program.
+          Options maintenance needs to be done countless times.  So, AutoGen
+          comes with an add-on package named AutoOpts that simplifies the
+          maintenance and documentation of program options.
+        </paragraph>
+        <paragraph>The msys-libopts package provides the runtime library
+          and development files for AutoOpts, a semi-automated command
+          line option parser library and toolset based on AutoGen.  The
+          associated msys-autogen package provides the autogen utilities
+          and documentation.
+        </paragraph>
+      </description>
+
+      <licence tarname="autogen-%-msys-%-lic.tar" />
+      <source tarname="autogen-%-msys-%-src.tar" />
+
+      <component class="dll">
+        <release tarname="libopts-5.10.1-1-msys-1.0.15-dll-25.tar.lzma" >
+          <requires eq="msys-libregex-*-msys-*-dll-1.tar" />
+        </release>
+
+        <!-- Every MSYS DLL package requires msys-core-bin -->
+        <requires eq="msys-core-*-msys-*-bin.tar" />
+      </component>
+
+      <component class="dev">
+        <requires eq="msys-autogen-*-msys-*-bin.tar" />
+        <requires eq="msys-libguile-*-msys-*-dev.tar" />
+        <requires eq="msys-libregex-*-msys-*-dev.tar" />
+        <release tarname="libopts-5.10.1-1-msys-1.0.15-dev.tar.lzma" >
+          <requires eq="msys-libopts-%-msys-%-dll-25.tar" />
+        </release>
+      </component>
+    </package>
+
+  </package-collection>
+</software-distribution>
+<!-- vim: set nocompatible expandtab fileformat=unix textwidth=80 tabstop=2 shiftwidth=2: -->

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<software-distribution project="MinGW" home="http://mingw.org" issue="2010080900">
+
+  <!-- File: msys-make.xml -->
+
+  <package-collection subsystem="msys">
+    <download-host uri="http://prdownloads.sourceforge.net/mingw/%F?download" />
+
+    <package name="msys-make">
+      <affiliate group="MSYS Base System" />
+      <description lang="en" title="make (msys): GNU make utility to maintain groups of programs" >
+        <paragraph>The `make' utility automatically determines which pieces
+          of a large program need to be recompiled, and issues commands to
+          recompile them. GNU `make' was implemented by Richard Stallman
+          and Roland McGrath.  Development since Version 3.76 has been
+          handled by Paul D. Smith.
+        </paragraph>
+        <paragraph>This is a case-preserving version of GNU make. While the
+          win32 file systems encountered when using MSYS software are
+          invariably case-INsensitive, some users prefer a GNU `make' that
+          itself is case-sensitive -- this version of make is a compromise
+          which exploits the case-preserving aspect of win32 file systems.
+          It considers *all* targets as fundamentally case-insensitive, but
+          first attempts to resolve them as case-sensitive, falling back to
+          the case-insensitive behaviour only if the case-sensitive match
+          remains unresolved.
+        </paragraph>
+        <paragraph>The MinGW/MSYS project provides two versions of make:
+          this msys-make version acts generally more as make is intended
+          to operate, and gives fewer headaches during execution. However,
+          msys-make requires the MSYS dll.  The other version, mingw32-make,
+          does not require the MSYS dll, but because of the lack of POSIX
+          support in "pure" Win32 has a number of known shortcomings in
+          comparison.
+        </paragraph>
+      </description>
+
+      <source tarname="make-%-msys-%-src.tar" />
+      <licence tarname="make-%-msys-%-lic.tar" />
+
+      <component class="bin">
+        <requires eq="msys-core-*-msys-*-bin.tar" />
+
+        <release tarname="make-3.81-3-msys-1.0.13-bin.tar.lzma" >
+          <requires eq="msys-libintl-*-msys-*-dll-8.tar" />
+        </release>
+      </component>
+
+      <component class="lang">
+        <release tarname="make-3.81-3-msys-1.0.13-lang.tar.lzma" />
+      </component>
+
+      <component class="doc">
+        <release tarname="make-3.81-3-msys-1.0.13-doc.tar.lzma" />
+      </component>
+
+      <component class="lic">
+        <release tarname="make-3.81-3-msys-1.0.13-lic.tar.lzma" />
+      </component>
+    </package>
+
+  </package-collection>
+</software-distribution>
+<!-- vim: set nocompatible expandtab fileformat=unix textwidth=80 tabstop=2 shiftwidth=2: -->

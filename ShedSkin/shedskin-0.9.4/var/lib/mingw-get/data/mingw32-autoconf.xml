@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<software-distribution project="MinGW" home="http://mingw.org" issue="2010090600">
+
+  <!-- File: mingw32-autoconf.xml -->
+
+  <package-collection subsystem="mingw32">
+    <download-host uri="http://prdownloads.sourceforge.net/mingw/%F?download" />
+
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <package name="mingw32-autoconf" alias="autoconf">
+      <affiliate group="MinGW Autotools" />
+      <description lang="en" title="autoconf: Wrapper scripts for autoconf commands">
+        <paragraph>Autoconf is an extensible package of M4 macros that
+          produce shell scripts to automatically configure software source
+          code packages.  These scripts can adapt the packages to many
+          kinds of UNIX-like systems without manual user intervention.
+          Autoconf creates a configuration script for a package from a
+          template file that lists the operating system features that the
+          package can use, in the form of M4 macro calls.  However, THIS
+          package is actually a simple wrapper, that automatically
+          redirects to either autoconf-2.13 or autoconf-2.6x, as needed
+          or requested.
+        </paragraph>
+      </description>
+
+      <licence tarname="autoconf-%-mingw32-%-lic.tar" />
+      <source tarname="autoconf-%-mingw32-%-src.tar" />
+
+      <component class="bin">
+        <requires eq="mingw32-autoconf2.1-*-mingw32-*-bin.tar" />
+        <requires eq="mingw32-autoconf2.5-*-mingw32-*-bin.tar" />
+        <requires eq="msys-bash-*-msys-*-bin.tar" />
+        <requires eq="msys-core-*-msys-*-bin.tar" />
+        <requires eq="msys-gawk-*-msys-*-bin.tar" />
+        <release tarname="autoconf-9-1-mingw32-bin.tar.lzma" />
+      </component>
+
+      <component class="lic">
+        <release tarname="autoconf-9-1-mingw32-lic.tar.lzma" />
+      </component>
+    </package>
+
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <package name="mingw32-autoconf2.1" alias="autoconf2.1">
+      <affiliate group="MinGW Autotools" />
+      <description lang="en" title="autoconf2.1: Automatic Configure Script Builder (2.1x series)">
+        <paragraph>Autoconf is an extensible package of M4 macros that
+          produce shell scripts to automatically configure software source
+          code packages.  These scripts can adapt the packages to many
+          kinds of UNIX-like systems without manual user intervention.
+          Autoconf creates a configuration script for a package from a
+          template file that lists the operating system features that the
+          package can use, in the form of M4 macro calls.  This package
+          provides the latest implementation of autoconf in the 2.1x
+          series.
+        </paragraph>
+      </description>
+
+      <licence tarname="autoconf2.1-%-mingw32-%-lic.tar" />
+      <source tarname="autoconf2.1-%-mingw32-%-src.tar" />
+
+      <component class="bin">
+        <requires eq="msys-core-*-msys-*-bin.tar" />
+        <requires eq="msys-coreutils-*-msys-*-bin.tar" />
+        <requires eq="msys-m4-*-msys-*-bin.tar" />
+        <requires eq="msys-perl-*-msys-*-bin.tar" />
+        <requires eq="msys-texinfo-*-msys-*-bin.tar" />
+        <release tarname="autoconf2.1-2.13-4-mingw32-bin.tar.lzma" />
+      </component>
+
+      <component class="doc">
+        <release tarname="autoconf2.1-2.13-4-mingw32-doc.tar.lzma" />
+      </component>
+
+      <component class="lic">
+        <release tarname="autoconf2.1-2.13-4-mingw32-lic.tar.lzma" />
+      </component>
+    </package>
+
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <package name="mingw32-autoconf2.5" alias="autoconf2.5">
+      <affiliate group="MinGW Autotools" />
+      <description lang="en" title="autoconf2.5: Automatic Configure Script Builder (2.5x/2.6x series)">
+        <paragraph>Autoconf is an extensible package of M4 macros that
+          produce shell scripts to automatically configure software source
+          code packages.  These scripts can adapt the packages to many
+          kinds of UNIX-like systems without manual user intervention.
+          Autoconf creates a configuration script for a package from a
+          template file that lists the operating system features that the
+          package can use, in the form of M4 macro calls.  This package
+          provides the latest implementation of autoconf in the 2.5x/2.6x
+          series.
+        </paragraph>
+      </description>
+
+      <licence tarname="autoconf2.5-%-mingw32-%-lic.tar" />
+      <source tarname="autoconf2.5-%-mingw32-%-src.tar" />
+
+      <component class="bin">
+        <requires eq="msys-core-*-msys-*-bin.tar" />
+        <requires eq="msys-coreutils-*-msys-*-bin.tar" />
+        <requires eq="msys-m4-*-msys-*-bin.tar" />
+        <requires eq="msys-perl-*-msys-*-bin.tar" />
+        <requires eq="msys-texinfo-*-msys-*-bin.tar" />
+        <release tarname="autoconf2.5-2.67-1-mingw32-bin.tar.lzma" />
+      </component>
+
+      <component class="doc">
+        <release tarname="autoconf2.5-2.67-1-mingw32-doc.tar.lzma" />
+      </component>
+
+      <component class="lic">
+        <release tarname="autoconf2.5-2.67-1-mingw32-lic.tar.lzma" />
+      </component>
+    </package>
+
+  </package-collection>
+</software-distribution>
+<!-- vim: set nocompatible expandtab fileformat=unix textwidth=80 tabstop=2 shiftwidth=2: -->

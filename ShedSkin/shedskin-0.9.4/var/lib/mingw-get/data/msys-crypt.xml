@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<software-distribution project="MinGW" home="http://mingw.org" issue="2010090500">
+
+  <!-- File: msys-crypt.xml -->
+
+  <package-collection subsystem="msys">
+    <download-host uri="http://prdownloads.sourceforge.net/mingw/%F?download" />
+
+    <package name="msys-crypt">
+      <description lang="en" title="crypt: tools for DES encryption">
+        <paragraph>crypt provides a library implementing the standard
+          encryption functions crypt(), encrypt(), and setkey().  Many
+          programs, such as perl, rely on the presence of these functions;
+          as the functions are not provided by the MSYS runtime, this
+          additional library fulfils those needs.
+        </paragraph>
+        <paragraph>crypt also provides a command-line tool for exercising
+          those functions.  `crypt cleartext' generates an encrypted version
+          of the cleartext using a random salt.  `crypt salt cleartext'
+          encrypts cleartext using the specified salt.  Salt is a two-character
+          string which also appears as the first two characters of the
+          encrypted cleartext.
+        </paragraph>
+        <paragraph>The msys-crypt package provides the command-line utility
+          crypt and related documentation.  The associated msys-libcrypt
+          package provides the runtime library and related development files.
+        </paragraph>
+      </description>
+
+      <licence tarname="crypt-%-msys-%-lic.tar" />
+      <source tarname="crypt-%-msys-%-src.tar" />
+
+      <component class="bin">
+        <requires eq="msys-core-*-msys-*-bin.tar" />
+        <!-- Note that the crypt utility is linked against the static
+             version of libcrypt.a, so there is no -dll dependency here. -->
+        <release tarname="crypt-1.1_1-3-msys-1.0.13-bin.tar.lzma" />
+      </component>
+
+      <component class="doc">
+        <release tarname="crypt-1.1_1-3-msys-1.0.13-doc.tar.lzma" />
+      </component>
+
+      <component class="lic">
+        <release tarname="crypt-1.1_1-3-msys-1.0.13-lic.tar.lzma" />
+      </component>
+    </package>
+
+    <package name="msys-libcrypt">
+      <description lang="en" title="libcrypt: runtime library for crypt">
+        <paragraph>crypt provides a library implementing the standard
+          encryption functions crypt(), encrypt(), and setkey().  Many
+          programs, such as perl, rely on the presence of these functions;
+          as the functions are not provided by the MSYS runtime, this
+          additional library fulfils those needs.
+        </paragraph>
+        <paragraph>crypt also provides a command-line tool for exercising
+          those functions.  `crypt cleartext' generates an encrypted version
+          of the cleartext using a random salt.  `crypt salt cleartext'
+          encrypts cleartext using the specified salt.  Salt is a two-character
+          string which also appears as the first two characters of the
+          encrypted cleartext.
+        </paragraph>
+        <paragraph>The msys-libcrypt package provides the libcrypt runtime
+          library and related development files.  The associated msys-crypt
+          package provides the command-line utility crypt and related
+          documentation.
+        </paragraph>
+      </description>
+
+      <licence tarname="crypt-%-msys-%-lic.tar" />
+      <source tarname="crypt-%-msys-%-src.tar" />
+
+      <component class="dll">
+        <!-- Every MSYS DLL package requires msys-core-bin -->
+        <requires eq="msys-core-*-msys-*-bin.tar" />
+        <release tarname="libcrypt-1.1_1-3-msys-1.0.13-dll-0.tar.lzma" />
+      </component>
+
+      <component class="dev">
+        <release tarname="libcrypt-1.1_1-3-msys-1.0.13-dev.tar.lzma" >
+          <requires eq="msys-libcrypt-%-msys-%-dll-0.tar" />
+        </release>
+      </component>
+    </package>
+
+  </package-collection>
+</software-distribution>
+<!-- vim: set nocompatible expandtab fileformat=unix textwidth=80 tabstop=2 shiftwidth=2: -->

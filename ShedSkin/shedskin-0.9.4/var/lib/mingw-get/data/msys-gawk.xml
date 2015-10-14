@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<software-distribution project="MinGW" home="http://mingw.org" issue="2010072600">
+
+  <!-- File: msys-gawk.xml -->
+
+  <package-collection subsystem="msys">
+    <download-host uri="http://prdownloads.sourceforge.net/mingw/%F?download" />
+
+    <package name="msys-gawk" alias="msys-awk">
+      <affiliate group="MSYS Base System" />
+      <description lang="en" title="gawk: pattern scanning and processing language" >
+        <paragraph>Gawk is the GNU implementation of the AWK programming
+          language. Many computer users need to manipulate text files:
+          extract and then operate on data from parts of certain lines
+          while discarding the rest, make changes in various text files
+          wherever certain patterns appear, and so on. To write a program
+          to do these things in a language such as C or Pascal is a
+          time-consuming inconvenience that may take many lines of code.
+          The job is easy with gawk, which interprets a special-purpose
+          programming language that makes it possible to handle many
+          data-reformatting jobs with just a few lines of code.
+        </paragraph>
+      </description>
+
+      <source tarname="gawk-%-msys-%-src.tar" />
+      <licence tarname="gawk-%-msys-%-lic.tar" />
+
+      <component class="bin">
+        <release tarname="gawk-3.1.7-2-msys-1.0.13-bin.tar.lzma" >
+          <requires eq="msys-libintl-*-msys-*-dll-8.tar" />
+        </release>
+        <requires eq="msys-core-*-msys-*-bin.tar" />
+        <requires eq="msys-coreutils-*-msys-*-bin.tar" />
+        <requires eq="msys-bash-*-msys-*-bin.tar" />
+      </component>
+
+      <component class="lang">
+        <release tarname="gawk-3.1.7-2-msys-1.0.13-lang.tar.lzma" />
+      </component>
+
+      <component class="doc">
+        <release tarname="gawk-3.1.7-2-msys-1.0.13-doc.tar.lzma" />
+      </component>
+
+      <component class="lic">
+        <release tarname="gawk-3.1.7-2-msys-1.0.13-lic.tar.lzma" />
+      </component>
+    </package>
+
+  </package-collection>
+</software-distribution>
+<!-- vim: set nocompatible expandtab fileformat=unix textwidth=80 tabstop=2 shiftwidth=2: -->

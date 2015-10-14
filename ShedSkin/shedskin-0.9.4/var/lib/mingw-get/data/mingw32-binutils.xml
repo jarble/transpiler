@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<software-distribution project="MinGW" home="http://www.mingw.org" issue="2010061600">
+
+  <!-- File: mingw32-binutils.xml ~~ mingw-get package description for GNU binutils -->
+
+  <package-collection subsystem="mingw32">
+    <download-host uri="http://prdownloads.sourceforge.net/mingw/%F?download" />
+
+    <package name="mingw32-binutils" alias="binutils">
+      <affiliate group="MinGW Compiler Suite" />
+      <description lang="en" title="The GNU Binary File Utilities">
+	<paragraph>
+	  This package provides the GNU assembler, linker, archive librarian,
+	  and other utilities for manipulating object format files.
+	</paragraph>
+	<paragraph>
+	  This is a required component of the MinGW Compiler Suite.
+	</paragraph>
+      </description>
+      <release tarname="binutils-2.20.51-1-mingw32-bin.tar.lzma">
+	<source tarname="binutils-2.20.51-1-mingw32-src.tar.lzma" />
+      </release>
+      <release tarname="binutils-2.20.1-2-mingw32-bin.tar.gz">
+	<source tarname="binutils-2.20.1-src.tar.gz" />
+      </release>
+      <release tarname="binutils-2.20-1-mingw32-bin.tar.gz" />
+      <release tarname="binutils-2.19.1-mingw32-bin.tar.gz">
+	<source tarname="binutils-2.19.1-src.tar.gz" />
+      </release>
+    </package>
+
+  </package-collection>
+</software-distribution>

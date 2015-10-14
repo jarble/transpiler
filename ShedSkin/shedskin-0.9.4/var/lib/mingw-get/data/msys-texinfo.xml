@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<software-distribution project="MinGW" home="http://mingw.org" issue="2010080900">
+
+  <!-- File: msys-texinfo.xml -->
+
+  <package-collection subsystem="msys">
+    <download-host uri="http://prdownloads.sourceforge.net/mingw/%F?download" />
+
+    <package name="msys-texinfo">
+      <affiliate group="MSYS Base System" />
+      <description lang="en" title="texinfo: Documentation system for on-screen and printed manuals" >
+        <paragraph>Texinfo is the official documentation format of the GNU
+          project. It was invented by Richard Stallman and Bob Chassell
+          many years ago, loosely based on Brian Reid's Scribe and other
+          formatting languages of the time. It is used by many non-GNU
+          projects as well.
+        </paragraph>
+        <paragraph>Texinfo uses a single source file to produce output in
+          a number of formats, both online and printed (dvi, html, info,
+          pdf, xml, etc.). This means that instead of writing different
+          documents for online information and another for a printed
+          manual, you need write only one document. And when the work is
+          revised, you need revise only that one document.
+        </paragraph>
+        <paragraph>msys-texinfo provides makeinfo, for generating .info
+          output files from .texi input; install-info, for installing them
+          correctly in an info/ directory and updating the info/dir
+          manifest; and info, a viewer for info documentation files. Note
+          that generating .dvi or .pdf output requires a fully-fledged TeX
+          implementation, which is not available as part of the MinGW/MSYS
+          distribution -- MikTeX may be of some assistance.
+        </paragraph>
+      </description>
+
+      <source tarname="texinfo-%-msys-%-src.tar" />
+      <licence tarname="texinfo-%-msys-%-lic.tar" />
+
+      <component class="bin">
+        <requires eq="msys-core-*-msys-*-bin.tar" />
+
+        <release tarname="texinfo-4.13a-2-msys-1.0.13-bin.tar.lzma">
+          <requires eq="msys-libintl-*-msys-*-dll-8.tar" />
+          <requires eq="msys-libtermcap-*-msys-*-dll-0.tar" />
+          <requires eq="msys-libregex-*-msys-*-dll-1.tar" />
+        </release>
+
+        <!-- the following are required by the texi2dvi script -->
+        <requires eq="msys-bash-*-msys-*-bin.tar" />
+        <requires eq="msys-coreutils-*-msys-*-bin.tar" />
+        <requires eq="msys-diffutils-*-msys-*-bin.tar" />
+        <requires eq="msys-grep-*-msys-*-bin.tar" />
+        <requires eq="msys-tar-*-msys-*-bin.tar" />
+      </component>
+
+      <component class="lang">
+        <release tarname="texinfo-4.13a-2-msys-1.0.13-lang.tar.lzma" />
+      </component>
+
+      <component class="doc">
+        <release tarname="texinfo-4.13a-2-msys-1.0.13-doc.tar.lzma" />
+      </component>
+
+      <component class="lic">
+        <release tarname="texinfo-4.13a-2-msys-1.0.13-lic.tar.lzma" />
+      </component>
+    </package>
+
+  </package-collection>
+</software-distribution>
+<!-- vim: set nocompatible expandtab fileformat=unix textwidth=80 tabstop=2 shiftwidth=2: -->

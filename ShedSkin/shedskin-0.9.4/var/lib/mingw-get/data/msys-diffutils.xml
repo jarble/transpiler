@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<software-distribution project="MinGW" home="http://mingw.org" issue="2010072800">
+
+  <!-- File: msys-diffutils.xml -->
+
+  <package-collection subsystem="msys">
+    <download-host uri="http://prdownloads.sourceforge.net/mingw/%F?download" />
+
+    <package name="msys-diffutils">
+      <affiliate group="MSYS Base System" />
+      <description lang="en" title="diffutils: GNU collection of diff utilities" >
+        <paragraph>Diffutils provides a group of utilities that displays
+          difference between and among text files. 'diff' outputs the
+          difference between two files in any of several formats. If the
+          files are identical, it normally produces no ouput; if they are
+          binary (non-text) it normally reports only that they are
+          different. 'cmp' shows the offsets and files numbers where two
+          files differ; it can also show, side by side, all the characters
+          that differ between the two files. 'sdiff' merges two files
+          interactively. 'diff3' shows differences among three files. If
+          two people have made independent changes to a common original,
+          diff3 reports that difference between the original and the two
+          changed versions, and can produce a merged file that contains
+          both persons' changes along with warnings about conflicts.
+        </paragraph>
+      </description>
+
+      <source tarname="diffutils-%-msys-%-src.tar" />
+      <licence tarname="diffutils-%-msys-%-lic.tar" />
+
+      <component class="bin">
+        <release tarname="diffutils-2.8.7.20071206cvs-3-msys-1.0.13-bin.tar.lzma" >
+          <requires eq="msys-libintl-*-msys-*-dll-8.tar" />
+        </release>
+        <requires eq="msys-core-*-msys-*-bin.tar" />
+      </component>
+
+      <component class="lang">
+        <release tarname="diffutils-2.8.7.20071206cvs-3-msys-1.0.13-lang.tar.lzma" />
+      </component>
+
+      <component class="doc">
+        <release tarname="diffutils-2.8.7.20071206cvs-3-msys-1.0.13-doc.tar.lzma" />
+      </component>
+
+      <component class="lic">
+        <release tarname="diffutils-2.8.7.20071206cvs-3-msys-1.0.13-lic.tar.lzma" />
+      </component>
+    </package>
+
+  </package-collection>
+</software-distribution>
+<!-- vim: set nocompatible expandtab fileformat=unix textwidth=80 tabstop=2 shiftwidth=2: -->

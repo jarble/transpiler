@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<software-distribution project="MinGW" home="http://mingw.org" issue="2010072800">
+
+  <!-- File: msys-gzip.xml -->
+
+  <package-collection subsystem="msys">
+    <download-host uri="http://prdownloads.sourceforge.net/mingw/%F?download" />
+
+    <package name="msys-gzip">
+      <affiliate group="MSYS Base System" />
+      <description lang="en" title="gzip: compress or expand files" >
+        <paragraph>Gzip reduces the size of the named files using
+          Lempel-Ziv coding (LZ77).  Whenever possible, each file is
+          replaced by one with the extension .gz, while keeping the same
+          ownership modes, access and modification times. The LZ77 algorithm
+          is the same one used by zip and PKZIP "deflate". The amount of
+          compression obtained depends on the size of the input and the
+          distribution of common substrings.  Typically, text such as
+          source code or English is reduced by 60-70%.  Compression is
+          generally much better than that achieved by LZW (as used in
+          compress), Huffman coding (as used in pack), or adaptive Huffman
+          coding (compact). gzip is the de facto standard compression
+          program on unix, and is universally available.
+        </paragraph>
+      </description>
+
+      <source tarname="gzip-%-msys-%-src.tar" />
+      <licence tarname="gzip-%-msys-%-lic.tar" />
+
+      <component class="bin">
+        <release tarname="gzip-1.3.12-2-msys-1.0.13-bin.tar.lzma" />
+
+        <!-- Every MSYS package requires msys-core-bin -->
+        <requires eq="msys-core-*-msys-*-bin.tar" />
+
+        <!-- Other requirements support the auxiliary scripts,
+          which are provided by the gzip-bin package.
+          -->
+        <requires eq="msys-bash-*-msys-*-bin.tar" />
+        <requires eq="msys-coreutils-*-msys-*-bin.tar" />
+        <requires eq="msys-diffutils-*-msys-*-bin.tar" />
+        <requires eq="msys-grep-*-msys-*-bin.tar" />
+        <requires eq="msys-less-*-msys-*-bin.tar" />
+      </component>
+
+      <component class="doc">
+        <release tarname="gzip-1.3.12-2-msys-1.0.13-doc.tar.lzma" />
+      </component>
+
+      <component class="lic">
+        <release tarname="gzip-1.3.12-2-msys-1.0.13-lic.tar.lzma" />
+      </component>
+    </package>
+
+  </package-collection>
+</software-distribution>
+<!-- vim: set nocompatible expandtab fileformat=unix textwidth=80 tabstop=2 shiftwidth=2: -->

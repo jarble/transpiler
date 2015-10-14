@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<package id="manifest-0-031-549a-6cb01d">
+    <release tarname="mingwrt-3.18-mingw32-dll.tar.gz" />
+    <references>
+        <sysroot id="sysroot-0-002-a7c6-d7dbb5" />
+    </references>
+    <manifest>
+        <file path="bin/mingwm10.dll" />
+        <dir path="doc/runtime" />
+        <file path="doc/runtime/CONTRIBUTORS" />
+        <file path="doc/runtime/DISCLAIMER" />
+        <file path="doc/runtime/README" />
+    </manifest>
+</package>

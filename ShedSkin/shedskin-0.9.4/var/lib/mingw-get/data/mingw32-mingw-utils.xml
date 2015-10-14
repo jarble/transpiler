@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<software-distribution project="MinGW" home="http://mingw.org" issue="2010090600">
+
+  <!-- File: mingw32-mingw-utils.xml -->
+
+  <package-collection subsystem="mingw32">
+    <download-host uri="http://prdownloads.sourceforge.net/mingw/%F?download" />
+
+    <package name="mingw32-mingw-utils" alias="mingw-utils mingw32-utils">
+      <description lang="en" title="mingw-utils: Various useful tools for MinGW" >
+        <paragraph>mingw-utils provides a number of useful utilities for MinGW.
+          These include: `a2dll', a script to generate DLLs from .a archives;
+          `dsw2mak', a script to generate gcc-compatibile GNU Makefiles from
+          MSDevStudio workspace files; `redir.exe', a utility for redirecting
+          stderr within cmd.exe sessions; `reimp.exe', a tool that converts
+          certain MS-format import libraries to GNU format; `res2coff', for
+          converting .res resource files to .o object format (possibly obsoleted
+          by modern versions of windres from mingw32-binutils).  Finally, this
+          package also provides an experimental version of `msys-here.exe', a
+          shell extension that adds a context-menu option to Windows Explorer.
+          To install msys-here, run the `msys-here-config' script.
+        </paragraph>
+        <paragraph>Several utilities were provided in the past by previous
+          incarnations of mingw-utils.  These included pexports, which is now
+          provided by the separate mingw32-pexports package; dos2unix and
+          unix2dos, which are both now provided by the separate
+          mingw32-cygutils-dos2unix package; and DrMinGW.  DrMinGW is now
+          available and maintained outside the MinGW/MSYS project by its
+          original author: http://code.google.com/p/jrfonseca/wiki/DrMingw
+        </paragraph>
+      </description>
+
+      <licence tarname="mingw-utils-%-mingw32-%-lic.tar" />
+      <source tarname="mingw-utils-%-mingw32-%-src.tar" />
+
+      <component class="bin">
+        <!-- All of the following requirements are needed to satisfy 
+             the msys-here-config, a2dll, and dsw2mak elements of
+             mingw-utils -->
+        <requires eq="msys-core-*-msys-*-bin.tar" />
+        <requires eq="msys-bash-*-msys-*-bin.tar" />
+        <requires eq="msys-coreutils-*-msys-*-bin.tar" />
+        <requires eq="msys-sed-*-msys-*-bin.tar" />
+        <requires eq="msys-gawk-*-msys-*-bin.tar" />
+        <requires eq="mingw32-binutils-*-mingw32-*-bin.tar" />
+        <requires eq="mingw32-pexports-*-mingw32-*-bin.tar" />
+        <release tarname="mingw-utils-0.4-1-mingw32-bin.tar.lzma" />
+      </component>
+
+      <component class="doc">
+        <release tarname="mingw-utils-0.4-1-mingw32-doc.tar.lzma" />
+      </component>
+
+      <component class="lic">
+        <release tarname="mingw-utils-0.4-1-mingw32-lic.tar.lzma" />
+      </component>
+    </package>
+
+  </package-collection>
+</software-distribution>
+<!-- vim: set nocompatible expandtab fileformat=unix textwidth=80 tabstop=2 shiftwidth=2: -->

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<software-distribution project="MinGW" home="http://www.mingw.org" issue="2010083100">
+
+  <!-- File: mingw32-gmp.xml ~~ mingw-get package description for gmp -->
+
+  <package-collection subsystem="mingw32">
+    <download-host uri="http://prdownloads.sourceforge.net/mingw/%F?download" />
+
+    <!-- Provides the package descriptions for the gmp library, which -->
+    <!-- is a runtime prerequisite for modern versions of GCC.        -->
+
+    <package name="mingw32-gmp" alias="gmp">
+      <affiliate group="MinGW Standard Libraries" />
+      <description lang="en" title="gmp: The GNU Multiple Precision Arithmetic Library" >
+        <paragraph>
+          GNU MP is a library for arbitrary precision arithmetic, operating on
+          signed integers, rational numbers, and floating point numbers.  It
+          has a rich set of functions, and the functions have a regular
+          interface.
+        </paragraph>
+        <paragraph>
+          The MinGW/MSYS project provides two gmp packages: the native win32
+          mingw32-gmp and an MSYS version, msys-gmp.  mingw32-gmp is provided
+          as a necessary component of modern MinGW gcc compilers, while the
+          msys-gmp version requires the MSYS dll, and is provided as a
+          prerequisite of certain other MSYS tools, such as guile.
+        </paragraph>
+        <paragraph>
+          The mingw32-gmp package provides the documentation for the gmp
+          library, as well as the related development files.  The associated
+          mingw32-libgmp package provides the C runtime library, while the
+          associated mingw32-libgmpxx package provides the C++ runtime library.
+        </paragraph>
+      </description>
+
+      <source tarname="gmp-%-mingw32-src.tar.lzma" />
+      <licence tarname="gmp-%-mingw32-lic.tar.lzma" />
+
+      <component class="dev">
+        <release tarname="gmp-5.0.1-1-mingw32-dev.tar.lzma" >
+          <requires eq="mingw32-libgmp-%-mingw32-dll-10.tar" />
+          <requires eq="mingw32-libgmpxx-%-mingw32-dll-4.tar" />
+        </release>
+      </component>
+
+      <component class="doc">
+        <release tarname="gmp-5.0.1-1-mingw32-doc.tar.lzma" />
+      </component>
+
+      <component class="lic">
+        <release tarname="gmp-5.0.1-1-mingw32-lic.tar.lzma" />
+      </component>
+    </package>
+
+    <package name="mingw32-libgmp" alias="libgmp">
+      <affiliate group="MinGW Standard Libraries" />
+      <description lang="en" title="libgmp: The GNU Multiple Precision Arithmetic Library" >
+        <paragraph>
+          GNU MP is a library for arbitrary precision arithmetic, operating on
+          signed integers, rational numbers, and floating point numbers.  It
+          has a rich set of functions, and the functions have a regular
+          interface.
+        </paragraph>
+        <paragraph>
+          The MinGW/MSYS project provides two libgmp packages: the native win32
+          mingw32-libgmp and an MSYS version, msys-libgmp.  mingw32-libgmp is
+          provided as a necessary component of modern MinGW gcc compilers,
+          while the msys-libgmp version requires the MSYS dll, and is provided
+          as a prerequisite of certain other MSYS tools, such as guile.
+        </paragraph>
+        <paragraph>
+          The mingw32-libgmp package provides the C runtime library.  The
+          associated mingw32-gmp package provides the documentation for the gmp
+          library, as well as the related development files.  The associated
+          mingw32-libgmpxx package provides the C++ runtime library.
+        </paragraph>
+        <paragraph>
+          This is a required component of the MinGW Compiler Suite.
+        </paragraph>
+      </description>
+
+      <source tarname="gmp-%-mingw32-src.tar.lzma" />
+      <licence tarname="gmp-%-mingw32-lic.tar.lzma" />
+
+      <component class="dll">
+        <release tarname="libgmp-5.0.1-1-mingw32-dll-10.tar.lzma" />
+      </component>
+    </package>
+
+    <package name="mingw32-libgmpxx" alias="libgmpxx">
+      <affiliate group="MinGW Standard Libraries" />
+      <description lang="en" title="libgmpxx: The GNU Multiple Precision Arithmetic Library" >
+        <paragraph>
+          GNU MP is a library for arbitrary precision arithmetic, operating on
+          signed integers, rational numbers, and floating point numbers.  It
+          has a rich set of functions, and the functions have a regular
+          interface.
+        </paragraph>
+        <paragraph>
+          The mingw32-libgmpxx package provides the C++ runtime library.  The
+          associated mingw32-gmp package provides the documentation for the gmp
+          library, as well as the related development files.  The associated
+          mingw32-libgmp package provides the C runtime library.
+        </paragraph>
+      </description>
+
+      <source tarname="gmp-%-mingw32-src.tar.lzma" />
+      <licence tarname="gmp-%-mingw32-lic.tar.lzma" />
+
+      <component class="dll">
+        <release tarname="libgmpxx-5.0.1-1-mingw32-dll-4.tar.lzma" >
+          <requires eq="libgmp-%-mingw32-dll-10.tar" />
+          <requires eq="libgcc-*-mingw32-dll-1.tar" />
+        </release>
+      </component>
+    </package>
+  </package-collection>
+</software-distribution>
+<!-- vim: set nocompatible expandtab fileformat=unix textwidth=80 tabstop=2 shiftwidth=2: -->

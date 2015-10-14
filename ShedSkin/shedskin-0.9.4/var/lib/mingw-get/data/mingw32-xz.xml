@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<software-distribution project="MinGW" home="http://mingw.org" issue="2010090600">
+
+  <!-- File: mingw32-xz.xml -->
+
+  <package-collection subsystem="mingw32">
+    <download-host uri="http://prdownloads.sourceforge.net/mingw/%F?download" />
+
+    <package name="mingw32-xz" alias="xz">
+      <description lang="en" title="xz: High performance compression based on the LZMA algorithm" >
+        <paragraph>LZMA is data compression algorithm based on the
+          Lempel-Ziv-Markov chain-Algorithm.  It provides high compression
+          ratios and very fast decompression, with minimal memory requirements
+          for decompression.  XZ Utils is the latest generation of this
+          software, supplanting the older LZMA Utils, which itself was a
+          friendly fork of the original LZMA SDK.  The xz package provides
+          commandline utilities for compression and decompression of XZ and LZMA
+          data, and documentation.  The associated liblzma package provides the
+          runtime library and development files for creating applications that
+          use LZMA or XZ compression.
+        </paragraph>
+        <paragraph>The MinGW/MSYS project provides both this native (mingw32)
+          version and an MSYS version of the xz package(s).  While the latter is
+          the primary tool from the perspective of the MSYS distribution, the
+          MinGW version is provided as one of the prerequisites for the native
+          (mingw32) basic-bsdtar utility.
+        </paragraph>
+      </description>
+
+      <licence tarname="xz-%-mingw32-%-lic.tar" />
+      <source tarname="xz-%-mingw32-%-src.tar" />
+
+      <component class="bin">
+        <requires eq="msys-bash-*-msys-*-bin.tar" />
+        <requires eq="msys-diffutils-*-msys-*-bin.tar" />
+        <requires eq="msys-grep-*-msys-*-bin.tar" />
+        <requires eq="msys-less-*-msys-*-bin.tar" />
+        <release tarname="xz-4.999.9beta_20100401-1-mingw32-bin.tar.bz2" >
+          <requires eq="mingw32-libintl-*-mingw32-*-dll-8.tar" />
+          <requires eq="mingw32-liblzma-%-mingw32-%-dll-1.tar" />
+        </release>
+      </component>
+
+      <component class="doc">
+        <release tarname="xz-4.999.9beta_20100401-1-mingw32-doc.tar.bz2" />
+      </component>
+
+      <component class="lang">
+        <release tarname="xz-4.999.9beta_20100401-1-mingw32-lang.tar.bz2" />
+      </component>
+
+      <component class="lic">
+        <release tarname="xz-4.999.9beta_20100401-1-mingw32-lic.tar.bz2" />
+      </component>
+    </package>
+
+    <package name="mingw32-liblzma" alias="liblzma">
+      <description lang="en" title="liblzma: High performance compression library based on the LZMA algorithm" >
+        <paragraph>LZMA is data compression algorithm based on the
+          Lempel-Ziv-Markov chain-Algorithm.  It provides high compression
+          ratios and very fast decompression, with minimal memory requirements
+          for decompression.  XZ Utils is the latest generation of this
+          software, supplanting the older LZMA Utils, which itself was a
+          friendly fork of the original LZMA SDK.  The xz package provides
+          commandline utilities for compression and decompression of XZ and LZMA
+          data, and documentation.  The associated liblzma package provides the
+          runtime library and development files for creating applications that
+          use LZMA or XZ compression.
+        </paragraph>
+        <paragraph>The MinGW/MSYS project provides both this native (mingw32)
+          version and an MSYS version of the liblzma package(s).  While the
+          latter is the primary tool from the perspective of the MSYS
+          distribution, the MinGW version is provided as one of the
+          prerequisites for the native (mingw32) basic-bsdtar utility.
+        </paragraph>
+      </description>
+
+      <licence tarname="xz-%-mingw32-%-lic.tar" />
+      <source tarname="xz-%-mingw32-%-src.tar" />
+
+      <component class="dll">
+        <release tarname="liblzma-4.999.9beta_20100401-1-mingw32-dll-1.tar.bz2" />
+      </component>
+
+      <component class="dev">
+        <release tarname="liblzma-4.999.9beta_20100401-1-mingw32-dev.tar.bz2" >
+          <requires eq="mingw32-liblzma-%-mingw32-%-dll-1.tar" />
+        </release>
+      </component>
+    </package>
+
+  </package-collection>
+</software-distribution>
+<!-- vim: set nocompatible expandtab fileformat=unix textwidth=80 tabstop=2 shiftwidth=2: -->

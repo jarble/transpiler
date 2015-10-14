@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<software-distribution project="MinGW" home="http://mingw.org" issue="2010090600">
+
+  <!-- File: mingw32-zlib.xml -->
+
+  <package-collection subsystem="mingw32">
+    <download-host uri="http://prdownloads.sourceforge.net/mingw/%F?download" />
+
+    <package name="mingw32-zlib" alias="zlib">
+      <description lang="en" title="ZLib: A Massively Spiffy Yet Delicately Unobtrusive Compression Library (docs)">
+        <paragraph>The zlib compression library provides in-memory compression
+          and decompression functions, including integrity checks of the
+          uncompressed data. The mingw32-zlib package provides documentation
+          related to the ZLib library. The runtime and development files are
+          provided by the associated mingw32-libz package.
+        </paragraph>
+      </description>
+
+      <licence tarname="zlib-%-mingw32-%-lic.tar" />
+      <source tarname="zlib-%-mingw32-%-src.tar" />
+
+      <component class="doc">
+        <release tarname="zlib-1.2.3-1-mingw32-doc.tar.gz" />
+      </component>
+
+      <component class="lic">
+        <release tarname="zlib-1.2.3-1-mingw32-lic.tar.gz" />
+      </component>
+
+      <component class="man">
+        <release tarname="zlib-1.2.3-1-mingw32-man.tar.gz" />
+      </component>
+    </package>
+
+    <package name="mingw32-libz" alias="libz">
+      <description lang="en" title="ZLib: A Massively Spiffy Yet Delicately Unobtrusive Compression Library">
+        <paragraph>The zlib compression library provides in-memory compression
+          and decompression functions, including integrity checks of the
+          uncompressed data. The libz package provides the runtime and
+          development files related to the ZLib library. The associated zlib
+          package provides documentation.
+        </paragraph>
+      </description>
+
+      <licence tarname="zlib-%-mingw32-%-lic.tar" />
+      <source tarname="zlib-%-mingw32-%-src.tar" />
+
+      <component class="dll">
+        <release tarname="libz-1.2.3-1-mingw32-dll-1.tar.gz" />
+      </component>
+
+      <component class="dev">
+        <release tarname="libz-1.2.3-1-mingw32-dev.tar.gz" >
+          <requires eq="mingw32-libz-%-mingw32-%-dll-1.tar" />
+        </release>
+      </component>
+    </package>
+
+  </package-collection>
+</software-distribution>
+<!-- vim: set nocompatible expandtab fileformat=unix textwidth=80 tabstop=2 shiftwidth=2: -->

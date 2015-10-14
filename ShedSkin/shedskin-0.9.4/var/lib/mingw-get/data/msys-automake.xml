@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<software-distribution project="MinGW" home="http://mingw.org" issue="2010090600">
+
+  <!-- File: msys-automake.xml ~~ mingw-get package description automake (msys) -->
+
+  <package-collection subsystem="msys">
+    <download-host uri="http://prdownloads.sourceforge.net/mingw/%F?download" />
+
+    <package name="msys-automake">
+      <affiliate group="MSYS System Builder" />
+      <description lang="en" title="automake (msys): Automatic Makefile Builder">
+        <paragraph>This is not the automake you are looking for.</paragraph>
+        <paragraph>Automake is a tool for automatically generating Makefile.in
+          files compliant with the GNU Coding Standards.  Automake requires the
+          use of Autoconf.
+        </paragraph>
+        <paragraph>This msys port of automake has been modified specifically for
+          the MSYS System Builder (msys-dvlpr) environment; that is, it is
+          intended to be used only when producing binary packages for the MSYS
+          subsystem.  If you intend to produce executables for the native
+          "mingw32" subsystem (that is, applications that should work on
+          Microsoft Windows installations without the MSYS dll), then you should
+          install the mingw32-automake-*, and/or the mingw32-automake1.NN-*
+          packages instead.
+        </paragraph>
+      </description>
+
+      <licence tarname="automake-%-msys-%-lic.tar" />
+      <source tarname="automake-%-msys-%-src.tar" />
+
+      <component class="bin">
+        <requires eq="msys-autoconf-*-msys-*-bin.tar" />
+        <requires eq="msys-core-*-msys-*-bin.tar" />
+        <requires eq="msys-coreutils-*-msys-*-bin.tar" />
+        <requires eq="msys-m4-*-msys-*-bin.tar" />
+        <requires eq="msys-perl-*-msys-*-bin.tar" />
+        <requires eq="msys-texinfo-*-msys-*-bin.tar" />
+        <release tarname="automake-1.11.1-1-msys-1.0.13-bin.tar.lzma" />
+      </component>
+
+      <component class="doc">
+        <release tarname="automake-1.11.1-1-msys-1.0.13-doc.tar.lzma" />
+      </component>
+
+      <component class="lic">
+        <release tarname="automake-1.11.1-1-msys-1.0.13-lic.tar.lzma" />
+      </component>
+    </package>
+
+  </package-collection>
+</software-distribution>
+<!-- vim: set nocompatible expandtab fileformat=unix textwidth=80 tabstop=2 shiftwidth=2: -->

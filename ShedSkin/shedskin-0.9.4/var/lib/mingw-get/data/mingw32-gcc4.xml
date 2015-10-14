@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<software-distribution project="MinGW" home="http://www.mingw.org" issue="2010100100">
+
+  <!-- File: mingw32-gcc4.xml ~~ mingw-get package list for GCC version 4.x -->
+
+  <package-collection subsystem="mingw32">
+    <download-host uri="http://prdownloads.sourceforge.net/mingw/%F?download" />
+
+    <package name="mingw32-gcc" alias="gcc gcc-core mingw32-gcc-core">
+      <affiliate group="MinGW Compiler Suite" />
+      <description lang="en" title="The GNU C Compiler">
+        <paragraph>
+          This package provides the MinGW implementation of the
+          GNU C language compiler; this includes the C preprocessor,
+          and the common back end processors which are necessary to
+          support all other language compilers in the GNU Compiler
+          Collection.
+        </paragraph>
+        <paragraph>
+          This is a required component of the MinGW Compiler Suite.
+        </paragraph>
+      </description>
+
+      <source tarname="gcc-%-mingw32-src.tar.lzma" />
+      <licence tarname="gcc-%-mingw32-lic.tar.lzma" />
+
+      <component class="lic">
+        <release tarname="gcc-4.5.0-1-mingw32-lic.tar.lzma" />
+      </component>
+
+      <component class="bin">
+        <requires eq="binutils-*-mingw32-bin.tar" />
+        <requires eq="mingwrt-*-mingw32-dev.tar" />
+        <requires eq="w32api-*-mingw32-dev.tar" />
+        <requires eq="libgcc-%-mingw32-dll-1.tar" />
+        <requires eq="libssp-%-mingw32-dll-0.tar" />
+        <requires eq="libmpc-*-mingw32-dll-2.tar" />
+        <requires eq="libgomp-%-mingw32-dll-1.tar" />
+        <requires eq="pthreads-w32-*-mingw32-dev.tar" />
+        <release tarname="gcc-core-4.5.0-1-mingw32-bin.tar.lzma" />
+      </component>
+
+      <component class="doc">
+        <release tarname="gcc-4.5.0-1-mingw32-doc.tar.lzma" />
+      </component>
+
+      <component class="lang">
+        <release tarname="gcc-4.5.0-1-mingw32-lang.tar.lzma" />
+      </component>
+    </package>
+
+    <package name="mingw32-libgcc" alias="libgcc">
+      <affiliate group="MinGW Compiler Suite" />
+      <description lang="en" title="The GNU C Compiler Shared Runtime Library">
+        <paragraph>
+          This package provides the MinGW implementation of the
+          shared runtime library for the GNU C language compiler;
+          you must install it if you wish to use this compiler with
+          -shared-libgcc support enabled, or if you wish to use any
+          other GCC language compiler, and you require safe handling
+          of exceptions which may cross DLL boundaries.
+        </paragraph>
+        <paragraph>
+          This is a freely redistributable library; it is required by,
+          (and you must distribute it with), any application compiled
+          by the GNU C++ language compiler, unless support for shared
+          runtime libraries is explicitly disabled when building.
+        </paragraph>
+      </description>
+
+      <source tarname="gcc-%-mingw32-src.tar.lzma" />
+      <licence tarname="gcc-%-mingw32-lic.tar.lzma" />
+
+      <component class="dll">
+        <release tarname="libgcc-4.5.0-1-mingw32-dll-1.tar.lzma" />
+      </component>
+    </package>
+
+    <package name="mingw32-gcc-ada" alias="gcc-ada ada">
+      <affiliate group="MinGW Compiler Suite" />
+      <description lang="en" title="The GNU Ada Compiler">
+        <paragraph>
+          This package provides the MinGW implementation of the
+          GNU Ada language compiler.
+        </paragraph>
+        <paragraph>
+          This is an optional component of the MinGW Compiler Suite;
+          you require it only if you wish to compile programs written
+          in the Ada language.
+        </paragraph>
+      </description>
+
+      <source tarname="gcc-%-mingw32-src.tar.lzma" />
+      <licence tarname="gcc-%-mingw32-lic.tar.lzma" />
+
+      <requires eq="gcc-core-%-mingw32-bin.tar" />
+      <requires eq="libgnat-%-mingw32-dll-45.tar" />
+      <release tarname="gcc-ada-4.5.0-1-mingw32-bin.tar.lzma" />
+    </package>
+
+    <package name="mingw32-libgnat" alias="libgnat">
+      <affiliate group="MinGW Compiler Suite" />
+      <description lang="en" title="The GNU Ada Compiler Runtime Library">
+        <paragraph>
+          This package provides the MinGW implementation of the
+          shared runtime library for the GNU Ada language compiler;
+          you must install it if you wish to use this compiler.
+        </paragraph>
+        <paragraph>
+          This is a freely redistributable library; it is required by,
+          (and you must distribute it with), any application compiled
+          by the GNU Ada language compiler, unless support for shared
+          runtime libraries is explicitly disabled when building.
+        </paragraph>
+      </description>
+
+      <source tarname="gcc-%-mingw32-src.tar.lzma" />
+      <licence tarname="gcc-%-mingw32-lic.tar.lzma" />
+
+      <component class="dll">
+        <release tarname="libgnat-4.5.0-1-mingw32-dll-45.tar.lzma">
+          <download tarname="libgnat-4.5.0-1-mingw32-dll-4.5.tar.lzma" />
+        </release>
+      </component>
+    </package>
+
+    <package name="mingw32-gcc-g++" alias="gcc-g++ g++ gcc-c++ c++">
+      <affiliate group="MinGW Compiler Suite" />
+      <description lang="en" title="The GNU C++ Compiler">
+        <paragraph>
+          This package provides the MinGW implementation of the
+          GNU C++ language compiler.
+        </paragraph>
+        <paragraph>
+          This is an optional component of the MinGW Compiler Suite;
+          you require it only if you wish to compile programs written
+          in the C++ language.
+        </paragraph>
+      </description>
+
+      <source tarname="gcc-%-mingw32-src.tar.lzma" />
+      <licence tarname="gcc-%-mingw32-lic.tar.lzma" />
+
+      <requires eq="gcc-core-%-mingw32-bin.tar" />
+      <requires eq="libstdc++-%-mingw32-dll-6.tar" />
+      <release tarname="gcc-c++-4.5.0-1-mingw32-bin.tar.lzma" />
+    </package>
+
+    <package name="mingw32-libstdc++" alias="libstdc++">
+      <affiliate group="MinGW Compiler Suite" />
+      <description lang="en" title="The GNU C++ Compiler Runtime Library">
+        <paragraph>
+          This package provides the MinGW implementation of the
+          shared runtime library for the GNU C++ language compiler;
+          you must install it if you wish to use this compiler.
+        </paragraph>
+        <paragraph>
+          This is a freely redistributable library; it is required by,
+          (and you must distribute it with), any application compiled
+          by the GNU C++ language compiler, unless support for shared
+          runtime libraries is explicitly disabled when building.
+        </paragraph>
+      </description>
+
+      <source tarname="gcc-%-mingw32-src.tar.lzma" />
+      <licence tarname="gcc-%-mingw32-lic.tar.lzma" />
+
+      <component class="dll">
+        <release tarname="libstdc++-4.5.0-1-mingw32-dll-6.tar.lzma" />
+      </component>
+    </package>
+
+    <package name="mingw32-gcc-fortran" alias="gcc-fortran gfortran fortran">
+      <affiliate group="MinGW Compiler Suite" />
+      <description lang="en" title="The GNU FORTRAN Compiler">
+        <paragraph>
+          This package provides the MinGW implementation of the
+          GNU FORTRAN language compiler.
+        </paragraph>
+        <paragraph>
+          This is an optional component of the MinGW Compiler Suite;
+          you require it only if you wish to compile programs written
+          in the FORTRAN language.
+        </paragraph>
+      </description>
+
+      <source tarname="gcc-%-mingw32-src.tar.lzma" />
+      <licence tarname="gcc-%-mingw32-lic.tar.lzma" />
+
+      <requires eq="gcc-core-%-mingw32-bin.tar" />
+      <requires eq="libgfortran-%-mingw32-dll-3.tar" />
+      <release tarname="gcc-fortran-4.5.0-1-mingw32-bin.tar.lzma" />
+    </package>
+
+    <package name="mingw32-libgfortran" alias="libgfortran">
+      <affiliate group="MinGW Compiler Suite" />
+      <description lang="en" title="The GNU FORTRAN Compiler Runtime Library">
+        <paragraph>
+          This package provides the MinGW implementation of the
+          shared runtime library for the GNU FORTRAN language compiler;
+          you must install it if you wish to use this compiler.
+        </paragraph>
+        <paragraph>
+          This is a freely redistributable library; it is required by,
+          (and you must distribute it with), any application compiled by
+          the GNU FORTRAN language compiler, unless support for shared
+          runtime libraries is explicitly disabled when building.
+        </paragraph>
+      </description>
+
+      <source tarname="gcc-%-mingw32-src.tar.lzma" />
+      <licence tarname="gcc-%-mingw32-lic.tar.lzma" />
+
+      <component class="dll">
+        <release tarname="libgfortran-4.5.0-1-mingw32-dll-3.tar.lzma" />
+      </component>
+    </package>
+
+    <!-- FIXME: no java package available at present...
+    <package name="mingw32-gcc-java" alias="gcc-java java">
+      <affiliate group="MinGW Compiler Suite" />
+      <description lang="en" title="The GNU Java Compiler">
+        <paragraph>
+          This package provides the MinGW implementation of the
+          GNU Java language compiler.
+        </paragraph>
+        <paragraph>
+          This is an optional component of the MinGW Compiler Suite;
+          you require it only if you wish to compile programs written
+          in the Java language.
+        </paragraph>
+      </description>
+
+      <source tarname="gcc-%-mingw32-src.tar.lzma" />
+      <licence tarname="gcc-%-mingw32-lic.tar.lzma" />
+
+      <requires eq="gcc-core-%-mingw32-bin.tar" />
+      <release tarname="gcc-java-4.5.0-1-mingw32-bin.tar.lzma" />
+    </package> -->
+
+    <package name="mingw32-gcc-objc" alias="gcc-objc objc">
+      <affiliate group="MinGW Compiler Suite" />
+      <description lang="en" title="The GNU Objective-C Compiler">
+        <paragraph>
+          This package provides the MinGW implementation of the
+          GNU Objective-C language compiler.
+        </paragraph>
+        <paragraph>
+          This is an optional component of the MinGW Compiler Suite;
+          you require it only if you wish to compile programs written
+          in the Objective-C language.
+        </paragraph>
+      </description>
+
+      <source tarname="gcc-%-mingw32-src.tar.lzma" />
+      <licence tarname="gcc-%-mingw32-lic.tar.lzma" />
+
+      <requires eq="gcc-core-%-mingw32-bin.tar" />
+      <requires eq="libobjc-%-mingw32-dll-2.tar" />
+      <release tarname="gcc-c++-4.5.0-1-mingw32-bin.tar.lzma" />
+    </package>
+
+    <package name="mingw32-libobjc" alias="libobjc">
+      <affiliate group="MinGW Compiler Suite" />
+      <description lang="en" title="The GNU Objective-C Compiler Runtime Library">
+        <paragraph>
+          This package provides the MinGW implementation of the shared
+          runtime library for the GNU Objective-C language compiler; you
+          must install it if you wish to use this compiler.
+        </paragraph>
+        <paragraph>
+          This is a freely redistributable library; it is required by,
+          (and you must distribute it with), any application compiled by
+          the GNU Objective-C language compiler, unless support for shared
+          runtime libraries is explicitly disabled when building.
+        </paragraph>
+      </description>
+
+      <source tarname="gcc-%-mingw32-src.tar.lzma" />
+      <licence tarname="gcc-%-mingw32-lic.tar.lzma" />
+
+      <component class="dll">
+        <release tarname="libobjc-4.5.0-1-mingw32-dll-2.tar.lzma" />
+      </component>
+    </package>
+
+    <package name="mingw32-libgomp" alias="libgomp">
+      <affiliate group="MinGW Compiler Suite" />
+
+      <source tarname="gcc-%-mingw32-src.tar.lzma" />
+      <licence tarname="gcc-%-mingw32-lic.tar.lzma" />
+
+      <component class="dll">
+        <requires eq="libpthread-*-mingw32-dll-2.tar" />
+        <release tarname="libgomp-4.5.0-1-mingw32-dll-1.tar.lzma" />
+      </component>
+    </package>
+
+    <package name="mingw32-libssp" alias="libssp">
+      <affiliate group="MinGW Compiler Suite" />
+
+      <source tarname="gcc-%-mingw32-src.tar.lzma" />
+      <licence tarname="gcc-%-mingw32-lic.tar.lzma" />
+
+      <component class="dll">
+        <release tarname="libssp-4.5.0-1-mingw32-dll-0.tar.lzma" />
+      </component>
+    </package>
+
+  </package-collection>
+</software-distribution>
+<!-- vim: set nocompatible expandtab fileformat=unix textwidth=80 tabstop=2 shiftwidth=2: -->
