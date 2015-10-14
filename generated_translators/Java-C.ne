@@ -1,7 +1,7 @@
 
 #The following expressions are the same in every language.
 
-chunk -> _ (_series_of_statements | class) _ {%function(d){return d[1][0];}%}
+chunk -> _ (_series_of_statements | class | class_extends) _ {%function(d){return d[1][0];}%}
 _series_of_statements -> series_of_statements _ statement {%function(d){return d[0] +"\n"+ d[2];}%} | statement {%function(d){return d[0];}%} | null
 series_of_statements -> statement {%function(d){return d[0];}%} | series_of_statements _ statement {%function(d){return d[0] + "\n" + d[2];}%}
 
@@ -10,14 +10,13 @@ boolean_expression -> expression
 string_expression -> expression
 array_expression -> expression
 
-expression ->  accessArray | this | functionCall | varName | dictionary
+expression ->  accessArray | this | functionCall | varName | dictionary | declare_new_object
 | parentheses_expression | add | subtract | multiply | mod | divide | number | pow | strlen
-| String | concatenateString
+| String | concatenateString | substring
 | initializerList
-| false | true | greaterThan | compareInts | strcmp | lessThanOrEqual | greaterThanOrEqual | lessThan | and | or | not | arrayContains
+| false | true | not_equal | greaterThan | compareInts | strcmp | lessThanOrEqual | greaterThanOrEqual | lessThan | and | or | not | arrayContains
 
-
-statement -> initializeArray | print | comment | switch | setVar | initializeVar | func | functionCallStatement | return | if | while | forInRange
+statement -> constructor | declare_constant | instance_method | static_method | initializeArray | print | comment | switch | setVar | initializeVar | func | functionCallStatement | return | if | while | forInRange
 type -> boolean | int | string | arrayType
 caseStatements -> caseStatements _ case {%function(d){return d[0] +"\n"+ d[2];}%} | case
 elifStatements -> elifStatements _ elif {%function(d){return d[0] +"\n"+ d[2];}%} | elif #Match a series of elif statements
@@ -82,6 +81,9 @@ __ -> [\s] | __ [\s] {% function() {} %}
 
 
 #The next two lines are the languages for the translator.
+declare_constant -> "final" _ __ _ type _ __ _ varName _ "=" _ expression _ ";"{%function(d){
+	return "static" + " " + "const" + " " + d[8] + "=" + d[12] + ";";
+}%}
 initializeArray -> arrayType _ __ _ identifier _ "=" _ array_expression _ ";"{%function(d){
 	return d[0] + " " + d[4] + "=" + d[8] + ";";
 }%}
@@ -123,6 +125,9 @@ greaterThan -> arithmetic_expression _ ">" _ arithmetic_expression{%function(d){
 }%}
 lessThan -> arithmetic_expression _ "<" _ arithmetic_expression{%function(d){
 	return d[0] + "<" + d[4];
+}%}
+class_extends -> "public" _ __ _ "class" _ __ _ identifier _ __ _ "extends" _ __ _ identifier _ "{" _ series_of_statements _ "}"{%function(d){
+	return "#include" + " " + "'" + d[16] + ".h'" + "\n" + d[20];
 }%}
 class -> "public" _ __ _ "class" _ __ _ identifier _ "{" _ series_of_statements _ "}"{%function(d){
 	return d[12];
@@ -202,14 +207,14 @@ else -> "else" _ "{" _ series_of_statements _ "}"{%function(d){
 while -> "while" _ "(" _ boolean_expression _ ")" _ "{" _ series_of_statements _ "}"{%function(d){
 	return "while" + "(" + d[4] + ")" + "{" + d[10] + "}";
 }%}
-forInRange -> "for" _ "(" _ "int" _ __ _ varName _ "=" _ arithmetic_expression _ ";" _ varName _ "<" _ "endWith" _ ";" _ varName _ "++" _ ")" _ "{" _ series_of_statements _ "}"{%function(d){
-	return "int" + " " + d[8] + ";" + "for" + "(" + d[8] + "=" + d[12] + ";" + d[8] + "<" + "endWith" + ";" + d[8] + "++" + ")" + "{" + d[32] + "}";
+forInRange -> "for" _ "(" _ "int" _ __ _ varName _ "=" _ arithmetic_expression _ ";" _ varName _ "<" _ arithmetic_expression _ ";" _ varName _ "++" _ ")" _ "{" _ series_of_statements _ "}"{%function(d){
+	return "int" + " " + d[8] + ";" + "for" + "(" + d[8] + "=" + d[12] + ";" + d[8] + "<" + d[20] + ";" + d[8] + "++" + ")" + "{" + d[32] + "}";
 }%}
 listComprehension -> _{%function(d){
 	return "";
 }%}
 import -> "import" _ __ _ expression _ ";"{%function(d){
-	return "#include" + " " + "'a" + ".h'";
+	return "#include" + " " + "'" + d[4] + ".h'";
 }%}
 print -> "System" _ "." _ "out" _ "." _ "println" _ "(" _ expression _ ")" _ ";"{%function(d){
 	return "printf" + "(" + d[12] + ")" + ";";
@@ -253,11 +258,8 @@ lessThanOrEqual -> _lessThanOrEqual{%function(d){
 switch -> "switch" _ "(" _ expression _ ")" _ "{" _ caseStatements _ __ _ default _ "}"{%function(d){
 	return "switch" + "(" + d[4] + ")" + "{" + d[10] + " " + d[14] + "}";
 }%}
-case -> "case" _ __ _ expression _ ":" _ series_of_statements{%function(d){
-	return "case" + " " + d[4] + ":" + d[8];
-}%}
-break -> "break;"{%function(d){
-	return "break;";
+case -> "case" _ __ _ expression _ ":" _ series_of_statements _ "break" _ ";"{%function(d){
+	return "case" + " " + d[4] + ":" + d[8] + "break" + ";";
 }%}
 foreach -> "for" _ "(" _ type _ __ _ expression _ ":" _ expression _ ")" _ "{" _ series_of_statements _ "}"{%function(d){
 	return "";
@@ -271,9 +273,27 @@ substring -> string_expression _ "." _ "substring" _ "(" _ arithmetic_expression
 strcmp -> string_expression _ "." _ "equals" _ "(" _ string_expression _ ")"{%function(d){
 	return "strcmp" + "(" + d[0] + "," + d[8] + ")" + "==" + "0";
 }%}
+arrayLength -> array_expression _ "." _ "length"{%function(d){
+	return "sizeof" + "(" + d[0] + ")" + "/" + "sizeof" + "(" + d[0] + "[" + "0" + "]" + ")";
+}%}
 strlen -> string_expression _ "." _ "length" _ "(" _ ")"{%function(d){
 	return "strlen" + "(" + d[0] + ")";
 }%}
 parameter_separator -> ","{%function(d){
 	return ",";
+}%}
+not_equal -> expression _ "!=" _ expression{%function(d){
+	return d[0] + "!=" + d[4];
+}%}
+instance_method -> "public" _ __ _ type _ __ _ identifier _ "(" _ parameterList _ ")" _ "{" _ series_of_statements _ "}"{%function(d){
+	return "";
+}%}
+static_method -> "public" _ __ _ "static" _ __ _ type _ __ _ identifier _ "(" _ parameterList _ ")" _ "{" _ series_of_statements _ "}"{%function(d){
+	return d[8] + " " + d[12] + "(" + d[16] + ")" + "{" + d[22] + "}";
+}%}
+constructor -> "public" _ __ _ identifier _ "(" _ parameterList _ ")" _ "{" _ series_of_statements _ "}"{%function(d){
+	return "";
+}%}
+declare_new_object -> "new" _ __ _ identifier _ "(params)"{%function(d){
+	return "";
 }%}

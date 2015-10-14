@@ -1,7 +1,7 @@
 
 #The following expressions are the same in every language.
 
-chunk -> _ (_series_of_statements | class) _ {%function(d){return d[1][0];}%}
+chunk -> _ (_series_of_statements | class | class_extends) _ {%function(d){return d[1][0];}%}
 _series_of_statements -> series_of_statements _ statement {%function(d){return d[0] +"\n"+ d[2];}%} | statement {%function(d){return d[0];}%} | null
 series_of_statements -> statement {%function(d){return d[0];}%} | series_of_statements _ statement {%function(d){return d[0] + "\n" + d[2];}%}
 
@@ -10,14 +10,13 @@ boolean_expression -> expression
 string_expression -> expression
 array_expression -> expression
 
-expression ->  accessArray | this | functionCall | varName | dictionary
+expression ->  accessArray | this | functionCall | varName | dictionary | declare_new_object
 | parentheses_expression | add | subtract | multiply | mod | divide | number | pow | strlen
-| String | concatenateString
+| String | concatenateString | substring
 | initializerList
-| false | true | greaterThan | compareInts | strcmp | lessThanOrEqual | greaterThanOrEqual | lessThan | and | or | not | arrayContains
+| false | true | not_equal | greaterThan | compareInts | strcmp | lessThanOrEqual | greaterThanOrEqual | lessThan | and | or | not | arrayContains
 
-
-statement -> initializeArray | print | comment | switch | setVar | initializeVar | func | functionCallStatement | return | if | while | forInRange
+statement -> constructor | plusEquals | minusEquals | declare_constant | instance_method | static_method | initializeArray | print | comment | switch | setVar | initializeVar | func | functionCallStatement | return | if | while | forInRange
 type -> boolean | int | string | arrayType
 caseStatements -> caseStatements _ case {%function(d){return d[0] +"\n"+ d[2];}%} | case
 elifStatements -> elifStatements _ elif {%function(d){return d[0] +"\n"+ d[2];}%} | elif #Match a series of elif statements
@@ -82,6 +81,9 @@ __ -> [\s] | __ [\s] {% function() {} %}
 
 
 #The next two lines are the languages for the translator.
+declare_constant -> "final" _ __ _ type _ __ _ varName _ "=" _ expression _ ";"{%function(d){
+	return d[8] + "=" + d[12];
+}%}
 initializeArray -> arrayType _ __ _ identifier _ "=" _ array_expression _ ";"{%function(d){
 	return d[4] + "=" + d[8] + "\n";
 }%}
@@ -123,6 +125,9 @@ greaterThan -> arithmetic_expression _ ">" _ arithmetic_expression{%function(d){
 }%}
 lessThan -> arithmetic_expression _ "<" _ arithmetic_expression{%function(d){
 	return d[0] + "<" + d[4];
+}%}
+class_extends -> "public" _ __ _ "class" _ __ _ identifier _ __ _ "extends" _ __ _ identifier _ "{" _ series_of_statements _ "}"{%function(d){
+	return "class" + " " + d[8] + " " + "<" + " " + d[16] + " " + d[20] + " " + "end";
 }%}
 class -> "public" _ __ _ "class" _ __ _ identifier _ "{" _ series_of_statements _ "}"{%function(d){
 	return "class" + " " + d[8] + " " + d[12] + " " + "end";
@@ -196,14 +201,20 @@ if -> "if" _ "(" _ boolean_expression _ ")" _ "{" _ series_of_statements _ "}" _
 elif -> "else" _ __ _ "if" _ "(" _ boolean_expression _ ")" _ "{" _ series_of_statements _ "}"{%function(d){
 	return "elsif" + " " + d[8] + " " + "then" + " " + d[14];
 }%}
+plusEquals -> expression _ "+=" _ expression _ ";"{%function(d){
+	return d[0] + "=" + d[0] + "+" + d[4] + "\n";
+}%}
+minusEquals -> expression _ "-=" _ expression _ ";"{%function(d){
+	return d[0] + "-=" + d[4] + "\n";
+}%}
 else -> "else" _ "{" _ series_of_statements _ "}"{%function(d){
 	return "else" + " " + d[4];
 }%}
 while -> "while" _ "(" _ boolean_expression _ ")" _ "{" _ series_of_statements _ "}"{%function(d){
 	return "while" + " " + d[4] + " " + d[10] + " " + "end";
 }%}
-forInRange -> "for" _ "(" _ "int" _ __ _ varName _ "=" _ arithmetic_expression _ ";" _ varName _ "<" _ "endWith" _ ";" _ varName _ "++" _ ")" _ "{" _ series_of_statements _ "}"{%function(d){
-	return "for" + " " + d[8] + " " + "in" + " " + d[12] + ".." + "endWith" + " " + d[32] + " " + "end";
+forInRange -> "for" _ "(" _ "int" _ __ _ varName _ "=" _ arithmetic_expression _ ";" _ varName _ "<" _ arithmetic_expression _ ";" _ varName _ "++" _ ")" _ "{" _ series_of_statements _ "}"{%function(d){
+	return "for" + " " + d[8] + " " + "in" + " " + d[12] + ".." + d[20] + " " + d[32] + " " + "end";
 }%}
 listComprehension -> _{%function(d){
 	return d[NaN] + "." + "select" + "{" + "|" + d[NaN] + "|" + d[NaN] + "}" + "." + "collect" + "{" + "|" + d[NaN] + "|" + d[NaN] + "}";
@@ -221,7 +232,7 @@ mod -> arithmetic_expression _ "%" _ arithmetic_expression{%function(d){
 	return d[0] + "%" + d[4];
 }%}
 setVar -> varName _ "=" _ expression _ ";"{%function(d){
-	return d[0] + "=" + d[4];
+	return d[0] + "=" + d[4] + "\n";
 }%}
 parameter -> type _ __ _ varName{%function(d){
 	return d[4];
@@ -253,7 +264,7 @@ lessThanOrEqual -> _lessThanOrEqual{%function(d){
 switch -> "switch" _ "(" _ expression _ ")" _ "{" _ caseStatements _ __ _ default _ "}"{%function(d){
 	return "case" + " " + d[4] + " " + d[10] + " " + d[14] + " " + "end";
 }%}
-case -> "case" _ __ _ expression _ ":" _ series_of_statements _ ";" _ "break" _ ";"{%function(d){
+case -> "case" _ __ _ expression _ ":" _ series_of_statements _ "break" _ ";"{%function(d){
 	return "when" + " " + d[4] + d[8];
 }%}
 foreach -> "for" _ "(" _ type _ __ _ expression _ ":" _ expression _ ")" _ "{" _ series_of_statements _ "}"{%function(d){
@@ -268,9 +279,27 @@ substring -> string_expression _ "." _ "substring" _ "(" _ arithmetic_expression
 strcmp -> string_expression _ "." _ "equals" _ "(" _ string_expression _ ")"{%function(d){
 	return d[0] + "==" + d[8];
 }%}
+arrayLength -> array_expression _ "." _ "length"{%function(d){
+	return d[0] + "." + "length";
+}%}
 strlen -> string_expression _ "." _ "length" _ "(" _ ")"{%function(d){
 	return d[0] + "." + "length";
 }%}
 parameter_separator -> ","{%function(d){
 	return ",";
+}%}
+not_equal -> expression _ "!=" _ expression{%function(d){
+	return d[0] + "!=" + d[4];
+}%}
+instance_method -> "public" _ __ _ type _ __ _ identifier _ "(" _ parameterList _ ")" _ "{" _ series_of_statements _ "}"{%function(d){
+	return "def" + " " + d[8] + "(" + d[12] + ")" + " " + d[18] + " " + "end";
+}%}
+static_method -> "public" _ __ _ "static" _ __ _ type _ __ _ identifier _ "(" _ parameterList _ ")" _ "{" _ series_of_statements _ "}"{%function(d){
+	return "def" + " " + "self" + "." + d[12] + "(" + d[16] + ")" + " " + d[22] + " " + "end";
+}%}
+constructor -> "public" _ __ _ identifier _ "(" _ parameterList _ ")" _ "{" _ series_of_statements _ "}"{%function(d){
+	return "def" + " " + "initialize" + "(" + d[8] + ")" + " " + d[14] + " " + "end";
+}%}
+declare_new_object -> "new" _ __ _ identifier _ "(params)"{%function(d){
+	return d[4] + "." + "new" + "(" + d[NaN] + ")";
 }%}

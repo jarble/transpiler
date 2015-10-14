@@ -14,7 +14,7 @@ expression ->  accessArray | this | functionCall | varName | dictionary
 | parentheses_expression | add | subtract | multiply | mod | divide | number | pow | strlen
 | String | concatenateString
 | initializerList
-| false | true | greaterThan | compareInts | strcmp | lessThanOrEqual | greaterThanOrEqual | lessThan | and | or | not | arrayContains
+| false | true | not_equal | greaterThan | compareInts | strcmp | lessThanOrEqual | greaterThanOrEqual | lessThan | and | or | not | arrayContains
 
 
 statement -> initializeArray | print | comment | switch | setVar | initializeVar | func | functionCallStatement | return | if | while | forInRange
@@ -253,7 +253,7 @@ lessThanOrEqual -> _lessThanOrEqual{%function(d){
 switch -> "switch" _ "(" _ expression _ ")" _ "{" _ caseStatements _ __ _ default _ "}"{%function(d){
 	return "";
 }%}
-case -> "case" _ __ _ expression _ ":" _ series_of_statements _ ";" _ "break" _ ";"{%function(d){
+case -> "case" _ __ _ expression _ ":" _ series_of_statements _ "break" _ ";"{%function(d){
 	return "";
 }%}
 foreach -> "for" _ "(" _ type _ __ _ expression _ ":" _ expression _ ")" _ "{" _ series_of_statements _ "}"{%function(d){
@@ -273,4 +273,7 @@ strlen -> string_expression _ "." _ "length" _ "(" _ ")"{%function(d){
 }%}
 parameter_separator -> ","{%function(d){
 	return ",";
+}%}
+not_equal -> expression _ "!=" _ expression{%function(d){
+	return "not" + "(" + d[0] + "==" + d[4] + ")";
 }%}
