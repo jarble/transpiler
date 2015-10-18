@@ -19,7 +19,6 @@ function getOutput(theInput) {
         var arr_i = arr[1][i];
         var nameList = [];
         var typeList = [];
-        //console.log(JSON.stringify(arr[1][i]));
         for (var j = 0; j < arr_i.length; j++) {
             var arr_j = arr_i[j];
             var functionName;
@@ -57,14 +56,20 @@ function getOutput(theInput) {
         var parameterTypes = [];
         var parameterPositions = [];
         var functionName = "";
-        var arr_i = theArrs[i]
+        var arr_i = theArrs[i];
+        var result_is_defined = true;
+        for(var j = 0; j < arr_i.length; j++){
+			var arr_j = arr_i[j];
+        	if(result_is_defined && (arr_i.length < 4 || arr_j === undefined)){
+				listOfErrors += "    " + arr_i[0] + " is not yet defined for " + translateFrom + " and " + translateTo + "\n";
+				result_is_defined = false;
+			}
+		}
+		var addToResultString = "";
         for (var j = 0; j < arr_i.length; j++) {
 			var arr_j = arr_i[j];
-			if(arr_i.length < 4 || arr_j === undefined){
-				listOfErrors += "    " + arr_i[0] + " is not yet defined for " + translateFrom + " and " + translateTo + "\n";
-			}
-            if (j === 0) {
-                resultString += arr_j + " -> ";
+            if ((j === 0) && result_is_defined) {
+                addToResultString += arr_j + " -> ";
             }
             if (j === 1) {
                 for (var k = 0; k < arr_j.length; k++) {
@@ -72,6 +77,7 @@ function getOutput(theInput) {
                     parameterNames[parameterNames.length] = arr_k[1];
                     parameterTypes[parameterTypes.length] = arr_k[0];
                 }
+                
             } else if (j === 2 && (arr_j !== undefined)) {
 				var arr_j1 = [];
                 for (var k = 0; k < arr_j.length; k++) {
@@ -87,7 +93,9 @@ function getOutput(theInput) {
                         arr_j1[k] = "\"" + arr_j[k] + "\""
                     }
                 }
-                resultString += arr_j1.join(" _ ")
+                if(result_is_defined){
+					addToResultString += arr_j1.join(" _ ")
+				}
             } else if (j === 3 && (arr_j !== undefined)) {
                 var arr_j1 = [];
                 for (var k = 0; k < arr_j.length; k++) {
@@ -100,17 +108,23 @@ function getOutput(theInput) {
 						arr_j1[k] = "\"\"";
                     }
                     else if (theIndex !== -1) {
-                        arr_j1[k] = "d[" + numIndex(parameterPositions[theIndex]) + "]";
+						arr_j1[k] = "d[" + numIndex(parameterPositions[theIndex]) + "]";
+						if(arr_j1[k] === "d[NaN]"){
+							result_is_defined = false;
+						}
                     } else {
                         arr_j1[k] = "\"" + arr_j[k] + "\"";
                     }
                 }
-                resultString += "{\%function(d){\n\treturn " + arr_j1.join(" + ") + ";\n}%\}\n";
+                if(result_is_defined){
+					resultString += addToResultString;
+					resultString += "{\%function(d){\n\treturn " + arr_j1.join(" + ") + ";\n}%\}\n";
+				}
             }
         }
     }
     if(listOfErrors != ""){
-		throw "There are some errors in grammar.txt\n" + listOfErrors;
+		console.log("There are some errors in grammar.txt\n" + listOfErrors);
     }
     return [translateFrom, translateTo, resultString];
 }

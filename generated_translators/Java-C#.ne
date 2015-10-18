@@ -11,13 +11,13 @@ string_expression -> expression
 array_expression -> expression
 
 expression ->  accessArray | this | functionCall | varName | dictionary | declare_new_object
-| parentheses_expression | add | subtract | multiply | mod | divide | number | pow | strlen | sin | cos | tan | sqrt
-| String | concatenateString | substring
+| parentheses_expression | string_to_int | add | subtract | multiply | mod | divide | number | pow | strlen | sin | cos | tan | sqrt | array_length
+| String | concatenateString | substring | int_to_string | split | join
 | initializerList
 | false | true | not_equal | greaterThan | compareInts | strcmp | lessThanOrEqual | greaterThanOrEqual | lessThan | and | or | not | arrayContains
 
 statement -> constructor | plusEquals | minusEquals | declare_constant | instance_method | static_method | initializeArray | print | comment | switch | setVar | initializeVar | func | functionCallStatement | return | if | while | forInRange
-type -> boolean | int | string | arrayType
+type -> boolean | int | string | auto | arrayType | void
 caseStatements -> caseStatements _ case {%function(d){return d[0] +"\n"+ d[2];}%} | case
 elifStatements -> elifStatements _ elif {%function(d){return d[0] +"\n"+ d[2];}%} | elif #Match a series of elif statements
 elifOrElse -> else | elifStatements _ else {%function(d){return d[0] +"\n"+ d[2];}%} #Match a series of elif statements followed by else
@@ -25,7 +25,7 @@ elifOrElse -> else | elifStatements _ else {%function(d){return d[0] +"\n"+ d[2]
 parameterList -> _parameterList | null
 _parameterList -> _parameterList _ parameter_separator _ parameter {%function(d){return d[0]+d[2]+d[4]}%}
 | parameter
-functionCallParameters -> functionCallParameters _ parameter_separator _ expression | expression | null
+functionCallParameters -> functionCallParameters _ parameter_separator _ expression {% function(d) {return d.join(""); } %} | expression | null
 
 keyValueList -> _keyValueList
 _keyValueList -> _keyValueList _ keyValueSeparator _ keyValue {%function(d){return d[0]+d[2]+d[4]}%}
@@ -81,6 +81,18 @@ __ -> [\s] | __ [\s] {% function() {} %}
 
 
 #The next two lines are the languages for the translator.
+int_to_string -> "Integer" _ "." _ "toString" _ "(" _ expression _ ")"{%function(d){
+	return "Convert" + "." + "ToString" + "(" + d[8] + ")";
+}%}
+split -> expression _ "." _ "split" _ "(" _ expression _ ")"{%function(d){
+	return d[0] + "." + "Split" + "(" + "new" + "string[]" + "{" + d[8] + "}" + "," + "StringSplitOptions" + "." + "None" + ")";
+}%}
+join -> "array" _ "." _ "join" _ "(" _ "separator" _ ")"{%function(d){
+	return "String" + "." + "Join" + "(" + "separator" + "," + "array" + ")";
+}%}
+string_to_int -> "Integer" _ "." _ "parseInt" _ "(" _ expression _ ")"{%function(d){
+	return "Int32" + "." + "Parse(" + d[8] + ")";
+}%}
 declare_constant -> "final" _ __ _ type _ __ _ varName _ "=" _ expression _ ";"{%function(d){
 	return "const" + " " + d[4] + " " + d[8] + "=" + d[12] + ";";
 }%}
@@ -104,6 +116,15 @@ keyValue -> _{%function(d){
 }%}
 charAt -> expression _ "." _ "charAt" _ "(" _ expression _ ")"{%function(d){
 	return d[0] + "[" + d[8] + "]";
+}%}
+anonymousFunction -> "(" _ parameterList _ ")" _ "->" _ "{" _ series_of_statements _ "}"{%function(d){
+	return "";
+}%}
+auto -> "Object"{%function(d){
+	return "var";
+}%}
+void -> "void"{%function(d){
+	return "void";
 }%}
 sin -> "Math" _ "." _ "sin" _ "(" _ expression _ ")"{%function(d){
 	return "Math" + "." + "Sin" + "(" + d[8] + ")";
@@ -189,8 +210,11 @@ _add -> arithmetic_expression _ "+" _ arithmetic_expression{%function(d){
 add -> _add{%function(d){
 	return d[0];
 }%}
-subtract -> arithmetic_expression _ "-" _ arithmetic_expression{%function(d){
+_subtract -> arithmetic_expression _ "-" _ arithmetic_expression{%function(d){
 	return d[0] + "-" + d[4];
+}%}
+subtract -> _subtract{%function(d){
+	return d[0];
 }%}
 functionCall -> identifier _ "(" _ functionCallParameters _ ")"{%function(d){
 	return d[0] + "(" + d[4] + ")";
@@ -288,7 +312,7 @@ substring -> string_expression _ "." _ "substring" _ "(" _ arithmetic_expression
 strcmp -> string_expression _ "." _ "equals" _ "(" _ string_expression _ ")"{%function(d){
 	return d[0] + "." + "Equals" + "(" + d[8] + ")";
 }%}
-arrayLength -> array_expression _ "." _ "length"{%function(d){
+array_length -> array_expression _ "." _ "length"{%function(d){
 	return d[0] + "." + "Length";
 }%}
 strlen -> string_expression _ "." _ "length" _ "(" _ ")"{%function(d){

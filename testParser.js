@@ -9,7 +9,6 @@ var nearley = require("nearley");
 var reversibleTranslator = require("./reversibleTranslator.js");
 var fs = require('fs');
 
-
 var reversible = new nearley.Parser(reversibleTranslator.ParserRules, reversibleTranslator.ParserStart);
 
 fs.readFile("grammar.txt", 'utf8', function(err, data) {

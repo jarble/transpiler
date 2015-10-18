@@ -17,7 +17,7 @@ fs.readFile("javaExample.java", 'utf8', function(err, data) {
   var theOutput = translator.feed(data).results;
   console.log(theOutput[0])
   //console.log(theOutput[2])
-  var fileName = "javaExample.js";
+  var fileName = "javaExample.pl";
   fs.writeFile(fileName, theOutput, function(err) {
     if(err) {
         return console.log(err);

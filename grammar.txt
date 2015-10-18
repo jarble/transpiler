@@ -1,5 +1,152 @@
-Java,JavaScript
+Lua,Perl
 {
+	initialize_instance_variable(type type, identifier name)
+		Java,C#
+			"private __ type __ name ;"
+		C++
+			"type __ name ;"
+		Python,Ruby
+			"_"
+			Java,C#
+			"private __ type __ name ;"
+		C++
+			"type __ name ;"
+		Python,Ruby
+			"_"
+	initialize_static_variable(type type, identifier name)
+		Swift
+			"static __ var __ name = value"
+		Java,C#
+			"public __ static __ type __ name ;"
+		C++
+			"static __ type __ name ;"
+		Python
+			"_"
+	range(expression a, expression b)
+		Swift,Perl,Picat,Ruby
+			"a .. b"
+		Python
+			"range ( a, b - 1 )"
+		Java,JavaScript,Lua
+			"_"
+	typeless_parameter(identifier a)
+		C++
+			"auto __ a"
+		Haskell,Scheme,Python,Mathematical notation,LispyScript,CLIPS,Clojure,F#,ML,Racket,OCaml,Tcl,Common Lisp,newLisp,Python,Cython,Frink,Picat,IDP,PowerShell,Maxima,Icon,CoffeeScript,Fortran,Octave,AutoHotKey,Julia,Prolog,AWK,Kotlin,Dart,JavaScript,Nemerle,Erlang,PHP,AutoIt,Lua,Ruby,R,bc
+			"a"
+		Java
+			"Object __ a"
+	typeless_function(identifier name, typeless_parameters params, series_of_statements body)
+		JavaScript
+			"function __ name ( params ) { body }"
+		C++
+			"auto __ name ( params ) { body }"
+		Java
+			"Object __ name ( params ) { body }"
+		Ruby
+			"def __ name ( params ) __ body __ end"
+		Perl
+			"sub __ name { params body }"
+		Lua
+			"function __ name ( params ) body"
+	typeless_variable_declaration(varName name, identifier value)
+		C++
+			"auto __ name = value ;"
+		JavaScript
+			"var __ name = value ;"
+		Lua
+			"local __ name = value ;"
+		Java
+			"Object __ name = value ;"
+		C#
+			"var __ name = value ;"
+		Prolog
+			"name = value ,"
+		Ruby
+			"name = value \n"
+		Perl
+			"my __ name = value"
+	int_to_string(expression a)
+		Python
+			"str ( a )"
+		Swift,JavaScript
+			"String ( a )"
+		Java
+			"Integer . toString ( a )"
+		Haskell
+			"( show __ a )"
+		Perl
+			"a"
+		C#
+			"Convert . ToString ( a )"
+		Ruby
+			"a . to_s"
+		C++
+			"std :: to_string ( a )"
+		Lua
+			"tostring ( a )"
+		Haxe
+			"Std . toString ( a )"
+	split(expression aString, expression separator)
+		JavaScript,CoffeeScript,Java,Python,Dart,Scala,Groovy,Haxe,Ruby,Rust
+			"aString . split ( separator )"
+		Lua
+			"string . gmatch ( aString , separator )"
+		PHP
+			"explode ( separator , aString )"
+		Perl,Processing
+			"split ( separator , aString )"
+		REBOL
+			"split __ aString __ separator"
+		C#
+			"aString . Split ( new string[] { separator } , StringSplitOptions . None )"
+		Picat
+			"split ( aString , separator )"
+		Haskell
+			"( splitOn __ aString __ separator )"
+	join(expression a, expression b)
+		C#
+			"String . Join ( separator , array )"
+		PHP
+			"implode ( separator , array )"
+		Perl
+			"join ( separator , array )"
+		Lua
+			"table . concat ( array , separator )"
+		Go
+			"Strings . join ( array , separator )"
+		JavaScript,Haxe,CoffeeScript,Ruby,Groovy,Java
+			"array . join ( separator )"
+	function_call_parameter_separator(lang a)
+		JavaScript,Perl,Swift,Perl 6,OCaml,Janus,Mathematical notation,Pascal,Rust,Picat,AutoHotKey,Maxima,Octave,Julia,R,Prolog,Fortran,Go,MiniZinc,Erlang,CoffeeScript,PHP,Hack,Java,C#,C,C++,Lua,TypeScript,Dart,Ruby,Python,Haxe,Scala,Visual Basic,Visual Basic .NET
+			","
+		Hy,Scheme,Racket,Common Lisp,CLIPS,REBOL,Haskell,Racket,Clojure
+			"__"
+	string_to_int(expression a)
+		Python
+			"int ( a )"
+		Haskell
+			"( read __ a )"
+		Perl
+			"a"
+		C#
+			"Int32 . Parse( a )"
+		Java
+			"Integer . parseInt ( a )"
+		C
+			"atoi ( a )"
+		Scala
+			"a . toInt"
+		Ruby
+			"Integer ( a )"
+		REBOL
+			"to __ integer! __ a"
+		Lua
+			"tonumber ( a )"
+		JavaScript
+			"parseInt ( a )"
+		C++
+			"atoi ( a . c_str ( ) )"
 	declare_constant(varName name, type type, expression value)
 		PHP,JavaScript
 			"const __ name = value ;"
@@ -14,9 +161,11 @@ Java,JavaScript
 		Scala
 			"val __ name : type = value"
 		Python,Ruby,Haskell,Erlang,Prolog,Julia
-			"name = value"
+			"name = value \n"
+		Picat
+			"name = value ,"
 		Lua
-			"local __ name = value"
+			"local __ name = value \n"
 		Perl
 			"my __ name = value ;"
 		REBOL
@@ -54,9 +203,7 @@ Java,JavaScript
 		Lua,Visual Basic, Visual Basic .NET
 			"a ( b + 1 )"
 		Haskell
-			"(a !! b)"
-		Prolog
-			"_"
+			"( a !! b )"
 		English
 			"index __ b __ of __ the __ list __ a"
 		English
@@ -74,8 +221,6 @@ Java,JavaScript
 			"Array"
 		Haxe
 			"Array< a >"
-		Prolog
-			"_"
 		English,PHP
 			"array"
 		Julia
@@ -84,7 +229,7 @@ Java,JavaScript
 		Python,Julia,English,Pascal,Delphi,Prolog,MiniZinc,EngScript,Cython,Groovy,Dart,TypeScript,CoffeeScript,Nemerle,JavaScript,Haxe,Haskell,Ruby,REBOL,Polish notation,Swift,Java,Picat,C#,Go,Lua,C++,C,Visual Basic .NET,Visual Basic,PHP,Scala,Perl
 			","
 		REBOL
-			"_"
+			"__"
 	initializerList(_initializerList a)
 		Java,Picat,C#,Go,Lua,C++,C,Visual Basic .NET,Visual Basic
 			"{ a }"
@@ -109,8 +254,6 @@ Java,JavaScript
 			"a __ b"
 		Lua
 			"a = b"
-		Java,C#,C,Prolog
-			"_"
 		C++
 			"{ a , b }"
 		Scala
@@ -118,7 +261,7 @@ Java,JavaScript
 	charAt(expression aString, expression index)
 		Java,Haxe,Scala,JavaScript
 			"aString . charAt ( index )"
-		Python,C,PHP,C#,MiniZinc,C++
+		Python,C,PHP,C#,MiniZinc,C++,Ruby
 			"aString [ index ]"
 		Lua
 			"aString : sub( index + 1 , index + 1 )"
@@ -149,16 +292,16 @@ Java,JavaScript
 		C#,JavaScript
 			"var"
 	void(lang a)
-		Python,EngScript,Hy,Cython,Go,Pike,Objective-C,Java,C,C++,C#,Vala,TypeScript
+		EngScript,Hy,Cython,Go,Pike,Objective-C,Java,C,C++,C#,Vala,TypeScript
 			"void"
 		Haxe
 			"Void"
 		Scala
 			"Unit"
-		JavaScript
+		JavaScript,Picat,Ruby,Python,Lua
 			"_"
 	sin(expression x)
-		Java,JavaScript,Ruby
+		Java,JavaScript,Ruby,Haxe
 			"Math . sin ( x )"
 		Lua,Python
 			"math . sin ( x )"
@@ -166,7 +309,7 @@ Java,JavaScript
 			"math:sin ( x )"
 		C++
 			"std :: sin ( x )"
-		C,PHP,Perl,Perl 6,Maxima,Fortran,MiniZinc,Swift
+		C,PHP,Perl,Perl 6,Maxima,Fortran,MiniZinc,Swift,Prolog
 			"sin ( x )"
 		Haskell,Clojure
 			"( sin __ x )"
@@ -177,11 +320,11 @@ Java,JavaScript
 		Scala
 			"scala . math . sin ( x )"
 	sqrt(expression x)
-		Java,JavaScript,Ruby
+		Java,JavaScript,Ruby,Haxe
 			"Math . sqrt ( x )"
 		C#
 			"Math . Sqrt ( x )"
-		C,Perl,PHP,Perl 6,Maxima,MiniZinc
+		C,Perl,PHP,Perl 6,Maxima,MiniZinc,Prolog
 			"sqrt ( x )"
 		Lua,Python
 			"math . sqrt ( x )"
@@ -192,13 +335,13 @@ Java,JavaScript
 		C++
 			"std :: sqrt ( x )"
 	cos(expression x)
-		Java,JavaScript,Ruby
+		Java,JavaScript,Ruby,Haxe
 			"Math . cos ( x )"
 		Lua,Python
 			"math . cos ( x )"
 		Erlang
 			"math:cos ( x )"
-		C,Perl,Perl 6,PHP,Maxima,Fortran,MiniZinc,Swift
+		C,Perl,Perl 6,PHP,Maxima,Fortran,MiniZinc,Swift,Prolog
 			"cos ( x )"
 		Haskell,Clojure
 			"( cos __ x )"
@@ -211,13 +354,13 @@ Java,JavaScript
 		Scala
 			"scala . math . cos ( x )"
 	tan(expression x)
-		Java,JavaScript,Ruby
+		Java,JavaScript,Ruby,Haxe
 			"Math . tan ( x )"
 		Lua,Python
 			"math . tan ( x )"
 		Lua,Python,Erlang
 			"math:tan ( x )"
-		C,Perl,Perl 6,PHP,Maxima,Fortran,MiniZinc,Swift
+		C,Perl,Perl 6,PHP,Maxima,Fortran,MiniZinc,Swift,Prolog
 			"tan ( x )"
 		Haskell,Clojure
 			"( tan x )"
@@ -232,8 +375,6 @@ Java,JavaScript
 	dictionary(keyValueList a)
 		Python,JavaScript,Lua,Ruby,Julia,C++
 			"{ a }"
-		Java,C#,C,Prolog
-			"_"
 		Perl
 			"( a )"
 		PHP
@@ -247,8 +388,6 @@ Java,JavaScript
 	keyValueSeparator(lang a)
 		Python,Swift,JavaScript,PHP,Perl,Lua,Ruby,Prolog,Julia,Haxe,C++,Scala
 			","
-		Java,C#,C
-			"_"
 	true(lang a)
 		Java,English,Pascal,MiniZinc,EngScript,Picat,Rust,Clojure,Nimrod,Hack,Ceylon,D,Groovy,CoffeeScript,TypeScript,Octave,Prolog,Julia,F#,Swift,Nemerle,Vala,C++,Dart,JavaScript,Ruby,Erlang,C#,Haxe,Go,OCaml,Lua,Scala,PHP,REBOL
 			"true"
@@ -297,17 +436,17 @@ Java,JavaScript
 		Pascal,Katahdin,Frink,MiniZinc,Picat,Java,ECLiPSe,D,ooc,Genie,Janus,PL/I,IDP,Processing,Maxima,Seed7,Self,GNU Smalltalk,Drools,Standard ML,Oz,Cobra,Pike,Prolog,EngScript,Kotlin,Pawn,FreeBASIC,MATLAB,Ada,FreeBASIC,Gosu,Gambas,Nimrod,AutoIt,ALGOL 68,Ceylon,Groovy,Rust,CoffeeScript,TypeScript,Fortran,Octave,ML,Hack,AutoHotKey,Scala,Delphi,Tcl,Swift,Vala,C,F#,C++,Dart,JavaScript,REBOL,Julia,Erlang,OCaml,crosslanguage,C#,Nemerle,AWK,Java,Lua,Perl,Haxe,Python,PHP,Haskell,Go,Ruby,R,bc,Visual Basic,Visual Basic .NET
 			"a > b"
 		Racket,Z3,CLIPS,GNU Smalltalk,newLisp,Hy,Common Lisp,Emacs Lisp,Clojure,Sibilant,LispyScript
-			"( > a b)"
+			"( > __ a __ b )"
 		English
 			"a __ is __ greater __ than __ b"
 	lessThan(arithmetic_expression a, arithmetic_expression b)
 		Pascal,Katahdin,Frink,MiniZinc,Picat,Java,ECLiPSe,D,ooc,Genie,Janus,PL/I,IDP,Processing,Maxima,Seed7,Self,GNU Smalltalk,Drools,Standard ML,Oz,Cobra,Pike,Prolog,EngScript,Kotlin,Pawn,FreeBASIC,MATLAB,Ada,FreeBASIC,Gosu,Gambas,Nimrod,AutoIt,ALGOL 68,Ceylon,Groovy,Rust,CoffeeScript,TypeScript,Fortran,Octave,ML,Hack,AutoHotKey,Scala,Delphi,Tcl,Swift,Vala,C,F#,C++,Dart,JavaScript,REBOL,Julia,Erlang,OCaml,crosslanguage,C#,Nemerle,AWK,Java,Lua,Perl,Haxe,Python,PHP,Haskell,Go,Ruby,R,bc,Visual Basic,Visual Basic .NET
 			"a < b"
 		Racket,Z3,CLIPS,GNU Smalltalk,newLisp,Hy,Common Lisp,Emacs Lisp,Clojure,Sibilant,LispyScript
-			"( < a b)"
+			"( < __ a __ b )"
 		English
 			"a __ is __ less __ than __ b"
-	class_extends(identifier c1, identifier c2, series_of_statements b)
+	class_extends(identifier c1, identifier c2, class_statements b)
 		Swift
 			"class __ c1 : c2"
 		Haxe,PHP,JavaScript
@@ -320,8 +459,8 @@ Java,JavaScript
 			"class __ c1 : public __ c2 { b }"
 		Ruby
 			"class __ c1 __ < __ c2 __ b __ end"
-	class(identifier a, series_of_statements b)
-		Java,C#
+	class(identifier a, class_statements b)
+		Java,C#,C++
 			"public __ class __ a { b }"
 		REBOL
 			"a: __ make __ object! [ b ]"
@@ -329,7 +468,7 @@ Java,JavaScript
 			"class __ a { b }"
 		Ruby
 			"class __ a __ b __ end"
-		C,Erlang,MiniZinc,Lua,Haskell,Prolog,Fortran,Julia
+		C,Picat,Erlang,MiniZinc,Lua,Haskell,Prolog,Fortran,Julia,Common Lisp
 			"b"
 		Python
 			"class __ name : \n #indent \n b \n #indent \n"
@@ -360,8 +499,6 @@ Java,JavaScript
             "Arrays . asList ( container ) . contains ( contained )"
         Haskell
 			"( elem __ contained __ container )"
-		C,Prolog
-			"_"
 	this(varName a)
 		Ruby,CoffeeScript
 			"@ a"
@@ -371,14 +508,10 @@ Java,JavaScript
 			"self . a"
 		PHP,Hack
 			"$this -> a"
-		C,MiniZinc,Prolog,Visual Basic .NET,Fortran
-			"_"
 		Swift,Scala
 			"a"
 		REBOL
 			"self / a"
-		Lua,MiniZinc,Haskell,Julia
-			"_"
 	pow(arithmetic_expression a, arithmetic_expression b)
 		Lua
 			"math . pow ( a , b )"
@@ -394,14 +527,12 @@ Java,JavaScript
 			"power __ a __ b"
 		C,C++,PHP,Hack,Swift,MiniZinc
 			"pow ( a , b )"
-		Prolog
-			"_"
 		Julia,EngScript,Visual Basic,Visual Basic .NET,Gambas,Go,Ceylon
 			"a ^ b"
 		Rust
 			"num::pow ( a , b )"
 		Hy,Common Lisp,Racket,Clojure
-			"( expt num1 num2 )"
+			"( expt __ num1 __ num2 )"
 		Erlang
 			"math:pow ( a , b )"
 	_or(arithmetic_expression a, arithmetic_expression b)
@@ -414,21 +545,21 @@ Java,JavaScript
 		MiniZinc
 			"a \\/ b"
 		Common Lisp,Z3,CLIPS,Racket,Sibilant,Clojure,Hy
-			"a b"
+			"a __ b"
 		Visual Basic,Visual Basic .NET
-			"a Or b"
+			"a __ Or __ b"
 		Fortran
 			"a .OR. b"
 	or(_or a)
 		Python,Fortran,Visual Basic .NET,MiniZinc,Genie,IDP,Maxima,EngScript,Ada,newLisp,OCaml,Visual Basic,Nimrod,CoffeeScript,Pascal,Delphi,Erlang,REBOL,Lua,PHP,crosslanguage,Ruby,JavaScript,Hack,PHP,Frink,ooc,Picat,Janus,Processing,Pike,Pawn,MATLAB,Hack,Gosu,Rust,AutoIt,AutoHotKey,TypeScript,Ceylon,Groovy,Octave,Julia,Scala,F#,Swift,Nemerle,Vala,Dart,C,C++,C#,OCaml,AWK,Java,Haskell,Haxe,Bash,Haxe,Go,Perl,R,Prolog
 			"a"
 		Common Lisp,Z3,CLIPS,Racket,Sibilant,Clojure,Hy
-			"( or a )"
+			"( or __ a )"
 	_and(boolean_expression a, boolean_expression b)
 		JavaScript,Hack,PHP,Frink,ooc,Picat,Janus,Processing,Pike,Pawn,MATLAB,Hack,Gosu,Rust,AutoIt,AutoHotKey,TypeScript,Ceylon,Groovy,Octave,Julia,Scala,F#,Swift,Nemerle,Vala,Dart,C,C++,C#,OCaml,AWK,Java,Haskell,Haxe,Bash,Haxe,Go,Perl,R
 			"a && b"
 		Visual Basic,Visual Basic .NET,OpenOffice Basic
-			"a And b"
+			"a __ And __ b"
 		Python,Mathematical notation,Genie,IDP,Maxima,EngScript,Ada,newLisp,OCaml,Nimrod,CoffeeScript,Pascal,Delphi,Erlang,REBOL,Lua,PHP,crosslanguage,Ruby
 			"a __ and __ b"
 		Prolog
@@ -436,17 +567,17 @@ Java,JavaScript
 		MiniZinc
 			"a /\\ b"
 		Common Lisp,Z3,newLisp,Racket,Clojure,Sibilant,Hy,CLIPS
-			"a b"
+			"a __ b"
 		Fortran
 			"a .AND. b"
 	and(_and a)
 		Prolog,Fortran,Visual Basic,Visual Basic .NET,OpenOffice Basic,Python,MiniZinc,Genie,IDP,Maxima,EngScript,Ada,newLisp,OCaml,Nimrod,CoffeeScript,Pascal,Delphi,Erlang,REBOL,Lua,PHP,crosslanguage,Ruby,JavaScript,Hack,PHP,Frink,ooc,Picat,Janus,Processing,Pike,Pawn,MATLAB,Hack,Gosu,Rust,AutoIt,AutoHotKey,TypeScript,Ceylon,Groovy,Octave,Julia,Scala,F#,Swift,Nemerle,Vala,Dart,C,C++,C#,OCaml,AWK,Java,Haskell,Haxe,Bash,Haxe,Go,Perl,R
 			"a"
 		Common Lisp,Z3,newLisp,Racket,Clojure,Sibilant,Hy,CLIPS
-			"( and a )"
+			"( and __ a )"
 	not(boolean_expression a)
 		Python,MiniZinc,Picat,Genie,Seed7,Z3,IDP,Maxima,CLIPS,EngScript,Hy,OCaml,Clojure,Erlang,Pascal,Delphi,F#,ML,Lua,Racket,Common Lisp,crosslanguage,REBOL,Haskell,Sibilant
-			"not a"
+			"not __ a"
 		Java,Katahdin,CoffeeScript,Frink,D,ooc,Ceylon,Processing,Pawn,AutoHotKey,Groovy,Scala,Hack,Rust,Octave,TypeScript,Julia,AWK,Swift,Scala,Vala,Nemerle,Pike,Perl,C,C++,Objective-C,Tcl,JavaScript,R,Dart,Java,Go,Ruby,PHP,Haxe,C#
 			"! a"
 		Prolog
@@ -467,42 +598,42 @@ Java,JavaScript
 		C,Katahdin,Mathematical notation,Frink,MiniZinc,COBOL,ooc,Genie,B-Prolog,ECLiPSe,Elixir,nools,Pyke,Picat,PL/I,REXX,IDP,Falcon,Processing,Maxima,Sympy,Mercury,Self,GNU Smalltalk,Boo,Drools,Seed7,Occam,Standard ML,EngScript,Prolog,Pike,Oz,Kotlin,Pawn,MATLAB,Ada,PowerShell,Gosu,AWK,Gambas,Nimrod,AutoHotKey,Julia,OpenOffice Basic,ALGOL 68,D,Groovy,Ceylon,Rust,CoffeeScript,ActionScript,TypeScript,Fortran,Octave,ML,Haxe,Pascal,Delphi,Swift,Nemerle,Vala,R,Red,C++,Erlang,Scala,AutoIt,Cobra,F#,Perl,PHP,Go,Ruby,Lua,Haskell,Hack,Java,OCaml,REBOL,Python,JavaScript,C#,Visual Basic,Visual Basic .NET,Dart
 			"a * b"
 		Racket,Perl 6,Z3,CLIPS,newLisp,Hy,LispyScript,Sibilant,Clojure,Common Lisp,Scheme
-			"a b"
+			"a __ b"
 	multiply(_multiply a)
 		C,Perl 6,Mathematical notation,Katahdin,Frink,MiniZinc,COBOL,ooc,Genie,B-Prolog,ECLiPSe,Elixir,nools,Pyke,Picat,PL/I,REXX,IDP,Falcon,Processing,Maxima,Sympy,Mercury,Self,GNU Smalltalk,Boo,Drools,Seed7,Occam,Standard ML,EngScript,Prolog,Pike,Oz,Kotlin,Pawn,MATLAB,Ada,PowerShell,Gosu,AWK,Gambas,Nimrod,AutoHotKey,Julia,OpenOffice Basic,ALGOL 68,D,Groovy,Ceylon,Rust,CoffeeScript,ActionScript,TypeScript,Fortran,Octave,ML,Haxe,Pascal,Delphi,Swift,Nemerle,Vala,R,Red,C++,Erlang,Scala,AutoIt,Cobra,F#,Perl,PHP,Go,Ruby,Lua,Haskell,Hack,Java,OCaml,REBOL,Python,JavaScript,C#,Visual Basic,Visual Basic .NET,Dart
 			"a"
 		Racket,Z3,CLIPS,newLisp,Hy,LispyScript,Sibilant,Clojure,Common Lisp,Scheme
-			"( * a )"
+			"( * __ a )"
 	_divide(arithmetic_expression a, arithmetic_expression b)
 		Java,Perl 6,Mathematical notation,Pascal,Visual Basic .NET,REBOL,Katahdin,Frink,MiniZinc,Aldor,Picat,COBOL,B-Prolog,Genie,ooc,Falcon,Oz,PL/I,IDP,REXX,Processing,Maxima,Sympy,Elixir,nools,Standard ML,Delphi,Pike,Self,GNU Smalltalk,Cobra,Kotlin,Seed7,Drools,Prolog,EngScript,Pawn,MATLAB,FreeBASIC,Ada,PowerShell,Gosu,Gambas,Nimrod,OpenOffice Basic,ALGOL 68,D,Groovy,Ceylon,Rust,CoffeeScript,ActionScript,TypeScript,Fortran,Octave,ML,AutoHotKey,AWK,Julia,F#,Visual Basic,Swift,Nemerle,Vala,Go,Dart,R,C,C++,Python,Scala,AutoIt,Perl,Erlang,Hack,Ruby,Haxe,Lua,Haskell,OCaml,JavaScript,C#,PHP
 			"a / b"
 		Racket,Z3,CLIPS,newLisp,Hy,LispyScript,Sibilant,Clojure,Common Lisp,Scheme
-			"a b"
+			"a __ b"
 	divide(_divide a)
 		Java,Perl 6,Mathematical notation,Pascal,Visual Basic .NET,REBOL,Katahdin,Frink,MiniZinc,Aldor,Picat,COBOL,B-Prolog,Genie,ooc,Falcon,Oz,PL/I,IDP,REXX,Processing,Maxima,Sympy,Elixir,nools,Standard ML,Delphi,Pike,Self,GNU Smalltalk,Cobra,Kotlin,Seed7,Drools,Prolog,EngScript,Pawn,MATLAB,FreeBASIC,Ada,PowerShell,Gosu,Gambas,Nimrod,OpenOffice Basic,ALGOL 68,D,Groovy,Ceylon,Rust,CoffeeScript,ActionScript,TypeScript,Fortran,Octave,ML,AutoHotKey,AWK,Julia,F#,Visual Basic,Swift,Nemerle,Vala,Go,Dart,R,C,C++,Python,Scala,AutoIt,Perl,Erlang,Hack,Ruby,Haxe,Lua,Haskell,OCaml,JavaScript,C#,PHP
 			"a"
 		Racket,Z3,CLIPS,newLisp,Hy,LispyScript,Sibilant,Clojure,Common Lisp,Scheme
-			"( / a )"
+			"( / __ a )"
 	_add(arithmetic_expression a, arithmetic_expression b)
 		Java,Bash,Perl 6,Mathematical notation,Katahdin,Frink,MiniZinc,Aldor,COBOL,ooc,Genie,ECLiPSe,nools,B-Prolog,Agda,Picat,PL/I,REXX,IDP,Falcon,Processing,Sympy,Maxima,Pyke,Elixir,GNU Smalltalk,Seed7,Standard ML,Occam,Boo,Drools,Icon,Mercury,EngScript,Pike,Oz,Kotlin,Pawn,FreeBASIC,Ada,PowerShell,Gosu,Nimrod,Cython,OpenOffice Basic,ALGOL 68,D,Ceylon,Rust,CoffeeScript,ActionScript,TypeScript,Fortran,Octave,ML,AutoHotKey,Prolog,Delphi,Pascal,F#,Self,Swift,Nemerle,Dart,C,AutoIt,Cobra,Julia,Groovy,Scala,OCaml,Erlang,Gambas,Hack,C++,MATLAB,REBOL,Red,Lua,Go,AWK,Haskell,Perl,Python,JavaScript,C#,PHP,Ruby,R,Haxe,Visual Basic,Visual Basic .NET,Vala,bc
 			"a + b"
 		Racket,Z3,CLIPS,newLisp,Hy,LispyScript,Sibilant,Clojure,Common Lisp,Scheme
-			"a b"
+			"a __ b"
 	add(_add a)
 		Java,Perl 6,Janus,Bash,Mathematical notation,Katahdin,Frink,MiniZinc,Aldor,COBOL,ooc,Genie,ECLiPSe,nools,B-Prolog,Agda,Picat,PL/I,REXX,IDP,Falcon,Processing,Sympy,Maxima,Pyke,Elixir,GNU Smalltalk,Seed7,Standard ML,Occam,Boo,Drools,Icon,Mercury,EngScript,Pike,Oz,Kotlin,Pawn,FreeBASIC,Ada,PowerShell,Gosu,Nimrod,Cython,OpenOffice Basic,ALGOL 68,D,Ceylon,Rust,CoffeeScript,ActionScript,TypeScript,Fortran,Octave,ML,AutoHotKey,Prolog,Delphi,Pascal,F#,Self,Swift,Nemerle,Dart,C,AutoIt,Cobra,Julia,Groovy,Scala,OCaml,Erlang,Gambas,Hack,C++,MATLAB,REBOL,Red,Lua,Go,AWK,Haskell,Perl,Python,JavaScript,C#,PHP,Ruby,R,Haxe,Visual Basic,Visual Basic .NET,Vala,bc
 			"a"
 		Racket,Z3,CLIPS,newLisp,Hy,LispyScript,Sibilant,Clojure,Common Lisp,Scheme
-			"( + a )"
+			"( + __ a )"
 	_subtract(arithmetic_expression a, arithmetic_expression b)
 		Java,Janus,Mathematical notation,Katahdin,Frink,PyCharm,MiniZinc,Aldor,COBOL,Genie,ooc,Pawn,B-Prolog,nools,ECLiPSe,Elixir,Pyke,Mercury,Picat,PL/I,REXX,IDP,Falcon,Processing,Maxima,Sympy,Self,GNU Smalltalk,Pike,Gambas,Nimrod,Kotlin,Occam,Drools,Gosu,Boo,Oz,Prolog,Seed7,Standard ML,Occam,MATLAB,Cobra,EngScript,PowerShell,OpenOffice Basic,Cython,ALGOL 68,D,Groovy,Ceylon,Rust,CoffeeScript,ActionScript,TypeScript,Fortran,Octave,ML,AutoHotKey,AWK,Julia,Delphi,Pascal,Swift,Nemerle,Vala,R,Go,Dart,C,C++,AutoIt,Scala,Perl,Erlang,F#,Hack,OCaml,Haskell,Python,REBOL,Red,JavaScript,C#,PHP,Visual Basic,Visual Basic .NET,Ruby,Haxe,Lua
 			"a - b"
 		Racket,Z3,CLIPS,newLisp,Hy,LispyScript,Sibilant,Clojure,Common Lisp,Scheme
-			"a b"
+			"a __ b"
 	subtract(_subtract a)
 		Java,Perl 6,Janus,Bash,Mathematical notation,Katahdin,Frink,MiniZinc,Aldor,COBOL,ooc,Genie,ECLiPSe,nools,B-Prolog,Agda,Picat,PL/I,REXX,IDP,Falcon,Processing,Sympy,Maxima,Pyke,Elixir,GNU Smalltalk,Seed7,Standard ML,Occam,Boo,Drools,Icon,Mercury,EngScript,Pike,Oz,Kotlin,Pawn,FreeBASIC,Ada,PowerShell,Gosu,Nimrod,Cython,OpenOffice Basic,ALGOL 68,D,Ceylon,Rust,CoffeeScript,ActionScript,TypeScript,Fortran,Octave,ML,AutoHotKey,Prolog,Delphi,Pascal,F#,Self,Swift,Nemerle,Dart,C,AutoIt,Cobra,Julia,Groovy,Scala,OCaml,Erlang,Gambas,Hack,C++,MATLAB,REBOL,Red,Lua,Go,AWK,Haskell,Perl,Python,JavaScript,C#,PHP,Ruby,R,Haxe,Visual Basic,Visual Basic .NET,Vala,bc
 			"a"
 		Racket,Z3,CLIPS,newLisp,Hy,LispyScript,Sibilant,Clojure,Common Lisp,Scheme
-			"( + a )"
+			"( - __ a )"
 	functionCall(identifier a, functionCallParameters b)
 		C,Perl 6,Pascal,Rust,Hack,Katahdin,Frink,MiniZinc,Pawn,Aldor,Picat,D,Genie,ooc,PL/I,Delphi,Standard ML,REXX,Falcon,IDP,Processing,Maxima,Swift,Boo,R,MATLAB,AutoIt,Pike,Gosu,AWK,AutoHotKey,Gambas,Kotlin,Nemerle,EngScript,Prolog,Groovy,Scala,CoffeeScript,Julia,TypeScript,Fortran,Octave,C++,Go,Cobra,Ruby,Vala,F#,Java,Ceylon,OCaml,Erlang,Python,C#,Lua,Haxe,JavaScript,Dart,bc,Visual Basic,Visual Basic .NET,PHP,Perl
 			"a ( b )"
@@ -527,8 +658,6 @@ Java,JavaScript
 			"append __ a __ b"
 		Haskell,MiniZinc
 			"a ++ b"
-		C,Prolog
-			"_"
 		CLIPS
 			"( str-cat a b )"
 		Clojure
@@ -556,8 +685,8 @@ Java,JavaScript
 			"type : name = value ;"
 		Scala
 			"var __ name : type = value \n"
-		Python,Ruby,Haskell,Erlang,Prolog,Julia
-			"name = value"
+		Python,Ruby,Haskell,Erlang,Prolog,Julia,Picat
+			"name = value \n"
 		JavaScript,TypeScript,PHP,Hack
 			"var __ name = value ;"
 		Swift
@@ -589,6 +718,8 @@ Java,JavaScript
 			"retval = a"
 		Pascal
 			"Exit ( a )"
+		Picat
+			"ToReturn = a"
 	varName(identifier name)
 		PHP,Perl,Bash,Tcl,AutoIt,Perl 6,Puppet,Hack,AWK,PowerShell
 			"$ name"
@@ -599,6 +730,8 @@ Java,JavaScript
 	func(identifier name, parameterList params, series_of_statements body, type returnType)
 		Mathematical notation
 			"name ( params ) = { body }"
+		Picat
+			"name ( params ) = ToReturn => body ."
 		Swift
 			"func __ name ( params ) -> returnType { body }"
 		Maxima
@@ -643,8 +776,6 @@ Java,JavaScript
 			"function __ name ( params ) : returnType { body }"
 		REBOL
 			"name : __ func [ params ] [ body ]"
-		Prolog
-			"name ( params ) :- body ."
 		Haxe
 			"public __ static __ function __ name ( params ) : returnType { body }"
 		Hack
@@ -713,7 +844,7 @@ Java,JavaScript
 		R,F#
 			"a <- b"
 		CLIPS
-			"(if __ a __ then __ b)"
+			"( if __ a __ then __ b )"
 		MiniZinc
 			"else __ if __ a __ then __ b"
 		Python,Cython
@@ -733,19 +864,15 @@ Java,JavaScript
 	plusEquals(expression a, expression b)
 		Janus,Python
 			"a += b \n"
-		Java,C,C++,C#,JavaScript,Haxe,PHP
+		Java,C,C++,C#,JavaScript,Haxe,PHP,Lua
 			"a += b ;"
-		Ruby
+		Ruby,Picat
 			"a = a + b \n"
-		Haskell,Erlang,Prolog,MiniZinc
-			"_"
 	minusEquals(expression a, expression b)
-		Janus,Python,Ruby
+		Janus,Python,Ruby,Lua
 			"a -= b \n"
-		Java,C,C++,C#,JavaScript,PHP
+		Java,C,C++,C#,JavaScript,PHP,Haxe,Hack
 			"a -= b ;"
-		Haskell,Erlang,Prolog,MiniZinc
-			"_"
 	else(series_of_statements a)
 		Hack,Katahdin,Pawn,PowerShell,Puppet,Ceylon,D,Rust,TypeScript,Scala,AutoHotKey,Gosu,Groovy,Java,Swift,Dart,AWK,JavaScript,Haxe,PHP,C#,Go,Perl,C++,C,Tcl,R,Vala,bc
 			"else { a }"
@@ -780,8 +907,6 @@ Java,JavaScript
 			"while __ ( a ) __ b __ end"
 		REBOL
 			"while [ a ] [ b ]"
-		Haskell,Erlang,MiniZinc,Prolog
-			"_"
 		Common Lisp
 			"( loop __ while __ a __ do __ b )"
 		Hy,newLisp,CLIPS
@@ -815,8 +940,6 @@ Java,JavaScript
 			"for ( var __ varName = startWith ; varName < endWith ; varName ++ ) { body }"
 		R
 			"for ( varName __ in __ startWith : endWith ) { body }"
-		Haskell,MiniZinc,Erlang,Prolog
-			"_"
 		REBOL
 			"for __ varName __ startWith __ endWith __ 1 [ body ]"
 		Rust
@@ -858,8 +981,8 @@ Java,JavaScript
             "array.grep { variable -> condition }.collect { variable -> result }"
         Dart
             "array . where ( variable => condition ) . map ( variable => result )"
-        C,C++,Lua,Java,Prolog,Visual Basic .NET,Visual Basic,Fortran,REBOL,Julia,Perl,PHP
-			"_"
+		Picat
+			"[ result : variable __ in __ array , condition ]"
 	import(expression a)
 		Fortran
 			"USE __ a"
@@ -870,7 +993,7 @@ Java,JavaScript
 		Prolog
 			":- consult( a ) ."
 		MiniZinc
-			"include __ \' a .mzn\' ;"
+			"include __ ' a .mzn' ;"
 		PHP
 			"include __ \' a .php\' ;"
 		C,C++
@@ -885,8 +1008,6 @@ Java,JavaScript
 			"import __ a ;"
 		Ruby,Lua
 			"require __ ' a '"
-		JavaScript
-			"_"
 		Perl
 			"use a ;"
 	print(expression a)
@@ -920,12 +1041,10 @@ Java,JavaScript
 			"printf ( a ) ;"
 		Haskell
 			"( putStrLn __ a )"
-		Hy
+		Hy,Common Lisp
 			"( print __ a )"
 		Rust
 			"println!( a ) ;"
-		MiniZinc
-			"_"
 	comment(_string a)
 		OCaml,Standard ML,ML
 			"(*{ a }*)"
@@ -1009,14 +1128,12 @@ Java,JavaScript
                     "Bool"
                 REBOL
                     "logic!"
-                Ruby
-					"_"
 				Prolog
 					"atom"
 	int(type t1)
 		        Hack,MiniZinc,EngScript,Cython,ALGOL 68,D,Octave,Tcl,ML,AWK,Julia,Gosu,OCaml,F#,Pike,Objective-C,Go,Cobra,Dart,Groovy,Python,Hy,Java,C#,C,C++,Vala,Nemerle,crosslanguage
                     "int"
-                PHP,Prolog
+                PHP,Prolog,Common Lisp
                     "integer"
                 Fortran
                     "INTEGER"
@@ -1060,12 +1177,12 @@ Java,JavaScript
 		Fortran
 			"a __ .GE. __ b"
 		Racket,Common Lisp,CLIPS,newLisp,Hy,Scheme,Clojure,Common Lisp,Emacs Lisp,Sibilant,LispyScript
-			"( >= a b )"
+			"( >= __ a __ b )"
 	lessThanOrEqual(arithmetic_expression a, arithmetic_expression b)
 		C,Frink,Mathematical notation,MiniZinc,Picat,ooc,Genie,PL/I,IDP,Processing,EngScript,Maxima,GNU Smalltalk,Pyke,Self,Boo,Cobra,Standard ML,Prolog,Kotlin,Pawn,FreeBASIC,Ada,MATLAB,ALGOL 68,Gambas,Nimrod,Gosu,AutoIt,Ceylon,D,Groovy,Rust,CoffeeScript,TypeScript,Octave,Hack,AutoHotKey,Julia,Scala,Pascal,Delphi,Swift,Visual Basic,F#,Objective-C,Pike,Python,Cython,Oz,ML,Vala,Dart,C++,Java,OCaml,REBOL,Erlang,C#,Nemerle,Ruby,PHP,Lua,Visual Basic .NET,Haskell,Haxe,Perl,JavaScript,R,AWK,crosslanguage,Go
 			"a <= b"
 		Racket,Z3,CLIPS,newLisp,Hy,Sibilant,LispyScript,Scheme,Clojure,Common Lisp,Emacs Lisp
-			"( <= a b )"
+			"( <= __ a __ b )"
 		English
 			"a __ is __ less __ than __ or __ equal __ to __ b"
 	switch(expression a, caseStatements b, default c)
@@ -1093,8 +1210,6 @@ Java,JavaScript
 			"SELECT __ CASE ( a ) __ b __ c __ END __ SELECT"
 		Clojure
 			"( case __ a __ b __ c )"
-		Python,Cython,Lua,MiniZinc,Prolog,Perl,Julia
-			"_"
 	case(expression a, series_of_statements b)
 		JavaScript,Java,C#,C,C++,TypeScript,Dart,PHP,Hack
 			"case __ a : b break ;"
@@ -1122,8 +1237,6 @@ Java,JavaScript
 			"( a __ b )"
 		Pascal,Delphi:
 			"a : b"
-		Python,Cython,Lua,MiniZinc,Prolog,Perl,Julia
-			"_"
 	foreach(expression array, expression variableName, type typeInArray, series_of_statements body)
 		Python,Cython
 			"for __ varName __ in __ array : \n #indent \n body \n #indent \n"
@@ -1161,8 +1274,6 @@ Java,JavaScript
 			"for ( getCorrespondingType __ typeInArray __ & __ variableName : array ){ body }"
 		Perl
 			"foreach __ variableName ( array ) { body }"
-		C,Prolog,Haskell
-			"_"
 	default(series_of_statements a)
 		JavaScript,C,Java,C#,C++,TypeScript,Dart,Ruby,PHP,Haxe,Hack,Go,Swift
 			"default : a"
@@ -1252,7 +1363,9 @@ Java,JavaScript
 			"a __ eq __ b"
 		Erlang
 			"string:equal ( a , b )"
-	arrayLength(array_expression a)
+	array_length(array_expression a)
+		Lua
+			"# a"
 		Python,Cython,Go
 			"len ( a )"
 		Java,Picat,Scala,D,CoffeeScript,TypeScript,Dart,Vala,JavaScript,Ruby,Haxe,Cobra
@@ -1309,9 +1422,9 @@ Java,JavaScript
 		AutoIt
 			"StringLen ( a )"
 		Common Lisp
-			"( length a )"
+			"( length __ a )"
 		Racket,Scheme
-			"( string-length a )"
+			"( string-length __ a )"
 		Perl,Octave
 			"length ( a )"
 		Nemerle
@@ -1351,15 +1464,17 @@ Java,JavaScript
 			"public __ function __ name ( params ) { body }"
 		Ruby
 			"def __ name ( params ) __ body __ end"
-		MiniZinc,C
-			"_"
 		C++
 			"type __ name ( params ) { body }"
 		Haxe
 			"public __ function __ name ( params ) : type { body }"
+		MiniZinc,C,Lua
+			"_"
 	static_method(identifier name, type returnType, parameterList params, series_of_statements body)
 		Haxe
 			"public __ static __ function __ name ( params ) { body }"
+		Lua,Julia
+			"function __ name ( params ) __ body __ end"
 		Java,C#
 			"public __ static __ returnType __ name ( params ) { body }"
 		C++
@@ -1372,6 +1487,8 @@ Java,JavaScript
 			"returnType __ name ( params ) { body }"
 		JavaScript
 			"static __ name ( params ) { body }"
+		Picat
+			"_"
 	constructor(identifier name, parameterList params, series_of_statements body)
 		Java,C#
 			"public __ name ( params ) { body }"
@@ -1389,7 +1506,7 @@ Java,JavaScript
 			"public __ function __ new ( params ) { body }"
 		C++
 			"name ( params ) { body }"
-		C,MiniZinc
+		C,MiniZinc,Picat,Lua
 			"_"
 	declare_new_object(varName var_name, identifier class_name, functionCallParameters params)
 		Java,C#
@@ -1406,7 +1523,7 @@ Java,JavaScript
 			"my __ var_name = class_name -> new ( params ) ;"
 		C++
 			"class_name __ var_name ( params ) ;"
-		C
+		C,Picat,MiniZinc,Prolog,Lua
 			"_"
 }
 '''
@@ -1422,12 +1539,16 @@ string_expression -> expression
 array_expression -> expression
 
 expression ->  accessArray | this | functionCall | varName | dictionary | declare_new_object
-| parentheses_expression | add | subtract | multiply | mod | divide | number | pow | strlen | sin | cos | tan | sqrt
-| String | concatenateString | substring
+| parentheses_expression | string_to_int | add | subtract | multiply | mod | divide | number | pow | strlen | sin | cos | tan | sqrt | array_length
+| String | concatenateString | substring | int_to_string | split | join
 | initializerList
 | false | true | not_equal | greaterThan | compareInts | strcmp | lessThanOrEqual | greaterThanOrEqual | lessThan | and | or | not | arrayContains
 
-statement -> constructor | plusEquals | minusEquals | declare_constant | instance_method | static_method | initializeArray | print | comment | switch | setVar | initializeVar | func | functionCallStatement | return | if | while | forInRange
+statement -> typeless_function | typeless_variable_declaration | plusEquals | minusEquals | declare_constant | initializeArray | print | comment | switch | setVar | initializeVar | func | functionCallStatement | return | if | while | forInRange
+class_statement -> constructor | initialize_static_variable | initialize_instance_variable | instance_method | static_method | comment
+
+class_statements -> class_statement:+
+
 type -> boolean | int | string | auto | arrayType | void
 caseStatements -> caseStatements _ case {%function(d){return d[0] +"\n"+ d[2];}%} | case
 elifStatements -> elifStatements _ elif {%function(d){return d[0] +"\n"+ d[2];}%} | elif #Match a series of elif statements
@@ -1436,7 +1557,12 @@ elifOrElse -> else | elifStatements _ else {%function(d){return d[0] +"\n"+ d[2]
 parameterList -> _parameterList | null
 _parameterList -> _parameterList _ parameter_separator _ parameter {%function(d){return d[0]+d[2]+d[4]}%}
 | parameter
-functionCallParameters -> functionCallParameters _ parameter_separator _ expression {% function(d) {return d.join(""); } %} | expression | null
+
+typeless_parameters -> _typeless_parameters | null
+_typeless_parameters -> _typeless_parameters _ parameter_separator _ typeless_parameter {%function(d){return d[0]+d[2]+d[4]}%}
+| typeless_parameter
+
+functionCallParameters -> functionCallParameters _ function_call_parameter_separator _ expression {% function(d) {return d.join(""); } %} | expression | null
 
 keyValueList -> _keyValueList
 _keyValueList -> _keyValueList _ keyValueSeparator _ keyValue {%function(d){return d[0]+d[2]+d[4]}%}

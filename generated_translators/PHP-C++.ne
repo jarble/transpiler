@@ -25,7 +25,7 @@ elifOrElse -> else | elifStatements _ else {%function(d){return d[0] +"\n"+ d[2]
 parameterList -> _parameterList | null
 _parameterList -> _parameterList _ parameter_separator _ parameter {%function(d){return d[0]+d[2]+d[4]}%}
 | parameter
-functionCallParameters -> functionCallParameters _ parameter_separator _ expression {% function(d) {return d.join(""); } %} | expression | null
+functionCallParameters -> functionCallParameters _ function_call_parameter_separator _ expression {% function(d) {return d.join(""); } %} | expression | null
 
 keyValueList -> _keyValueList
 _keyValueList -> _keyValueList _ keyValueSeparator _ keyValue {%function(d){return d[0]+d[2]+d[4]}%}
@@ -81,64 +81,58 @@ __ -> [\s] | __ [\s] {% function() {} %}
 
 
 #The next two lines are the languages for the translator.
-string_to_int -> "Integer" _ "." _ "parseInt" _ "(" _ expression _ ")"{%function(d){
-	return "atoi" + "(" + d[8] + ")";
+function_call_parameter_separator -> ","{%function(d){
+	return ",";
 }%}
-declare_constant -> "final" _ __ _ type _ __ _ varName _ "=" _ expression _ ";"{%function(d){
-	return "static" + " " + "const" + " " + d[8] + "=" + d[12] + ";";
+declare_constant -> "const" _ __ _ varName _ "=" _ expression _ ";"{%function(d){
+	return "const" + " " + d[NaN] + " " + "a" + "=" + d[8] + ";";
 }%}
-initializeArray -> arrayType _ __ _ identifier _ "=" _ array_expression _ ";"{%function(d){
-	return d[0] + " " + d[4] + "=" + d[8] + ";";
+initializeArray -> "var" _ __ _ identifier _ "=" _ array_expression _ ";"{%function(d){
+	return d[NaN] + " " + d[4] + "=" + d[8] + ";";
 }%}
 accessArray -> identifier _ "[" _ arithmetic_expression _ "]"{%function(d){
 	return d[0] + "[" + d[4] + "]";
 }%}
-arrayType -> type _ "[]"{%function(d){
-	return d[0] + "[]";
+arrayType -> "array"{%function(d){
+	return d[NaN] + "[]";
 }%}
 initializerListSeparator -> ","{%function(d){
 	return ",";
 }%}
-initializerList -> "{" _ _initializerList _ "}"{%function(d){
+initializerList -> "array" _ "(" _ _initializerList _ ")"{%function(d){
+	return "{" + d[4] + "}";
+}%}
+keyValue -> identifier _ "=>" _ expression{%function(d){
+	return "{" + d[0] + "," + d[4] + "}";
+}%}
+charAt -> expression _ "[" _ expression _ "]"{%function(d){
+	return d[0] + "[" + d[4] + "]";
+}%}
+sin -> "sin" _ "(" _ expression _ ")"{%function(d){
+	return "std" + "::" + "sin" + "(" + d[4] + ")";
+}%}
+sqrt -> "sqrt" _ "(" _ expression _ ")"{%function(d){
+	return "std" + "::" + "sqrt" + "(" + d[4] + ")";
+}%}
+cos -> "cos" _ "(" _ expression _ ")"{%function(d){
+	return "std" + "::" + "cos" + "(" + d[4] + ")";
+}%}
+tan -> "tan" _ "(" _ expression _ ")"{%function(d){
+	return "std" + "::" + "tan" + "(" + d[4] + ")";
+}%}
+dictionary -> "array(" _ keyValueList _ ")"{%function(d){
 	return "{" + d[2] + "}";
 }%}
-keyValue -> _{%function(d){
-	return "";
-}%}
-charAt -> expression _ "." _ "charAt" _ "(" _ expression _ ")"{%function(d){
-	return d[0] + "[" + d[8] + "]";
-}%}
-auto -> "Object"{%function(d){
-	return "";
-}%}
-void -> "void"{%function(d){
-	return "void";
-}%}
-sin -> "Math" _ "." _ "sin" _ "(" _ expression _ ")"{%function(d){
-	return "sin" + "(" + d[8] + ")";
-}%}
-sqrt -> "Math" _ "." _ "sqrt" _ "(" _ expression _ ")"{%function(d){
-	return "sqrt" + "(" + d[8] + ")";
-}%}
-cos -> "Math" _ "." _ "cos" _ "(" _ expression _ ")"{%function(d){
-	return "cos" + "(" + d[8] + ")";
-}%}
-tan -> "Math" _ "." _ "tan" _ "(" _ expression _ ")"{%function(d){
-	return "tan" + "(" + d[8] + ")";
-}%}
-dictionary -> _{%function(d){
-	return "";
-}%}
-keyValueSeparator -> _{%function(d){
-	return "";
+keyValueSeparator -> ","{%function(d){
+	return ",";
 }%}
 true -> "true"{%function(d){
-	return "1";
+	return "true";
 }%}
 false -> "false"{%function(d){
-	return "0";
+	return "false";
 }%}
-compareInts -> arithmetic_expression _ "==" _ arithmetic_expression{%function(d){
+compareInts -> arithmetic_expression _ "===" _ arithmetic_expression{%function(d){
 	return d[0] + "==" + d[4];
 }%}
 parentheses_expression -> "(" _ expression _ ")"{%function(d){
@@ -150,29 +144,26 @@ greaterThan -> arithmetic_expression _ ">" _ arithmetic_expression{%function(d){
 lessThan -> arithmetic_expression _ "<" _ arithmetic_expression{%function(d){
 	return d[0] + "<" + d[4];
 }%}
-class_extends -> "public" _ __ _ "class" _ __ _ identifier _ __ _ "extends" _ __ _ identifier _ "{" _ series_of_statements _ "}"{%function(d){
-	return "#include" + " " + "'" + d[16] + ".h'" + "\n" + d[20];
+class_extends -> "class" _ __ _ identifier _ __ _ "extends" _ __ _ identifier _ "{" _ series_of_statements _ "}"{%function(d){
+	return "class" + " " + d[4] + ":" + "public" + " " + d[12] + "{" + d[16] + "}";
 }%}
-class -> "public" _ __ _ "class" _ __ _ identifier _ "{" _ series_of_statements _ "}"{%function(d){
-	return d[12];
+class -> "class" _ __ _ identifier _ "{" _ series_of_statements _ "}"{%function(d){
+	return "class" + " " + d[4] + "{" + d[8] + "}";
 }%}
-arrayContains -> "Arrays" _ "." _ "asList" _ "(" _ array_expression _ ")" _ "." _ "contains" _ "(" _ expression _ ")"{%function(d){
-	return "";
+this -> "$this" _ "->" _ varName{%function(d){
+	return "this" + "." + d[4];
 }%}
-this -> "this" _ "." _ varName{%function(d){
-	return "";
+pow -> "pow" _ "(" _ arithmetic_expression _ "," _ arithmetic_expression _ ")"{%function(d){
+	return "pow" + "(" + d[4] + "," + d[8] + ")";
 }%}
-pow -> "Math" _ "." _ "pow" _ "(" _ arithmetic_expression _ "," _ arithmetic_expression _ ")"{%function(d){
-	return "pow" + "(" + d[8] + "," + d[12] + ")";
-}%}
-_or -> arithmetic_expression _ "||" _ arithmetic_expression{%function(d){
-	return d[0] + "||" + d[4];
+_or -> arithmetic_expression _ __ _ "or" _ __ _ arithmetic_expression{%function(d){
+	return d[0] + "||" + d[8];
 }%}
 or -> _or{%function(d){
 	return d[0];
 }%}
-_and -> boolean_expression _ "&&" _ boolean_expression{%function(d){
-	return d[0] + "&&" + d[4];
+_and -> boolean_expression _ __ _ "and" _ __ _ boolean_expression{%function(d){
+	return d[0] + "&&" + d[8];
 }%}
 and -> _and{%function(d){
 	return d[0];
@@ -207,23 +198,26 @@ subtract -> _subtract{%function(d){
 functionCall -> identifier _ "(" _ functionCallParameters _ ")"{%function(d){
 	return d[0] + "(" + d[4] + ")";
 }%}
-initializeVar -> type _ __ _ varName _ "=" _ expression _ ";"{%function(d){
-	return d[0] + " " + d[4] + "=" + d[8] + ";";
+concatenateString -> string_expression _ "." _ string_expression{%function(d){
+	return d[0] + "+" + d[4];
+}%}
+initializeVar -> "var" _ __ _ varName _ "=" _ expression _ ";"{%function(d){
+	return d[NaN] + " " + d[4] + "=" + d[8] + ";";
 }%}
 return -> "return" _ __ _ expression _ ";"{%function(d){
 	return "return" + " " + d[4] + ";";
 }%}
-varName -> identifier{%function(d){
-	return d[0];
+varName -> "$" _ identifier{%function(d){
+	return d[2];
 }%}
-func -> "public" _ __ _ "static" _ __ _ type _ __ _ identifier _ "(" _ parameterList _ ")" _ "{" _ series_of_statements _ "}"{%function(d){
-	return d[8] + " " + d[12] + "(" + d[16] + ")" + "{" + d[22] + "}";
+func -> "function" _ __ _ identifier _ "(" _ parameterList _ ")" _ "{" _ series_of_statements _ "}"{%function(d){
+	return d[NaN] + " " + d[4] + "(" + d[8] + ")" + "{" + d[14] + "}";
 }%}
 if -> "if" _ "(" _ boolean_expression _ ")" _ "{" _ series_of_statements _ "}" _ elifOrElse{%function(d){
 	return "if" + "(" + d[4] + ")" + "{" + d[10] + "}" + d[14];
 }%}
-elif -> "else" _ __ _ "if" _ "(" _ boolean_expression _ ")" _ "{" _ series_of_statements _ "}"{%function(d){
-	return "else" + " " + "if" + "(" + d[8] + ")" + "{" + d[14] + "}";
+elif -> "elseif" _ "(" _ boolean_expression _ ")" _ "{" _ series_of_statements _ "}"{%function(d){
+	return "else" + " " + "if" + "(" + d[4] + ")" + "{" + d[10] + "}";
 }%}
 plusEquals -> expression _ "+=" _ expression _ ";"{%function(d){
 	return d[0] + "+=" + d[4] + ";";
@@ -237,17 +231,14 @@ else -> "else" _ "{" _ series_of_statements _ "}"{%function(d){
 while -> "while" _ "(" _ boolean_expression _ ")" _ "{" _ series_of_statements _ "}"{%function(d){
 	return "while" + "(" + d[4] + ")" + "{" + d[10] + "}";
 }%}
-forInRange -> "for" _ "(" _ "int" _ __ _ varName _ "=" _ arithmetic_expression _ ";" _ varName _ "<" _ arithmetic_expression _ ";" _ varName _ "++" _ ")" _ "{" _ series_of_statements _ "}"{%function(d){
-	return "int" + " " + d[8] + ";" + "for" + "(" + d[8] + "=" + d[12] + ";" + d[8] + "<" + d[20] + ";" + d[8] + "++" + ")" + "{" + d[32] + "}";
+forInRange -> "for" _ "(" _ "var" _ __ _ varName _ "=" _ arithmetic_expression _ ";" _ varName _ "<" _ arithmetic_expression _ ";" _ varName _ "++" _ ")" _ "{" _ series_of_statements _ "}"{%function(d){
+	return "for" + "(" + "int" + " " + d[8] + "=" + d[12] + ";" + d[8] + "<" + d[20] + ";" + d[8] + "++" + ")" + "{" + d[32] + "}";
 }%}
-listComprehension -> _{%function(d){
-	return "";
+import -> "include" _ __ _ "\'" _ expression _ ".php\'" _ ";"{%function(d){
+	return "#include" + " " + "'" + d[6] + ".h'";
 }%}
-import -> "import" _ __ _ expression _ ";"{%function(d){
-	return "#include" + " " + "'" + d[4] + ".h'";
-}%}
-print -> "System" _ "." _ "out" _ "." _ "println" _ "(" _ expression _ ")" _ ";"{%function(d){
-	return "printf" + "(" + d[12] + ")" + ";";
+print -> "print" _ "(" _ expression _ ")" _ ";"{%function(d){
+	return "cout" + "<<" + d[4] + ";";
 }%}
 comment -> "//" _ _string _ "\n"{%function(d){
 	return "//" + d[2] + "\n";
@@ -258,17 +249,17 @@ mod -> arithmetic_expression _ "%" _ arithmetic_expression{%function(d){
 setVar -> varName _ "=" _ expression _ ";"{%function(d){
 	return d[0] + "=" + d[4] + ";";
 }%}
-parameter -> type _ __ _ varName{%function(d){
-	return d[0] + " " + d[4];
+parameter -> varName{%function(d){
+	return d[NaN] + " " + d[0];
 }%}
-boolean -> "boolean"{%function(d){
+boolean -> "bool"{%function(d){
+	return "bool";
+}%}
+int -> "integer"{%function(d){
 	return "int";
 }%}
-int -> "int"{%function(d){
-	return "int";
-}%}
-string -> "String"{%function(d){
-	return "char*";
+string -> "string"{%function(d){
+	return "string";
 }%}
 functionCallStatement -> functionCall _ ";"{%function(d){
 	return d[0] + ";";
@@ -285,39 +276,39 @@ switch -> "switch" _ "(" _ expression _ ")" _ "{" _ caseStatements _ __ _ defaul
 case -> "case" _ __ _ expression _ ":" _ series_of_statements _ "break" _ ";"{%function(d){
 	return "case" + " " + d[4] + ":" + d[8] + "break" + ";";
 }%}
-foreach -> "for" _ "(" _ type _ __ _ expression _ ":" _ expression _ ")" _ "{" _ series_of_statements _ "}"{%function(d){
-	return "";
+foreach -> "foreach" _ "(" _ expression _ __ _ "as" _ __ _ expression _ ")" _ "{" _ series_of_statements _ "}"{%function(d){
+	return "for" + "(" + "getCorrespondingType" + " " + d[NaN] + " " + "&" + " " + d[12] + ":" + d[4] + "){" + d[18] + "}";
 }%}
 default -> "default" _ ":" _ series_of_statements{%function(d){
 	return "default" + ":" + d[4];
 }%}
-substring -> string_expression _ "." _ "substring" _ "(" _ arithmetic_expression _ "," _ arithmetic_expression _ ")"{%function(d){
-	return "";
+substring -> "substr" _ "(" _ string_expression _ "," _ arithmetic_expression _ "," _ arithmetic_expression _ ")"{%function(d){
+	return d[4] + "." + "substring" + "(" + d[8] + "," + d[12] + "-" + d[8] + ")";
 }%}
-strcmp -> string_expression _ "." _ "equals" _ "(" _ string_expression _ ")"{%function(d){
-	return "strcmp" + "(" + d[0] + "," + d[8] + ")" + "==" + "0";
+strcmp -> string_expression _ "===" _ string_expression{%function(d){
+	return d[0] + "." + "compare" + "(" + d[4] + ")";
 }%}
-array_length -> array_expression _ "." _ "length"{%function(d){
-	return "sizeof" + "(" + d[0] + ")" + "/" + "sizeof" + "(" + d[0] + "[" + "0" + "]" + ")";
+array_length -> "count" _ "(" _ array_expression _ ")"{%function(d){
+	return d[4] + "." + "size" + "(" + ")";
 }%}
-strlen -> string_expression _ "." _ "length" _ "(" _ ")"{%function(d){
-	return "strlen" + "(" + d[0] + ")";
+strlen -> "strlen" _ "(" _ string_expression _ ")"{%function(d){
+	return d[4] + "." + "length" + "(" + ")";
 }%}
 parameter_separator -> ","{%function(d){
 	return ",";
 }%}
-not_equal -> expression _ "!=" _ expression{%function(d){
+not_equal -> expression _ "!==" _ expression{%function(d){
 	return d[0] + "!=" + d[4];
 }%}
-instance_method -> "public" _ __ _ type _ __ _ identifier _ "(" _ parameterList _ ")" _ "{" _ series_of_statements _ "}"{%function(d){
-	return "";
+instance_method -> "public" _ __ _ "function" _ __ _ identifier _ "(" _ parameterList _ ")" _ "{" _ series_of_statements _ "}"{%function(d){
+	return d[NaN] + " " + d[8] + "(" + d[12] + ")" + "{" + d[18] + "}";
 }%}
-static_method -> "public" _ __ _ "static" _ __ _ type _ __ _ identifier _ "(" _ parameterList _ ")" _ "{" _ series_of_statements _ "}"{%function(d){
-	return d[8] + " " + d[12] + "(" + d[16] + ")" + "{" + d[22] + "}";
+static_method -> "public" _ __ _ "static" _ __ _ "function" _ __ _ identifier _ "(" _ parameterList _ ")" _ "{" _ series_of_statements _ "}"{%function(d){
+	return "static" + " " + d[NaN] + " " + d[12] + "(" + d[16] + ")" + "{" + d[22] + "}";
 }%}
-constructor -> "public" _ __ _ identifier _ "(" _ parameterList _ ")" _ "{" _ series_of_statements _ "}"{%function(d){
-	return "";
+constructor -> "function" _ __ _ "construct" _ "(" _ parameterList _ ")" _ "{" _ series_of_statements _ "}"{%function(d){
+	return d[NaN] + "(" + d[8] + ")" + "{" + d[14] + "}";
 }%}
-declare_new_object -> identifier _ __ _ varName _ "=" _ "new" _ __ _ identifier _ "(" _ functionCallParameters _ ")" _ ";"{%function(d){
-	return "";
+declare_new_object -> varName _ "=" _ "new" _ __ _ identifier _ "(" _ functionCallParameters _ ")" _ ";"{%function(d){
+	return d[8] + " " + d[0] + "(" + d[12] + ")" + ";";
 }%}

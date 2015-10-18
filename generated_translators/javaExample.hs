@@ -1,10 +1,7041 @@
-public class javaExample{//Does this comment work?
-
-public static int doSomething(int a,int b){if(b>a){Console.WriteLine(b);}else if(b<a){Console.WriteLine(a);}
-else{Console.WriteLine("Does this translator work?");
-return a-b;}
-switch(a){case 1:return func(3);
-case b:return func(4)+func(5);default:
-return 10;}
-return a+b;}
-public static string doSomething(string a,string b){return a+b;}}
+doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a++b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)++(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)++(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)++(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana++b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b,doSomething a b=
+(functionCall a b c);
+if b>a then (sin a)+(cos b)+(tana+b)
+(putStrLn b) else if b<a then (putStrLn a) c
+else (putStrLn "Does this translator work?")
+a-b
+case a of 1 ->
+(func 3)
+b ->
+(func 4)+(func 5) _->
+ 10 end
+a+b

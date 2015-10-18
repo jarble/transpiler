@@ -7,7 +7,6 @@ name2 = input("Type the name of the output language, then press enter:")
 fileName = name1 + "-" + name2
 
 
-print(3+7)
 from subprocess import call
 def generateParsers(parserNames):
 	for current in parserNames.split(","):

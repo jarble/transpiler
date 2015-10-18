@@ -3,7 +3,6 @@
 #Translate each language into EngScript, then use polyglotcodegenerator.py to translate it into other languages.
 #The grammar and output is specified in test.ne.
 
-print(3+7)
 from subprocess import call
 def generateParsers(parserNames):
 	for current in parserNames.split(","):
