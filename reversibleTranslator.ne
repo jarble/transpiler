@@ -80,6 +80,7 @@ function getOutput(theInput) {
                 
             } else if (j === 2 && (arr_j !== undefined)) {
 				var arr_j1 = [];
+				console.log(arr_j);
                 for (var k = 0; k < arr_j.length; k++) {
                     arr_k = arr_j[k];
                     var theIndex = parameterNames.indexOf(arr_k);
@@ -94,7 +95,7 @@ function getOutput(theInput) {
                     }
                 }
                 if(result_is_defined){
-					addToResultString += arr_j1.join(" _ ")
+					addToResultString += arr_j1.join(" ");
 				}
             } else if (j === 3 && (arr_j !== undefined)) {
                 var arr_j1 = [];
@@ -108,8 +109,8 @@ function getOutput(theInput) {
 						arr_j1[k] = "\"\"";
                     }
                     else if (theIndex !== -1) {
-						arr_j1[k] = "d[" + numIndex(parameterPositions[theIndex]) + "]";
-						if(arr_j1[k] === "d[NaN]"){
+						arr_j1[k] = "d[" + parameterPositions[theIndex] + "]";
+						if(arr_j1[k] === "d[NaN]" || arr_j1[k] == "d[undefined]"){
 							result_is_defined = false;
 						}
                     } else {
@@ -126,6 +127,7 @@ function getOutput(theInput) {
     if(listOfErrors != ""){
 		console.log("There are some errors in grammar.txt\n" + listOfErrors);
     }
+    //console.log(resultString)
     return [translateFrom, translateTo, resultString];
 }
 %}
@@ -205,10 +207,19 @@ _ -> null | _ [\s] {% function() {} %}
 __ -> [\s] | __ [\s] {% function() {} %}
 
 #string literals, valid in all languages, adapted from https://gist.github.com/Hardmath123/11024526
-String -> "\"" _string "\"" {% function(d) {return d[1]; } %}
-_string -> string_token {%function(d){return [d[0]];}%} | string_token __ _string {%function(d){return [d[0]].concat(d[2]);}%}
+String -> "\"" _string "\"" {% function(d) {
+	for(var i = 0; i < d[1].length; i++){
+		if(d[1][i] === "__" && (d[1][i-1] === "_") && (d[1][i+1] === "_")){
+			  d[1].splice(i-1, 3, '__');
+		}
+	}
+	return d[1];
+} %}
+_string -> string_token {%function(d){return [d[0]];}%} | string_token __ _string {%function(d){
+	return [d[0]].concat("_").concat(d[2]);
+}%}
 string_token -> string_token string_char {%function(d){return d[0] + d[1];}%} | string_char {%function(d){return d[0][0];}%}
-string_char -> [^"\s]
+string_char -> [^"\s] | "\\\""
 
 #adapted from https://gist.github.com/Hardmath123/11024526
 identifier -> _name {% function(d) {return d[0] } %}

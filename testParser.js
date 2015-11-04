@@ -61,7 +61,7 @@ Java,Lua
 function generateTranslator(lang1, lang2, text){
 	for(var i = 0; i < text.length; i++){
 		console.log(JSON.stringify(text[i]));
-		console.log("\n\n")
+		console.log("\n\n");
 	}
 	return text;
 }
