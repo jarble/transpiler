@@ -1,3 +1,5 @@
-public static int doSomething(int a, int b){
+function doSomething(a, b){
+	console.log(Math.sin(a));
+	var q = a / b;
 	return a + b;
 }

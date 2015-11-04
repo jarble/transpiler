@@ -1,9 +1,18 @@
 
 #The following expressions are the same in every language.
 
-chunk -> _ (_series_of_statements | class | class_extends) _ {%function(d){return d[1][0];}%}
-_series_of_statements -> series_of_statements _ statement {%function(d){return d[0] +"\n"+ d[2];}%} | statement {%function(d){return d[0];}%} | null
-series_of_statements -> statement {%function(d){return d[0];}%} | series_of_statements _ statement {%function(d){return d[0] + "\n" + d[2];}%}
+chunk -> _ ( _series_of_statements | class | class_extends) _ {%function(d){
+	toReturn = d[1][0];
+	if(Array.isArray(toReturn)){
+		return d.join("");
+	}
+	else{
+		return d[1][0];
+	}
+}%}
+_series_of_statements -> statement {%function(d){return d[0];}%} | series_of_statements __ statement {%function(d){return d[0] + "\n" + d[2];}%}
+
+series_of_statements -> statement {%function(d){return d[0];}%} | series_of_statements statement_separator __ statement {%function(d){return d[0] + d[1] + "\n" + d[3];}%}
 
 arithmetic_expression -> expression
 boolean_expression -> expression
@@ -13,10 +22,16 @@ array_expression -> expression
 expression ->  accessArray | this | functionCall | varName | dictionary | declare_new_object
 | parentheses_expression | string_to_int | add | subtract | multiply | mod | divide | number | pow | strlen | sin | cos | tan | sqrt | array_length
 | String | concatenateString | substring | int_to_string | split | join
-| initializerList
+| initializerList | range
 | false | true | not_equal | greaterThan | compareInts | strcmp | lessThanOrEqual | greaterThanOrEqual | lessThan | and | or | not | arrayContains
 
-statement -> constructor | plusEquals | minusEquals | declare_constant | instance_method | static_method | initializeArray | print | comment | switch | setVar | initializeVar | func | functionCallStatement | return | if | while | forInRange
+statement ->   func | typeless_function | typeless_variable_declaration | plusEquals | minusEquals | declare_constant | initializeArray | print | comment | switch | setVar | initializeVar | functionCallStatement | return | if | while | forInRange | exception
+class_statement -> constructor | initialize_static_variable_with_value | initialize_instance_variable_with_value | initialize_static_variable | initialize_instance_variable | instance_method | static_method | comment
+
+_class_statements -> class_statements _ class_statement {%function(d){return d[0] +"\n"+ d[2];}%} | class_statement {%function(d){return d[0];}%} | null
+class_statements -> class_statement {%function(d){return d[0];}%} | class_statements _ class_statement {%function(d){return d[0] + "\n" + d[2];}%}
+
+
 type -> boolean | int | string | auto | arrayType | void
 caseStatements -> caseStatements _ case {%function(d){return d[0] +"\n"+ d[2];}%} | case
 elifStatements -> elifStatements _ elif {%function(d){return d[0] +"\n"+ d[2];}%} | elif #Match a series of elif statements
@@ -25,7 +40,12 @@ elifOrElse -> else | elifStatements _ else {%function(d){return d[0] +"\n"+ d[2]
 parameterList -> _parameterList | null
 _parameterList -> _parameterList _ parameter_separator _ parameter {%function(d){return d[0]+d[2]+d[4]}%}
 | parameter
-functionCallParameters -> functionCallParameters _ parameter_separator _ expression {% function(d) {return d.join(""); } %} | expression | null
+
+typeless_parameters -> _typeless_parameters | null
+_typeless_parameters -> _typeless_parameters _ parameter_separator _ typeless_parameter {%function(d){return d[0]+d[2]+d[4]}%}
+| typeless_parameter
+
+functionCallParameters -> functionCallParameters _ function_call_parameter_separator _ expression {% function(d) {return d.join(""); } %} | expression | null
 
 keyValueList -> _keyValueList
 _keyValueList -> _keyValueList _ keyValueSeparator _ keyValue {%function(d){return d[0]+d[2]+d[4]}%}
@@ -81,11 +101,23 @@ __ -> [\s] | __ [\s] {% function() {} %}
 
 
 #The next two lines are the languages for the translator.
+statement_separator -> _{%function(d){
+	return ",";
+}%}
+typeless_parameter -> "Object" _ __ _ identifier{%function(d){
+	return d[4];
+}%}
+typeless_variable_declaration -> "Object" _ __ _ varName _ "=" _ identifier _ ";"{%function(d){
+	return d[4] + "=" + d[8];
+}%}
+function_call_parameter_separator -> ","{%function(d){
+	return ",";
+}%}
 declare_constant -> "final" _ __ _ type _ __ _ varName _ "=" _ expression _ ";"{%function(d){
-	return d[8] + "=" + d[12] + "\n";
+	return d[8] + "=" + d[12];
 }%}
 initializeArray -> arrayType _ __ _ identifier _ "=" _ array_expression _ ";"{%function(d){
-	return d[4] + "=" + d[8] + "\n";
+	return d[4] + "=" + d[8];
 }%}
 initializerListSeparator -> ","{%function(d){
 	return ",";
@@ -105,9 +137,6 @@ cos -> "Math" _ "." _ "cos" _ "(" _ expression _ ")"{%function(d){
 tan -> "Math" _ "." _ "tan" _ "(" _ expression _ ")"{%function(d){
 	return "tan" + "(" + d[8] + ")";
 }%}
-keyValueSeparator -> {%function(d){
-	return ",";
-}%}
 true -> "true"{%function(d){
 	return "true";
 }%}
@@ -126,7 +155,7 @@ greaterThan -> arithmetic_expression _ ">" _ arithmetic_expression{%function(d){
 lessThan -> arithmetic_expression _ "<" _ arithmetic_expression{%function(d){
 	return d[0] + "<" + d[4];
 }%}
-class -> "public" _ __ _ "class" _ __ _ identifier _ "{" _ series_of_statements _ "}"{%function(d){
+class -> "public" _ __ _ "class" _ __ _ identifier _ "{" _ class_statements _ "}"{%function(d){
 	return d[12];
 }%}
 _or -> arithmetic_expression _ "||" _ arithmetic_expression{%function(d){
@@ -172,7 +201,7 @@ functionCall -> identifier _ "(" _ functionCallParameters _ ")"{%function(d){
 	return d[0] + "(" + d[4] + ")";
 }%}
 initializeVar -> type _ __ _ varName _ "=" _ expression _ ";"{%function(d){
-	return d[4] + "=" + d[8] + "\n";
+	return d[4] + "=" + d[8];
 }%}
 return -> "return" _ __ _ expression _ ";"{%function(d){
 	return d[4];
@@ -181,16 +210,13 @@ varName -> identifier{%function(d){
 	return d[0];
 }%}
 func -> "public" _ __ _ "static" _ __ _ type _ __ _ identifier _ "(" _ parameterList _ ")" _ "{" _ series_of_statements _ "}"{%function(d){
-	return d[12] + "(" + d[16] + ")" + ":-" + d[22] + ".";
+	return d[12] + "(" + d[16] + ")" + " " + ":-" + " " + d[22] + ".";
 }%}
 if -> "if" _ "(" _ boolean_expression _ ")" _ "{" _ series_of_statements _ "}" _ elifOrElse{%function(d){
 	return "(" + d[4] + "->" + d[10] + ";" + d[14] + ")";
 }%}
 elif -> "else" _ __ _ "if" _ "(" _ boolean_expression _ ")" _ "{" _ series_of_statements _ "}"{%function(d){
 	return d[8] + "->" + d[14] + ";";
-}%}
-minusEquals -> expression _ "-=" _ expression _ ";"{%function(d){
-	return d[0] + "=" + d[0] + "-" + d[4];
 }%}
 else -> "else" _ "{" _ series_of_statements _ "}"{%function(d){
 	return d[4];
@@ -201,14 +227,14 @@ import -> "import" _ __ _ expression _ ";"{%function(d){
 print -> "System" _ "." _ "out" _ "." _ "println" _ "(" _ expression _ ")" _ ";"{%function(d){
 	return "write" + "(" + d[12] + ")";
 }%}
-comment -> "//" _ _string _ "\n"{%function(d){
-	return "%" + d[2] + "\n";
+comment -> "//" _ _string{%function(d){
+	return "%" + d[2];
 }%}
 mod -> arithmetic_expression _ "%" _ arithmetic_expression{%function(d){
 	return "mod" + "(" + d[0] + "," + d[4] + ")";
 }%}
 setVar -> varName _ "=" _ expression _ ";"{%function(d){
-	return d[0] + "=" + d[4] + "\n";
+	return d[0] + "=" + d[4];
 }%}
 parameter -> type _ __ _ varName{%function(d){
 	return d[4];

@@ -84,6 +84,7 @@ function getOutput(theInput) {
                 
             } else if (j === 2 && (arr_j !== undefined)) {
 				var arr_j1 = [];
+				console.log(arr_j);
                 for (var k = 0; k < arr_j.length; k++) {
                     arr_k = arr_j[k];
                     var theIndex = parameterNames.indexOf(arr_k);
@@ -98,7 +99,7 @@ function getOutput(theInput) {
                     }
                 }
                 if(result_is_defined){
-					addToResultString += arr_j1.join(" _ ")
+					addToResultString += arr_j1.join(" ");
 				}
             } else if (j === 3 && (arr_j !== undefined)) {
                 var arr_j1 = [];
@@ -112,8 +113,8 @@ function getOutput(theInput) {
 						arr_j1[k] = "\"\"";
                     }
                     else if (theIndex !== -1) {
-						arr_j1[k] = "d[" + numIndex(parameterPositions[theIndex]) + "]";
-						if(arr_j1[k] === "d[NaN]"){
+						arr_j1[k] = "d[" + parameterPositions[theIndex] + "]";
+						if(arr_j1[k] === "d[NaN]" || arr_j1[k] == "d[undefined]"){
 							result_is_defined = false;
 						}
                     } else {
@@ -130,6 +131,7 @@ function getOutput(theInput) {
     if(listOfErrors != ""){
 		console.log("There are some errors in grammar.txt\n" + listOfErrors);
     }
+    //console.log(resultString)
     return [translateFrom, translateTo, resultString];
 }
 var grammar = {
@@ -205,12 +207,25 @@ var grammar = {
     {"name": "_", "symbols": ["_", /[\s]/], "postprocess":  function() {} },
     {"name": "__", "symbols": [/[\s]/]},
     {"name": "__", "symbols": ["__", /[\s]/], "postprocess":  function() {} },
-    {"name": "String", "symbols": [{"literal":"\""}, "_string", {"literal":"\""}], "postprocess":  function(d) {return d[1]; } },
+    {"name": "String", "symbols": [{"literal":"\""}, "_string", {"literal":"\""}], "postprocess":  function(d) {
+	for(var i = 0; i < d[1].length; i++){
+		if(d[1][i] === "__" && (d[1][i-1] === "_") && (d[1][i+1] === "_")){
+			  d[1].splice(i-1, 3, '__');
+		}
+	}
+	return d[1];
+} },
     {"name": "_string", "symbols": ["string_token"], "postprocess": function(d){return [d[0]];}},
-    {"name": "_string", "symbols": ["string_token", "__", "_string"], "postprocess": function(d){return [d[0]].concat(d[2]);}},
+    {"name": "_string", "symbols": ["string_token", "__", "_string"], "postprocess": function(d){
+	return [d[0]].concat("_").concat(d[2]);
+}},
     {"name": "string_token", "symbols": ["string_token", "string_char"], "postprocess": function(d){return d[0] + d[1];}},
     {"name": "string_token", "symbols": ["string_char"], "postprocess": function(d){return d[0][0];}},
     {"name": "string_char", "symbols": [/[^"\s]/]},
+    {"name": " string$5", "symbols": [{"literal":"\\"}, {"literal":"\""}], "postprocess": function joiner(d) {
+        return d.join('');
+    }},
+    {"name": "string_char", "symbols": [" string$5"]},
     {"name": "identifier", "symbols": ["_name"], "postprocess":  function(d) {return d[0] } },
     {"name": "_name", "symbols": [/[a-zA-Z_#-*+]/], "postprocess":  id },
     {"name": "_name", "symbols": ["_name", /[\w_]/], "postprocess":  function(d) {return d[0] + d[1]; } },

@@ -1,31 +1,56 @@
 
 #The following expressions are the same in every language.
 
-chunk -> _ (_series_of_statements | class | class_extends) _ {%function(d){return d[1][0];}%}
-_series_of_statements -> series_of_statements _ statement {%function(d){return d[0] +"\n"+ d[2];}%} | statement {%function(d){return d[0];}%} | null
-series_of_statements -> statement {%function(d){return d[0];}%} | series_of_statements _ statement {%function(d){return d[0] + "\n" + d[2];}%}
+chunk -> _ ( series_of_statements | class | class_extends) _ {%function(d){
+	toReturn = d[1][0];
+	if(Array.isArray(toReturn)){
+		return d.join("");
+	}
+	else{
+		return d[1][0];
+	}
+}%}
+
+statement_without_semicolon -> _setVar | _initializeVar | functionCall
+
+series_of_statements -> _series_of_statements {%
+	function(d){
+		
+	}
+%}
+series_of_statements -> statement {%function(d){return d[0];}%} | series_of_statements statement_separator __ statement {%function(d){return d[0] + d[1] + "\n" + d[3];}%}
 
 arithmetic_expression -> expression
 boolean_expression -> expression
 string_expression -> expression
 array_expression -> expression
 
-expression ->  accessArray | this | functionCall | varName | dictionary | declare_new_object
-| parentheses_expression | add | subtract | multiply | mod | divide | number | pow | strlen
-| String | concatenateString | substring
-| initializerList
-| false | true | not_equal | greaterThan | compareInts | strcmp | lessThanOrEqual | greaterThanOrEqual | lessThan | and | or | not | arrayContains
+expression -> string_to_regex | accessArray | this | functionCall | varName | dictionary | declare_new_object
+| parentheses_expression | pi | natural_logarithm | absolute_value | floor | ceiling | string_to_int | add | subtract | multiply | mod | divide | number | pow | strlen | asin | acos | atan | sin | cos | tan | sqrt | array_length
+| String | concatenateString | substring | int_to_string | split | join | startswith | endswith | globalReplace
+| initializerList | range
+| false | true | not_equal | greaterThan | compareInts | strcmp | lessThanOrEqual | greaterThanOrEqual | lessThan | and | or | not | arrayContains | stringContains
 
-statement -> constructor | plusEquals | minusEquals | declare_constant | instance_method | static_method | initializeArray | print | comment | switch | setVar | initializeVar | func | functionCallStatement | return | if | while | forInRange
-type -> boolean | int | string | arrayType
+statement ->   func | for_loop | typeless_function | typeless_variable_declaration | plusEquals | minusEquals | declare_constant | initializeArray | print | comment | switch | setVar | initializeVar | functionCallStatement | return | if | while | forInRange | exception
+class_statement -> constructor | initialize_static_variable_with_value | initialize_instance_variable_with_value | initialize_static_variable | initialize_instance_variable | instance_method | static_method | comment
+
+_class_statements -> class_statements _ class_statement {%function(d){return d[0] +"\n"+ d[2];}%} | class_statement {%function(d){return d[0];}%} | null
+class_statements -> class_statement {%function(d){return d[0];}%} | class_statements _ class_statement {%function(d){return d[0] + "\n" + d[2];}%}
+
+
+type -> boolean | int | string | auto | arrayType | void
 caseStatements -> caseStatements _ case {%function(d){return d[0] +"\n"+ d[2];}%} | case
-elifStatements -> elifStatements _ elif {%function(d){return d[0] +"\n"+ d[2];}%} | elif #Match a series of elif statements
-elifOrElse -> else | elifStatements _ else {%function(d){return d[0] +"\n"+ d[2];}%} #Match a series of elif statements followed by else
+elifOrElse -> else | elif
 
 parameterList -> _parameterList | null
-_parameterList -> _parameterList _ parameter_separator _ parameter {%function(d){return d[0]+d[2]+d[4]}%}
-| parameter
-functionCallParameters -> functionCallParameters _ parameter_separator _ expression | expression | null
+_parameterList -> _parameterList _ parameter_separator _ ( parameter | default_parameter ) {%function(d){return d[0]+d[2]+d[4]}%}
+| (parameter | default_parameter )
+
+typeless_parameters -> _typeless_parameters | null
+_typeless_parameters -> _typeless_parameters _ parameter_separator _ typeless_parameter {%function(d){return d[0]+d[2]+d[4]}%}
+| typeless_parameter
+
+functionCallParameters -> functionCallParameters _ function_call_parameter_separator _ ( expression | function_call_named_parameter) {% function(d) {return d.join(""); } %} | (expression | function_call_named_parameter) | null
 
 keyValueList -> _keyValueList
 _keyValueList -> _keyValueList _ keyValueSeparator _ keyValue {%function(d){return d[0]+d[2]+d[4]}%}
@@ -33,6 +58,8 @@ _keyValueList -> _keyValueList _ keyValueSeparator _ keyValue {%function(d){retu
 
 _initializerList -> _initializerList _ initializerListSeparator _ expression {%function(d){return d[0]+d[2]+d[4]}%}
 | expression
+
+array_access_list -> array_access_index | array_access_list array_access_separator array_access_index {%function(d){return d[0]+d[1]+d[2]}%}
 
 # Primitives
 # ==========
@@ -81,13 +108,94 @@ __ -> [\s] | __ [\s] {% function() {} %}
 
 
 #The next two lines are the languages for the translator.
+absolute_value -> "Math" _ "." _ "abs" _ "(" _ expression _ ")"{%function(d){
+	return d[8] + "." + "abs";
+}%}
+asin -> "Math" _ "." _ "asin" _ "(" _ expression _ ")"{%function(d){
+	return "Math" + "." + "asin" + "(" + d[8] + ")";
+}%}
+acos -> "Math" _ "." _ "acos" _ "(" _ expression _ ")"{%function(d){
+	return "Math" + "." + "acos" + "(" + d[8] + ")";
+}%}
+atan -> "Math" _ "." _ "atan" _ "(" _ expression _ ")"{%function(d){
+	return "Math" + "." + "atan" + "(" + d[8] + ")";
+}%}
+reverse_string -> "new" _ __ _ "StringBuilder" _ "(" _ expression _ ")" _ "." _ "reverse" _ "(" _ ")" _ "." _ "toString" _ "(" _ ")"{%function(d){
+	return d[8] + "." + "reverse!";
+}%}
+globalReplace -> expression _ "." _ "replaceAll" _ "(" _ expression _ "," _ expression _ ")"{%function(d){
+	return d[0] + "." + "gsub" + "(" + d[8] + "," + d[12] + ")";
+}%}
+stringContains -> expression _ "." _ "contains" _ "(" _ expression _ ")"{%function(d){
+	return d[0] + "." + "include?" + "(" + d[8] + ")";
+}%}
+endswith -> expression _ "." _ "endsWith" _ "(" _ expression _ ")"{%function(d){
+	return d[0] + "." + "end_with?" + "(" + d[8] + ")";
+}%}
+startswith -> expression _ "." _ "startsWith" _ "(" _ "contained" _ ")"{%function(d){
+	return d[0] + "." + "start_with?" + "(" + "contained" + ")";
+}%}
+statement_separator -> _{%function(d){
+	return "";
+}%}
+for_loop -> "for" _ "(" _ statement_without_semicolon _ ";" _ expression _ ";" _ statement_without_semicolon _ ")" _ "{" _ series_of_statements _ "}"{%function(d){
+	return d[4] + "\n" + "while" + " " + d[8] + " " + "do" + " " + d[18] + " " + d[12] + " " + "end";
+}%}
+initialize_instance_variable -> "private" _ __ _ type _ __ _ identifier _ ";"{%function(d){
+	return "";
+}%}
+initialize_instance_variable_with_value -> "private" _ __ _ type _ __ _ identifier _ "=" _ expression _ ";"{%function(d){
+	return "@" + d[8] + "=" + d[12];
+}%}
+initialize_static_variable -> "public" _ __ _ "static" _ __ _ type _ __ _ identifier _ ";"{%function(d){
+	return " ";
+}%}
+initialize_static_variable_with_value -> "public" _ __ _ "static" _ __ _ type _ __ _ identifier _ "=" _ expression _ ";"{%function(d){
+	return "@@" + d[12] + "=" + d[8];
+}%}
+typeless_parameter -> "Object" _ __ _ identifier{%function(d){
+	return d[4];
+}%}
+typeless_function -> "Object" _ __ _ identifier _ "(" _ typeless_parameters _ ")" _ "{" _ series_of_statements _ "}"{%function(d){
+	return "def" + " " + d[4] + "(" + d[8] + ")" + "\n" + d[14] + " " + "end";
+}%}
+exception -> "throw" _ __ _ expression _ ";"{%function(d){
+	return "raise" + " " + d[4];
+}%}
+typeless_variable_declaration -> "Object" _ __ _ varName _ "=" _ identifier _ ";"{%function(d){
+	return d[4] + "=" + d[8];
+}%}
+int_to_string -> "Integer" _ "." _ "toString" _ "(" _ expression _ ")"{%function(d){
+	return d[8] + "." + "to_s";
+}%}
+split -> expression _ "." _ "split" _ "(" _ expression _ ")"{%function(d){
+	return d[0] + "." + "split" + "(" + d[8] + ")";
+}%}
+join -> "array" _ "." _ "join" _ "(" _ "separator" _ ")"{%function(d){
+	return "array" + "." + "join" + "(" + "separator" + ")";
+}%}
+function_call_parameter_separator -> ","{%function(d){
+	return ",";
+}%}
+string_to_regex -> "Pattern" _ "." _ "compile" _ "(" _ expression _ ")"{%function(d){
+	return "Regexp" + "." + "new" + "(" + d[8] + ")";
+}%}
+string_to_int -> "Integer" _ "." _ "parseInt" _ "(" _ expression _ ")"{%function(d){
+	return "Integer" + "(" + d[8] + ")";
+}%}
 declare_constant -> "final" _ __ _ type _ __ _ varName _ "=" _ expression _ ";"{%function(d){
 	return d[8] + "=" + d[12];
 }%}
 initializeArray -> arrayType _ __ _ identifier _ "=" _ array_expression _ ";"{%function(d){
-	return d[4] + "=" + d[8] + "\n";
+	return d[4] + "=" + d[8];
 }%}
-accessArray -> identifier _ "[" _ arithmetic_expression _ "]"{%function(d){
+array_access_separator -> "]["{%function(d){
+	return "][";
+}%}
+array_access_index -> expression{%function(d){
+	return d[0];
+}%}
+accessArray -> identifier _ "[" _ array_access_list _ "]"{%function(d){
 	return d[0] + "[" + d[4] + "]";
 }%}
 arrayType -> type _ "[]"{%function(d){
@@ -99,14 +207,23 @@ initializerListSeparator -> ","{%function(d){
 initializerList -> "{" _ _initializerList _ "}"{%function(d){
 	return "[" + d[2] + "]";
 }%}
-keyValue -> _{%function(d){
-	return d[NaN] + "=>" + d[NaN];
+charAt -> expression _ "." _ "charAt" _ "(" _ expression _ ")"{%function(d){
+	return d[0] + "[" + d[8] + "]";
 }%}
-dictionary -> _{%function(d){
-	return "{" + d[NaN] + "}";
+void -> "void"{%function(d){
+	return "";
 }%}
-keyValueSeparator -> _{%function(d){
-	return ",";
+sin -> "Math" _ "." _ "sin" _ "(" _ expression _ ")"{%function(d){
+	return "Math" + "." + "sin" + "(" + d[8] + ")";
+}%}
+sqrt -> "Math" _ "." _ "sqrt" _ "(" _ expression _ ")"{%function(d){
+	return "Math" + "." + "sqrt" + "(" + d[8] + ")";
+}%}
+cos -> "Math" _ "." _ "cos" _ "(" _ expression _ ")"{%function(d){
+	return "Math" + "." + "cos" + "(" + d[8] + ")";
+}%}
+tan -> "Math" _ "." _ "tan" _ "(" _ expression _ ")"{%function(d){
+	return "Math" + "." + "tan" + "(" + d[8] + ")";
 }%}
 true -> "true"{%function(d){
 	return "true";
@@ -126,10 +243,10 @@ greaterThan -> arithmetic_expression _ ">" _ arithmetic_expression{%function(d){
 lessThan -> arithmetic_expression _ "<" _ arithmetic_expression{%function(d){
 	return d[0] + "<" + d[4];
 }%}
-class_extends -> "public" _ __ _ "class" _ __ _ identifier _ __ _ "extends" _ __ _ identifier _ "{" _ series_of_statements _ "}"{%function(d){
+class_extends -> "public" _ __ _ "class" _ __ _ identifier _ __ _ "extends" _ __ _ identifier _ "{" _ class_statements _ "}"{%function(d){
 	return "class" + " " + d[8] + " " + "<" + " " + d[16] + " " + d[20] + " " + "end";
 }%}
-class -> "public" _ __ _ "class" _ __ _ identifier _ "{" _ series_of_statements _ "}"{%function(d){
+class -> "public" _ __ _ "class" _ __ _ identifier _ "{" _ class_statements _ "}"{%function(d){
 	return "class" + " " + d[8] + " " + d[12] + " " + "end";
 }%}
 arrayContains -> "Arrays" _ "." _ "asList" _ "(" _ array_expression _ ")" _ "." _ "contains" _ "(" _ expression _ ")"{%function(d){
@@ -174,8 +291,11 @@ _add -> arithmetic_expression _ "+" _ arithmetic_expression{%function(d){
 add -> _add{%function(d){
 	return d[0];
 }%}
-subtract -> arithmetic_expression _ "-" _ arithmetic_expression{%function(d){
+_subtract -> arithmetic_expression _ "-" _ arithmetic_expression{%function(d){
 	return d[0] + "-" + d[4];
+}%}
+subtract -> _subtract{%function(d){
+	return d[0];
 }%}
 functionCall -> identifier _ "(" _ functionCallParameters _ ")"{%function(d){
 	return d[0] + "(" + d[4] + ")";
@@ -183,8 +303,11 @@ functionCall -> identifier _ "(" _ functionCallParameters _ ")"{%function(d){
 concatenateString -> string_expression _ "+" _ string_expression{%function(d){
 	return d[0] + "+" + d[4];
 }%}
-initializeVar -> type _ __ _ varName _ "=" _ expression _ ";"{%function(d){
+_initializeVar -> type _ __ _ varName _ "=" _ expression{%function(d){
 	return d[4] + "=" + d[8];
+}%}
+initializeVar -> _initializeVar _ semicolon{%function(d){
+	return d[0] + d[2];
 }%}
 return -> "return" _ __ _ expression _ ";"{%function(d){
 	return "return" + " " + d[4];
@@ -195,20 +318,20 @@ varName -> identifier{%function(d){
 func -> "public" _ __ _ "static" _ __ _ type _ __ _ identifier _ "(" _ parameterList _ ")" _ "{" _ series_of_statements _ "}"{%function(d){
 	return "def" + " " + d[12] + "(" + d[16] + ")" + " " + d[22] + " " + "end";
 }%}
-if -> "if" _ "(" _ boolean_expression _ ")" _ "{" _ series_of_statements _ "}" _ elifOrElse{%function(d){
+if -> "if" _ "(" _ expression _ ")" _ "{" _ series_of_statements _ "}" _ elifOrElse{%function(d){
 	return "if" + " " + d[4] + " " + "then" + " " + d[10] + " " + d[14] + " " + "end";
 }%}
-elif -> "else" _ __ _ "if" _ "(" _ boolean_expression _ ")" _ "{" _ series_of_statements _ "}"{%function(d){
-	return "elsif" + " " + d[8] + " " + "then" + " " + d[14];
+elif -> "else" _ __ _ "if" _ "(" _ expression _ ")" _ "{" _ series_of_statements _ "}" _ elifOrElse{%function(d){
+	return "elsif" + " " + d[8] + " " + "then" + " " + d[14] + " " + d[18];
 }%}
 plusEquals -> expression _ "+=" _ expression _ ";"{%function(d){
-	return d[0] + "=" + d[0] + "+" + d[4] + "\n";
+	return d[0] + "=" + d[0] + "+" + d[4];
 }%}
 minusEquals -> expression _ "-=" _ expression _ ";"{%function(d){
-	return d[0] + "-=" + d[4] + "\n";
+	return d[0] + "-=" + d[4];
 }%}
 else -> "else" _ "{" _ series_of_statements _ "}"{%function(d){
-	return "else" + " " + d[4];
+	return "else" + "/n" + d[4];
 }%}
 while -> "while" _ "(" _ boolean_expression _ ")" _ "{" _ series_of_statements _ "}"{%function(d){
 	return "while" + " " + d[4] + " " + d[10] + " " + "end";
@@ -216,29 +339,29 @@ while -> "while" _ "(" _ boolean_expression _ ")" _ "{" _ series_of_statements _
 forInRange -> "for" _ "(" _ "int" _ __ _ varName _ "=" _ arithmetic_expression _ ";" _ varName _ "<" _ arithmetic_expression _ ";" _ varName _ "++" _ ")" _ "{" _ series_of_statements _ "}"{%function(d){
 	return "for" + " " + d[8] + " " + "in" + " " + d[12] + ".." + d[20] + " " + d[32] + " " + "end";
 }%}
-listComprehension -> _{%function(d){
-	return d[NaN] + "." + "select" + "{" + "|" + d[NaN] + "|" + d[NaN] + "}" + "." + "collect" + "{" + "|" + d[NaN] + "|" + d[NaN] + "}";
-}%}
 import -> "import" _ __ _ expression _ ";"{%function(d){
 	return "require" + " " + "'" + d[4] + "'";
 }%}
 print -> "System" _ "." _ "out" _ "." _ "println" _ "(" _ expression _ ")" _ ";"{%function(d){
 	return "puts" + "(" + d[12] + ")";
 }%}
-comment -> "//" _ _string _ "\n"{%function(d){
-	return "#" + d[2] + "\n";
+comment -> "//" _ _string{%function(d){
+	return "#" + d[2];
 }%}
 mod -> arithmetic_expression _ "%" _ arithmetic_expression{%function(d){
 	return d[0] + "%" + d[4];
 }%}
-setVar -> varName _ "=" _ expression _ ";"{%function(d){
-	return d[0] + "=" + d[4] + "\n";
+semicolon -> ";"{%function(d){
+	return "";
+}%}
+_setVar -> varName _ "=" _ expression{%function(d){
+	return d[0] + "=" + d[4];
+}%}
+setVar -> _setVar _ semicolon{%function(d){
+	return d[0] + d[2];
 }%}
 parameter -> type _ __ _ varName{%function(d){
 	return d[4];
-}%}
-boolean -> "boolean"{%function(d){
-	return "";
 }%}
 int -> "int"{%function(d){
 	return "fixnum";
@@ -246,20 +369,14 @@ int -> "int"{%function(d){
 string -> "String"{%function(d){
 	return "String";
 }%}
-functionCallStatement -> functionCall _ ";"{%function(d){
-	return d[0];
+functionCallStatement -> functionCall _ semicolon{%function(d){
+	return d[0] + d[2];
 }%}
-_greaterThanOrEqual -> arithmetic_expression _ ">=" _ arithmetic_expression{%function(d){
+greaterThanOrEqual -> arithmetic_expression _ ">=" _ arithmetic_expression{%function(d){
 	return d[0] + ">=" + d[4];
 }%}
-greaterThanOrEqual -> _greaterThanOrEqual{%function(d){
-	return d[0];
-}%}
-_lessThanOrEqual -> arithmetic_expression _ "<=" _ arithmetic_expression{%function(d){
+lessThanOrEqual -> arithmetic_expression _ "<=" _ arithmetic_expression{%function(d){
 	return d[0] + "<=" + d[4];
-}%}
-lessThanOrEqual -> _lessThanOrEqual{%function(d){
-	return d[0];
 }%}
 switch -> "switch" _ "(" _ expression _ ")" _ "{" _ caseStatements _ __ _ default _ "}"{%function(d){
 	return "case" + " " + d[4] + " " + d[10] + " " + d[14] + " " + "end";
@@ -279,7 +396,7 @@ substring -> string_expression _ "." _ "substring" _ "(" _ arithmetic_expression
 strcmp -> string_expression _ "." _ "equals" _ "(" _ string_expression _ ")"{%function(d){
 	return d[0] + "==" + d[8];
 }%}
-arrayLength -> array_expression _ "." _ "length"{%function(d){
+array_length -> array_expression _ "." _ "length"{%function(d){
 	return d[0] + "." + "length";
 }%}
 strlen -> string_expression _ "." _ "length" _ "(" _ ")"{%function(d){
@@ -300,6 +417,6 @@ static_method -> "public" _ __ _ "static" _ __ _ type _ __ _ identifier _ "(" _ 
 constructor -> "public" _ __ _ identifier _ "(" _ parameterList _ ")" _ "{" _ series_of_statements _ "}"{%function(d){
 	return "def" + " " + "initialize" + "(" + d[8] + ")" + " " + d[14] + " " + "end";
 }%}
-declare_new_object -> "new" _ __ _ identifier _ "(params)"{%function(d){
-	return d[4] + "." + "new" + "(" + d[NaN] + ")";
+declare_new_object -> identifier _ __ _ varName _ "=" _ "new" _ __ _ identifier _ "(" _ functionCallParameters _ ")" _ ";"{%function(d){
+	return d[4] + "=" + d[0] + "." + "new" + "(" + d[16] + ")";
 }%}
