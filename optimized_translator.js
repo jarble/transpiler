@@ -33,7 +33,7 @@ function pattern_to_output(theDict, thePattern, theLang){
 	}
 	return theString.join("");
 }
-var thePatterns = {"import,a:Identifier":{"JavaScript":"import __ * __ as __ a:Identifier __ from __ ' _ a:Identifier _ ' _ ;","crosslanguage":"(import __ a:Identifier _ )","Fortran":"USE __ a:Identifier","Visual Basic .NET":"Imports __ a:Identifier","REBOL":"a:Identifier _ : __ load __ % _ a:Identifier _ .r","Prolog":":- _ consult( _ a:Identifier _ ) _ .","MiniZinc":"include __ ' _ a:Identifier _ .mzn' _ ;","PHP":"include __ ' _ a:Identifier _ .php' _ ;","C,C++":"#include __ \\\" _ a:Identifier _ .h\\\"","C#":"using __ a:Identifier _ ;","Julia":"using __ a:Identifier","Haskell,EngScript,Python,Scala,Go,Groovy,Picat,Elm,Swift":"import __ a:Identifier","Java,D,Haxe":"import __ a:Identifier _ ;","Ruby,Lua":"require __ ' _ a:Identifier _ '","Perl,Perl 6,Chapel":"\"use _ a:Identifier _ ;\""},"key_value_separator":{"Python,C,Dart,Visual Basic .NET,D,C#,Frink,Swift,JavaScript,TypeScript,PHP,Perl,Lua,Ruby,Prolog,Julia,Haxe,C++,Scala,Octave,Elixir,Wolfram":",","Java":";","REBOL":"__"},"dictionary,a:key_value_list,input:type,output:type":{"Python,C,Dart,JavaScript,TypeScript,Lua,Ruby,Julia,C++,EngScript,Visual Basic .NET":"{ _ a:key_value_list _ }","Java":"new __ HashMap _ < _ input:type _ , _ output:type _ > _ ( _ ) _ { _ { _ a:key_value_list _ } _ }","C#":"new __ Dictionary _ < _ input:type _ , _ output:type _ > _ { _ a:key_value_list _ }","Perl":"( _ a:key_value_list _ )","PHP":"array( _ a:key_value_list _ )","Haxe,Frink,Swift,Elixir,D,Wolfram":"[ _ a:key_value_list _ ]","Scala":"Map( _ a:key_value_list _ )","Octave":"struct _ ( _ a:key_value_list _ )","REBOL":"to-hash _ [ _ a:key_value_list _ ]"},"var_name,name:Identifier":{"PHP,Perl,Bash,Tcl,AutoIt,Perl 6,Puppet,Hack,AWK,PowerShell":"$ name:Identifier","EngScript,Wolfram,crosslanguage,Erlang,English,Mathematical notation,Pascal,Picat,Prolog,Katahdin,TypeScript,JavaScript,Frink,MiniZinc,Aldor,Flora-2,F-logic,D,Genie,ooc,Janus,Chapel,ABAP,COBOL,PicoLisp,REXX,PL/I,Falcon,IDP,Processing,Sympy,Maxima,Z3,Shen,Ceylon,nools,Pyke,Self,GNU Smalltalk,Elixir,LispyScript,Standard ML,Nimrod,Occam,ANTLR,Boo,Seed7,pyparsing,EBNF,Agda,Icon,Octave,Cobra,Kotlin,C++,Drools,Oz,Pike,Delphi,Racket,ML,Java,Pawn,Fortran,Ada,FreeBASIC,MATLAB,newLisp,Hy,OCaml,Julia,AutoIt,C#,Gosu,AutoHotKey,Groovy,Rust,R,Swift,Vala,Go,Scala,Nemerle,Visual Basic,Visual Basic .NET,Clojure,Haxe,CoffeeScript,Dart,JavaScript,C#,Python,Ruby,Haskell,C,Lua,Gambas,Common Lisp,Scheme,REBOL,F#":"name:Identifier","CLIPS":"? name:Identifier"},"default_parameter,type:type,name:var_name,value:expression":{"Python,AutoHotKey,Julia,Nemerle,PHP":"name:var_name _ = _ value:expression","C#,D,Groovy":"type:type __ name:var_name _ = _ value:expression","Ruby":"name:var_name _ : _ value:expression","Scala,Swift,Python":"name:var_name _ : _ type:type _ = _ value:expression","Haxe":"? _ name:var_name _ = _ value:expression","Visual Basic .NET":"Optional __ name:var_name __ As __ type:type _ = _ value:expression","Java,JavaScript,Lua,C":"_"},"_initializer_list,var1:expression,var2:initializer_list_separator,var3:_initializer_list":{"Lua,Java,C++,JavaScript,C#,Perl,Fortran,C,PHP,Haskell,Haxe,Python,Ruby,TypeScript,MiniZinc":"var1:expression _ var2:initializer_list_separator _ var3:_initializer_list"},"initialize_empty_var,type:type,name:var_name":{"Java,C#,C++,C,D,Janus,Fortran":"type:type __ name:var_name","JavaScript,Haxe":"var __ name:var_name","TypeScript":"var __ name:var_name _ : _ type:type","PHP":"name:var_name","MiniZinc":"type:type _ : _ name:var_name","Z3":"( _ declare-const __ name:var_name __ type:type _ )","Lua":"local __ name:var_name"},"anonymous_function,params:function_parameters,b:series_of_statements,return_type:type":{"Ruby":"Proc _ . _ new _ { _ | _ params:function_parameters _ | _ b:series_of_statements _ }","JavaScript,TypeScript,Haxe,R,PHP":"function _ ( _ params:function_parameters _ ) _ { _ b:series_of_statements _ }","Haskell":"(\\ _ params:function_parameters _ -> _ b:series_of_statements _ )","Frink":"{ _ | _ params:function_parameters _ | _ body _ }","Erlang":"fun _ ( _ params:function_parameters _ ) __ b:series_of_statements __ end","Lua":"function _ ( _ params:function_parameters _ ) __ b:series_of_statements __ end","Swift":"{ _ ( _ params:function_parameters _ ) _ -> _ return_type:type __ in __ b:series_of_statements _ }","Go":"func _ ( _ params:function_parameters _ ) _ return_type:type _ { _ b:series_of_statements _ }","Dart":"( _ ( _ params:function_parameters _ ) _ => _ b:series_of_statements _ )","C++":"[ _ = _ ] _ ( _ params:function_parameters _ ) _ -> _ int _ { _ b:series_of_statements _ }","Java":"( _ params:function_parameters _ ) _ -> _ { _ b:series_of_statements _ }","Haxe":"( _ name __ params:function_parameters _ -> _ b:series_of_statements _ )","Python":"( _ lambda __ params:function_parameters _ : _ b:series_of_statements _ )","Delphi":"function _ ( _ params:function_parameters _ ) _ begin __ b:series_of_statements __ end _ ;","D":"( _ params:function_parameters _ ) _ { _ body _ }"},"strlen,a:parentheses_expression":{"crosslanguage":"( _ strlen __ a:parentheses_expression __ b _ )","Python":"len _ ( _ a:parentheses_expression _ )","R":"nchar _ ( _ a:parentheses_expression _ )","Erlang":"string:len _ ( _ a:parentheses_expression _ )","Visual Basic,Visual Basic .NET,Gambas":"Len _ ( _ a:parentheses_expression _ )","JavaScript,TypeScript,Ruby,Scala,Gosu,Picat,Haxe,OCaml,D":"a:parentheses_expression _ . _ length","REBOL":"length? __ a:parentheses_expression","Java,C++,Kotlin":"a:parentheses_expression _ . _ length _ ( _ )","PHP,C,Pawn,Hack":"strlen _ ( _ a:parentheses_expression _ )","MiniZinc,Julia":"length _ ( _ a:parentheses_expression _ )","Haskell":"( _ length _ a:parentheses_expression _ )","C#":"a:parentheses_expression _ . _ Length","Swift":"countElements _ ( _ a:parentheses_expression _ )","AutoIt":"StringLen _ ( _ a:parentheses_expression _ )","Common Lisp":"( _ length __ a:parentheses_expression _ )","Racket,Scheme":"( _ string-length __ a:parentheses_expression _ )","Perl,Octave":"length _ ( _ a:parentheses_expression _ )","Nemerle":"a:parentheses_expression _ . _ Length","Fortran":"LEN _ ( _ a:parentheses_expression _ )","Lua":"string _ . _ len _ ( _ a:parentheses_expression _ )","Wolfram":"StringLength _ [ _ a:parentheses_expression _ ]"},"not_equal,a:Add,b:Add":{"Lua":"a:Add _ ~= _ b:Add","JavaScript,PHP,TypeScript":"a:Add _ !== _ b:Add","Java,Wolfram,C,C++,D,C#,Julia,Perl,Ruby,Haxe,Python,MiniZinc":"a:Add _ != _ b:Add","English":"a:Add __ does __ not __ equal __ b:Add","Prolog":"not _ ( _ a:Add _ == _ b:Add _ )","Mathematical notation":"a:Add _ ≠ _ b:Add","Janus":"a:Add _ # _ b:Add","Fortran":"a:Add _ .NE. _ b:Add","Z3":"( _ not _ ( _ = __ a:Add __ b:Add _ ) _ )"},"key_value_list,var1:key_value,var2:key_value_separator,var3:key_value_list":{"Lua,JavaScript,Java,C#,C++,C,Ruby,PHP,Python,Perl,Fortran,Haxe,TypeScript":"var1:key_value _ var2:key_value_separator _ var3:key_value_list"},"Or,var1:greater_than,var2:Or":{"JavaScript,Wolfram,Chapel,Elixir,Frink,ooc,Picat,Janus,Processing,Pike,nools,Pawn,MATLAB,Hack,Gosu,Rust,AutoIt,AutoHotKey,TypeScript,Ceylon,Groovy,D,Octave,AWK,Julia,Scala,F#,Swift,Nemerle,Vala,Go,Perl,Java,Haskell,Haxe,C,C++,C#,Dart,R":"var1:greater_than _ || _ var2:Or","Python":"var1:greater_than __ or __ var2:Or","Fortran":"var1:greater_than __ .OR. __ var2:Or","Z3":"( _ or __ var1:greater_than __ var2:Or _ )"},"And,a:Or,b:And":{"Java,JavaScript,C#":"a:Or _ && _ b:And","Python":"a:Or __ and __ b:And","MiniZinc":"a:Or _ /\\ _ b:And","Fortran":"a:Or _ .AND. _ b:And","Z3":"( _ and __ a:Or __ b:And _ )"},"this,a:Identifier":{"Ruby,CoffeeScript":"@ a:Identifier","Java,EngScript,Dart,Groovy,TypeScript,JavaScript,C#,C++,Haxe,Chapel":"this _ . _ a:Identifier","Python":"self _ . _ a:Identifier","PHP,Hack":"$this _ -> _ a:Identifier","Swift,Scala":"a:Identifier","REBOL":"self _ / _ a:Identifier"},"array_length,a:parentheses_expression":{"crosslanguage":"( _ array_length __ a:parentheses_expression _ )","Lua":"# a:parentheses_expression","Python,Cython,Go":"len _ ( _ a:parentheses_expression _ )","Java,Picat,Scala,D,CoffeeScript,TypeScript,Dart,Vala,JavaScript,Ruby,Haxe,Cobra":"a:parentheses_expression _ . _ length","C#,Visual Basic,Visual Basic .NET,PowerShell":"a:parentheses_expression _ . _ Length","MiniZinc,Julia,R":"length _ ( _ a:parentheses_expression _ )","Common Lisp":"( _ list-length __ a:parentheses_expression _ )","PHP":"count _ ( _ a:parentheses_expression _ )","Rust":"a:parentheses_expression _ . _ len _ ( _ )","Emacs Lisp,Scheme,Racket,Haskell":"( _ length __ a:parentheses_expression _ )","C++,Groovy":"a:parentheses_expression _ . _ size _ ( _ )","C":"sizeof _ ( _ a:parentheses_expression _ ) _ / _ sizeof _ ( _ a:parentheses_expression _ [ _ 0 _ ] _ )","Perl":"scalar _ ( _ a:parentheses_expression _ )","REBOL":"length? __ a:parentheses_expression","Swift":"a:parentheses_expression _ . _ count","Clojure":"( _ count __ array _ )","Hy":"( _ len __ a:parentheses_expression _ )","Octave":"length _ ( _ a:parentheses_expression _ )","Fortran,Janus":"size _ ( _ a:parentheses_expression _ )","Wolfram":"Length _ [ _ a:parentheses_expression _ ]"},"initializer_list_separator":{"Python,D,Frink,Fortran,Chapel,Octave,Julia,English,Pascal,Delphi,Prolog,MiniZinc,EngScript,Cython,Groovy,Dart,TypeScript,CoffeeScript,Nemerle,JavaScript,Haxe,Haskell,Ruby,REBOL,Polish notation,Swift,Java,Picat,C#,Go,Lua,C++,C,Visual Basic .NET,Visual Basic,PHP,Scala,Perl,Wolfram":",","REBOL":"__"},"initializer_list,a:_initializer_list":{"Java,Picat,C#,Go,Lua,C++,C,Visual Basic .NET,Visual Basic,Wolfram":"{ _ a:_initializer_list _ }","Python,D,Frink,REBOL,Octave,Julia,Prolog,MiniZinc,EngScript,Cython,Groovy,Dart,TypeScript,CoffeeScript,Nemerle,JavaScript,Haxe,Haskell,Ruby,REBOL,Polish notation,Swift":"[ _ a:_initializer_list _ ]","PHP":"array _ ( _ a:_initializer_list _ )","Scala":"Array _ ( _ a:_initializer_list _ )","Perl,Chapel":"( _ a:_initializer_list _ )","Fortran":"(/ _ a:_initializer_list _ /)"},"key_value,a:Identifier,b:expression":{"Groovy,D,Dart,JavaScript,CoffeeScript,Swift,Elixir,Swift":"a:Identifier _ : _ b:expression","Python":"' _ a:Identifier _ ' _ : _ b:expression","Ruby,PHP,Haxe,Perl,Julia":"a:Identifier _ => _ b:expression","REBOL":"a:Identifier __ b:expression","Lua":"a:Identifier _ = _ b:expression","C++,C,C#,Visual Basic .NET":"{ _ a:Identifier _ , _ b:expression _ }","Scala,Wolfram":"a:Identifier _ -> _ b:expression","Octave":"a:Identifier _ , _ b:expression","Frink":"[ _ a:Identifier _ , _ b:expression _ ]","Java":"put _ ( _ a:Identifier _ , _ b:expression _ )"},"strcmp,a:parentheses_expression,b:parentheses_expression":{"crosslanguage":"( _ strcmp __ a:parentheses_expression __ b:parentheses_expression _ )","Visual Basic,Visual Basic .NET,F#,Prolog":"a:parentheses_expression _ = _ b:parentheses_expression","Python,Chapel,Julia,Fortran,MiniZinc,Picat,Go,Vala,AutoIt,REBOL,Ceylon,Groovy,Scala,CoffeeScript,AWK,Ruby,Haskell,Haxe,Dart,Lua,Swift":"a:parentheses_expression _ == _ b:parentheses_expression","JavaScript,PHP,TypeScript,Hack":"a:parentheses_expression _ === _ b:parentheses_expression","C,Octave":"strcmp _ ( _ a:parentheses_expression _ , _ b:parentheses_expression _ ) _ == _ 0","C++":"a:parentheses_expression _ . _ compare _ ( _ b:parentheses_expression _ )","C#":"a:parentheses_expression _ . _ Equals _ ( _ b:parentheses_expression _ )","Java":"a:parentheses_expression _ . _ equals _ ( _ b:parentheses_expression _ )","Common Lisp":"( _ equal __ a:parentheses_expression __ b:parentheses_expression _ )","CLIPS":"( _ str-compare __ a:parentheses_expression __ b:parentheses_expression _ )","Hy":"( _ = __ a:parentheses_expression __ b:parentheses_expression _ )","Perl":"a:parentheses_expression __ eq __ b:parentheses_expression","Erlang":"string:equal _ ( _ a:parentheses_expression _ , _ b:parentheses_expression _ )"},"sqrt,x:expression":{"Java,JavaScript,TypeScript,Ruby,Haxe":"Math _ . _ sqrt _ ( _ x:expression _ )","C#,Visual Basic .NET":"Math _ . _ Sqrt _ ( _ x:expression _ )","C,Perl,PHP,Perl 6,Maxima,MiniZinc,Prolog,Octave,D,Haskell":"sqrt _ ( _ x:expression _ )","Lua,Python":"math _ . _ sqrt _ ( _ x:expression _ )","REBOL":"square-root __ x:expression","Scala":"scala _ . _ math _ . _ sqrt _ ( _ x:expression _ )","C++":"std _ :: _ sqrt _ ( _ x:expression _ )","Erlang":"math:sqrt _ ( _ x:expression _ )","Wolfram":"Sqrt _ [ _ x:expression _ ]"},"parentheses_expression,a:expression":{"Pascal,Katahdin,Frink,MiniZinc,Picat,Java,ECLiPSe,D,ooc,Genie,Janus,PL/I,IDP,Processing,Maxima,Seed7,Self,GNU Smalltalk,Drools,Standard ML,Oz,Cobra,Pike,Prolog,EngScript,Kotlin,Pawn,FreeBASIC,MATLAB,Ada,FreeBASIC,Gosu,Gambas,Nimrod,AutoIt,ALGOL 68,Ceylon,Groovy,Rust,CoffeeScript,TypeScript,Fortran,Octave,ML,Hack,AutoHotKey,Scala,Delphi,Tcl,Swift,Vala,C,F#,C++,Dart,JavaScript,REBOL,Julia,Erlang,OCaml,crosslanguage,C#,Nemerle,AWK,Java,Lua,Perl,Haxe,Python,PHP,Haskell,Go,Ruby,R,bc,Visual Basic,Visual Basic .NET":"( _ a:expression _ )","Racket,Z3,CLIPS,GNU Smalltalk,newLisp,Hy,Common Lisp,Emacs Lisp,Clojure,Sibilant,LispyScript":"a:expression"},"join,array:parentheses_expression,separator:parentheses_expression":{"C#":"String _ . _ Join _ ( _ separator:parentheses_expression _ , _ array:parentheses_expression _ )","PHP":"implode _ ( _ separator:parentheses_expression _ , _ array:parentheses_expression _ )","Perl":"join _ ( _ separator:parentheses_expression _ , _ array:parentheses_expression _ )","D":"join _ ( _ array:parentheses_expression _ , _ separator:parentheses_expression _ )","Lua":"table _ . _ concat _ ( _ array:parentheses_expression _ , _ separator:parentheses_expression _ )","Go":"Strings _ . _ join _ ( _ array:parentheses_expression _ , _ separator:parentheses_expression _ )","JavaScript,Haxe,CoffeeScript,Ruby,Groovy,Java,TypeScript":"array:parentheses_expression _ . _ join _ ( _ separator:parentheses_expression _ )","Python":"separator:parentheses_expression _ . _ join _ ( _ array:parentheses_expression _ )"},"plus_equals,a:(access_array/dot_notation/Identifier),b:expression":{"Janus,TypeScript,Python,Lua,Java,C,C++,C#,JavaScript,Haxe,PHP,Chapel,Perl":"a:(access_array/dot_notation/Identifier) _ += _ b:expression","Ruby,Picat":"a:(access_array/dot_notation/Identifier) _ = _ a:(access_array/dot_notation/Identifier) _ + _ b:expression"},"minus_equals,a:(dot_notation/access_array/Identifier),b:expression":{"Janus,TypeScript,Python,Lua,Java,C,C++,C#,JavaScript,PHP,Haxe,Hack,Fortran":"a:(dot_notation/access_array/Identifier) _ -= _ b:expression","Ruby":"a:(dot_notation/access_array/Identifier) _ = _ a:(dot_notation/access_array/Identifier) _ - _ b:expression"},"concatenate_string,a:Add,b:concatenate_string":{"Common Lisp":"( _ concatenate __ 'string __ a:Add __ b:concatenate_string _ )","C,Z3,Java,Chapel,Frink,FreeBASIC,Nemerle,D,Cython,Ceylon,CoffeeScript,TypeScript,Dart,Gosu,Groovy,Scala,Swift,F#,Python,JavaScript,C#,Haxe,Ruby,C++,Vala":"a:Add _ + _ b:concatenate_string","Lua,EngScript":"a:Add _ .. _ b:concatenate_string","Fortran":"a:Add _ // _ b:concatenate_string","PHP,AutoHotKey,Hack,Perl":"a:Add _ . _ b:concatenate_string","OCaml":"a:Add _ ^ _ b:concatenate_string","REBOL":"append __ a:Add __ b:concatenate_string","Haskell,MiniZinc,Picat,Elm":"a:Add _ ++ _ b:concatenate_string","CLIPS":"( _ str-cat _ a:Add _ b:concatenate_string _ )","Clojure":"( _ str _ a:Add _ b:concatenate_string _ )","Erlang":"string:concat _ ( _ a:Add _ , _ b:concatenate_string _ )","Julia":"string _ ( _ a:Add _ , _ b:concatenate_string _ )","Octave":"strcat _ ( _ a:Add _ , _ b:concatenate_string _ )","Racket":"( _ string-append _ a:Add _ b:concatenate_string _ )","Delphi":"Concat _ ( _ a:Add _ , _ b:concatenate_string _ )","Visual Basic,Gambas,Nimrod,AutoIt,Visual Basic .NET,OpenOffice Basic":"a:Add _ & _ b:concatenate_string","Elixir,Wolfram":"a:Add _ <> _ b:concatenate_string","Perl 6":"a:Add _ ~ _ b:concatenate_string"},"split,aString:parentheses_expression,separator:parentheses_expression":{"JavaScript,CoffeeScript,Java,Python,Dart,Scala,Groovy,Haxe,Ruby,Rust,TypeScript":"aString:parentheses_expression _ . _ split _ ( _ separator:parentheses_expression _ )","Lua":"string _ . _ gmatch _ ( _ aString:parentheses_expression _ , _ separator:parentheses_expression _ )","PHP":"explode _ ( _ separator:parentheses_expression _ , _ aString:parentheses_expression _ )","Perl,Processing":"split _ ( _ separator:parentheses_expression _ , _ aString:parentheses_expression _ )","REBOL":"split __ aString:parentheses_expression __ separator:parentheses_expression","C#":"aString:parentheses_expression _ . _ Split _ ( _ new _ string[] _ { _ separator:parentheses_expression _ } _ , _ StringSplitOptions _ . _ None _ )","Picat,D":"split _ ( _ aString:parentheses_expression _ , _ separator:parentheses_expression _ )","Haskell":"( _ splitOn __ aString:parentheses_expression __ separator:parentheses_expression _ )","Wolfram":"StringSplit _ [ _ aString:parentheses_expression _ , _ separator:parentheses_expression _ ]"},"pow,a:expression,b:expression":{"Lua":"math _ . _ pow _ ( _ a:expression _ , _ b:expression _ )","Scala":"scala.math.pow _ ( _ a:expression _ , _ b:expression _ )","C#,Visual Basic .NET":"Math _ . _ Pow _ ( _ a:expression _ , _ b:expression _ )","JavaScript,Java,TypeScript,Haxe":"Math _ . _ pow _ ( _ a:expression _ , _ b:expression _ )","Python,Chapel,Haskell,COBOL,Picat,ooc,PL/I,REXX,Maxima,AWK,R,F#,AutoHotKey,Tcl,AutoIt,Groovy,Octave,Ruby,Perl,Fortran":"( _ a:expression _ ** _ b:expression _ )","REBOL":"power __ a:expression __ b:expression","C,C++,PHP,Hack,Swift,MiniZinc,D":"pow _ ( _ a:expression _ , _ b:expression _ )","Julia,EngScript,Visual Basic,Visual Basic .NET,Gambas,Go,Ceylon,Wolfram":"a:expression _ ^ _ b:expression","Rust":"num::pow _ ( _ a:expression _ , _ b:expression _ )","Hy,Common Lisp,Racket,Clojure":"( _ expt __ num1 __ num2 _ )","Erlang":"math:pow _ ( _ a:expression _ , _ b:expression _ )"},"case_statements,a:case,b:case_statements":{"Java,C,C#,C++,JavaScript,PHP,Haxe,Fortran,Ruby,Lua,Dart,TypeScript":"a:case __ b:case_statements"},"statement_with_semicolon,var1:statement":{"C,Dafny,Chapel,Katahdin,Frink,MiniZinc,Falcon,Aldor,IDP,Processing,Maxima,Seed7,Drools,EBNF,ANTLR,EngScript,OpenOffice Basic,Ada,ALGOL 68,D,Ceylon,Rust,TypeScript,Octave,AutoHotKey,Pascal,Delphi,JavaScript,Pike,Objective-C,OCaml,Java,Scala,Dart,PHP,C#,C++,Haxe,AWK,bc,Haskell,Perl,Perl 6,Go,Nemerle,Vala":"var1:statement ;","Python,Z3,Swift,Wolfram,Gambas,Pascal,Delphi,AutoHotKey,REBOL,Octave,Janus,Cython,Mathematical notation,Picat,Lua,Ruby,Haskell,Erlang,Prolog,Scala,Visual Basic .NET,Fortran,Julia,R":"var1:statement"},"dot_notation,var1:Identifier,var2:dot_notation":{"Java,JavaScript,D,Haxe,C#,Perl 6":"var1:Identifier _ . _ var2:dot_notation","PHP,C":"var1:Identifier _ -> _ var2:dot_notation"},"sin,var1:expression":{"Java,JavaScript,TypeScript,Ruby,Haxe":"Math _ . _ sin _ ( _ var1:expression _ )","Lua,Python":"math _ . _ sin _ ( _ var1:expression _ )","C,D,PHP,Perl,Perl 6,Maxima,Fortran,MiniZinc,Swift,Prolog,Octave,Dart,Haskell":"sin _ ( _ var1:expression _ )","C#,Visual Basic .NET":"Math _ . _ Sin _ ( _ var1:expression _ )","Wolfram":"Sin _ [ _ var1:expression _ ]"},"cos,var1:expression":{"Java,JavaScript,TypeScript,Ruby,Haxe":"Math _ . _ cos _ ( _ var1:expression _ )","Lua,Python":"math _ . _ cos _ ( _ var1:expression _ )","C,D,PHP,Perl,Perl 6,Maxima,Fortran,MiniZinc,Swift,Prolog,Octave,Dart,Haskell":"cos _ ( _ var1:expression _ )","C#,Visual Basic .NET":"Math _ . _ Cos _ ( _ var1:expression _ )","Wolfram":"Cos _ [ _ var1:expression _ ]"},"tan,var1:expression":{"Java,JavaScript,TypeScript,Ruby,Haxe":"Math _ . _ tan _ ( _ var1:expression _ )","Lua,Python":"math _ . _ tan _ ( _ var1:expression _ )","C,D,PHP,Perl,Perl 6,Maxima,Fortran,MiniZinc,Swift,Prolog,Octave,Dart,Haskell":"tan _ ( _ var1:expression _ )","C#,Visual Basic .NET":"Math _ . _ Tan _ ( _ var1:expression _ )","Wolfram":"Tan _ [ _ var1:expression _ ]"},"instance_method,name:Identifier,type:type,params:function_parameters,body:series_of_statements":{"JavaScript":"name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","Perl 6":"method __ name:Identifier __ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","Chapel":"def __ name:Identifier _ ( _ params:function_parameters _ ) _ : _ type:type _ { _ body:series_of_statements _ }","Java,C#":"public __ type:type __ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","PHP":"public __ function __ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","Ruby":"def __ name:Identifier _ ( _ params:function_parameters _ ) __ body:series_of_statements __ end","C++,D":"type:type __ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","Haxe":"public __ function __ name:Identifier _ ( _ params:function_parameters _ ) _ : _ type:type _ { _ body:series_of_statements _ }","Lua":"_","Python":"def __ name:Identifier _ ( _  _ self, _ params:function_parameters _ ) _ : _ \\n _ #indent _ \\n _ body:series_of_statements _ \\n _ #unindent"},"typeless_instance_method,name:Identifier,params:function_parameters,body:series_of_statements":{"JavaScript":"name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","Chapel":"def __ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","Java":"public __ Object __ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","C#":"public __ object __ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","PHP":"public __ function __ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","Ruby":"def __ name:Identifier _ ( _ params:function_parameters _ ) __ body:series_of_statements __ end","C++,D":"auto __ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","Haxe":"public __ function __ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","Lua":"_","Python":"def __ name:Identifier _ ( _ self, _ params:function_parameters _ ) _ : _ \\n _ #indent _ \\n _ body:series_of_statements _ \\n _ #unindent"},"typeless_static_method,name:Identifier,params:function_parameters,body:series_of_statements":{"JavaScript":"static __ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","Haxe":"public __ static __ function __ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","Lua,Julia":"function __ name:Identifier _ ( _ params:function_parameters _ ) __ body:series_of_statements __ end","Java":"public __ static __ Object __ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","C#":"public __ static __ object __ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","Dart":"static __ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","C++":"static __ auto __ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","PHP":"public __ static __ function __ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","Ruby":"def __ self _ . _ name:Identifier _ ( _ params:function_parameters _ ) __ body:series_of_statements __ end","Python":"@staticmethod _ \\n __ def __ name:Identifier _ ( _  _ params:function_parameters _ ) _ : _ \\n _ #indent _ \\n _ body:series_of_statements _ \\n _ #unindent"},"static_method,name:Identifier,return_type:type,params:function_parameters,body:series_of_statements":{"Haxe":"public __ static __ function __ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","Lua,Julia":"function __ name:Identifier _ ( _ params:function_parameters _ ) __ body:series_of_statements __ end","Java,C#":"public __ static __ return_type:type __ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","C++,Dart":"static __ return_type:type __ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","PHP":"public __ static __ function __ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","Ruby":"def __ self _ . _ name:Identifier _ ( _ params:function_parameters _ ) __ body:series_of_statements __ end","C":"return_type:type __ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","JavaScript":"static __ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","Picat":"_","Python":"@staticmethod _ \\n __ def __ name:Identifier _ ( _  _ params:function_parameters _ ) _ : _ "}," #indent \\n body \\n #unindent":{},"declare_new_object,var_name:var_name,class_name:Identifier,params:function_call_parameters":{"Java,C#,D":"class_name:Identifier __ var_name:var_name _ = _ new __ class_name:Identifier _ ( _ params:function_call_parameters _ )","JavaScript,Haxe,Chapel":"var __ var_name:var_name _ = _ new __ class_name:Identifier _ ( _ params:function_call_parameters _ )","PHP":"var_name:var_name _ = _ new __ class_name:Identifier _ ( _ params:function_call_parameters _ )","Python":"var_name:var_name _ = _ class_name:Identifier _ ( _ params:function_call_parameters _ )","Ruby":"var_name:var_name _ = _ class_name:Identifier _ . _ new _ ( _ params:function_call_parameters _ )","Perl":"my __ var_name:var_name _ = _ class_name:Identifier _ -> _ new _ ( _ params:function_call_parameters _ )","C++":"class_name:Identifier __ var_name:var_name _ ( _ params:function_call_parameters _ )","C,Picat,MiniZinc,Prolog,Lua":"_"},"string_to_int,a:expression":{"Python":"int _ ( _ a:expression _ )","Haxe":"Std _ . _ parseInt _ ( _ a:expression _ )","PHP":"( _ int _ ) _ a:expression","Haskell":"( _ read __ a:expression _ )","Perl":"a:expression","C#":"Int32 _ . _ Parse( _ a:expression _ )","Visual Basic .NET":"Convert _ . _ toInt32 _ ( _ a:expression _ )","Java":"Integer _ . _ parseInt _ ( _ a:expression _ )","C":"atoi _ ( _ a:expression _ )","Scala":"a:expression _ . _ toInt","D":"std _ . _ conv _ . _ to!int _ ( _ a:expression _ )","Ruby":"Integer _ ( _ a:expression _ )","REBOL":"to __ integer! __ a:expression","Lua":"tonumber _ ( _ a:expression _ )","JavaScript,TypeScript":"parseInt _ ( _ a:expression _ )","C++":"atoi _ ( _ a:expression _ . _ c_str _ ( _ ) _ )","Dart":"int _ . _ parse _ ( _ a:expression _ )"},"int_to_string,a:parentheses_expression":{"Python":"str _ ( _ a:parentheses_expression _ )","Wolfram":"ToString _ [ _ a:parentheses_expression _ ]","Swift,JavaScript,TypeScript":"String _ ( _ a:parentheses_expression _ )","Java":"Integer _ . _ toString _ ( _ a:parentheses_expression _ )","Haskell":"( _ show __ a:parentheses_expression _ )","Perl":"a:parentheses_expression","C#":"Convert _ . _ ToString _ ( _ a:parentheses_expression _ )","Ruby":"a:parentheses_expression _ . _ to_s","C++":"std _ :: _ to_string _ ( _ a:parentheses_expression _ )","Lua":"tostring _ ( _ a:parentheses_expression _ )","Haxe":"Std _ . _ toString _ ( _ a:parentheses_expression _ )","D":"std _ . _ conv _ . _ to!string _ ( _ a:parentheses_expression _ )","PHP":"( _ string _ ) _ a:parentheses_expression","Dart":"a:parentheses_expression _ . _ toString _ ( _ )"},"typeless_declare_constant,name:var_name,value:expression":{"PHP,JavaScript,Dart,TypeScript":"const __ name:var_name _ = _ value:expression","Visual Basic .NET":"Public __ Const __ name:var_name _ = _ value:expression","Rust,Swift":"let __ name:var_name _ = _ value:expression","C":"static __ const __ name:var_name _ = _ value:expression","C#":"const __ object __ name:var_name _ = _ value:expression","D,C++":"const __ auto __ name:var_name _ = _ value:expression","Common Lisp":"( _ setf __ name:var_name __ value:expression _ )","Scala":"val __ name:var_name _ = _ value:expression","Python,Ruby,Haskell,Erlang,Julia,Picat,Prolog":"name:var_name _ = _ value:expression","Lua":"local __ name:var_name _ = _ value:expression","Perl":"my __ name:var_name _ = _ value:expression","REBOL":"name:var_name _ : _ value:expression","Haxe":"static __ inline __ var __ name:var_name _ = _ value:expression","Java":"final __ Object __ name:var_name _ = _ value:expression","Chapel":"var _ name:var_name _ = _ value:expression"},"declare_constant,name:var_name,type:type,value:expression":{"PHP,JavaScript":"const __ name:var_name _ = _ value:expression","Z3":"( _ declare-const __ name:var_name __ type:type _ ) _ ( _ assert __ ( _ = __ name:var_name __ value:expression _ ) _ )","Visual Basic .NET":"Public __ Const __ name:var_name __ As __ type:type _ = _ value:expression","Rust,Swift":"let __ name:var_name _ = _ value:expression","C++,C,D,C#":"const __ type:type __ name:var_name _ = _ value:expression","Common Lisp":"( _ setf __ name:var_name __ value:expression _ )","MiniZinc":"type:type _ : _ name:var_name _ = _ value:expression","Scala":"val __ name:var_name _ : _ type:type _ = _ value:expression","Python,Ruby,Haskell,Erlang,Julia,Picat,Prolog":"name:var_name _ = _ value:expression","Lua":"local __ name:var_name _ = _ value:expression","Perl":"my __ name:var_name _ = _ value:expression","REBOL":"name:var_name _ : _ value:expression","Haxe":"static __ inline __ var __ name:var_name _ = _ value:expression","Java":"final __ type:type __ name:var_name _ = _ value:expression","C":"static __ const __ name:var_name _ = _ value:expression","Chapel":"var _ name:var_name _ : _ type:type _ = _ value:expression"},"constructor,name:Identifier,params:function_parameters,body:series_of_statements":{"crosslanguage":"(constructor __ name:Identifier __ params:function_parameters __ body)","Python":"def __ __init__ _ ( _  _ self _ , _ params:function_parameters _ ) _ : _ \\n _ #indent _ "}," body \\n #unindent":{"Java,C#":"public __ name ( params ) { body }","Swift":"init ( params ) { body }","JavaScript":"constructor ( params ) { body }","Ruby":"def __ initialize ( params ) __ body __ end","PHP":"function __ construct ( params ) { body }","Perl":"sub __ new { body }","Haxe":"public __ function __ new ( params ) { body }","C++,Dart":"name ( params ) { body }","D":"this ( params ) { body }","Chapel":"proc __ name ( params ) { body }"},"function_call_named_parameter,name:Identifier,value:expression":{"Python,C#,Fortran,Scala":"name:Identifier _ = _ value:expression","Modula-3,Visual Basic .NET":"name:Identifier _ := _ value:expression","Ruby":"name:Identifier _ : _ value:expression","JavaScript,Lua,Java,C,PHP,Haxe,MiniZinc":"value:expression"},"function_call,theName:dot_notation,args:function_call_parameters":{"C,Chapel,Elixir,Janus,Perl 6,Pascal,Rust,Hack,Katahdin,MiniZinc,Pawn,Aldor,Picat,D,Genie,ooc,PL/I,Delphi,Standard ML,REXX,Falcon,IDP,Processing,Maxima,Swift,Boo,R,MATLAB,AutoIt,Pike,Gosu,AWK,AutoHotKey,Gambas,Kotlin,Nemerle,EngScript,Prolog,Groovy,Scala,CoffeeScript,Julia,TypeScript,Fortran,Octave,C++,Go,Cobra,Ruby,Vala,F#,Java,Ceylon,OCaml,Erlang,Python,C#,Lua,Haxe,JavaScript,Dart,bc,Visual Basic,Visual Basic .NET,PHP,Perl":"theName:dot_notation _ ( _ args:function_call_parameters _ )","Haskell,Z3,CLIPS,Clojure,Common Lisp,CLIPS,Racket,Scheme,crosslanguage":"( _ theName:dot_notation _ args:function_call_parameters _ )"},"for,statement_1:initialize_var,condition:expression,statement_2:set_var,body:series_of_statements":{"Java,D,Pawn,Groovy,JavaScript,Dart,TypeScript,PHP,Hack,C#,Perl,C++,AWK,Pike":"for _ ( _ statement_1:initialize_var _ ; _ condition:expression _ ; _ statement_2:set_var _ ) _ { _ body:series_of_statements _ }","C":"init:initialize_empty_var _ ; _ for _ ( _ statement_1:initialize_var _ ; _ condition:expression _ ; _ statement_2:set_var _ ) _ { _ body:series_of_statements _ }","Haxe":"statement_1:initialize_var _ ; _  _ while _ ( _ condition:expression _ ) _ { _ body:series_of_statements _ statement_2:set_var _ ; _ }","Lua,Ruby":"statement_1:initialize_var __ while __ condition:expression __ do __ body:series_of_statements __ statement_2:set_var __ end"},"while,a:Or,b:series_of_statements":{"Fortran":"WHILE __ ( _ a:Or _ ) __ DO __ b:series_of_statements __ ENDDO","Pascal":"while __ a:Or __ do __ begin __ b:series_of_statements __ end;","Delphi":"While __ a:Or __ do __ begin __ b:series_of_statements __ end;","Rust,Frink,Dafny":"while __ a:Or _ { _ b:series_of_statements _ }","C,Perl 6,Katahdin,Chapel,ooc,Processing,Pike,Kotlin,Pawn,PowerShell,Hack,Gosu,AutoHotKey,Ceylon,D,TypeScript,ActionScript,Nemerle,Dart,Swift,Groovy,Scala,Java,JavaScript,PHP,C#,Perl,C++,Haxe,R,AWK,Vala":"while _ ( _ a:Or _ ) _ { _ b:series_of_statements _ }","Lua,Ruby,Julia":"while __ a:Or __ b:series_of_statements __ end","Picat":"while __ ( _ a:Or _ ) __ b:series_of_statements __ end","REBOL":"while _ [ _ a:Or _ ] _ [ _ b:series_of_statements _ ]","Common Lisp":"( _ loop __ while __ a:Or __ do __ b:series_of_statements _ )","Hy,newLisp,CLIPS":"( _ while __ a:Or __ b:series_of_statements _ )","Python,Cython":"while __ a:Or _ : _ "}," #indent ":{}," b ":{}," #unindent":{"Prolog":"a","Visual Basic .NET":"Else __ a","REBOL":"true [ a ]","Common Lisp":"( t __ a )","English":"otherwise __ a","Wolfram,Z3":"a"},"function,return_type:type,params:function_parameters,name:Identifier,body:series_of_statements":{"C++,Vala,C,Dart,Ceylon,Pike,D":"return_type:type __ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","Java,C#":"public __ static __ return_type:type __ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","JavaScript,PHP":"function __ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","Lua,Julia":"function __ name:Identifier _ ( _ params:function_parameters _ ) __ body:series_of_statements __ end","Wolfram":"name:Identifier _ [ _ params:function_parameters _ ] _ := _ body:series_of_statements","Frink":"name:Identifier _ [ _ params:function_parameters _ ] _ := _ { _ body:series_of_statements _ }","POP-11":"define __ name:Identifier _ ( _ params:function_parameters _ ) _ -> _ Result; __ body:series_of_statements __ enddefine;","Z3":"( _ define-fun __ name:Identifier _ ( _ params:function_parameters _ ) __ return_type:type __ body:series_of_statements _ )","Mathematical notation":"name:Identifier _ ( _ params:function_parameters _ ) _ = _ { _ body:series_of_statements _ }","Chapel":"proc __ name:Identifier _ ( _ params:function_parameters _ ) _ : _ return_type:type _ { _ body:series_of_statements _ }","Prolog":"name:Identifier _ ( _ params:function_parameters _ ) __ :- __ body:series_of_statements _ .","Picat":"name:Identifier _ ( _ params:function_parameters _ ) _ = _ to_return _ => _ body:series_of_statements _ .","Swift":"func __ name:Identifier _ ( _ params:function_parameters _ ) _ -> _ return_type:type _ { _ body:series_of_statements _ }","Maxima":"name:Identifier _ ( _ params:function_parameters _ ) _ := _ body:series_of_statements","Rust":"fn __ name:Identifier _ ( _ params:function_parameters _ ) _ -> _ return_type:type _ { _ body:series_of_statements _ }","Clojure":"( _ defn _ name:Identifier _ [ _ params:function_parameters _ ] _ body:series_of_statements _ )","Octave":"function __ retval _ = _ name:Identifier _ ( _ params:function_parameters _ ) _ body:series_of_statements __ endfunction","Haskell":"name:Identifier __ params:function_parameters _ = _ \\n _ body:series_of_statements","Common Lisp":"(defun __ name:Identifier _ ( _ params:function_parameters _ ) _ body:series_of_statements _ )","Fortran":"FUNC __ name:Identifier __ ( _ params:function_parameters _ ) __ RESULT _ ( _ retval _ ) __ return_type:type _ :: _ retval __ body:series_of_statements __ END __ FUNCTION __ name:Identifier","Scala":"def __ name:Identifier _ ( _ params:function_parameters _ ) _ : _ return_type:type _ = _ { _ body:series_of_statements _ }","MiniZinc":"function __ return_type:type _ : _ name:Identifier _ ( _ params:function_parameters _ ) _ = _ body:series_of_statements _ ;","CLIPS":"( _ deffunction __ name:Identifier _ ( _ params:function_parameters _ ) _ body:series_of_statements _ )","Erlang":"name:Identifier _ ( _ params:function_parameters _ ) _ -> _ body:series_of_statements","Perl":"sub __ name:Identifier _ { _ params:function_parameters __ body:series_of_statements _ }","Perl 6":"sub __ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","Pawn":"name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","Ruby":"def __ name:Identifier _ ( _ params:function_parameters _ ) __ body:series_of_statements __ end","TypeScript":"function __ name:Identifier _ ( _ params:function_parameters _ ) _ : _ return_type:type _ { _ body:series_of_statements _ }","REBOL":"name:Identifier _ : __ func _ [ _ params:function_parameters _ ] _ [ _ body:series_of_statements _ ]","Haxe":"public __ static __ function __ name:Identifier _ ( _ params:function_parameters _ ) _ : _ return_type:type _ { _ body:series_of_statements _ }","Hack":"function __ name:Identifier _ ( _ params:function_parameters _ ) _ : _ return_type:type _ { _ body:series_of_statements _ }","R":"name:Identifier _ <- _ function _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","bc":"define _ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","Visual Basic,Visual Basic .NET":"Function _ name:Identifier _ ( _ params:function_parameters _ ) _ As _ return_type:type _ body:series_of_statements _ End _ Function","Racket,newLisp":"(define _ (name _ params) _ body:series_of_statements _ )","Janus":"procedure _ name:Identifier _ ( _ params:function_parameters _ ) _ body:series_of_statements","Python":"def __ name:Identifier _ ( _ params:function_parameters _ ) _ -> _ type _ : _ \\n _ #indent _ \\n _ body:series_of_statements _ \\n _ #unindent"},"else,a:series_of_statements":{"Fortran":"ELSE __ a:series_of_statements","Hack,Dafny,Perl 6,Frink,Chapel,Katahdin,Pawn,PowerShell,Puppet,Ceylon,D,Rust,TypeScript,Scala,AutoHotKey,Gosu,Groovy,Java,Swift,Dart,AWK,JavaScript,Haxe,PHP,C#,Go,Perl,C++,C,Tcl,R,Vala,bc":"else _ { _ a:series_of_statements _ }","Ruby,Janus,Lua,Haskell,CLIPS,MiniZinc,Julia,Octave,Picat,Pascal,Maxima":"else "}," a":{"Erlang":"true -> a","Python,Cython":"else : "},"elif,condition:And,body:series_of_statements,next:elif_or_else":{"D,Chapel,Pawn,Ceylon,Scala,TypeScript,AutoHotKey,AWK,R,Groovy,Gosu,Katahdin,Java,Swift,Nemerle,C,Dart,Vala,JavaScript,C#,C++,Haxe":"else __ if _ ( _ a _ ) _ { _ b _ } _ c","Z3":"( _ ite __ a __ b __ c _ )","Rust,Go":"else __ if __ a _ { _ b _ } _ c","PHP,Hack,Perl":"elseif _ ( _ a _ ) _ { _ b _ } _ c","Julia,Octave,Lua":"elseif __ a __ b __ c","Ruby":"elsif __ a __ then __ b __ c","Picat":"elseif __ a __ then __ b __ c","Haskell,Pascal,Maxima":"else __ if __ a __ then __ b __ c","Erlang":"a _ -> _ b __ c","R,F#":"a _ <- _ b __ c","CLIPS":"( _ if __ a __ then __ ( _ b __ c _ ) _ )","MiniZinc":"else __ if __ a __ then __ b __ c","Python,Cython":"elif __ a _ : _ \\n _ #indent _ \\n _ b _ \\n _ #unindent __ c","Prolog":"a _ -> _ b _ ; __ c","Visual Basic .NET":"ElseIf __ a __ Then __ b __ c","Fortran":"ELSE __ IF __ a __ THEN __ b __ c","REBOL":"a _ [ _ b _ ] __ c","Common Lisp":"( _ a __ b _ ) __ c","English":"otherwise __ if __ a __ then __ b __ c","Wolfram":"If _ [ _ a _ , _ b _ , _ c _ ]"},"return,a:And":{"Java,Kal,EngScript,Pawn,Ada,PowerShell,Rust,D,Ceylon,TypeScript,Hack,AutoHotKey,Gosu,Swift,Pike,Objective-C,C,Groovy,Scala,CoffeeScript,Julia,Dart,C#,JavaScript,Go,Haxe,PHP,C++,Perl,Vala,Lua,Python,REBOL,Ruby,Tcl,AWK,bc,Chapel,Perl 6":"return __ a:And","MiniZinc,Z3,Erlang,Maxima,Standard ML,Icon,Oz,CLIPS,newLisp,Hy,Sibilant,LispyScript,ALGOL 68,Clojure,Prolog,Common Lisp,F#,OCaml,Haskell,ML,Racket,Nemerle":"a:And","Visual Basic,Visual Basic .NET,AutoIt":"Return __ a:And","Octave,Fortran":"retval _ = _ a:And","Pascal":"Exit _ ( _ a:And _ )","Picat":"to_return _ = _ a:And","R":"return _ ( _ a:And _ )","Wolfram":"Return _ [ _ a:And _ ]","POP-11":"a:And _ -> _ Result"},"set_var,name:(access_array/var_name),value:expression":{"Z3":"( _ declare_const __ name:Identifier __ value:expression _ )","JavaScript,Perl 6,Wolfram,Chapel,Katahdin,Frink,MiniZinc,Picat,ooc,D,Genie,Janus,Ceylon,IDP,Sympy,Prolog,Processing,Java,EBNF,Boo,Gosu,Pike,Kotlin,Icon,PowerShell,EngScript,Pawn,FreeBASIC,Hack,Nimrod,OpenOffice Basic,Groovy,TypeScript,Rust,CoffeeScript,Fortran,AWK,Go,Swift,Vala,C,Julia,Scala,Cobra,Erlang,AutoIt,Dart,Java,OCaml,Haxe,C#,MATLAB,C++,PHP,Perl,Python,Lua,Ruby,Gambas,Octave,Visual Basic,Visual Basic .NET,bc":"name:(access_array/var_name) _ = _ value:expression"},"print,a:expression":{"Erlang":"io _ : _ fwrite _ ( _ a:expression _ )","C++":"cout _ << _ a:expression","Haxe":"trace _ ( _ a:expression _ )","Prolog":"write _ ( _ a:expression _ )","C#":"Console _ . _ WriteLine _ ( _ a:expression _ )","REBOL,Fortran,Perl,PHP":"print __ a:expression","Ruby":"puts _ ( _ a:expression _ )","Visual Basic .NET":"System _ . _ Console _ . _ WriteLine _ ( _ a:expression _ )","Scala,Julia,Swift":"println _ ( _ a:expression _ )","JavaScript,TypeScript":"console _ . _ log _ ( _ a:expression _ )","Python,Cython,Ceylon,R,Gosu,Dart,Vala,Perl,PHP,Hack,AWK,Lua":"print _ ( _ a:expression _ )","Java":"System _ . _ out _ . _ println _ ( _ a:expression _ )","C":"printf _ ( _ a:expression _ )","Haskell":"( _ putStrLn __ a:expression _ )","Hy,Common Lisp,crosslanguage":"( _ print __ a:expression _ )","Rust":"println!( _ a:expression _ )","Octave":"disp _ ( _ a:expression _ )","Chapel,D":"writeln _ ( _ a:expression _ )","Frink":"print _ [ _ a:expression _ ]","Wolfram":"Print _ [ _ a:expression _ ]"},"series_of_statements,var1:statement,var2:series_of_statements":{"Java,Dafny,Z3,Elm,Bash,Perl 6,Mathematical notation,Katahdin,Frink,MiniZinc,Aldor,COBOL,ooc,Genie,ECLiPSe,nools,Agda,PL/I,REXX,IDP,Falcon,Processing,Sympy,Maxima,Pyke,Elixir,GNU Smalltalk,Seed7,Standard ML,Occam,Boo,Drools,Icon,Mercury,EngScript,Pike,Oz,Kotlin,Pawn,FreeBASIC,Ada,PowerShell,Gosu,Nimrod,Cython,OpenOffice Basic,ALGOL 68,D,Ceylon,Rust,CoffeeScript,ActionScript,TypeScript,Fortran,Octave,ML,AutoHotKey,Delphi,Pascal,F#,Self,Swift,Nemerle,Dart,C,AutoIt,Cobra,Julia,Groovy,Scala,OCaml,Erlang,Gambas,Hack,C++,MATLAB,REBOL,Red,Lua,Go,AWK,Haskell,Perl,Python,JavaScript,C#,PHP,Ruby,R,Haxe,Visual Basic,Visual Basic .NET,Vala,bc":"var1:statement __ var2:series_of_statements","Prolog":"var1:statement _ , _ var2:series_of_statements","Wolfram":"var1:statement _ ; _ var2:series_of_statements"},"comment,var1:[^\\n]+":{"Java,Dafny,Janus,Chapel,Rust,Frink,D,Genie,Ceylon,Hack,Maxima,Kotlin,Delphi,Dart,TypeScript,Swift,Vala,C#,JavaScript,Haxe,Scala,Go,C,C++,Pike,PHP,F#,Nemerle,crosslanguage,Gosu,Groovy\":":"// _ var1:[^\\n]+ _ \\n","OCaml,Standard ML,ML":"(*{ _ var1:[^\\n]+ _ }*)","MATLAB,MiniZinc,Octave,Erlang,Prolog,Picat":"% _ var1:[^\\n]+ _ \\n","REBOL":"comment _ [ _ var1:[^\\n]+ _ ]","Wolfram":"(* _ var1:[^\\n]+ _ *)","Pascal":"{ _ var1:[^\\n]+ _ }","Fortran":"! _ var1:[^\\n]+ _ \\n","Z3":"; _ var1:[^\\n]+ _ \\n","Bash,Perl 6,PowerShell,Seed7,Cobra,Icon,EngScript,Nimrod,CoffeeScript,Julia,AWK,Ruby,Perl,R,Tcl,bc,Python,Cython":"# _ var1:[^\\n]+ _ \\n","Lua,Haskell,Ada":"-- _ var1:[^\\n]+ _ \\n"},"initialize_var,name:var_name,type:type,value:expression":{"Rust":"let __ mut __ name:var_name _ = _ value:expression","Dafny":"var _ name:var_name _ : _ type:type _ := _ value:expression","Z3":"( _ declare-const __ name:var_name __ type:type _ ) _ ( _ assert __ ( _ = __ name:var_name __ value:expression _ ) _ )","F#":"let __ mutable __ name:var_name _ = _ value:expression","Common Lisp":"( _ setf __ name:var_name __ value:expression _ )","MiniZinc":"type:type _ : _ name:var_name _ = _ value:expression","Python,Ruby,Haskell,Erlang,Prolog,Julia,Picat,Octave":"name:var_name _ = _ value:expression","JavaScript,PHP,Hack,Swift":"var __ name:var_name _ = _ value:expression","Lua":"local __ name:var_name _ = _ value:expression","Janus":"local __ type:type __ name:var_name _ = _ value:expression","Perl":"my __ name:var_name _ = _ value:expression","C,Java,C#,C++,D":"type:type __ name:var_name _ = _ value:expression","REBOL":"name:var_name _ : _ value:expression","Visual Basic,Visual Basic .NET,OpenOffice Basic":"Dim __ name:var_name __ As __ type:type _ = _ value:expression","R":"name:var_name _ <- _ value:expression","Fortran":"type:type _ :: _ name:var_name _ = _ value:expression","Chapel,Haxe,Scala,TypeScript":"var __ name:var_name _ : _ type:type _ = _ value:expression"},"typeless_initialize_var,name:var_name,value:expression":{"C++,D":"auto __ name:var_name _ = _ value:expression","C#,Dafny,JavaScript,Haxe,PHP,TypeScript,Dart,Swift":"var __ name:var_name _ = _ value:expression","Lua":"local __ name:var_name _ = _ value:expression","Python,Ruby,Haskell,Erlang,Prolog,Julia,Picat,Octave,PHP":"name:var_name _ = _ value:expression","C":"__auto_type __ name:var_name _ = _ value:expression","Java":"Object __ name:var_name _ = _ value:expression","C#,JavaScript,Haxe,Swift":"var __ name:var_name _ = _ value:expression","Perl":"my __ name:var_name _ = _ value:expression"},"int,t1:type":{"Hack,Dafny,Janus,Chapel,MiniZinc,EngScript,Cython,ALGOL 68,D,Octave,Tcl,crosslanguage,ML,AWK,Julia,Gosu,OCaml,F#,Pike,Objective-C,Go,Cobra,Dart,Groovy,Python,Hy,Java,C#,C,C++,Vala,Nemerle,crosslanguage":"int","PHP,Prolog,Common Lisp,Picat":"integer","Fortran":"INTEGER","REBOL":"integer!","Ceylon,Gambas,OpenOffice Basic,Pascal,Erlang,Delphi,Visual Basic,Visual Basic .NET":"Integer","Haxe,ooc,Swift,Scala,Perl 6,Z3":"Int","JavaScript,TypeScript,CoffeeScript,Lua,Perl":"number","Haskell":"Num","Ruby":"fixnum"},"char":{"Java,C":"char"},"string":{"Java,Ceylon,Gambas,Dart,Gosu,Groovy,Scala,Pascal,Swift,Ruby,Haxe,Haskell,Visual Basic,Visual Basic .NET":"String","Vala,D,crosslanguage,Chapel,Prolog,MiniZinc,Genie,Hack,Nimrod,ALGOL 68,TypeScript,CoffeeScript,Octave,Tcl,AWK,Julia,C#,F#,Perl,Lua,JavaScript,Go,PHP,C++,Nemerle,Erlang":"string","C":"char*"},"void":{"EngScript,PHP,Hy,Cython,Go,Pike,Objective-C,Java,C,C++,C#,Vala,TypeScript,D,JavaScript,Lua":"void","Haxe":"Void","Scala":"Unit"},"boolean":{"TypeScript,Python,Hy,Java,JavaScript,Lua,Perl":"boolean","C++,Dafny,Chapel,C,crosslanguage,Rust,MiniZinc,EngScript,Dart,D,Vala,crosslanguage,Go,Cobra,C#,F#,PHP,Hack":"bool","Haxe,Haskell,Swift,Julia,Perl 6,Z3":"Bool","Fortran":"LOGICAL"},"if,c:elif_or_else,b:series_of_statements,a:And":{"Erlang":"if __ a:And _ -> _ b:series_of_statements __ c:elif_or_else __ end","Fortran":"IF __ a:And __ THEN __ b:series_of_statements __ c:elif_or_else __ END __ IF","REBOL":"case _ [ _ a:And _ [ _ b:series_of_statements _ ] _ c:elif_or_else _ ]","Julia":"if __ a:And __ b:series_of_statements __ c:elif_or_else __ end","Lua,Ruby,Picat":"if __ a:And __ then __ b:series_of_statements __ c:elif_or_else __ end","Octave":"if __ a:And __ b:series_of_statements __ c:elif_or_else __ endif","Haskell,Pascal,Maxima":"if __ a:And __ then __ b:series_of_statements __ c:elif_or_else","Java,Perl 6,Chapel,Katahdin,Pawn,PowerShell,D,Ceylon,TypeScript,ActionScript,Hack,AutoHotKey,Gosu,Nemerle,Swift,Nemerle,Pike,Groovy,Scala,Dart,JavaScript,C#,C,C++,Perl,Haxe,PHP,R,AWK,Vala,bc,Squirrel":"if _ ( _ a:And _ ) _ { _ b:series_of_statements _ } _ c:elif_or_else","Rust,Go":"if __ a:And _ { _ b:series_of_statements _ } _ c:elif_or_else","Visual Basic,Visual Basic .NET":"If __ a:And __ b:series_of_statements __ c:elif_or_else","CLIPS":"( _ if __ a:And __ then __ b:series_of_statements __ c:elif_or_else _ )","Z3":"( _ ite __ a:And __ b:series_of_statements __ c:elif_or_else _ )","MiniZinc":"if __ a:And __ then __ b:series_of_statements __ c:elif_or_else __ endif","Python,Cython":"if __ a:And _ : _ "}," #unindent ":{}," c":{"Prolog":"( a -> b ; c )","Visual Basic":"If __ a __ Then __ b __ c __ End __ If","Common Lisp":"( cond ( a __ b ) __ c )","Wolfram":"If [ a , b , c ]"},"foreach,array:expression,var_name:var_name,typeInArray:type,body:series_of_statements":{"JavaScript":"array:expression _ . _ forEach _ ( _ function _ ( _ var_name:var_name _ ) _ { _ body:series_of_statements _  _ } _ ) _ ;","MiniZinc":"forall _ ( _ var_name:var_name _ in _ array:expression _ ) _ ( _ body:series_of_statements _ ) _ ;","PHP,Hack":"foreach _ ( _ array:expression __ as __ var_name:var_name _ ) _ { _ body:series_of_statements _ }","Java":"for _ ( _ typeInArray:type __ var_name:var_name _ : _ array:expression _ ) _ { _ body:series_of_statements _ }","C#,Vala":"foreach _ ( _ typeInArray:type __ var_name:var_name __ in __ array:expression _ ) _ { _ body:series_of_statements _ }","Lua":"for __ var_name:var_name __ in __ array:expression __ do __ body:series_of_statements __ end","Python,Cython":"for __ var_name:var_name __ in __ array:expression _ : _ \\n _ #indent _ \\n _ body:series_of_statements _ \\n _ #unindent","Julia":"for __ var_name:var_name __ in __ array:expression __ body:series_of_statements __ end","Chapel,Swift":"for __ var_name:var_name __ in __ array:expression _ { _ body:series_of_statements _ }","Pawn":"foreach _ ( _ new __ var_name:var_name _ : _ array:expression _ ) _ { _ body:series_of_statements _ }","Picat":"foreach _ ( _ var_name:var_name __ in __ array:expression _ ) _ ( _ body:series_of_statements _ ) _ end","AWK,Ceylon":"for __ ( __ var_name:var_name __ in __ array:expression _ ) _ { _ body:series_of_statements _ }","Go":"for __ var_name:var_name _ := _ range __ array:expression _ { _ body:series_of_statements _ }","Haxe,Groovy":"for _ ( _ var_name:var_name __ in __ array:expression _ ) _ { _ body:series_of_statements _ }","Ruby":"array:expression _ . _ each __ do _ | _ var_name:var_name _ | __ body:series_of_statements __ end","Nemerle,PowerShell":"foreach _ ( _ var_name:var_name __ in __ array:expression _ ) _ { _ body:series_of_statements _ }","Scala":"for _ ( _ var_name:var_name _ -> _ array:expression _ ) _ { _ body:series_of_statements _ }","REBOL":"foreach __ var_name:var_name __ array:expression _ [ _ body:series_of_statements _ ]","C++":"for _ ( _ typeInArray:type __ & __ var_name:var_name _ : _ array:expression _ ){ _ body:series_of_statements _ }","Perl":"foreach __ var_name:var_name _ ( _ array:expression _ ) _ { _ body:series_of_statements _ }","D":"foreach _ ( _ var_name:var_name _ , _ array:expression _ ) _ { _ body:series_of_statements _ }","Gambas":"FOR __ EACH __ var_name:var_name __ IN __ array:expression __ body:series_of_statements __ NEXT","Visual Basic .NET":"For __ Each __ var_name:var_name __ As __ typeInArray:type __ In __ array:expression __ body:series_of_statements __ Next"},"compare_ints,var1:Add,var2:Add":{"Lua,Dafny,Wolfram,D,Rust,R,MiniZinc,Frink,Picat,Pike,Pawn,Processing,C++,Ceylon,CoffeeScript,Octave,Swift,AWK,Julia,Perl,Groovy,Erlang,Haxe,Scala,Java,Vala,Dart,Python,C#,C,Go,Haskell,Ruby":"var1:Add _ == _ var2:Add","JavaScript,PHP,TypeScript,Hack":"var1:Add _ === _ var2:Add","Z3":"( _ = __ var1:Add __ var2:Add _ )","Fortran":"var1:Add _ .eq. _ var2:Add","Maxima,REBOL,F#,AutoIt,Pascal,Delphi,Visual Basic,Visual Basic .NET":"var1:Add _ = _ var2:Add"},"class,name:Identifier,body:series_of_statements":{"C,Z3,Lua":"body:series_of_statements","Java,C#":"public __ class __ name:Identifier _ { _ body:series_of_statements _ }","C++":"class __ name:Identifier _ { _ body:series_of_statements _ } _ ;","JavaScript,Hack,PHP,Scala,Haxe,Chapel,Swift,D,TypeScript,Dart,Perl 6":"class __ name:Identifier _ { _ body:series_of_statements _ }","Ruby":"class __ name:Identifier __ body:series_of_statements __ end","R":"_"},"function_parameter,type:type,name:var_name":{"crosslanguage":"( _ parameter __ type:type __ name:var_name _ )","C#,Java,Ceylon,ALGOL 68,Groovy,D,C++,Pawn,Pike,Vala,C,Janus":"type:type __ name:var_name","Haxe,Dafny,Chapel,Pascal,Rust,Genie,Hack,Nimrod,TypeScript,Gosu,Delphi,Nemerle,Scala,Swift":"name:var_name _ : _ type:type","Go":"name:var_name __ type:type","MiniZinc":"var __ type:type _ : _ name:var_name","Haskell,Scheme,Python,Mathematical notation,LispyScript,CLIPS,Clojure,F#,ML,Racket,OCaml,Tcl,Common Lisp,newLisp,Python,Cython,Frink,Picat,IDP,PowerShell,Maxima,Icon,CoffeeScript,Fortran,Octave,AutoHotKey,Julia,Prolog,AWK,Kotlin,Dart,JavaScript,Nemerle,Erlang,PHP,AutoIt,Lua,Ruby,R,bc":"name:var_name","REBOL":"type:type _ [ _ name:var_name _ ]","OpenOffice Basic,Gambas":"name:var_name __ As __ type:type","Visual Basic,Visual Basic .NET":"name:var_name __ as __ type:type","Perl":"name:var_name _ = _ push;","Wolfram":"name:var_name _","Z3":"( _ name:var_name __ type:type _ )"},"switch,a:expression,b:case_statements,c:default":{"crosslanguage":"( _ switch __ a:expression __ b:case_statements __ c:default _ )","Rust":"match __ a:expression _ { _ b:case_statements __ c:default _ }","Elixir":"case __ a:expression __ do __ b:case_statements __ c:default __ end","Scala":"a:expression __ match _ { _ b:case_statements __ c:default _ }","Octave":"switch _ ( _ a:expression _ ) _ b:case_statements __ endswitch","Java,D,PowerShell,Nemerle,D,TypeScript,Hack,Swift,Groovy,Dart,AWK,C#,JavaScript,C++,PHP,C,Go,Haxe,Vala":"switch _ ( _ a:expression _ ) _ { _ b:case_statements __ c:default _ }","Ruby":"case __ a:expression __ b:case_statements __ c:default __ end","Haskell,Erlang":"case __ a:expression __ of __ b:case_statements __ c:default __ end","Delphi,Pascal":"Case __ a:expression __ of __ b:case_statements __ c:default __ end;","CLIPS":"( _ switch __ a:expression __ b:case_statements __ c:default _ )","Visual Basic .NET,Visual Basic":"Select __ Case __ a:expression __ b:case_statements __ c:default __ End __ Select","REBOL":"switch/default _ [ _ a:expression __ b:case_statements _ ]","Fortran":"SELECT __ CASE _ ( _ a:expression _ ) __ b:case_statements __ c:default __ END __ SELECT","Clojure":"( _ case __ a:expression __ b:case_statements __ c:default _ )","Chapel":"select _ ( _ a:expression _ ) _ { _ b:case_statements _ c:default _ }","Wolfram":"Switch _ [ _ a:expression _ , _ b:case_statements _ , _ c:default _ ]","Python,Lua":""},"case,a:expression,b:series_of_statements":{"Lua,Python":"_","crosslanguage":"( _ case __ a:expression __ b:series_of_statements _ )","JavaScript,D,Java,C#,C,C++,TypeScript,Dart,PHP,Hack":"case __ a:expression _ : _ b:series_of_statements _ break _ ;","Go,Haxe,Swift":"case __ a:expression _ : _ b:series_of_statements","Fortran":"CASE _ ( _ a:expression _ ) __ b:series_of_statements","Rust":"a:expression _ => _ { _ b:series_of_statements _ }","Ruby":"when __ a:expression __ b:series_of_statements","Haskell,Erlang,Elixir":"a:expression __ -> _ \\n _ b:series_of_statements","CLIPS":"( _ case __ a:expression __ then __ b:series_of_statements _ )","Scala":"case __ a:expression _ => _ b:series_of_statements","Visual Basic .NET":"Case __ a:expression __ b:series_of_statements","REBOL":"a:expression _ [ _ b:series_of_statements _ ]","Octave":"case __ a:expression __ b:series_of_statements","Clojure":"( _ a:expression __ b:series_of_statements _ )","Pascal,Delphi:":"a:expression _ : _ b:series_of_statements","Chapel":"when __ a:expression _ { _ b:series_of_statements _ }","Wolfram":"a:expression _ , _ b:series_of_statements"},"access_array,a:Identifier,b:array_access_list":{"Python,Lua,C#,Julia,D,Swift,Julia,Janus,MiniZinc,Picat,Nimrod,AutoIt,Cython,CoffeeScript,Dart,TypeScript,AWK,Vala,Perl,Java,JavaScript,Ruby,Go,C++,PHP,Haxe,C":"a:Identifier _ [ _ b:array_access_list _ ]","Scala,Octave,Fortran,Visual Basic, Visual Basic .NET":"a:Identifier _ ( _ b:array_access_list _ )","Haskell":"( _ a:Identifier _ !! _ b:array_access_list _ )","Frink":"a:Identifier _ @ _ b:array_access_list"},"array_access_list,var1:expression,var2:array_access_list,separator:array_access_separator":{"Java,C#,Lua,C++,Python,JavaScript,C,PHP,Ruby,Scala,Haxe,Fortran,TypeScript,MiniZinc,Dart":"var1:expression _ separator:array_access_separator _ var2:array_access_list"},"array_access_separator":{"C#,MiniZinc,Fortran,Julia,Visual Basic,Visual Basic .NET":",","Python,D,Lua,Picat,Janus,Nimrod,AutoIt,Cython,CoffeeScript,Dart,TypeScript,AWK,Vala,Perl,Java,JavaScript,Ruby,Go,C++,PHP,Haxe,C":"][","Haskell":"!!","Scala":")(","Frink":"@"},"default,a:series_of_statements":{"Python,Cython,Lua,MiniZinc,Prolog,Lua":"_","Fortran":"CASE __ DEFAULT __ a:series_of_statements","crosslanguage":"( _ default __ a:series_of_statements _ )","JavaScript,D,C,Java,C#,C++,TypeScript,Dart,PHP,Haxe,Hack,Go,Swift":"default _ : _ a:series_of_statements","Ruby,Pascal,Delphi":"else __ a:series_of_statements","Haskell":"_ _ -> _ \\n __ a:series_of_statements","Rust":"_ _ => _ a:series_of_statements","CLIPS":"( _ default __ a:series_of_statements _ )","Scala":"case __ _ => _ a:series_of_statements","Visual Basic .NET":"Case __ Else __ a:series_of_statements","REBOL":"][ a:series_of_statements","Octave":"otherwise __ a:series_of_statements","Chapel":"otherwise _ { _ a:series_of_statements _ }","Clojure":"a:series_of_statements","Wolfram":"_ _ , _ a:series_of_statements"},"":{},"import":{"JavaScript":"import __ * __ as __ a:Identifier __ from __ ' _ a:Identifier _ ' _ ;","crosslanguage":"(import __ a:Identifier _ )","Fortran":"USE __ a:Identifier","Visual Basic .NET":"Imports __ a:Identifier","REBOL":"a:Identifier _ : __ load __ % _ a:Identifier _ .r","Prolog":":- _ consult( _ a:Identifier _ ) _ .","MiniZinc":"include __ ' _ a:Identifier _ .mzn' _ ;","PHP":"include __ ' _ a:Identifier _ .php' _ ;","C,C++":"#include __ \\\" _ a:Identifier _ .h\\\"","C#":"using __ a:Identifier _ ;","Julia":"using __ a:Identifier","Haskell,EngScript,Python,Scala,Go,Groovy,Picat,Elm,Swift":"import __ a:Identifier","Java,D,Haxe":"import __ a:Identifier _ ;","Ruby,Lua":"require __ ' _ a:Identifier _ '","Perl,Perl 6,Chapel":"\"use _ a:Identifier _ ;\""},"dictionary":{"Python,C,Dart,JavaScript,TypeScript,Lua,Ruby,Julia,C++,EngScript,Visual Basic .NET":"{ _ a:key_value_list _ }","Java":"new __ HashMap _ < _ input:type _ , _ output:type _ > _ ( _ ) _ { _ { _ a:key_value_list _ } _ }","C#":"new __ Dictionary _ < _ input:type _ , _ output:type _ > _ { _ a:key_value_list _ }","Perl":"( _ a:key_value_list _ )","PHP":"array( _ a:key_value_list _ )","Haxe,Frink,Swift,Elixir,D,Wolfram":"[ _ a:key_value_list _ ]","Scala":"Map( _ a:key_value_list _ )","Octave":"struct _ ( _ a:key_value_list _ )","REBOL":"to-hash _ [ _ a:key_value_list _ ]"},"var_name":{"PHP,Perl,Bash,Tcl,AutoIt,Perl 6,Puppet,Hack,AWK,PowerShell":"$ name:Identifier","EngScript,Wolfram,crosslanguage,Erlang,English,Mathematical notation,Pascal,Picat,Prolog,Katahdin,TypeScript,JavaScript,Frink,MiniZinc,Aldor,Flora-2,F-logic,D,Genie,ooc,Janus,Chapel,ABAP,COBOL,PicoLisp,REXX,PL/I,Falcon,IDP,Processing,Sympy,Maxima,Z3,Shen,Ceylon,nools,Pyke,Self,GNU Smalltalk,Elixir,LispyScript,Standard ML,Nimrod,Occam,ANTLR,Boo,Seed7,pyparsing,EBNF,Agda,Icon,Octave,Cobra,Kotlin,C++,Drools,Oz,Pike,Delphi,Racket,ML,Java,Pawn,Fortran,Ada,FreeBASIC,MATLAB,newLisp,Hy,OCaml,Julia,AutoIt,C#,Gosu,AutoHotKey,Groovy,Rust,R,Swift,Vala,Go,Scala,Nemerle,Visual Basic,Visual Basic .NET,Clojure,Haxe,CoffeeScript,Dart,JavaScript,C#,Python,Ruby,Haskell,C,Lua,Gambas,Common Lisp,Scheme,REBOL,F#":"name:Identifier","CLIPS":"? name:Identifier"},"default_parameter":{"Python,AutoHotKey,Julia,Nemerle,PHP":"name:var_name _ = _ value:expression","C#,D,Groovy":"type:type __ name:var_name _ = _ value:expression","Ruby":"name:var_name _ : _ value:expression","Scala,Swift,Python":"name:var_name _ : _ type:type _ = _ value:expression","Haxe":"? _ name:var_name _ = _ value:expression","Visual Basic .NET":"Optional __ name:var_name __ As __ type:type _ = _ value:expression","Java,JavaScript,Lua,C":"_"},"_initializer_list":{"Lua,Java,C++,JavaScript,C#,Perl,Fortran,C,PHP,Haskell,Haxe,Python,Ruby,TypeScript,MiniZinc":"var1:expression _ var2:initializer_list_separator _ var3:_initializer_list"},"initialize_empty_var":{"Java,C#,C++,C,D,Janus,Fortran":"type:type __ name:var_name","JavaScript,Haxe":"var __ name:var_name","TypeScript":"var __ name:var_name _ : _ type:type","PHP":"name:var_name","MiniZinc":"type:type _ : _ name:var_name","Z3":"( _ declare-const __ name:var_name __ type:type _ )","Lua":"local __ name:var_name"},"anonymous_function":{"Ruby":"Proc _ . _ new _ { _ | _ params:function_parameters _ | _ b:series_of_statements _ }","JavaScript,TypeScript,Haxe,R,PHP":"function _ ( _ params:function_parameters _ ) _ { _ b:series_of_statements _ }","Haskell":"(\\ _ params:function_parameters _ -> _ b:series_of_statements _ )","Frink":"{ _ | _ params:function_parameters _ | _ body _ }","Erlang":"fun _ ( _ params:function_parameters _ ) __ b:series_of_statements __ end","Lua":"function _ ( _ params:function_parameters _ ) __ b:series_of_statements __ end","Swift":"{ _ ( _ params:function_parameters _ ) _ -> _ return_type:type __ in __ b:series_of_statements _ }","Go":"func _ ( _ params:function_parameters _ ) _ return_type:type _ { _ b:series_of_statements _ }","Dart":"( _ ( _ params:function_parameters _ ) _ => _ b:series_of_statements _ )","C++":"[ _ = _ ] _ ( _ params:function_parameters _ ) _ -> _ int _ { _ b:series_of_statements _ }","Java":"( _ params:function_parameters _ ) _ -> _ { _ b:series_of_statements _ }","Haxe":"( _ name __ params:function_parameters _ -> _ b:series_of_statements _ )","Python":"( _ lambda __ params:function_parameters _ : _ b:series_of_statements _ )","Delphi":"function _ ( _ params:function_parameters _ ) _ begin __ b:series_of_statements __ end _ ;","D":"( _ params:function_parameters _ ) _ { _ body _ }"},"strlen":{"crosslanguage":"( _ strlen __ a:parentheses_expression __ b _ )","Python":"len _ ( _ a:parentheses_expression _ )","R":"nchar _ ( _ a:parentheses_expression _ )","Erlang":"string:len _ ( _ a:parentheses_expression _ )","Visual Basic,Visual Basic .NET,Gambas":"Len _ ( _ a:parentheses_expression _ )","JavaScript,TypeScript,Ruby,Scala,Gosu,Picat,Haxe,OCaml,D":"a:parentheses_expression _ . _ length","REBOL":"length? __ a:parentheses_expression","Java,C++,Kotlin":"a:parentheses_expression _ . _ length _ ( _ )","PHP,C,Pawn,Hack":"strlen _ ( _ a:parentheses_expression _ )","MiniZinc,Julia":"length _ ( _ a:parentheses_expression _ )","Haskell":"( _ length _ a:parentheses_expression _ )","C#":"a:parentheses_expression _ . _ Length","Swift":"countElements _ ( _ a:parentheses_expression _ )","AutoIt":"StringLen _ ( _ a:parentheses_expression _ )","Common Lisp":"( _ length __ a:parentheses_expression _ )","Racket,Scheme":"( _ string-length __ a:parentheses_expression _ )","Perl,Octave":"length _ ( _ a:parentheses_expression _ )","Nemerle":"a:parentheses_expression _ . _ Length","Fortran":"LEN _ ( _ a:parentheses_expression _ )","Lua":"string _ . _ len _ ( _ a:parentheses_expression _ )","Wolfram":"StringLength _ [ _ a:parentheses_expression _ ]"},"not_equal":{"Lua":"a:Add _ ~= _ b:Add","JavaScript,PHP,TypeScript":"a:Add _ !== _ b:Add","Java,Wolfram,C,C++,D,C#,Julia,Perl,Ruby,Haxe,Python,MiniZinc":"a:Add _ != _ b:Add","English":"a:Add __ does __ not __ equal __ b:Add","Prolog":"not _ ( _ a:Add _ == _ b:Add _ )","Mathematical notation":"a:Add _ ≠ _ b:Add","Janus":"a:Add _ # _ b:Add","Fortran":"a:Add _ .NE. _ b:Add","Z3":"( _ not _ ( _ = __ a:Add __ b:Add _ ) _ )"},"key_value_list":{"Lua,JavaScript,Java,C#,C++,C,Ruby,PHP,Python,Perl,Fortran,Haxe,TypeScript":"var1:key_value _ var2:key_value_separator _ var3:key_value_list"},"Or":{"JavaScript,Wolfram,Chapel,Elixir,Frink,ooc,Picat,Janus,Processing,Pike,nools,Pawn,MATLAB,Hack,Gosu,Rust,AutoIt,AutoHotKey,TypeScript,Ceylon,Groovy,D,Octave,AWK,Julia,Scala,F#,Swift,Nemerle,Vala,Go,Perl,Java,Haskell,Haxe,C,C++,C#,Dart,R":"var1:greater_than _ || _ var2:Or","Python":"var1:greater_than __ or __ var2:Or","Fortran":"var1:greater_than __ .OR. __ var2:Or","Z3":"( _ or __ var1:greater_than __ var2:Or _ )"},"And":{"Java,JavaScript,C#":"a:Or _ && _ b:And","Python":"a:Or __ and __ b:And","MiniZinc":"a:Or _ /\\ _ b:And","Fortran":"a:Or _ .AND. _ b:And","Z3":"( _ and __ a:Or __ b:And _ )"},"this":{"Ruby,CoffeeScript":"@ a:Identifier","Java,EngScript,Dart,Groovy,TypeScript,JavaScript,C#,C++,Haxe,Chapel":"this _ . _ a:Identifier","Python":"self _ . _ a:Identifier","PHP,Hack":"$this _ -> _ a:Identifier","Swift,Scala":"a:Identifier","REBOL":"self _ / _ a:Identifier"},"array_length":{"crosslanguage":"( _ array_length __ a:parentheses_expression _ )","Lua":"# a:parentheses_expression","Python,Cython,Go":"len _ ( _ a:parentheses_expression _ )","Java,Picat,Scala,D,CoffeeScript,TypeScript,Dart,Vala,JavaScript,Ruby,Haxe,Cobra":"a:parentheses_expression _ . _ length","C#,Visual Basic,Visual Basic .NET,PowerShell":"a:parentheses_expression _ . _ Length","MiniZinc,Julia,R":"length _ ( _ a:parentheses_expression _ )","Common Lisp":"( _ list-length __ a:parentheses_expression _ )","PHP":"count _ ( _ a:parentheses_expression _ )","Rust":"a:parentheses_expression _ . _ len _ ( _ )","Emacs Lisp,Scheme,Racket,Haskell":"( _ length __ a:parentheses_expression _ )","C++,Groovy":"a:parentheses_expression _ . _ size _ ( _ )","C":"sizeof _ ( _ a:parentheses_expression _ ) _ / _ sizeof _ ( _ a:parentheses_expression _ [ _ 0 _ ] _ )","Perl":"scalar _ ( _ a:parentheses_expression _ )","REBOL":"length? __ a:parentheses_expression","Swift":"a:parentheses_expression _ . _ count","Clojure":"( _ count __ array _ )","Hy":"( _ len __ a:parentheses_expression _ )","Octave":"length _ ( _ a:parentheses_expression _ )","Fortran,Janus":"size _ ( _ a:parentheses_expression _ )","Wolfram":"Length _ [ _ a:parentheses_expression _ ]"},"initializer_list":{"Java,Picat,C#,Go,Lua,C++,C,Visual Basic .NET,Visual Basic,Wolfram":"{ _ a:_initializer_list _ }","Python,D,Frink,REBOL,Octave,Julia,Prolog,MiniZinc,EngScript,Cython,Groovy,Dart,TypeScript,CoffeeScript,Nemerle,JavaScript,Haxe,Haskell,Ruby,REBOL,Polish notation,Swift":"[ _ a:_initializer_list _ ]","PHP":"array _ ( _ a:_initializer_list _ )","Scala":"Array _ ( _ a:_initializer_list _ )","Perl,Chapel":"( _ a:_initializer_list _ )","Fortran":"(/ _ a:_initializer_list _ /)"},"key_value":{"Groovy,D,Dart,JavaScript,CoffeeScript,Swift,Elixir,Swift":"a:Identifier _ : _ b:expression","Python":"' _ a:Identifier _ ' _ : _ b:expression","Ruby,PHP,Haxe,Perl,Julia":"a:Identifier _ => _ b:expression","REBOL":"a:Identifier __ b:expression","Lua":"a:Identifier _ = _ b:expression","C++,C,C#,Visual Basic .NET":"{ _ a:Identifier _ , _ b:expression _ }","Scala,Wolfram":"a:Identifier _ -> _ b:expression","Octave":"a:Identifier _ , _ b:expression","Frink":"[ _ a:Identifier _ , _ b:expression _ ]","Java":"put _ ( _ a:Identifier _ , _ b:expression _ )"},"strcmp":{"crosslanguage":"( _ strcmp __ a:parentheses_expression __ b:parentheses_expression _ )","Visual Basic,Visual Basic .NET,F#,Prolog":"a:parentheses_expression _ = _ b:parentheses_expression","Python,Chapel,Julia,Fortran,MiniZinc,Picat,Go,Vala,AutoIt,REBOL,Ceylon,Groovy,Scala,CoffeeScript,AWK,Ruby,Haskell,Haxe,Dart,Lua,Swift":"a:parentheses_expression _ == _ b:parentheses_expression","JavaScript,PHP,TypeScript,Hack":"a:parentheses_expression _ === _ b:parentheses_expression","C,Octave":"strcmp _ ( _ a:parentheses_expression _ , _ b:parentheses_expression _ ) _ == _ 0","C++":"a:parentheses_expression _ . _ compare _ ( _ b:parentheses_expression _ )","C#":"a:parentheses_expression _ . _ Equals _ ( _ b:parentheses_expression _ )","Java":"a:parentheses_expression _ . _ equals _ ( _ b:parentheses_expression _ )","Common Lisp":"( _ equal __ a:parentheses_expression __ b:parentheses_expression _ )","CLIPS":"( _ str-compare __ a:parentheses_expression __ b:parentheses_expression _ )","Hy":"( _ = __ a:parentheses_expression __ b:parentheses_expression _ )","Perl":"a:parentheses_expression __ eq __ b:parentheses_expression","Erlang":"string:equal _ ( _ a:parentheses_expression _ , _ b:parentheses_expression _ )"},"sqrt":{"Java,JavaScript,TypeScript,Ruby,Haxe":"Math _ . _ sqrt _ ( _ x:expression _ )","C#,Visual Basic .NET":"Math _ . _ Sqrt _ ( _ x:expression _ )","C,Perl,PHP,Perl 6,Maxima,MiniZinc,Prolog,Octave,D,Haskell":"sqrt _ ( _ x:expression _ )","Lua,Python":"math _ . _ sqrt _ ( _ x:expression _ )","REBOL":"square-root __ x:expression","Scala":"scala _ . _ math _ . _ sqrt _ ( _ x:expression _ )","C++":"std _ :: _ sqrt _ ( _ x:expression _ )","Erlang":"math:sqrt _ ( _ x:expression _ )","Wolfram":"Sqrt _ [ _ x:expression _ ]"},"parentheses_expression":{"Pascal,Katahdin,Frink,MiniZinc,Picat,Java,ECLiPSe,D,ooc,Genie,Janus,PL/I,IDP,Processing,Maxima,Seed7,Self,GNU Smalltalk,Drools,Standard ML,Oz,Cobra,Pike,Prolog,EngScript,Kotlin,Pawn,FreeBASIC,MATLAB,Ada,FreeBASIC,Gosu,Gambas,Nimrod,AutoIt,ALGOL 68,Ceylon,Groovy,Rust,CoffeeScript,TypeScript,Fortran,Octave,ML,Hack,AutoHotKey,Scala,Delphi,Tcl,Swift,Vala,C,F#,C++,Dart,JavaScript,REBOL,Julia,Erlang,OCaml,crosslanguage,C#,Nemerle,AWK,Java,Lua,Perl,Haxe,Python,PHP,Haskell,Go,Ruby,R,bc,Visual Basic,Visual Basic .NET":"( _ a:expression _ )","Racket,Z3,CLIPS,GNU Smalltalk,newLisp,Hy,Common Lisp,Emacs Lisp,Clojure,Sibilant,LispyScript":"a:expression"},"join":{"C#":"String _ . _ Join _ ( _ separator:parentheses_expression _ , _ array:parentheses_expression _ )","PHP":"implode _ ( _ separator:parentheses_expression _ , _ array:parentheses_expression _ )","Perl":"join _ ( _ separator:parentheses_expression _ , _ array:parentheses_expression _ )","D":"join _ ( _ array:parentheses_expression _ , _ separator:parentheses_expression _ )","Lua":"table _ . _ concat _ ( _ array:parentheses_expression _ , _ separator:parentheses_expression _ )","Go":"Strings _ . _ join _ ( _ array:parentheses_expression _ , _ separator:parentheses_expression _ )","JavaScript,Haxe,CoffeeScript,Ruby,Groovy,Java,TypeScript":"array:parentheses_expression _ . _ join _ ( _ separator:parentheses_expression _ )","Python":"separator:parentheses_expression _ . _ join _ ( _ array:parentheses_expression _ )"},"plus_equals":{"Janus,TypeScript,Python,Lua,Java,C,C++,C#,JavaScript,Haxe,PHP,Chapel,Perl":"a:(access_array/dot_notation/Identifier) _ += _ b:expression","Ruby,Picat":"a:(access_array/dot_notation/Identifier) _ = _ a:(access_array/dot_notation/Identifier) _ + _ b:expression"},"minus_equals":{"Janus,TypeScript,Python,Lua,Java,C,C++,C#,JavaScript,PHP,Haxe,Hack,Fortran":"a:(dot_notation/access_array/Identifier) _ -= _ b:expression","Ruby":"a:(dot_notation/access_array/Identifier) _ = _ a:(dot_notation/access_array/Identifier) _ - _ b:expression"},"concatenate_string":{"Common Lisp":"( _ concatenate __ 'string __ a:Add __ b:concatenate_string _ )","C,Z3,Java,Chapel,Frink,FreeBASIC,Nemerle,D,Cython,Ceylon,CoffeeScript,TypeScript,Dart,Gosu,Groovy,Scala,Swift,F#,Python,JavaScript,C#,Haxe,Ruby,C++,Vala":"a:Add _ + _ b:concatenate_string","Lua,EngScript":"a:Add _ .. _ b:concatenate_string","Fortran":"a:Add _ // _ b:concatenate_string","PHP,AutoHotKey,Hack,Perl":"a:Add _ . _ b:concatenate_string","OCaml":"a:Add _ ^ _ b:concatenate_string","REBOL":"append __ a:Add __ b:concatenate_string","Haskell,MiniZinc,Picat,Elm":"a:Add _ ++ _ b:concatenate_string","CLIPS":"( _ str-cat _ a:Add _ b:concatenate_string _ )","Clojure":"( _ str _ a:Add _ b:concatenate_string _ )","Erlang":"string:concat _ ( _ a:Add _ , _ b:concatenate_string _ )","Julia":"string _ ( _ a:Add _ , _ b:concatenate_string _ )","Octave":"strcat _ ( _ a:Add _ , _ b:concatenate_string _ )","Racket":"( _ string-append _ a:Add _ b:concatenate_string _ )","Delphi":"Concat _ ( _ a:Add _ , _ b:concatenate_string _ )","Visual Basic,Gambas,Nimrod,AutoIt,Visual Basic .NET,OpenOffice Basic":"a:Add _ & _ b:concatenate_string","Elixir,Wolfram":"a:Add _ <> _ b:concatenate_string","Perl 6":"a:Add _ ~ _ b:concatenate_string"},"split":{"JavaScript,CoffeeScript,Java,Python,Dart,Scala,Groovy,Haxe,Ruby,Rust,TypeScript":"aString:parentheses_expression _ . _ split _ ( _ separator:parentheses_expression _ )","Lua":"string _ . _ gmatch _ ( _ aString:parentheses_expression _ , _ separator:parentheses_expression _ )","PHP":"explode _ ( _ separator:parentheses_expression _ , _ aString:parentheses_expression _ )","Perl,Processing":"split _ ( _ separator:parentheses_expression _ , _ aString:parentheses_expression _ )","REBOL":"split __ aString:parentheses_expression __ separator:parentheses_expression","C#":"aString:parentheses_expression _ . _ Split _ ( _ new _ string[] _ { _ separator:parentheses_expression _ } _ , _ StringSplitOptions _ . _ None _ )","Picat,D":"split _ ( _ aString:parentheses_expression _ , _ separator:parentheses_expression _ )","Haskell":"( _ splitOn __ aString:parentheses_expression __ separator:parentheses_expression _ )","Wolfram":"StringSplit _ [ _ aString:parentheses_expression _ , _ separator:parentheses_expression _ ]"},"pow":{"Lua":"math _ . _ pow _ ( _ a:expression _ , _ b:expression _ )","Scala":"scala.math.pow _ ( _ a:expression _ , _ b:expression _ )","C#,Visual Basic .NET":"Math _ . _ Pow _ ( _ a:expression _ , _ b:expression _ )","JavaScript,Java,TypeScript,Haxe":"Math _ . _ pow _ ( _ a:expression _ , _ b:expression _ )","Python,Chapel,Haskell,COBOL,Picat,ooc,PL/I,REXX,Maxima,AWK,R,F#,AutoHotKey,Tcl,AutoIt,Groovy,Octave,Ruby,Perl,Fortran":"( _ a:expression _ ** _ b:expression _ )","REBOL":"power __ a:expression __ b:expression","C,C++,PHP,Hack,Swift,MiniZinc,D":"pow _ ( _ a:expression _ , _ b:expression _ )","Julia,EngScript,Visual Basic,Visual Basic .NET,Gambas,Go,Ceylon,Wolfram":"a:expression _ ^ _ b:expression","Rust":"num::pow _ ( _ a:expression _ , _ b:expression _ )","Hy,Common Lisp,Racket,Clojure":"( _ expt __ num1 __ num2 _ )","Erlang":"math:pow _ ( _ a:expression _ , _ b:expression _ )"},"case_statements":{"Java,C,C#,C++,JavaScript,PHP,Haxe,Fortran,Ruby,Lua,Dart,TypeScript":"a:case __ b:case_statements"},"statement_with_semicolon":{"C,Dafny,Chapel,Katahdin,Frink,MiniZinc,Falcon,Aldor,IDP,Processing,Maxima,Seed7,Drools,EBNF,ANTLR,EngScript,OpenOffice Basic,Ada,ALGOL 68,D,Ceylon,Rust,TypeScript,Octave,AutoHotKey,Pascal,Delphi,JavaScript,Pike,Objective-C,OCaml,Java,Scala,Dart,PHP,C#,C++,Haxe,AWK,bc,Haskell,Perl,Perl 6,Go,Nemerle,Vala":"var1:statement ;","Python,Z3,Swift,Wolfram,Gambas,Pascal,Delphi,AutoHotKey,REBOL,Octave,Janus,Cython,Mathematical notation,Picat,Lua,Ruby,Haskell,Erlang,Prolog,Scala,Visual Basic .NET,Fortran,Julia,R":"var1:statement"},"dot_notation":{"Java,JavaScript,D,Haxe,C#,Perl 6":"var1:Identifier _ . _ var2:dot_notation","PHP,C":"var1:Identifier _ -> _ var2:dot_notation"},"sin":{"Java,JavaScript,TypeScript,Ruby,Haxe":"Math _ . _ sin _ ( _ var1:expression _ )","Lua,Python":"math _ . _ sin _ ( _ var1:expression _ )","C,D,PHP,Perl,Perl 6,Maxima,Fortran,MiniZinc,Swift,Prolog,Octave,Dart,Haskell":"sin _ ( _ var1:expression _ )","C#,Visual Basic .NET":"Math _ . _ Sin _ ( _ var1:expression _ )","Wolfram":"Sin _ [ _ var1:expression _ ]"},"cos":{"Java,JavaScript,TypeScript,Ruby,Haxe":"Math _ . _ cos _ ( _ var1:expression _ )","Lua,Python":"math _ . _ cos _ ( _ var1:expression _ )","C,D,PHP,Perl,Perl 6,Maxima,Fortran,MiniZinc,Swift,Prolog,Octave,Dart,Haskell":"cos _ ( _ var1:expression _ )","C#,Visual Basic .NET":"Math _ . _ Cos _ ( _ var1:expression _ )","Wolfram":"Cos _ [ _ var1:expression _ ]"},"tan":{"Java,JavaScript,TypeScript,Ruby,Haxe":"Math _ . _ tan _ ( _ var1:expression _ )","Lua,Python":"math _ . _ tan _ ( _ var1:expression _ )","C,D,PHP,Perl,Perl 6,Maxima,Fortran,MiniZinc,Swift,Prolog,Octave,Dart,Haskell":"tan _ ( _ var1:expression _ )","C#,Visual Basic .NET":"Math _ . _ Tan _ ( _ var1:expression _ )","Wolfram":"Tan _ [ _ var1:expression _ ]"},"instance_method":{"JavaScript":"name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","Perl 6":"method __ name:Identifier __ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","Chapel":"def __ name:Identifier _ ( _ params:function_parameters _ ) _ : _ type:type _ { _ body:series_of_statements _ }","Java,C#":"public __ type:type __ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","PHP":"public __ function __ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","Ruby":"def __ name:Identifier _ ( _ params:function_parameters _ ) __ body:series_of_statements __ end","C++,D":"type:type __ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","Haxe":"public __ function __ name:Identifier _ ( _ params:function_parameters _ ) _ : _ type:type _ { _ body:series_of_statements _ }","Lua":"_","Python":"def __ name:Identifier _ ( _  _ self, _ params:function_parameters _ ) _ : _ \\n _ #indent _ \\n _ body:series_of_statements _ \\n _ #unindent"},"typeless_instance_method":{"JavaScript":"name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","Chapel":"def __ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","Java":"public __ Object __ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","C#":"public __ object __ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","PHP":"public __ function __ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","Ruby":"def __ name:Identifier _ ( _ params:function_parameters _ ) __ body:series_of_statements __ end","C++,D":"auto __ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","Haxe":"public __ function __ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","Lua":"_","Python":"def __ name:Identifier _ ( _ self, _ params:function_parameters _ ) _ : _ \\n _ #indent _ \\n _ body:series_of_statements _ \\n _ #unindent"},"typeless_static_method":{"JavaScript":"static __ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","Haxe":"public __ static __ function __ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","Lua,Julia":"function __ name:Identifier _ ( _ params:function_parameters _ ) __ body:series_of_statements __ end","Java":"public __ static __ Object __ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","C#":"public __ static __ object __ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","Dart":"static __ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","C++":"static __ auto __ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","PHP":"public __ static __ function __ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","Ruby":"def __ self _ . _ name:Identifier _ ( _ params:function_parameters _ ) __ body:series_of_statements __ end","Python":"@staticmethod _ \\n __ def __ name:Identifier _ ( _  _ params:function_parameters _ ) _ : _ \\n _ #indent _ \\n _ body:series_of_statements _ \\n _ #unindent"},"static_method":{"Haxe":"public __ static __ function __ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","Lua,Julia":"function __ name:Identifier _ ( _ params:function_parameters _ ) __ body:series_of_statements __ end","Java,C#":"public __ static __ return_type:type __ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","C++,Dart":"static __ return_type:type __ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","PHP":"public __ static __ function __ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","Ruby":"def __ self _ . _ name:Identifier _ ( _ params:function_parameters _ ) __ body:series_of_statements __ end","C":"return_type:type __ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","JavaScript":"static __ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","Picat":"_","Python":"@staticmethod _ \\n __ def __ name:Identifier _ ( _  _ params:function_parameters _ ) _ : _ "},"declare_new_object":{"Java,C#,D":"class_name:Identifier __ var_name:var_name _ = _ new __ class_name:Identifier _ ( _ params:function_call_parameters _ )","JavaScript,Haxe,Chapel":"var __ var_name:var_name _ = _ new __ class_name:Identifier _ ( _ params:function_call_parameters _ )","PHP":"var_name:var_name _ = _ new __ class_name:Identifier _ ( _ params:function_call_parameters _ )","Python":"var_name:var_name _ = _ class_name:Identifier _ ( _ params:function_call_parameters _ )","Ruby":"var_name:var_name _ = _ class_name:Identifier _ . _ new _ ( _ params:function_call_parameters _ )","Perl":"my __ var_name:var_name _ = _ class_name:Identifier _ -> _ new _ ( _ params:function_call_parameters _ )","C++":"class_name:Identifier __ var_name:var_name _ ( _ params:function_call_parameters _ )","C,Picat,MiniZinc,Prolog,Lua":"_"},"string_to_int":{"Python":"int _ ( _ a:expression _ )","Haxe":"Std _ . _ parseInt _ ( _ a:expression _ )","PHP":"( _ int _ ) _ a:expression","Haskell":"( _ read __ a:expression _ )","Perl":"a:expression","C#":"Int32 _ . _ Parse( _ a:expression _ )","Visual Basic .NET":"Convert _ . _ toInt32 _ ( _ a:expression _ )","Java":"Integer _ . _ parseInt _ ( _ a:expression _ )","C":"atoi _ ( _ a:expression _ )","Scala":"a:expression _ . _ toInt","D":"std _ . _ conv _ . _ to!int _ ( _ a:expression _ )","Ruby":"Integer _ ( _ a:expression _ )","REBOL":"to __ integer! __ a:expression","Lua":"tonumber _ ( _ a:expression _ )","JavaScript,TypeScript":"parseInt _ ( _ a:expression _ )","C++":"atoi _ ( _ a:expression _ . _ c_str _ ( _ ) _ )","Dart":"int _ . _ parse _ ( _ a:expression _ )"},"int_to_string":{"Python":"str _ ( _ a:parentheses_expression _ )","Wolfram":"ToString _ [ _ a:parentheses_expression _ ]","Swift,JavaScript,TypeScript":"String _ ( _ a:parentheses_expression _ )","Java":"Integer _ . _ toString _ ( _ a:parentheses_expression _ )","Haskell":"( _ show __ a:parentheses_expression _ )","Perl":"a:parentheses_expression","C#":"Convert _ . _ ToString _ ( _ a:parentheses_expression _ )","Ruby":"a:parentheses_expression _ . _ to_s","C++":"std _ :: _ to_string _ ( _ a:parentheses_expression _ )","Lua":"tostring _ ( _ a:parentheses_expression _ )","Haxe":"Std _ . _ toString _ ( _ a:parentheses_expression _ )","D":"std _ . _ conv _ . _ to!string _ ( _ a:parentheses_expression _ )","PHP":"( _ string _ ) _ a:parentheses_expression","Dart":"a:parentheses_expression _ . _ toString _ ( _ )"},"typeless_declare_constant":{"PHP,JavaScript,Dart,TypeScript":"const __ name:var_name _ = _ value:expression","Visual Basic .NET":"Public __ Const __ name:var_name _ = _ value:expression","Rust,Swift":"let __ name:var_name _ = _ value:expression","C":"static __ const __ name:var_name _ = _ value:expression","C#":"const __ object __ name:var_name _ = _ value:expression","D,C++":"const __ auto __ name:var_name _ = _ value:expression","Common Lisp":"( _ setf __ name:var_name __ value:expression _ )","Scala":"val __ name:var_name _ = _ value:expression","Python,Ruby,Haskell,Erlang,Julia,Picat,Prolog":"name:var_name _ = _ value:expression","Lua":"local __ name:var_name _ = _ value:expression","Perl":"my __ name:var_name _ = _ value:expression","REBOL":"name:var_name _ : _ value:expression","Haxe":"static __ inline __ var __ name:var_name _ = _ value:expression","Java":"final __ Object __ name:var_name _ = _ value:expression","Chapel":"var _ name:var_name _ = _ value:expression"},"declare_constant":{"PHP,JavaScript":"const __ name:var_name _ = _ value:expression","Z3":"( _ declare-const __ name:var_name __ type:type _ ) _ ( _ assert __ ( _ = __ name:var_name __ value:expression _ ) _ )","Visual Basic .NET":"Public __ Const __ name:var_name __ As __ type:type _ = _ value:expression","Rust,Swift":"let __ name:var_name _ = _ value:expression","C++,C,D,C#":"const __ type:type __ name:var_name _ = _ value:expression","Common Lisp":"( _ setf __ name:var_name __ value:expression _ )","MiniZinc":"type:type _ : _ name:var_name _ = _ value:expression","Scala":"val __ name:var_name _ : _ type:type _ = _ value:expression","Python,Ruby,Haskell,Erlang,Julia,Picat,Prolog":"name:var_name _ = _ value:expression","Lua":"local __ name:var_name _ = _ value:expression","Perl":"my __ name:var_name _ = _ value:expression","REBOL":"name:var_name _ : _ value:expression","Haxe":"static __ inline __ var __ name:var_name _ = _ value:expression","Java":"final __ type:type __ name:var_name _ = _ value:expression","C":"static __ const __ name:var_name _ = _ value:expression","Chapel":"var _ name:var_name _ : _ type:type _ = _ value:expression"},"constructor":{"crosslanguage":"(constructor __ name:Identifier __ params:function_parameters __ body)","Python":"def __ __init__ _ ( _  _ self _ , _ params:function_parameters _ ) _ : _ \\n _ #indent _ "},"function_call_named_parameter":{"Python,C#,Fortran,Scala":"name:Identifier _ = _ value:expression","Modula-3,Visual Basic .NET":"name:Identifier _ := _ value:expression","Ruby":"name:Identifier _ : _ value:expression","JavaScript,Lua,Java,C,PHP,Haxe,MiniZinc":"value:expression"},"function_call":{"C,Chapel,Elixir,Janus,Perl 6,Pascal,Rust,Hack,Katahdin,MiniZinc,Pawn,Aldor,Picat,D,Genie,ooc,PL/I,Delphi,Standard ML,REXX,Falcon,IDP,Processing,Maxima,Swift,Boo,R,MATLAB,AutoIt,Pike,Gosu,AWK,AutoHotKey,Gambas,Kotlin,Nemerle,EngScript,Prolog,Groovy,Scala,CoffeeScript,Julia,TypeScript,Fortran,Octave,C++,Go,Cobra,Ruby,Vala,F#,Java,Ceylon,OCaml,Erlang,Python,C#,Lua,Haxe,JavaScript,Dart,bc,Visual Basic,Visual Basic .NET,PHP,Perl":"theName:dot_notation _ ( _ args:function_call_parameters _ )","Haskell,Z3,CLIPS,Clojure,Common Lisp,CLIPS,Racket,Scheme,crosslanguage":"( _ theName:dot_notation _ args:function_call_parameters _ )"},"for":{"Java,D,Pawn,Groovy,JavaScript,Dart,TypeScript,PHP,Hack,C#,Perl,C++,AWK,Pike":"for _ ( _ statement_1:initialize_var _ ; _ condition:expression _ ; _ statement_2:set_var _ ) _ { _ body:series_of_statements _ }","C":"init:initialize_empty_var _ ; _ for _ ( _ statement_1:initialize_var _ ; _ condition:expression _ ; _ statement_2:set_var _ ) _ { _ body:series_of_statements _ }","Haxe":"statement_1:initialize_var _ ; _  _ while _ ( _ condition:expression _ ) _ { _ body:series_of_statements _ statement_2:set_var _ ; _ }","Lua,Ruby":"statement_1:initialize_var __ while __ condition:expression __ do __ body:series_of_statements __ statement_2:set_var __ end"},"while":{"Fortran":"WHILE __ ( _ a:Or _ ) __ DO __ b:series_of_statements __ ENDDO","Pascal":"while __ a:Or __ do __ begin __ b:series_of_statements __ end;","Delphi":"While __ a:Or __ do __ begin __ b:series_of_statements __ end;","Rust,Frink,Dafny":"while __ a:Or _ { _ b:series_of_statements _ }","C,Perl 6,Katahdin,Chapel,ooc,Processing,Pike,Kotlin,Pawn,PowerShell,Hack,Gosu,AutoHotKey,Ceylon,D,TypeScript,ActionScript,Nemerle,Dart,Swift,Groovy,Scala,Java,JavaScript,PHP,C#,Perl,C++,Haxe,R,AWK,Vala":"while _ ( _ a:Or _ ) _ { _ b:series_of_statements _ }","Lua,Ruby,Julia":"while __ a:Or __ b:series_of_statements __ end","Picat":"while __ ( _ a:Or _ ) __ b:series_of_statements __ end","REBOL":"while _ [ _ a:Or _ ] _ [ _ b:series_of_statements _ ]","Common Lisp":"( _ loop __ while __ a:Or __ do __ b:series_of_statements _ )","Hy,newLisp,CLIPS":"( _ while __ a:Or __ b:series_of_statements _ )","Python,Cython":"while __ a:Or _ : _ "},"function":{"C++,Vala,C,Dart,Ceylon,Pike,D":"return_type:type __ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","Java,C#":"public __ static __ return_type:type __ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","JavaScript,PHP":"function __ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","Lua,Julia":"function __ name:Identifier _ ( _ params:function_parameters _ ) __ body:series_of_statements __ end","Wolfram":"name:Identifier _ [ _ params:function_parameters _ ] _ := _ body:series_of_statements","Frink":"name:Identifier _ [ _ params:function_parameters _ ] _ := _ { _ body:series_of_statements _ }","POP-11":"define __ name:Identifier _ ( _ params:function_parameters _ ) _ -> _ Result; __ body:series_of_statements __ enddefine;","Z3":"( _ define-fun __ name:Identifier _ ( _ params:function_parameters _ ) __ return_type:type __ body:series_of_statements _ )","Mathematical notation":"name:Identifier _ ( _ params:function_parameters _ ) _ = _ { _ body:series_of_statements _ }","Chapel":"proc __ name:Identifier _ ( _ params:function_parameters _ ) _ : _ return_type:type _ { _ body:series_of_statements _ }","Prolog":"name:Identifier _ ( _ params:function_parameters _ ) __ :- __ body:series_of_statements _ .","Picat":"name:Identifier _ ( _ params:function_parameters _ ) _ = _ to_return _ => _ body:series_of_statements _ .","Swift":"func __ name:Identifier _ ( _ params:function_parameters _ ) _ -> _ return_type:type _ { _ body:series_of_statements _ }","Maxima":"name:Identifier _ ( _ params:function_parameters _ ) _ := _ body:series_of_statements","Rust":"fn __ name:Identifier _ ( _ params:function_parameters _ ) _ -> _ return_type:type _ { _ body:series_of_statements _ }","Clojure":"( _ defn _ name:Identifier _ [ _ params:function_parameters _ ] _ body:series_of_statements _ )","Octave":"function __ retval _ = _ name:Identifier _ ( _ params:function_parameters _ ) _ body:series_of_statements __ endfunction","Haskell":"name:Identifier __ params:function_parameters _ = _ \\n _ body:series_of_statements","Common Lisp":"(defun __ name:Identifier _ ( _ params:function_parameters _ ) _ body:series_of_statements _ )","Fortran":"FUNC __ name:Identifier __ ( _ params:function_parameters _ ) __ RESULT _ ( _ retval _ ) __ return_type:type _ :: _ retval __ body:series_of_statements __ END __ FUNCTION __ name:Identifier","Scala":"def __ name:Identifier _ ( _ params:function_parameters _ ) _ : _ return_type:type _ = _ { _ body:series_of_statements _ }","MiniZinc":"function __ return_type:type _ : _ name:Identifier _ ( _ params:function_parameters _ ) _ = _ body:series_of_statements _ ;","CLIPS":"( _ deffunction __ name:Identifier _ ( _ params:function_parameters _ ) _ body:series_of_statements _ )","Erlang":"name:Identifier _ ( _ params:function_parameters _ ) _ -> _ body:series_of_statements","Perl":"sub __ name:Identifier _ { _ params:function_parameters __ body:series_of_statements _ }","Perl 6":"sub __ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","Pawn":"name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","Ruby":"def __ name:Identifier _ ( _ params:function_parameters _ ) __ body:series_of_statements __ end","TypeScript":"function __ name:Identifier _ ( _ params:function_parameters _ ) _ : _ return_type:type _ { _ body:series_of_statements _ }","REBOL":"name:Identifier _ : __ func _ [ _ params:function_parameters _ ] _ [ _ body:series_of_statements _ ]","Haxe":"public __ static __ function __ name:Identifier _ ( _ params:function_parameters _ ) _ : _ return_type:type _ { _ body:series_of_statements _ }","Hack":"function __ name:Identifier _ ( _ params:function_parameters _ ) _ : _ return_type:type _ { _ body:series_of_statements _ }","R":"name:Identifier _ <- _ function _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","bc":"define _ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","Visual Basic,Visual Basic .NET":"Function _ name:Identifier _ ( _ params:function_parameters _ ) _ As _ return_type:type _ body:series_of_statements _ End _ Function","Racket,newLisp":"(define _ (name _ params) _ body:series_of_statements _ )","Janus":"procedure _ name:Identifier _ ( _ params:function_parameters _ ) _ body:series_of_statements","Python":"def __ name:Identifier _ ( _ params:function_parameters _ ) _ -> _ type _ : _ \\n _ #indent _ \\n _ body:series_of_statements _ \\n _ #unindent"},"else":{"Fortran":"ELSE __ a:series_of_statements","Hack,Dafny,Perl 6,Frink,Chapel,Katahdin,Pawn,PowerShell,Puppet,Ceylon,D,Rust,TypeScript,Scala,AutoHotKey,Gosu,Groovy,Java,Swift,Dart,AWK,JavaScript,Haxe,PHP,C#,Go,Perl,C++,C,Tcl,R,Vala,bc":"else _ { _ a:series_of_statements _ }","Ruby,Janus,Lua,Haskell,CLIPS,MiniZinc,Julia,Octave,Picat,Pascal,Maxima":"else "},"elif":{"D,Chapel,Pawn,Ceylon,Scala,TypeScript,AutoHotKey,AWK,R,Groovy,Gosu,Katahdin,Java,Swift,Nemerle,C,Dart,Vala,JavaScript,C#,C++,Haxe":"else __ if _ ( _ a _ ) _ { _ b _ } _ c","Z3":"( _ ite __ a __ b __ c _ )","Rust,Go":"else __ if __ a _ { _ b _ } _ c","PHP,Hack,Perl":"elseif _ ( _ a _ ) _ { _ b _ } _ c","Julia,Octave,Lua":"elseif __ a __ b __ c","Ruby":"elsif __ a __ then __ b __ c","Picat":"elseif __ a __ then __ b __ c","Haskell,Pascal,Maxima":"else __ if __ a __ then __ b __ c","Erlang":"a _ -> _ b __ c","R,F#":"a _ <- _ b __ c","CLIPS":"( _ if __ a __ then __ ( _ b __ c _ ) _ )","MiniZinc":"else __ if __ a __ then __ b __ c","Python,Cython":"elif __ a _ : _ \\n _ #indent _ \\n _ b _ \\n _ #unindent __ c","Prolog":"a _ -> _ b _ ; __ c","Visual Basic .NET":"ElseIf __ a __ Then __ b __ c","Fortran":"ELSE __ IF __ a __ THEN __ b __ c","REBOL":"a _ [ _ b _ ] __ c","Common Lisp":"( _ a __ b _ ) __ c","English":"otherwise __ if __ a __ then __ b __ c","Wolfram":"If _ [ _ a _ , _ b _ , _ c _ ]"},"return":{"Java,Kal,EngScript,Pawn,Ada,PowerShell,Rust,D,Ceylon,TypeScript,Hack,AutoHotKey,Gosu,Swift,Pike,Objective-C,C,Groovy,Scala,CoffeeScript,Julia,Dart,C#,JavaScript,Go,Haxe,PHP,C++,Perl,Vala,Lua,Python,REBOL,Ruby,Tcl,AWK,bc,Chapel,Perl 6":"return __ a:And","MiniZinc,Z3,Erlang,Maxima,Standard ML,Icon,Oz,CLIPS,newLisp,Hy,Sibilant,LispyScript,ALGOL 68,Clojure,Prolog,Common Lisp,F#,OCaml,Haskell,ML,Racket,Nemerle":"a:And","Visual Basic,Visual Basic .NET,AutoIt":"Return __ a:And","Octave,Fortran":"retval _ = _ a:And","Pascal":"Exit _ ( _ a:And _ )","Picat":"to_return _ = _ a:And","R":"return _ ( _ a:And _ )","Wolfram":"Return _ [ _ a:And _ ]","POP-11":"a:And _ -> _ Result"},"set_var":{"Z3":"( _ declare_const __ name:Identifier __ value:expression _ )","JavaScript,Perl 6,Wolfram,Chapel,Katahdin,Frink,MiniZinc,Picat,ooc,D,Genie,Janus,Ceylon,IDP,Sympy,Prolog,Processing,Java,EBNF,Boo,Gosu,Pike,Kotlin,Icon,PowerShell,EngScript,Pawn,FreeBASIC,Hack,Nimrod,OpenOffice Basic,Groovy,TypeScript,Rust,CoffeeScript,Fortran,AWK,Go,Swift,Vala,C,Julia,Scala,Cobra,Erlang,AutoIt,Dart,Java,OCaml,Haxe,C#,MATLAB,C++,PHP,Perl,Python,Lua,Ruby,Gambas,Octave,Visual Basic,Visual Basic .NET,bc":"name:(access_array/var_name) _ = _ value:expression"},"print":{"Erlang":"io _ : _ fwrite _ ( _ a:expression _ )","C++":"cout _ << _ a:expression","Haxe":"trace _ ( _ a:expression _ )","Prolog":"write _ ( _ a:expression _ )","C#":"Console _ . _ WriteLine _ ( _ a:expression _ )","REBOL,Fortran,Perl,PHP":"print __ a:expression","Ruby":"puts _ ( _ a:expression _ )","Visual Basic .NET":"System _ . _ Console _ . _ WriteLine _ ( _ a:expression _ )","Scala,Julia,Swift":"println _ ( _ a:expression _ )","JavaScript,TypeScript":"console _ . _ log _ ( _ a:expression _ )","Python,Cython,Ceylon,R,Gosu,Dart,Vala,Perl,PHP,Hack,AWK,Lua":"print _ ( _ a:expression _ )","Java":"System _ . _ out _ . _ println _ ( _ a:expression _ )","C":"printf _ ( _ a:expression _ )","Haskell":"( _ putStrLn __ a:expression _ )","Hy,Common Lisp,crosslanguage":"( _ print __ a:expression _ )","Rust":"println!( _ a:expression _ )","Octave":"disp _ ( _ a:expression _ )","Chapel,D":"writeln _ ( _ a:expression _ )","Frink":"print _ [ _ a:expression _ ]","Wolfram":"Print _ [ _ a:expression _ ]"},"series_of_statements":{"Java,Dafny,Z3,Elm,Bash,Perl 6,Mathematical notation,Katahdin,Frink,MiniZinc,Aldor,COBOL,ooc,Genie,ECLiPSe,nools,Agda,PL/I,REXX,IDP,Falcon,Processing,Sympy,Maxima,Pyke,Elixir,GNU Smalltalk,Seed7,Standard ML,Occam,Boo,Drools,Icon,Mercury,EngScript,Pike,Oz,Kotlin,Pawn,FreeBASIC,Ada,PowerShell,Gosu,Nimrod,Cython,OpenOffice Basic,ALGOL 68,D,Ceylon,Rust,CoffeeScript,ActionScript,TypeScript,Fortran,Octave,ML,AutoHotKey,Delphi,Pascal,F#,Self,Swift,Nemerle,Dart,C,AutoIt,Cobra,Julia,Groovy,Scala,OCaml,Erlang,Gambas,Hack,C++,MATLAB,REBOL,Red,Lua,Go,AWK,Haskell,Perl,Python,JavaScript,C#,PHP,Ruby,R,Haxe,Visual Basic,Visual Basic .NET,Vala,bc":"var1:statement __ var2:series_of_statements","Prolog":"var1:statement _ , _ var2:series_of_statements","Wolfram":"var1:statement _ ; _ var2:series_of_statements"},"comment":{"Java,Dafny,Janus,Chapel,Rust,Frink,D,Genie,Ceylon,Hack,Maxima,Kotlin,Delphi,Dart,TypeScript,Swift,Vala,C#,JavaScript,Haxe,Scala,Go,C,C++,Pike,PHP,F#,Nemerle,crosslanguage,Gosu,Groovy\":":"// _ var1:[^\\n]+ _ \\n","OCaml,Standard ML,ML":"(*{ _ var1:[^\\n]+ _ }*)","MATLAB,MiniZinc,Octave,Erlang,Prolog,Picat":"% _ var1:[^\\n]+ _ \\n","REBOL":"comment _ [ _ var1:[^\\n]+ _ ]","Wolfram":"(* _ var1:[^\\n]+ _ *)","Pascal":"{ _ var1:[^\\n]+ _ }","Fortran":"! _ var1:[^\\n]+ _ \\n","Z3":"; _ var1:[^\\n]+ _ \\n","Bash,Perl 6,PowerShell,Seed7,Cobra,Icon,EngScript,Nimrod,CoffeeScript,Julia,AWK,Ruby,Perl,R,Tcl,bc,Python,Cython":"# _ var1:[^\\n]+ _ \\n","Lua,Haskell,Ada":"-- _ var1:[^\\n]+ _ \\n"},"initialize_var":{"Rust":"let __ mut __ name:var_name _ = _ value:expression","Dafny":"var _ name:var_name _ : _ type:type _ := _ value:expression","Z3":"( _ declare-const __ name:var_name __ type:type _ ) _ ( _ assert __ ( _ = __ name:var_name __ value:expression _ ) _ )","F#":"let __ mutable __ name:var_name _ = _ value:expression","Common Lisp":"( _ setf __ name:var_name __ value:expression _ )","MiniZinc":"type:type _ : _ name:var_name _ = _ value:expression","Python,Ruby,Haskell,Erlang,Prolog,Julia,Picat,Octave":"name:var_name _ = _ value:expression","JavaScript,PHP,Hack,Swift":"var __ name:var_name _ = _ value:expression","Lua":"local __ name:var_name _ = _ value:expression","Janus":"local __ type:type __ name:var_name _ = _ value:expression","Perl":"my __ name:var_name _ = _ value:expression","C,Java,C#,C++,D":"type:type __ name:var_name _ = _ value:expression","REBOL":"name:var_name _ : _ value:expression","Visual Basic,Visual Basic .NET,OpenOffice Basic":"Dim __ name:var_name __ As __ type:type _ = _ value:expression","R":"name:var_name _ <- _ value:expression","Fortran":"type:type _ :: _ name:var_name _ = _ value:expression","Chapel,Haxe,Scala,TypeScript":"var __ name:var_name _ : _ type:type _ = _ value:expression"},"typeless_initialize_var":{"C++,D":"auto __ name:var_name _ = _ value:expression","C#,Dafny,JavaScript,Haxe,PHP,TypeScript,Dart,Swift":"var __ name:var_name _ = _ value:expression","Lua":"local __ name:var_name _ = _ value:expression","Python,Ruby,Haskell,Erlang,Prolog,Julia,Picat,Octave,PHP":"name:var_name _ = _ value:expression","C":"__auto_type __ name:var_name _ = _ value:expression","Java":"Object __ name:var_name _ = _ value:expression","C#,JavaScript,Haxe,Swift":"var __ name:var_name _ = _ value:expression","Perl":"my __ name:var_name _ = _ value:expression"},"int":{"Hack,Dafny,Janus,Chapel,MiniZinc,EngScript,Cython,ALGOL 68,D,Octave,Tcl,crosslanguage,ML,AWK,Julia,Gosu,OCaml,F#,Pike,Objective-C,Go,Cobra,Dart,Groovy,Python,Hy,Java,C#,C,C++,Vala,Nemerle,crosslanguage":"int","PHP,Prolog,Common Lisp,Picat":"integer","Fortran":"INTEGER","REBOL":"integer!","Ceylon,Gambas,OpenOffice Basic,Pascal,Erlang,Delphi,Visual Basic,Visual Basic .NET":"Integer","Haxe,ooc,Swift,Scala,Perl 6,Z3":"Int","JavaScript,TypeScript,CoffeeScript,Lua,Perl":"number","Haskell":"Num","Ruby":"fixnum"},"if":{"Erlang":"if __ a:And _ -> _ b:series_of_statements __ c:elif_or_else __ end","Fortran":"IF __ a:And __ THEN __ b:series_of_statements __ c:elif_or_else __ END __ IF","REBOL":"case _ [ _ a:And _ [ _ b:series_of_statements _ ] _ c:elif_or_else _ ]","Julia":"if __ a:And __ b:series_of_statements __ c:elif_or_else __ end","Lua,Ruby,Picat":"if __ a:And __ then __ b:series_of_statements __ c:elif_or_else __ end","Octave":"if __ a:And __ b:series_of_statements __ c:elif_or_else __ endif","Haskell,Pascal,Maxima":"if __ a:And __ then __ b:series_of_statements __ c:elif_or_else","Java,Perl 6,Chapel,Katahdin,Pawn,PowerShell,D,Ceylon,TypeScript,ActionScript,Hack,AutoHotKey,Gosu,Nemerle,Swift,Nemerle,Pike,Groovy,Scala,Dart,JavaScript,C#,C,C++,Perl,Haxe,PHP,R,AWK,Vala,bc,Squirrel":"if _ ( _ a:And _ ) _ { _ b:series_of_statements _ } _ c:elif_or_else","Rust,Go":"if __ a:And _ { _ b:series_of_statements _ } _ c:elif_or_else","Visual Basic,Visual Basic .NET":"If __ a:And __ b:series_of_statements __ c:elif_or_else","CLIPS":"( _ if __ a:And __ then __ b:series_of_statements __ c:elif_or_else _ )","Z3":"( _ ite __ a:And __ b:series_of_statements __ c:elif_or_else _ )","MiniZinc":"if __ a:And __ then __ b:series_of_statements __ c:elif_or_else __ endif","Python,Cython":"if __ a:And _ : _ "},"foreach":{"JavaScript":"array:expression _ . _ forEach _ ( _ function _ ( _ var_name:var_name _ ) _ { _ body:series_of_statements _  _ } _ ) _ ;","MiniZinc":"forall _ ( _ var_name:var_name _ in _ array:expression _ ) _ ( _ body:series_of_statements _ ) _ ;","PHP,Hack":"foreach _ ( _ array:expression __ as __ var_name:var_name _ ) _ { _ body:series_of_statements _ }","Java":"for _ ( _ typeInArray:type __ var_name:var_name _ : _ array:expression _ ) _ { _ body:series_of_statements _ }","C#,Vala":"foreach _ ( _ typeInArray:type __ var_name:var_name __ in __ array:expression _ ) _ { _ body:series_of_statements _ }","Lua":"for __ var_name:var_name __ in __ array:expression __ do __ body:series_of_statements __ end","Python,Cython":"for __ var_name:var_name __ in __ array:expression _ : _ \\n _ #indent _ \\n _ body:series_of_statements _ \\n _ #unindent","Julia":"for __ var_name:var_name __ in __ array:expression __ body:series_of_statements __ end","Chapel,Swift":"for __ var_name:var_name __ in __ array:expression _ { _ body:series_of_statements _ }","Pawn":"foreach _ ( _ new __ var_name:var_name _ : _ array:expression _ ) _ { _ body:series_of_statements _ }","Picat":"foreach _ ( _ var_name:var_name __ in __ array:expression _ ) _ ( _ body:series_of_statements _ ) _ end","AWK,Ceylon":"for __ ( __ var_name:var_name __ in __ array:expression _ ) _ { _ body:series_of_statements _ }","Go":"for __ var_name:var_name _ := _ range __ array:expression _ { _ body:series_of_statements _ }","Haxe,Groovy":"for _ ( _ var_name:var_name __ in __ array:expression _ ) _ { _ body:series_of_statements _ }","Ruby":"array:expression _ . _ each __ do _ | _ var_name:var_name _ | __ body:series_of_statements __ end","Nemerle,PowerShell":"foreach _ ( _ var_name:var_name __ in __ array:expression _ ) _ { _ body:series_of_statements _ }","Scala":"for _ ( _ var_name:var_name _ -> _ array:expression _ ) _ { _ body:series_of_statements _ }","REBOL":"foreach __ var_name:var_name __ array:expression _ [ _ body:series_of_statements _ ]","C++":"for _ ( _ typeInArray:type __ & __ var_name:var_name _ : _ array:expression _ ){ _ body:series_of_statements _ }","Perl":"foreach __ var_name:var_name _ ( _ array:expression _ ) _ { _ body:series_of_statements _ }","D":"foreach _ ( _ var_name:var_name _ , _ array:expression _ ) _ { _ body:series_of_statements _ }","Gambas":"FOR __ EACH __ var_name:var_name __ IN __ array:expression __ body:series_of_statements __ NEXT","Visual Basic .NET":"For __ Each __ var_name:var_name __ As __ typeInArray:type __ In __ array:expression __ body:series_of_statements __ Next"},"compare_ints":{"Lua,Dafny,Wolfram,D,Rust,R,MiniZinc,Frink,Picat,Pike,Pawn,Processing,C++,Ceylon,CoffeeScript,Octave,Swift,AWK,Julia,Perl,Groovy,Erlang,Haxe,Scala,Java,Vala,Dart,Python,C#,C,Go,Haskell,Ruby":"var1:Add _ == _ var2:Add","JavaScript,PHP,TypeScript,Hack":"var1:Add _ === _ var2:Add","Z3":"( _ = __ var1:Add __ var2:Add _ )","Fortran":"var1:Add _ .eq. _ var2:Add","Maxima,REBOL,F#,AutoIt,Pascal,Delphi,Visual Basic,Visual Basic .NET":"var1:Add _ = _ var2:Add"},"class":{"C,Z3,Lua":"body:series_of_statements","Java,C#":"public __ class __ name:Identifier _ { _ body:series_of_statements _ }","C++":"class __ name:Identifier _ { _ body:series_of_statements _ } _ ;","JavaScript,Hack,PHP,Scala,Haxe,Chapel,Swift,D,TypeScript,Dart,Perl 6":"class __ name:Identifier _ { _ body:series_of_statements _ }","Ruby":"class __ name:Identifier __ body:series_of_statements __ end","R":"_"},"function_parameter":{"crosslanguage":"( _ parameter __ type:type __ name:var_name _ )","C#,Java,Ceylon,ALGOL 68,Groovy,D,C++,Pawn,Pike,Vala,C,Janus":"type:type __ name:var_name","Haxe,Dafny,Chapel,Pascal,Rust,Genie,Hack,Nimrod,TypeScript,Gosu,Delphi,Nemerle,Scala,Swift":"name:var_name _ : _ type:type","Go":"name:var_name __ type:type","MiniZinc":"var __ type:type _ : _ name:var_name","Haskell,Scheme,Python,Mathematical notation,LispyScript,CLIPS,Clojure,F#,ML,Racket,OCaml,Tcl,Common Lisp,newLisp,Python,Cython,Frink,Picat,IDP,PowerShell,Maxima,Icon,CoffeeScript,Fortran,Octave,AutoHotKey,Julia,Prolog,AWK,Kotlin,Dart,JavaScript,Nemerle,Erlang,PHP,AutoIt,Lua,Ruby,R,bc":"name:var_name","REBOL":"type:type _ [ _ name:var_name _ ]","OpenOffice Basic,Gambas":"name:var_name __ As __ type:type","Visual Basic,Visual Basic .NET":"name:var_name __ as __ type:type","Perl":"name:var_name _ = _ push;","Wolfram":"name:var_name _","Z3":"( _ name:var_name __ type:type _ )"},"switch":{"crosslanguage":"( _ switch __ a:expression __ b:case_statements __ c:default _ )","Rust":"match __ a:expression _ { _ b:case_statements __ c:default _ }","Elixir":"case __ a:expression __ do __ b:case_statements __ c:default __ end","Scala":"a:expression __ match _ { _ b:case_statements __ c:default _ }","Octave":"switch _ ( _ a:expression _ ) _ b:case_statements __ endswitch","Java,D,PowerShell,Nemerle,D,TypeScript,Hack,Swift,Groovy,Dart,AWK,C#,JavaScript,C++,PHP,C,Go,Haxe,Vala":"switch _ ( _ a:expression _ ) _ { _ b:case_statements __ c:default _ }","Ruby":"case __ a:expression __ b:case_statements __ c:default __ end","Haskell,Erlang":"case __ a:expression __ of __ b:case_statements __ c:default __ end","Delphi,Pascal":"Case __ a:expression __ of __ b:case_statements __ c:default __ end;","CLIPS":"( _ switch __ a:expression __ b:case_statements __ c:default _ )","Visual Basic .NET,Visual Basic":"Select __ Case __ a:expression __ b:case_statements __ c:default __ End __ Select","REBOL":"switch/default _ [ _ a:expression __ b:case_statements _ ]","Fortran":"SELECT __ CASE _ ( _ a:expression _ ) __ b:case_statements __ c:default __ END __ SELECT","Clojure":"( _ case __ a:expression __ b:case_statements __ c:default _ )","Chapel":"select _ ( _ a:expression _ ) _ { _ b:case_statements _ c:default _ }","Wolfram":"Switch _ [ _ a:expression _ , _ b:case_statements _ , _ c:default _ ]","Python,Lua":""},"case":{"Lua,Python":"_","crosslanguage":"( _ case __ a:expression __ b:series_of_statements _ )","JavaScript,D,Java,C#,C,C++,TypeScript,Dart,PHP,Hack":"case __ a:expression _ : _ b:series_of_statements _ break _ ;","Go,Haxe,Swift":"case __ a:expression _ : _ b:series_of_statements","Fortran":"CASE _ ( _ a:expression _ ) __ b:series_of_statements","Rust":"a:expression _ => _ { _ b:series_of_statements _ }","Ruby":"when __ a:expression __ b:series_of_statements","Haskell,Erlang,Elixir":"a:expression __ -> _ \\n _ b:series_of_statements","CLIPS":"( _ case __ a:expression __ then __ b:series_of_statements _ )","Scala":"case __ a:expression _ => _ b:series_of_statements","Visual Basic .NET":"Case __ a:expression __ b:series_of_statements","REBOL":"a:expression _ [ _ b:series_of_statements _ ]","Octave":"case __ a:expression __ b:series_of_statements","Clojure":"( _ a:expression __ b:series_of_statements _ )","Pascal,Delphi:":"a:expression _ : _ b:series_of_statements","Chapel":"when __ a:expression _ { _ b:series_of_statements _ }","Wolfram":"a:expression _ , _ b:series_of_statements"},"access_array":{"Python,Lua,C#,Julia,D,Swift,Julia,Janus,MiniZinc,Picat,Nimrod,AutoIt,Cython,CoffeeScript,Dart,TypeScript,AWK,Vala,Perl,Java,JavaScript,Ruby,Go,C++,PHP,Haxe,C":"a:Identifier _ [ _ b:array_access_list _ ]","Scala,Octave,Fortran,Visual Basic, Visual Basic .NET":"a:Identifier _ ( _ b:array_access_list _ )","Haskell":"( _ a:Identifier _ !! _ b:array_access_list _ )","Frink":"a:Identifier _ @ _ b:array_access_list"},"array_access_list":{"Java,C#,Lua,C++,Python,JavaScript,C,PHP,Ruby,Scala,Haxe,Fortran,TypeScript,MiniZinc,Dart":"var1:expression _ separator:array_access_separator _ var2:array_access_list"},"default":{"Python,Cython,Lua,MiniZinc,Prolog,Lua":"_","Fortran":"CASE __ DEFAULT __ a:series_of_statements","crosslanguage":"( _ default __ a:series_of_statements _ )","JavaScript,D,C,Java,C#,C++,TypeScript,Dart,PHP,Haxe,Hack,Go,Swift":"default _ : _ a:series_of_statements","Ruby,Pascal,Delphi":"else __ a:series_of_statements","Haskell":"_ _ -> _ \\n __ a:series_of_statements","Rust":"_ _ => _ a:series_of_statements","CLIPS":"( _ default __ a:series_of_statements _ )","Scala":"case __ _ => _ a:series_of_statements","Visual Basic .NET":"Case __ Else __ a:series_of_statements","REBOL":"][ a:series_of_statements","Octave":"otherwise __ a:series_of_statements","Chapel":"otherwise _ { _ a:series_of_statements _ }","Clojure":"a:series_of_statements","Wolfram":"_ _ , _ a:series_of_statements"}};
+var thePatterns = {"import,a:Identifier":{"JavaScript":"import __ * __ as __ a:Identifier __ from __ ' _ a:Identifier _ ' _ ;","crosslanguage":"(import __ a:Identifier _ )","Fortran":"USE __ a:Identifier","Visual Basic .NET":"Imports __ a:Identifier","REBOL":"a:Identifier _ : __ load __ % _ a:Identifier _ .r","Prolog":":- _ consult( _ a:Identifier _ ) _ .","MiniZinc":"include __ ' _ a:Identifier _ .mzn' _ ;","PHP":"include __ ' _ a:Identifier _ .php' _ ;","C,C++":"#include __ \\\" _ a:Identifier _ .h\\\"","C#":"using __ a:Identifier _ ;","Julia":"using __ a:Identifier","Haskell,EngScript,Python,Scala,Go,Groovy,Picat,Elm,Swift":"import __ a:Identifier","Java,D,Haxe":"import __ a:Identifier _ ;","Ruby,Lua":"require __ ' _ a:Identifier _ '","Perl,Perl 6,Chapel":"\"use _ a:Identifier _ ;\""},"key_value_separator":{"Python,C,Dart,Visual Basic .NET,D,C#,Frink,Swift,JavaScript,TypeScript,PHP,Perl,Lua,Ruby,Prolog,Julia,Haxe,C++,Scala,Octave,Elixir,Wolfram":",","Java":";","REBOL":"__"},"dictionary,a:key_value_list,input:type,output:type":{"Python,C,Dart,JavaScript,TypeScript,Lua,Ruby,Julia,C++,EngScript,Visual Basic .NET":"{ _ a:key_value_list _ }","Java":"new __ HashMap _ < _ input:type _ , _ output:type _ > _ ( _ ) _ { _ { _ a:key_value_list _ } _ }","C#":"new __ Dictionary _ < _ input:type _ , _ output:type _ > _ { _ a:key_value_list _ }","Perl":"( _ a:key_value_list _ )","PHP":"array( _ a:key_value_list _ )","Haxe,Frink,Swift,Elixir,D,Wolfram":"[ _ a:key_value_list _ ]","Scala":"Map( _ a:key_value_list _ )","Octave":"struct _ ( _ a:key_value_list _ )","REBOL":"to-hash _ [ _ a:key_value_list _ ]"},"var_name,name:Identifier":{"PHP,Perl,Bash,Tcl,AutoIt,Perl 6,Puppet,Hack,AWK,PowerShell":"$ name:Identifier","EngScript,Wolfram,crosslanguage,Erlang,English,Mathematical notation,Pascal,Picat,Prolog,Katahdin,TypeScript,JavaScript,Frink,MiniZinc,Aldor,Flora-2,F-logic,D,Genie,ooc,Janus,Chapel,ABAP,COBOL,PicoLisp,REXX,PL/I,Falcon,IDP,Processing,Sympy,Maxima,Z3,Shen,Ceylon,nools,Pyke,Self,GNU Smalltalk,Elixir,LispyScript,Standard ML,Nimrod,Occam,ANTLR,Boo,Seed7,pyparsing,EBNF,Agda,Icon,Octave,Cobra,Kotlin,C++,Drools,Oz,Pike,Delphi,Racket,ML,Java,Pawn,Fortran,Ada,FreeBASIC,MATLAB,newLisp,Hy,OCaml,Julia,AutoIt,C#,Gosu,AutoHotKey,Groovy,Rust,R,Swift,Vala,Go,Scala,Nemerle,Visual Basic,Visual Basic .NET,Clojure,Haxe,CoffeeScript,Dart,JavaScript,C#,Python,Ruby,Haskell,C,Lua,Gambas,Common Lisp,Scheme,REBOL,F#":"name:Identifier","CLIPS":"? name:Identifier"},"default_parameter,type:type,name:var_name,value:expression":{"Python,AutoHotKey,Julia,Nemerle,PHP":"name:var_name _ = _ value:expression","C#,D,Groovy":"type:type __ name:var_name _ = _ value:expression","Ruby":"name:var_name _ : _ value:expression","Scala,Swift,Python":"name:var_name _ : _ type:type _ = _ value:expression","Haxe":"? _ name:var_name _ = _ value:expression","Visual Basic .NET":"Optional __ name:var_name __ As __ type:type _ = _ value:expression","Java,JavaScript,Lua,C":"_"},"_initializer_list,var1:expression,var2:initializer_list_separator,var3:_initializer_list":{"Lua,Java,C++,JavaScript,C#,Perl,Fortran,C,PHP,Haskell,Haxe,Python,Ruby,TypeScript,MiniZinc":"var1:expression _ var2:initializer_list_separator _ var3:_initializer_list"},"initialize_empty_var,type:type,name:var_name":{"Java,C#,C++,C,D,Janus,Fortran":"type:type __ name:var_name","JavaScript,Haxe":"var __ name:var_name","TypeScript":"var __ name:var_name _ : _ type:type","PHP":"name:var_name","MiniZinc":"type:type _ : _ name:var_name","Z3":"( _ declare-const __ name:var_name __ type:type _ )","Lua":"local __ name:var_name"},"anonymous_function,params:function_parameters,b:series_of_statements,return_type:type":{"Ruby":"Proc _ . _ new _ { _ | _ params:function_parameters _ | _ b:series_of_statements _ }","JavaScript,TypeScript,Haxe,R,PHP":"function _ ( _ params:function_parameters _ ) _ { _ b:series_of_statements _ }","Haskell":"(\\ _ params:function_parameters _ -> _ b:series_of_statements _ )","Frink":"{ _ | _ params:function_parameters _ | _ body _ }","Erlang":"fun _ ( _ params:function_parameters _ ) __ b:series_of_statements __ end","Lua":"function _ ( _ params:function_parameters _ ) __ b:series_of_statements __ end","Swift":"{ _ ( _ params:function_parameters _ ) _ -> _ return_type:type __ in __ b:series_of_statements _ }","Go":"func _ ( _ params:function_parameters _ ) _ return_type:type _ { _ b:series_of_statements _ }","Dart":"( _ ( _ params:function_parameters _ ) _ => _ b:series_of_statements _ )","C++":"[ _ = _ ] _ ( _ params:function_parameters _ ) _ -> _ int _ { _ b:series_of_statements _ }","Java":"( _ params:function_parameters _ ) _ -> _ { _ b:series_of_statements _ }","Haxe":"( _ name __ params:function_parameters _ -> _ b:series_of_statements _ )","Python":"( _ lambda __ params:function_parameters _ : _ b:series_of_statements _ )","Delphi":"function _ ( _ params:function_parameters _ ) _ begin __ b:series_of_statements __ end _ ;","D":"( _ params:function_parameters _ ) _ { _ body _ }"},"strlen,a:parentheses_expression":{"crosslanguage":"( _ strlen __ a:parentheses_expression __ b _ )","Python":"len _ ( _ a:parentheses_expression _ )","R":"nchar _ ( _ a:parentheses_expression _ )","Erlang":"string:len _ ( _ a:parentheses_expression _ )","Visual Basic,Visual Basic .NET,Gambas":"Len _ ( _ a:parentheses_expression _ )","JavaScript,TypeScript,Ruby,Scala,Gosu,Picat,Haxe,OCaml,D":"a:parentheses_expression _ . _ length","REBOL":"length? __ a:parentheses_expression","Java,C++,Kotlin":"a:parentheses_expression _ . _ length _ ( _ )","PHP,C,Pawn,Hack":"strlen _ ( _ a:parentheses_expression _ )","MiniZinc,Julia":"length _ ( _ a:parentheses_expression _ )","Haskell":"( _ length _ a:parentheses_expression _ )","C#":"a:parentheses_expression _ . _ Length","Swift":"countElements _ ( _ a:parentheses_expression _ )","AutoIt":"StringLen _ ( _ a:parentheses_expression _ )","Common Lisp":"( _ length __ a:parentheses_expression _ )","Racket,Scheme":"( _ string-length __ a:parentheses_expression _ )","Perl,Octave":"length _ ( _ a:parentheses_expression _ )","Nemerle":"a:parentheses_expression _ . _ Length","Fortran":"LEN _ ( _ a:parentheses_expression _ )","Lua":"string _ . _ len _ ( _ a:parentheses_expression _ )","Wolfram":"StringLength _ [ _ a:parentheses_expression _ ]"},"not_equal,a:Add,b:Add":{"Lua":"a:Add _ ~= _ b:Add","JavaScript,PHP,TypeScript":"a:Add _ !== _ b:Add","Java,Wolfram,C,C++,D,C#,Julia,Perl,Ruby,Haxe,Python,MiniZinc":"a:Add _ != _ b:Add","English":"a:Add __ does __ not __ equal __ b:Add","Prolog":"not _ ( _ a:Add _ == _ b:Add _ )","Mathematical notation":"a:Add _ ≠ _ b:Add","Janus":"a:Add _ # _ b:Add","Fortran":"a:Add _ .NE. _ b:Add","Z3":"( _ not _ ( _ = __ a:Add __ b:Add _ ) _ )"},"key_value_list,var1:key_value,var2:key_value_separator,var3:key_value_list":{"Lua,JavaScript,Java,C#,C++,C,Ruby,PHP,Python,Perl,Fortran,Haxe,TypeScript":"var1:key_value _ var2:key_value_separator _ var3:key_value_list"},"Or,var1:greater_than,var2:Or":{"JavaScript,Wolfram,Chapel,Elixir,Frink,ooc,Picat,Janus,Processing,Pike,nools,Pawn,MATLAB,Hack,Gosu,Rust,AutoIt,AutoHotKey,TypeScript,Ceylon,Groovy,D,Octave,AWK,Julia,Scala,F#,Swift,Nemerle,Vala,Go,Perl,Java,Haskell,Haxe,C,C++,C#,Dart,R":"var1:greater_than _ || _ var2:Or","Python":"var1:greater_than __ or __ var2:Or","Fortran":"var1:greater_than __ .OR. __ var2:Or","Z3":"( _ or __ var1:greater_than __ var2:Or _ )"},"And,a:Or,b:And":{"Java,JavaScript,C#":"a:Or _ && _ b:And","Python":"a:Or __ and __ b:And","MiniZinc":"a:Or _ /\\ _ b:And","Fortran":"a:Or _ .AND. _ b:And","Z3":"( _ and __ a:Or __ b:And _ )"},"this,a:Identifier":{"Ruby,CoffeeScript":"@ a:Identifier","Java,EngScript,Dart,Groovy,TypeScript,JavaScript,C#,C++,Haxe,Chapel":"this _ . _ a:Identifier","Python":"self _ . _ a:Identifier","PHP,Hack":"$this _ -> _ a:Identifier","Swift,Scala":"a:Identifier","REBOL":"self _ / _ a:Identifier"},"array_length,a:parentheses_expression":{"crosslanguage":"( _ array_length __ a:parentheses_expression _ )","Lua":"# a:parentheses_expression","Python,Cython,Go":"len _ ( _ a:parentheses_expression _ )","Java,Picat,Scala,D,CoffeeScript,TypeScript,Dart,Vala,JavaScript,Ruby,Haxe,Cobra":"a:parentheses_expression _ . _ length","C#,Visual Basic,Visual Basic .NET,PowerShell":"a:parentheses_expression _ . _ Length","MiniZinc,Julia,R":"length _ ( _ a:parentheses_expression _ )","Common Lisp":"( _ list-length __ a:parentheses_expression _ )","PHP":"count _ ( _ a:parentheses_expression _ )","Rust":"a:parentheses_expression _ . _ len _ ( _ )","Emacs Lisp,Scheme,Racket,Haskell":"( _ length __ a:parentheses_expression _ )","C++,Groovy":"a:parentheses_expression _ . _ size _ ( _ )","C":"sizeof _ ( _ a:parentheses_expression _ ) _ / _ sizeof _ ( _ a:parentheses_expression _ [ _ 0 _ ] _ )","Perl":"scalar _ ( _ a:parentheses_expression _ )","REBOL":"length? __ a:parentheses_expression","Swift":"a:parentheses_expression _ . _ count","Clojure":"( _ count __ array _ )","Hy":"( _ len __ a:parentheses_expression _ )","Octave":"length _ ( _ a:parentheses_expression _ )","Fortran,Janus":"size _ ( _ a:parentheses_expression _ )","Wolfram":"Length _ [ _ a:parentheses_expression _ ]"},"initializer_list_separator":{"Python,D,Frink,Fortran,Chapel,Octave,Julia,English,Pascal,Delphi,Prolog,MiniZinc,EngScript,Cython,Groovy,Dart,TypeScript,CoffeeScript,Nemerle,JavaScript,Haxe,Haskell,Ruby,REBOL,Polish notation,Swift,Java,Picat,C#,Go,Lua,C++,C,Visual Basic .NET,Visual Basic,PHP,Scala,Perl,Wolfram":",","REBOL":"__"},"initializer_list,a:_initializer_list":{"Java,Picat,C#,Go,Lua,C++,C,Visual Basic .NET,Visual Basic,Wolfram":"{ _ a:_initializer_list _ }","Python,D,Frink,REBOL,Octave,Julia,Prolog,MiniZinc,EngScript,Cython,Groovy,Dart,TypeScript,CoffeeScript,Nemerle,JavaScript,Haxe,Haskell,Ruby,REBOL,Polish notation,Swift":"[ _ a:_initializer_list _ ]","PHP":"array _ ( _ a:_initializer_list _ )","Scala":"Array _ ( _ a:_initializer_list _ )","Perl,Chapel":"( _ a:_initializer_list _ )","Fortran":"(/ _ a:_initializer_list _ /)"},"key_value,a:Identifier,b:expression":{"Groovy,D,Dart,JavaScript,CoffeeScript,Swift,Elixir,Swift":"a:Identifier _ : _ b:expression","Python":"' _ a:Identifier _ ' _ : _ b:expression","Ruby,PHP,Haxe,Perl,Julia":"a:Identifier _ => _ b:expression","REBOL":"a:Identifier __ b:expression","Lua":"a:Identifier _ = _ b:expression","C++,C,C#,Visual Basic .NET":"{ _ a:Identifier _ , _ b:expression _ }","Scala,Wolfram":"a:Identifier _ -> _ b:expression","Octave":"a:Identifier _ , _ b:expression","Frink":"[ _ a:Identifier _ , _ b:expression _ ]","Java":"put _ ( _ a:Identifier _ , _ b:expression _ )"},"strcmp,a:parentheses_expression,b:parentheses_expression":{"crosslanguage":"( _ strcmp __ a:parentheses_expression __ b:parentheses_expression _ )","Visual Basic,Visual Basic .NET,F#,Prolog":"a:parentheses_expression _ = _ b:parentheses_expression","Python,Chapel,Julia,Fortran,MiniZinc,Picat,Go,Vala,AutoIt,REBOL,Ceylon,Groovy,Scala,CoffeeScript,AWK,Ruby,Haskell,Haxe,Dart,Lua,Swift":"a:parentheses_expression _ == _ b:parentheses_expression","JavaScript,PHP,TypeScript,Hack":"a:parentheses_expression _ === _ b:parentheses_expression","C,Octave":"strcmp _ ( _ a:parentheses_expression _ , _ b:parentheses_expression _ ) _ == _ 0","C++":"a:parentheses_expression _ . _ compare _ ( _ b:parentheses_expression _ )","C#":"a:parentheses_expression _ . _ Equals _ ( _ b:parentheses_expression _ )","Java":"a:parentheses_expression _ . _ equals _ ( _ b:parentheses_expression _ )","Common Lisp":"( _ equal __ a:parentheses_expression __ b:parentheses_expression _ )","CLIPS":"( _ str-compare __ a:parentheses_expression __ b:parentheses_expression _ )","Hy":"( _ = __ a:parentheses_expression __ b:parentheses_expression _ )","Perl":"a:parentheses_expression __ eq __ b:parentheses_expression","Erlang":"string:equal _ ( _ a:parentheses_expression _ , _ b:parentheses_expression _ )"},"sqrt,x:expression":{"Java,JavaScript,TypeScript,Ruby,Haxe":"Math _ . _ sqrt _ ( _ x:expression _ )","C#,Visual Basic .NET":"Math _ . _ Sqrt _ ( _ x:expression _ )","C,Perl,PHP,Perl 6,Maxima,MiniZinc,Prolog,Octave,D,Haskell":"sqrt _ ( _ x:expression _ )","Lua,Python":"math _ . _ sqrt _ ( _ x:expression _ )","REBOL":"square-root __ x:expression","Scala":"scala _ . _ math _ . _ sqrt _ ( _ x:expression _ )","C++":"std _ :: _ sqrt _ ( _ x:expression _ )","Erlang":"math:sqrt _ ( _ x:expression _ )","Wolfram":"Sqrt _ [ _ x:expression _ ]"},"parentheses_expression,a:expression":{"Pascal,Katahdin,Frink,MiniZinc,Picat,Java,ECLiPSe,D,ooc,Genie,Janus,PL/I,IDP,Processing,Maxima,Seed7,Self,GNU Smalltalk,Drools,Standard ML,Oz,Cobra,Pike,Prolog,EngScript,Kotlin,Pawn,FreeBASIC,MATLAB,Ada,FreeBASIC,Gosu,Gambas,Nimrod,AutoIt,ALGOL 68,Ceylon,Groovy,Rust,CoffeeScript,TypeScript,Fortran,Octave,ML,Hack,AutoHotKey,Scala,Delphi,Tcl,Swift,Vala,C,F#,C++,Dart,JavaScript,REBOL,Julia,Erlang,OCaml,crosslanguage,C#,Nemerle,AWK,Java,Lua,Perl,Haxe,Python,PHP,Haskell,Go,Ruby,R,bc,Visual Basic,Visual Basic .NET":"( _ a:expression _ )","Racket,Z3,CLIPS,GNU Smalltalk,newLisp,Hy,Common Lisp,Emacs Lisp,Clojure,Sibilant,LispyScript":"a:expression"},"join,array:parentheses_expression,separator:parentheses_expression":{"C#":"String _ . _ Join _ ( _ separator:parentheses_expression _ , _ array:parentheses_expression _ )","PHP":"implode _ ( _ separator:parentheses_expression _ , _ array:parentheses_expression _ )","Perl":"join _ ( _ separator:parentheses_expression _ , _ array:parentheses_expression _ )","D":"join _ ( _ array:parentheses_expression _ , _ separator:parentheses_expression _ )","Lua":"table _ . _ concat _ ( _ array:parentheses_expression _ , _ separator:parentheses_expression _ )","Go":"Strings _ . _ join _ ( _ array:parentheses_expression _ , _ separator:parentheses_expression _ )","JavaScript,Haxe,CoffeeScript,Ruby,Groovy,Java,TypeScript":"array:parentheses_expression _ . _ join _ ( _ separator:parentheses_expression _ )","Python":"separator:parentheses_expression _ . _ join _ ( _ array:parentheses_expression _ )"},"plus_equals,a:(access_array/dot_notation/Identifier),b:expression":{"Janus,TypeScript,Python,Lua,Java,C,C++,C#,JavaScript,Haxe,PHP,Chapel,Perl":"a:(access_array/dot_notation/Identifier) _ += _ b:expression","Ruby,Picat":"a:(access_array/dot_notation/Identifier) _ = _ a:(access_array/dot_notation/Identifier) _ + _ b:expression"},"minus_equals,a:(dot_notation/access_array/Identifier),b:expression":{"Janus,TypeScript,Python,Lua,Java,C,C++,C#,JavaScript,PHP,Haxe,Hack,Fortran":"a:(dot_notation/access_array/Identifier) _ -= _ b:expression","Ruby":"a:(dot_notation/access_array/Identifier) _ = _ a:(dot_notation/access_array/Identifier) _ - _ b:expression"},"concatenate_string,a:Add,b:concatenate_string":{"Common Lisp":"( _ concatenate __ 'string __ a:Add __ b:concatenate_string _ )","C,Z3,Java,Chapel,Frink,FreeBASIC,Nemerle,D,Cython,Ceylon,CoffeeScript,TypeScript,Dart,Gosu,Groovy,Scala,Swift,F#,Python,JavaScript,C#,Haxe,Ruby,C++,Vala":"a:Add _ + _ b:concatenate_string","Lua,EngScript":"a:Add _ .. _ b:concatenate_string","Fortran":"a:Add _ // _ b:concatenate_string","PHP,AutoHotKey,Hack,Perl":"a:Add _ . _ b:concatenate_string","OCaml":"a:Add _ ^ _ b:concatenate_string","REBOL":"append __ a:Add __ b:concatenate_string","Haskell,MiniZinc,Picat,Elm":"a:Add _ ++ _ b:concatenate_string","CLIPS":"( _ str-cat _ a:Add _ b:concatenate_string _ )","Clojure":"( _ str _ a:Add _ b:concatenate_string _ )","Erlang":"string:concat _ ( _ a:Add _ , _ b:concatenate_string _ )","Julia":"string _ ( _ a:Add _ , _ b:concatenate_string _ )","Octave":"strcat _ ( _ a:Add _ , _ b:concatenate_string _ )","Racket":"( _ string-append _ a:Add _ b:concatenate_string _ )","Delphi":"Concat _ ( _ a:Add _ , _ b:concatenate_string _ )","Visual Basic,Gambas,Nimrod,AutoIt,Visual Basic .NET,OpenOffice Basic":"a:Add _ & _ b:concatenate_string","Elixir,Wolfram":"a:Add _ <> _ b:concatenate_string","Perl 6":"a:Add _ ~ _ b:concatenate_string"},"split,aString:parentheses_expression,separator:parentheses_expression":{"JavaScript,CoffeeScript,Java,Python,Dart,Scala,Groovy,Haxe,Ruby,Rust,TypeScript":"aString:parentheses_expression _ . _ split _ ( _ separator:parentheses_expression _ )","Lua":"string _ . _ gmatch _ ( _ aString:parentheses_expression _ , _ separator:parentheses_expression _ )","PHP":"explode _ ( _ separator:parentheses_expression _ , _ aString:parentheses_expression _ )","Perl,Processing":"split _ ( _ separator:parentheses_expression _ , _ aString:parentheses_expression _ )","REBOL":"split __ aString:parentheses_expression __ separator:parentheses_expression","C#":"aString:parentheses_expression _ . _ Split _ ( _ new _ string[] _ { _ separator:parentheses_expression _ } _ , _ StringSplitOptions _ . _ None _ )","Picat,D":"split _ ( _ aString:parentheses_expression _ , _ separator:parentheses_expression _ )","Haskell":"( _ splitOn __ aString:parentheses_expression __ separator:parentheses_expression _ )","Wolfram":"StringSplit _ [ _ aString:parentheses_expression _ , _ separator:parentheses_expression _ ]"},"pow,a:expression,b:expression":{"Lua":"math _ . _ pow _ ( _ a:expression _ , _ b:expression _ )","Scala":"scala.math.pow _ ( _ a:expression _ , _ b:expression _ )","C#,Visual Basic .NET":"Math _ . _ Pow _ ( _ a:expression _ , _ b:expression _ )","JavaScript,Java,TypeScript,Haxe":"Math _ . _ pow _ ( _ a:expression _ , _ b:expression _ )","Python,Chapel,Haskell,COBOL,Picat,ooc,PL/I,REXX,Maxima,AWK,R,F#,AutoHotKey,Tcl,AutoIt,Groovy,Octave,Ruby,Perl,Fortran":"( _ a:expression _ ** _ b:expression _ )","REBOL":"power __ a:expression __ b:expression","C,C++,PHP,Hack,Swift,MiniZinc,D":"pow _ ( _ a:expression _ , _ b:expression _ )","Julia,EngScript,Visual Basic,Visual Basic .NET,Gambas,Go,Ceylon,Wolfram":"a:expression _ ^ _ b:expression","Rust":"num::pow _ ( _ a:expression _ , _ b:expression _ )","Hy,Common Lisp,Racket,Clojure":"( _ expt __ num1 __ num2 _ )","Erlang":"math:pow _ ( _ a:expression _ , _ b:expression _ )"},"case_statements,a:case,b:case_statements":{"Java,C,C#,C++,JavaScript,PHP,Haxe,Fortran,Ruby,Lua,Dart,TypeScript":"a:case __ b:case_statements"},"statement_with_semicolon,var1:statement":{"C,Dafny,Chapel,Katahdin,Frink,MiniZinc,Falcon,Aldor,IDP,Processing,Maxima,Seed7,Drools,EBNF,ANTLR,EngScript,OpenOffice Basic,Ada,ALGOL 68,D,Ceylon,Rust,TypeScript,Octave,AutoHotKey,Pascal,Delphi,JavaScript,Pike,Objective-C,OCaml,Java,Scala,Dart,PHP,C#,C++,Haxe,AWK,bc,Haskell,Perl,Perl 6,Go,Nemerle,Vala":"var1:statement ;","Python,Z3,Swift,Wolfram,Gambas,Pascal,Delphi,AutoHotKey,REBOL,Octave,Janus,Cython,Mathematical notation,Picat,Lua,Ruby,Haskell,Erlang,Prolog,Scala,Visual Basic .NET,Fortran,Julia,R":"var1:statement"},"dot_notation,var_name:Identifier,var_name:dot_notation":{"Java,JavaScript,D,Haxe,C#,Perl 6":"var1 _ . _ var2","PHP,C":"var1 _ -> _ var2"},"sin,var1:expression":{"Java,JavaScript,TypeScript,Ruby,Haxe":"Math _ . _ sin _ ( _ var1:expression _ )","Lua,Python":"math _ . _ sin _ ( _ var1:expression _ )","C,D,PHP,Perl,Perl 6,Maxima,Fortran,MiniZinc,Swift,Prolog,Octave,Dart,Haskell":"sin _ ( _ var1:expression _ )","C#,Visual Basic .NET":"Math _ . _ Sin _ ( _ var1:expression _ )","Wolfram":"Sin _ [ _ var1:expression _ ]"},"cos,var1:expression":{"Java,JavaScript,TypeScript,Ruby,Haxe":"Math _ . _ cos _ ( _ var1:expression _ )","Lua,Python":"math _ . _ cos _ ( _ var1:expression _ )","C,D,PHP,Perl,Perl 6,Maxima,Fortran,MiniZinc,Swift,Prolog,Octave,Dart,Haskell":"cos _ ( _ var1:expression _ )","C#,Visual Basic .NET":"Math _ . _ Cos _ ( _ var1:expression _ )","Wolfram":"Cos _ [ _ var1:expression _ ]"},"tan,var1:expression":{"Java,JavaScript,TypeScript,Ruby,Haxe":"Math _ . _ tan _ ( _ var1:expression _ )","Lua,Python":"math _ . _ tan _ ( _ var1:expression _ )","C,D,PHP,Perl,Perl 6,Maxima,Fortran,MiniZinc,Swift,Prolog,Octave,Dart,Haskell":"tan _ ( _ var1:expression _ )","C#,Visual Basic .NET":"Math _ . _ Tan _ ( _ var1:expression _ )","Wolfram":"Tan _ [ _ var1:expression _ ]"},"instance_method,name:Identifier,type:type,params:function_parameters,body:series_of_statements":{"JavaScript":"name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","Perl 6":"method __ name:Identifier __ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","Chapel":"def __ name:Identifier _ ( _ params:function_parameters _ ) _ : _ type:type _ { _ body:series_of_statements _ }","Java,C#":"public __ type:type __ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","PHP":"public __ function __ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","Ruby":"def __ name:Identifier _ ( _ params:function_parameters _ ) __ body:series_of_statements __ end","C++,D":"type:type __ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","Haxe":"public __ function __ name:Identifier _ ( _ params:function_parameters _ ) _ : _ type:type _ { _ body:series_of_statements _ }","Lua":"_","Python":"def __ name:Identifier _ ( _  _ self, _ params:function_parameters _ ) _ : _ \\n _ #indent _ \\n _ body:series_of_statements _ \\n _ #unindent"},"typeless_instance_method,name:Identifier,params:function_parameters,body:series_of_statements":{"JavaScript":"name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","Chapel":"def __ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","Java":"public __ Object __ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","C#":"public __ object __ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","PHP":"public __ function __ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","Ruby":"def __ name:Identifier _ ( _ params:function_parameters _ ) __ body:series_of_statements __ end","C++,D":"auto __ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","Haxe":"public __ function __ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","Lua":"_","Python":"def __ name:Identifier _ ( _ self, _ params:function_parameters _ ) _ : _ \\n _ #indent _ \\n _ body:series_of_statements _ \\n _ #unindent"},"typeless_static_method,name:Identifier,params:function_parameters,body:series_of_statements":{"JavaScript":"static __ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","Haxe":"public __ static __ function __ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","Lua,Julia":"function __ name:Identifier _ ( _ params:function_parameters _ ) __ body:series_of_statements __ end","Java":"public __ static __ Object __ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","C#":"public __ static __ object __ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","Dart":"static __ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","C++":"static __ auto __ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","PHP":"public __ static __ function __ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","Ruby":"def __ self _ . _ name:Identifier _ ( _ params:function_parameters _ ) __ body:series_of_statements __ end","Python":"@staticmethod _ \\n __ def __ name:Identifier _ ( _  _ params:function_parameters _ ) _ : _ \\n _ #indent _ \\n _ body:series_of_statements _ \\n _ #unindent"},"static_method,name:Identifier,return_type:type,params:function_parameters,body:series_of_statements":{"Haxe":"public __ static __ function __ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","Lua,Julia":"function __ name:Identifier _ ( _ params:function_parameters _ ) __ body:series_of_statements __ end","Java,C#":"public __ static __ return_type:type __ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","C++,Dart":"static __ return_type:type __ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","PHP":"public __ static __ function __ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","Ruby":"def __ self _ . _ name:Identifier _ ( _ params:function_parameters _ ) __ body:series_of_statements __ end","C":"return_type:type __ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","JavaScript":"static __ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","Picat":"_","Python":"@staticmethod _ \\n __ def __ name:Identifier _ ( _  _ params:function_parameters _ ) _ : _ "}," #indent \\n body \\n #unindent":{},"declare_new_object,var_name:var_name,class_name:Identifier,params:function_call_parameters":{"Java,C#,D":"class_name:Identifier __ var_name:var_name _ = _ new __ class_name:Identifier _ ( _ params:function_call_parameters _ )","JavaScript,Haxe,Chapel":"var __ var_name:var_name _ = _ new __ class_name:Identifier _ ( _ params:function_call_parameters _ )","PHP":"var_name:var_name _ = _ new __ class_name:Identifier _ ( _ params:function_call_parameters _ )","Python":"var_name:var_name _ = _ class_name:Identifier _ ( _ params:function_call_parameters _ )","Ruby":"var_name:var_name _ = _ class_name:Identifier _ . _ new _ ( _ params:function_call_parameters _ )","Perl":"my __ var_name:var_name _ = _ class_name:Identifier _ -> _ new _ ( _ params:function_call_parameters _ )","C++":"class_name:Identifier __ var_name:var_name _ ( _ params:function_call_parameters _ )","C,Picat,MiniZinc,Prolog,Lua":"_"},"string_to_int,a:expression":{"Python":"int _ ( _ a:expression _ )","Haxe":"Std _ . _ parseInt _ ( _ a:expression _ )","PHP":"( _ int _ ) _ a:expression","Haskell":"( _ read __ a:expression _ )","Perl":"a:expression","C#":"Int32 _ . _ Parse( _ a:expression _ )","Visual Basic .NET":"Convert _ . _ toInt32 _ ( _ a:expression _ )","Java":"Integer _ . _ parseInt _ ( _ a:expression _ )","C":"atoi _ ( _ a:expression _ )","Scala":"a:expression _ . _ toInt","D":"std _ . _ conv _ . _ to!int _ ( _ a:expression _ )","Ruby":"Integer _ ( _ a:expression _ )","REBOL":"to __ integer! __ a:expression","Lua":"tonumber _ ( _ a:expression _ )","JavaScript,TypeScript":"parseInt _ ( _ a:expression _ )","C++":"atoi _ ( _ a:expression _ . _ c_str _ ( _ ) _ )","Dart":"int _ . _ parse _ ( _ a:expression _ )"},"int_to_string,a:parentheses_expression":{"Python":"str _ ( _ a:parentheses_expression _ )","Wolfram":"ToString _ [ _ a:parentheses_expression _ ]","Swift,JavaScript,TypeScript":"String _ ( _ a:parentheses_expression _ )","Java":"Integer _ . _ toString _ ( _ a:parentheses_expression _ )","Haskell":"( _ show __ a:parentheses_expression _ )","Perl":"a:parentheses_expression","C#":"Convert _ . _ ToString _ ( _ a:parentheses_expression _ )","Ruby":"a:parentheses_expression _ . _ to_s","C++":"std _ :: _ to_string _ ( _ a:parentheses_expression _ )","Lua":"tostring _ ( _ a:parentheses_expression _ )","Haxe":"Std _ . _ toString _ ( _ a:parentheses_expression _ )","D":"std _ . _ conv _ . _ to!string _ ( _ a:parentheses_expression _ )","PHP":"( _ string _ ) _ a:parentheses_expression","Dart":"a:parentheses_expression _ . _ toString _ ( _ )"},"typeless_declare_constant,name:var_name,value:expression":{"PHP,JavaScript,Dart,TypeScript":"const __ name:var_name _ = _ value:expression","Visual Basic .NET":"Public __ Const __ name:var_name _ = _ value:expression","Rust,Swift":"let __ name:var_name _ = _ value:expression","C":"static __ const __ name:var_name _ = _ value:expression","C#":"const __ object __ name:var_name _ = _ value:expression","D,C++":"const __ auto __ name:var_name _ = _ value:expression","Common Lisp":"( _ setf __ name:var_name __ value:expression _ )","Scala":"val __ name:var_name _ = _ value:expression","Python,Ruby,Haskell,Erlang,Julia,Picat,Prolog":"name:var_name _ = _ value:expression","Lua":"local __ name:var_name _ = _ value:expression","Perl":"my __ name:var_name _ = _ value:expression","REBOL":"name:var_name _ : _ value:expression","Haxe":"static __ inline __ var __ name:var_name _ = _ value:expression","Java":"final __ Object __ name:var_name _ = _ value:expression","Chapel":"var _ name:var_name _ = _ value:expression"},"declare_constant,name:var_name,type:type,value:expression":{"PHP,JavaScript":"const __ name:var_name _ = _ value:expression","Z3":"( _ declare-const __ name:var_name __ type:type _ ) _ ( _ assert __ ( _ = __ name:var_name __ value:expression _ ) _ )","Visual Basic .NET":"Public __ Const __ name:var_name __ As __ type:type _ = _ value:expression","Rust,Swift":"let __ name:var_name _ = _ value:expression","C++,C,D,C#":"const __ type:type __ name:var_name _ = _ value:expression","Common Lisp":"( _ setf __ name:var_name __ value:expression _ )","MiniZinc":"type:type _ : _ name:var_name _ = _ value:expression","Scala":"val __ name:var_name _ : _ type:type _ = _ value:expression","Python,Ruby,Haskell,Erlang,Julia,Picat,Prolog":"name:var_name _ = _ value:expression","Lua":"local __ name:var_name _ = _ value:expression","Perl":"my __ name:var_name _ = _ value:expression","REBOL":"name:var_name _ : _ value:expression","Haxe":"static __ inline __ var __ name:var_name _ = _ value:expression","Java":"final __ type:type __ name:var_name _ = _ value:expression","C":"static __ const __ name:var_name _ = _ value:expression","Chapel":"var _ name:var_name _ : _ type:type _ = _ value:expression"},"constructor,name:Identifier,params:function_parameters,body:series_of_statements":{"crosslanguage":"(constructor __ name:Identifier __ params:function_parameters __ body)","Python":"def __ __init__ _ ( _  _ self _ , _ params:function_parameters _ ) _ : _ \\n _ #indent _ "}," body \\n #unindent":{"Java,C#":"public __ name ( params ) { body }","Swift":"init ( params ) { body }","JavaScript":"constructor ( params ) { body }","Ruby":"def __ initialize ( params ) __ body __ end","PHP":"function __ construct ( params ) { body }","Perl":"sub __ new { body }","Haxe":"public __ function __ new ( params ) { body }","C++,Dart":"name ( params ) { body }","D":"this ( params ) { body }","Chapel":"proc __ name ( params ) { body }"},"function_call_named_parameter,name:Identifier,value:expression":{"Python,C#,Fortran,Scala":"name:Identifier _ = _ value:expression","Modula-3,Visual Basic .NET":"name:Identifier _ := _ value:expression","Ruby":"name:Identifier _ : _ value:expression","JavaScript,Lua,Java,C,PHP,Haxe,MiniZinc,C++":"value:expression"},"function_call,theName:dot_notation,args:function_call_parameters":{"C,Chapel,Elixir,Janus,Perl 6,Pascal,Rust,Hack,Katahdin,MiniZinc,Pawn,Aldor,Picat,D,Genie,ooc,PL/I,Delphi,Standard ML,REXX,Falcon,IDP,Processing,Maxima,Swift,Boo,R,MATLAB,AutoIt,Pike,Gosu,AWK,AutoHotKey,Gambas,Kotlin,Nemerle,EngScript,Prolog,Groovy,Scala,CoffeeScript,Julia,TypeScript,Fortran,Octave,C++,Go,Cobra,Ruby,Vala,F#,Java,Ceylon,OCaml,Erlang,Python,C#,Lua,Haxe,JavaScript,Dart,bc,Visual Basic,Visual Basic .NET,PHP,Perl":"theName:dot_notation _ ( _ args:function_call_parameters _ )","Haskell,Z3,CLIPS,Clojure,Common Lisp,CLIPS,Racket,Scheme,crosslanguage":"( _ theName:dot_notation _ args:function_call_parameters _ )"},"for,statement_1:initialize_var,condition:expression,statement_2:set_var,body:series_of_statements":{"Java,D,Pawn,Groovy,JavaScript,Dart,TypeScript,PHP,Hack,C#,Perl,C++,AWK,Pike":"for _ ( _ statement_1:initialize_var _ ; _ condition:expression _ ; _ statement_2:set_var _ ) _ { _ body:series_of_statements _ }","C":"init:initialize_empty_var _ ; _ for _ ( _ statement_1:initialize_var _ ; _ condition:expression _ ; _ statement_2:set_var _ ) _ { _ body:series_of_statements _ }","Haxe":"statement_1:initialize_var _ ; _  _ while _ ( _ condition:expression _ ) _ { _ body:series_of_statements _ statement_2:set_var _ ; _ }","Lua,Ruby":"statement_1:initialize_var __ while __ condition:expression __ do __ body:series_of_statements __ statement_2:set_var __ end"},"while,a:Or,b:series_of_statements":{"Fortran":"WHILE __ ( _ a:Or _ ) __ DO __ b:series_of_statements __ ENDDO","Pascal":"while __ a:Or __ do __ begin __ b:series_of_statements __ end;","Delphi":"While __ a:Or __ do __ begin __ b:series_of_statements __ end;","Rust,Frink,Dafny":"while __ a:Or _ { _ b:series_of_statements _ }","C,Perl 6,Katahdin,Chapel,ooc,Processing,Pike,Kotlin,Pawn,PowerShell,Hack,Gosu,AutoHotKey,Ceylon,D,TypeScript,ActionScript,Nemerle,Dart,Swift,Groovy,Scala,Java,JavaScript,PHP,C#,Perl,C++,Haxe,R,AWK,Vala":"while _ ( _ a:Or _ ) _ { _ b:series_of_statements _ }","Lua,Ruby,Julia":"while __ a:Or __ b:series_of_statements __ end","Picat":"while __ ( _ a:Or _ ) __ b:series_of_statements __ end","REBOL":"while _ [ _ a:Or _ ] _ [ _ b:series_of_statements _ ]","Common Lisp":"( _ loop __ while __ a:Or __ do __ b:series_of_statements _ )","Hy,newLisp,CLIPS":"( _ while __ a:Or __ b:series_of_statements _ )","Python,Cython":"while __ a:Or _ : _ "}," #indent ":{}," b ":{}," #unindent":{"Prolog":"a","Visual Basic .NET":"Else __ a","REBOL":"true [ a ]","Common Lisp":"( t __ a )","English":"otherwise __ a","Wolfram,Z3":"a"},"function,return_type:type,params:function_parameters,name:Identifier,body:series_of_statements":{"C++,Vala,C,Dart,Ceylon,Pike,D":"return_type:type __ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","Java,C#":"public __ static __ return_type:type __ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","JavaScript,PHP":"function __ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","Lua,Julia":"function __ name:Identifier _ ( _ params:function_parameters _ ) __ body:series_of_statements __ end","Wolfram":"name:Identifier _ [ _ params:function_parameters _ ] _ := _ body:series_of_statements","Frink":"name:Identifier _ [ _ params:function_parameters _ ] _ := _ { _ body:series_of_statements _ }","POP-11":"define __ name:Identifier _ ( _ params:function_parameters _ ) _ -> _ Result; __ body:series_of_statements __ enddefine;","Z3":"( _ define-fun __ name:Identifier _ ( _ params:function_parameters _ ) __ return_type:type __ body:series_of_statements _ )","Mathematical notation":"name:Identifier _ ( _ params:function_parameters _ ) _ = _ { _ body:series_of_statements _ }","Chapel":"proc __ name:Identifier _ ( _ params:function_parameters _ ) _ : _ return_type:type _ { _ body:series_of_statements _ }","Prolog":"name:Identifier _ ( _ params:function_parameters _ ) __ :- __ body:series_of_statements _ .","Picat":"name:Identifier _ ( _ params:function_parameters _ ) _ = _ to_return _ => _ body:series_of_statements _ .","Swift":"func __ name:Identifier _ ( _ params:function_parameters _ ) _ -> _ return_type:type _ { _ body:series_of_statements _ }","Maxima":"name:Identifier _ ( _ params:function_parameters _ ) _ := _ body:series_of_statements","Rust":"fn __ name:Identifier _ ( _ params:function_parameters _ ) _ -> _ return_type:type _ { _ body:series_of_statements _ }","Clojure":"( _ defn _ name:Identifier _ [ _ params:function_parameters _ ] _ body:series_of_statements _ )","Octave":"function __ retval _ = _ name:Identifier _ ( _ params:function_parameters _ ) _ body:series_of_statements __ endfunction","Haskell":"name:Identifier __ params:function_parameters _ = _ \\n _ body:series_of_statements","Common Lisp":"(defun __ name:Identifier _ ( _ params:function_parameters _ ) _ body:series_of_statements _ )","Fortran":"FUNC __ name:Identifier __ ( _ params:function_parameters _ ) __ RESULT _ ( _ retval _ ) __ return_type:type _ :: _ retval __ body:series_of_statements __ END __ FUNCTION __ name:Identifier","Scala":"def __ name:Identifier _ ( _ params:function_parameters _ ) _ : _ return_type:type _ = _ { _ body:series_of_statements _ }","MiniZinc":"function __ return_type:type _ : _ name:Identifier _ ( _ params:function_parameters _ ) _ = _ body:series_of_statements _ ;","CLIPS":"( _ deffunction __ name:Identifier _ ( _ params:function_parameters _ ) _ body:series_of_statements _ )","Erlang":"name:Identifier _ ( _ params:function_parameters _ ) _ -> _ body:series_of_statements","Perl":"sub __ name:Identifier _ { _ params:function_parameters __ body:series_of_statements _ }","Perl 6":"sub __ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","Pawn":"name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","Ruby":"def __ name:Identifier _ ( _ params:function_parameters _ ) __ body:series_of_statements __ end","TypeScript":"function __ name:Identifier _ ( _ params:function_parameters _ ) _ : _ return_type:type _ { _ body:series_of_statements _ }","REBOL":"name:Identifier _ : __ func _ [ _ params:function_parameters _ ] _ [ _ body:series_of_statements _ ]","Haxe":"public __ static __ function __ name:Identifier _ ( _ params:function_parameters _ ) _ : _ return_type:type _ { _ body:series_of_statements _ }","Hack":"function __ name:Identifier _ ( _ params:function_parameters _ ) _ : _ return_type:type _ { _ body:series_of_statements _ }","R":"name:Identifier _ <- _ function _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","bc":"define _ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","Visual Basic,Visual Basic .NET":"Function _ name:Identifier _ ( _ params:function_parameters _ ) _ As _ return_type:type _ body:series_of_statements _ End _ Function","Racket,newLisp":"(define _ (name _ params) _ body:series_of_statements _ )","Janus":"procedure _ name:Identifier _ ( _ params:function_parameters _ ) _ body:series_of_statements","Python":"def __ name:Identifier _ ( _ params:function_parameters _ ) _ -> _ type _ : _ \\n _ #indent _ \\n _ body:series_of_statements _ \\n _ #unindent"},"else,a:series_of_statements":{"Fortran":"ELSE __ a:series_of_statements","Hack,Dafny,Perl 6,Frink,Chapel,Katahdin,Pawn,PowerShell,Puppet,Ceylon,D,Rust,TypeScript,Scala,AutoHotKey,Gosu,Groovy,Java,Swift,Dart,AWK,JavaScript,Haxe,PHP,C#,Go,Perl,C++,C,Tcl,R,Vala,bc":"else _ { _ a:series_of_statements _ }","Ruby,Janus,Lua,Haskell,CLIPS,MiniZinc,Julia,Octave,Picat,Pascal,Maxima":"else "}," a":{"Erlang":"true -> a","Python,Cython":"else : "},"elif,condition:And,body:series_of_statements,next:elif_or_else":{"D,Chapel,Pawn,Ceylon,Scala,TypeScript,AutoHotKey,AWK,R,Groovy,Gosu,Katahdin,Java,Swift,Nemerle,C,Dart,Vala,JavaScript,C#,C++,Haxe":"else __ if _ ( _ a _ ) _ { _ b _ } _ c","Z3":"( _ ite __ a __ b __ c _ )","Rust,Go":"else __ if __ a _ { _ b _ } _ c","PHP,Hack,Perl":"elseif _ ( _ a _ ) _ { _ b _ } _ c","Julia,Octave,Lua":"elseif __ a __ b __ c","Ruby":"elsif __ a __ then __ b __ c","Picat":"elseif __ a __ then __ b __ c","Haskell,Pascal,Maxima":"else __ if __ a __ then __ b __ c","Erlang":"a _ -> _ b __ c","R,F#":"a _ <- _ b __ c","CLIPS":"( _ if __ a __ then __ ( _ b __ c _ ) _ )","MiniZinc":"else __ if __ a __ then __ b __ c","Python,Cython":"elif __ a _ : _ \\n _ #indent _ \\n _ b _ \\n _ #unindent __ c","Prolog":"a _ -> _ b _ ; __ c","Visual Basic .NET":"ElseIf __ a __ Then __ b __ c","Fortran":"ELSE __ IF __ a __ THEN __ b __ c","REBOL":"a _ [ _ b _ ] __ c","Common Lisp":"( _ a __ b _ ) __ c","English":"otherwise __ if __ a __ then __ b __ c","Wolfram":"If _ [ _ a _ , _ b _ , _ c _ ]"},"return,a:And":{"Java,Kal,EngScript,Pawn,Ada,PowerShell,Rust,D,Ceylon,TypeScript,Hack,AutoHotKey,Gosu,Swift,Pike,Objective-C,C,Groovy,Scala,CoffeeScript,Julia,Dart,C#,JavaScript,Go,Haxe,PHP,C++,Perl,Vala,Lua,Python,REBOL,Ruby,Tcl,AWK,bc,Chapel,Perl 6":"return __ a:And","MiniZinc,Z3,Erlang,Maxima,Standard ML,Icon,Oz,CLIPS,newLisp,Hy,Sibilant,LispyScript,ALGOL 68,Clojure,Prolog,Common Lisp,F#,OCaml,Haskell,ML,Racket,Nemerle":"a:And","Visual Basic,Visual Basic .NET,AutoIt":"Return __ a:And","Octave,Fortran":"retval _ = _ a:And","Pascal":"Exit _ ( _ a:And _ )","Picat":"to_return _ = _ a:And","R":"return _ ( _ a:And _ )","Wolfram":"Return _ [ _ a:And _ ]","POP-11":"a:And _ -> _ Result"},"set_var,name:(access_array/var_name),value:expression":{"Z3":"( _ declare_const __ name:Identifier __ value:expression _ )","JavaScript,Perl 6,Wolfram,Chapel,Katahdin,Frink,MiniZinc,Picat,ooc,D,Genie,Janus,Ceylon,IDP,Sympy,Prolog,Processing,Java,EBNF,Boo,Gosu,Pike,Kotlin,Icon,PowerShell,EngScript,Pawn,FreeBASIC,Hack,Nimrod,OpenOffice Basic,Groovy,TypeScript,Rust,CoffeeScript,Fortran,AWK,Go,Swift,Vala,C,Julia,Scala,Cobra,Erlang,AutoIt,Dart,Java,OCaml,Haxe,C#,MATLAB,C++,PHP,Perl,Python,Lua,Ruby,Gambas,Octave,Visual Basic,Visual Basic .NET,bc":"name:(access_array/var_name) _ = _ value:expression"},"print,a:expression":{"Erlang":"io _ : _ fwrite _ ( _ a:expression _ )","C++":"cout _ << _ a:expression","Haxe":"trace _ ( _ a:expression _ )","Prolog":"write _ ( _ a:expression _ )","C#":"Console _ . _ WriteLine _ ( _ a:expression _ )","REBOL,Fortran,Perl,PHP":"print __ a:expression","Ruby":"puts _ ( _ a:expression _ )","Visual Basic .NET":"System _ . _ Console _ . _ WriteLine _ ( _ a:expression _ )","Scala,Julia,Swift":"println _ ( _ a:expression _ )","JavaScript,TypeScript":"console _ . _ log _ ( _ a:expression _ )","Python,Cython,Ceylon,R,Gosu,Dart,Vala,Perl,PHP,Hack,AWK,Lua":"print _ ( _ a:expression _ )","Java":"System _ . _ out _ . _ println _ ( _ a:expression _ )","C":"printf _ ( _ a:expression _ )","Haskell":"( _ putStrLn __ a:expression _ )","Hy,Common Lisp,crosslanguage":"( _ print __ a:expression _ )","Rust":"println!( _ a:expression _ )","Octave":"disp _ ( _ a:expression _ )","Chapel,D":"writeln _ ( _ a:expression _ )","Frink":"print _ [ _ a:expression _ ]","Wolfram":"Print _ [ _ a:expression _ ]"},"series_of_statements,var1:statement,var2:series_of_statements":{"Java,Dafny,Z3,Elm,Bash,Perl 6,Mathematical notation,Katahdin,Frink,MiniZinc,Aldor,COBOL,ooc,Genie,ECLiPSe,nools,Agda,PL/I,REXX,IDP,Falcon,Processing,Sympy,Maxima,Pyke,Elixir,GNU Smalltalk,Seed7,Standard ML,Occam,Boo,Drools,Icon,Mercury,EngScript,Pike,Oz,Kotlin,Pawn,FreeBASIC,Ada,PowerShell,Gosu,Nimrod,Cython,OpenOffice Basic,ALGOL 68,D,Ceylon,Rust,CoffeeScript,ActionScript,TypeScript,Fortran,Octave,ML,AutoHotKey,Delphi,Pascal,F#,Self,Swift,Nemerle,Dart,C,AutoIt,Cobra,Julia,Groovy,Scala,OCaml,Erlang,Gambas,Hack,C++,MATLAB,REBOL,Red,Lua,Go,AWK,Haskell,Perl,Python,JavaScript,C#,PHP,Ruby,R,Haxe,Visual Basic,Visual Basic .NET,Vala,bc":"var1:statement __ var2:series_of_statements","Prolog":"var1:statement _ , _ var2:series_of_statements","Wolfram":"var1:statement _ ; _ var2:series_of_statements"},"comment,var1:[^\\n]+":{"Java,Dafny,Janus,Chapel,Rust,Frink,D,Genie,Ceylon,Hack,Maxima,Kotlin,Delphi,Dart,TypeScript,Swift,Vala,C#,JavaScript,Haxe,Scala,Go,C,C++,Pike,PHP,F#,Nemerle,crosslanguage,Gosu,Groovy\":":"// _ var1:[^\\n]+ _ \\n","OCaml,Standard ML,ML":"(*{ _ var1:[^\\n]+ _ }*)","MATLAB,MiniZinc,Octave,Erlang,Prolog,Picat":"% _ var1:[^\\n]+ _ \\n","REBOL":"comment _ [ _ var1:[^\\n]+ _ ]","Wolfram":"(* _ var1:[^\\n]+ _ *)","Pascal":"{ _ var1:[^\\n]+ _ }","Fortran":"! _ var1:[^\\n]+ _ \\n","Z3":"; _ var1:[^\\n]+ _ \\n","Bash,Perl 6,PowerShell,Seed7,Cobra,Icon,EngScript,Nimrod,CoffeeScript,Julia,AWK,Ruby,Perl,R,Tcl,bc,Python,Cython":"# _ var1:[^\\n]+ _ \\n","Lua,Haskell,Ada":"-- _ var1:[^\\n]+ _ \\n"},"initialize_var,name:var_name,type:type,value:expression":{"Rust":"let __ mut __ name:var_name _ = _ value:expression","Dafny":"var _ name:var_name _ : _ type:type _ := _ value:expression","Z3":"( _ declare-const __ name:var_name __ type:type _ ) _ ( _ assert __ ( _ = __ name:var_name __ value:expression _ ) _ )","F#":"let __ mutable __ name:var_name _ = _ value:expression","Common Lisp":"( _ setf __ name:var_name __ value:expression _ )","MiniZinc":"type:type _ : _ name:var_name _ = _ value:expression","Python,Ruby,Haskell,Erlang,Prolog,Julia,Picat,Octave":"name:var_name _ = _ value:expression","JavaScript,PHP,Hack,Swift":"var __ name:var_name _ = _ value:expression","Lua":"local __ name:var_name _ = _ value:expression","Janus":"local __ type:type __ name:var_name _ = _ value:expression","Perl":"my __ name:var_name _ = _ value:expression","C,Java,C#,C++,D":"type:type __ name:var_name _ = _ value:expression","REBOL":"name:var_name _ : _ value:expression","Visual Basic,Visual Basic .NET,OpenOffice Basic":"Dim __ name:var_name __ As __ type:type _ = _ value:expression","R":"name:var_name _ <- _ value:expression","Fortran":"type:type _ :: _ name:var_name _ = _ value:expression","Chapel,Haxe,Scala,TypeScript":"var __ name:var_name _ : _ type:type _ = _ value:expression"},"typeless_initialize_var,name:var_name,value:expression":{"C++,D":"auto __ name:var_name _ = _ value:expression","C#,Dafny,JavaScript,Haxe,PHP,TypeScript,Dart,Swift":"var __ name:var_name _ = _ value:expression","Lua":"local __ name:var_name _ = _ value:expression","Python,Ruby,Haskell,Erlang,Prolog,Julia,Picat,Octave,PHP":"name:var_name _ = _ value:expression","C":"__auto_type __ name:var_name _ = _ value:expression","Java":"Object __ name:var_name _ = _ value:expression","C#,JavaScript,Haxe,Swift":"var __ name:var_name _ = _ value:expression","Perl":"my __ name:var_name _ = _ value:expression"},"int,t1:type":{"Hack,Dafny,Janus,Chapel,MiniZinc,EngScript,Cython,ALGOL 68,D,Octave,Tcl,crosslanguage,ML,AWK,Julia,Gosu,OCaml,F#,Pike,Objective-C,Go,Cobra,Dart,Groovy,Python,Hy,Java,C#,C,C++,Vala,Nemerle,crosslanguage":"int","PHP,Prolog,Common Lisp,Picat":"integer","Fortran":"INTEGER","REBOL":"integer!","Ceylon,Gambas,OpenOffice Basic,Pascal,Erlang,Delphi,Visual Basic,Visual Basic .NET":"Integer","Haxe,ooc,Swift,Scala,Perl 6,Z3":"Int","JavaScript,TypeScript,CoffeeScript,Lua,Perl":"number","Haskell":"Num","Ruby":"fixnum"},"char":{"Java,C":"char"},"string":{"Java,Ceylon,Gambas,Dart,Gosu,Groovy,Scala,Pascal,Swift,Ruby,Haxe,Haskell,Visual Basic,Visual Basic .NET":"String","Vala,D,crosslanguage,Chapel,Prolog,MiniZinc,Genie,Hack,Nimrod,ALGOL 68,TypeScript,CoffeeScript,Octave,Tcl,AWK,Julia,C#,F#,Perl,Lua,JavaScript,Go,PHP,C++,Nemerle,Erlang":"string","C":"char*"},"void":{"EngScript,PHP,Hy,Cython,Go,Pike,Objective-C,Java,C,C++,C#,Vala,TypeScript,D,JavaScript,Lua":"void","Haxe":"Void","Scala":"Unit"},"boolean":{"TypeScript,Python,Hy,Java,JavaScript,Lua,Perl":"boolean","C++,Dafny,Chapel,C,crosslanguage,Rust,MiniZinc,EngScript,Dart,D,Vala,crosslanguage,Go,Cobra,C#,F#,PHP,Hack":"bool","Haxe,Haskell,Swift,Julia,Perl 6,Z3":"Bool","Fortran":"LOGICAL"},"if,c:elif_or_else,b:series_of_statements,a:And":{"Erlang":"if __ a:And _ -> _ b:series_of_statements __ c:elif_or_else __ end","Fortran":"IF __ a:And __ THEN __ b:series_of_statements __ c:elif_or_else __ END __ IF","REBOL":"case _ [ _ a:And _ [ _ b:series_of_statements _ ] _ c:elif_or_else _ ]","Julia":"if __ a:And __ b:series_of_statements __ c:elif_or_else __ end","Lua,Ruby,Picat":"if __ a:And __ then __ b:series_of_statements __ c:elif_or_else __ end","Octave":"if __ a:And __ b:series_of_statements __ c:elif_or_else __ endif","Haskell,Pascal,Maxima":"if __ a:And __ then __ b:series_of_statements __ c:elif_or_else","Java,Perl 6,Chapel,Katahdin,Pawn,PowerShell,D,Ceylon,TypeScript,ActionScript,Hack,AutoHotKey,Gosu,Nemerle,Swift,Nemerle,Pike,Groovy,Scala,Dart,JavaScript,C#,C,C++,Perl,Haxe,PHP,R,AWK,Vala,bc,Squirrel":"if _ ( _ a:And _ ) _ { _ b:series_of_statements _ } _ c:elif_or_else","Rust,Go":"if __ a:And _ { _ b:series_of_statements _ } _ c:elif_or_else","Visual Basic,Visual Basic .NET":"If __ a:And __ b:series_of_statements __ c:elif_or_else","CLIPS":"( _ if __ a:And __ then __ b:series_of_statements __ c:elif_or_else _ )","Z3":"( _ ite __ a:And __ b:series_of_statements __ c:elif_or_else _ )","MiniZinc":"if __ a:And __ then __ b:series_of_statements __ c:elif_or_else __ endif","Python,Cython":"if __ a:And _ : _ "}," #unindent ":{}," c":{"Prolog":"( a -> b ; c )","Visual Basic":"If __ a __ Then __ b __ c __ End __ If","Common Lisp":"( cond ( a __ b ) __ c )","Wolfram":"If [ a , b , c ]"},"foreach,array:expression,var_name:var_name,typeInArray:type,body:series_of_statements":{"JavaScript":"array:expression _ . _ forEach _ ( _ function _ ( _ var_name:var_name _ ) _ { _ body:series_of_statements _  _ } _ ) _ ;","MiniZinc":"forall _ ( _ var_name:var_name _ in _ array:expression _ ) _ ( _ body:series_of_statements _ ) _ ;","PHP,Hack":"foreach _ ( _ array:expression __ as __ var_name:var_name _ ) _ { _ body:series_of_statements _ }","Java":"for _ ( _ typeInArray:type __ var_name:var_name _ : _ array:expression _ ) _ { _ body:series_of_statements _ }","C#,Vala":"foreach _ ( _ typeInArray:type __ var_name:var_name __ in __ array:expression _ ) _ { _ body:series_of_statements _ }","Lua":"for __ var_name:var_name __ in __ array:expression __ do __ body:series_of_statements __ end","Python,Cython":"for __ var_name:var_name __ in __ array:expression _ : _ \\n _ #indent _ \\n _ body:series_of_statements _ \\n _ #unindent","Julia":"for __ var_name:var_name __ in __ array:expression __ body:series_of_statements __ end","Chapel,Swift":"for __ var_name:var_name __ in __ array:expression _ { _ body:series_of_statements _ }","Pawn":"foreach _ ( _ new __ var_name:var_name _ : _ array:expression _ ) _ { _ body:series_of_statements _ }","Picat":"foreach _ ( _ var_name:var_name __ in __ array:expression _ ) _ ( _ body:series_of_statements _ ) _ end","AWK,Ceylon":"for __ ( __ var_name:var_name __ in __ array:expression _ ) _ { _ body:series_of_statements _ }","Go":"for __ var_name:var_name _ := _ range __ array:expression _ { _ body:series_of_statements _ }","Haxe,Groovy":"for _ ( _ var_name:var_name __ in __ array:expression _ ) _ { _ body:series_of_statements _ }","Ruby":"array:expression _ . _ each __ do _ | _ var_name:var_name _ | __ body:series_of_statements __ end","Nemerle,PowerShell":"foreach _ ( _ var_name:var_name __ in __ array:expression _ ) _ { _ body:series_of_statements _ }","Scala":"for _ ( _ var_name:var_name _ -> _ array:expression _ ) _ { _ body:series_of_statements _ }","REBOL":"foreach __ var_name:var_name __ array:expression _ [ _ body:series_of_statements _ ]","C++":"for _ ( _ typeInArray:type __ & __ var_name:var_name _ : _ array:expression _ ){ _ body:series_of_statements _ }","Perl":"foreach __ var_name:var_name _ ( _ array:expression _ ) _ { _ body:series_of_statements _ }","D":"foreach _ ( _ var_name:var_name _ , _ array:expression _ ) _ { _ body:series_of_statements _ }","Gambas":"FOR __ EACH __ var_name:var_name __ IN __ array:expression __ body:series_of_statements __ NEXT","Visual Basic .NET":"For __ Each __ var_name:var_name __ As __ typeInArray:type __ In __ array:expression __ body:series_of_statements __ Next"},"compare_ints,var1:Add,var2:Add":{"Lua,Dafny,Wolfram,D,Rust,R,MiniZinc,Frink,Picat,Pike,Pawn,Processing,C++,Ceylon,CoffeeScript,Octave,Swift,AWK,Julia,Perl,Groovy,Erlang,Haxe,Scala,Java,Vala,Dart,Python,C#,C,Go,Haskell,Ruby":"var1:Add _ == _ var2:Add","JavaScript,PHP,TypeScript,Hack":"var1:Add _ === _ var2:Add","Z3":"( _ = __ var1:Add __ var2:Add _ )","Fortran":"var1:Add _ .eq. _ var2:Add","Maxima,REBOL,F#,AutoIt,Pascal,Delphi,Visual Basic,Visual Basic .NET":"var1:Add _ = _ var2:Add"},"class,name:Identifier,body:series_of_statements":{"C,Z3,Lua":"body:series_of_statements","Java,C#":"public __ class __ name:Identifier _ { _ body:series_of_statements _ }","C++":"class __ name:Identifier _ { _ body:series_of_statements _ } _ ;","JavaScript,Hack,PHP,Scala,Haxe,Chapel,Swift,D,TypeScript,Dart,Perl 6":"class __ name:Identifier _ { _ body:series_of_statements _ }","Ruby":"class __ name:Identifier __ body:series_of_statements __ end","R":"_"},"function_parameter,type:type,name:var_name":{"crosslanguage":"( _ parameter __ type:type __ name:var_name _ )","C#,Java,Ceylon,ALGOL 68,Groovy,D,C++,Pawn,Pike,Vala,C,Janus":"type:type __ name:var_name","Haxe,Dafny,Chapel,Pascal,Rust,Genie,Hack,Nimrod,TypeScript,Gosu,Delphi,Nemerle,Scala,Swift":"name:var_name _ : _ type:type","Go":"name:var_name __ type:type","MiniZinc":"var __ type:type _ : _ name:var_name","Haskell,Scheme,Python,Mathematical notation,LispyScript,CLIPS,Clojure,F#,ML,Racket,OCaml,Tcl,Common Lisp,newLisp,Python,Cython,Frink,Picat,IDP,PowerShell,Maxima,Icon,CoffeeScript,Fortran,Octave,AutoHotKey,Julia,Prolog,AWK,Kotlin,Dart,JavaScript,Nemerle,Erlang,PHP,AutoIt,Lua,Ruby,R,bc":"name:var_name","REBOL":"type:type _ [ _ name:var_name _ ]","OpenOffice Basic,Gambas":"name:var_name __ As __ type:type","Visual Basic,Visual Basic .NET":"name:var_name __ as __ type:type","Perl":"name:var_name _ = _ push;","Wolfram":"name:var_name _","Z3":"( _ name:var_name __ type:type _ )"},"switch,a:expression,b:case_statements,c:default":{"crosslanguage":"( _ switch __ a:expression __ b:case_statements __ c:default _ )","Rust":"match __ a:expression _ { _ b:case_statements __ c:default _ }","Elixir":"case __ a:expression __ do __ b:case_statements __ c:default __ end","Scala":"a:expression __ match _ { _ b:case_statements __ c:default _ }","Octave":"switch _ ( _ a:expression _ ) _ b:case_statements __ endswitch","Java,D,PowerShell,Nemerle,D,TypeScript,Hack,Swift,Groovy,Dart,AWK,C#,JavaScript,C++,PHP,C,Go,Haxe,Vala":"switch _ ( _ a:expression _ ) _ { _ b:case_statements __ c:default _ }","Ruby":"case __ a:expression __ b:case_statements __ c:default __ end","Haskell,Erlang":"case __ a:expression __ of __ b:case_statements __ c:default __ end","Delphi,Pascal":"Case __ a:expression __ of __ b:case_statements __ c:default __ end;","CLIPS":"( _ switch __ a:expression __ b:case_statements __ c:default _ )","Visual Basic .NET,Visual Basic":"Select __ Case __ a:expression __ b:case_statements __ c:default __ End __ Select","REBOL":"switch/default _ [ _ a:expression __ b:case_statements _ ]","Fortran":"SELECT __ CASE _ ( _ a:expression _ ) __ b:case_statements __ c:default __ END __ SELECT","Clojure":"( _ case __ a:expression __ b:case_statements __ c:default _ )","Chapel":"select _ ( _ a:expression _ ) _ { _ b:case_statements _ c:default _ }","Wolfram":"Switch _ [ _ a:expression _ , _ b:case_statements _ , _ c:default _ ]","Python,Lua":""},"case,a:expression,b:series_of_statements":{"Lua,Python":"_","crosslanguage":"( _ case __ a:expression __ b:series_of_statements _ )","JavaScript,D,Java,C#,C,C++,TypeScript,Dart,PHP,Hack":"case __ a:expression _ : _ b:series_of_statements _ break _ ;","Go,Haxe,Swift":"case __ a:expression _ : _ b:series_of_statements","Fortran":"CASE _ ( _ a:expression _ ) __ b:series_of_statements","Rust":"a:expression _ => _ { _ b:series_of_statements _ }","Ruby":"when __ a:expression __ b:series_of_statements","Haskell,Erlang,Elixir":"a:expression __ -> _ \\n _ b:series_of_statements","CLIPS":"( _ case __ a:expression __ then __ b:series_of_statements _ )","Scala":"case __ a:expression _ => _ b:series_of_statements","Visual Basic .NET":"Case __ a:expression __ b:series_of_statements","REBOL":"a:expression _ [ _ b:series_of_statements _ ]","Octave":"case __ a:expression __ b:series_of_statements","Clojure":"( _ a:expression __ b:series_of_statements _ )","Pascal,Delphi:":"a:expression _ : _ b:series_of_statements","Chapel":"when __ a:expression _ { _ b:series_of_statements _ }","Wolfram":"a:expression _ , _ b:series_of_statements"},"access_array,a:Identifier,b:array_access_list":{"Python,Lua,C#,Julia,D,Swift,Julia,Janus,MiniZinc,Picat,Nimrod,AutoIt,Cython,CoffeeScript,Dart,TypeScript,AWK,Vala,Perl,Java,JavaScript,Ruby,Go,C++,PHP,Haxe,C":"a:Identifier _ [ _ b:array_access_list _ ]","Scala,Octave,Fortran,Visual Basic, Visual Basic .NET":"a:Identifier _ ( _ b:array_access_list _ )","Haskell":"( _ a:Identifier _ !! _ b:array_access_list _ )","Frink":"a:Identifier _ @ _ b:array_access_list"},"array_access_list,var1:expression,var2:array_access_list,separator:array_access_separator":{"Java,C#,Lua,C++,Python,JavaScript,C,PHP,Ruby,Scala,Haxe,Fortran,TypeScript,MiniZinc,Dart":"var1:expression _ separator:array_access_separator _ var2:array_access_list"},"array_access_separator":{"C#,MiniZinc,Fortran,Julia,Visual Basic,Visual Basic .NET":",","Python,D,Lua,Picat,Janus,Nimrod,AutoIt,Cython,CoffeeScript,Dart,TypeScript,AWK,Vala,Perl,Java,JavaScript,Ruby,Go,C++,PHP,Haxe,C":"][","Haskell":"!!","Scala":")(","Frink":"@"},"default,a:series_of_statements":{"Python,Cython,Lua,MiniZinc,Prolog,Lua":"_","Fortran":"CASE __ DEFAULT __ a:series_of_statements","crosslanguage":"( _ default __ a:series_of_statements _ )","JavaScript,D,C,Java,C#,C++,TypeScript,Dart,PHP,Haxe,Hack,Go,Swift":"default _ : _ a:series_of_statements","Ruby,Pascal,Delphi":"else __ a:series_of_statements","Haskell":"_ _ -> _ \\n __ a:series_of_statements","Rust":"_ _ => _ a:series_of_statements","CLIPS":"( _ default __ a:series_of_statements _ )","Scala":"case __ _ => _ a:series_of_statements","Visual Basic .NET":"Case __ Else __ a:series_of_statements","REBOL":"][ a:series_of_statements","Octave":"otherwise __ a:series_of_statements","Chapel":"otherwise _ { _ a:series_of_statements _ }","Clojure":"a:series_of_statements","Wolfram":"_ _ , _ a:series_of_statements"},"":{},"import":{"JavaScript":"import __ * __ as __ a:Identifier __ from __ ' _ a:Identifier _ ' _ ;","crosslanguage":"(import __ a:Identifier _ )","Fortran":"USE __ a:Identifier","Visual Basic .NET":"Imports __ a:Identifier","REBOL":"a:Identifier _ : __ load __ % _ a:Identifier _ .r","Prolog":":- _ consult( _ a:Identifier _ ) _ .","MiniZinc":"include __ ' _ a:Identifier _ .mzn' _ ;","PHP":"include __ ' _ a:Identifier _ .php' _ ;","C,C++":"#include __ \\\" _ a:Identifier _ .h\\\"","C#":"using __ a:Identifier _ ;","Julia":"using __ a:Identifier","Haskell,EngScript,Python,Scala,Go,Groovy,Picat,Elm,Swift":"import __ a:Identifier","Java,D,Haxe":"import __ a:Identifier _ ;","Ruby,Lua":"require __ ' _ a:Identifier _ '","Perl,Perl 6,Chapel":"\"use _ a:Identifier _ ;\""},"dictionary":{"Python,C,Dart,JavaScript,TypeScript,Lua,Ruby,Julia,C++,EngScript,Visual Basic .NET":"{ _ a:key_value_list _ }","Java":"new __ HashMap _ < _ input:type _ , _ output:type _ > _ ( _ ) _ { _ { _ a:key_value_list _ } _ }","C#":"new __ Dictionary _ < _ input:type _ , _ output:type _ > _ { _ a:key_value_list _ }","Perl":"( _ a:key_value_list _ )","PHP":"array( _ a:key_value_list _ )","Haxe,Frink,Swift,Elixir,D,Wolfram":"[ _ a:key_value_list _ ]","Scala":"Map( _ a:key_value_list _ )","Octave":"struct _ ( _ a:key_value_list _ )","REBOL":"to-hash _ [ _ a:key_value_list _ ]"},"var_name":{"PHP,Perl,Bash,Tcl,AutoIt,Perl 6,Puppet,Hack,AWK,PowerShell":"$ name:Identifier","EngScript,Wolfram,crosslanguage,Erlang,English,Mathematical notation,Pascal,Picat,Prolog,Katahdin,TypeScript,JavaScript,Frink,MiniZinc,Aldor,Flora-2,F-logic,D,Genie,ooc,Janus,Chapel,ABAP,COBOL,PicoLisp,REXX,PL/I,Falcon,IDP,Processing,Sympy,Maxima,Z3,Shen,Ceylon,nools,Pyke,Self,GNU Smalltalk,Elixir,LispyScript,Standard ML,Nimrod,Occam,ANTLR,Boo,Seed7,pyparsing,EBNF,Agda,Icon,Octave,Cobra,Kotlin,C++,Drools,Oz,Pike,Delphi,Racket,ML,Java,Pawn,Fortran,Ada,FreeBASIC,MATLAB,newLisp,Hy,OCaml,Julia,AutoIt,C#,Gosu,AutoHotKey,Groovy,Rust,R,Swift,Vala,Go,Scala,Nemerle,Visual Basic,Visual Basic .NET,Clojure,Haxe,CoffeeScript,Dart,JavaScript,C#,Python,Ruby,Haskell,C,Lua,Gambas,Common Lisp,Scheme,REBOL,F#":"name:Identifier","CLIPS":"? name:Identifier"},"default_parameter":{"Python,AutoHotKey,Julia,Nemerle,PHP":"name:var_name _ = _ value:expression","C#,D,Groovy":"type:type __ name:var_name _ = _ value:expression","Ruby":"name:var_name _ : _ value:expression","Scala,Swift,Python":"name:var_name _ : _ type:type _ = _ value:expression","Haxe":"? _ name:var_name _ = _ value:expression","Visual Basic .NET":"Optional __ name:var_name __ As __ type:type _ = _ value:expression","Java,JavaScript,Lua,C":"_"},"_initializer_list":{"Lua,Java,C++,JavaScript,C#,Perl,Fortran,C,PHP,Haskell,Haxe,Python,Ruby,TypeScript,MiniZinc":"var1:expression _ var2:initializer_list_separator _ var3:_initializer_list"},"initialize_empty_var":{"Java,C#,C++,C,D,Janus,Fortran":"type:type __ name:var_name","JavaScript,Haxe":"var __ name:var_name","TypeScript":"var __ name:var_name _ : _ type:type","PHP":"name:var_name","MiniZinc":"type:type _ : _ name:var_name","Z3":"( _ declare-const __ name:var_name __ type:type _ )","Lua":"local __ name:var_name"},"anonymous_function":{"Ruby":"Proc _ . _ new _ { _ | _ params:function_parameters _ | _ b:series_of_statements _ }","JavaScript,TypeScript,Haxe,R,PHP":"function _ ( _ params:function_parameters _ ) _ { _ b:series_of_statements _ }","Haskell":"(\\ _ params:function_parameters _ -> _ b:series_of_statements _ )","Frink":"{ _ | _ params:function_parameters _ | _ body _ }","Erlang":"fun _ ( _ params:function_parameters _ ) __ b:series_of_statements __ end","Lua":"function _ ( _ params:function_parameters _ ) __ b:series_of_statements __ end","Swift":"{ _ ( _ params:function_parameters _ ) _ -> _ return_type:type __ in __ b:series_of_statements _ }","Go":"func _ ( _ params:function_parameters _ ) _ return_type:type _ { _ b:series_of_statements _ }","Dart":"( _ ( _ params:function_parameters _ ) _ => _ b:series_of_statements _ )","C++":"[ _ = _ ] _ ( _ params:function_parameters _ ) _ -> _ int _ { _ b:series_of_statements _ }","Java":"( _ params:function_parameters _ ) _ -> _ { _ b:series_of_statements _ }","Haxe":"( _ name __ params:function_parameters _ -> _ b:series_of_statements _ )","Python":"( _ lambda __ params:function_parameters _ : _ b:series_of_statements _ )","Delphi":"function _ ( _ params:function_parameters _ ) _ begin __ b:series_of_statements __ end _ ;","D":"( _ params:function_parameters _ ) _ { _ body _ }"},"strlen":{"crosslanguage":"( _ strlen __ a:parentheses_expression __ b _ )","Python":"len _ ( _ a:parentheses_expression _ )","R":"nchar _ ( _ a:parentheses_expression _ )","Erlang":"string:len _ ( _ a:parentheses_expression _ )","Visual Basic,Visual Basic .NET,Gambas":"Len _ ( _ a:parentheses_expression _ )","JavaScript,TypeScript,Ruby,Scala,Gosu,Picat,Haxe,OCaml,D":"a:parentheses_expression _ . _ length","REBOL":"length? __ a:parentheses_expression","Java,C++,Kotlin":"a:parentheses_expression _ . _ length _ ( _ )","PHP,C,Pawn,Hack":"strlen _ ( _ a:parentheses_expression _ )","MiniZinc,Julia":"length _ ( _ a:parentheses_expression _ )","Haskell":"( _ length _ a:parentheses_expression _ )","C#":"a:parentheses_expression _ . _ Length","Swift":"countElements _ ( _ a:parentheses_expression _ )","AutoIt":"StringLen _ ( _ a:parentheses_expression _ )","Common Lisp":"( _ length __ a:parentheses_expression _ )","Racket,Scheme":"( _ string-length __ a:parentheses_expression _ )","Perl,Octave":"length _ ( _ a:parentheses_expression _ )","Nemerle":"a:parentheses_expression _ . _ Length","Fortran":"LEN _ ( _ a:parentheses_expression _ )","Lua":"string _ . _ len _ ( _ a:parentheses_expression _ )","Wolfram":"StringLength _ [ _ a:parentheses_expression _ ]"},"not_equal":{"Lua":"a:Add _ ~= _ b:Add","JavaScript,PHP,TypeScript":"a:Add _ !== _ b:Add","Java,Wolfram,C,C++,D,C#,Julia,Perl,Ruby,Haxe,Python,MiniZinc":"a:Add _ != _ b:Add","English":"a:Add __ does __ not __ equal __ b:Add","Prolog":"not _ ( _ a:Add _ == _ b:Add _ )","Mathematical notation":"a:Add _ ≠ _ b:Add","Janus":"a:Add _ # _ b:Add","Fortran":"a:Add _ .NE. _ b:Add","Z3":"( _ not _ ( _ = __ a:Add __ b:Add _ ) _ )"},"key_value_list":{"Lua,JavaScript,Java,C#,C++,C,Ruby,PHP,Python,Perl,Fortran,Haxe,TypeScript":"var1:key_value _ var2:key_value_separator _ var3:key_value_list"},"Or":{"JavaScript,Wolfram,Chapel,Elixir,Frink,ooc,Picat,Janus,Processing,Pike,nools,Pawn,MATLAB,Hack,Gosu,Rust,AutoIt,AutoHotKey,TypeScript,Ceylon,Groovy,D,Octave,AWK,Julia,Scala,F#,Swift,Nemerle,Vala,Go,Perl,Java,Haskell,Haxe,C,C++,C#,Dart,R":"var1:greater_than _ || _ var2:Or","Python":"var1:greater_than __ or __ var2:Or","Fortran":"var1:greater_than __ .OR. __ var2:Or","Z3":"( _ or __ var1:greater_than __ var2:Or _ )"},"And":{"Java,JavaScript,C#":"a:Or _ && _ b:And","Python":"a:Or __ and __ b:And","MiniZinc":"a:Or _ /\\ _ b:And","Fortran":"a:Or _ .AND. _ b:And","Z3":"( _ and __ a:Or __ b:And _ )"},"this":{"Ruby,CoffeeScript":"@ a:Identifier","Java,EngScript,Dart,Groovy,TypeScript,JavaScript,C#,C++,Haxe,Chapel":"this _ . _ a:Identifier","Python":"self _ . _ a:Identifier","PHP,Hack":"$this _ -> _ a:Identifier","Swift,Scala":"a:Identifier","REBOL":"self _ / _ a:Identifier"},"array_length":{"crosslanguage":"( _ array_length __ a:parentheses_expression _ )","Lua":"# a:parentheses_expression","Python,Cython,Go":"len _ ( _ a:parentheses_expression _ )","Java,Picat,Scala,D,CoffeeScript,TypeScript,Dart,Vala,JavaScript,Ruby,Haxe,Cobra":"a:parentheses_expression _ . _ length","C#,Visual Basic,Visual Basic .NET,PowerShell":"a:parentheses_expression _ . _ Length","MiniZinc,Julia,R":"length _ ( _ a:parentheses_expression _ )","Common Lisp":"( _ list-length __ a:parentheses_expression _ )","PHP":"count _ ( _ a:parentheses_expression _ )","Rust":"a:parentheses_expression _ . _ len _ ( _ )","Emacs Lisp,Scheme,Racket,Haskell":"( _ length __ a:parentheses_expression _ )","C++,Groovy":"a:parentheses_expression _ . _ size _ ( _ )","C":"sizeof _ ( _ a:parentheses_expression _ ) _ / _ sizeof _ ( _ a:parentheses_expression _ [ _ 0 _ ] _ )","Perl":"scalar _ ( _ a:parentheses_expression _ )","REBOL":"length? __ a:parentheses_expression","Swift":"a:parentheses_expression _ . _ count","Clojure":"( _ count __ array _ )","Hy":"( _ len __ a:parentheses_expression _ )","Octave":"length _ ( _ a:parentheses_expression _ )","Fortran,Janus":"size _ ( _ a:parentheses_expression _ )","Wolfram":"Length _ [ _ a:parentheses_expression _ ]"},"initializer_list":{"Java,Picat,C#,Go,Lua,C++,C,Visual Basic .NET,Visual Basic,Wolfram":"{ _ a:_initializer_list _ }","Python,D,Frink,REBOL,Octave,Julia,Prolog,MiniZinc,EngScript,Cython,Groovy,Dart,TypeScript,CoffeeScript,Nemerle,JavaScript,Haxe,Haskell,Ruby,REBOL,Polish notation,Swift":"[ _ a:_initializer_list _ ]","PHP":"array _ ( _ a:_initializer_list _ )","Scala":"Array _ ( _ a:_initializer_list _ )","Perl,Chapel":"( _ a:_initializer_list _ )","Fortran":"(/ _ a:_initializer_list _ /)"},"key_value":{"Groovy,D,Dart,JavaScript,CoffeeScript,Swift,Elixir,Swift":"a:Identifier _ : _ b:expression","Python":"' _ a:Identifier _ ' _ : _ b:expression","Ruby,PHP,Haxe,Perl,Julia":"a:Identifier _ => _ b:expression","REBOL":"a:Identifier __ b:expression","Lua":"a:Identifier _ = _ b:expression","C++,C,C#,Visual Basic .NET":"{ _ a:Identifier _ , _ b:expression _ }","Scala,Wolfram":"a:Identifier _ -> _ b:expression","Octave":"a:Identifier _ , _ b:expression","Frink":"[ _ a:Identifier _ , _ b:expression _ ]","Java":"put _ ( _ a:Identifier _ , _ b:expression _ )"},"strcmp":{"crosslanguage":"( _ strcmp __ a:parentheses_expression __ b:parentheses_expression _ )","Visual Basic,Visual Basic .NET,F#,Prolog":"a:parentheses_expression _ = _ b:parentheses_expression","Python,Chapel,Julia,Fortran,MiniZinc,Picat,Go,Vala,AutoIt,REBOL,Ceylon,Groovy,Scala,CoffeeScript,AWK,Ruby,Haskell,Haxe,Dart,Lua,Swift":"a:parentheses_expression _ == _ b:parentheses_expression","JavaScript,PHP,TypeScript,Hack":"a:parentheses_expression _ === _ b:parentheses_expression","C,Octave":"strcmp _ ( _ a:parentheses_expression _ , _ b:parentheses_expression _ ) _ == _ 0","C++":"a:parentheses_expression _ . _ compare _ ( _ b:parentheses_expression _ )","C#":"a:parentheses_expression _ . _ Equals _ ( _ b:parentheses_expression _ )","Java":"a:parentheses_expression _ . _ equals _ ( _ b:parentheses_expression _ )","Common Lisp":"( _ equal __ a:parentheses_expression __ b:parentheses_expression _ )","CLIPS":"( _ str-compare __ a:parentheses_expression __ b:parentheses_expression _ )","Hy":"( _ = __ a:parentheses_expression __ b:parentheses_expression _ )","Perl":"a:parentheses_expression __ eq __ b:parentheses_expression","Erlang":"string:equal _ ( _ a:parentheses_expression _ , _ b:parentheses_expression _ )"},"sqrt":{"Java,JavaScript,TypeScript,Ruby,Haxe":"Math _ . _ sqrt _ ( _ x:expression _ )","C#,Visual Basic .NET":"Math _ . _ Sqrt _ ( _ x:expression _ )","C,Perl,PHP,Perl 6,Maxima,MiniZinc,Prolog,Octave,D,Haskell":"sqrt _ ( _ x:expression _ )","Lua,Python":"math _ . _ sqrt _ ( _ x:expression _ )","REBOL":"square-root __ x:expression","Scala":"scala _ . _ math _ . _ sqrt _ ( _ x:expression _ )","C++":"std _ :: _ sqrt _ ( _ x:expression _ )","Erlang":"math:sqrt _ ( _ x:expression _ )","Wolfram":"Sqrt _ [ _ x:expression _ ]"},"parentheses_expression":{"Pascal,Katahdin,Frink,MiniZinc,Picat,Java,ECLiPSe,D,ooc,Genie,Janus,PL/I,IDP,Processing,Maxima,Seed7,Self,GNU Smalltalk,Drools,Standard ML,Oz,Cobra,Pike,Prolog,EngScript,Kotlin,Pawn,FreeBASIC,MATLAB,Ada,FreeBASIC,Gosu,Gambas,Nimrod,AutoIt,ALGOL 68,Ceylon,Groovy,Rust,CoffeeScript,TypeScript,Fortran,Octave,ML,Hack,AutoHotKey,Scala,Delphi,Tcl,Swift,Vala,C,F#,C++,Dart,JavaScript,REBOL,Julia,Erlang,OCaml,crosslanguage,C#,Nemerle,AWK,Java,Lua,Perl,Haxe,Python,PHP,Haskell,Go,Ruby,R,bc,Visual Basic,Visual Basic .NET":"( _ a:expression _ )","Racket,Z3,CLIPS,GNU Smalltalk,newLisp,Hy,Common Lisp,Emacs Lisp,Clojure,Sibilant,LispyScript":"a:expression"},"join":{"C#":"String _ . _ Join _ ( _ separator:parentheses_expression _ , _ array:parentheses_expression _ )","PHP":"implode _ ( _ separator:parentheses_expression _ , _ array:parentheses_expression _ )","Perl":"join _ ( _ separator:parentheses_expression _ , _ array:parentheses_expression _ )","D":"join _ ( _ array:parentheses_expression _ , _ separator:parentheses_expression _ )","Lua":"table _ . _ concat _ ( _ array:parentheses_expression _ , _ separator:parentheses_expression _ )","Go":"Strings _ . _ join _ ( _ array:parentheses_expression _ , _ separator:parentheses_expression _ )","JavaScript,Haxe,CoffeeScript,Ruby,Groovy,Java,TypeScript":"array:parentheses_expression _ . _ join _ ( _ separator:parentheses_expression _ )","Python":"separator:parentheses_expression _ . _ join _ ( _ array:parentheses_expression _ )"},"plus_equals":{"Janus,TypeScript,Python,Lua,Java,C,C++,C#,JavaScript,Haxe,PHP,Chapel,Perl":"a:(access_array/dot_notation/Identifier) _ += _ b:expression","Ruby,Picat":"a:(access_array/dot_notation/Identifier) _ = _ a:(access_array/dot_notation/Identifier) _ + _ b:expression"},"minus_equals":{"Janus,TypeScript,Python,Lua,Java,C,C++,C#,JavaScript,PHP,Haxe,Hack,Fortran":"a:(dot_notation/access_array/Identifier) _ -= _ b:expression","Ruby":"a:(dot_notation/access_array/Identifier) _ = _ a:(dot_notation/access_array/Identifier) _ - _ b:expression"},"concatenate_string":{"Common Lisp":"( _ concatenate __ 'string __ a:Add __ b:concatenate_string _ )","C,Z3,Java,Chapel,Frink,FreeBASIC,Nemerle,D,Cython,Ceylon,CoffeeScript,TypeScript,Dart,Gosu,Groovy,Scala,Swift,F#,Python,JavaScript,C#,Haxe,Ruby,C++,Vala":"a:Add _ + _ b:concatenate_string","Lua,EngScript":"a:Add _ .. _ b:concatenate_string","Fortran":"a:Add _ // _ b:concatenate_string","PHP,AutoHotKey,Hack,Perl":"a:Add _ . _ b:concatenate_string","OCaml":"a:Add _ ^ _ b:concatenate_string","REBOL":"append __ a:Add __ b:concatenate_string","Haskell,MiniZinc,Picat,Elm":"a:Add _ ++ _ b:concatenate_string","CLIPS":"( _ str-cat _ a:Add _ b:concatenate_string _ )","Clojure":"( _ str _ a:Add _ b:concatenate_string _ )","Erlang":"string:concat _ ( _ a:Add _ , _ b:concatenate_string _ )","Julia":"string _ ( _ a:Add _ , _ b:concatenate_string _ )","Octave":"strcat _ ( _ a:Add _ , _ b:concatenate_string _ )","Racket":"( _ string-append _ a:Add _ b:concatenate_string _ )","Delphi":"Concat _ ( _ a:Add _ , _ b:concatenate_string _ )","Visual Basic,Gambas,Nimrod,AutoIt,Visual Basic .NET,OpenOffice Basic":"a:Add _ & _ b:concatenate_string","Elixir,Wolfram":"a:Add _ <> _ b:concatenate_string","Perl 6":"a:Add _ ~ _ b:concatenate_string"},"split":{"JavaScript,CoffeeScript,Java,Python,Dart,Scala,Groovy,Haxe,Ruby,Rust,TypeScript":"aString:parentheses_expression _ . _ split _ ( _ separator:parentheses_expression _ )","Lua":"string _ . _ gmatch _ ( _ aString:parentheses_expression _ , _ separator:parentheses_expression _ )","PHP":"explode _ ( _ separator:parentheses_expression _ , _ aString:parentheses_expression _ )","Perl,Processing":"split _ ( _ separator:parentheses_expression _ , _ aString:parentheses_expression _ )","REBOL":"split __ aString:parentheses_expression __ separator:parentheses_expression","C#":"aString:parentheses_expression _ . _ Split _ ( _ new _ string[] _ { _ separator:parentheses_expression _ } _ , _ StringSplitOptions _ . _ None _ )","Picat,D":"split _ ( _ aString:parentheses_expression _ , _ separator:parentheses_expression _ )","Haskell":"( _ splitOn __ aString:parentheses_expression __ separator:parentheses_expression _ )","Wolfram":"StringSplit _ [ _ aString:parentheses_expression _ , _ separator:parentheses_expression _ ]"},"pow":{"Lua":"math _ . _ pow _ ( _ a:expression _ , _ b:expression _ )","Scala":"scala.math.pow _ ( _ a:expression _ , _ b:expression _ )","C#,Visual Basic .NET":"Math _ . _ Pow _ ( _ a:expression _ , _ b:expression _ )","JavaScript,Java,TypeScript,Haxe":"Math _ . _ pow _ ( _ a:expression _ , _ b:expression _ )","Python,Chapel,Haskell,COBOL,Picat,ooc,PL/I,REXX,Maxima,AWK,R,F#,AutoHotKey,Tcl,AutoIt,Groovy,Octave,Ruby,Perl,Fortran":"( _ a:expression _ ** _ b:expression _ )","REBOL":"power __ a:expression __ b:expression","C,C++,PHP,Hack,Swift,MiniZinc,D":"pow _ ( _ a:expression _ , _ b:expression _ )","Julia,EngScript,Visual Basic,Visual Basic .NET,Gambas,Go,Ceylon,Wolfram":"a:expression _ ^ _ b:expression","Rust":"num::pow _ ( _ a:expression _ , _ b:expression _ )","Hy,Common Lisp,Racket,Clojure":"( _ expt __ num1 __ num2 _ )","Erlang":"math:pow _ ( _ a:expression _ , _ b:expression _ )"},"case_statements":{"Java,C,C#,C++,JavaScript,PHP,Haxe,Fortran,Ruby,Lua,Dart,TypeScript":"a:case __ b:case_statements"},"statement_with_semicolon":{"C,Dafny,Chapel,Katahdin,Frink,MiniZinc,Falcon,Aldor,IDP,Processing,Maxima,Seed7,Drools,EBNF,ANTLR,EngScript,OpenOffice Basic,Ada,ALGOL 68,D,Ceylon,Rust,TypeScript,Octave,AutoHotKey,Pascal,Delphi,JavaScript,Pike,Objective-C,OCaml,Java,Scala,Dart,PHP,C#,C++,Haxe,AWK,bc,Haskell,Perl,Perl 6,Go,Nemerle,Vala":"var1:statement ;","Python,Z3,Swift,Wolfram,Gambas,Pascal,Delphi,AutoHotKey,REBOL,Octave,Janus,Cython,Mathematical notation,Picat,Lua,Ruby,Haskell,Erlang,Prolog,Scala,Visual Basic .NET,Fortran,Julia,R":"var1:statement"},"dot_notation":{"Java,JavaScript,D,Haxe,C#,Perl 6":"var1 _ . _ var2","PHP,C":"var1 _ -> _ var2"},"sin":{"Java,JavaScript,TypeScript,Ruby,Haxe":"Math _ . _ sin _ ( _ var1:expression _ )","Lua,Python":"math _ . _ sin _ ( _ var1:expression _ )","C,D,PHP,Perl,Perl 6,Maxima,Fortran,MiniZinc,Swift,Prolog,Octave,Dart,Haskell":"sin _ ( _ var1:expression _ )","C#,Visual Basic .NET":"Math _ . _ Sin _ ( _ var1:expression _ )","Wolfram":"Sin _ [ _ var1:expression _ ]"},"cos":{"Java,JavaScript,TypeScript,Ruby,Haxe":"Math _ . _ cos _ ( _ var1:expression _ )","Lua,Python":"math _ . _ cos _ ( _ var1:expression _ )","C,D,PHP,Perl,Perl 6,Maxima,Fortran,MiniZinc,Swift,Prolog,Octave,Dart,Haskell":"cos _ ( _ var1:expression _ )","C#,Visual Basic .NET":"Math _ . _ Cos _ ( _ var1:expression _ )","Wolfram":"Cos _ [ _ var1:expression _ ]"},"tan":{"Java,JavaScript,TypeScript,Ruby,Haxe":"Math _ . _ tan _ ( _ var1:expression _ )","Lua,Python":"math _ . _ tan _ ( _ var1:expression _ )","C,D,PHP,Perl,Perl 6,Maxima,Fortran,MiniZinc,Swift,Prolog,Octave,Dart,Haskell":"tan _ ( _ var1:expression _ )","C#,Visual Basic .NET":"Math _ . _ Tan _ ( _ var1:expression _ )","Wolfram":"Tan _ [ _ var1:expression _ ]"},"instance_method":{"JavaScript":"name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","Perl 6":"method __ name:Identifier __ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","Chapel":"def __ name:Identifier _ ( _ params:function_parameters _ ) _ : _ type:type _ { _ body:series_of_statements _ }","Java,C#":"public __ type:type __ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","PHP":"public __ function __ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","Ruby":"def __ name:Identifier _ ( _ params:function_parameters _ ) __ body:series_of_statements __ end","C++,D":"type:type __ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","Haxe":"public __ function __ name:Identifier _ ( _ params:function_parameters _ ) _ : _ type:type _ { _ body:series_of_statements _ }","Lua":"_","Python":"def __ name:Identifier _ ( _  _ self, _ params:function_parameters _ ) _ : _ \\n _ #indent _ \\n _ body:series_of_statements _ \\n _ #unindent"},"typeless_instance_method":{"JavaScript":"name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","Chapel":"def __ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","Java":"public __ Object __ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","C#":"public __ object __ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","PHP":"public __ function __ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","Ruby":"def __ name:Identifier _ ( _ params:function_parameters _ ) __ body:series_of_statements __ end","C++,D":"auto __ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","Haxe":"public __ function __ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","Lua":"_","Python":"def __ name:Identifier _ ( _ self, _ params:function_parameters _ ) _ : _ \\n _ #indent _ \\n _ body:series_of_statements _ \\n _ #unindent"},"typeless_static_method":{"JavaScript":"static __ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","Haxe":"public __ static __ function __ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","Lua,Julia":"function __ name:Identifier _ ( _ params:function_parameters _ ) __ body:series_of_statements __ end","Java":"public __ static __ Object __ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","C#":"public __ static __ object __ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","Dart":"static __ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","C++":"static __ auto __ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","PHP":"public __ static __ function __ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","Ruby":"def __ self _ . _ name:Identifier _ ( _ params:function_parameters _ ) __ body:series_of_statements __ end","Python":"@staticmethod _ \\n __ def __ name:Identifier _ ( _  _ params:function_parameters _ ) _ : _ \\n _ #indent _ \\n _ body:series_of_statements _ \\n _ #unindent"},"static_method":{"Haxe":"public __ static __ function __ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","Lua,Julia":"function __ name:Identifier _ ( _ params:function_parameters _ ) __ body:series_of_statements __ end","Java,C#":"public __ static __ return_type:type __ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","C++,Dart":"static __ return_type:type __ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","PHP":"public __ static __ function __ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","Ruby":"def __ self _ . _ name:Identifier _ ( _ params:function_parameters _ ) __ body:series_of_statements __ end","C":"return_type:type __ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","JavaScript":"static __ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","Picat":"_","Python":"@staticmethod _ \\n __ def __ name:Identifier _ ( _  _ params:function_parameters _ ) _ : _ "},"declare_new_object":{"Java,C#,D":"class_name:Identifier __ var_name:var_name _ = _ new __ class_name:Identifier _ ( _ params:function_call_parameters _ )","JavaScript,Haxe,Chapel":"var __ var_name:var_name _ = _ new __ class_name:Identifier _ ( _ params:function_call_parameters _ )","PHP":"var_name:var_name _ = _ new __ class_name:Identifier _ ( _ params:function_call_parameters _ )","Python":"var_name:var_name _ = _ class_name:Identifier _ ( _ params:function_call_parameters _ )","Ruby":"var_name:var_name _ = _ class_name:Identifier _ . _ new _ ( _ params:function_call_parameters _ )","Perl":"my __ var_name:var_name _ = _ class_name:Identifier _ -> _ new _ ( _ params:function_call_parameters _ )","C++":"class_name:Identifier __ var_name:var_name _ ( _ params:function_call_parameters _ )","C,Picat,MiniZinc,Prolog,Lua":"_"},"string_to_int":{"Python":"int _ ( _ a:expression _ )","Haxe":"Std _ . _ parseInt _ ( _ a:expression _ )","PHP":"( _ int _ ) _ a:expression","Haskell":"( _ read __ a:expression _ )","Perl":"a:expression","C#":"Int32 _ . _ Parse( _ a:expression _ )","Visual Basic .NET":"Convert _ . _ toInt32 _ ( _ a:expression _ )","Java":"Integer _ . _ parseInt _ ( _ a:expression _ )","C":"atoi _ ( _ a:expression _ )","Scala":"a:expression _ . _ toInt","D":"std _ . _ conv _ . _ to!int _ ( _ a:expression _ )","Ruby":"Integer _ ( _ a:expression _ )","REBOL":"to __ integer! __ a:expression","Lua":"tonumber _ ( _ a:expression _ )","JavaScript,TypeScript":"parseInt _ ( _ a:expression _ )","C++":"atoi _ ( _ a:expression _ . _ c_str _ ( _ ) _ )","Dart":"int _ . _ parse _ ( _ a:expression _ )"},"int_to_string":{"Python":"str _ ( _ a:parentheses_expression _ )","Wolfram":"ToString _ [ _ a:parentheses_expression _ ]","Swift,JavaScript,TypeScript":"String _ ( _ a:parentheses_expression _ )","Java":"Integer _ . _ toString _ ( _ a:parentheses_expression _ )","Haskell":"( _ show __ a:parentheses_expression _ )","Perl":"a:parentheses_expression","C#":"Convert _ . _ ToString _ ( _ a:parentheses_expression _ )","Ruby":"a:parentheses_expression _ . _ to_s","C++":"std _ :: _ to_string _ ( _ a:parentheses_expression _ )","Lua":"tostring _ ( _ a:parentheses_expression _ )","Haxe":"Std _ . _ toString _ ( _ a:parentheses_expression _ )","D":"std _ . _ conv _ . _ to!string _ ( _ a:parentheses_expression _ )","PHP":"( _ string _ ) _ a:parentheses_expression","Dart":"a:parentheses_expression _ . _ toString _ ( _ )"},"typeless_declare_constant":{"PHP,JavaScript,Dart,TypeScript":"const __ name:var_name _ = _ value:expression","Visual Basic .NET":"Public __ Const __ name:var_name _ = _ value:expression","Rust,Swift":"let __ name:var_name _ = _ value:expression","C":"static __ const __ name:var_name _ = _ value:expression","C#":"const __ object __ name:var_name _ = _ value:expression","D,C++":"const __ auto __ name:var_name _ = _ value:expression","Common Lisp":"( _ setf __ name:var_name __ value:expression _ )","Scala":"val __ name:var_name _ = _ value:expression","Python,Ruby,Haskell,Erlang,Julia,Picat,Prolog":"name:var_name _ = _ value:expression","Lua":"local __ name:var_name _ = _ value:expression","Perl":"my __ name:var_name _ = _ value:expression","REBOL":"name:var_name _ : _ value:expression","Haxe":"static __ inline __ var __ name:var_name _ = _ value:expression","Java":"final __ Object __ name:var_name _ = _ value:expression","Chapel":"var _ name:var_name _ = _ value:expression"},"declare_constant":{"PHP,JavaScript":"const __ name:var_name _ = _ value:expression","Z3":"( _ declare-const __ name:var_name __ type:type _ ) _ ( _ assert __ ( _ = __ name:var_name __ value:expression _ ) _ )","Visual Basic .NET":"Public __ Const __ name:var_name __ As __ type:type _ = _ value:expression","Rust,Swift":"let __ name:var_name _ = _ value:expression","C++,C,D,C#":"const __ type:type __ name:var_name _ = _ value:expression","Common Lisp":"( _ setf __ name:var_name __ value:expression _ )","MiniZinc":"type:type _ : _ name:var_name _ = _ value:expression","Scala":"val __ name:var_name _ : _ type:type _ = _ value:expression","Python,Ruby,Haskell,Erlang,Julia,Picat,Prolog":"name:var_name _ = _ value:expression","Lua":"local __ name:var_name _ = _ value:expression","Perl":"my __ name:var_name _ = _ value:expression","REBOL":"name:var_name _ : _ value:expression","Haxe":"static __ inline __ var __ name:var_name _ = _ value:expression","Java":"final __ type:type __ name:var_name _ = _ value:expression","C":"static __ const __ name:var_name _ = _ value:expression","Chapel":"var _ name:var_name _ : _ type:type _ = _ value:expression"},"constructor":{"crosslanguage":"(constructor __ name:Identifier __ params:function_parameters __ body)","Python":"def __ __init__ _ ( _  _ self _ , _ params:function_parameters _ ) _ : _ \\n _ #indent _ "},"function_call_named_parameter":{"Python,C#,Fortran,Scala":"name:Identifier _ = _ value:expression","Modula-3,Visual Basic .NET":"name:Identifier _ := _ value:expression","Ruby":"name:Identifier _ : _ value:expression","JavaScript,Lua,Java,C,PHP,Haxe,MiniZinc,C++":"value:expression"},"function_call":{"C,Chapel,Elixir,Janus,Perl 6,Pascal,Rust,Hack,Katahdin,MiniZinc,Pawn,Aldor,Picat,D,Genie,ooc,PL/I,Delphi,Standard ML,REXX,Falcon,IDP,Processing,Maxima,Swift,Boo,R,MATLAB,AutoIt,Pike,Gosu,AWK,AutoHotKey,Gambas,Kotlin,Nemerle,EngScript,Prolog,Groovy,Scala,CoffeeScript,Julia,TypeScript,Fortran,Octave,C++,Go,Cobra,Ruby,Vala,F#,Java,Ceylon,OCaml,Erlang,Python,C#,Lua,Haxe,JavaScript,Dart,bc,Visual Basic,Visual Basic .NET,PHP,Perl":"theName:dot_notation _ ( _ args:function_call_parameters _ )","Haskell,Z3,CLIPS,Clojure,Common Lisp,CLIPS,Racket,Scheme,crosslanguage":"( _ theName:dot_notation _ args:function_call_parameters _ )"},"for":{"Java,D,Pawn,Groovy,JavaScript,Dart,TypeScript,PHP,Hack,C#,Perl,C++,AWK,Pike":"for _ ( _ statement_1:initialize_var _ ; _ condition:expression _ ; _ statement_2:set_var _ ) _ { _ body:series_of_statements _ }","C":"init:initialize_empty_var _ ; _ for _ ( _ statement_1:initialize_var _ ; _ condition:expression _ ; _ statement_2:set_var _ ) _ { _ body:series_of_statements _ }","Haxe":"statement_1:initialize_var _ ; _  _ while _ ( _ condition:expression _ ) _ { _ body:series_of_statements _ statement_2:set_var _ ; _ }","Lua,Ruby":"statement_1:initialize_var __ while __ condition:expression __ do __ body:series_of_statements __ statement_2:set_var __ end"},"while":{"Fortran":"WHILE __ ( _ a:Or _ ) __ DO __ b:series_of_statements __ ENDDO","Pascal":"while __ a:Or __ do __ begin __ b:series_of_statements __ end;","Delphi":"While __ a:Or __ do __ begin __ b:series_of_statements __ end;","Rust,Frink,Dafny":"while __ a:Or _ { _ b:series_of_statements _ }","C,Perl 6,Katahdin,Chapel,ooc,Processing,Pike,Kotlin,Pawn,PowerShell,Hack,Gosu,AutoHotKey,Ceylon,D,TypeScript,ActionScript,Nemerle,Dart,Swift,Groovy,Scala,Java,JavaScript,PHP,C#,Perl,C++,Haxe,R,AWK,Vala":"while _ ( _ a:Or _ ) _ { _ b:series_of_statements _ }","Lua,Ruby,Julia":"while __ a:Or __ b:series_of_statements __ end","Picat":"while __ ( _ a:Or _ ) __ b:series_of_statements __ end","REBOL":"while _ [ _ a:Or _ ] _ [ _ b:series_of_statements _ ]","Common Lisp":"( _ loop __ while __ a:Or __ do __ b:series_of_statements _ )","Hy,newLisp,CLIPS":"( _ while __ a:Or __ b:series_of_statements _ )","Python,Cython":"while __ a:Or _ : _ "},"function":{"C++,Vala,C,Dart,Ceylon,Pike,D":"return_type:type __ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","Java,C#":"public __ static __ return_type:type __ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","JavaScript,PHP":"function __ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","Lua,Julia":"function __ name:Identifier _ ( _ params:function_parameters _ ) __ body:series_of_statements __ end","Wolfram":"name:Identifier _ [ _ params:function_parameters _ ] _ := _ body:series_of_statements","Frink":"name:Identifier _ [ _ params:function_parameters _ ] _ := _ { _ body:series_of_statements _ }","POP-11":"define __ name:Identifier _ ( _ params:function_parameters _ ) _ -> _ Result; __ body:series_of_statements __ enddefine;","Z3":"( _ define-fun __ name:Identifier _ ( _ params:function_parameters _ ) __ return_type:type __ body:series_of_statements _ )","Mathematical notation":"name:Identifier _ ( _ params:function_parameters _ ) _ = _ { _ body:series_of_statements _ }","Chapel":"proc __ name:Identifier _ ( _ params:function_parameters _ ) _ : _ return_type:type _ { _ body:series_of_statements _ }","Prolog":"name:Identifier _ ( _ params:function_parameters _ ) __ :- __ body:series_of_statements _ .","Picat":"name:Identifier _ ( _ params:function_parameters _ ) _ = _ to_return _ => _ body:series_of_statements _ .","Swift":"func __ name:Identifier _ ( _ params:function_parameters _ ) _ -> _ return_type:type _ { _ body:series_of_statements _ }","Maxima":"name:Identifier _ ( _ params:function_parameters _ ) _ := _ body:series_of_statements","Rust":"fn __ name:Identifier _ ( _ params:function_parameters _ ) _ -> _ return_type:type _ { _ body:series_of_statements _ }","Clojure":"( _ defn _ name:Identifier _ [ _ params:function_parameters _ ] _ body:series_of_statements _ )","Octave":"function __ retval _ = _ name:Identifier _ ( _ params:function_parameters _ ) _ body:series_of_statements __ endfunction","Haskell":"name:Identifier __ params:function_parameters _ = _ \\n _ body:series_of_statements","Common Lisp":"(defun __ name:Identifier _ ( _ params:function_parameters _ ) _ body:series_of_statements _ )","Fortran":"FUNC __ name:Identifier __ ( _ params:function_parameters _ ) __ RESULT _ ( _ retval _ ) __ return_type:type _ :: _ retval __ body:series_of_statements __ END __ FUNCTION __ name:Identifier","Scala":"def __ name:Identifier _ ( _ params:function_parameters _ ) _ : _ return_type:type _ = _ { _ body:series_of_statements _ }","MiniZinc":"function __ return_type:type _ : _ name:Identifier _ ( _ params:function_parameters _ ) _ = _ body:series_of_statements _ ;","CLIPS":"( _ deffunction __ name:Identifier _ ( _ params:function_parameters _ ) _ body:series_of_statements _ )","Erlang":"name:Identifier _ ( _ params:function_parameters _ ) _ -> _ body:series_of_statements","Perl":"sub __ name:Identifier _ { _ params:function_parameters __ body:series_of_statements _ }","Perl 6":"sub __ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","Pawn":"name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","Ruby":"def __ name:Identifier _ ( _ params:function_parameters _ ) __ body:series_of_statements __ end","TypeScript":"function __ name:Identifier _ ( _ params:function_parameters _ ) _ : _ return_type:type _ { _ body:series_of_statements _ }","REBOL":"name:Identifier _ : __ func _ [ _ params:function_parameters _ ] _ [ _ body:series_of_statements _ ]","Haxe":"public __ static __ function __ name:Identifier _ ( _ params:function_parameters _ ) _ : _ return_type:type _ { _ body:series_of_statements _ }","Hack":"function __ name:Identifier _ ( _ params:function_parameters _ ) _ : _ return_type:type _ { _ body:series_of_statements _ }","R":"name:Identifier _ <- _ function _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","bc":"define _ name:Identifier _ ( _ params:function_parameters _ ) _ { _ body:series_of_statements _ }","Visual Basic,Visual Basic .NET":"Function _ name:Identifier _ ( _ params:function_parameters _ ) _ As _ return_type:type _ body:series_of_statements _ End _ Function","Racket,newLisp":"(define _ (name _ params) _ body:series_of_statements _ )","Janus":"procedure _ name:Identifier _ ( _ params:function_parameters _ ) _ body:series_of_statements","Python":"def __ name:Identifier _ ( _ params:function_parameters _ ) _ -> _ type _ : _ \\n _ #indent _ \\n _ body:series_of_statements _ \\n _ #unindent"},"else":{"Fortran":"ELSE __ a:series_of_statements","Hack,Dafny,Perl 6,Frink,Chapel,Katahdin,Pawn,PowerShell,Puppet,Ceylon,D,Rust,TypeScript,Scala,AutoHotKey,Gosu,Groovy,Java,Swift,Dart,AWK,JavaScript,Haxe,PHP,C#,Go,Perl,C++,C,Tcl,R,Vala,bc":"else _ { _ a:series_of_statements _ }","Ruby,Janus,Lua,Haskell,CLIPS,MiniZinc,Julia,Octave,Picat,Pascal,Maxima":"else "},"elif":{"D,Chapel,Pawn,Ceylon,Scala,TypeScript,AutoHotKey,AWK,R,Groovy,Gosu,Katahdin,Java,Swift,Nemerle,C,Dart,Vala,JavaScript,C#,C++,Haxe":"else __ if _ ( _ a _ ) _ { _ b _ } _ c","Z3":"( _ ite __ a __ b __ c _ )","Rust,Go":"else __ if __ a _ { _ b _ } _ c","PHP,Hack,Perl":"elseif _ ( _ a _ ) _ { _ b _ } _ c","Julia,Octave,Lua":"elseif __ a __ b __ c","Ruby":"elsif __ a __ then __ b __ c","Picat":"elseif __ a __ then __ b __ c","Haskell,Pascal,Maxima":"else __ if __ a __ then __ b __ c","Erlang":"a _ -> _ b __ c","R,F#":"a _ <- _ b __ c","CLIPS":"( _ if __ a __ then __ ( _ b __ c _ ) _ )","MiniZinc":"else __ if __ a __ then __ b __ c","Python,Cython":"elif __ a _ : _ \\n _ #indent _ \\n _ b _ \\n _ #unindent __ c","Prolog":"a _ -> _ b _ ; __ c","Visual Basic .NET":"ElseIf __ a __ Then __ b __ c","Fortran":"ELSE __ IF __ a __ THEN __ b __ c","REBOL":"a _ [ _ b _ ] __ c","Common Lisp":"( _ a __ b _ ) __ c","English":"otherwise __ if __ a __ then __ b __ c","Wolfram":"If _ [ _ a _ , _ b _ , _ c _ ]"},"return":{"Java,Kal,EngScript,Pawn,Ada,PowerShell,Rust,D,Ceylon,TypeScript,Hack,AutoHotKey,Gosu,Swift,Pike,Objective-C,C,Groovy,Scala,CoffeeScript,Julia,Dart,C#,JavaScript,Go,Haxe,PHP,C++,Perl,Vala,Lua,Python,REBOL,Ruby,Tcl,AWK,bc,Chapel,Perl 6":"return __ a:And","MiniZinc,Z3,Erlang,Maxima,Standard ML,Icon,Oz,CLIPS,newLisp,Hy,Sibilant,LispyScript,ALGOL 68,Clojure,Prolog,Common Lisp,F#,OCaml,Haskell,ML,Racket,Nemerle":"a:And","Visual Basic,Visual Basic .NET,AutoIt":"Return __ a:And","Octave,Fortran":"retval _ = _ a:And","Pascal":"Exit _ ( _ a:And _ )","Picat":"to_return _ = _ a:And","R":"return _ ( _ a:And _ )","Wolfram":"Return _ [ _ a:And _ ]","POP-11":"a:And _ -> _ Result"},"set_var":{"Z3":"( _ declare_const __ name:Identifier __ value:expression _ )","JavaScript,Perl 6,Wolfram,Chapel,Katahdin,Frink,MiniZinc,Picat,ooc,D,Genie,Janus,Ceylon,IDP,Sympy,Prolog,Processing,Java,EBNF,Boo,Gosu,Pike,Kotlin,Icon,PowerShell,EngScript,Pawn,FreeBASIC,Hack,Nimrod,OpenOffice Basic,Groovy,TypeScript,Rust,CoffeeScript,Fortran,AWK,Go,Swift,Vala,C,Julia,Scala,Cobra,Erlang,AutoIt,Dart,Java,OCaml,Haxe,C#,MATLAB,C++,PHP,Perl,Python,Lua,Ruby,Gambas,Octave,Visual Basic,Visual Basic .NET,bc":"name:(access_array/var_name) _ = _ value:expression"},"print":{"Erlang":"io _ : _ fwrite _ ( _ a:expression _ )","C++":"cout _ << _ a:expression","Haxe":"trace _ ( _ a:expression _ )","Prolog":"write _ ( _ a:expression _ )","C#":"Console _ . _ WriteLine _ ( _ a:expression _ )","REBOL,Fortran,Perl,PHP":"print __ a:expression","Ruby":"puts _ ( _ a:expression _ )","Visual Basic .NET":"System _ . _ Console _ . _ WriteLine _ ( _ a:expression _ )","Scala,Julia,Swift":"println _ ( _ a:expression _ )","JavaScript,TypeScript":"console _ . _ log _ ( _ a:expression _ )","Python,Cython,Ceylon,R,Gosu,Dart,Vala,Perl,PHP,Hack,AWK,Lua":"print _ ( _ a:expression _ )","Java":"System _ . _ out _ . _ println _ ( _ a:expression _ )","C":"printf _ ( _ a:expression _ )","Haskell":"( _ putStrLn __ a:expression _ )","Hy,Common Lisp,crosslanguage":"( _ print __ a:expression _ )","Rust":"println!( _ a:expression _ )","Octave":"disp _ ( _ a:expression _ )","Chapel,D":"writeln _ ( _ a:expression _ )","Frink":"print _ [ _ a:expression _ ]","Wolfram":"Print _ [ _ a:expression _ ]"},"series_of_statements":{"Java,Dafny,Z3,Elm,Bash,Perl 6,Mathematical notation,Katahdin,Frink,MiniZinc,Aldor,COBOL,ooc,Genie,ECLiPSe,nools,Agda,PL/I,REXX,IDP,Falcon,Processing,Sympy,Maxima,Pyke,Elixir,GNU Smalltalk,Seed7,Standard ML,Occam,Boo,Drools,Icon,Mercury,EngScript,Pike,Oz,Kotlin,Pawn,FreeBASIC,Ada,PowerShell,Gosu,Nimrod,Cython,OpenOffice Basic,ALGOL 68,D,Ceylon,Rust,CoffeeScript,ActionScript,TypeScript,Fortran,Octave,ML,AutoHotKey,Delphi,Pascal,F#,Self,Swift,Nemerle,Dart,C,AutoIt,Cobra,Julia,Groovy,Scala,OCaml,Erlang,Gambas,Hack,C++,MATLAB,REBOL,Red,Lua,Go,AWK,Haskell,Perl,Python,JavaScript,C#,PHP,Ruby,R,Haxe,Visual Basic,Visual Basic .NET,Vala,bc":"var1:statement __ var2:series_of_statements","Prolog":"var1:statement _ , _ var2:series_of_statements","Wolfram":"var1:statement _ ; _ var2:series_of_statements"},"comment":{"Java,Dafny,Janus,Chapel,Rust,Frink,D,Genie,Ceylon,Hack,Maxima,Kotlin,Delphi,Dart,TypeScript,Swift,Vala,C#,JavaScript,Haxe,Scala,Go,C,C++,Pike,PHP,F#,Nemerle,crosslanguage,Gosu,Groovy\":":"// _ var1:[^\\n]+ _ \\n","OCaml,Standard ML,ML":"(*{ _ var1:[^\\n]+ _ }*)","MATLAB,MiniZinc,Octave,Erlang,Prolog,Picat":"% _ var1:[^\\n]+ _ \\n","REBOL":"comment _ [ _ var1:[^\\n]+ _ ]","Wolfram":"(* _ var1:[^\\n]+ _ *)","Pascal":"{ _ var1:[^\\n]+ _ }","Fortran":"! _ var1:[^\\n]+ _ \\n","Z3":"; _ var1:[^\\n]+ _ \\n","Bash,Perl 6,PowerShell,Seed7,Cobra,Icon,EngScript,Nimrod,CoffeeScript,Julia,AWK,Ruby,Perl,R,Tcl,bc,Python,Cython":"# _ var1:[^\\n]+ _ \\n","Lua,Haskell,Ada":"-- _ var1:[^\\n]+ _ \\n"},"initialize_var":{"Rust":"let __ mut __ name:var_name _ = _ value:expression","Dafny":"var _ name:var_name _ : _ type:type _ := _ value:expression","Z3":"( _ declare-const __ name:var_name __ type:type _ ) _ ( _ assert __ ( _ = __ name:var_name __ value:expression _ ) _ )","F#":"let __ mutable __ name:var_name _ = _ value:expression","Common Lisp":"( _ setf __ name:var_name __ value:expression _ )","MiniZinc":"type:type _ : _ name:var_name _ = _ value:expression","Python,Ruby,Haskell,Erlang,Prolog,Julia,Picat,Octave":"name:var_name _ = _ value:expression","JavaScript,PHP,Hack,Swift":"var __ name:var_name _ = _ value:expression","Lua":"local __ name:var_name _ = _ value:expression","Janus":"local __ type:type __ name:var_name _ = _ value:expression","Perl":"my __ name:var_name _ = _ value:expression","C,Java,C#,C++,D":"type:type __ name:var_name _ = _ value:expression","REBOL":"name:var_name _ : _ value:expression","Visual Basic,Visual Basic .NET,OpenOffice Basic":"Dim __ name:var_name __ As __ type:type _ = _ value:expression","R":"name:var_name _ <- _ value:expression","Fortran":"type:type _ :: _ name:var_name _ = _ value:expression","Chapel,Haxe,Scala,TypeScript":"var __ name:var_name _ : _ type:type _ = _ value:expression"},"typeless_initialize_var":{"C++,D":"auto __ name:var_name _ = _ value:expression","C#,Dafny,JavaScript,Haxe,PHP,TypeScript,Dart,Swift":"var __ name:var_name _ = _ value:expression","Lua":"local __ name:var_name _ = _ value:expression","Python,Ruby,Haskell,Erlang,Prolog,Julia,Picat,Octave,PHP":"name:var_name _ = _ value:expression","C":"__auto_type __ name:var_name _ = _ value:expression","Java":"Object __ name:var_name _ = _ value:expression","C#,JavaScript,Haxe,Swift":"var __ name:var_name _ = _ value:expression","Perl":"my __ name:var_name _ = _ value:expression"},"int":{"Hack,Dafny,Janus,Chapel,MiniZinc,EngScript,Cython,ALGOL 68,D,Octave,Tcl,crosslanguage,ML,AWK,Julia,Gosu,OCaml,F#,Pike,Objective-C,Go,Cobra,Dart,Groovy,Python,Hy,Java,C#,C,C++,Vala,Nemerle,crosslanguage":"int","PHP,Prolog,Common Lisp,Picat":"integer","Fortran":"INTEGER","REBOL":"integer!","Ceylon,Gambas,OpenOffice Basic,Pascal,Erlang,Delphi,Visual Basic,Visual Basic .NET":"Integer","Haxe,ooc,Swift,Scala,Perl 6,Z3":"Int","JavaScript,TypeScript,CoffeeScript,Lua,Perl":"number","Haskell":"Num","Ruby":"fixnum"},"if":{"Erlang":"if __ a:And _ -> _ b:series_of_statements __ c:elif_or_else __ end","Fortran":"IF __ a:And __ THEN __ b:series_of_statements __ c:elif_or_else __ END __ IF","REBOL":"case _ [ _ a:And _ [ _ b:series_of_statements _ ] _ c:elif_or_else _ ]","Julia":"if __ a:And __ b:series_of_statements __ c:elif_or_else __ end","Lua,Ruby,Picat":"if __ a:And __ then __ b:series_of_statements __ c:elif_or_else __ end","Octave":"if __ a:And __ b:series_of_statements __ c:elif_or_else __ endif","Haskell,Pascal,Maxima":"if __ a:And __ then __ b:series_of_statements __ c:elif_or_else","Java,Perl 6,Chapel,Katahdin,Pawn,PowerShell,D,Ceylon,TypeScript,ActionScript,Hack,AutoHotKey,Gosu,Nemerle,Swift,Nemerle,Pike,Groovy,Scala,Dart,JavaScript,C#,C,C++,Perl,Haxe,PHP,R,AWK,Vala,bc,Squirrel":"if _ ( _ a:And _ ) _ { _ b:series_of_statements _ } _ c:elif_or_else","Rust,Go":"if __ a:And _ { _ b:series_of_statements _ } _ c:elif_or_else","Visual Basic,Visual Basic .NET":"If __ a:And __ b:series_of_statements __ c:elif_or_else","CLIPS":"( _ if __ a:And __ then __ b:series_of_statements __ c:elif_or_else _ )","Z3":"( _ ite __ a:And __ b:series_of_statements __ c:elif_or_else _ )","MiniZinc":"if __ a:And __ then __ b:series_of_statements __ c:elif_or_else __ endif","Python,Cython":"if __ a:And _ : _ "},"foreach":{"JavaScript":"array:expression _ . _ forEach _ ( _ function _ ( _ var_name:var_name _ ) _ { _ body:series_of_statements _  _ } _ ) _ ;","MiniZinc":"forall _ ( _ var_name:var_name _ in _ array:expression _ ) _ ( _ body:series_of_statements _ ) _ ;","PHP,Hack":"foreach _ ( _ array:expression __ as __ var_name:var_name _ ) _ { _ body:series_of_statements _ }","Java":"for _ ( _ typeInArray:type __ var_name:var_name _ : _ array:expression _ ) _ { _ body:series_of_statements _ }","C#,Vala":"foreach _ ( _ typeInArray:type __ var_name:var_name __ in __ array:expression _ ) _ { _ body:series_of_statements _ }","Lua":"for __ var_name:var_name __ in __ array:expression __ do __ body:series_of_statements __ end","Python,Cython":"for __ var_name:var_name __ in __ array:expression _ : _ \\n _ #indent _ \\n _ body:series_of_statements _ \\n _ #unindent","Julia":"for __ var_name:var_name __ in __ array:expression __ body:series_of_statements __ end","Chapel,Swift":"for __ var_name:var_name __ in __ array:expression _ { _ body:series_of_statements _ }","Pawn":"foreach _ ( _ new __ var_name:var_name _ : _ array:expression _ ) _ { _ body:series_of_statements _ }","Picat":"foreach _ ( _ var_name:var_name __ in __ array:expression _ ) _ ( _ body:series_of_statements _ ) _ end","AWK,Ceylon":"for __ ( __ var_name:var_name __ in __ array:expression _ ) _ { _ body:series_of_statements _ }","Go":"for __ var_name:var_name _ := _ range __ array:expression _ { _ body:series_of_statements _ }","Haxe,Groovy":"for _ ( _ var_name:var_name __ in __ array:expression _ ) _ { _ body:series_of_statements _ }","Ruby":"array:expression _ . _ each __ do _ | _ var_name:var_name _ | __ body:series_of_statements __ end","Nemerle,PowerShell":"foreach _ ( _ var_name:var_name __ in __ array:expression _ ) _ { _ body:series_of_statements _ }","Scala":"for _ ( _ var_name:var_name _ -> _ array:expression _ ) _ { _ body:series_of_statements _ }","REBOL":"foreach __ var_name:var_name __ array:expression _ [ _ body:series_of_statements _ ]","C++":"for _ ( _ typeInArray:type __ & __ var_name:var_name _ : _ array:expression _ ){ _ body:series_of_statements _ }","Perl":"foreach __ var_name:var_name _ ( _ array:expression _ ) _ { _ body:series_of_statements _ }","D":"foreach _ ( _ var_name:var_name _ , _ array:expression _ ) _ { _ body:series_of_statements _ }","Gambas":"FOR __ EACH __ var_name:var_name __ IN __ array:expression __ body:series_of_statements __ NEXT","Visual Basic .NET":"For __ Each __ var_name:var_name __ As __ typeInArray:type __ In __ array:expression __ body:series_of_statements __ Next"},"compare_ints":{"Lua,Dafny,Wolfram,D,Rust,R,MiniZinc,Frink,Picat,Pike,Pawn,Processing,C++,Ceylon,CoffeeScript,Octave,Swift,AWK,Julia,Perl,Groovy,Erlang,Haxe,Scala,Java,Vala,Dart,Python,C#,C,Go,Haskell,Ruby":"var1:Add _ == _ var2:Add","JavaScript,PHP,TypeScript,Hack":"var1:Add _ === _ var2:Add","Z3":"( _ = __ var1:Add __ var2:Add _ )","Fortran":"var1:Add _ .eq. _ var2:Add","Maxima,REBOL,F#,AutoIt,Pascal,Delphi,Visual Basic,Visual Basic .NET":"var1:Add _ = _ var2:Add"},"class":{"C,Z3,Lua":"body:series_of_statements","Java,C#":"public __ class __ name:Identifier _ { _ body:series_of_statements _ }","C++":"class __ name:Identifier _ { _ body:series_of_statements _ } _ ;","JavaScript,Hack,PHP,Scala,Haxe,Chapel,Swift,D,TypeScript,Dart,Perl 6":"class __ name:Identifier _ { _ body:series_of_statements _ }","Ruby":"class __ name:Identifier __ body:series_of_statements __ end","R":"_"},"function_parameter":{"crosslanguage":"( _ parameter __ type:type __ name:var_name _ )","C#,Java,Ceylon,ALGOL 68,Groovy,D,C++,Pawn,Pike,Vala,C,Janus":"type:type __ name:var_name","Haxe,Dafny,Chapel,Pascal,Rust,Genie,Hack,Nimrod,TypeScript,Gosu,Delphi,Nemerle,Scala,Swift":"name:var_name _ : _ type:type","Go":"name:var_name __ type:type","MiniZinc":"var __ type:type _ : _ name:var_name","Haskell,Scheme,Python,Mathematical notation,LispyScript,CLIPS,Clojure,F#,ML,Racket,OCaml,Tcl,Common Lisp,newLisp,Python,Cython,Frink,Picat,IDP,PowerShell,Maxima,Icon,CoffeeScript,Fortran,Octave,AutoHotKey,Julia,Prolog,AWK,Kotlin,Dart,JavaScript,Nemerle,Erlang,PHP,AutoIt,Lua,Ruby,R,bc":"name:var_name","REBOL":"type:type _ [ _ name:var_name _ ]","OpenOffice Basic,Gambas":"name:var_name __ As __ type:type","Visual Basic,Visual Basic .NET":"name:var_name __ as __ type:type","Perl":"name:var_name _ = _ push;","Wolfram":"name:var_name _","Z3":"( _ name:var_name __ type:type _ )"},"switch":{"crosslanguage":"( _ switch __ a:expression __ b:case_statements __ c:default _ )","Rust":"match __ a:expression _ { _ b:case_statements __ c:default _ }","Elixir":"case __ a:expression __ do __ b:case_statements __ c:default __ end","Scala":"a:expression __ match _ { _ b:case_statements __ c:default _ }","Octave":"switch _ ( _ a:expression _ ) _ b:case_statements __ endswitch","Java,D,PowerShell,Nemerle,D,TypeScript,Hack,Swift,Groovy,Dart,AWK,C#,JavaScript,C++,PHP,C,Go,Haxe,Vala":"switch _ ( _ a:expression _ ) _ { _ b:case_statements __ c:default _ }","Ruby":"case __ a:expression __ b:case_statements __ c:default __ end","Haskell,Erlang":"case __ a:expression __ of __ b:case_statements __ c:default __ end","Delphi,Pascal":"Case __ a:expression __ of __ b:case_statements __ c:default __ end;","CLIPS":"( _ switch __ a:expression __ b:case_statements __ c:default _ )","Visual Basic .NET,Visual Basic":"Select __ Case __ a:expression __ b:case_statements __ c:default __ End __ Select","REBOL":"switch/default _ [ _ a:expression __ b:case_statements _ ]","Fortran":"SELECT __ CASE _ ( _ a:expression _ ) __ b:case_statements __ c:default __ END __ SELECT","Clojure":"( _ case __ a:expression __ b:case_statements __ c:default _ )","Chapel":"select _ ( _ a:expression _ ) _ { _ b:case_statements _ c:default _ }","Wolfram":"Switch _ [ _ a:expression _ , _ b:case_statements _ , _ c:default _ ]","Python,Lua":""},"case":{"Lua,Python":"_","crosslanguage":"( _ case __ a:expression __ b:series_of_statements _ )","JavaScript,D,Java,C#,C,C++,TypeScript,Dart,PHP,Hack":"case __ a:expression _ : _ b:series_of_statements _ break _ ;","Go,Haxe,Swift":"case __ a:expression _ : _ b:series_of_statements","Fortran":"CASE _ ( _ a:expression _ ) __ b:series_of_statements","Rust":"a:expression _ => _ { _ b:series_of_statements _ }","Ruby":"when __ a:expression __ b:series_of_statements","Haskell,Erlang,Elixir":"a:expression __ -> _ \\n _ b:series_of_statements","CLIPS":"( _ case __ a:expression __ then __ b:series_of_statements _ )","Scala":"case __ a:expression _ => _ b:series_of_statements","Visual Basic .NET":"Case __ a:expression __ b:series_of_statements","REBOL":"a:expression _ [ _ b:series_of_statements _ ]","Octave":"case __ a:expression __ b:series_of_statements","Clojure":"( _ a:expression __ b:series_of_statements _ )","Pascal,Delphi:":"a:expression _ : _ b:series_of_statements","Chapel":"when __ a:expression _ { _ b:series_of_statements _ }","Wolfram":"a:expression _ , _ b:series_of_statements"},"access_array":{"Python,Lua,C#,Julia,D,Swift,Julia,Janus,MiniZinc,Picat,Nimrod,AutoIt,Cython,CoffeeScript,Dart,TypeScript,AWK,Vala,Perl,Java,JavaScript,Ruby,Go,C++,PHP,Haxe,C":"a:Identifier _ [ _ b:array_access_list _ ]","Scala,Octave,Fortran,Visual Basic, Visual Basic .NET":"a:Identifier _ ( _ b:array_access_list _ )","Haskell":"( _ a:Identifier _ !! _ b:array_access_list _ )","Frink":"a:Identifier _ @ _ b:array_access_list"},"array_access_list":{"Java,C#,Lua,C++,Python,JavaScript,C,PHP,Ruby,Scala,Haxe,Fortran,TypeScript,MiniZinc,Dart":"var1:expression _ separator:array_access_separator _ var2:array_access_list"},"default":{"Python,Cython,Lua,MiniZinc,Prolog,Lua":"_","Fortran":"CASE __ DEFAULT __ a:series_of_statements","crosslanguage":"( _ default __ a:series_of_statements _ )","JavaScript,D,C,Java,C#,C++,TypeScript,Dart,PHP,Haxe,Hack,Go,Swift":"default _ : _ a:series_of_statements","Ruby,Pascal,Delphi":"else __ a:series_of_statements","Haskell":"_ _ -> _ \\n __ a:series_of_statements","Rust":"_ _ => _ a:series_of_statements","CLIPS":"( _ default __ a:series_of_statements _ )","Scala":"case __ _ => _ a:series_of_statements","Visual Basic .NET":"Case __ Else __ a:series_of_statements","REBOL":"][ a:series_of_statements","Octave":"otherwise __ a:series_of_statements","Chapel":"otherwise _ { _ a:series_of_statements _ }","Clojure":"a:series_of_statements","Wolfram":"_ _ , _ a:series_of_statements"}};
 var parsers = {'C#':(function() {
   "use strict";
 
@@ -178,7 +178,7 @@ var parsers = {'C#':(function() {
         peg$c103 = { type: "literal", value: "*", description: "\"*\"" },
         peg$c104 = function(var1, symbol, var2) {return [symbol, {var1:var1,var2:var2}];},
         peg$c105 = function(var1, var2) {return ["dot_notation", {var1:var1, var2:var2}];},
-        peg$c106 = function(theName, args) {return ["function_call", {name:theName, args:args}]},
+        peg$c106 = function(theName, args) {return ["function_call", {theName:theName, args:args}]},
         peg$c107 = function(var1) {return ["parentheses_expression", {"a":var1}];},
         peg$c108 = function(var1, var2) {return ["function_call_parameters", {var1:var1, var2:var2}]},
         peg$c109 = "this",
@@ -196,20 +196,20 @@ var parsers = {'C#':(function() {
         peg$c121 = { type: "literal", value: "Tan", description: "\"Tan\"" },
         peg$c122 = function(var1) {return ["tan", {var1:var1,}];},
         peg$c123 = function(expr) {return ["parentheses_expression", {"a":expr}]},
-        peg$c124 = function() { return expr; },
-        peg$c125 = function(var1, var2) {return var1 + var2;},
-        peg$c126 = "bool",
-        peg$c127 = { type: "literal", value: "bool", description: "\"bool\"" },
-        peg$c128 = function() {return ["boolean", {}];},
-        peg$c129 = function(type, name) {return ["initialize_empty_var", {type:type,name:name,}];},
-        peg$c130 = "string",
-        peg$c131 = { type: "literal", value: "string", description: "\"string\"" },
-        peg$c132 = function() {return ["string", {}];},
-        peg$c133 = "void",
-        peg$c134 = { type: "literal", value: "void", description: "\"void\"" },
-        peg$c135 = function() {return ["void", {}];},
-        peg$c136 = "[]",
-        peg$c137 = { type: "literal", value: "[]", description: "\"[]\"" },
+        peg$c124 = function(var1, var2) {return ["type",{var1:var1, var2:var2}];},
+        peg$c125 = "bool",
+        peg$c126 = { type: "literal", value: "bool", description: "\"bool\"" },
+        peg$c127 = function() {return ["boolean", {}];},
+        peg$c128 = function(type, name) {return ["initialize_empty_var", {type:type,name:name,}];},
+        peg$c129 = "string",
+        peg$c130 = { type: "literal", value: "string", description: "\"string\"" },
+        peg$c131 = function() {return ["string", {}];},
+        peg$c132 = "void",
+        peg$c133 = { type: "literal", value: "void", description: "\"void\"" },
+        peg$c134 = function() {return ["void", {}];},
+        peg$c135 = "[]",
+        peg$c136 = { type: "literal", value: "[]", description: "\"[]\"" },
+        peg$c137 = function(var1, var2) {return ["array_type_suffix", {var1:var1, var2:var2}];},
         peg$c138 = "case",
         peg$c139 = { type: "literal", value: "case", description: "\"case\"" },
         peg$c140 = "break",
@@ -2220,6 +2220,9 @@ var parsers = {'C#':(function() {
       }
       if (s0 === peg$FAILED) {
         s0 = peg$parsefunction_parameter();
+        if (s0 === peg$FAILED) {
+          s0 = peg$parse_();
+        }
       }
 
       return s0;
@@ -3073,7 +3076,10 @@ var parsers = {'C#':(function() {
       var s0, s1, s2, s3, s4, s5;
 
       s0 = peg$currPos;
-      s1 = peg$parseAnd();
+      s1 = peg$parsefunction_call_named_parameter();
+      if (s1 === peg$FAILED) {
+        s1 = peg$parseAnd();
+      }
       if (s1 !== peg$FAILED) {
         s2 = peg$parse_();
         if (s2 !== peg$FAILED) {
@@ -3113,7 +3119,10 @@ var parsers = {'C#':(function() {
         s0 = peg$FAILED;
       }
       if (s0 === peg$FAILED) {
-        s0 = peg$parseAnd();
+        s0 = peg$parsefunction_call_named_parameter();
+        if (s0 === peg$FAILED) {
+          s0 = peg$parseAnd();
+        }
       }
 
       return s0;
@@ -3567,13 +3576,7 @@ var parsers = {'C#':(function() {
                                         if (s0 === peg$FAILED) {
                                           s0 = peg$parseIdentifier();
                                           if (s0 === peg$FAILED) {
-                                            s0 = peg$currPos;
-                                            s1 = peg$parseInteger();
-                                            if (s1 !== peg$FAILED) {
-                                              peg$savedPos = s0;
-                                              s1 = peg$c124();
-                                            }
-                                            s0 = s1;
+                                            s0 = peg$parseInteger();
                                           }
                                         }
                                       }
@@ -3606,7 +3609,7 @@ var parsers = {'C#':(function() {
         s2 = peg$parsearray_type_suffix();
         if (s2 !== peg$FAILED) {
           peg$savedPos = s0;
-          s1 = peg$c125(s1, s2);
+          s1 = peg$c124(s1, s2);
           s0 = s1;
         } else {
           peg$currPos = s0;
@@ -3653,16 +3656,16 @@ var parsers = {'C#':(function() {
       var s0, s1;
 
       s0 = peg$currPos;
-      if (input.substr(peg$currPos, 4) === peg$c126) {
-        s1 = peg$c126;
+      if (input.substr(peg$currPos, 4) === peg$c125) {
+        s1 = peg$c125;
         peg$currPos += 4;
       } else {
         s1 = peg$FAILED;
-        if (peg$silentFails === 0) { peg$fail(peg$c127); }
+        if (peg$silentFails === 0) { peg$fail(peg$c126); }
       }
       if (s1 !== peg$FAILED) {
         peg$savedPos = s0;
-        s1 = peg$c128();
+        s1 = peg$c127();
       }
       s0 = s1;
 
@@ -3680,7 +3683,7 @@ var parsers = {'C#':(function() {
           s3 = peg$parsevar_name();
           if (s3 !== peg$FAILED) {
             peg$savedPos = s0;
-            s1 = peg$c129(s1, s3);
+            s1 = peg$c128(s1, s3);
             s0 = s1;
           } else {
             peg$currPos = s0;
@@ -3702,16 +3705,16 @@ var parsers = {'C#':(function() {
       var s0, s1;
 
       s0 = peg$currPos;
-      if (input.substr(peg$currPos, 6) === peg$c130) {
-        s1 = peg$c130;
+      if (input.substr(peg$currPos, 6) === peg$c129) {
+        s1 = peg$c129;
         peg$currPos += 6;
       } else {
         s1 = peg$FAILED;
-        if (peg$silentFails === 0) { peg$fail(peg$c131); }
+        if (peg$silentFails === 0) { peg$fail(peg$c130); }
       }
       if (s1 !== peg$FAILED) {
         peg$savedPos = s0;
-        s1 = peg$c132();
+        s1 = peg$c131();
       }
       s0 = s1;
 
@@ -3722,16 +3725,16 @@ var parsers = {'C#':(function() {
       var s0, s1;
 
       s0 = peg$currPos;
-      if (input.substr(peg$currPos, 4) === peg$c133) {
-        s1 = peg$c133;
+      if (input.substr(peg$currPos, 4) === peg$c132) {
+        s1 = peg$c132;
         peg$currPos += 4;
       } else {
         s1 = peg$FAILED;
-        if (peg$silentFails === 0) { peg$fail(peg$c134); }
+        if (peg$silentFails === 0) { peg$fail(peg$c133); }
       }
       if (s1 !== peg$FAILED) {
         peg$savedPos = s0;
-        s1 = peg$c135();
+        s1 = peg$c134();
       }
       s0 = s1;
 
@@ -3742,18 +3745,18 @@ var parsers = {'C#':(function() {
       var s0, s1, s2;
 
       s0 = peg$currPos;
-      if (input.substr(peg$currPos, 2) === peg$c136) {
-        s1 = peg$c136;
+      if (input.substr(peg$currPos, 2) === peg$c135) {
+        s1 = peg$c135;
         peg$currPos += 2;
       } else {
         s1 = peg$FAILED;
-        if (peg$silentFails === 0) { peg$fail(peg$c137); }
+        if (peg$silentFails === 0) { peg$fail(peg$c136); }
       }
       if (s1 !== peg$FAILED) {
         s2 = peg$parsearray_type_suffix();
         if (s2 !== peg$FAILED) {
           peg$savedPos = s0;
-          s1 = peg$c125(s1, s2);
+          s1 = peg$c137(s1, s2);
           s0 = s1;
         } else {
           peg$currPos = s0;
@@ -3764,12 +3767,12 @@ var parsers = {'C#':(function() {
         s0 = peg$FAILED;
       }
       if (s0 === peg$FAILED) {
-        if (input.substr(peg$currPos, 2) === peg$c136) {
-          s0 = peg$c136;
+        if (input.substr(peg$currPos, 2) === peg$c135) {
+          s0 = peg$c135;
           peg$currPos += 2;
         } else {
           s0 = peg$FAILED;
-          if (peg$silentFails === 0) { peg$fail(peg$c137); }
+          if (peg$silentFails === 0) { peg$fail(peg$c136); }
         }
       }
 
@@ -7654,7 +7657,7 @@ var parsers = {'C#':(function() {
         peg$c91 = "->",
         peg$c92 = { type: "literal", value: "->", description: "\"->\"" },
         peg$c93 = function(var1, var2) {return ["dot_notation", {var1:var1, var2:var2}];},
-        peg$c94 = function(theName, args) {return ["function_call", {name:theName, args:args}]},
+        peg$c94 = function(theName, args) {return ["function_call", {theName:theName, args:args}]},
         peg$c95 = function(var1) {return ["parentheses_expression", {"a":var1}];},
         peg$c96 = function(var1, var2) {return ["function_call_parameters", {var1:var1, var2:var2}]},
         peg$c97 = "$this",
@@ -7671,7 +7674,7 @@ var parsers = {'C#':(function() {
         peg$c108 = { type: "literal", value: "tan", description: "\"tan\"" },
         peg$c109 = function(var1) {return ["tan", {var1:var1,}];},
         peg$c110 = function(expr) { return ["parentheses_expression", {"a":expr}]; },
-        peg$c111 = function(type) {return type},
+        peg$c111 = function(var1) {return ["type", {var1:var1}]},
         peg$c112 = "bool",
         peg$c113 = { type: "literal", value: "bool", description: "\"bool\"" },
         peg$c114 = function() {return ["boolean", {}];},
@@ -9479,6 +9482,9 @@ var parsers = {'C#':(function() {
       }
       if (s0 === peg$FAILED) {
         s0 = peg$parsefunction_parameter();
+        if (s0 === peg$FAILED) {
+          s0 = peg$parse_();
+        }
       }
 
       return s0;
@@ -10314,7 +10320,10 @@ var parsers = {'C#':(function() {
       var s0, s1, s2, s3, s4, s5;
 
       s0 = peg$currPos;
-      s1 = peg$parseAnd();
+      s1 = peg$parsefunction_call_named_parameter();
+      if (s1 === peg$FAILED) {
+        s1 = peg$parseAnd();
+      }
       if (s1 !== peg$FAILED) {
         s2 = peg$parse_();
         if (s2 !== peg$FAILED) {
@@ -10354,7 +10363,10 @@ var parsers = {'C#':(function() {
         s0 = peg$FAILED;
       }
       if (s0 === peg$FAILED) {
-        s0 = peg$parseAnd();
+        s0 = peg$parsefunction_call_named_parameter();
+        if (s0 === peg$FAILED) {
+          s0 = peg$parseAnd();
+        }
       }
 
       return s0;
@@ -14381,7 +14393,7 @@ var parsers = {'C#':(function() {
         peg$c65 = "->",
         peg$c66 = { type: "literal", value: "->", description: "\"->\"" },
         peg$c67 = function(var1, var2) {return ["dot_notation", {var1:var1, var2:var2}];},
-        peg$c68 = function(theName, args) {return ["function_call", {name:theName, args:args}]},
+        peg$c68 = function(theName, args) {return ["function_call", {theName:theName, args:args}]},
         peg$c69 = function(var1) {return ["parentheses_expression", {"a":var1}];},
         peg$c70 = function(var1, var2) {return ["function_call_parameters", {var1:var1, var2:var2}]},
         peg$c71 = "sin",
@@ -14394,7 +14406,7 @@ var parsers = {'C#':(function() {
         peg$c78 = { type: "literal", value: "tan", description: "\"tan\"" },
         peg$c79 = function(var1) {return ["tan", {var1:var1,}];},
         peg$c80 = function(expr) { return ["parentheses_expression", {"a":expr}]; },
-        peg$c81 = function(var1, var2) {return var1 + var2;},
+        peg$c81 = function(var1, var2) {return ["type",{var1:var1, var2:var2}];},
         peg$c82 = "bool",
         peg$c83 = { type: "literal", value: "bool", description: "\"bool\"" },
         peg$c84 = function() {return ["boolean", {}];},
@@ -14410,153 +14422,154 @@ var parsers = {'C#':(function() {
         peg$c94 = function() {return ["void", {}];},
         peg$c95 = "[]",
         peg$c96 = { type: "literal", value: "[]", description: "\"[]\"" },
-        peg$c97 = "case",
-        peg$c98 = { type: "literal", value: "case", description: "\"case\"" },
-        peg$c99 = "break",
-        peg$c100 = { type: "literal", value: "break", description: "\"break\"" },
-        peg$c101 = function(a, b) {return ["case", {a:a,b:b,}];},
-        peg$c102 = function() {return ["key_value_separator", {}];},
-        peg$c103 = function() {return ["initializer_list_separator", {}];},
-        peg$c104 = "][",
-        peg$c105 = { type: "literal", value: "][", description: "\"][\"" },
-        peg$c106 = function() {return ["array_access_separator", {}];},
-        peg$c107 = "#include",
-        peg$c108 = { type: "literal", value: "#include", description: "\"#include\"" },
-        peg$c109 = "\"",
-        peg$c110 = { type: "literal", value: "\"", description: "\"\\\"\"" },
-        peg$c111 = ".h\"",
-        peg$c112 = { type: "literal", value: ".h\"", description: "\".h\\\"\"" },
-        peg$c113 = function(a) {return ["import", {a:a,}];},
-        peg$c114 = function(a) {return ["dictionary", {a:a,}];},
-        peg$c115 = function(name) {return ["var_name", {name:name,}];},
-        peg$c116 = function() {return ["default_parameter", {}];},
-        peg$c117 = function(var1, var2, var3) {return ["_initializer_list", {var1:var1,var2:var2,var3:var3,}];},
-        peg$c118 = "strlen",
-        peg$c119 = { type: "literal", value: "strlen", description: "\"strlen\"" },
-        peg$c120 = function(a) {return ["strlen", {a:a,}];},
-        peg$c121 = "!=",
-        peg$c122 = { type: "literal", value: "!=", description: "\"!=\"" },
-        peg$c123 = function(a, b) {return ["not_equal", {a:a,b:b,}];},
-        peg$c124 = function(var1, var2, var3) {return ["key_value_list", {var1:var1,var2:var2,var3:var3,}];},
-        peg$c125 = "sizeof",
-        peg$c126 = { type: "literal", value: "sizeof", description: "\"sizeof\"" },
-        peg$c127 = "[",
-        peg$c128 = { type: "literal", value: "[", description: "\"[\"" },
-        peg$c129 = "0",
-        peg$c130 = { type: "literal", value: "0", description: "\"0\"" },
-        peg$c131 = "]",
-        peg$c132 = { type: "literal", value: "]", description: "\"]\"" },
-        peg$c133 = function(a) {return ["array_length", {a:a,a:a,}];},
-        peg$c134 = function(a) {return ["initializer_list", {a:a,}];},
-        peg$c135 = function(a, b) {return ["key_value", {a:a,b:b,}];},
-        peg$c136 = "strcmp",
-        peg$c137 = { type: "literal", value: "strcmp", description: "\"strcmp\"" },
-        peg$c138 = function(a, b) {return ["strcmp", {a:a,b:b,}];},
-        peg$c139 = "sqrt",
-        peg$c140 = { type: "literal", value: "sqrt", description: "\"sqrt\"" },
-        peg$c141 = function(x) {return ["sqrt", {x:x,}];},
-        peg$c142 = "+=",
-        peg$c143 = { type: "literal", value: "+=", description: "\"+=\"" },
-        peg$c144 = function(a, b) {return ["plus_equals", {a:a,b:b,}];},
-        peg$c145 = "-=",
-        peg$c146 = { type: "literal", value: "-=", description: "\"-=\"" },
-        peg$c147 = function(a, b) {return ["minus_equals", {a:a,b:b,}];},
-        peg$c148 = function(a, b) {return ["concatenate_string", {a:a,b:b,}];},
-        peg$c149 = "pow",
-        peg$c150 = { type: "literal", value: "pow", description: "\"pow\"" },
-        peg$c151 = function(a, b) {return ["pow", {a:a,b:b,}];},
-        peg$c152 = function(return_type, name, params, body) {return ["static_method", {return_type:return_type,name:name,params:params,body:body,}];},
-        peg$c153 = function() {return ["declare_new_object", {}];},
-        peg$c154 = "atoi",
-        peg$c155 = { type: "literal", value: "atoi", description: "\"atoi\"" },
-        peg$c156 = function(a) {return ["string_to_int", {a:a,}];},
-        peg$c157 = "static",
-        peg$c158 = { type: "literal", value: "static", description: "\"static\"" },
-        peg$c159 = "const",
-        peg$c160 = { type: "literal", value: "const", description: "\"const\"" },
-        peg$c161 = "=",
-        peg$c162 = { type: "literal", value: "=", description: "\"=\"" },
-        peg$c163 = function(name, value) {return ["typeless_declare_constant", {name:name,value:value,}];},
-        peg$c164 = function(type, name, value) {return ["declare_constant", {type:type,name:name,value:value,}];},
-        peg$c165 = function(value) {return ["function_call_named_parameter", {value:value,}];},
-        peg$c166 = "for",
-        peg$c167 = { type: "literal", value: "for", description: "\"for\"" },
-        peg$c168 = function(init, statement_1, condition, statement_2, body) {return ["for", {init:init,statement_1:statement_1,condition:condition,statement_2:statement_2,body:body,}];},
-        peg$c169 = function(return_type, name, params, body) {return ["function", {return_type:return_type,name:name,params:params,body:body,}];},
-        peg$c170 = "else",
-        peg$c171 = { type: "literal", value: "else", description: "\"else\"" },
-        peg$c172 = function(a) {return ["else", {a:a,}];},
-        peg$c173 = "if",
-        peg$c174 = { type: "literal", value: "if", description: "\"if\"" },
-        peg$c175 = "a",
-        peg$c176 = { type: "literal", value: "a", description: "\"a\"" },
-        peg$c177 = "b",
-        peg$c178 = { type: "literal", value: "b", description: "\"b\"" },
-        peg$c179 = "c",
-        peg$c180 = { type: "literal", value: "c", description: "\"c\"" },
-        peg$c181 = function() {return ["elif", {}];},
-        peg$c182 = "return",
-        peg$c183 = { type: "literal", value: "return", description: "\"return\"" },
-        peg$c184 = function(a) {return ["return", {a:a,}];},
-        peg$c185 = function(name, value) {return ["set_var", {name:name,value:value,}];},
-        peg$c186 = "printf",
-        peg$c187 = { type: "literal", value: "printf", description: "\"printf\"" },
-        peg$c188 = function(a) {return ["print", {a:a,}];},
-        peg$c189 = "//",
-        peg$c190 = { type: "literal", value: "//", description: "\"//\"" },
-        peg$c191 = /^[^\n]/,
-        peg$c192 = { type: "class", value: "[^\\n]", description: "[^\\n]" },
-        peg$c193 = "\n",
-        peg$c194 = { type: "literal", value: "\n", description: "\"\\n\"" },
-        peg$c195 = function(var1) {return ["comment", {var1:var1,}];},
-        peg$c196 = function(type, name, value) {return ["initialize_var", {type:type,name:name,value:value,}];},
-        peg$c197 = "__auto_type",
-        peg$c198 = { type: "literal", value: "__auto_type", description: "\"__auto_type\"" },
-        peg$c199 = function(name, value) {return ["typeless_initialize_var", {name:name,value:value,}];},
-        peg$c200 = "int",
-        peg$c201 = { type: "literal", value: "int", description: "\"int\"" },
-        peg$c202 = function() {return ["int", {}];},
-        peg$c203 = function(a, b, c) {return ["if", {a:a,b:b,c:c,}];},
-        peg$c204 = function(type, name) {return ["function_parameter", {type:type,name:name,}];},
-        peg$c205 = function(a, b) {return ["access_array", {a:a,b:b,}];},
-        peg$c206 = function(var1, separator, var2) {return ["array_access_list", {var1:var1,separator:separator,var2:var2,}];},
-        peg$c207 = { type: "other", description: "identifier" },
-        peg$c208 = "split",
-        peg$c209 = { type: "literal", value: "split", description: "\"split\"" },
-        peg$c210 = "equals",
-        peg$c211 = { type: "literal", value: "equals", description: "\"equals\"" },
-        peg$c212 = "Console",
-        peg$c213 = { type: "literal", value: "Console", description: "\"Console\"" },
-        peg$c214 = "System",
-        peg$c215 = { type: "literal", value: "System", description: "\"System\"" },
-        peg$c216 = "ite",
-        peg$c217 = { type: "literal", value: "ite", description: "\"ite\"" },
-        peg$c218 = "end",
-        peg$c219 = { type: "literal", value: "end", description: "\"end\"" },
-        peg$c220 = "then",
-        peg$c221 = { type: "literal", value: "then", description: "\"then\"" },
-        peg$c222 = /^[a-zA-Z0-9]/,
-        peg$c223 = { type: "class", value: "[a-zA-Z0-9]", description: "[a-zA-Z0-9]" },
-        peg$c224 = function() {return text();},
-        peg$c225 = function(var1, var2, var3) {return ["key_value_list", {var1:var1,var2:var2,var3:var3}]},
-        peg$c226 = function(var1, var2, var3) {return ["_initializer_list", {var1:var1,var2:var2,var3:var3}];},
-        peg$c227 = function(var1, separator, var2) {return ["array_access_list", {var1:var1, separator:separator, var2:var2}]},
-        peg$c228 = { type: "other", description: "integer" },
-        peg$c229 = /^[0-9]/,
-        peg$c230 = { type: "class", value: "[0-9]", description: "[0-9]" },
-        peg$c231 = function() { return text(); },
-        peg$c232 = { type: "other", description: "whitespace" },
-        peg$c233 = /^[ \t\n\r]/,
-        peg$c234 = { type: "class", value: "[ \\t\\n\\r]", description: "[ \\t\\n\\r]" },
-        peg$c235 = { type: "other", description: "whitespace2" },
-        peg$c236 = function(var1) {return ["string_literal", {var1:var1}];},
-        peg$c237 = "'",
-        peg$c238 = { type: "literal", value: "'", description: "\"'\"" },
-        peg$c239 = function(var1) {return ["string literal", var1];},
-        peg$c240 = /^[^"]/,
-        peg$c241 = { type: "class", value: "[^\"]", description: "[^\"]" },
-        peg$c242 = /^[^']/,
-        peg$c243 = { type: "class", value: "[^']", description: "[^']" },
+        peg$c97 = function(var1, var2) {return ["array_type_suffix", {var1:var1, var2:var2}];},
+        peg$c98 = "case",
+        peg$c99 = { type: "literal", value: "case", description: "\"case\"" },
+        peg$c100 = "break",
+        peg$c101 = { type: "literal", value: "break", description: "\"break\"" },
+        peg$c102 = function(a, b) {return ["case", {a:a,b:b,}];},
+        peg$c103 = function() {return ["key_value_separator", {}];},
+        peg$c104 = function() {return ["initializer_list_separator", {}];},
+        peg$c105 = "][",
+        peg$c106 = { type: "literal", value: "][", description: "\"][\"" },
+        peg$c107 = function() {return ["array_access_separator", {}];},
+        peg$c108 = "#include",
+        peg$c109 = { type: "literal", value: "#include", description: "\"#include\"" },
+        peg$c110 = "\"",
+        peg$c111 = { type: "literal", value: "\"", description: "\"\\\"\"" },
+        peg$c112 = ".h\"",
+        peg$c113 = { type: "literal", value: ".h\"", description: "\".h\\\"\"" },
+        peg$c114 = function(a) {return ["import", {a:a,}];},
+        peg$c115 = function(a) {return ["dictionary", {a:a,}];},
+        peg$c116 = function(name) {return ["var_name", {name:name,}];},
+        peg$c117 = function() {return ["default_parameter", {}];},
+        peg$c118 = function(var1, var2, var3) {return ["_initializer_list", {var1:var1,var2:var2,var3:var3,}];},
+        peg$c119 = "strlen",
+        peg$c120 = { type: "literal", value: "strlen", description: "\"strlen\"" },
+        peg$c121 = function(a) {return ["strlen", {a:a,}];},
+        peg$c122 = "!=",
+        peg$c123 = { type: "literal", value: "!=", description: "\"!=\"" },
+        peg$c124 = function(a, b) {return ["not_equal", {a:a,b:b,}];},
+        peg$c125 = function(var1, var2, var3) {return ["key_value_list", {var1:var1,var2:var2,var3:var3,}];},
+        peg$c126 = "sizeof",
+        peg$c127 = { type: "literal", value: "sizeof", description: "\"sizeof\"" },
+        peg$c128 = "[",
+        peg$c129 = { type: "literal", value: "[", description: "\"[\"" },
+        peg$c130 = "0",
+        peg$c131 = { type: "literal", value: "0", description: "\"0\"" },
+        peg$c132 = "]",
+        peg$c133 = { type: "literal", value: "]", description: "\"]\"" },
+        peg$c134 = function(a) {return ["array_length", {a:a,a:a,}];},
+        peg$c135 = function(a) {return ["initializer_list", {a:a,}];},
+        peg$c136 = function(a, b) {return ["key_value", {a:a,b:b,}];},
+        peg$c137 = "strcmp",
+        peg$c138 = { type: "literal", value: "strcmp", description: "\"strcmp\"" },
+        peg$c139 = function(a, b) {return ["strcmp", {a:a,b:b,}];},
+        peg$c140 = "sqrt",
+        peg$c141 = { type: "literal", value: "sqrt", description: "\"sqrt\"" },
+        peg$c142 = function(x) {return ["sqrt", {x:x,}];},
+        peg$c143 = "+=",
+        peg$c144 = { type: "literal", value: "+=", description: "\"+=\"" },
+        peg$c145 = function(a, b) {return ["plus_equals", {a:a,b:b,}];},
+        peg$c146 = "-=",
+        peg$c147 = { type: "literal", value: "-=", description: "\"-=\"" },
+        peg$c148 = function(a, b) {return ["minus_equals", {a:a,b:b,}];},
+        peg$c149 = function(a, b) {return ["concatenate_string", {a:a,b:b,}];},
+        peg$c150 = "pow",
+        peg$c151 = { type: "literal", value: "pow", description: "\"pow\"" },
+        peg$c152 = function(a, b) {return ["pow", {a:a,b:b,}];},
+        peg$c153 = function(return_type, name, params, body) {return ["static_method", {return_type:return_type,name:name,params:params,body:body,}];},
+        peg$c154 = function() {return ["declare_new_object", {}];},
+        peg$c155 = "atoi",
+        peg$c156 = { type: "literal", value: "atoi", description: "\"atoi\"" },
+        peg$c157 = function(a) {return ["string_to_int", {a:a,}];},
+        peg$c158 = "static",
+        peg$c159 = { type: "literal", value: "static", description: "\"static\"" },
+        peg$c160 = "const",
+        peg$c161 = { type: "literal", value: "const", description: "\"const\"" },
+        peg$c162 = "=",
+        peg$c163 = { type: "literal", value: "=", description: "\"=\"" },
+        peg$c164 = function(name, value) {return ["typeless_declare_constant", {name:name,value:value,}];},
+        peg$c165 = function(type, name, value) {return ["declare_constant", {type:type,name:name,value:value,}];},
+        peg$c166 = function(value) {return ["function_call_named_parameter", {value:value,}];},
+        peg$c167 = "for",
+        peg$c168 = { type: "literal", value: "for", description: "\"for\"" },
+        peg$c169 = function(init, statement_1, condition, statement_2, body) {return ["for", {init:init,statement_1:statement_1,condition:condition,statement_2:statement_2,body:body,}];},
+        peg$c170 = function(return_type, name, params, body) {return ["function", {return_type:return_type,name:name,params:params,body:body,}];},
+        peg$c171 = "else",
+        peg$c172 = { type: "literal", value: "else", description: "\"else\"" },
+        peg$c173 = function(a) {return ["else", {a:a,}];},
+        peg$c174 = "if",
+        peg$c175 = { type: "literal", value: "if", description: "\"if\"" },
+        peg$c176 = "a",
+        peg$c177 = { type: "literal", value: "a", description: "\"a\"" },
+        peg$c178 = "b",
+        peg$c179 = { type: "literal", value: "b", description: "\"b\"" },
+        peg$c180 = "c",
+        peg$c181 = { type: "literal", value: "c", description: "\"c\"" },
+        peg$c182 = function() {return ["elif", {}];},
+        peg$c183 = "return",
+        peg$c184 = { type: "literal", value: "return", description: "\"return\"" },
+        peg$c185 = function(a) {return ["return", {a:a,}];},
+        peg$c186 = function(name, value) {return ["set_var", {name:name,value:value,}];},
+        peg$c187 = "printf",
+        peg$c188 = { type: "literal", value: "printf", description: "\"printf\"" },
+        peg$c189 = function(a) {return ["print", {a:a,}];},
+        peg$c190 = "//",
+        peg$c191 = { type: "literal", value: "//", description: "\"//\"" },
+        peg$c192 = /^[^\n]/,
+        peg$c193 = { type: "class", value: "[^\\n]", description: "[^\\n]" },
+        peg$c194 = "\n",
+        peg$c195 = { type: "literal", value: "\n", description: "\"\\n\"" },
+        peg$c196 = function(var1) {return ["comment", {var1:var1,}];},
+        peg$c197 = function(type, name, value) {return ["initialize_var", {type:type,name:name,value:value,}];},
+        peg$c198 = "__auto_type",
+        peg$c199 = { type: "literal", value: "__auto_type", description: "\"__auto_type\"" },
+        peg$c200 = function(name, value) {return ["typeless_initialize_var", {name:name,value:value,}];},
+        peg$c201 = "int",
+        peg$c202 = { type: "literal", value: "int", description: "\"int\"" },
+        peg$c203 = function() {return ["int", {}];},
+        peg$c204 = function(a, b, c) {return ["if", {a:a,b:b,c:c,}];},
+        peg$c205 = function(type, name) {return ["function_parameter", {type:type,name:name,}];},
+        peg$c206 = function(a, b) {return ["access_array", {a:a,b:b,}];},
+        peg$c207 = function(var1, separator, var2) {return ["array_access_list", {var1:var1,separator:separator,var2:var2,}];},
+        peg$c208 = { type: "other", description: "identifier" },
+        peg$c209 = "split",
+        peg$c210 = { type: "literal", value: "split", description: "\"split\"" },
+        peg$c211 = "equals",
+        peg$c212 = { type: "literal", value: "equals", description: "\"equals\"" },
+        peg$c213 = "Console",
+        peg$c214 = { type: "literal", value: "Console", description: "\"Console\"" },
+        peg$c215 = "System",
+        peg$c216 = { type: "literal", value: "System", description: "\"System\"" },
+        peg$c217 = "ite",
+        peg$c218 = { type: "literal", value: "ite", description: "\"ite\"" },
+        peg$c219 = "end",
+        peg$c220 = { type: "literal", value: "end", description: "\"end\"" },
+        peg$c221 = "then",
+        peg$c222 = { type: "literal", value: "then", description: "\"then\"" },
+        peg$c223 = /^[a-zA-Z0-9]/,
+        peg$c224 = { type: "class", value: "[a-zA-Z0-9]", description: "[a-zA-Z0-9]" },
+        peg$c225 = function() {return text();},
+        peg$c226 = function(var1, var2, var3) {return ["key_value_list", {var1:var1,var2:var2,var3:var3}]},
+        peg$c227 = function(var1, var2, var3) {return ["_initializer_list", {var1:var1,var2:var2,var3:var3}];},
+        peg$c228 = function(var1, separator, var2) {return ["array_access_list", {var1:var1, separator:separator, var2:var2}]},
+        peg$c229 = { type: "other", description: "integer" },
+        peg$c230 = /^[0-9]/,
+        peg$c231 = { type: "class", value: "[0-9]", description: "[0-9]" },
+        peg$c232 = function() { return text(); },
+        peg$c233 = { type: "other", description: "whitespace" },
+        peg$c234 = /^[ \t\n\r]/,
+        peg$c235 = { type: "class", value: "[ \\t\\n\\r]", description: "[ \\t\\n\\r]" },
+        peg$c236 = { type: "other", description: "whitespace2" },
+        peg$c237 = function(var1) {return ["string_literal", {var1:var1}];},
+        peg$c238 = "'",
+        peg$c239 = { type: "literal", value: "'", description: "\"'\"" },
+        peg$c240 = function(var1) {return ["string literal", var1];},
+        peg$c241 = /^[^"]/,
+        peg$c242 = { type: "class", value: "[^\"]", description: "[^\"]" },
+        peg$c243 = /^[^']/,
+        peg$c244 = { type: "class", value: "[^']", description: "[^']" },
 
         peg$currPos          = 0,
         peg$savedPos         = 0,
@@ -15305,6 +15318,9 @@ var parsers = {'C#':(function() {
       }
       if (s0 === peg$FAILED) {
         s0 = peg$parsefunction_parameter();
+        if (s0 === peg$FAILED) {
+          s0 = peg$parse_();
+        }
       }
 
       return s0;
@@ -16057,7 +16073,10 @@ var parsers = {'C#':(function() {
       var s0, s1, s2, s3, s4, s5;
 
       s0 = peg$currPos;
-      s1 = peg$parseAnd();
+      s1 = peg$parsefunction_call_named_parameter();
+      if (s1 === peg$FAILED) {
+        s1 = peg$parseAnd();
+      }
       if (s1 !== peg$FAILED) {
         s2 = peg$parse_();
         if (s2 !== peg$FAILED) {
@@ -16097,7 +16116,10 @@ var parsers = {'C#':(function() {
         s0 = peg$FAILED;
       }
       if (s0 === peg$FAILED) {
-        s0 = peg$parseAnd();
+        s0 = peg$parsefunction_call_named_parameter();
+        if (s0 === peg$FAILED) {
+          s0 = peg$parseAnd();
+        }
       }
 
       return s0;
@@ -16602,7 +16624,7 @@ var parsers = {'C#':(function() {
         s2 = peg$parsearray_type_suffix();
         if (s2 !== peg$FAILED) {
           peg$savedPos = s0;
-          s1 = peg$c81(s1, s2);
+          s1 = peg$c97(s1, s2);
           s0 = s1;
         } else {
           peg$currPos = s0;
@@ -16638,12 +16660,12 @@ var parsers = {'C#':(function() {
       var s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, s10, s11;
 
       s0 = peg$currPos;
-      if (input.substr(peg$currPos, 4) === peg$c97) {
-        s1 = peg$c97;
+      if (input.substr(peg$currPos, 4) === peg$c98) {
+        s1 = peg$c98;
         peg$currPos += 4;
       } else {
         s1 = peg$FAILED;
-        if (peg$silentFails === 0) { peg$fail(peg$c98); }
+        if (peg$silentFails === 0) { peg$fail(peg$c99); }
       }
       if (s1 !== peg$FAILED) {
         s2 = peg$parse__();
@@ -16666,12 +16688,12 @@ var parsers = {'C#':(function() {
                   if (s7 !== peg$FAILED) {
                     s8 = peg$parse_();
                     if (s8 !== peg$FAILED) {
-                      if (input.substr(peg$currPos, 5) === peg$c99) {
-                        s9 = peg$c99;
+                      if (input.substr(peg$currPos, 5) === peg$c100) {
+                        s9 = peg$c100;
                         peg$currPos += 5;
                       } else {
                         s9 = peg$FAILED;
-                        if (peg$silentFails === 0) { peg$fail(peg$c100); }
+                        if (peg$silentFails === 0) { peg$fail(peg$c101); }
                       }
                       if (s9 !== peg$FAILED) {
                         s10 = peg$parse_();
@@ -16685,7 +16707,7 @@ var parsers = {'C#':(function() {
                           }
                           if (s11 !== peg$FAILED) {
                             peg$savedPos = s0;
-                            s1 = peg$c101(s3, s7);
+                            s1 = peg$c102(s3, s7);
                             s0 = s1;
                           } else {
                             peg$currPos = s0;
@@ -16748,7 +16770,7 @@ var parsers = {'C#':(function() {
       }
       if (s1 !== peg$FAILED) {
         peg$savedPos = s0;
-        s1 = peg$c102();
+        s1 = peg$c103();
       }
       s0 = s1;
 
@@ -16768,7 +16790,7 @@ var parsers = {'C#':(function() {
       }
       if (s1 !== peg$FAILED) {
         peg$savedPos = s0;
-        s1 = peg$c103();
+        s1 = peg$c104();
       }
       s0 = s1;
 
@@ -16779,16 +16801,16 @@ var parsers = {'C#':(function() {
       var s0, s1;
 
       s0 = peg$currPos;
-      if (input.substr(peg$currPos, 2) === peg$c104) {
-        s1 = peg$c104;
+      if (input.substr(peg$currPos, 2) === peg$c105) {
+        s1 = peg$c105;
         peg$currPos += 2;
       } else {
         s1 = peg$FAILED;
-        if (peg$silentFails === 0) { peg$fail(peg$c105); }
+        if (peg$silentFails === 0) { peg$fail(peg$c106); }
       }
       if (s1 !== peg$FAILED) {
         peg$savedPos = s0;
-        s1 = peg$c106();
+        s1 = peg$c107();
       }
       s0 = s1;
 
@@ -16799,22 +16821,22 @@ var parsers = {'C#':(function() {
       var s0, s1, s2, s3, s4, s5, s6, s7;
 
       s0 = peg$currPos;
-      if (input.substr(peg$currPos, 8) === peg$c107) {
-        s1 = peg$c107;
+      if (input.substr(peg$currPos, 8) === peg$c108) {
+        s1 = peg$c108;
         peg$currPos += 8;
       } else {
         s1 = peg$FAILED;
-        if (peg$silentFails === 0) { peg$fail(peg$c108); }
+        if (peg$silentFails === 0) { peg$fail(peg$c109); }
       }
       if (s1 !== peg$FAILED) {
         s2 = peg$parse__();
         if (s2 !== peg$FAILED) {
           if (input.charCodeAt(peg$currPos) === 34) {
-            s3 = peg$c109;
+            s3 = peg$c110;
             peg$currPos++;
           } else {
             s3 = peg$FAILED;
-            if (peg$silentFails === 0) { peg$fail(peg$c110); }
+            if (peg$silentFails === 0) { peg$fail(peg$c111); }
           }
           if (s3 !== peg$FAILED) {
             s4 = peg$parse_();
@@ -16823,16 +16845,16 @@ var parsers = {'C#':(function() {
               if (s5 !== peg$FAILED) {
                 s6 = peg$parse_();
                 if (s6 !== peg$FAILED) {
-                  if (input.substr(peg$currPos, 3) === peg$c111) {
-                    s7 = peg$c111;
+                  if (input.substr(peg$currPos, 3) === peg$c112) {
+                    s7 = peg$c112;
                     peg$currPos += 3;
                   } else {
                     s7 = peg$FAILED;
-                    if (peg$silentFails === 0) { peg$fail(peg$c112); }
+                    if (peg$silentFails === 0) { peg$fail(peg$c113); }
                   }
                   if (s7 !== peg$FAILED) {
                     peg$savedPos = s0;
-                    s1 = peg$c113(s5);
+                    s1 = peg$c114(s5);
                     s0 = s1;
                   } else {
                     peg$currPos = s0;
@@ -16893,7 +16915,7 @@ var parsers = {'C#':(function() {
               }
               if (s5 !== peg$FAILED) {
                 peg$savedPos = s0;
-                s1 = peg$c114(s3);
+                s1 = peg$c115(s3);
                 s0 = s1;
               } else {
                 peg$currPos = s0;
@@ -16926,7 +16948,7 @@ var parsers = {'C#':(function() {
       s1 = peg$parseIdentifier();
       if (s1 !== peg$FAILED) {
         peg$savedPos = s0;
-        s1 = peg$c115(s1);
+        s1 = peg$c116(s1);
       }
       s0 = s1;
 
@@ -16940,7 +16962,7 @@ var parsers = {'C#':(function() {
       s1 = peg$parse_();
       if (s1 !== peg$FAILED) {
         peg$savedPos = s0;
-        s1 = peg$c116();
+        s1 = peg$c117();
       }
       s0 = s1;
 
@@ -16962,7 +16984,7 @@ var parsers = {'C#':(function() {
               s5 = peg$parse_initializer_list();
               if (s5 !== peg$FAILED) {
                 peg$savedPos = s0;
-                s1 = peg$c117(s1, s3, s5);
+                s1 = peg$c118(s1, s3, s5);
                 s0 = s1;
               } else {
                 peg$currPos = s0;
@@ -16992,12 +17014,12 @@ var parsers = {'C#':(function() {
       var s0, s1, s2, s3, s4, s5, s6, s7;
 
       s0 = peg$currPos;
-      if (input.substr(peg$currPos, 6) === peg$c118) {
-        s1 = peg$c118;
+      if (input.substr(peg$currPos, 6) === peg$c119) {
+        s1 = peg$c119;
         peg$currPos += 6;
       } else {
         s1 = peg$FAILED;
-        if (peg$silentFails === 0) { peg$fail(peg$c119); }
+        if (peg$silentFails === 0) { peg$fail(peg$c120); }
       }
       if (s1 !== peg$FAILED) {
         s2 = peg$parse_();
@@ -17025,7 +17047,7 @@ var parsers = {'C#':(function() {
                   }
                   if (s7 !== peg$FAILED) {
                     peg$savedPos = s0;
-                    s1 = peg$c120(s5);
+                    s1 = peg$c121(s5);
                     s0 = s1;
                   } else {
                     peg$currPos = s0;
@@ -17067,12 +17089,12 @@ var parsers = {'C#':(function() {
       if (s1 !== peg$FAILED) {
         s2 = peg$parse_();
         if (s2 !== peg$FAILED) {
-          if (input.substr(peg$currPos, 2) === peg$c121) {
-            s3 = peg$c121;
+          if (input.substr(peg$currPos, 2) === peg$c122) {
+            s3 = peg$c122;
             peg$currPos += 2;
           } else {
             s3 = peg$FAILED;
-            if (peg$silentFails === 0) { peg$fail(peg$c122); }
+            if (peg$silentFails === 0) { peg$fail(peg$c123); }
           }
           if (s3 !== peg$FAILED) {
             s4 = peg$parse_();
@@ -17080,7 +17102,7 @@ var parsers = {'C#':(function() {
               s5 = peg$parseAdd();
               if (s5 !== peg$FAILED) {
                 peg$savedPos = s0;
-                s1 = peg$c123(s1, s5);
+                s1 = peg$c124(s1, s5);
                 s0 = s1;
               } else {
                 peg$currPos = s0;
@@ -17121,7 +17143,7 @@ var parsers = {'C#':(function() {
               s5 = peg$parsekey_value_list();
               if (s5 !== peg$FAILED) {
                 peg$savedPos = s0;
-                s1 = peg$c124(s1, s3, s5);
+                s1 = peg$c125(s1, s3, s5);
                 s0 = s1;
               } else {
                 peg$currPos = s0;
@@ -17151,12 +17173,12 @@ var parsers = {'C#':(function() {
       var s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, s10, s11, s12, s13, s14, s15, s16, s17, s18, s19, s20, s21, s22, s23;
 
       s0 = peg$currPos;
-      if (input.substr(peg$currPos, 6) === peg$c125) {
-        s1 = peg$c125;
+      if (input.substr(peg$currPos, 6) === peg$c126) {
+        s1 = peg$c126;
         peg$currPos += 6;
       } else {
         s1 = peg$FAILED;
-        if (peg$silentFails === 0) { peg$fail(peg$c126); }
+        if (peg$silentFails === 0) { peg$fail(peg$c127); }
       }
       if (s1 !== peg$FAILED) {
         s2 = peg$parse_();
@@ -17195,12 +17217,12 @@ var parsers = {'C#':(function() {
                       if (s9 !== peg$FAILED) {
                         s10 = peg$parse_();
                         if (s10 !== peg$FAILED) {
-                          if (input.substr(peg$currPos, 6) === peg$c125) {
-                            s11 = peg$c125;
+                          if (input.substr(peg$currPos, 6) === peg$c126) {
+                            s11 = peg$c126;
                             peg$currPos += 6;
                           } else {
                             s11 = peg$FAILED;
-                            if (peg$silentFails === 0) { peg$fail(peg$c126); }
+                            if (peg$silentFails === 0) { peg$fail(peg$c127); }
                           }
                           if (s11 !== peg$FAILED) {
                             s12 = peg$parse_();
@@ -17220,31 +17242,31 @@ var parsers = {'C#':(function() {
                                     s16 = peg$parse_();
                                     if (s16 !== peg$FAILED) {
                                       if (input.charCodeAt(peg$currPos) === 91) {
-                                        s17 = peg$c127;
+                                        s17 = peg$c128;
                                         peg$currPos++;
                                       } else {
                                         s17 = peg$FAILED;
-                                        if (peg$silentFails === 0) { peg$fail(peg$c128); }
+                                        if (peg$silentFails === 0) { peg$fail(peg$c129); }
                                       }
                                       if (s17 !== peg$FAILED) {
                                         s18 = peg$parse_();
                                         if (s18 !== peg$FAILED) {
                                           if (input.charCodeAt(peg$currPos) === 48) {
-                                            s19 = peg$c129;
+                                            s19 = peg$c130;
                                             peg$currPos++;
                                           } else {
                                             s19 = peg$FAILED;
-                                            if (peg$silentFails === 0) { peg$fail(peg$c130); }
+                                            if (peg$silentFails === 0) { peg$fail(peg$c131); }
                                           }
                                           if (s19 !== peg$FAILED) {
                                             s20 = peg$parse_();
                                             if (s20 !== peg$FAILED) {
                                               if (input.charCodeAt(peg$currPos) === 93) {
-                                                s21 = peg$c131;
+                                                s21 = peg$c132;
                                                 peg$currPos++;
                                               } else {
                                                 s21 = peg$FAILED;
-                                                if (peg$silentFails === 0) { peg$fail(peg$c132); }
+                                                if (peg$silentFails === 0) { peg$fail(peg$c133); }
                                               }
                                               if (s21 !== peg$FAILED) {
                                                 s22 = peg$parse_();
@@ -17258,7 +17280,7 @@ var parsers = {'C#':(function() {
                                                   }
                                                   if (s23 !== peg$FAILED) {
                                                     peg$savedPos = s0;
-                                                    s1 = peg$c133(s15);
+                                                    s1 = peg$c134(s15);
                                                     s0 = s1;
                                                   } else {
                                                     peg$currPos = s0;
@@ -17383,7 +17405,7 @@ var parsers = {'C#':(function() {
               }
               if (s5 !== peg$FAILED) {
                 peg$savedPos = s0;
-                s1 = peg$c134(s3);
+                s1 = peg$c135(s3);
                 s0 = s1;
               } else {
                 peg$currPos = s0;
@@ -17450,7 +17472,7 @@ var parsers = {'C#':(function() {
                       }
                       if (s9 !== peg$FAILED) {
                         peg$savedPos = s0;
-                        s1 = peg$c135(s3, s7);
+                        s1 = peg$c136(s3, s7);
                         s0 = s1;
                       } else {
                         peg$currPos = s0;
@@ -17496,12 +17518,12 @@ var parsers = {'C#':(function() {
       var s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, s10, s11, s12, s13, s14, s15;
 
       s0 = peg$currPos;
-      if (input.substr(peg$currPos, 6) === peg$c136) {
-        s1 = peg$c136;
+      if (input.substr(peg$currPos, 6) === peg$c137) {
+        s1 = peg$c137;
         peg$currPos += 6;
       } else {
         s1 = peg$FAILED;
-        if (peg$silentFails === 0) { peg$fail(peg$c137); }
+        if (peg$silentFails === 0) { peg$fail(peg$c138); }
       }
       if (s1 !== peg$FAILED) {
         s2 = peg$parse_();
@@ -17555,15 +17577,15 @@ var parsers = {'C#':(function() {
                                 s14 = peg$parse_();
                                 if (s14 !== peg$FAILED) {
                                   if (input.charCodeAt(peg$currPos) === 48) {
-                                    s15 = peg$c129;
+                                    s15 = peg$c130;
                                     peg$currPos++;
                                   } else {
                                     s15 = peg$FAILED;
-                                    if (peg$silentFails === 0) { peg$fail(peg$c130); }
+                                    if (peg$silentFails === 0) { peg$fail(peg$c131); }
                                   }
                                   if (s15 !== peg$FAILED) {
                                     peg$savedPos = s0;
-                                    s1 = peg$c138(s5, s9);
+                                    s1 = peg$c139(s5, s9);
                                     s0 = s1;
                                   } else {
                                     peg$currPos = s0;
@@ -17633,12 +17655,12 @@ var parsers = {'C#':(function() {
       var s0, s1, s2, s3, s4, s5, s6, s7;
 
       s0 = peg$currPos;
-      if (input.substr(peg$currPos, 4) === peg$c139) {
-        s1 = peg$c139;
+      if (input.substr(peg$currPos, 4) === peg$c140) {
+        s1 = peg$c140;
         peg$currPos += 4;
       } else {
         s1 = peg$FAILED;
-        if (peg$silentFails === 0) { peg$fail(peg$c140); }
+        if (peg$silentFails === 0) { peg$fail(peg$c141); }
       }
       if (s1 !== peg$FAILED) {
         s2 = peg$parse_();
@@ -17666,7 +17688,7 @@ var parsers = {'C#':(function() {
                   }
                   if (s7 !== peg$FAILED) {
                     peg$savedPos = s0;
-                    s1 = peg$c141(s5);
+                    s1 = peg$c142(s5);
                     s0 = s1;
                   } else {
                     peg$currPos = s0;
@@ -17714,12 +17736,12 @@ var parsers = {'C#':(function() {
       if (s1 !== peg$FAILED) {
         s2 = peg$parse_();
         if (s2 !== peg$FAILED) {
-          if (input.substr(peg$currPos, 2) === peg$c142) {
-            s3 = peg$c142;
+          if (input.substr(peg$currPos, 2) === peg$c143) {
+            s3 = peg$c143;
             peg$currPos += 2;
           } else {
             s3 = peg$FAILED;
-            if (peg$silentFails === 0) { peg$fail(peg$c143); }
+            if (peg$silentFails === 0) { peg$fail(peg$c144); }
           }
           if (s3 !== peg$FAILED) {
             s4 = peg$parse_();
@@ -17727,7 +17749,7 @@ var parsers = {'C#':(function() {
               s5 = peg$parseAnd();
               if (s5 !== peg$FAILED) {
                 peg$savedPos = s0;
-                s1 = peg$c144(s1, s5);
+                s1 = peg$c145(s1, s5);
                 s0 = s1;
               } else {
                 peg$currPos = s0;
@@ -17767,12 +17789,12 @@ var parsers = {'C#':(function() {
       if (s1 !== peg$FAILED) {
         s2 = peg$parse_();
         if (s2 !== peg$FAILED) {
-          if (input.substr(peg$currPos, 2) === peg$c145) {
-            s3 = peg$c145;
+          if (input.substr(peg$currPos, 2) === peg$c146) {
+            s3 = peg$c146;
             peg$currPos += 2;
           } else {
             s3 = peg$FAILED;
-            if (peg$silentFails === 0) { peg$fail(peg$c146); }
+            if (peg$silentFails === 0) { peg$fail(peg$c147); }
           }
           if (s3 !== peg$FAILED) {
             s4 = peg$parse_();
@@ -17780,7 +17802,7 @@ var parsers = {'C#':(function() {
               s5 = peg$parseAnd();
               if (s5 !== peg$FAILED) {
                 peg$savedPos = s0;
-                s1 = peg$c147(s1, s5);
+                s1 = peg$c148(s1, s5);
                 s0 = s1;
               } else {
                 peg$currPos = s0;
@@ -17827,7 +17849,7 @@ var parsers = {'C#':(function() {
               s5 = peg$parseconcatenate_string();
               if (s5 !== peg$FAILED) {
                 peg$savedPos = s0;
-                s1 = peg$c148(s1, s5);
+                s1 = peg$c149(s1, s5);
                 s0 = s1;
               } else {
                 peg$currPos = s0;
@@ -17857,12 +17879,12 @@ var parsers = {'C#':(function() {
       var s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, s10, s11;
 
       s0 = peg$currPos;
-      if (input.substr(peg$currPos, 3) === peg$c149) {
-        s1 = peg$c149;
+      if (input.substr(peg$currPos, 3) === peg$c150) {
+        s1 = peg$c150;
         peg$currPos += 3;
       } else {
         s1 = peg$FAILED;
-        if (peg$silentFails === 0) { peg$fail(peg$c150); }
+        if (peg$silentFails === 0) { peg$fail(peg$c151); }
       }
       if (s1 !== peg$FAILED) {
         s2 = peg$parse_();
@@ -17904,7 +17926,7 @@ var parsers = {'C#':(function() {
                           }
                           if (s11 !== peg$FAILED) {
                             peg$savedPos = s0;
-                            s1 = peg$c151(s5, s9);
+                            s1 = peg$c152(s5, s9);
                             s0 = s1;
                           } else {
                             peg$currPos = s0;
@@ -18013,7 +18035,7 @@ var parsers = {'C#':(function() {
                                   }
                                   if (s15 !== peg$FAILED) {
                                     peg$savedPos = s0;
-                                    s1 = peg$c152(s1, s3, s7, s13);
+                                    s1 = peg$c153(s1, s3, s7, s13);
                                     s0 = s1;
                                   } else {
                                     peg$currPos = s0;
@@ -18086,7 +18108,7 @@ var parsers = {'C#':(function() {
       s1 = peg$parse_();
       if (s1 !== peg$FAILED) {
         peg$savedPos = s0;
-        s1 = peg$c153();
+        s1 = peg$c154();
       }
       s0 = s1;
 
@@ -18097,12 +18119,12 @@ var parsers = {'C#':(function() {
       var s0, s1, s2, s3, s4, s5, s6, s7;
 
       s0 = peg$currPos;
-      if (input.substr(peg$currPos, 4) === peg$c154) {
-        s1 = peg$c154;
+      if (input.substr(peg$currPos, 4) === peg$c155) {
+        s1 = peg$c155;
         peg$currPos += 4;
       } else {
         s1 = peg$FAILED;
-        if (peg$silentFails === 0) { peg$fail(peg$c155); }
+        if (peg$silentFails === 0) { peg$fail(peg$c156); }
       }
       if (s1 !== peg$FAILED) {
         s2 = peg$parse_();
@@ -18130,7 +18152,7 @@ var parsers = {'C#':(function() {
                   }
                   if (s7 !== peg$FAILED) {
                     peg$savedPos = s0;
-                    s1 = peg$c156(s5);
+                    s1 = peg$c157(s5);
                     s0 = s1;
                   } else {
                     peg$currPos = s0;
@@ -18168,22 +18190,22 @@ var parsers = {'C#':(function() {
       var s0, s1, s2, s3, s4, s5, s6, s7, s8, s9;
 
       s0 = peg$currPos;
-      if (input.substr(peg$currPos, 6) === peg$c157) {
-        s1 = peg$c157;
+      if (input.substr(peg$currPos, 6) === peg$c158) {
+        s1 = peg$c158;
         peg$currPos += 6;
       } else {
         s1 = peg$FAILED;
-        if (peg$silentFails === 0) { peg$fail(peg$c158); }
+        if (peg$silentFails === 0) { peg$fail(peg$c159); }
       }
       if (s1 !== peg$FAILED) {
         s2 = peg$parse__();
         if (s2 !== peg$FAILED) {
-          if (input.substr(peg$currPos, 5) === peg$c159) {
-            s3 = peg$c159;
+          if (input.substr(peg$currPos, 5) === peg$c160) {
+            s3 = peg$c160;
             peg$currPos += 5;
           } else {
             s3 = peg$FAILED;
-            if (peg$silentFails === 0) { peg$fail(peg$c160); }
+            if (peg$silentFails === 0) { peg$fail(peg$c161); }
           }
           if (s3 !== peg$FAILED) {
             s4 = peg$parse__();
@@ -18193,11 +18215,11 @@ var parsers = {'C#':(function() {
                 s6 = peg$parse_();
                 if (s6 !== peg$FAILED) {
                   if (input.charCodeAt(peg$currPos) === 61) {
-                    s7 = peg$c161;
+                    s7 = peg$c162;
                     peg$currPos++;
                   } else {
                     s7 = peg$FAILED;
-                    if (peg$silentFails === 0) { peg$fail(peg$c162); }
+                    if (peg$silentFails === 0) { peg$fail(peg$c163); }
                   }
                   if (s7 !== peg$FAILED) {
                     s8 = peg$parse_();
@@ -18205,7 +18227,7 @@ var parsers = {'C#':(function() {
                       s9 = peg$parseAnd();
                       if (s9 !== peg$FAILED) {
                         peg$savedPos = s0;
-                        s1 = peg$c163(s5, s9);
+                        s1 = peg$c164(s5, s9);
                         s0 = s1;
                       } else {
                         peg$currPos = s0;
@@ -18251,12 +18273,12 @@ var parsers = {'C#':(function() {
       var s0, s1, s2, s3, s4, s5, s6, s7, s8, s9;
 
       s0 = peg$currPos;
-      if (input.substr(peg$currPos, 5) === peg$c159) {
-        s1 = peg$c159;
+      if (input.substr(peg$currPos, 5) === peg$c160) {
+        s1 = peg$c160;
         peg$currPos += 5;
       } else {
         s1 = peg$FAILED;
-        if (peg$silentFails === 0) { peg$fail(peg$c160); }
+        if (peg$silentFails === 0) { peg$fail(peg$c161); }
       }
       if (s1 !== peg$FAILED) {
         s2 = peg$parse__();
@@ -18270,11 +18292,11 @@ var parsers = {'C#':(function() {
                 s6 = peg$parse_();
                 if (s6 !== peg$FAILED) {
                   if (input.charCodeAt(peg$currPos) === 61) {
-                    s7 = peg$c161;
+                    s7 = peg$c162;
                     peg$currPos++;
                   } else {
                     s7 = peg$FAILED;
-                    if (peg$silentFails === 0) { peg$fail(peg$c162); }
+                    if (peg$silentFails === 0) { peg$fail(peg$c163); }
                   }
                   if (s7 !== peg$FAILED) {
                     s8 = peg$parse_();
@@ -18282,7 +18304,7 @@ var parsers = {'C#':(function() {
                       s9 = peg$parseAnd();
                       if (s9 !== peg$FAILED) {
                         peg$savedPos = s0;
-                        s1 = peg$c164(s3, s5, s9);
+                        s1 = peg$c165(s3, s5, s9);
                         s0 = s1;
                       } else {
                         peg$currPos = s0;
@@ -18331,7 +18353,7 @@ var parsers = {'C#':(function() {
       s1 = peg$parseAnd();
       if (s1 !== peg$FAILED) {
         peg$savedPos = s0;
-        s1 = peg$c165(s1);
+        s1 = peg$c166(s1);
       }
       s0 = s1;
 
@@ -18356,12 +18378,12 @@ var parsers = {'C#':(function() {
           if (s3 !== peg$FAILED) {
             s4 = peg$parse_();
             if (s4 !== peg$FAILED) {
-              if (input.substr(peg$currPos, 3) === peg$c166) {
-                s5 = peg$c166;
+              if (input.substr(peg$currPos, 3) === peg$c167) {
+                s5 = peg$c167;
                 peg$currPos += 3;
               } else {
                 s5 = peg$FAILED;
-                if (peg$silentFails === 0) { peg$fail(peg$c167); }
+                if (peg$silentFails === 0) { peg$fail(peg$c168); }
               }
               if (s5 !== peg$FAILED) {
                 s6 = peg$parse_();
@@ -18441,7 +18463,7 @@ var parsers = {'C#':(function() {
                                                       }
                                                       if (s25 !== peg$FAILED) {
                                                         peg$savedPos = s0;
-                                                        s1 = peg$c168(s1, s9, s13, s17, s23);
+                                                        s1 = peg$c169(s1, s9, s13, s17, s23);
                                                         s0 = s1;
                                                       } else {
                                                         peg$currPos = s0;
@@ -18606,7 +18628,7 @@ var parsers = {'C#':(function() {
                                   }
                                   if (s15 !== peg$FAILED) {
                                     peg$savedPos = s0;
-                                    s1 = peg$c169(s1, s3, s7, s13);
+                                    s1 = peg$c170(s1, s3, s7, s13);
                                     s0 = s1;
                                   } else {
                                     peg$currPos = s0;
@@ -18676,12 +18698,12 @@ var parsers = {'C#':(function() {
       var s0, s1, s2, s3, s4, s5, s6, s7;
 
       s0 = peg$currPos;
-      if (input.substr(peg$currPos, 4) === peg$c170) {
-        s1 = peg$c170;
+      if (input.substr(peg$currPos, 4) === peg$c171) {
+        s1 = peg$c171;
         peg$currPos += 4;
       } else {
         s1 = peg$FAILED;
-        if (peg$silentFails === 0) { peg$fail(peg$c171); }
+        if (peg$silentFails === 0) { peg$fail(peg$c172); }
       }
       if (s1 !== peg$FAILED) {
         s2 = peg$parse_();
@@ -18709,7 +18731,7 @@ var parsers = {'C#':(function() {
                   }
                   if (s7 !== peg$FAILED) {
                     peg$savedPos = s0;
-                    s1 = peg$c172(s5);
+                    s1 = peg$c173(s5);
                     s0 = s1;
                   } else {
                     peg$currPos = s0;
@@ -18747,22 +18769,22 @@ var parsers = {'C#':(function() {
       var s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, s10, s11, s12, s13, s14, s15, s16, s17;
 
       s0 = peg$currPos;
-      if (input.substr(peg$currPos, 4) === peg$c170) {
-        s1 = peg$c170;
+      if (input.substr(peg$currPos, 4) === peg$c171) {
+        s1 = peg$c171;
         peg$currPos += 4;
       } else {
         s1 = peg$FAILED;
-        if (peg$silentFails === 0) { peg$fail(peg$c171); }
+        if (peg$silentFails === 0) { peg$fail(peg$c172); }
       }
       if (s1 !== peg$FAILED) {
         s2 = peg$parse__();
         if (s2 !== peg$FAILED) {
-          if (input.substr(peg$currPos, 2) === peg$c173) {
-            s3 = peg$c173;
+          if (input.substr(peg$currPos, 2) === peg$c174) {
+            s3 = peg$c174;
             peg$currPos += 2;
           } else {
             s3 = peg$FAILED;
-            if (peg$silentFails === 0) { peg$fail(peg$c174); }
+            if (peg$silentFails === 0) { peg$fail(peg$c175); }
           }
           if (s3 !== peg$FAILED) {
             s4 = peg$parse_();
@@ -18778,11 +18800,11 @@ var parsers = {'C#':(function() {
                 s6 = peg$parse_();
                 if (s6 !== peg$FAILED) {
                   if (input.charCodeAt(peg$currPos) === 97) {
-                    s7 = peg$c175;
+                    s7 = peg$c176;
                     peg$currPos++;
                   } else {
                     s7 = peg$FAILED;
-                    if (peg$silentFails === 0) { peg$fail(peg$c176); }
+                    if (peg$silentFails === 0) { peg$fail(peg$c177); }
                   }
                   if (s7 !== peg$FAILED) {
                     s8 = peg$parse_();
@@ -18808,11 +18830,11 @@ var parsers = {'C#':(function() {
                             s12 = peg$parse_();
                             if (s12 !== peg$FAILED) {
                               if (input.charCodeAt(peg$currPos) === 98) {
-                                s13 = peg$c177;
+                                s13 = peg$c178;
                                 peg$currPos++;
                               } else {
                                 s13 = peg$FAILED;
-                                if (peg$silentFails === 0) { peg$fail(peg$c178); }
+                                if (peg$silentFails === 0) { peg$fail(peg$c179); }
                               }
                               if (s13 !== peg$FAILED) {
                                 s14 = peg$parse_();
@@ -18828,15 +18850,15 @@ var parsers = {'C#':(function() {
                                     s16 = peg$parse_();
                                     if (s16 !== peg$FAILED) {
                                       if (input.charCodeAt(peg$currPos) === 99) {
-                                        s17 = peg$c179;
+                                        s17 = peg$c180;
                                         peg$currPos++;
                                       } else {
                                         s17 = peg$FAILED;
-                                        if (peg$silentFails === 0) { peg$fail(peg$c180); }
+                                        if (peg$silentFails === 0) { peg$fail(peg$c181); }
                                       }
                                       if (s17 !== peg$FAILED) {
                                         peg$savedPos = s0;
-                                        s1 = peg$c181();
+                                        s1 = peg$c182();
                                         s0 = s1;
                                       } else {
                                         peg$currPos = s0;
@@ -18914,12 +18936,12 @@ var parsers = {'C#':(function() {
       var s0, s1, s2, s3;
 
       s0 = peg$currPos;
-      if (input.substr(peg$currPos, 6) === peg$c182) {
-        s1 = peg$c182;
+      if (input.substr(peg$currPos, 6) === peg$c183) {
+        s1 = peg$c183;
         peg$currPos += 6;
       } else {
         s1 = peg$FAILED;
-        if (peg$silentFails === 0) { peg$fail(peg$c183); }
+        if (peg$silentFails === 0) { peg$fail(peg$c184); }
       }
       if (s1 !== peg$FAILED) {
         s2 = peg$parse__();
@@ -18927,7 +18949,7 @@ var parsers = {'C#':(function() {
           s3 = peg$parseAnd();
           if (s3 !== peg$FAILED) {
             peg$savedPos = s0;
-            s1 = peg$c184(s3);
+            s1 = peg$c185(s3);
             s0 = s1;
           } else {
             peg$currPos = s0;
@@ -18957,11 +18979,11 @@ var parsers = {'C#':(function() {
         s2 = peg$parse_();
         if (s2 !== peg$FAILED) {
           if (input.charCodeAt(peg$currPos) === 61) {
-            s3 = peg$c161;
+            s3 = peg$c162;
             peg$currPos++;
           } else {
             s3 = peg$FAILED;
-            if (peg$silentFails === 0) { peg$fail(peg$c162); }
+            if (peg$silentFails === 0) { peg$fail(peg$c163); }
           }
           if (s3 !== peg$FAILED) {
             s4 = peg$parse_();
@@ -18969,7 +18991,7 @@ var parsers = {'C#':(function() {
               s5 = peg$parseAnd();
               if (s5 !== peg$FAILED) {
                 peg$savedPos = s0;
-                s1 = peg$c185(s1, s5);
+                s1 = peg$c186(s1, s5);
                 s0 = s1;
               } else {
                 peg$currPos = s0;
@@ -18999,12 +19021,12 @@ var parsers = {'C#':(function() {
       var s0, s1, s2, s3, s4, s5, s6, s7;
 
       s0 = peg$currPos;
-      if (input.substr(peg$currPos, 6) === peg$c186) {
-        s1 = peg$c186;
+      if (input.substr(peg$currPos, 6) === peg$c187) {
+        s1 = peg$c187;
         peg$currPos += 6;
       } else {
         s1 = peg$FAILED;
-        if (peg$silentFails === 0) { peg$fail(peg$c187); }
+        if (peg$silentFails === 0) { peg$fail(peg$c188); }
       }
       if (s1 !== peg$FAILED) {
         s2 = peg$parse_();
@@ -19032,7 +19054,7 @@ var parsers = {'C#':(function() {
                   }
                   if (s7 !== peg$FAILED) {
                     peg$savedPos = s0;
-                    s1 = peg$c188(s5);
+                    s1 = peg$c189(s5);
                     s0 = s1;
                   } else {
                     peg$currPos = s0;
@@ -19070,33 +19092,33 @@ var parsers = {'C#':(function() {
       var s0, s1, s2, s3, s4, s5;
 
       s0 = peg$currPos;
-      if (input.substr(peg$currPos, 2) === peg$c189) {
-        s1 = peg$c189;
+      if (input.substr(peg$currPos, 2) === peg$c190) {
+        s1 = peg$c190;
         peg$currPos += 2;
       } else {
         s1 = peg$FAILED;
-        if (peg$silentFails === 0) { peg$fail(peg$c190); }
+        if (peg$silentFails === 0) { peg$fail(peg$c191); }
       }
       if (s1 !== peg$FAILED) {
         s2 = peg$parse_();
         if (s2 !== peg$FAILED) {
           s3 = [];
-          if (peg$c191.test(input.charAt(peg$currPos))) {
+          if (peg$c192.test(input.charAt(peg$currPos))) {
             s4 = input.charAt(peg$currPos);
             peg$currPos++;
           } else {
             s4 = peg$FAILED;
-            if (peg$silentFails === 0) { peg$fail(peg$c192); }
+            if (peg$silentFails === 0) { peg$fail(peg$c193); }
           }
           if (s4 !== peg$FAILED) {
             while (s4 !== peg$FAILED) {
               s3.push(s4);
-              if (peg$c191.test(input.charAt(peg$currPos))) {
+              if (peg$c192.test(input.charAt(peg$currPos))) {
                 s4 = input.charAt(peg$currPos);
                 peg$currPos++;
               } else {
                 s4 = peg$FAILED;
-                if (peg$silentFails === 0) { peg$fail(peg$c192); }
+                if (peg$silentFails === 0) { peg$fail(peg$c193); }
               }
             }
           } else {
@@ -19106,15 +19128,15 @@ var parsers = {'C#':(function() {
             s4 = peg$parse_();
             if (s4 !== peg$FAILED) {
               if (input.charCodeAt(peg$currPos) === 10) {
-                s5 = peg$c193;
+                s5 = peg$c194;
                 peg$currPos++;
               } else {
                 s5 = peg$FAILED;
-                if (peg$silentFails === 0) { peg$fail(peg$c194); }
+                if (peg$silentFails === 0) { peg$fail(peg$c195); }
               }
               if (s5 !== peg$FAILED) {
                 peg$savedPos = s0;
-                s1 = peg$c195(s3);
+                s1 = peg$c196(s3);
                 s0 = s1;
               } else {
                 peg$currPos = s0;
@@ -19153,11 +19175,11 @@ var parsers = {'C#':(function() {
             s4 = peg$parse_();
             if (s4 !== peg$FAILED) {
               if (input.charCodeAt(peg$currPos) === 61) {
-                s5 = peg$c161;
+                s5 = peg$c162;
                 peg$currPos++;
               } else {
                 s5 = peg$FAILED;
-                if (peg$silentFails === 0) { peg$fail(peg$c162); }
+                if (peg$silentFails === 0) { peg$fail(peg$c163); }
               }
               if (s5 !== peg$FAILED) {
                 s6 = peg$parse_();
@@ -19165,7 +19187,7 @@ var parsers = {'C#':(function() {
                   s7 = peg$parseAnd();
                   if (s7 !== peg$FAILED) {
                     peg$savedPos = s0;
-                    s1 = peg$c196(s1, s3, s7);
+                    s1 = peg$c197(s1, s3, s7);
                     s0 = s1;
                   } else {
                     peg$currPos = s0;
@@ -19203,12 +19225,12 @@ var parsers = {'C#':(function() {
       var s0, s1, s2, s3, s4, s5, s6, s7;
 
       s0 = peg$currPos;
-      if (input.substr(peg$currPos, 11) === peg$c197) {
-        s1 = peg$c197;
+      if (input.substr(peg$currPos, 11) === peg$c198) {
+        s1 = peg$c198;
         peg$currPos += 11;
       } else {
         s1 = peg$FAILED;
-        if (peg$silentFails === 0) { peg$fail(peg$c198); }
+        if (peg$silentFails === 0) { peg$fail(peg$c199); }
       }
       if (s1 !== peg$FAILED) {
         s2 = peg$parse__();
@@ -19218,11 +19240,11 @@ var parsers = {'C#':(function() {
             s4 = peg$parse_();
             if (s4 !== peg$FAILED) {
               if (input.charCodeAt(peg$currPos) === 61) {
-                s5 = peg$c161;
+                s5 = peg$c162;
                 peg$currPos++;
               } else {
                 s5 = peg$FAILED;
-                if (peg$silentFails === 0) { peg$fail(peg$c162); }
+                if (peg$silentFails === 0) { peg$fail(peg$c163); }
               }
               if (s5 !== peg$FAILED) {
                 s6 = peg$parse_();
@@ -19230,7 +19252,7 @@ var parsers = {'C#':(function() {
                   s7 = peg$parseAnd();
                   if (s7 !== peg$FAILED) {
                     peg$savedPos = s0;
-                    s1 = peg$c199(s3, s7);
+                    s1 = peg$c200(s3, s7);
                     s0 = s1;
                   } else {
                     peg$currPos = s0;
@@ -19268,16 +19290,16 @@ var parsers = {'C#':(function() {
       var s0, s1;
 
       s0 = peg$currPos;
-      if (input.substr(peg$currPos, 3) === peg$c200) {
-        s1 = peg$c200;
+      if (input.substr(peg$currPos, 3) === peg$c201) {
+        s1 = peg$c201;
         peg$currPos += 3;
       } else {
         s1 = peg$FAILED;
-        if (peg$silentFails === 0) { peg$fail(peg$c201); }
+        if (peg$silentFails === 0) { peg$fail(peg$c202); }
       }
       if (s1 !== peg$FAILED) {
         peg$savedPos = s0;
-        s1 = peg$c202();
+        s1 = peg$c203();
       }
       s0 = s1;
 
@@ -19288,12 +19310,12 @@ var parsers = {'C#':(function() {
       var s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, s10, s11, s12, s13, s14, s15;
 
       s0 = peg$currPos;
-      if (input.substr(peg$currPos, 2) === peg$c173) {
-        s1 = peg$c173;
+      if (input.substr(peg$currPos, 2) === peg$c174) {
+        s1 = peg$c174;
         peg$currPos += 2;
       } else {
         s1 = peg$FAILED;
-        if (peg$silentFails === 0) { peg$fail(peg$c174); }
+        if (peg$silentFails === 0) { peg$fail(peg$c175); }
       }
       if (s1 !== peg$FAILED) {
         s2 = peg$parse_();
@@ -19349,7 +19371,7 @@ var parsers = {'C#':(function() {
                                   s15 = peg$parseelif_or_else();
                                   if (s15 !== peg$FAILED) {
                                     peg$savedPos = s0;
-                                    s1 = peg$c203(s5, s11, s15);
+                                    s1 = peg$c204(s5, s11, s15);
                                     s0 = s1;
                                   } else {
                                     peg$currPos = s0;
@@ -19426,7 +19448,7 @@ var parsers = {'C#':(function() {
           s3 = peg$parsevar_name();
           if (s3 !== peg$FAILED) {
             peg$savedPos = s0;
-            s1 = peg$c204(s1, s3);
+            s1 = peg$c205(s1, s3);
             s0 = s1;
           } else {
             peg$currPos = s0;
@@ -19453,11 +19475,11 @@ var parsers = {'C#':(function() {
         s2 = peg$parse_();
         if (s2 !== peg$FAILED) {
           if (input.charCodeAt(peg$currPos) === 91) {
-            s3 = peg$c127;
+            s3 = peg$c128;
             peg$currPos++;
           } else {
             s3 = peg$FAILED;
-            if (peg$silentFails === 0) { peg$fail(peg$c128); }
+            if (peg$silentFails === 0) { peg$fail(peg$c129); }
           }
           if (s3 !== peg$FAILED) {
             s4 = peg$parse_();
@@ -19467,15 +19489,15 @@ var parsers = {'C#':(function() {
                 s6 = peg$parse_();
                 if (s6 !== peg$FAILED) {
                   if (input.charCodeAt(peg$currPos) === 93) {
-                    s7 = peg$c131;
+                    s7 = peg$c132;
                     peg$currPos++;
                   } else {
                     s7 = peg$FAILED;
-                    if (peg$silentFails === 0) { peg$fail(peg$c132); }
+                    if (peg$silentFails === 0) { peg$fail(peg$c133); }
                   }
                   if (s7 !== peg$FAILED) {
                     peg$savedPos = s0;
-                    s1 = peg$c205(s1, s5);
+                    s1 = peg$c206(s1, s5);
                     s0 = s1;
                   } else {
                     peg$currPos = s0;
@@ -19524,7 +19546,7 @@ var parsers = {'C#':(function() {
               s5 = peg$parsearray_access_list();
               if (s5 !== peg$FAILED) {
                 peg$savedPos = s0;
-                s1 = peg$c206(s1, s3, s5);
+                s1 = peg$c207(s1, s3, s5);
                 s0 = s1;
               } else {
                 peg$currPos = s0;
@@ -19561,44 +19583,44 @@ var parsers = {'C#':(function() {
       if (s2 === peg$FAILED) {
         s2 = peg$parseInteger();
         if (s2 === peg$FAILED) {
-          if (input.substr(peg$currPos, 5) === peg$c208) {
-            s2 = peg$c208;
+          if (input.substr(peg$currPos, 5) === peg$c209) {
+            s2 = peg$c209;
             peg$currPos += 5;
           } else {
             s2 = peg$FAILED;
-            if (peg$silentFails === 0) { peg$fail(peg$c209); }
+            if (peg$silentFails === 0) { peg$fail(peg$c210); }
           }
           if (s2 === peg$FAILED) {
-            if (input.substr(peg$currPos, 6) === peg$c210) {
-              s2 = peg$c210;
+            if (input.substr(peg$currPos, 6) === peg$c211) {
+              s2 = peg$c211;
               peg$currPos += 6;
             } else {
               s2 = peg$FAILED;
-              if (peg$silentFails === 0) { peg$fail(peg$c211); }
+              if (peg$silentFails === 0) { peg$fail(peg$c212); }
             }
             if (s2 === peg$FAILED) {
-              if (input.substr(peg$currPos, 7) === peg$c212) {
-                s2 = peg$c212;
+              if (input.substr(peg$currPos, 7) === peg$c213) {
+                s2 = peg$c213;
                 peg$currPos += 7;
               } else {
                 s2 = peg$FAILED;
-                if (peg$silentFails === 0) { peg$fail(peg$c213); }
+                if (peg$silentFails === 0) { peg$fail(peg$c214); }
               }
               if (s2 === peg$FAILED) {
-                if (input.substr(peg$currPos, 6) === peg$c214) {
-                  s2 = peg$c214;
+                if (input.substr(peg$currPos, 6) === peg$c215) {
+                  s2 = peg$c215;
                   peg$currPos += 6;
                 } else {
                   s2 = peg$FAILED;
-                  if (peg$silentFails === 0) { peg$fail(peg$c215); }
+                  if (peg$silentFails === 0) { peg$fail(peg$c216); }
                 }
                 if (s2 === peg$FAILED) {
-                  if (input.substr(peg$currPos, 5) === peg$c99) {
-                    s2 = peg$c99;
+                  if (input.substr(peg$currPos, 5) === peg$c100) {
+                    s2 = peg$c100;
                     peg$currPos += 5;
                   } else {
                     s2 = peg$FAILED;
-                    if (peg$silentFails === 0) { peg$fail(peg$c100); }
+                    if (peg$silentFails === 0) { peg$fail(peg$c101); }
                   }
                   if (s2 === peg$FAILED) {
                     if (input.substr(peg$currPos, 5) === peg$c31) {
@@ -19609,44 +19631,44 @@ var parsers = {'C#':(function() {
                       if (peg$silentFails === 0) { peg$fail(peg$c32); }
                     }
                     if (s2 === peg$FAILED) {
-                      if (input.substr(peg$currPos, 2) === peg$c173) {
-                        s2 = peg$c173;
+                      if (input.substr(peg$currPos, 2) === peg$c174) {
+                        s2 = peg$c174;
                         peg$currPos += 2;
                       } else {
                         s2 = peg$FAILED;
-                        if (peg$silentFails === 0) { peg$fail(peg$c174); }
+                        if (peg$silentFails === 0) { peg$fail(peg$c175); }
                       }
                       if (s2 === peg$FAILED) {
-                        if (input.substr(peg$currPos, 4) === peg$c170) {
-                          s2 = peg$c170;
+                        if (input.substr(peg$currPos, 4) === peg$c171) {
+                          s2 = peg$c171;
                           peg$currPos += 4;
                         } else {
                           s2 = peg$FAILED;
-                          if (peg$silentFails === 0) { peg$fail(peg$c171); }
+                          if (peg$silentFails === 0) { peg$fail(peg$c172); }
                         }
                         if (s2 === peg$FAILED) {
-                          if (input.substr(peg$currPos, 3) === peg$c216) {
-                            s2 = peg$c216;
+                          if (input.substr(peg$currPos, 3) === peg$c217) {
+                            s2 = peg$c217;
                             peg$currPos += 3;
                           } else {
                             s2 = peg$FAILED;
-                            if (peg$silentFails === 0) { peg$fail(peg$c217); }
+                            if (peg$silentFails === 0) { peg$fail(peg$c218); }
                           }
                           if (s2 === peg$FAILED) {
-                            if (input.substr(peg$currPos, 3) === peg$c218) {
-                              s2 = peg$c218;
+                            if (input.substr(peg$currPos, 3) === peg$c219) {
+                              s2 = peg$c219;
                               peg$currPos += 3;
                             } else {
                               s2 = peg$FAILED;
-                              if (peg$silentFails === 0) { peg$fail(peg$c219); }
+                              if (peg$silentFails === 0) { peg$fail(peg$c220); }
                             }
                             if (s2 === peg$FAILED) {
-                              if (input.substr(peg$currPos, 4) === peg$c220) {
-                                s2 = peg$c220;
+                              if (input.substr(peg$currPos, 4) === peg$c221) {
+                                s2 = peg$c221;
                                 peg$currPos += 4;
                               } else {
                                 s2 = peg$FAILED;
-                                if (peg$silentFails === 0) { peg$fail(peg$c221); }
+                                if (peg$silentFails === 0) { peg$fail(peg$c222); }
                               }
                             }
                           }
@@ -19669,22 +19691,22 @@ var parsers = {'C#':(function() {
       }
       if (s1 !== peg$FAILED) {
         s2 = [];
-        if (peg$c222.test(input.charAt(peg$currPos))) {
+        if (peg$c223.test(input.charAt(peg$currPos))) {
           s3 = input.charAt(peg$currPos);
           peg$currPos++;
         } else {
           s3 = peg$FAILED;
-          if (peg$silentFails === 0) { peg$fail(peg$c223); }
+          if (peg$silentFails === 0) { peg$fail(peg$c224); }
         }
         if (s3 !== peg$FAILED) {
           while (s3 !== peg$FAILED) {
             s2.push(s3);
-            if (peg$c222.test(input.charAt(peg$currPos))) {
+            if (peg$c223.test(input.charAt(peg$currPos))) {
               s3 = input.charAt(peg$currPos);
               peg$currPos++;
             } else {
               s3 = peg$FAILED;
-              if (peg$silentFails === 0) { peg$fail(peg$c223); }
+              if (peg$silentFails === 0) { peg$fail(peg$c224); }
             }
           }
         } else {
@@ -19692,7 +19714,7 @@ var parsers = {'C#':(function() {
         }
         if (s2 !== peg$FAILED) {
           peg$savedPos = s0;
-          s1 = peg$c224();
+          s1 = peg$c225();
           s0 = s1;
         } else {
           peg$currPos = s0;
@@ -19705,7 +19727,7 @@ var parsers = {'C#':(function() {
       peg$silentFails--;
       if (s0 === peg$FAILED) {
         s1 = peg$FAILED;
-        if (peg$silentFails === 0) { peg$fail(peg$c207); }
+        if (peg$silentFails === 0) { peg$fail(peg$c208); }
       }
 
       return s0;
@@ -19726,7 +19748,7 @@ var parsers = {'C#':(function() {
               s5 = peg$parsekey_value_list();
               if (s5 !== peg$FAILED) {
                 peg$savedPos = s0;
-                s1 = peg$c225(s1, s3, s5);
+                s1 = peg$c226(s1, s3, s5);
                 s0 = s1;
               } else {
                 peg$currPos = s0;
@@ -19770,7 +19792,7 @@ var parsers = {'C#':(function() {
               s5 = peg$parse_initializer_list();
               if (s5 !== peg$FAILED) {
                 peg$savedPos = s0;
-                s1 = peg$c226(s1, s3, s5);
+                s1 = peg$c227(s1, s3, s5);
                 s0 = s1;
               } else {
                 peg$currPos = s0;
@@ -19814,7 +19836,7 @@ var parsers = {'C#':(function() {
               s5 = peg$parsearray_access_list();
               if (s5 !== peg$FAILED) {
                 peg$savedPos = s0;
-                s1 = peg$c227(s1, s3, s5);
+                s1 = peg$c228(s1, s3, s5);
                 s0 = s1;
               } else {
                 peg$currPos = s0;
@@ -19849,22 +19871,22 @@ var parsers = {'C#':(function() {
       peg$silentFails++;
       s0 = peg$currPos;
       s1 = [];
-      if (peg$c229.test(input.charAt(peg$currPos))) {
+      if (peg$c230.test(input.charAt(peg$currPos))) {
         s2 = input.charAt(peg$currPos);
         peg$currPos++;
       } else {
         s2 = peg$FAILED;
-        if (peg$silentFails === 0) { peg$fail(peg$c230); }
+        if (peg$silentFails === 0) { peg$fail(peg$c231); }
       }
       if (s2 !== peg$FAILED) {
         while (s2 !== peg$FAILED) {
           s1.push(s2);
-          if (peg$c229.test(input.charAt(peg$currPos))) {
+          if (peg$c230.test(input.charAt(peg$currPos))) {
             s2 = input.charAt(peg$currPos);
             peg$currPos++;
           } else {
             s2 = peg$FAILED;
-            if (peg$silentFails === 0) { peg$fail(peg$c230); }
+            if (peg$silentFails === 0) { peg$fail(peg$c231); }
           }
         }
       } else {
@@ -19872,13 +19894,13 @@ var parsers = {'C#':(function() {
       }
       if (s1 !== peg$FAILED) {
         peg$savedPos = s0;
-        s1 = peg$c231();
+        s1 = peg$c232();
       }
       s0 = s1;
       peg$silentFails--;
       if (s0 === peg$FAILED) {
         s1 = peg$FAILED;
-        if (peg$silentFails === 0) { peg$fail(peg$c228); }
+        if (peg$silentFails === 0) { peg$fail(peg$c229); }
       }
 
       return s0;
@@ -19889,27 +19911,27 @@ var parsers = {'C#':(function() {
 
       peg$silentFails++;
       s0 = [];
-      if (peg$c233.test(input.charAt(peg$currPos))) {
+      if (peg$c234.test(input.charAt(peg$currPos))) {
         s1 = input.charAt(peg$currPos);
         peg$currPos++;
       } else {
         s1 = peg$FAILED;
-        if (peg$silentFails === 0) { peg$fail(peg$c234); }
+        if (peg$silentFails === 0) { peg$fail(peg$c235); }
       }
       while (s1 !== peg$FAILED) {
         s0.push(s1);
-        if (peg$c233.test(input.charAt(peg$currPos))) {
+        if (peg$c234.test(input.charAt(peg$currPos))) {
           s1 = input.charAt(peg$currPos);
           peg$currPos++;
         } else {
           s1 = peg$FAILED;
-          if (peg$silentFails === 0) { peg$fail(peg$c234); }
+          if (peg$silentFails === 0) { peg$fail(peg$c235); }
         }
       }
       peg$silentFails--;
       if (s0 === peg$FAILED) {
         s1 = peg$FAILED;
-        if (peg$silentFails === 0) { peg$fail(peg$c232); }
+        if (peg$silentFails === 0) { peg$fail(peg$c233); }
       }
 
       return s0;
@@ -19920,30 +19942,30 @@ var parsers = {'C#':(function() {
 
       peg$silentFails++;
       s0 = peg$currPos;
-      if (peg$c233.test(input.charAt(peg$currPos))) {
+      if (peg$c234.test(input.charAt(peg$currPos))) {
         s1 = input.charAt(peg$currPos);
         peg$currPos++;
       } else {
         s1 = peg$FAILED;
-        if (peg$silentFails === 0) { peg$fail(peg$c234); }
+        if (peg$silentFails === 0) { peg$fail(peg$c235); }
       }
       if (s1 !== peg$FAILED) {
         s2 = [];
-        if (peg$c233.test(input.charAt(peg$currPos))) {
+        if (peg$c234.test(input.charAt(peg$currPos))) {
           s3 = input.charAt(peg$currPos);
           peg$currPos++;
         } else {
           s3 = peg$FAILED;
-          if (peg$silentFails === 0) { peg$fail(peg$c234); }
+          if (peg$silentFails === 0) { peg$fail(peg$c235); }
         }
         while (s3 !== peg$FAILED) {
           s2.push(s3);
-          if (peg$c233.test(input.charAt(peg$currPos))) {
+          if (peg$c234.test(input.charAt(peg$currPos))) {
             s3 = input.charAt(peg$currPos);
             peg$currPos++;
           } else {
             s3 = peg$FAILED;
-            if (peg$silentFails === 0) { peg$fail(peg$c234); }
+            if (peg$silentFails === 0) { peg$fail(peg$c235); }
           }
         }
         if (s2 !== peg$FAILED) {
@@ -19960,7 +19982,7 @@ var parsers = {'C#':(function() {
       peg$silentFails--;
       if (s0 === peg$FAILED) {
         s1 = peg$FAILED;
-        if (peg$silentFails === 0) { peg$fail(peg$c235); }
+        if (peg$silentFails === 0) { peg$fail(peg$c236); }
       }
 
       return s0;
@@ -19971,25 +19993,25 @@ var parsers = {'C#':(function() {
 
       s0 = peg$currPos;
       if (input.charCodeAt(peg$currPos) === 34) {
-        s1 = peg$c109;
+        s1 = peg$c110;
         peg$currPos++;
       } else {
         s1 = peg$FAILED;
-        if (peg$silentFails === 0) { peg$fail(peg$c110); }
+        if (peg$silentFails === 0) { peg$fail(peg$c111); }
       }
       if (s1 !== peg$FAILED) {
         s2 = peg$parse_string_literal();
         if (s2 !== peg$FAILED) {
           if (input.charCodeAt(peg$currPos) === 34) {
-            s3 = peg$c109;
+            s3 = peg$c110;
             peg$currPos++;
           } else {
             s3 = peg$FAILED;
-            if (peg$silentFails === 0) { peg$fail(peg$c110); }
+            if (peg$silentFails === 0) { peg$fail(peg$c111); }
           }
           if (s3 !== peg$FAILED) {
             peg$savedPos = s0;
-            s1 = peg$c236(s2);
+            s1 = peg$c237(s2);
             s0 = s1;
           } else {
             peg$currPos = s0;
@@ -20006,25 +20028,25 @@ var parsers = {'C#':(function() {
       if (s0 === peg$FAILED) {
         s0 = peg$currPos;
         if (input.charCodeAt(peg$currPos) === 39) {
-          s1 = peg$c237;
+          s1 = peg$c238;
           peg$currPos++;
         } else {
           s1 = peg$FAILED;
-          if (peg$silentFails === 0) { peg$fail(peg$c238); }
+          if (peg$silentFails === 0) { peg$fail(peg$c239); }
         }
         if (s1 !== peg$FAILED) {
           s2 = peg$parse__string_literal();
           if (s2 !== peg$FAILED) {
             if (input.charCodeAt(peg$currPos) === 39) {
-              s3 = peg$c237;
+              s3 = peg$c238;
               peg$currPos++;
             } else {
               s3 = peg$FAILED;
-              if (peg$silentFails === 0) { peg$fail(peg$c238); }
+              if (peg$silentFails === 0) { peg$fail(peg$c239); }
             }
             if (s3 !== peg$FAILED) {
               peg$savedPos = s0;
-              s1 = peg$c239(s2);
+              s1 = peg$c240(s2);
               s0 = s1;
             } else {
               peg$currPos = s0;
@@ -20048,22 +20070,22 @@ var parsers = {'C#':(function() {
 
       s0 = peg$currPos;
       s1 = [];
-      if (peg$c240.test(input.charAt(peg$currPos))) {
+      if (peg$c241.test(input.charAt(peg$currPos))) {
         s2 = input.charAt(peg$currPos);
         peg$currPos++;
       } else {
         s2 = peg$FAILED;
-        if (peg$silentFails === 0) { peg$fail(peg$c241); }
+        if (peg$silentFails === 0) { peg$fail(peg$c242); }
       }
       if (s2 !== peg$FAILED) {
         while (s2 !== peg$FAILED) {
           s1.push(s2);
-          if (peg$c240.test(input.charAt(peg$currPos))) {
+          if (peg$c241.test(input.charAt(peg$currPos))) {
             s2 = input.charAt(peg$currPos);
             peg$currPos++;
           } else {
             s2 = peg$FAILED;
-            if (peg$silentFails === 0) { peg$fail(peg$c241); }
+            if (peg$silentFails === 0) { peg$fail(peg$c242); }
           }
         }
       } else {
@@ -20071,7 +20093,7 @@ var parsers = {'C#':(function() {
       }
       if (s1 !== peg$FAILED) {
         peg$savedPos = s0;
-        s1 = peg$c224();
+        s1 = peg$c225();
       }
       s0 = s1;
 
@@ -20083,22 +20105,22 @@ var parsers = {'C#':(function() {
 
       s0 = peg$currPos;
       s1 = [];
-      if (peg$c242.test(input.charAt(peg$currPos))) {
+      if (peg$c243.test(input.charAt(peg$currPos))) {
         s2 = input.charAt(peg$currPos);
         peg$currPos++;
       } else {
         s2 = peg$FAILED;
-        if (peg$silentFails === 0) { peg$fail(peg$c243); }
+        if (peg$silentFails === 0) { peg$fail(peg$c244); }
       }
       if (s2 !== peg$FAILED) {
         while (s2 !== peg$FAILED) {
           s1.push(s2);
-          if (peg$c242.test(input.charAt(peg$currPos))) {
+          if (peg$c243.test(input.charAt(peg$currPos))) {
             s2 = input.charAt(peg$currPos);
             peg$currPos++;
           } else {
             s2 = peg$FAILED;
-            if (peg$silentFails === 0) { peg$fail(peg$c243); }
+            if (peg$silentFails === 0) { peg$fail(peg$c244); }
           }
         }
       } else {
@@ -20106,7 +20128,7 @@ var parsers = {'C#':(function() {
       }
       if (s1 !== peg$FAILED) {
         peg$savedPos = s0;
-        s1 = peg$c224();
+        s1 = peg$c225();
       }
       s0 = s1;
 
@@ -20266,7 +20288,7 @@ var parsers = {'C#':(function() {
         peg$c88 = { type: "literal", value: "*", description: "\"*\"" },
         peg$c89 = function(var1, symbol, var2) {return [symbol, {var1:var1,var2:var2}];},
         peg$c90 = function(var1, var2) {return ["dot_notation", {var1:var1, var2:var2}];},
-        peg$c91 = function(theName, args) {return ["function_call", {name:theName, args:args}]},
+        peg$c91 = function(theName, args) {return ["function_call", {theName:theName, args:args}]},
         peg$c92 = function(var1) {return ["parentheses_expression", {"a":var1}];},
         peg$c93 = function(var1, var2) {return ["function_call_parameters", {var1:var1, var2:var2}]},
         peg$c94 = "this",
@@ -20285,7 +20307,7 @@ var parsers = {'C#':(function() {
         peg$c107 = { type: "literal", value: "tan", description: "\"tan\"" },
         peg$c108 = function(var1) {return ["tan", {var1:var1,}];},
         peg$c109 = function(expr) { return ["parentheses_expression", {"a":expr}]; },
-        peg$c110 = function(type) {return type},
+        peg$c110 = function(var1) {return ["type", {var1:var1}]},
         peg$c111 = "boolean",
         peg$c112 = { type: "literal", value: "boolean", description: "\"boolean\"" },
         peg$c113 = function() {return ["boolean", {}];},
@@ -22059,6 +22081,9 @@ var parsers = {'C#':(function() {
       }
       if (s0 === peg$FAILED) {
         s0 = peg$parsefunction_parameter();
+        if (s0 === peg$FAILED) {
+          s0 = peg$parse_();
+        }
       }
 
       return s0;
@@ -22894,7 +22919,10 @@ var parsers = {'C#':(function() {
       var s0, s1, s2, s3, s4, s5;
 
       s0 = peg$currPos;
-      s1 = peg$parseAnd();
+      s1 = peg$parsefunction_call_named_parameter();
+      if (s1 === peg$FAILED) {
+        s1 = peg$parseAnd();
+      }
       if (s1 !== peg$FAILED) {
         s2 = peg$parse_();
         if (s2 !== peg$FAILED) {
@@ -22934,7 +22962,10 @@ var parsers = {'C#':(function() {
         s0 = peg$FAILED;
       }
       if (s0 === peg$FAILED) {
-        s0 = peg$parseAnd();
+        s0 = peg$parsefunction_call_named_parameter();
+        if (s0 === peg$FAILED) {
+          s0 = peg$parseAnd();
+        }
       }
 
       return s0;
@@ -27204,7 +27235,7 @@ var parsers = {'C#':(function() {
         peg$c71 = { type: "literal", value: "*", description: "\"*\"" },
         peg$c72 = function(var1, symbol, var2) {return [symbol, {var1:var1,var2:var2}];},
         peg$c73 = function(var1, var2) {return ["dot_notation", {var1:var1, var2:var2}];},
-        peg$c74 = function(theName, args) {return ["function_call", {name:theName, args:args}]},
+        peg$c74 = function(theName, args) {return ["function_call", {theName:theName, args:args}]},
         peg$c75 = function(var1) {return ["parentheses_expression", {"a":var1}];},
         peg$c76 = function(var1, var2) {return ["function_call_parameters", {var1:var1, var2:var2}]},
         peg$c77 = function(params, b) {return ["anonymous_function", {params:params,b:b,}];},
@@ -27220,7 +27251,7 @@ var parsers = {'C#':(function() {
         peg$c87 = { type: "literal", value: "tan", description: "\"tan\"" },
         peg$c88 = function(var1) {return ["tan", {var1:var1,}];},
         peg$c89 = function(expr) { return ["parentheses_expression", {"a":expr}]; },
-        peg$c90 = function(type) {return type},
+        peg$c90 = function(var1) {return ["type", {var1:var1}]},
         peg$c91 = "boolean",
         peg$c92 = { type: "literal", value: "boolean", description: "\"boolean\"" },
         peg$c93 = function() {return ["boolean", {}];},
@@ -28337,6 +28368,9 @@ var parsers = {'C#':(function() {
       }
       if (s0 === peg$FAILED) {
         s0 = peg$parsefunction_parameter();
+        if (s0 === peg$FAILED) {
+          s0 = peg$parse_();
+        }
       }
 
       return s0;
@@ -29096,7 +29130,10 @@ var parsers = {'C#':(function() {
       var s0, s1, s2, s3, s4, s5;
 
       s0 = peg$currPos;
-      s1 = peg$parseAnd();
+      s1 = peg$parsefunction_call_named_parameter();
+      if (s1 === peg$FAILED) {
+        s1 = peg$parseAnd();
+      }
       if (s1 !== peg$FAILED) {
         s2 = peg$parse_();
         if (s2 !== peg$FAILED) {
@@ -29136,7 +29173,10 @@ var parsers = {'C#':(function() {
         s0 = peg$FAILED;
       }
       if (s0 === peg$FAILED) {
-        s0 = peg$parseAnd();
+        s0 = peg$parsefunction_call_named_parameter();
+        if (s0 === peg$FAILED) {
+          s0 = peg$parseAnd();
+        }
       }
 
       return s0;
@@ -32771,7 +32811,7 @@ var parsers = {'C#':(function() {
         peg$c91 = { type: "literal", value: "*", description: "\"*\"" },
         peg$c92 = function(var1, symbol, var2) {return [symbol, {var1:var1,var2:var2}];},
         peg$c93 = function(var1, var2) {return ["dot_notation", {var1:var1, var2:var2}];},
-        peg$c94 = function(theName, args) {return ["function_call", {name:theName, args:args}]},
+        peg$c94 = function(theName, args) {return ["function_call", {theName:theName, args:args}]},
         peg$c95 = function(var1) {return ["parentheses_expression", {"a":var1}];},
         peg$c96 = function(var1, var2) {return ["function_call_parameters", {var1:var1, var2:var2}]},
         peg$c97 = "this",
@@ -32792,7 +32832,7 @@ var parsers = {'C#':(function() {
         peg$c112 = { type: "literal", value: "tan", description: "\"tan\"" },
         peg$c113 = function(var1) {return ["tan", {var1:var1,}];},
         peg$c114 = function(expr) { return ["parentheses_expression", {"a":expr}]; },
-        peg$c115 = function(var1, var2) {return var1 + var2;},
+        peg$c115 = function(var1, var2) {return ["type",{var1:var1, var2:var2}];},
         peg$c116 = "boolean",
         peg$c117 = { type: "literal", value: "boolean", description: "\"boolean\"" },
         peg$c118 = function() {return ["boolean", {}];},
@@ -32808,145 +32848,146 @@ var parsers = {'C#':(function() {
         peg$c128 = function() {return ["void", {}];},
         peg$c129 = "[]",
         peg$c130 = { type: "literal", value: "[]", description: "\"[]\"" },
-        peg$c131 = "case",
-        peg$c132 = { type: "literal", value: "case", description: "\"case\"" },
-        peg$c133 = "break",
-        peg$c134 = { type: "literal", value: "break", description: "\"break\"" },
-        peg$c135 = function(a, b) {return ["case", {a:a,b:b,}];},
-        peg$c136 = function() {return ["key_value_separator", {}];},
-        peg$c137 = function() {return ["initializer_list_separator", {}];},
-        peg$c138 = "][",
-        peg$c139 = { type: "literal", value: "][", description: "\"][\"" },
-        peg$c140 = function() {return ["array_access_separator", {}];},
-        peg$c141 = "import",
-        peg$c142 = { type: "literal", value: "import", description: "\"import\"" },
-        peg$c143 = function(a) {return ["import", {a:a,}];},
-        peg$c144 = "new",
-        peg$c145 = { type: "literal", value: "new", description: "\"new\"" },
-        peg$c146 = "HashMap",
-        peg$c147 = { type: "literal", value: "HashMap", description: "\"HashMap\"" },
-        peg$c148 = function(input, output, a) {return ["dictionary", {input:input,output:output,a:a,}];},
-        peg$c149 = function(name) {return ["var_name", {name:name,}];},
-        peg$c150 = function() {return ["default_parameter", {}];},
-        peg$c151 = function(var1, var2, var3) {return ["_initializer_list", {var1:var1,var2:var2,var3:var3,}];},
-        peg$c152 = "length",
-        peg$c153 = { type: "literal", value: "length", description: "\"length\"" },
-        peg$c154 = function(a) {return ["strlen", {a:a,}];},
-        peg$c155 = "!=",
-        peg$c156 = { type: "literal", value: "!=", description: "\"!=\"" },
-        peg$c157 = function(a, b) {return ["not_equal", {a:a,b:b,}];},
-        peg$c158 = function(var1, var2, var3) {return ["key_value_list", {var1:var1,var2:var2,var3:var3,}];},
-        peg$c159 = function(a) {return ["array_length", {a:a,}];},
-        peg$c160 = function(a) {return ["initializer_list", {a:a,}];},
-        peg$c161 = "put",
-        peg$c162 = { type: "literal", value: "put", description: "\"put\"" },
-        peg$c163 = function(a, b) {return ["key_value", {a:a,b:b,}];},
-        peg$c164 = "equals",
-        peg$c165 = { type: "literal", value: "equals", description: "\"equals\"" },
-        peg$c166 = function(a, b) {return ["strcmp", {a:a,b:b,}];},
-        peg$c167 = "sqrt",
-        peg$c168 = { type: "literal", value: "sqrt", description: "\"sqrt\"" },
-        peg$c169 = function(x) {return ["sqrt", {x:x,}];},
-        peg$c170 = "+=",
-        peg$c171 = { type: "literal", value: "+=", description: "\"+=\"" },
-        peg$c172 = function(a, b) {return ["plus_equals", {a:a,b:b,}];},
-        peg$c173 = "-=",
-        peg$c174 = { type: "literal", value: "-=", description: "\"-=\"" },
-        peg$c175 = function(a, b) {return ["minus_equals", {a:a,b:b,}];},
-        peg$c176 = function(a, b) {return ["concatenate_string", {a:a,b:b,}];},
-        peg$c177 = "pow",
-        peg$c178 = { type: "literal", value: "pow", description: "\"pow\"" },
-        peg$c179 = function(a, b) {return ["pow", {a:a,b:b,}];},
-        peg$c180 = function(return_type, name, params, body) {return ["static_method", {return_type:return_type,name:name,params:params,body:body,}];},
-        peg$c181 = "=",
-        peg$c182 = { type: "literal", value: "=", description: "\"=\"" },
-        peg$c183 = function(class_name, var_name, params) {return ["declare_new_object", {class_name:class_name,var_name:var_name,class_name:class_name,params:params,}];},
-        peg$c184 = "parseInt",
-        peg$c185 = { type: "literal", value: "parseInt", description: "\"parseInt\"" },
-        peg$c186 = function(a) {return ["string_to_int", {a:a,}];},
-        peg$c187 = "final",
-        peg$c188 = { type: "literal", value: "final", description: "\"final\"" },
-        peg$c189 = function(name, value) {return ["typeless_declare_constant", {name:name,value:value,}];},
-        peg$c190 = function(type, name, value) {return ["declare_constant", {type:type,name:name,value:value,}];},
-        peg$c191 = function(value) {return ["function_call_named_parameter", {value:value,}];},
-        peg$c192 = function(statement_1, condition, statement_2, body) {return ["for", {statement_1:statement_1,condition:condition,statement_2:statement_2,body:body,}];},
-        peg$c193 = function(return_type, name, params, body) {return ["function", {return_type:return_type,name:name,params:params,body:body,}];},
-        peg$c194 = "else",
-        peg$c195 = { type: "literal", value: "else", description: "\"else\"" },
-        peg$c196 = function(a) {return ["else", {a:a,}];},
-        peg$c197 = "if",
-        peg$c198 = { type: "literal", value: "if", description: "\"if\"" },
-        peg$c199 = "a",
-        peg$c200 = { type: "literal", value: "a", description: "\"a\"" },
-        peg$c201 = "b",
-        peg$c202 = { type: "literal", value: "b", description: "\"b\"" },
-        peg$c203 = "c",
-        peg$c204 = { type: "literal", value: "c", description: "\"c\"" },
-        peg$c205 = function() {return ["elif", {}];},
-        peg$c206 = "return",
-        peg$c207 = { type: "literal", value: "return", description: "\"return\"" },
-        peg$c208 = function(a) {return ["return", {a:a,}];},
-        peg$c209 = function(name, value) {return ["set_var", {name:name,value:value,}];},
-        peg$c210 = "System",
-        peg$c211 = { type: "literal", value: "System", description: "\"System\"" },
-        peg$c212 = "out",
-        peg$c213 = { type: "literal", value: "out", description: "\"out\"" },
-        peg$c214 = "println",
-        peg$c215 = { type: "literal", value: "println", description: "\"println\"" },
-        peg$c216 = function(a) {return ["print", {a:a,}];},
-        peg$c217 = "//",
-        peg$c218 = { type: "literal", value: "//", description: "\"//\"" },
-        peg$c219 = /^[^\n]/,
-        peg$c220 = { type: "class", value: "[^\\n]", description: "[^\\n]" },
-        peg$c221 = "\n",
-        peg$c222 = { type: "literal", value: "\n", description: "\"\\n\"" },
-        peg$c223 = function(var1) {return ["comment", {var1:var1,}];},
-        peg$c224 = function(type, name, value) {return ["initialize_var", {type:type,name:name,value:value,}];},
-        peg$c225 = function(name, value) {return ["typeless_initialize_var", {name:name,value:value,}];},
-        peg$c226 = "int",
-        peg$c227 = { type: "literal", value: "int", description: "\"int\"" },
-        peg$c228 = function() {return ["int", {}];},
-        peg$c229 = function(a, b, c) {return ["if", {a:a,b:b,c:c,}];},
-        peg$c230 = function(type, name) {return ["function_parameter", {type:type,name:name,}];},
-        peg$c231 = "[",
-        peg$c232 = { type: "literal", value: "[", description: "\"[\"" },
-        peg$c233 = "]",
-        peg$c234 = { type: "literal", value: "]", description: "\"]\"" },
-        peg$c235 = function(a, b) {return ["access_array", {a:a,b:b,}];},
-        peg$c236 = function(var1, separator, var2) {return ["array_access_list", {var1:var1,separator:separator,var2:var2,}];},
-        peg$c237 = { type: "other", description: "identifier" },
-        peg$c238 = "Console",
-        peg$c239 = { type: "literal", value: "Console", description: "\"Console\"" },
-        peg$c240 = "ite",
-        peg$c241 = { type: "literal", value: "ite", description: "\"ite\"" },
-        peg$c242 = "end",
-        peg$c243 = { type: "literal", value: "end", description: "\"end\"" },
-        peg$c244 = "then",
-        peg$c245 = { type: "literal", value: "then", description: "\"then\"" },
-        peg$c246 = /^[a-zA-Z0-9]/,
-        peg$c247 = { type: "class", value: "[a-zA-Z0-9]", description: "[a-zA-Z0-9]" },
-        peg$c248 = function() {return text();},
-        peg$c249 = function(var1, var2, var3) {return ["key_value_list", {var1:var1,var2:var2,var3:var3}]},
-        peg$c250 = function(var1, var2, var3) {return ["_initializer_list", {var1:var1,var2:var2,var3:var3}];},
-        peg$c251 = function(var1, separator, var2) {return ["array_access_list", {var1:var1, separator:separator, var2:var2}]},
-        peg$c252 = { type: "other", description: "integer" },
-        peg$c253 = /^[0-9]/,
-        peg$c254 = { type: "class", value: "[0-9]", description: "[0-9]" },
-        peg$c255 = function() { return text(); },
-        peg$c256 = { type: "other", description: "whitespace" },
-        peg$c257 = /^[ \t\n\r]/,
-        peg$c258 = { type: "class", value: "[ \\t\\n\\r]", description: "[ \\t\\n\\r]" },
-        peg$c259 = { type: "other", description: "whitespace2" },
-        peg$c260 = "\"",
-        peg$c261 = { type: "literal", value: "\"", description: "\"\\\"\"" },
-        peg$c262 = function(var1) {return ["string_literal", {var1:var1}];},
-        peg$c263 = "'",
-        peg$c264 = { type: "literal", value: "'", description: "\"'\"" },
-        peg$c265 = function(var1) {return ["string literal", var1];},
-        peg$c266 = /^[^"]/,
-        peg$c267 = { type: "class", value: "[^\"]", description: "[^\"]" },
-        peg$c268 = /^[^']/,
-        peg$c269 = { type: "class", value: "[^']", description: "[^']" },
+        peg$c131 = function(var1, var2) {return ["array_type_suffix", {var1:var1, var2:var2}];},
+        peg$c132 = "case",
+        peg$c133 = { type: "literal", value: "case", description: "\"case\"" },
+        peg$c134 = "break",
+        peg$c135 = { type: "literal", value: "break", description: "\"break\"" },
+        peg$c136 = function(a, b) {return ["case", {a:a,b:b,}];},
+        peg$c137 = function() {return ["key_value_separator", {}];},
+        peg$c138 = function() {return ["initializer_list_separator", {}];},
+        peg$c139 = "][",
+        peg$c140 = { type: "literal", value: "][", description: "\"][\"" },
+        peg$c141 = function() {return ["array_access_separator", {}];},
+        peg$c142 = "import",
+        peg$c143 = { type: "literal", value: "import", description: "\"import\"" },
+        peg$c144 = function(a) {return ["import", {a:a,}];},
+        peg$c145 = "new",
+        peg$c146 = { type: "literal", value: "new", description: "\"new\"" },
+        peg$c147 = "HashMap",
+        peg$c148 = { type: "literal", value: "HashMap", description: "\"HashMap\"" },
+        peg$c149 = function(input, output, a) {return ["dictionary", {input:input,output:output,a:a,}];},
+        peg$c150 = function(name) {return ["var_name", {name:name,}];},
+        peg$c151 = function() {return ["default_parameter", {}];},
+        peg$c152 = function(var1, var2, var3) {return ["_initializer_list", {var1:var1,var2:var2,var3:var3,}];},
+        peg$c153 = "length",
+        peg$c154 = { type: "literal", value: "length", description: "\"length\"" },
+        peg$c155 = function(a) {return ["strlen", {a:a,}];},
+        peg$c156 = "!=",
+        peg$c157 = { type: "literal", value: "!=", description: "\"!=\"" },
+        peg$c158 = function(a, b) {return ["not_equal", {a:a,b:b,}];},
+        peg$c159 = function(var1, var2, var3) {return ["key_value_list", {var1:var1,var2:var2,var3:var3,}];},
+        peg$c160 = function(a) {return ["array_length", {a:a,}];},
+        peg$c161 = function(a) {return ["initializer_list", {a:a,}];},
+        peg$c162 = "put",
+        peg$c163 = { type: "literal", value: "put", description: "\"put\"" },
+        peg$c164 = function(a, b) {return ["key_value", {a:a,b:b,}];},
+        peg$c165 = "equals",
+        peg$c166 = { type: "literal", value: "equals", description: "\"equals\"" },
+        peg$c167 = function(a, b) {return ["strcmp", {a:a,b:b,}];},
+        peg$c168 = "sqrt",
+        peg$c169 = { type: "literal", value: "sqrt", description: "\"sqrt\"" },
+        peg$c170 = function(x) {return ["sqrt", {x:x,}];},
+        peg$c171 = "+=",
+        peg$c172 = { type: "literal", value: "+=", description: "\"+=\"" },
+        peg$c173 = function(a, b) {return ["plus_equals", {a:a,b:b,}];},
+        peg$c174 = "-=",
+        peg$c175 = { type: "literal", value: "-=", description: "\"-=\"" },
+        peg$c176 = function(a, b) {return ["minus_equals", {a:a,b:b,}];},
+        peg$c177 = function(a, b) {return ["concatenate_string", {a:a,b:b,}];},
+        peg$c178 = "pow",
+        peg$c179 = { type: "literal", value: "pow", description: "\"pow\"" },
+        peg$c180 = function(a, b) {return ["pow", {a:a,b:b,}];},
+        peg$c181 = function(return_type, name, params, body) {return ["static_method", {return_type:return_type,name:name,params:params,body:body,}];},
+        peg$c182 = "=",
+        peg$c183 = { type: "literal", value: "=", description: "\"=\"" },
+        peg$c184 = function(class_name, var_name, params) {return ["declare_new_object", {class_name:class_name,var_name:var_name,class_name:class_name,params:params,}];},
+        peg$c185 = "parseInt",
+        peg$c186 = { type: "literal", value: "parseInt", description: "\"parseInt\"" },
+        peg$c187 = function(a) {return ["string_to_int", {a:a,}];},
+        peg$c188 = "final",
+        peg$c189 = { type: "literal", value: "final", description: "\"final\"" },
+        peg$c190 = function(name, value) {return ["typeless_declare_constant", {name:name,value:value,}];},
+        peg$c191 = function(type, name, value) {return ["declare_constant", {type:type,name:name,value:value,}];},
+        peg$c192 = function(value) {return ["function_call_named_parameter", {value:value,}];},
+        peg$c193 = function(statement_1, condition, statement_2, body) {return ["for", {statement_1:statement_1,condition:condition,statement_2:statement_2,body:body,}];},
+        peg$c194 = function(return_type, name, params, body) {return ["function", {return_type:return_type,name:name,params:params,body:body,}];},
+        peg$c195 = "else",
+        peg$c196 = { type: "literal", value: "else", description: "\"else\"" },
+        peg$c197 = function(a) {return ["else", {a:a,}];},
+        peg$c198 = "if",
+        peg$c199 = { type: "literal", value: "if", description: "\"if\"" },
+        peg$c200 = "a",
+        peg$c201 = { type: "literal", value: "a", description: "\"a\"" },
+        peg$c202 = "b",
+        peg$c203 = { type: "literal", value: "b", description: "\"b\"" },
+        peg$c204 = "c",
+        peg$c205 = { type: "literal", value: "c", description: "\"c\"" },
+        peg$c206 = function() {return ["elif", {}];},
+        peg$c207 = "return",
+        peg$c208 = { type: "literal", value: "return", description: "\"return\"" },
+        peg$c209 = function(a) {return ["return", {a:a,}];},
+        peg$c210 = function(name, value) {return ["set_var", {name:name,value:value,}];},
+        peg$c211 = "System",
+        peg$c212 = { type: "literal", value: "System", description: "\"System\"" },
+        peg$c213 = "out",
+        peg$c214 = { type: "literal", value: "out", description: "\"out\"" },
+        peg$c215 = "println",
+        peg$c216 = { type: "literal", value: "println", description: "\"println\"" },
+        peg$c217 = function(a) {return ["print", {a:a,}];},
+        peg$c218 = "//",
+        peg$c219 = { type: "literal", value: "//", description: "\"//\"" },
+        peg$c220 = /^[^\n]/,
+        peg$c221 = { type: "class", value: "[^\\n]", description: "[^\\n]" },
+        peg$c222 = "\n",
+        peg$c223 = { type: "literal", value: "\n", description: "\"\\n\"" },
+        peg$c224 = function(var1) {return ["comment", {var1:var1,}];},
+        peg$c225 = function(type, name, value) {return ["initialize_var", {type:type,name:name,value:value,}];},
+        peg$c226 = function(name, value) {return ["typeless_initialize_var", {name:name,value:value,}];},
+        peg$c227 = "int",
+        peg$c228 = { type: "literal", value: "int", description: "\"int\"" },
+        peg$c229 = function() {return ["int", {}];},
+        peg$c230 = function(a, b, c) {return ["if", {a:a,b:b,c:c,}];},
+        peg$c231 = function(type, name) {return ["function_parameter", {type:type,name:name,}];},
+        peg$c232 = "[",
+        peg$c233 = { type: "literal", value: "[", description: "\"[\"" },
+        peg$c234 = "]",
+        peg$c235 = { type: "literal", value: "]", description: "\"]\"" },
+        peg$c236 = function(a, b) {return ["access_array", {a:a,b:b,}];},
+        peg$c237 = function(var1, separator, var2) {return ["array_access_list", {var1:var1,separator:separator,var2:var2,}];},
+        peg$c238 = { type: "other", description: "identifier" },
+        peg$c239 = "Console",
+        peg$c240 = { type: "literal", value: "Console", description: "\"Console\"" },
+        peg$c241 = "ite",
+        peg$c242 = { type: "literal", value: "ite", description: "\"ite\"" },
+        peg$c243 = "end",
+        peg$c244 = { type: "literal", value: "end", description: "\"end\"" },
+        peg$c245 = "then",
+        peg$c246 = { type: "literal", value: "then", description: "\"then\"" },
+        peg$c247 = /^[a-zA-Z0-9]/,
+        peg$c248 = { type: "class", value: "[a-zA-Z0-9]", description: "[a-zA-Z0-9]" },
+        peg$c249 = function() {return text();},
+        peg$c250 = function(var1, var2, var3) {return ["key_value_list", {var1:var1,var2:var2,var3:var3}]},
+        peg$c251 = function(var1, var2, var3) {return ["_initializer_list", {var1:var1,var2:var2,var3:var3}];},
+        peg$c252 = function(var1, separator, var2) {return ["array_access_list", {var1:var1, separator:separator, var2:var2}]},
+        peg$c253 = { type: "other", description: "integer" },
+        peg$c254 = /^[0-9]/,
+        peg$c255 = { type: "class", value: "[0-9]", description: "[0-9]" },
+        peg$c256 = function() { return text(); },
+        peg$c257 = { type: "other", description: "whitespace" },
+        peg$c258 = /^[ \t\n\r]/,
+        peg$c259 = { type: "class", value: "[ \\t\\n\\r]", description: "[ \\t\\n\\r]" },
+        peg$c260 = { type: "other", description: "whitespace2" },
+        peg$c261 = "\"",
+        peg$c262 = { type: "literal", value: "\"", description: "\"\\\"\"" },
+        peg$c263 = function(var1) {return ["string_literal", {var1:var1}];},
+        peg$c264 = "'",
+        peg$c265 = { type: "literal", value: "'", description: "\"'\"" },
+        peg$c266 = function(var1) {return ["string literal", var1];},
+        peg$c267 = /^[^"]/,
+        peg$c268 = { type: "class", value: "[^\"]", description: "[^\"]" },
+        peg$c269 = /^[^']/,
+        peg$c270 = { type: "class", value: "[^']", description: "[^']" },
 
         peg$currPos          = 0,
         peg$savedPos         = 0,
@@ -34636,6 +34677,9 @@ var parsers = {'C#':(function() {
       }
       if (s0 === peg$FAILED) {
         s0 = peg$parsefunction_parameter();
+        if (s0 === peg$FAILED) {
+          s0 = peg$parse_();
+        }
       }
 
       return s0;
@@ -35489,7 +35533,10 @@ var parsers = {'C#':(function() {
       var s0, s1, s2, s3, s4, s5;
 
       s0 = peg$currPos;
-      s1 = peg$parseAnd();
+      s1 = peg$parsefunction_call_named_parameter();
+      if (s1 === peg$FAILED) {
+        s1 = peg$parseAnd();
+      }
       if (s1 !== peg$FAILED) {
         s2 = peg$parse_();
         if (s2 !== peg$FAILED) {
@@ -35529,7 +35576,10 @@ var parsers = {'C#':(function() {
         s0 = peg$FAILED;
       }
       if (s0 === peg$FAILED) {
-        s0 = peg$parseAnd();
+        s0 = peg$parsefunction_call_named_parameter();
+        if (s0 === peg$FAILED) {
+          s0 = peg$parseAnd();
+        }
       }
 
       return s0;
@@ -36305,7 +36355,7 @@ var parsers = {'C#':(function() {
         s2 = peg$parsearray_type_suffix();
         if (s2 !== peg$FAILED) {
           peg$savedPos = s0;
-          s1 = peg$c115(s1, s2);
+          s1 = peg$c131(s1, s2);
           s0 = s1;
         } else {
           peg$currPos = s0;
@@ -36332,12 +36382,12 @@ var parsers = {'C#':(function() {
       var s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, s10, s11;
 
       s0 = peg$currPos;
-      if (input.substr(peg$currPos, 4) === peg$c131) {
-        s1 = peg$c131;
+      if (input.substr(peg$currPos, 4) === peg$c132) {
+        s1 = peg$c132;
         peg$currPos += 4;
       } else {
         s1 = peg$FAILED;
-        if (peg$silentFails === 0) { peg$fail(peg$c132); }
+        if (peg$silentFails === 0) { peg$fail(peg$c133); }
       }
       if (s1 !== peg$FAILED) {
         s2 = peg$parse__();
@@ -36360,12 +36410,12 @@ var parsers = {'C#':(function() {
                   if (s7 !== peg$FAILED) {
                     s8 = peg$parse_();
                     if (s8 !== peg$FAILED) {
-                      if (input.substr(peg$currPos, 5) === peg$c133) {
-                        s9 = peg$c133;
+                      if (input.substr(peg$currPos, 5) === peg$c134) {
+                        s9 = peg$c134;
                         peg$currPos += 5;
                       } else {
                         s9 = peg$FAILED;
-                        if (peg$silentFails === 0) { peg$fail(peg$c134); }
+                        if (peg$silentFails === 0) { peg$fail(peg$c135); }
                       }
                       if (s9 !== peg$FAILED) {
                         s10 = peg$parse_();
@@ -36379,7 +36429,7 @@ var parsers = {'C#':(function() {
                           }
                           if (s11 !== peg$FAILED) {
                             peg$savedPos = s0;
-                            s1 = peg$c135(s3, s7);
+                            s1 = peg$c136(s3, s7);
                             s0 = s1;
                           } else {
                             peg$currPos = s0;
@@ -36442,7 +36492,7 @@ var parsers = {'C#':(function() {
       }
       if (s1 !== peg$FAILED) {
         peg$savedPos = s0;
-        s1 = peg$c136();
+        s1 = peg$c137();
       }
       s0 = s1;
 
@@ -36462,7 +36512,7 @@ var parsers = {'C#':(function() {
       }
       if (s1 !== peg$FAILED) {
         peg$savedPos = s0;
-        s1 = peg$c137();
+        s1 = peg$c138();
       }
       s0 = s1;
 
@@ -36473,16 +36523,16 @@ var parsers = {'C#':(function() {
       var s0, s1;
 
       s0 = peg$currPos;
-      if (input.substr(peg$currPos, 2) === peg$c138) {
-        s1 = peg$c138;
+      if (input.substr(peg$currPos, 2) === peg$c139) {
+        s1 = peg$c139;
         peg$currPos += 2;
       } else {
         s1 = peg$FAILED;
-        if (peg$silentFails === 0) { peg$fail(peg$c139); }
+        if (peg$silentFails === 0) { peg$fail(peg$c140); }
       }
       if (s1 !== peg$FAILED) {
         peg$savedPos = s0;
-        s1 = peg$c140();
+        s1 = peg$c141();
       }
       s0 = s1;
 
@@ -36493,12 +36543,12 @@ var parsers = {'C#':(function() {
       var s0, s1, s2, s3, s4, s5;
 
       s0 = peg$currPos;
-      if (input.substr(peg$currPos, 6) === peg$c141) {
-        s1 = peg$c141;
+      if (input.substr(peg$currPos, 6) === peg$c142) {
+        s1 = peg$c142;
         peg$currPos += 6;
       } else {
         s1 = peg$FAILED;
-        if (peg$silentFails === 0) { peg$fail(peg$c142); }
+        if (peg$silentFails === 0) { peg$fail(peg$c143); }
       }
       if (s1 !== peg$FAILED) {
         s2 = peg$parse__();
@@ -36516,7 +36566,7 @@ var parsers = {'C#':(function() {
               }
               if (s5 !== peg$FAILED) {
                 peg$savedPos = s0;
-                s1 = peg$c143(s3);
+                s1 = peg$c144(s3);
                 s0 = s1;
               } else {
                 peg$currPos = s0;
@@ -36546,22 +36596,22 @@ var parsers = {'C#':(function() {
       var s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, s10, s11, s12, s13, s14, s15, s16, s17, s18, s19, s20, s21, s22, s23, s24, s25, s26, s27;
 
       s0 = peg$currPos;
-      if (input.substr(peg$currPos, 3) === peg$c144) {
-        s1 = peg$c144;
+      if (input.substr(peg$currPos, 3) === peg$c145) {
+        s1 = peg$c145;
         peg$currPos += 3;
       } else {
         s1 = peg$FAILED;
-        if (peg$silentFails === 0) { peg$fail(peg$c145); }
+        if (peg$silentFails === 0) { peg$fail(peg$c146); }
       }
       if (s1 !== peg$FAILED) {
         s2 = peg$parse__();
         if (s2 !== peg$FAILED) {
-          if (input.substr(peg$currPos, 7) === peg$c146) {
-            s3 = peg$c146;
+          if (input.substr(peg$currPos, 7) === peg$c147) {
+            s3 = peg$c147;
             peg$currPos += 7;
           } else {
             s3 = peg$FAILED;
-            if (peg$silentFails === 0) { peg$fail(peg$c147); }
+            if (peg$silentFails === 0) { peg$fail(peg$c148); }
           }
           if (s3 !== peg$FAILED) {
             s4 = peg$parse_();
@@ -36667,7 +36717,7 @@ var parsers = {'C#':(function() {
                                                           }
                                                           if (s27 !== peg$FAILED) {
                                                             peg$savedPos = s0;
-                                                            s1 = peg$c148(s7, s11, s23);
+                                                            s1 = peg$c149(s7, s11, s23);
                                                             s0 = s1;
                                                           } else {
                                                             peg$currPos = s0;
@@ -36788,7 +36838,7 @@ var parsers = {'C#':(function() {
       s1 = peg$parseIdentifier();
       if (s1 !== peg$FAILED) {
         peg$savedPos = s0;
-        s1 = peg$c149(s1);
+        s1 = peg$c150(s1);
       }
       s0 = s1;
 
@@ -36802,7 +36852,7 @@ var parsers = {'C#':(function() {
       s1 = peg$parse_();
       if (s1 !== peg$FAILED) {
         peg$savedPos = s0;
-        s1 = peg$c150();
+        s1 = peg$c151();
       }
       s0 = s1;
 
@@ -36824,7 +36874,7 @@ var parsers = {'C#':(function() {
               s5 = peg$parse_initializer_list();
               if (s5 !== peg$FAILED) {
                 peg$savedPos = s0;
-                s1 = peg$c151(s1, s3, s5);
+                s1 = peg$c152(s1, s3, s5);
                 s0 = s1;
               } else {
                 peg$currPos = s0;
@@ -36868,12 +36918,12 @@ var parsers = {'C#':(function() {
           if (s3 !== peg$FAILED) {
             s4 = peg$parse_();
             if (s4 !== peg$FAILED) {
-              if (input.substr(peg$currPos, 6) === peg$c152) {
-                s5 = peg$c152;
+              if (input.substr(peg$currPos, 6) === peg$c153) {
+                s5 = peg$c153;
                 peg$currPos += 6;
               } else {
                 s5 = peg$FAILED;
-                if (peg$silentFails === 0) { peg$fail(peg$c153); }
+                if (peg$silentFails === 0) { peg$fail(peg$c154); }
               }
               if (s5 !== peg$FAILED) {
                 s6 = peg$parse_();
@@ -36897,7 +36947,7 @@ var parsers = {'C#':(function() {
                       }
                       if (s9 !== peg$FAILED) {
                         peg$savedPos = s0;
-                        s1 = peg$c154(s1);
+                        s1 = peg$c155(s1);
                         s0 = s1;
                       } else {
                         peg$currPos = s0;
@@ -36947,12 +36997,12 @@ var parsers = {'C#':(function() {
       if (s1 !== peg$FAILED) {
         s2 = peg$parse_();
         if (s2 !== peg$FAILED) {
-          if (input.substr(peg$currPos, 2) === peg$c155) {
-            s3 = peg$c155;
+          if (input.substr(peg$currPos, 2) === peg$c156) {
+            s3 = peg$c156;
             peg$currPos += 2;
           } else {
             s3 = peg$FAILED;
-            if (peg$silentFails === 0) { peg$fail(peg$c156); }
+            if (peg$silentFails === 0) { peg$fail(peg$c157); }
           }
           if (s3 !== peg$FAILED) {
             s4 = peg$parse_();
@@ -36960,7 +37010,7 @@ var parsers = {'C#':(function() {
               s5 = peg$parseAdd();
               if (s5 !== peg$FAILED) {
                 peg$savedPos = s0;
-                s1 = peg$c157(s1, s5);
+                s1 = peg$c158(s1, s5);
                 s0 = s1;
               } else {
                 peg$currPos = s0;
@@ -37001,7 +37051,7 @@ var parsers = {'C#':(function() {
               s5 = peg$parsekey_value_list();
               if (s5 !== peg$FAILED) {
                 peg$savedPos = s0;
-                s1 = peg$c158(s1, s3, s5);
+                s1 = peg$c159(s1, s3, s5);
                 s0 = s1;
               } else {
                 peg$currPos = s0;
@@ -37045,16 +37095,16 @@ var parsers = {'C#':(function() {
           if (s3 !== peg$FAILED) {
             s4 = peg$parse_();
             if (s4 !== peg$FAILED) {
-              if (input.substr(peg$currPos, 6) === peg$c152) {
-                s5 = peg$c152;
+              if (input.substr(peg$currPos, 6) === peg$c153) {
+                s5 = peg$c153;
                 peg$currPos += 6;
               } else {
                 s5 = peg$FAILED;
-                if (peg$silentFails === 0) { peg$fail(peg$c153); }
+                if (peg$silentFails === 0) { peg$fail(peg$c154); }
               }
               if (s5 !== peg$FAILED) {
                 peg$savedPos = s0;
-                s1 = peg$c159(s1);
+                s1 = peg$c160(s1);
                 s0 = s1;
               } else {
                 peg$currPos = s0;
@@ -37107,7 +37157,7 @@ var parsers = {'C#':(function() {
               }
               if (s5 !== peg$FAILED) {
                 peg$savedPos = s0;
-                s1 = peg$c160(s3);
+                s1 = peg$c161(s3);
                 s0 = s1;
               } else {
                 peg$currPos = s0;
@@ -37137,12 +37187,12 @@ var parsers = {'C#':(function() {
       var s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, s10, s11;
 
       s0 = peg$currPos;
-      if (input.substr(peg$currPos, 3) === peg$c161) {
-        s1 = peg$c161;
+      if (input.substr(peg$currPos, 3) === peg$c162) {
+        s1 = peg$c162;
         peg$currPos += 3;
       } else {
         s1 = peg$FAILED;
-        if (peg$silentFails === 0) { peg$fail(peg$c162); }
+        if (peg$silentFails === 0) { peg$fail(peg$c163); }
       }
       if (s1 !== peg$FAILED) {
         s2 = peg$parse_();
@@ -37184,7 +37234,7 @@ var parsers = {'C#':(function() {
                           }
                           if (s11 !== peg$FAILED) {
                             peg$savedPos = s0;
-                            s1 = peg$c163(s5, s9);
+                            s1 = peg$c164(s5, s9);
                             s0 = s1;
                           } else {
                             peg$currPos = s0;
@@ -37252,12 +37302,12 @@ var parsers = {'C#':(function() {
           if (s3 !== peg$FAILED) {
             s4 = peg$parse_();
             if (s4 !== peg$FAILED) {
-              if (input.substr(peg$currPos, 6) === peg$c164) {
-                s5 = peg$c164;
+              if (input.substr(peg$currPos, 6) === peg$c165) {
+                s5 = peg$c165;
                 peg$currPos += 6;
               } else {
                 s5 = peg$FAILED;
-                if (peg$silentFails === 0) { peg$fail(peg$c165); }
+                if (peg$silentFails === 0) { peg$fail(peg$c166); }
               }
               if (s5 !== peg$FAILED) {
                 s6 = peg$parse_();
@@ -37285,7 +37335,7 @@ var parsers = {'C#':(function() {
                           }
                           if (s11 !== peg$FAILED) {
                             peg$savedPos = s0;
-                            s1 = peg$c166(s1, s9);
+                            s1 = peg$c167(s1, s9);
                             s0 = s1;
                           } else {
                             peg$currPos = s0;
@@ -37359,12 +37409,12 @@ var parsers = {'C#':(function() {
           if (s3 !== peg$FAILED) {
             s4 = peg$parse_();
             if (s4 !== peg$FAILED) {
-              if (input.substr(peg$currPos, 4) === peg$c167) {
-                s5 = peg$c167;
+              if (input.substr(peg$currPos, 4) === peg$c168) {
+                s5 = peg$c168;
                 peg$currPos += 4;
               } else {
                 s5 = peg$FAILED;
-                if (peg$silentFails === 0) { peg$fail(peg$c168); }
+                if (peg$silentFails === 0) { peg$fail(peg$c169); }
               }
               if (s5 !== peg$FAILED) {
                 s6 = peg$parse_();
@@ -37392,7 +37442,7 @@ var parsers = {'C#':(function() {
                           }
                           if (s11 !== peg$FAILED) {
                             peg$savedPos = s0;
-                            s1 = peg$c169(s9);
+                            s1 = peg$c170(s9);
                             s0 = s1;
                           } else {
                             peg$currPos = s0;
@@ -37456,12 +37506,12 @@ var parsers = {'C#':(function() {
       if (s1 !== peg$FAILED) {
         s2 = peg$parse_();
         if (s2 !== peg$FAILED) {
-          if (input.substr(peg$currPos, 2) === peg$c170) {
-            s3 = peg$c170;
+          if (input.substr(peg$currPos, 2) === peg$c171) {
+            s3 = peg$c171;
             peg$currPos += 2;
           } else {
             s3 = peg$FAILED;
-            if (peg$silentFails === 0) { peg$fail(peg$c171); }
+            if (peg$silentFails === 0) { peg$fail(peg$c172); }
           }
           if (s3 !== peg$FAILED) {
             s4 = peg$parse_();
@@ -37469,7 +37519,7 @@ var parsers = {'C#':(function() {
               s5 = peg$parseAnd();
               if (s5 !== peg$FAILED) {
                 peg$savedPos = s0;
-                s1 = peg$c172(s1, s5);
+                s1 = peg$c173(s1, s5);
                 s0 = s1;
               } else {
                 peg$currPos = s0;
@@ -37509,12 +37559,12 @@ var parsers = {'C#':(function() {
       if (s1 !== peg$FAILED) {
         s2 = peg$parse_();
         if (s2 !== peg$FAILED) {
-          if (input.substr(peg$currPos, 2) === peg$c173) {
-            s3 = peg$c173;
+          if (input.substr(peg$currPos, 2) === peg$c174) {
+            s3 = peg$c174;
             peg$currPos += 2;
           } else {
             s3 = peg$FAILED;
-            if (peg$silentFails === 0) { peg$fail(peg$c174); }
+            if (peg$silentFails === 0) { peg$fail(peg$c175); }
           }
           if (s3 !== peg$FAILED) {
             s4 = peg$parse_();
@@ -37522,7 +37572,7 @@ var parsers = {'C#':(function() {
               s5 = peg$parseAnd();
               if (s5 !== peg$FAILED) {
                 peg$savedPos = s0;
-                s1 = peg$c175(s1, s5);
+                s1 = peg$c176(s1, s5);
                 s0 = s1;
               } else {
                 peg$currPos = s0;
@@ -37569,7 +37619,7 @@ var parsers = {'C#':(function() {
               s5 = peg$parseconcatenate_string();
               if (s5 !== peg$FAILED) {
                 peg$savedPos = s0;
-                s1 = peg$c176(s1, s5);
+                s1 = peg$c177(s1, s5);
                 s0 = s1;
               } else {
                 peg$currPos = s0;
@@ -37619,12 +37669,12 @@ var parsers = {'C#':(function() {
           if (s3 !== peg$FAILED) {
             s4 = peg$parse_();
             if (s4 !== peg$FAILED) {
-              if (input.substr(peg$currPos, 3) === peg$c177) {
-                s5 = peg$c177;
+              if (input.substr(peg$currPos, 3) === peg$c178) {
+                s5 = peg$c178;
                 peg$currPos += 3;
               } else {
                 s5 = peg$FAILED;
-                if (peg$silentFails === 0) { peg$fail(peg$c178); }
+                if (peg$silentFails === 0) { peg$fail(peg$c179); }
               }
               if (s5 !== peg$FAILED) {
                 s6 = peg$parse_();
@@ -37666,7 +37716,7 @@ var parsers = {'C#':(function() {
                                   }
                                   if (s15 !== peg$FAILED) {
                                     peg$savedPos = s0;
-                                    s1 = peg$c179(s9, s13);
+                                    s1 = peg$c180(s9, s13);
                                     s0 = s1;
                                   } else {
                                     peg$currPos = s0;
@@ -37811,7 +37861,7 @@ var parsers = {'C#':(function() {
                                           }
                                           if (s19 !== peg$FAILED) {
                                             peg$savedPos = s0;
-                                            s1 = peg$c180(s5, s7, s11, s17);
+                                            s1 = peg$c181(s5, s7, s11, s17);
                                             s0 = s1;
                                           } else {
                                             peg$currPos = s0;
@@ -37906,21 +37956,21 @@ var parsers = {'C#':(function() {
             s4 = peg$parse_();
             if (s4 !== peg$FAILED) {
               if (input.charCodeAt(peg$currPos) === 61) {
-                s5 = peg$c181;
+                s5 = peg$c182;
                 peg$currPos++;
               } else {
                 s5 = peg$FAILED;
-                if (peg$silentFails === 0) { peg$fail(peg$c182); }
+                if (peg$silentFails === 0) { peg$fail(peg$c183); }
               }
               if (s5 !== peg$FAILED) {
                 s6 = peg$parse_();
                 if (s6 !== peg$FAILED) {
-                  if (input.substr(peg$currPos, 3) === peg$c144) {
-                    s7 = peg$c144;
+                  if (input.substr(peg$currPos, 3) === peg$c145) {
+                    s7 = peg$c145;
                     peg$currPos += 3;
                   } else {
                     s7 = peg$FAILED;
-                    if (peg$silentFails === 0) { peg$fail(peg$c145); }
+                    if (peg$silentFails === 0) { peg$fail(peg$c146); }
                   }
                   if (s7 !== peg$FAILED) {
                     s8 = peg$parse__();
@@ -37952,7 +38002,7 @@ var parsers = {'C#':(function() {
                                   }
                                   if (s15 !== peg$FAILED) {
                                     peg$savedPos = s0;
-                                    s1 = peg$c183(s9, s3, s13);
+                                    s1 = peg$c184(s9, s3, s13);
                                     s0 = s1;
                                   } else {
                                     peg$currPos = s0;
@@ -38042,12 +38092,12 @@ var parsers = {'C#':(function() {
           if (s3 !== peg$FAILED) {
             s4 = peg$parse_();
             if (s4 !== peg$FAILED) {
-              if (input.substr(peg$currPos, 8) === peg$c184) {
-                s5 = peg$c184;
+              if (input.substr(peg$currPos, 8) === peg$c185) {
+                s5 = peg$c185;
                 peg$currPos += 8;
               } else {
                 s5 = peg$FAILED;
-                if (peg$silentFails === 0) { peg$fail(peg$c185); }
+                if (peg$silentFails === 0) { peg$fail(peg$c186); }
               }
               if (s5 !== peg$FAILED) {
                 s6 = peg$parse_();
@@ -38075,7 +38125,7 @@ var parsers = {'C#':(function() {
                           }
                           if (s11 !== peg$FAILED) {
                             peg$savedPos = s0;
-                            s1 = peg$c186(s9);
+                            s1 = peg$c187(s9);
                             s0 = s1;
                           } else {
                             peg$currPos = s0;
@@ -38129,12 +38179,12 @@ var parsers = {'C#':(function() {
       var s0, s1, s2, s3, s4, s5, s6, s7, s8, s9;
 
       s0 = peg$currPos;
-      if (input.substr(peg$currPos, 5) === peg$c187) {
-        s1 = peg$c187;
+      if (input.substr(peg$currPos, 5) === peg$c188) {
+        s1 = peg$c188;
         peg$currPos += 5;
       } else {
         s1 = peg$FAILED;
-        if (peg$silentFails === 0) { peg$fail(peg$c188); }
+        if (peg$silentFails === 0) { peg$fail(peg$c189); }
       }
       if (s1 !== peg$FAILED) {
         s2 = peg$parse__();
@@ -38154,11 +38204,11 @@ var parsers = {'C#':(function() {
                 s6 = peg$parse_();
                 if (s6 !== peg$FAILED) {
                   if (input.charCodeAt(peg$currPos) === 61) {
-                    s7 = peg$c181;
+                    s7 = peg$c182;
                     peg$currPos++;
                   } else {
                     s7 = peg$FAILED;
-                    if (peg$silentFails === 0) { peg$fail(peg$c182); }
+                    if (peg$silentFails === 0) { peg$fail(peg$c183); }
                   }
                   if (s7 !== peg$FAILED) {
                     s8 = peg$parse_();
@@ -38166,7 +38216,7 @@ var parsers = {'C#':(function() {
                       s9 = peg$parseAnd();
                       if (s9 !== peg$FAILED) {
                         peg$savedPos = s0;
-                        s1 = peg$c189(s5, s9);
+                        s1 = peg$c190(s5, s9);
                         s0 = s1;
                       } else {
                         peg$currPos = s0;
@@ -38212,12 +38262,12 @@ var parsers = {'C#':(function() {
       var s0, s1, s2, s3, s4, s5, s6, s7, s8, s9;
 
       s0 = peg$currPos;
-      if (input.substr(peg$currPos, 5) === peg$c187) {
-        s1 = peg$c187;
+      if (input.substr(peg$currPos, 5) === peg$c188) {
+        s1 = peg$c188;
         peg$currPos += 5;
       } else {
         s1 = peg$FAILED;
-        if (peg$silentFails === 0) { peg$fail(peg$c188); }
+        if (peg$silentFails === 0) { peg$fail(peg$c189); }
       }
       if (s1 !== peg$FAILED) {
         s2 = peg$parse__();
@@ -38231,11 +38281,11 @@ var parsers = {'C#':(function() {
                 s6 = peg$parse_();
                 if (s6 !== peg$FAILED) {
                   if (input.charCodeAt(peg$currPos) === 61) {
-                    s7 = peg$c181;
+                    s7 = peg$c182;
                     peg$currPos++;
                   } else {
                     s7 = peg$FAILED;
-                    if (peg$silentFails === 0) { peg$fail(peg$c182); }
+                    if (peg$silentFails === 0) { peg$fail(peg$c183); }
                   }
                   if (s7 !== peg$FAILED) {
                     s8 = peg$parse_();
@@ -38243,7 +38293,7 @@ var parsers = {'C#':(function() {
                       s9 = peg$parseAnd();
                       if (s9 !== peg$FAILED) {
                         peg$savedPos = s0;
-                        s1 = peg$c190(s3, s5, s9);
+                        s1 = peg$c191(s3, s5, s9);
                         s0 = s1;
                       } else {
                         peg$currPos = s0;
@@ -38292,7 +38342,7 @@ var parsers = {'C#':(function() {
       s1 = peg$parseAnd();
       if (s1 !== peg$FAILED) {
         peg$savedPos = s0;
-        s1 = peg$c191(s1);
+        s1 = peg$c192(s1);
       }
       s0 = s1;
 
@@ -38388,7 +38438,7 @@ var parsers = {'C#':(function() {
                                               }
                                               if (s21 !== peg$FAILED) {
                                                 peg$savedPos = s0;
-                                                s1 = peg$c192(s5, s9, s13, s19);
+                                                s1 = peg$c193(s5, s9, s13, s19);
                                                 s0 = s1;
                                               } else {
                                                 peg$currPos = s0;
@@ -38557,7 +38607,7 @@ var parsers = {'C#':(function() {
                                           }
                                           if (s19 !== peg$FAILED) {
                                             peg$savedPos = s0;
-                                            s1 = peg$c193(s5, s7, s11, s17);
+                                            s1 = peg$c194(s5, s7, s11, s17);
                                             s0 = s1;
                                           } else {
                                             peg$currPos = s0;
@@ -38643,12 +38693,12 @@ var parsers = {'C#':(function() {
       var s0, s1, s2, s3, s4, s5, s6, s7;
 
       s0 = peg$currPos;
-      if (input.substr(peg$currPos, 4) === peg$c194) {
-        s1 = peg$c194;
+      if (input.substr(peg$currPos, 4) === peg$c195) {
+        s1 = peg$c195;
         peg$currPos += 4;
       } else {
         s1 = peg$FAILED;
-        if (peg$silentFails === 0) { peg$fail(peg$c195); }
+        if (peg$silentFails === 0) { peg$fail(peg$c196); }
       }
       if (s1 !== peg$FAILED) {
         s2 = peg$parse_();
@@ -38676,7 +38726,7 @@ var parsers = {'C#':(function() {
                   }
                   if (s7 !== peg$FAILED) {
                     peg$savedPos = s0;
-                    s1 = peg$c196(s5);
+                    s1 = peg$c197(s5);
                     s0 = s1;
                   } else {
                     peg$currPos = s0;
@@ -38714,22 +38764,22 @@ var parsers = {'C#':(function() {
       var s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, s10, s11, s12, s13, s14, s15, s16, s17;
 
       s0 = peg$currPos;
-      if (input.substr(peg$currPos, 4) === peg$c194) {
-        s1 = peg$c194;
+      if (input.substr(peg$currPos, 4) === peg$c195) {
+        s1 = peg$c195;
         peg$currPos += 4;
       } else {
         s1 = peg$FAILED;
-        if (peg$silentFails === 0) { peg$fail(peg$c195); }
+        if (peg$silentFails === 0) { peg$fail(peg$c196); }
       }
       if (s1 !== peg$FAILED) {
         s2 = peg$parse__();
         if (s2 !== peg$FAILED) {
-          if (input.substr(peg$currPos, 2) === peg$c197) {
-            s3 = peg$c197;
+          if (input.substr(peg$currPos, 2) === peg$c198) {
+            s3 = peg$c198;
             peg$currPos += 2;
           } else {
             s3 = peg$FAILED;
-            if (peg$silentFails === 0) { peg$fail(peg$c198); }
+            if (peg$silentFails === 0) { peg$fail(peg$c199); }
           }
           if (s3 !== peg$FAILED) {
             s4 = peg$parse_();
@@ -38745,11 +38795,11 @@ var parsers = {'C#':(function() {
                 s6 = peg$parse_();
                 if (s6 !== peg$FAILED) {
                   if (input.charCodeAt(peg$currPos) === 97) {
-                    s7 = peg$c199;
+                    s7 = peg$c200;
                     peg$currPos++;
                   } else {
                     s7 = peg$FAILED;
-                    if (peg$silentFails === 0) { peg$fail(peg$c200); }
+                    if (peg$silentFails === 0) { peg$fail(peg$c201); }
                   }
                   if (s7 !== peg$FAILED) {
                     s8 = peg$parse_();
@@ -38775,11 +38825,11 @@ var parsers = {'C#':(function() {
                             s12 = peg$parse_();
                             if (s12 !== peg$FAILED) {
                               if (input.charCodeAt(peg$currPos) === 98) {
-                                s13 = peg$c201;
+                                s13 = peg$c202;
                                 peg$currPos++;
                               } else {
                                 s13 = peg$FAILED;
-                                if (peg$silentFails === 0) { peg$fail(peg$c202); }
+                                if (peg$silentFails === 0) { peg$fail(peg$c203); }
                               }
                               if (s13 !== peg$FAILED) {
                                 s14 = peg$parse_();
@@ -38795,15 +38845,15 @@ var parsers = {'C#':(function() {
                                     s16 = peg$parse_();
                                     if (s16 !== peg$FAILED) {
                                       if (input.charCodeAt(peg$currPos) === 99) {
-                                        s17 = peg$c203;
+                                        s17 = peg$c204;
                                         peg$currPos++;
                                       } else {
                                         s17 = peg$FAILED;
-                                        if (peg$silentFails === 0) { peg$fail(peg$c204); }
+                                        if (peg$silentFails === 0) { peg$fail(peg$c205); }
                                       }
                                       if (s17 !== peg$FAILED) {
                                         peg$savedPos = s0;
-                                        s1 = peg$c205();
+                                        s1 = peg$c206();
                                         s0 = s1;
                                       } else {
                                         peg$currPos = s0;
@@ -38881,12 +38931,12 @@ var parsers = {'C#':(function() {
       var s0, s1, s2, s3;
 
       s0 = peg$currPos;
-      if (input.substr(peg$currPos, 6) === peg$c206) {
-        s1 = peg$c206;
+      if (input.substr(peg$currPos, 6) === peg$c207) {
+        s1 = peg$c207;
         peg$currPos += 6;
       } else {
         s1 = peg$FAILED;
-        if (peg$silentFails === 0) { peg$fail(peg$c207); }
+        if (peg$silentFails === 0) { peg$fail(peg$c208); }
       }
       if (s1 !== peg$FAILED) {
         s2 = peg$parse__();
@@ -38894,7 +38944,7 @@ var parsers = {'C#':(function() {
           s3 = peg$parseAnd();
           if (s3 !== peg$FAILED) {
             peg$savedPos = s0;
-            s1 = peg$c208(s3);
+            s1 = peg$c209(s3);
             s0 = s1;
           } else {
             peg$currPos = s0;
@@ -38924,11 +38974,11 @@ var parsers = {'C#':(function() {
         s2 = peg$parse_();
         if (s2 !== peg$FAILED) {
           if (input.charCodeAt(peg$currPos) === 61) {
-            s3 = peg$c181;
+            s3 = peg$c182;
             peg$currPos++;
           } else {
             s3 = peg$FAILED;
-            if (peg$silentFails === 0) { peg$fail(peg$c182); }
+            if (peg$silentFails === 0) { peg$fail(peg$c183); }
           }
           if (s3 !== peg$FAILED) {
             s4 = peg$parse_();
@@ -38936,7 +38986,7 @@ var parsers = {'C#':(function() {
               s5 = peg$parseAnd();
               if (s5 !== peg$FAILED) {
                 peg$savedPos = s0;
-                s1 = peg$c209(s1, s5);
+                s1 = peg$c210(s1, s5);
                 s0 = s1;
               } else {
                 peg$currPos = s0;
@@ -38966,12 +39016,12 @@ var parsers = {'C#':(function() {
       var s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, s10, s11, s12, s13, s14, s15;
 
       s0 = peg$currPos;
-      if (input.substr(peg$currPos, 6) === peg$c210) {
-        s1 = peg$c210;
+      if (input.substr(peg$currPos, 6) === peg$c211) {
+        s1 = peg$c211;
         peg$currPos += 6;
       } else {
         s1 = peg$FAILED;
-        if (peg$silentFails === 0) { peg$fail(peg$c211); }
+        if (peg$silentFails === 0) { peg$fail(peg$c212); }
       }
       if (s1 !== peg$FAILED) {
         s2 = peg$parse_();
@@ -38986,12 +39036,12 @@ var parsers = {'C#':(function() {
           if (s3 !== peg$FAILED) {
             s4 = peg$parse_();
             if (s4 !== peg$FAILED) {
-              if (input.substr(peg$currPos, 3) === peg$c212) {
-                s5 = peg$c212;
+              if (input.substr(peg$currPos, 3) === peg$c213) {
+                s5 = peg$c213;
                 peg$currPos += 3;
               } else {
                 s5 = peg$FAILED;
-                if (peg$silentFails === 0) { peg$fail(peg$c213); }
+                if (peg$silentFails === 0) { peg$fail(peg$c214); }
               }
               if (s5 !== peg$FAILED) {
                 s6 = peg$parse_();
@@ -39006,12 +39056,12 @@ var parsers = {'C#':(function() {
                   if (s7 !== peg$FAILED) {
                     s8 = peg$parse_();
                     if (s8 !== peg$FAILED) {
-                      if (input.substr(peg$currPos, 7) === peg$c214) {
-                        s9 = peg$c214;
+                      if (input.substr(peg$currPos, 7) === peg$c215) {
+                        s9 = peg$c215;
                         peg$currPos += 7;
                       } else {
                         s9 = peg$FAILED;
-                        if (peg$silentFails === 0) { peg$fail(peg$c215); }
+                        if (peg$silentFails === 0) { peg$fail(peg$c216); }
                       }
                       if (s9 !== peg$FAILED) {
                         s10 = peg$parse_();
@@ -39039,7 +39089,7 @@ var parsers = {'C#':(function() {
                                   }
                                   if (s15 !== peg$FAILED) {
                                     peg$savedPos = s0;
-                                    s1 = peg$c216(s13);
+                                    s1 = peg$c217(s13);
                                     s0 = s1;
                                   } else {
                                     peg$currPos = s0;
@@ -39109,33 +39159,33 @@ var parsers = {'C#':(function() {
       var s0, s1, s2, s3, s4, s5;
 
       s0 = peg$currPos;
-      if (input.substr(peg$currPos, 2) === peg$c217) {
-        s1 = peg$c217;
+      if (input.substr(peg$currPos, 2) === peg$c218) {
+        s1 = peg$c218;
         peg$currPos += 2;
       } else {
         s1 = peg$FAILED;
-        if (peg$silentFails === 0) { peg$fail(peg$c218); }
+        if (peg$silentFails === 0) { peg$fail(peg$c219); }
       }
       if (s1 !== peg$FAILED) {
         s2 = peg$parse_();
         if (s2 !== peg$FAILED) {
           s3 = [];
-          if (peg$c219.test(input.charAt(peg$currPos))) {
+          if (peg$c220.test(input.charAt(peg$currPos))) {
             s4 = input.charAt(peg$currPos);
             peg$currPos++;
           } else {
             s4 = peg$FAILED;
-            if (peg$silentFails === 0) { peg$fail(peg$c220); }
+            if (peg$silentFails === 0) { peg$fail(peg$c221); }
           }
           if (s4 !== peg$FAILED) {
             while (s4 !== peg$FAILED) {
               s3.push(s4);
-              if (peg$c219.test(input.charAt(peg$currPos))) {
+              if (peg$c220.test(input.charAt(peg$currPos))) {
                 s4 = input.charAt(peg$currPos);
                 peg$currPos++;
               } else {
                 s4 = peg$FAILED;
-                if (peg$silentFails === 0) { peg$fail(peg$c220); }
+                if (peg$silentFails === 0) { peg$fail(peg$c221); }
               }
             }
           } else {
@@ -39145,15 +39195,15 @@ var parsers = {'C#':(function() {
             s4 = peg$parse_();
             if (s4 !== peg$FAILED) {
               if (input.charCodeAt(peg$currPos) === 10) {
-                s5 = peg$c221;
+                s5 = peg$c222;
                 peg$currPos++;
               } else {
                 s5 = peg$FAILED;
-                if (peg$silentFails === 0) { peg$fail(peg$c222); }
+                if (peg$silentFails === 0) { peg$fail(peg$c223); }
               }
               if (s5 !== peg$FAILED) {
                 peg$savedPos = s0;
-                s1 = peg$c223(s3);
+                s1 = peg$c224(s3);
                 s0 = s1;
               } else {
                 peg$currPos = s0;
@@ -39192,11 +39242,11 @@ var parsers = {'C#':(function() {
             s4 = peg$parse_();
             if (s4 !== peg$FAILED) {
               if (input.charCodeAt(peg$currPos) === 61) {
-                s5 = peg$c181;
+                s5 = peg$c182;
                 peg$currPos++;
               } else {
                 s5 = peg$FAILED;
-                if (peg$silentFails === 0) { peg$fail(peg$c182); }
+                if (peg$silentFails === 0) { peg$fail(peg$c183); }
               }
               if (s5 !== peg$FAILED) {
                 s6 = peg$parse_();
@@ -39204,7 +39254,7 @@ var parsers = {'C#':(function() {
                   s7 = peg$parseAnd();
                   if (s7 !== peg$FAILED) {
                     peg$savedPos = s0;
-                    s1 = peg$c224(s1, s3, s7);
+                    s1 = peg$c225(s1, s3, s7);
                     s0 = s1;
                   } else {
                     peg$currPos = s0;
@@ -39257,11 +39307,11 @@ var parsers = {'C#':(function() {
             s4 = peg$parse_();
             if (s4 !== peg$FAILED) {
               if (input.charCodeAt(peg$currPos) === 61) {
-                s5 = peg$c181;
+                s5 = peg$c182;
                 peg$currPos++;
               } else {
                 s5 = peg$FAILED;
-                if (peg$silentFails === 0) { peg$fail(peg$c182); }
+                if (peg$silentFails === 0) { peg$fail(peg$c183); }
               }
               if (s5 !== peg$FAILED) {
                 s6 = peg$parse_();
@@ -39269,7 +39319,7 @@ var parsers = {'C#':(function() {
                   s7 = peg$parseAnd();
                   if (s7 !== peg$FAILED) {
                     peg$savedPos = s0;
-                    s1 = peg$c225(s3, s7);
+                    s1 = peg$c226(s3, s7);
                     s0 = s1;
                   } else {
                     peg$currPos = s0;
@@ -39307,16 +39357,16 @@ var parsers = {'C#':(function() {
       var s0, s1;
 
       s0 = peg$currPos;
-      if (input.substr(peg$currPos, 3) === peg$c226) {
-        s1 = peg$c226;
+      if (input.substr(peg$currPos, 3) === peg$c227) {
+        s1 = peg$c227;
         peg$currPos += 3;
       } else {
         s1 = peg$FAILED;
-        if (peg$silentFails === 0) { peg$fail(peg$c227); }
+        if (peg$silentFails === 0) { peg$fail(peg$c228); }
       }
       if (s1 !== peg$FAILED) {
         peg$savedPos = s0;
-        s1 = peg$c228();
+        s1 = peg$c229();
       }
       s0 = s1;
 
@@ -39327,12 +39377,12 @@ var parsers = {'C#':(function() {
       var s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, s10, s11, s12, s13, s14, s15;
 
       s0 = peg$currPos;
-      if (input.substr(peg$currPos, 2) === peg$c197) {
-        s1 = peg$c197;
+      if (input.substr(peg$currPos, 2) === peg$c198) {
+        s1 = peg$c198;
         peg$currPos += 2;
       } else {
         s1 = peg$FAILED;
-        if (peg$silentFails === 0) { peg$fail(peg$c198); }
+        if (peg$silentFails === 0) { peg$fail(peg$c199); }
       }
       if (s1 !== peg$FAILED) {
         s2 = peg$parse_();
@@ -39388,7 +39438,7 @@ var parsers = {'C#':(function() {
                                   s15 = peg$parseelif_or_else();
                                   if (s15 !== peg$FAILED) {
                                     peg$savedPos = s0;
-                                    s1 = peg$c229(s5, s11, s15);
+                                    s1 = peg$c230(s5, s11, s15);
                                     s0 = s1;
                                   } else {
                                     peg$currPos = s0;
@@ -39465,7 +39515,7 @@ var parsers = {'C#':(function() {
           s3 = peg$parsevar_name();
           if (s3 !== peg$FAILED) {
             peg$savedPos = s0;
-            s1 = peg$c230(s1, s3);
+            s1 = peg$c231(s1, s3);
             s0 = s1;
           } else {
             peg$currPos = s0;
@@ -39492,11 +39542,11 @@ var parsers = {'C#':(function() {
         s2 = peg$parse_();
         if (s2 !== peg$FAILED) {
           if (input.charCodeAt(peg$currPos) === 91) {
-            s3 = peg$c231;
+            s3 = peg$c232;
             peg$currPos++;
           } else {
             s3 = peg$FAILED;
-            if (peg$silentFails === 0) { peg$fail(peg$c232); }
+            if (peg$silentFails === 0) { peg$fail(peg$c233); }
           }
           if (s3 !== peg$FAILED) {
             s4 = peg$parse_();
@@ -39506,15 +39556,15 @@ var parsers = {'C#':(function() {
                 s6 = peg$parse_();
                 if (s6 !== peg$FAILED) {
                   if (input.charCodeAt(peg$currPos) === 93) {
-                    s7 = peg$c233;
+                    s7 = peg$c234;
                     peg$currPos++;
                   } else {
                     s7 = peg$FAILED;
-                    if (peg$silentFails === 0) { peg$fail(peg$c234); }
+                    if (peg$silentFails === 0) { peg$fail(peg$c235); }
                   }
                   if (s7 !== peg$FAILED) {
                     peg$savedPos = s0;
-                    s1 = peg$c235(s1, s5);
+                    s1 = peg$c236(s1, s5);
                     s0 = s1;
                   } else {
                     peg$currPos = s0;
@@ -39563,7 +39613,7 @@ var parsers = {'C#':(function() {
               s5 = peg$parsearray_access_list();
               if (s5 !== peg$FAILED) {
                 peg$savedPos = s0;
-                s1 = peg$c236(s1, s3, s5);
+                s1 = peg$c237(s1, s3, s5);
                 s0 = s1;
               } else {
                 peg$currPos = s0;
@@ -39608,36 +39658,36 @@ var parsers = {'C#':(function() {
             if (peg$silentFails === 0) { peg$fail(peg$c25); }
           }
           if (s2 === peg$FAILED) {
-            if (input.substr(peg$currPos, 6) === peg$c164) {
-              s2 = peg$c164;
+            if (input.substr(peg$currPos, 6) === peg$c165) {
+              s2 = peg$c165;
               peg$currPos += 6;
             } else {
               s2 = peg$FAILED;
-              if (peg$silentFails === 0) { peg$fail(peg$c165); }
+              if (peg$silentFails === 0) { peg$fail(peg$c166); }
             }
             if (s2 === peg$FAILED) {
-              if (input.substr(peg$currPos, 7) === peg$c238) {
-                s2 = peg$c238;
+              if (input.substr(peg$currPos, 7) === peg$c239) {
+                s2 = peg$c239;
                 peg$currPos += 7;
               } else {
                 s2 = peg$FAILED;
-                if (peg$silentFails === 0) { peg$fail(peg$c239); }
+                if (peg$silentFails === 0) { peg$fail(peg$c240); }
               }
               if (s2 === peg$FAILED) {
-                if (input.substr(peg$currPos, 6) === peg$c210) {
-                  s2 = peg$c210;
+                if (input.substr(peg$currPos, 6) === peg$c211) {
+                  s2 = peg$c211;
                   peg$currPos += 6;
                 } else {
                   s2 = peg$FAILED;
-                  if (peg$silentFails === 0) { peg$fail(peg$c211); }
+                  if (peg$silentFails === 0) { peg$fail(peg$c212); }
                 }
                 if (s2 === peg$FAILED) {
-                  if (input.substr(peg$currPos, 5) === peg$c133) {
-                    s2 = peg$c133;
+                  if (input.substr(peg$currPos, 5) === peg$c134) {
+                    s2 = peg$c134;
                     peg$currPos += 5;
                   } else {
                     s2 = peg$FAILED;
-                    if (peg$silentFails === 0) { peg$fail(peg$c134); }
+                    if (peg$silentFails === 0) { peg$fail(peg$c135); }
                   }
                   if (s2 === peg$FAILED) {
                     if (input.substr(peg$currPos, 5) === peg$c59) {
@@ -39648,44 +39698,44 @@ var parsers = {'C#':(function() {
                       if (peg$silentFails === 0) { peg$fail(peg$c60); }
                     }
                     if (s2 === peg$FAILED) {
-                      if (input.substr(peg$currPos, 2) === peg$c197) {
-                        s2 = peg$c197;
+                      if (input.substr(peg$currPos, 2) === peg$c198) {
+                        s2 = peg$c198;
                         peg$currPos += 2;
                       } else {
                         s2 = peg$FAILED;
-                        if (peg$silentFails === 0) { peg$fail(peg$c198); }
+                        if (peg$silentFails === 0) { peg$fail(peg$c199); }
                       }
                       if (s2 === peg$FAILED) {
-                        if (input.substr(peg$currPos, 4) === peg$c194) {
-                          s2 = peg$c194;
+                        if (input.substr(peg$currPos, 4) === peg$c195) {
+                          s2 = peg$c195;
                           peg$currPos += 4;
                         } else {
                           s2 = peg$FAILED;
-                          if (peg$silentFails === 0) { peg$fail(peg$c195); }
+                          if (peg$silentFails === 0) { peg$fail(peg$c196); }
                         }
                         if (s2 === peg$FAILED) {
-                          if (input.substr(peg$currPos, 3) === peg$c240) {
-                            s2 = peg$c240;
+                          if (input.substr(peg$currPos, 3) === peg$c241) {
+                            s2 = peg$c241;
                             peg$currPos += 3;
                           } else {
                             s2 = peg$FAILED;
-                            if (peg$silentFails === 0) { peg$fail(peg$c241); }
+                            if (peg$silentFails === 0) { peg$fail(peg$c242); }
                           }
                           if (s2 === peg$FAILED) {
-                            if (input.substr(peg$currPos, 3) === peg$c242) {
-                              s2 = peg$c242;
+                            if (input.substr(peg$currPos, 3) === peg$c243) {
+                              s2 = peg$c243;
                               peg$currPos += 3;
                             } else {
                               s2 = peg$FAILED;
-                              if (peg$silentFails === 0) { peg$fail(peg$c243); }
+                              if (peg$silentFails === 0) { peg$fail(peg$c244); }
                             }
                             if (s2 === peg$FAILED) {
-                              if (input.substr(peg$currPos, 4) === peg$c244) {
-                                s2 = peg$c244;
+                              if (input.substr(peg$currPos, 4) === peg$c245) {
+                                s2 = peg$c245;
                                 peg$currPos += 4;
                               } else {
                                 s2 = peg$FAILED;
-                                if (peg$silentFails === 0) { peg$fail(peg$c245); }
+                                if (peg$silentFails === 0) { peg$fail(peg$c246); }
                               }
                             }
                           }
@@ -39708,22 +39758,22 @@ var parsers = {'C#':(function() {
       }
       if (s1 !== peg$FAILED) {
         s2 = [];
-        if (peg$c246.test(input.charAt(peg$currPos))) {
+        if (peg$c247.test(input.charAt(peg$currPos))) {
           s3 = input.charAt(peg$currPos);
           peg$currPos++;
         } else {
           s3 = peg$FAILED;
-          if (peg$silentFails === 0) { peg$fail(peg$c247); }
+          if (peg$silentFails === 0) { peg$fail(peg$c248); }
         }
         if (s3 !== peg$FAILED) {
           while (s3 !== peg$FAILED) {
             s2.push(s3);
-            if (peg$c246.test(input.charAt(peg$currPos))) {
+            if (peg$c247.test(input.charAt(peg$currPos))) {
               s3 = input.charAt(peg$currPos);
               peg$currPos++;
             } else {
               s3 = peg$FAILED;
-              if (peg$silentFails === 0) { peg$fail(peg$c247); }
+              if (peg$silentFails === 0) { peg$fail(peg$c248); }
             }
           }
         } else {
@@ -39731,7 +39781,7 @@ var parsers = {'C#':(function() {
         }
         if (s2 !== peg$FAILED) {
           peg$savedPos = s0;
-          s1 = peg$c248();
+          s1 = peg$c249();
           s0 = s1;
         } else {
           peg$currPos = s0;
@@ -39744,7 +39794,7 @@ var parsers = {'C#':(function() {
       peg$silentFails--;
       if (s0 === peg$FAILED) {
         s1 = peg$FAILED;
-        if (peg$silentFails === 0) { peg$fail(peg$c237); }
+        if (peg$silentFails === 0) { peg$fail(peg$c238); }
       }
 
       return s0;
@@ -39765,7 +39815,7 @@ var parsers = {'C#':(function() {
               s5 = peg$parsekey_value_list();
               if (s5 !== peg$FAILED) {
                 peg$savedPos = s0;
-                s1 = peg$c249(s1, s3, s5);
+                s1 = peg$c250(s1, s3, s5);
                 s0 = s1;
               } else {
                 peg$currPos = s0;
@@ -39809,7 +39859,7 @@ var parsers = {'C#':(function() {
               s5 = peg$parse_initializer_list();
               if (s5 !== peg$FAILED) {
                 peg$savedPos = s0;
-                s1 = peg$c250(s1, s3, s5);
+                s1 = peg$c251(s1, s3, s5);
                 s0 = s1;
               } else {
                 peg$currPos = s0;
@@ -39853,7 +39903,7 @@ var parsers = {'C#':(function() {
               s5 = peg$parsearray_access_list();
               if (s5 !== peg$FAILED) {
                 peg$savedPos = s0;
-                s1 = peg$c251(s1, s3, s5);
+                s1 = peg$c252(s1, s3, s5);
                 s0 = s1;
               } else {
                 peg$currPos = s0;
@@ -39888,22 +39938,22 @@ var parsers = {'C#':(function() {
       peg$silentFails++;
       s0 = peg$currPos;
       s1 = [];
-      if (peg$c253.test(input.charAt(peg$currPos))) {
+      if (peg$c254.test(input.charAt(peg$currPos))) {
         s2 = input.charAt(peg$currPos);
         peg$currPos++;
       } else {
         s2 = peg$FAILED;
-        if (peg$silentFails === 0) { peg$fail(peg$c254); }
+        if (peg$silentFails === 0) { peg$fail(peg$c255); }
       }
       if (s2 !== peg$FAILED) {
         while (s2 !== peg$FAILED) {
           s1.push(s2);
-          if (peg$c253.test(input.charAt(peg$currPos))) {
+          if (peg$c254.test(input.charAt(peg$currPos))) {
             s2 = input.charAt(peg$currPos);
             peg$currPos++;
           } else {
             s2 = peg$FAILED;
-            if (peg$silentFails === 0) { peg$fail(peg$c254); }
+            if (peg$silentFails === 0) { peg$fail(peg$c255); }
           }
         }
       } else {
@@ -39911,13 +39961,13 @@ var parsers = {'C#':(function() {
       }
       if (s1 !== peg$FAILED) {
         peg$savedPos = s0;
-        s1 = peg$c255();
+        s1 = peg$c256();
       }
       s0 = s1;
       peg$silentFails--;
       if (s0 === peg$FAILED) {
         s1 = peg$FAILED;
-        if (peg$silentFails === 0) { peg$fail(peg$c252); }
+        if (peg$silentFails === 0) { peg$fail(peg$c253); }
       }
 
       return s0;
@@ -39928,27 +39978,27 @@ var parsers = {'C#':(function() {
 
       peg$silentFails++;
       s0 = [];
-      if (peg$c257.test(input.charAt(peg$currPos))) {
+      if (peg$c258.test(input.charAt(peg$currPos))) {
         s1 = input.charAt(peg$currPos);
         peg$currPos++;
       } else {
         s1 = peg$FAILED;
-        if (peg$silentFails === 0) { peg$fail(peg$c258); }
+        if (peg$silentFails === 0) { peg$fail(peg$c259); }
       }
       while (s1 !== peg$FAILED) {
         s0.push(s1);
-        if (peg$c257.test(input.charAt(peg$currPos))) {
+        if (peg$c258.test(input.charAt(peg$currPos))) {
           s1 = input.charAt(peg$currPos);
           peg$currPos++;
         } else {
           s1 = peg$FAILED;
-          if (peg$silentFails === 0) { peg$fail(peg$c258); }
+          if (peg$silentFails === 0) { peg$fail(peg$c259); }
         }
       }
       peg$silentFails--;
       if (s0 === peg$FAILED) {
         s1 = peg$FAILED;
-        if (peg$silentFails === 0) { peg$fail(peg$c256); }
+        if (peg$silentFails === 0) { peg$fail(peg$c257); }
       }
 
       return s0;
@@ -39959,30 +40009,30 @@ var parsers = {'C#':(function() {
 
       peg$silentFails++;
       s0 = peg$currPos;
-      if (peg$c257.test(input.charAt(peg$currPos))) {
+      if (peg$c258.test(input.charAt(peg$currPos))) {
         s1 = input.charAt(peg$currPos);
         peg$currPos++;
       } else {
         s1 = peg$FAILED;
-        if (peg$silentFails === 0) { peg$fail(peg$c258); }
+        if (peg$silentFails === 0) { peg$fail(peg$c259); }
       }
       if (s1 !== peg$FAILED) {
         s2 = [];
-        if (peg$c257.test(input.charAt(peg$currPos))) {
+        if (peg$c258.test(input.charAt(peg$currPos))) {
           s3 = input.charAt(peg$currPos);
           peg$currPos++;
         } else {
           s3 = peg$FAILED;
-          if (peg$silentFails === 0) { peg$fail(peg$c258); }
+          if (peg$silentFails === 0) { peg$fail(peg$c259); }
         }
         while (s3 !== peg$FAILED) {
           s2.push(s3);
-          if (peg$c257.test(input.charAt(peg$currPos))) {
+          if (peg$c258.test(input.charAt(peg$currPos))) {
             s3 = input.charAt(peg$currPos);
             peg$currPos++;
           } else {
             s3 = peg$FAILED;
-            if (peg$silentFails === 0) { peg$fail(peg$c258); }
+            if (peg$silentFails === 0) { peg$fail(peg$c259); }
           }
         }
         if (s2 !== peg$FAILED) {
@@ -39999,7 +40049,7 @@ var parsers = {'C#':(function() {
       peg$silentFails--;
       if (s0 === peg$FAILED) {
         s1 = peg$FAILED;
-        if (peg$silentFails === 0) { peg$fail(peg$c259); }
+        if (peg$silentFails === 0) { peg$fail(peg$c260); }
       }
 
       return s0;
@@ -40010,25 +40060,25 @@ var parsers = {'C#':(function() {
 
       s0 = peg$currPos;
       if (input.charCodeAt(peg$currPos) === 34) {
-        s1 = peg$c260;
+        s1 = peg$c261;
         peg$currPos++;
       } else {
         s1 = peg$FAILED;
-        if (peg$silentFails === 0) { peg$fail(peg$c261); }
+        if (peg$silentFails === 0) { peg$fail(peg$c262); }
       }
       if (s1 !== peg$FAILED) {
         s2 = peg$parse_string_literal();
         if (s2 !== peg$FAILED) {
           if (input.charCodeAt(peg$currPos) === 34) {
-            s3 = peg$c260;
+            s3 = peg$c261;
             peg$currPos++;
           } else {
             s3 = peg$FAILED;
-            if (peg$silentFails === 0) { peg$fail(peg$c261); }
+            if (peg$silentFails === 0) { peg$fail(peg$c262); }
           }
           if (s3 !== peg$FAILED) {
             peg$savedPos = s0;
-            s1 = peg$c262(s2);
+            s1 = peg$c263(s2);
             s0 = s1;
           } else {
             peg$currPos = s0;
@@ -40045,25 +40095,25 @@ var parsers = {'C#':(function() {
       if (s0 === peg$FAILED) {
         s0 = peg$currPos;
         if (input.charCodeAt(peg$currPos) === 39) {
-          s1 = peg$c263;
+          s1 = peg$c264;
           peg$currPos++;
         } else {
           s1 = peg$FAILED;
-          if (peg$silentFails === 0) { peg$fail(peg$c264); }
+          if (peg$silentFails === 0) { peg$fail(peg$c265); }
         }
         if (s1 !== peg$FAILED) {
           s2 = peg$parse__string_literal();
           if (s2 !== peg$FAILED) {
             if (input.charCodeAt(peg$currPos) === 39) {
-              s3 = peg$c263;
+              s3 = peg$c264;
               peg$currPos++;
             } else {
               s3 = peg$FAILED;
-              if (peg$silentFails === 0) { peg$fail(peg$c264); }
+              if (peg$silentFails === 0) { peg$fail(peg$c265); }
             }
             if (s3 !== peg$FAILED) {
               peg$savedPos = s0;
-              s1 = peg$c265(s2);
+              s1 = peg$c266(s2);
               s0 = s1;
             } else {
               peg$currPos = s0;
@@ -40087,22 +40137,22 @@ var parsers = {'C#':(function() {
 
       s0 = peg$currPos;
       s1 = [];
-      if (peg$c266.test(input.charAt(peg$currPos))) {
+      if (peg$c267.test(input.charAt(peg$currPos))) {
         s2 = input.charAt(peg$currPos);
         peg$currPos++;
       } else {
         s2 = peg$FAILED;
-        if (peg$silentFails === 0) { peg$fail(peg$c267); }
+        if (peg$silentFails === 0) { peg$fail(peg$c268); }
       }
       if (s2 !== peg$FAILED) {
         while (s2 !== peg$FAILED) {
           s1.push(s2);
-          if (peg$c266.test(input.charAt(peg$currPos))) {
+          if (peg$c267.test(input.charAt(peg$currPos))) {
             s2 = input.charAt(peg$currPos);
             peg$currPos++;
           } else {
             s2 = peg$FAILED;
-            if (peg$silentFails === 0) { peg$fail(peg$c267); }
+            if (peg$silentFails === 0) { peg$fail(peg$c268); }
           }
         }
       } else {
@@ -40110,7 +40160,7 @@ var parsers = {'C#':(function() {
       }
       if (s1 !== peg$FAILED) {
         peg$savedPos = s0;
-        s1 = peg$c248();
+        s1 = peg$c249();
       }
       s0 = s1;
 
@@ -40122,22 +40172,22 @@ var parsers = {'C#':(function() {
 
       s0 = peg$currPos;
       s1 = [];
-      if (peg$c268.test(input.charAt(peg$currPos))) {
+      if (peg$c269.test(input.charAt(peg$currPos))) {
         s2 = input.charAt(peg$currPos);
         peg$currPos++;
       } else {
         s2 = peg$FAILED;
-        if (peg$silentFails === 0) { peg$fail(peg$c269); }
+        if (peg$silentFails === 0) { peg$fail(peg$c270); }
       }
       if (s2 !== peg$FAILED) {
         while (s2 !== peg$FAILED) {
           s1.push(s2);
-          if (peg$c268.test(input.charAt(peg$currPos))) {
+          if (peg$c269.test(input.charAt(peg$currPos))) {
             s2 = input.charAt(peg$currPos);
             peg$currPos++;
           } else {
             s2 = peg$FAILED;
-            if (peg$silentFails === 0) { peg$fail(peg$c269); }
+            if (peg$silentFails === 0) { peg$fail(peg$c270); }
           }
         }
       } else {
@@ -40145,7 +40195,7 @@ var parsers = {'C#':(function() {
       }
       if (s1 !== peg$FAILED) {
         peg$savedPos = s0;
-        s1 = peg$c248();
+        s1 = peg$c249();
       }
       s0 = s1;
 
@@ -40310,7 +40360,7 @@ var parsers = {'C#':(function() {
         peg$c93 = { type: "literal", value: "*", description: "\"*\"" },
         peg$c94 = function(var1, symbol, var2) {return [symbol, {var1:var1,var2:var2}];},
         peg$c95 = function(var1, var2) {return ["dot_notation", {var1:var1, var2:var2}];},
-        peg$c96 = function(theName, args) {return ["function_call", {name:theName, args:args}]},
+        peg$c96 = function(theName, args) {return ["function_call", {theName:theName, args:args}]},
         peg$c97 = function(var1) {return ["parentheses_expression", {"a":var1}];},
         peg$c98 = function(var1, var2) {return ["function_call_parameters", {var1:var1, var2:var2}]},
         peg$c99 = "this",
@@ -40329,7 +40379,7 @@ var parsers = {'C#':(function() {
         peg$c112 = { type: "literal", value: "tan", description: "\"tan\"" },
         peg$c113 = function(var1) {return ["tan", {var1:var1,}];},
         peg$c114 = function(expr) { return ["parentheses_expression", {"a":expr}]; },
-        peg$c115 = function(var1, var2) {return var1 + var2;},
+        peg$c115 = function(var1, var2) {return ["type",{var1:var1, var2:var2}];},
         peg$c116 = "Bool",
         peg$c117 = { type: "literal", value: "Bool", description: "\"Bool\"" },
         peg$c118 = function() {return ["boolean", {}];},
@@ -40344,144 +40394,145 @@ var parsers = {'C#':(function() {
         peg$c127 = function() {return ["void", {}];},
         peg$c128 = "[]",
         peg$c129 = { type: "literal", value: "[]", description: "\"[]\"" },
-        peg$c130 = "case",
-        peg$c131 = { type: "literal", value: "case", description: "\"case\"" },
-        peg$c132 = function(a, b) {return ["case", {a:a,b:b,}];},
-        peg$c133 = function() {return ["key_value_separator", {}];},
-        peg$c134 = function() {return ["initializer_list_separator", {}];},
-        peg$c135 = "][",
-        peg$c136 = { type: "literal", value: "][", description: "\"][\"" },
-        peg$c137 = function() {return ["array_access_separator", {}];},
-        peg$c138 = "import",
-        peg$c139 = { type: "literal", value: "import", description: "\"import\"" },
-        peg$c140 = function(a) {return ["import", {a:a,}];},
-        peg$c141 = "[",
-        peg$c142 = { type: "literal", value: "[", description: "\"[\"" },
-        peg$c143 = "]",
-        peg$c144 = { type: "literal", value: "]", description: "\"]\"" },
-        peg$c145 = function(a) {return ["dictionary", {a:a,}];},
-        peg$c146 = function(name) {return ["var_name", {name:name,}];},
-        peg$c147 = "?",
-        peg$c148 = { type: "literal", value: "?", description: "\"?\"" },
-        peg$c149 = "=",
-        peg$c150 = { type: "literal", value: "=", description: "\"=\"" },
-        peg$c151 = function(name, value) {return ["default_parameter", {name:name,value:value,}];},
-        peg$c152 = function(var1, var2, var3) {return ["_initializer_list", {var1:var1,var2:var2,var3:var3,}];},
-        peg$c153 = "length",
-        peg$c154 = { type: "literal", value: "length", description: "\"length\"" },
-        peg$c155 = function(a) {return ["strlen", {a:a,}];},
-        peg$c156 = "!=",
-        peg$c157 = { type: "literal", value: "!=", description: "\"!=\"" },
-        peg$c158 = function(a, b) {return ["not_equal", {a:a,b:b,}];},
-        peg$c159 = function(var1, var2, var3) {return ["key_value_list", {var1:var1,var2:var2,var3:var3,}];},
-        peg$c160 = function(a) {return ["array_length", {a:a,}];},
-        peg$c161 = function(a) {return ["initializer_list", {a:a,}];},
-        peg$c162 = "=>",
-        peg$c163 = { type: "literal", value: "=>", description: "\"=>\"" },
-        peg$c164 = function(a, b) {return ["key_value", {a:a,b:b,}];},
-        peg$c165 = function(a, b) {return ["strcmp", {a:a,b:b,}];},
-        peg$c166 = "sqrt",
-        peg$c167 = { type: "literal", value: "sqrt", description: "\"sqrt\"" },
-        peg$c168 = function(x) {return ["sqrt", {x:x,}];},
-        peg$c169 = "+=",
-        peg$c170 = { type: "literal", value: "+=", description: "\"+=\"" },
-        peg$c171 = function(a, b) {return ["plus_equals", {a:a,b:b,}];},
-        peg$c172 = "-=",
-        peg$c173 = { type: "literal", value: "-=", description: "\"-=\"" },
-        peg$c174 = function(a, b) {return ["minus_equals", {a:a,b:b,}];},
-        peg$c175 = function(a, b) {return ["concatenate_string", {a:a,b:b,}];},
-        peg$c176 = "pow",
-        peg$c177 = { type: "literal", value: "pow", description: "\"pow\"" },
-        peg$c178 = function(a, b) {return ["pow", {a:a,b:b,}];},
-        peg$c179 = function(name, params, body) {return ["static_method", {name:name,params:params,body:body,}];},
-        peg$c180 = "new",
-        peg$c181 = { type: "literal", value: "new", description: "\"new\"" },
-        peg$c182 = function(var_name, class_name, params) {return ["declare_new_object", {var_name:var_name,class_name:class_name,params:params,}];},
-        peg$c183 = "parseInt",
-        peg$c184 = { type: "literal", value: "parseInt", description: "\"parseInt\"" },
-        peg$c185 = function(a) {return ["string_to_int", {a:a,}];},
-        peg$c186 = "inline",
-        peg$c187 = { type: "literal", value: "inline", description: "\"inline\"" },
-        peg$c188 = function(name, value) {return ["typeless_declare_constant", {name:name,value:value,}];},
-        peg$c189 = function(name, value) {return ["declare_constant", {name:name,value:value,}];},
-        peg$c190 = function(value) {return ["function_call_named_parameter", {value:value,}];},
-        peg$c191 = "",
-        peg$c192 = function(statement_1, condition, body, statement_2) {return ["for", {statement_1:statement_1,condition:condition,body:body,statement_2:statement_2,}];},
-        peg$c193 = function(name, params, return_type, body) {return ["function", {name:name,params:params,return_type:return_type,body:body,}];},
-        peg$c194 = "else",
-        peg$c195 = { type: "literal", value: "else", description: "\"else\"" },
-        peg$c196 = function(a) {return ["else", {a:a,}];},
-        peg$c197 = "if",
-        peg$c198 = { type: "literal", value: "if", description: "\"if\"" },
-        peg$c199 = "a",
-        peg$c200 = { type: "literal", value: "a", description: "\"a\"" },
-        peg$c201 = "b",
-        peg$c202 = { type: "literal", value: "b", description: "\"b\"" },
-        peg$c203 = "c",
-        peg$c204 = { type: "literal", value: "c", description: "\"c\"" },
-        peg$c205 = function() {return ["elif", {}];},
-        peg$c206 = "return",
-        peg$c207 = { type: "literal", value: "return", description: "\"return\"" },
-        peg$c208 = function(a) {return ["return", {a:a,}];},
-        peg$c209 = function(name, value) {return ["set_var", {name:name,value:value,}];},
-        peg$c210 = "trace",
-        peg$c211 = { type: "literal", value: "trace", description: "\"trace\"" },
-        peg$c212 = function(a) {return ["print", {a:a,}];},
-        peg$c213 = "//",
-        peg$c214 = { type: "literal", value: "//", description: "\"//\"" },
-        peg$c215 = /^[^\n]/,
-        peg$c216 = { type: "class", value: "[^\\n]", description: "[^\\n]" },
-        peg$c217 = "\n",
-        peg$c218 = { type: "literal", value: "\n", description: "\"\\n\"" },
-        peg$c219 = function(var1) {return ["comment", {var1:var1,}];},
-        peg$c220 = function(name, type, value) {return ["initialize_var", {name:name,type:type,value:value,}];},
-        peg$c221 = function(name, value) {return ["typeless_initialize_var", {name:name,value:value,}];},
-        peg$c222 = "Int",
-        peg$c223 = { type: "literal", value: "Int", description: "\"Int\"" },
-        peg$c224 = function() {return ["int", {}];},
-        peg$c225 = function(a, b, c) {return ["if", {a:a,b:b,c:c,}];},
-        peg$c226 = function(name, type) {return ["function_parameter", {name:name,type:type,}];},
-        peg$c227 = function(a, b) {return ["access_array", {a:a,b:b,}];},
-        peg$c228 = function(var1, separator, var2) {return ["array_access_list", {var1:var1,separator:separator,var2:var2,}];},
-        peg$c229 = { type: "other", description: "identifier" },
-        peg$c230 = "equals",
-        peg$c231 = { type: "literal", value: "equals", description: "\"equals\"" },
-        peg$c232 = "Console",
-        peg$c233 = { type: "literal", value: "Console", description: "\"Console\"" },
-        peg$c234 = "System",
-        peg$c235 = { type: "literal", value: "System", description: "\"System\"" },
-        peg$c236 = "break",
-        peg$c237 = { type: "literal", value: "break", description: "\"break\"" },
-        peg$c238 = "ite",
-        peg$c239 = { type: "literal", value: "ite", description: "\"ite\"" },
-        peg$c240 = "end",
-        peg$c241 = { type: "literal", value: "end", description: "\"end\"" },
-        peg$c242 = "then",
-        peg$c243 = { type: "literal", value: "then", description: "\"then\"" },
-        peg$c244 = /^[a-zA-Z0-9]/,
-        peg$c245 = { type: "class", value: "[a-zA-Z0-9]", description: "[a-zA-Z0-9]" },
-        peg$c246 = function() {return text();},
-        peg$c247 = function(var1, var2, var3) {return ["key_value_list", {var1:var1,var2:var2,var3:var3}]},
-        peg$c248 = function(var1, var2, var3) {return ["_initializer_list", {var1:var1,var2:var2,var3:var3}];},
-        peg$c249 = function(var1, separator, var2) {return ["array_access_list", {var1:var1, separator:separator, var2:var2}]},
-        peg$c250 = { type: "other", description: "integer" },
-        peg$c251 = /^[0-9]/,
-        peg$c252 = { type: "class", value: "[0-9]", description: "[0-9]" },
-        peg$c253 = function() { return text(); },
-        peg$c254 = { type: "other", description: "whitespace" },
-        peg$c255 = /^[ \t\n\r]/,
-        peg$c256 = { type: "class", value: "[ \\t\\n\\r]", description: "[ \\t\\n\\r]" },
-        peg$c257 = { type: "other", description: "whitespace2" },
-        peg$c258 = "\"",
-        peg$c259 = { type: "literal", value: "\"", description: "\"\\\"\"" },
-        peg$c260 = function(var1) {return ["string_literal", {var1:var1}];},
-        peg$c261 = "'",
-        peg$c262 = { type: "literal", value: "'", description: "\"'\"" },
-        peg$c263 = function(var1) {return ["string literal", var1];},
-        peg$c264 = /^[^"]/,
-        peg$c265 = { type: "class", value: "[^\"]", description: "[^\"]" },
-        peg$c266 = /^[^']/,
-        peg$c267 = { type: "class", value: "[^']", description: "[^']" },
+        peg$c130 = function(var1, var2) {return ["array_type_suffix", {var1:var1, var2:var2}];},
+        peg$c131 = "case",
+        peg$c132 = { type: "literal", value: "case", description: "\"case\"" },
+        peg$c133 = function(a, b) {return ["case", {a:a,b:b,}];},
+        peg$c134 = function() {return ["key_value_separator", {}];},
+        peg$c135 = function() {return ["initializer_list_separator", {}];},
+        peg$c136 = "][",
+        peg$c137 = { type: "literal", value: "][", description: "\"][\"" },
+        peg$c138 = function() {return ["array_access_separator", {}];},
+        peg$c139 = "import",
+        peg$c140 = { type: "literal", value: "import", description: "\"import\"" },
+        peg$c141 = function(a) {return ["import", {a:a,}];},
+        peg$c142 = "[",
+        peg$c143 = { type: "literal", value: "[", description: "\"[\"" },
+        peg$c144 = "]",
+        peg$c145 = { type: "literal", value: "]", description: "\"]\"" },
+        peg$c146 = function(a) {return ["dictionary", {a:a,}];},
+        peg$c147 = function(name) {return ["var_name", {name:name,}];},
+        peg$c148 = "?",
+        peg$c149 = { type: "literal", value: "?", description: "\"?\"" },
+        peg$c150 = "=",
+        peg$c151 = { type: "literal", value: "=", description: "\"=\"" },
+        peg$c152 = function(name, value) {return ["default_parameter", {name:name,value:value,}];},
+        peg$c153 = function(var1, var2, var3) {return ["_initializer_list", {var1:var1,var2:var2,var3:var3,}];},
+        peg$c154 = "length",
+        peg$c155 = { type: "literal", value: "length", description: "\"length\"" },
+        peg$c156 = function(a) {return ["strlen", {a:a,}];},
+        peg$c157 = "!=",
+        peg$c158 = { type: "literal", value: "!=", description: "\"!=\"" },
+        peg$c159 = function(a, b) {return ["not_equal", {a:a,b:b,}];},
+        peg$c160 = function(var1, var2, var3) {return ["key_value_list", {var1:var1,var2:var2,var3:var3,}];},
+        peg$c161 = function(a) {return ["array_length", {a:a,}];},
+        peg$c162 = function(a) {return ["initializer_list", {a:a,}];},
+        peg$c163 = "=>",
+        peg$c164 = { type: "literal", value: "=>", description: "\"=>\"" },
+        peg$c165 = function(a, b) {return ["key_value", {a:a,b:b,}];},
+        peg$c166 = function(a, b) {return ["strcmp", {a:a,b:b,}];},
+        peg$c167 = "sqrt",
+        peg$c168 = { type: "literal", value: "sqrt", description: "\"sqrt\"" },
+        peg$c169 = function(x) {return ["sqrt", {x:x,}];},
+        peg$c170 = "+=",
+        peg$c171 = { type: "literal", value: "+=", description: "\"+=\"" },
+        peg$c172 = function(a, b) {return ["plus_equals", {a:a,b:b,}];},
+        peg$c173 = "-=",
+        peg$c174 = { type: "literal", value: "-=", description: "\"-=\"" },
+        peg$c175 = function(a, b) {return ["minus_equals", {a:a,b:b,}];},
+        peg$c176 = function(a, b) {return ["concatenate_string", {a:a,b:b,}];},
+        peg$c177 = "pow",
+        peg$c178 = { type: "literal", value: "pow", description: "\"pow\"" },
+        peg$c179 = function(a, b) {return ["pow", {a:a,b:b,}];},
+        peg$c180 = function(name, params, body) {return ["static_method", {name:name,params:params,body:body,}];},
+        peg$c181 = "new",
+        peg$c182 = { type: "literal", value: "new", description: "\"new\"" },
+        peg$c183 = function(var_name, class_name, params) {return ["declare_new_object", {var_name:var_name,class_name:class_name,params:params,}];},
+        peg$c184 = "parseInt",
+        peg$c185 = { type: "literal", value: "parseInt", description: "\"parseInt\"" },
+        peg$c186 = function(a) {return ["string_to_int", {a:a,}];},
+        peg$c187 = "inline",
+        peg$c188 = { type: "literal", value: "inline", description: "\"inline\"" },
+        peg$c189 = function(name, value) {return ["typeless_declare_constant", {name:name,value:value,}];},
+        peg$c190 = function(name, value) {return ["declare_constant", {name:name,value:value,}];},
+        peg$c191 = function(value) {return ["function_call_named_parameter", {value:value,}];},
+        peg$c192 = "",
+        peg$c193 = function(statement_1, condition, body, statement_2) {return ["for", {statement_1:statement_1,condition:condition,body:body,statement_2:statement_2,}];},
+        peg$c194 = function(name, params, return_type, body) {return ["function", {name:name,params:params,return_type:return_type,body:body,}];},
+        peg$c195 = "else",
+        peg$c196 = { type: "literal", value: "else", description: "\"else\"" },
+        peg$c197 = function(a) {return ["else", {a:a,}];},
+        peg$c198 = "if",
+        peg$c199 = { type: "literal", value: "if", description: "\"if\"" },
+        peg$c200 = "a",
+        peg$c201 = { type: "literal", value: "a", description: "\"a\"" },
+        peg$c202 = "b",
+        peg$c203 = { type: "literal", value: "b", description: "\"b\"" },
+        peg$c204 = "c",
+        peg$c205 = { type: "literal", value: "c", description: "\"c\"" },
+        peg$c206 = function() {return ["elif", {}];},
+        peg$c207 = "return",
+        peg$c208 = { type: "literal", value: "return", description: "\"return\"" },
+        peg$c209 = function(a) {return ["return", {a:a,}];},
+        peg$c210 = function(name, value) {return ["set_var", {name:name,value:value,}];},
+        peg$c211 = "trace",
+        peg$c212 = { type: "literal", value: "trace", description: "\"trace\"" },
+        peg$c213 = function(a) {return ["print", {a:a,}];},
+        peg$c214 = "//",
+        peg$c215 = { type: "literal", value: "//", description: "\"//\"" },
+        peg$c216 = /^[^\n]/,
+        peg$c217 = { type: "class", value: "[^\\n]", description: "[^\\n]" },
+        peg$c218 = "\n",
+        peg$c219 = { type: "literal", value: "\n", description: "\"\\n\"" },
+        peg$c220 = function(var1) {return ["comment", {var1:var1,}];},
+        peg$c221 = function(name, type, value) {return ["initialize_var", {name:name,type:type,value:value,}];},
+        peg$c222 = function(name, value) {return ["typeless_initialize_var", {name:name,value:value,}];},
+        peg$c223 = "Int",
+        peg$c224 = { type: "literal", value: "Int", description: "\"Int\"" },
+        peg$c225 = function() {return ["int", {}];},
+        peg$c226 = function(a, b, c) {return ["if", {a:a,b:b,c:c,}];},
+        peg$c227 = function(name, type) {return ["function_parameter", {name:name,type:type,}];},
+        peg$c228 = function(a, b) {return ["access_array", {a:a,b:b,}];},
+        peg$c229 = function(var1, separator, var2) {return ["array_access_list", {var1:var1,separator:separator,var2:var2,}];},
+        peg$c230 = { type: "other", description: "identifier" },
+        peg$c231 = "equals",
+        peg$c232 = { type: "literal", value: "equals", description: "\"equals\"" },
+        peg$c233 = "Console",
+        peg$c234 = { type: "literal", value: "Console", description: "\"Console\"" },
+        peg$c235 = "System",
+        peg$c236 = { type: "literal", value: "System", description: "\"System\"" },
+        peg$c237 = "break",
+        peg$c238 = { type: "literal", value: "break", description: "\"break\"" },
+        peg$c239 = "ite",
+        peg$c240 = { type: "literal", value: "ite", description: "\"ite\"" },
+        peg$c241 = "end",
+        peg$c242 = { type: "literal", value: "end", description: "\"end\"" },
+        peg$c243 = "then",
+        peg$c244 = { type: "literal", value: "then", description: "\"then\"" },
+        peg$c245 = /^[a-zA-Z0-9]/,
+        peg$c246 = { type: "class", value: "[a-zA-Z0-9]", description: "[a-zA-Z0-9]" },
+        peg$c247 = function() {return text();},
+        peg$c248 = function(var1, var2, var3) {return ["key_value_list", {var1:var1,var2:var2,var3:var3}]},
+        peg$c249 = function(var1, var2, var3) {return ["_initializer_list", {var1:var1,var2:var2,var3:var3}];},
+        peg$c250 = function(var1, separator, var2) {return ["array_access_list", {var1:var1, separator:separator, var2:var2}]},
+        peg$c251 = { type: "other", description: "integer" },
+        peg$c252 = /^[0-9]/,
+        peg$c253 = { type: "class", value: "[0-9]", description: "[0-9]" },
+        peg$c254 = function() { return text(); },
+        peg$c255 = { type: "other", description: "whitespace" },
+        peg$c256 = /^[ \t\n\r]/,
+        peg$c257 = { type: "class", value: "[ \\t\\n\\r]", description: "[ \\t\\n\\r]" },
+        peg$c258 = { type: "other", description: "whitespace2" },
+        peg$c259 = "\"",
+        peg$c260 = { type: "literal", value: "\"", description: "\"\\\"\"" },
+        peg$c261 = function(var1) {return ["string_literal", {var1:var1}];},
+        peg$c262 = "'",
+        peg$c263 = { type: "literal", value: "'", description: "\"'\"" },
+        peg$c264 = function(var1) {return ["string literal", var1];},
+        peg$c265 = /^[^"]/,
+        peg$c266 = { type: "class", value: "[^\"]", description: "[^\"]" },
+        peg$c267 = /^[^']/,
+        peg$c268 = { type: "class", value: "[^']", description: "[^']" },
 
         peg$currPos          = 0,
         peg$savedPos         = 0,
@@ -42195,6 +42246,9 @@ var parsers = {'C#':(function() {
       }
       if (s0 === peg$FAILED) {
         s0 = peg$parsefunction_parameter();
+        if (s0 === peg$FAILED) {
+          s0 = peg$parse_();
+        }
       }
 
       return s0;
@@ -43030,7 +43084,10 @@ var parsers = {'C#':(function() {
       var s0, s1, s2, s3, s4, s5;
 
       s0 = peg$currPos;
-      s1 = peg$parseAnd();
+      s1 = peg$parsefunction_call_named_parameter();
+      if (s1 === peg$FAILED) {
+        s1 = peg$parseAnd();
+      }
       if (s1 !== peg$FAILED) {
         s2 = peg$parse_();
         if (s2 !== peg$FAILED) {
@@ -43070,7 +43127,10 @@ var parsers = {'C#':(function() {
         s0 = peg$FAILED;
       }
       if (s0 === peg$FAILED) {
-        s0 = peg$parseAnd();
+        s0 = peg$parsefunction_call_named_parameter();
+        if (s0 === peg$FAILED) {
+          s0 = peg$parseAnd();
+        }
       }
 
       return s0;
@@ -43832,7 +43892,7 @@ var parsers = {'C#':(function() {
         s2 = peg$parsearray_type_suffix();
         if (s2 !== peg$FAILED) {
           peg$savedPos = s0;
-          s1 = peg$c115(s1, s2);
+          s1 = peg$c130(s1, s2);
           s0 = s1;
         } else {
           peg$currPos = s0;
@@ -43859,12 +43919,12 @@ var parsers = {'C#':(function() {
       var s0, s1, s2, s3, s4, s5, s6, s7;
 
       s0 = peg$currPos;
-      if (input.substr(peg$currPos, 4) === peg$c130) {
-        s1 = peg$c130;
+      if (input.substr(peg$currPos, 4) === peg$c131) {
+        s1 = peg$c131;
         peg$currPos += 4;
       } else {
         s1 = peg$FAILED;
-        if (peg$silentFails === 0) { peg$fail(peg$c131); }
+        if (peg$silentFails === 0) { peg$fail(peg$c132); }
       }
       if (s1 !== peg$FAILED) {
         s2 = peg$parse__();
@@ -43886,7 +43946,7 @@ var parsers = {'C#':(function() {
                   s7 = peg$parseseries_of_statements();
                   if (s7 !== peg$FAILED) {
                     peg$savedPos = s0;
-                    s1 = peg$c132(s3, s7);
+                    s1 = peg$c133(s3, s7);
                     s0 = s1;
                   } else {
                     peg$currPos = s0;
@@ -43933,7 +43993,7 @@ var parsers = {'C#':(function() {
       }
       if (s1 !== peg$FAILED) {
         peg$savedPos = s0;
-        s1 = peg$c133();
+        s1 = peg$c134();
       }
       s0 = s1;
 
@@ -43953,7 +44013,7 @@ var parsers = {'C#':(function() {
       }
       if (s1 !== peg$FAILED) {
         peg$savedPos = s0;
-        s1 = peg$c134();
+        s1 = peg$c135();
       }
       s0 = s1;
 
@@ -43964,16 +44024,16 @@ var parsers = {'C#':(function() {
       var s0, s1;
 
       s0 = peg$currPos;
-      if (input.substr(peg$currPos, 2) === peg$c135) {
-        s1 = peg$c135;
+      if (input.substr(peg$currPos, 2) === peg$c136) {
+        s1 = peg$c136;
         peg$currPos += 2;
       } else {
         s1 = peg$FAILED;
-        if (peg$silentFails === 0) { peg$fail(peg$c136); }
+        if (peg$silentFails === 0) { peg$fail(peg$c137); }
       }
       if (s1 !== peg$FAILED) {
         peg$savedPos = s0;
-        s1 = peg$c137();
+        s1 = peg$c138();
       }
       s0 = s1;
 
@@ -43984,12 +44044,12 @@ var parsers = {'C#':(function() {
       var s0, s1, s2, s3, s4, s5;
 
       s0 = peg$currPos;
-      if (input.substr(peg$currPos, 6) === peg$c138) {
-        s1 = peg$c138;
+      if (input.substr(peg$currPos, 6) === peg$c139) {
+        s1 = peg$c139;
         peg$currPos += 6;
       } else {
         s1 = peg$FAILED;
-        if (peg$silentFails === 0) { peg$fail(peg$c139); }
+        if (peg$silentFails === 0) { peg$fail(peg$c140); }
       }
       if (s1 !== peg$FAILED) {
         s2 = peg$parse__();
@@ -44007,7 +44067,7 @@ var parsers = {'C#':(function() {
               }
               if (s5 !== peg$FAILED) {
                 peg$savedPos = s0;
-                s1 = peg$c140(s3);
+                s1 = peg$c141(s3);
                 s0 = s1;
               } else {
                 peg$currPos = s0;
@@ -44038,11 +44098,11 @@ var parsers = {'C#':(function() {
 
       s0 = peg$currPos;
       if (input.charCodeAt(peg$currPos) === 91) {
-        s1 = peg$c141;
+        s1 = peg$c142;
         peg$currPos++;
       } else {
         s1 = peg$FAILED;
-        if (peg$silentFails === 0) { peg$fail(peg$c142); }
+        if (peg$silentFails === 0) { peg$fail(peg$c143); }
       }
       if (s1 !== peg$FAILED) {
         s2 = peg$parse_();
@@ -44052,15 +44112,15 @@ var parsers = {'C#':(function() {
             s4 = peg$parse_();
             if (s4 !== peg$FAILED) {
               if (input.charCodeAt(peg$currPos) === 93) {
-                s5 = peg$c143;
+                s5 = peg$c144;
                 peg$currPos++;
               } else {
                 s5 = peg$FAILED;
-                if (peg$silentFails === 0) { peg$fail(peg$c144); }
+                if (peg$silentFails === 0) { peg$fail(peg$c145); }
               }
               if (s5 !== peg$FAILED) {
                 peg$savedPos = s0;
-                s1 = peg$c145(s3);
+                s1 = peg$c146(s3);
                 s0 = s1;
               } else {
                 peg$currPos = s0;
@@ -44093,7 +44153,7 @@ var parsers = {'C#':(function() {
       s1 = peg$parseIdentifier();
       if (s1 !== peg$FAILED) {
         peg$savedPos = s0;
-        s1 = peg$c146(s1);
+        s1 = peg$c147(s1);
       }
       s0 = s1;
 
@@ -44105,11 +44165,11 @@ var parsers = {'C#':(function() {
 
       s0 = peg$currPos;
       if (input.charCodeAt(peg$currPos) === 63) {
-        s1 = peg$c147;
+        s1 = peg$c148;
         peg$currPos++;
       } else {
         s1 = peg$FAILED;
-        if (peg$silentFails === 0) { peg$fail(peg$c148); }
+        if (peg$silentFails === 0) { peg$fail(peg$c149); }
       }
       if (s1 !== peg$FAILED) {
         s2 = peg$parse_();
@@ -44119,11 +44179,11 @@ var parsers = {'C#':(function() {
             s4 = peg$parse_();
             if (s4 !== peg$FAILED) {
               if (input.charCodeAt(peg$currPos) === 61) {
-                s5 = peg$c149;
+                s5 = peg$c150;
                 peg$currPos++;
               } else {
                 s5 = peg$FAILED;
-                if (peg$silentFails === 0) { peg$fail(peg$c150); }
+                if (peg$silentFails === 0) { peg$fail(peg$c151); }
               }
               if (s5 !== peg$FAILED) {
                 s6 = peg$parse_();
@@ -44131,7 +44191,7 @@ var parsers = {'C#':(function() {
                   s7 = peg$parseAnd();
                   if (s7 !== peg$FAILED) {
                     peg$savedPos = s0;
-                    s1 = peg$c151(s3, s7);
+                    s1 = peg$c152(s3, s7);
                     s0 = s1;
                   } else {
                     peg$currPos = s0;
@@ -44180,7 +44240,7 @@ var parsers = {'C#':(function() {
               s5 = peg$parse_initializer_list();
               if (s5 !== peg$FAILED) {
                 peg$savedPos = s0;
-                s1 = peg$c152(s1, s3, s5);
+                s1 = peg$c153(s1, s3, s5);
                 s0 = s1;
               } else {
                 peg$currPos = s0;
@@ -44224,16 +44284,16 @@ var parsers = {'C#':(function() {
           if (s3 !== peg$FAILED) {
             s4 = peg$parse_();
             if (s4 !== peg$FAILED) {
-              if (input.substr(peg$currPos, 6) === peg$c153) {
-                s5 = peg$c153;
+              if (input.substr(peg$currPos, 6) === peg$c154) {
+                s5 = peg$c154;
                 peg$currPos += 6;
               } else {
                 s5 = peg$FAILED;
-                if (peg$silentFails === 0) { peg$fail(peg$c154); }
+                if (peg$silentFails === 0) { peg$fail(peg$c155); }
               }
               if (s5 !== peg$FAILED) {
                 peg$savedPos = s0;
-                s1 = peg$c155(s1);
+                s1 = peg$c156(s1);
                 s0 = s1;
               } else {
                 peg$currPos = s0;
@@ -44267,12 +44327,12 @@ var parsers = {'C#':(function() {
       if (s1 !== peg$FAILED) {
         s2 = peg$parse_();
         if (s2 !== peg$FAILED) {
-          if (input.substr(peg$currPos, 2) === peg$c156) {
-            s3 = peg$c156;
+          if (input.substr(peg$currPos, 2) === peg$c157) {
+            s3 = peg$c157;
             peg$currPos += 2;
           } else {
             s3 = peg$FAILED;
-            if (peg$silentFails === 0) { peg$fail(peg$c157); }
+            if (peg$silentFails === 0) { peg$fail(peg$c158); }
           }
           if (s3 !== peg$FAILED) {
             s4 = peg$parse_();
@@ -44280,7 +44340,7 @@ var parsers = {'C#':(function() {
               s5 = peg$parseAdd();
               if (s5 !== peg$FAILED) {
                 peg$savedPos = s0;
-                s1 = peg$c158(s1, s5);
+                s1 = peg$c159(s1, s5);
                 s0 = s1;
               } else {
                 peg$currPos = s0;
@@ -44321,7 +44381,7 @@ var parsers = {'C#':(function() {
               s5 = peg$parsekey_value_list();
               if (s5 !== peg$FAILED) {
                 peg$savedPos = s0;
-                s1 = peg$c159(s1, s3, s5);
+                s1 = peg$c160(s1, s3, s5);
                 s0 = s1;
               } else {
                 peg$currPos = s0;
@@ -44365,16 +44425,16 @@ var parsers = {'C#':(function() {
           if (s3 !== peg$FAILED) {
             s4 = peg$parse_();
             if (s4 !== peg$FAILED) {
-              if (input.substr(peg$currPos, 6) === peg$c153) {
-                s5 = peg$c153;
+              if (input.substr(peg$currPos, 6) === peg$c154) {
+                s5 = peg$c154;
                 peg$currPos += 6;
               } else {
                 s5 = peg$FAILED;
-                if (peg$silentFails === 0) { peg$fail(peg$c154); }
+                if (peg$silentFails === 0) { peg$fail(peg$c155); }
               }
               if (s5 !== peg$FAILED) {
                 peg$savedPos = s0;
-                s1 = peg$c160(s1);
+                s1 = peg$c161(s1);
                 s0 = s1;
               } else {
                 peg$currPos = s0;
@@ -44405,11 +44465,11 @@ var parsers = {'C#':(function() {
 
       s0 = peg$currPos;
       if (input.charCodeAt(peg$currPos) === 91) {
-        s1 = peg$c141;
+        s1 = peg$c142;
         peg$currPos++;
       } else {
         s1 = peg$FAILED;
-        if (peg$silentFails === 0) { peg$fail(peg$c142); }
+        if (peg$silentFails === 0) { peg$fail(peg$c143); }
       }
       if (s1 !== peg$FAILED) {
         s2 = peg$parse_();
@@ -44419,15 +44479,15 @@ var parsers = {'C#':(function() {
             s4 = peg$parse_();
             if (s4 !== peg$FAILED) {
               if (input.charCodeAt(peg$currPos) === 93) {
-                s5 = peg$c143;
+                s5 = peg$c144;
                 peg$currPos++;
               } else {
                 s5 = peg$FAILED;
-                if (peg$silentFails === 0) { peg$fail(peg$c144); }
+                if (peg$silentFails === 0) { peg$fail(peg$c145); }
               }
               if (s5 !== peg$FAILED) {
                 peg$savedPos = s0;
-                s1 = peg$c161(s3);
+                s1 = peg$c162(s3);
                 s0 = s1;
               } else {
                 peg$currPos = s0;
@@ -44461,12 +44521,12 @@ var parsers = {'C#':(function() {
       if (s1 !== peg$FAILED) {
         s2 = peg$parse_();
         if (s2 !== peg$FAILED) {
-          if (input.substr(peg$currPos, 2) === peg$c162) {
-            s3 = peg$c162;
+          if (input.substr(peg$currPos, 2) === peg$c163) {
+            s3 = peg$c163;
             peg$currPos += 2;
           } else {
             s3 = peg$FAILED;
-            if (peg$silentFails === 0) { peg$fail(peg$c163); }
+            if (peg$silentFails === 0) { peg$fail(peg$c164); }
           }
           if (s3 !== peg$FAILED) {
             s4 = peg$parse_();
@@ -44474,7 +44534,7 @@ var parsers = {'C#':(function() {
               s5 = peg$parseAnd();
               if (s5 !== peg$FAILED) {
                 peg$savedPos = s0;
-                s1 = peg$c164(s1, s5);
+                s1 = peg$c165(s1, s5);
                 s0 = s1;
               } else {
                 peg$currPos = s0;
@@ -44521,7 +44581,7 @@ var parsers = {'C#':(function() {
               s5 = peg$parseparentheses_expression();
               if (s5 !== peg$FAILED) {
                 peg$savedPos = s0;
-                s1 = peg$c165(s1, s5);
+                s1 = peg$c166(s1, s5);
                 s0 = s1;
               } else {
                 peg$currPos = s0;
@@ -44571,12 +44631,12 @@ var parsers = {'C#':(function() {
           if (s3 !== peg$FAILED) {
             s4 = peg$parse_();
             if (s4 !== peg$FAILED) {
-              if (input.substr(peg$currPos, 4) === peg$c166) {
-                s5 = peg$c166;
+              if (input.substr(peg$currPos, 4) === peg$c167) {
+                s5 = peg$c167;
                 peg$currPos += 4;
               } else {
                 s5 = peg$FAILED;
-                if (peg$silentFails === 0) { peg$fail(peg$c167); }
+                if (peg$silentFails === 0) { peg$fail(peg$c168); }
               }
               if (s5 !== peg$FAILED) {
                 s6 = peg$parse_();
@@ -44604,7 +44664,7 @@ var parsers = {'C#':(function() {
                           }
                           if (s11 !== peg$FAILED) {
                             peg$savedPos = s0;
-                            s1 = peg$c168(s9);
+                            s1 = peg$c169(s9);
                             s0 = s1;
                           } else {
                             peg$currPos = s0;
@@ -44668,12 +44728,12 @@ var parsers = {'C#':(function() {
       if (s1 !== peg$FAILED) {
         s2 = peg$parse_();
         if (s2 !== peg$FAILED) {
-          if (input.substr(peg$currPos, 2) === peg$c169) {
-            s3 = peg$c169;
+          if (input.substr(peg$currPos, 2) === peg$c170) {
+            s3 = peg$c170;
             peg$currPos += 2;
           } else {
             s3 = peg$FAILED;
-            if (peg$silentFails === 0) { peg$fail(peg$c170); }
+            if (peg$silentFails === 0) { peg$fail(peg$c171); }
           }
           if (s3 !== peg$FAILED) {
             s4 = peg$parse_();
@@ -44681,7 +44741,7 @@ var parsers = {'C#':(function() {
               s5 = peg$parseAnd();
               if (s5 !== peg$FAILED) {
                 peg$savedPos = s0;
-                s1 = peg$c171(s1, s5);
+                s1 = peg$c172(s1, s5);
                 s0 = s1;
               } else {
                 peg$currPos = s0;
@@ -44721,12 +44781,12 @@ var parsers = {'C#':(function() {
       if (s1 !== peg$FAILED) {
         s2 = peg$parse_();
         if (s2 !== peg$FAILED) {
-          if (input.substr(peg$currPos, 2) === peg$c172) {
-            s3 = peg$c172;
+          if (input.substr(peg$currPos, 2) === peg$c173) {
+            s3 = peg$c173;
             peg$currPos += 2;
           } else {
             s3 = peg$FAILED;
-            if (peg$silentFails === 0) { peg$fail(peg$c173); }
+            if (peg$silentFails === 0) { peg$fail(peg$c174); }
           }
           if (s3 !== peg$FAILED) {
             s4 = peg$parse_();
@@ -44734,7 +44794,7 @@ var parsers = {'C#':(function() {
               s5 = peg$parseAnd();
               if (s5 !== peg$FAILED) {
                 peg$savedPos = s0;
-                s1 = peg$c174(s1, s5);
+                s1 = peg$c175(s1, s5);
                 s0 = s1;
               } else {
                 peg$currPos = s0;
@@ -44781,7 +44841,7 @@ var parsers = {'C#':(function() {
               s5 = peg$parseconcatenate_string();
               if (s5 !== peg$FAILED) {
                 peg$savedPos = s0;
-                s1 = peg$c175(s1, s5);
+                s1 = peg$c176(s1, s5);
                 s0 = s1;
               } else {
                 peg$currPos = s0;
@@ -44831,12 +44891,12 @@ var parsers = {'C#':(function() {
           if (s3 !== peg$FAILED) {
             s4 = peg$parse_();
             if (s4 !== peg$FAILED) {
-              if (input.substr(peg$currPos, 3) === peg$c176) {
-                s5 = peg$c176;
+              if (input.substr(peg$currPos, 3) === peg$c177) {
+                s5 = peg$c177;
                 peg$currPos += 3;
               } else {
                 s5 = peg$FAILED;
-                if (peg$silentFails === 0) { peg$fail(peg$c177); }
+                if (peg$silentFails === 0) { peg$fail(peg$c178); }
               }
               if (s5 !== peg$FAILED) {
                 s6 = peg$parse_();
@@ -44878,7 +44938,7 @@ var parsers = {'C#':(function() {
                                   }
                                   if (s15 !== peg$FAILED) {
                                     peg$savedPos = s0;
-                                    s1 = peg$c178(s9, s13);
+                                    s1 = peg$c179(s9, s13);
                                     s0 = s1;
                                   } else {
                                     peg$currPos = s0;
@@ -45029,7 +45089,7 @@ var parsers = {'C#':(function() {
                                           }
                                           if (s19 !== peg$FAILED) {
                                             peg$savedPos = s0;
-                                            s1 = peg$c179(s7, s11, s17);
+                                            s1 = peg$c180(s7, s11, s17);
                                             s0 = s1;
                                           } else {
                                             peg$currPos = s0;
@@ -45130,21 +45190,21 @@ var parsers = {'C#':(function() {
             s4 = peg$parse_();
             if (s4 !== peg$FAILED) {
               if (input.charCodeAt(peg$currPos) === 61) {
-                s5 = peg$c149;
+                s5 = peg$c150;
                 peg$currPos++;
               } else {
                 s5 = peg$FAILED;
-                if (peg$silentFails === 0) { peg$fail(peg$c150); }
+                if (peg$silentFails === 0) { peg$fail(peg$c151); }
               }
               if (s5 !== peg$FAILED) {
                 s6 = peg$parse_();
                 if (s6 !== peg$FAILED) {
-                  if (input.substr(peg$currPos, 3) === peg$c180) {
-                    s7 = peg$c180;
+                  if (input.substr(peg$currPos, 3) === peg$c181) {
+                    s7 = peg$c181;
                     peg$currPos += 3;
                   } else {
                     s7 = peg$FAILED;
-                    if (peg$silentFails === 0) { peg$fail(peg$c181); }
+                    if (peg$silentFails === 0) { peg$fail(peg$c182); }
                   }
                   if (s7 !== peg$FAILED) {
                     s8 = peg$parse__();
@@ -45176,7 +45236,7 @@ var parsers = {'C#':(function() {
                                   }
                                   if (s15 !== peg$FAILED) {
                                     peg$savedPos = s0;
-                                    s1 = peg$c182(s3, s9, s13);
+                                    s1 = peg$c183(s3, s9, s13);
                                     s0 = s1;
                                   } else {
                                     peg$currPos = s0;
@@ -45266,12 +45326,12 @@ var parsers = {'C#':(function() {
           if (s3 !== peg$FAILED) {
             s4 = peg$parse_();
             if (s4 !== peg$FAILED) {
-              if (input.substr(peg$currPos, 8) === peg$c183) {
-                s5 = peg$c183;
+              if (input.substr(peg$currPos, 8) === peg$c184) {
+                s5 = peg$c184;
                 peg$currPos += 8;
               } else {
                 s5 = peg$FAILED;
-                if (peg$silentFails === 0) { peg$fail(peg$c184); }
+                if (peg$silentFails === 0) { peg$fail(peg$c185); }
               }
               if (s5 !== peg$FAILED) {
                 s6 = peg$parse_();
@@ -45299,7 +45359,7 @@ var parsers = {'C#':(function() {
                           }
                           if (s11 !== peg$FAILED) {
                             peg$savedPos = s0;
-                            s1 = peg$c185(s9);
+                            s1 = peg$c186(s9);
                             s0 = s1;
                           } else {
                             peg$currPos = s0;
@@ -45363,12 +45423,12 @@ var parsers = {'C#':(function() {
       if (s1 !== peg$FAILED) {
         s2 = peg$parse__();
         if (s2 !== peg$FAILED) {
-          if (input.substr(peg$currPos, 6) === peg$c186) {
-            s3 = peg$c186;
+          if (input.substr(peg$currPos, 6) === peg$c187) {
+            s3 = peg$c187;
             peg$currPos += 6;
           } else {
             s3 = peg$FAILED;
-            if (peg$silentFails === 0) { peg$fail(peg$c187); }
+            if (peg$silentFails === 0) { peg$fail(peg$c188); }
           }
           if (s3 !== peg$FAILED) {
             s4 = peg$parse__();
@@ -45388,11 +45448,11 @@ var parsers = {'C#':(function() {
                     s8 = peg$parse_();
                     if (s8 !== peg$FAILED) {
                       if (input.charCodeAt(peg$currPos) === 61) {
-                        s9 = peg$c149;
+                        s9 = peg$c150;
                         peg$currPos++;
                       } else {
                         s9 = peg$FAILED;
-                        if (peg$silentFails === 0) { peg$fail(peg$c150); }
+                        if (peg$silentFails === 0) { peg$fail(peg$c151); }
                       }
                       if (s9 !== peg$FAILED) {
                         s10 = peg$parse_();
@@ -45400,7 +45460,7 @@ var parsers = {'C#':(function() {
                           s11 = peg$parseAnd();
                           if (s11 !== peg$FAILED) {
                             peg$savedPos = s0;
-                            s1 = peg$c188(s7, s11);
+                            s1 = peg$c189(s7, s11);
                             s0 = s1;
                           } else {
                             peg$currPos = s0;
@@ -45464,12 +45524,12 @@ var parsers = {'C#':(function() {
       if (s1 !== peg$FAILED) {
         s2 = peg$parse__();
         if (s2 !== peg$FAILED) {
-          if (input.substr(peg$currPos, 6) === peg$c186) {
-            s3 = peg$c186;
+          if (input.substr(peg$currPos, 6) === peg$c187) {
+            s3 = peg$c187;
             peg$currPos += 6;
           } else {
             s3 = peg$FAILED;
-            if (peg$silentFails === 0) { peg$fail(peg$c187); }
+            if (peg$silentFails === 0) { peg$fail(peg$c188); }
           }
           if (s3 !== peg$FAILED) {
             s4 = peg$parse__();
@@ -45489,11 +45549,11 @@ var parsers = {'C#':(function() {
                     s8 = peg$parse_();
                     if (s8 !== peg$FAILED) {
                       if (input.charCodeAt(peg$currPos) === 61) {
-                        s9 = peg$c149;
+                        s9 = peg$c150;
                         peg$currPos++;
                       } else {
                         s9 = peg$FAILED;
-                        if (peg$silentFails === 0) { peg$fail(peg$c150); }
+                        if (peg$silentFails === 0) { peg$fail(peg$c151); }
                       }
                       if (s9 !== peg$FAILED) {
                         s10 = peg$parse_();
@@ -45501,7 +45561,7 @@ var parsers = {'C#':(function() {
                           s11 = peg$parseAnd();
                           if (s11 !== peg$FAILED) {
                             peg$savedPos = s0;
-                            s1 = peg$c189(s7, s11);
+                            s1 = peg$c190(s7, s11);
                             s0 = s1;
                           } else {
                             peg$currPos = s0;
@@ -45558,7 +45618,7 @@ var parsers = {'C#':(function() {
       s1 = peg$parseAnd();
       if (s1 !== peg$FAILED) {
         peg$savedPos = s0;
-        s1 = peg$c190(s1);
+        s1 = peg$c191(s1);
       }
       s0 = s1;
 
@@ -45583,7 +45643,7 @@ var parsers = {'C#':(function() {
           if (s3 !== peg$FAILED) {
             s4 = peg$parse_();
             if (s4 !== peg$FAILED) {
-              s5 = peg$c191;
+              s5 = peg$c192;
               if (s5 !== peg$FAILED) {
                 s6 = peg$parse_();
                 if (s6 !== peg$FAILED) {
@@ -45658,7 +45718,7 @@ var parsers = {'C#':(function() {
                                                   }
                                                   if (s23 !== peg$FAILED) {
                                                     peg$savedPos = s0;
-                                                    s1 = peg$c192(s1, s11, s17, s19);
+                                                    s1 = peg$c193(s1, s11, s17, s19);
                                                     s0 = s1;
                                                   } else {
                                                     peg$currPos = s0;
@@ -45855,7 +45915,7 @@ var parsers = {'C#':(function() {
                                                   }
                                                   if (s23 !== peg$FAILED) {
                                                     peg$savedPos = s0;
-                                                    s1 = peg$c193(s7, s11, s17, s21);
+                                                    s1 = peg$c194(s7, s11, s17, s21);
                                                     s0 = s1;
                                                   } else {
                                                     peg$currPos = s0;
@@ -45957,12 +46017,12 @@ var parsers = {'C#':(function() {
       var s0, s1, s2, s3, s4, s5, s6, s7;
 
       s0 = peg$currPos;
-      if (input.substr(peg$currPos, 4) === peg$c194) {
-        s1 = peg$c194;
+      if (input.substr(peg$currPos, 4) === peg$c195) {
+        s1 = peg$c195;
         peg$currPos += 4;
       } else {
         s1 = peg$FAILED;
-        if (peg$silentFails === 0) { peg$fail(peg$c195); }
+        if (peg$silentFails === 0) { peg$fail(peg$c196); }
       }
       if (s1 !== peg$FAILED) {
         s2 = peg$parse_();
@@ -45990,7 +46050,7 @@ var parsers = {'C#':(function() {
                   }
                   if (s7 !== peg$FAILED) {
                     peg$savedPos = s0;
-                    s1 = peg$c196(s5);
+                    s1 = peg$c197(s5);
                     s0 = s1;
                   } else {
                     peg$currPos = s0;
@@ -46028,22 +46088,22 @@ var parsers = {'C#':(function() {
       var s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, s10, s11, s12, s13, s14, s15, s16, s17;
 
       s0 = peg$currPos;
-      if (input.substr(peg$currPos, 4) === peg$c194) {
-        s1 = peg$c194;
+      if (input.substr(peg$currPos, 4) === peg$c195) {
+        s1 = peg$c195;
         peg$currPos += 4;
       } else {
         s1 = peg$FAILED;
-        if (peg$silentFails === 0) { peg$fail(peg$c195); }
+        if (peg$silentFails === 0) { peg$fail(peg$c196); }
       }
       if (s1 !== peg$FAILED) {
         s2 = peg$parse__();
         if (s2 !== peg$FAILED) {
-          if (input.substr(peg$currPos, 2) === peg$c197) {
-            s3 = peg$c197;
+          if (input.substr(peg$currPos, 2) === peg$c198) {
+            s3 = peg$c198;
             peg$currPos += 2;
           } else {
             s3 = peg$FAILED;
-            if (peg$silentFails === 0) { peg$fail(peg$c198); }
+            if (peg$silentFails === 0) { peg$fail(peg$c199); }
           }
           if (s3 !== peg$FAILED) {
             s4 = peg$parse_();
@@ -46059,11 +46119,11 @@ var parsers = {'C#':(function() {
                 s6 = peg$parse_();
                 if (s6 !== peg$FAILED) {
                   if (input.charCodeAt(peg$currPos) === 97) {
-                    s7 = peg$c199;
+                    s7 = peg$c200;
                     peg$currPos++;
                   } else {
                     s7 = peg$FAILED;
-                    if (peg$silentFails === 0) { peg$fail(peg$c200); }
+                    if (peg$silentFails === 0) { peg$fail(peg$c201); }
                   }
                   if (s7 !== peg$FAILED) {
                     s8 = peg$parse_();
@@ -46089,11 +46149,11 @@ var parsers = {'C#':(function() {
                             s12 = peg$parse_();
                             if (s12 !== peg$FAILED) {
                               if (input.charCodeAt(peg$currPos) === 98) {
-                                s13 = peg$c201;
+                                s13 = peg$c202;
                                 peg$currPos++;
                               } else {
                                 s13 = peg$FAILED;
-                                if (peg$silentFails === 0) { peg$fail(peg$c202); }
+                                if (peg$silentFails === 0) { peg$fail(peg$c203); }
                               }
                               if (s13 !== peg$FAILED) {
                                 s14 = peg$parse_();
@@ -46109,15 +46169,15 @@ var parsers = {'C#':(function() {
                                     s16 = peg$parse_();
                                     if (s16 !== peg$FAILED) {
                                       if (input.charCodeAt(peg$currPos) === 99) {
-                                        s17 = peg$c203;
+                                        s17 = peg$c204;
                                         peg$currPos++;
                                       } else {
                                         s17 = peg$FAILED;
-                                        if (peg$silentFails === 0) { peg$fail(peg$c204); }
+                                        if (peg$silentFails === 0) { peg$fail(peg$c205); }
                                       }
                                       if (s17 !== peg$FAILED) {
                                         peg$savedPos = s0;
-                                        s1 = peg$c205();
+                                        s1 = peg$c206();
                                         s0 = s1;
                                       } else {
                                         peg$currPos = s0;
@@ -46195,12 +46255,12 @@ var parsers = {'C#':(function() {
       var s0, s1, s2, s3;
 
       s0 = peg$currPos;
-      if (input.substr(peg$currPos, 6) === peg$c206) {
-        s1 = peg$c206;
+      if (input.substr(peg$currPos, 6) === peg$c207) {
+        s1 = peg$c207;
         peg$currPos += 6;
       } else {
         s1 = peg$FAILED;
-        if (peg$silentFails === 0) { peg$fail(peg$c207); }
+        if (peg$silentFails === 0) { peg$fail(peg$c208); }
       }
       if (s1 !== peg$FAILED) {
         s2 = peg$parse__();
@@ -46208,7 +46268,7 @@ var parsers = {'C#':(function() {
           s3 = peg$parseAnd();
           if (s3 !== peg$FAILED) {
             peg$savedPos = s0;
-            s1 = peg$c208(s3);
+            s1 = peg$c209(s3);
             s0 = s1;
           } else {
             peg$currPos = s0;
@@ -46238,11 +46298,11 @@ var parsers = {'C#':(function() {
         s2 = peg$parse_();
         if (s2 !== peg$FAILED) {
           if (input.charCodeAt(peg$currPos) === 61) {
-            s3 = peg$c149;
+            s3 = peg$c150;
             peg$currPos++;
           } else {
             s3 = peg$FAILED;
-            if (peg$silentFails === 0) { peg$fail(peg$c150); }
+            if (peg$silentFails === 0) { peg$fail(peg$c151); }
           }
           if (s3 !== peg$FAILED) {
             s4 = peg$parse_();
@@ -46250,7 +46310,7 @@ var parsers = {'C#':(function() {
               s5 = peg$parseAnd();
               if (s5 !== peg$FAILED) {
                 peg$savedPos = s0;
-                s1 = peg$c209(s1, s5);
+                s1 = peg$c210(s1, s5);
                 s0 = s1;
               } else {
                 peg$currPos = s0;
@@ -46280,12 +46340,12 @@ var parsers = {'C#':(function() {
       var s0, s1, s2, s3, s4, s5, s6, s7;
 
       s0 = peg$currPos;
-      if (input.substr(peg$currPos, 5) === peg$c210) {
-        s1 = peg$c210;
+      if (input.substr(peg$currPos, 5) === peg$c211) {
+        s1 = peg$c211;
         peg$currPos += 5;
       } else {
         s1 = peg$FAILED;
-        if (peg$silentFails === 0) { peg$fail(peg$c211); }
+        if (peg$silentFails === 0) { peg$fail(peg$c212); }
       }
       if (s1 !== peg$FAILED) {
         s2 = peg$parse_();
@@ -46313,7 +46373,7 @@ var parsers = {'C#':(function() {
                   }
                   if (s7 !== peg$FAILED) {
                     peg$savedPos = s0;
-                    s1 = peg$c212(s5);
+                    s1 = peg$c213(s5);
                     s0 = s1;
                   } else {
                     peg$currPos = s0;
@@ -46351,33 +46411,33 @@ var parsers = {'C#':(function() {
       var s0, s1, s2, s3, s4, s5;
 
       s0 = peg$currPos;
-      if (input.substr(peg$currPos, 2) === peg$c213) {
-        s1 = peg$c213;
+      if (input.substr(peg$currPos, 2) === peg$c214) {
+        s1 = peg$c214;
         peg$currPos += 2;
       } else {
         s1 = peg$FAILED;
-        if (peg$silentFails === 0) { peg$fail(peg$c214); }
+        if (peg$silentFails === 0) { peg$fail(peg$c215); }
       }
       if (s1 !== peg$FAILED) {
         s2 = peg$parse_();
         if (s2 !== peg$FAILED) {
           s3 = [];
-          if (peg$c215.test(input.charAt(peg$currPos))) {
+          if (peg$c216.test(input.charAt(peg$currPos))) {
             s4 = input.charAt(peg$currPos);
             peg$currPos++;
           } else {
             s4 = peg$FAILED;
-            if (peg$silentFails === 0) { peg$fail(peg$c216); }
+            if (peg$silentFails === 0) { peg$fail(peg$c217); }
           }
           if (s4 !== peg$FAILED) {
             while (s4 !== peg$FAILED) {
               s3.push(s4);
-              if (peg$c215.test(input.charAt(peg$currPos))) {
+              if (peg$c216.test(input.charAt(peg$currPos))) {
                 s4 = input.charAt(peg$currPos);
                 peg$currPos++;
               } else {
                 s4 = peg$FAILED;
-                if (peg$silentFails === 0) { peg$fail(peg$c216); }
+                if (peg$silentFails === 0) { peg$fail(peg$c217); }
               }
             }
           } else {
@@ -46387,15 +46447,15 @@ var parsers = {'C#':(function() {
             s4 = peg$parse_();
             if (s4 !== peg$FAILED) {
               if (input.charCodeAt(peg$currPos) === 10) {
-                s5 = peg$c217;
+                s5 = peg$c218;
                 peg$currPos++;
               } else {
                 s5 = peg$FAILED;
-                if (peg$silentFails === 0) { peg$fail(peg$c218); }
+                if (peg$silentFails === 0) { peg$fail(peg$c219); }
               }
               if (s5 !== peg$FAILED) {
                 peg$savedPos = s0;
-                s1 = peg$c219(s3);
+                s1 = peg$c220(s3);
                 s0 = s1;
               } else {
                 peg$currPos = s0;
@@ -46454,11 +46514,11 @@ var parsers = {'C#':(function() {
                     s8 = peg$parse_();
                     if (s8 !== peg$FAILED) {
                       if (input.charCodeAt(peg$currPos) === 61) {
-                        s9 = peg$c149;
+                        s9 = peg$c150;
                         peg$currPos++;
                       } else {
                         s9 = peg$FAILED;
-                        if (peg$silentFails === 0) { peg$fail(peg$c150); }
+                        if (peg$silentFails === 0) { peg$fail(peg$c151); }
                       }
                       if (s9 !== peg$FAILED) {
                         s10 = peg$parse_();
@@ -46466,7 +46526,7 @@ var parsers = {'C#':(function() {
                           s11 = peg$parseAnd();
                           if (s11 !== peg$FAILED) {
                             peg$savedPos = s0;
-                            s1 = peg$c220(s3, s7, s11);
+                            s1 = peg$c221(s3, s7, s11);
                             s0 = s1;
                           } else {
                             peg$currPos = s0;
@@ -46535,11 +46595,11 @@ var parsers = {'C#':(function() {
             s4 = peg$parse_();
             if (s4 !== peg$FAILED) {
               if (input.charCodeAt(peg$currPos) === 61) {
-                s5 = peg$c149;
+                s5 = peg$c150;
                 peg$currPos++;
               } else {
                 s5 = peg$FAILED;
-                if (peg$silentFails === 0) { peg$fail(peg$c150); }
+                if (peg$silentFails === 0) { peg$fail(peg$c151); }
               }
               if (s5 !== peg$FAILED) {
                 s6 = peg$parse_();
@@ -46547,7 +46607,7 @@ var parsers = {'C#':(function() {
                   s7 = peg$parseAnd();
                   if (s7 !== peg$FAILED) {
                     peg$savedPos = s0;
-                    s1 = peg$c221(s3, s7);
+                    s1 = peg$c222(s3, s7);
                     s0 = s1;
                   } else {
                     peg$currPos = s0;
@@ -46585,16 +46645,16 @@ var parsers = {'C#':(function() {
       var s0, s1;
 
       s0 = peg$currPos;
-      if (input.substr(peg$currPos, 3) === peg$c222) {
-        s1 = peg$c222;
+      if (input.substr(peg$currPos, 3) === peg$c223) {
+        s1 = peg$c223;
         peg$currPos += 3;
       } else {
         s1 = peg$FAILED;
-        if (peg$silentFails === 0) { peg$fail(peg$c223); }
+        if (peg$silentFails === 0) { peg$fail(peg$c224); }
       }
       if (s1 !== peg$FAILED) {
         peg$savedPos = s0;
-        s1 = peg$c224();
+        s1 = peg$c225();
       }
       s0 = s1;
 
@@ -46605,12 +46665,12 @@ var parsers = {'C#':(function() {
       var s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, s10, s11, s12, s13, s14, s15;
 
       s0 = peg$currPos;
-      if (input.substr(peg$currPos, 2) === peg$c197) {
-        s1 = peg$c197;
+      if (input.substr(peg$currPos, 2) === peg$c198) {
+        s1 = peg$c198;
         peg$currPos += 2;
       } else {
         s1 = peg$FAILED;
-        if (peg$silentFails === 0) { peg$fail(peg$c198); }
+        if (peg$silentFails === 0) { peg$fail(peg$c199); }
       }
       if (s1 !== peg$FAILED) {
         s2 = peg$parse_();
@@ -46666,7 +46726,7 @@ var parsers = {'C#':(function() {
                                   s15 = peg$parseelif_or_else();
                                   if (s15 !== peg$FAILED) {
                                     peg$savedPos = s0;
-                                    s1 = peg$c225(s5, s11, s15);
+                                    s1 = peg$c226(s5, s11, s15);
                                     s0 = s1;
                                   } else {
                                     peg$currPos = s0;
@@ -46753,7 +46813,7 @@ var parsers = {'C#':(function() {
               s5 = peg$parsetype();
               if (s5 !== peg$FAILED) {
                 peg$savedPos = s0;
-                s1 = peg$c226(s1, s5);
+                s1 = peg$c227(s1, s5);
                 s0 = s1;
               } else {
                 peg$currPos = s0;
@@ -46788,11 +46848,11 @@ var parsers = {'C#':(function() {
         s2 = peg$parse_();
         if (s2 !== peg$FAILED) {
           if (input.charCodeAt(peg$currPos) === 91) {
-            s3 = peg$c141;
+            s3 = peg$c142;
             peg$currPos++;
           } else {
             s3 = peg$FAILED;
-            if (peg$silentFails === 0) { peg$fail(peg$c142); }
+            if (peg$silentFails === 0) { peg$fail(peg$c143); }
           }
           if (s3 !== peg$FAILED) {
             s4 = peg$parse_();
@@ -46802,15 +46862,15 @@ var parsers = {'C#':(function() {
                 s6 = peg$parse_();
                 if (s6 !== peg$FAILED) {
                   if (input.charCodeAt(peg$currPos) === 93) {
-                    s7 = peg$c143;
+                    s7 = peg$c144;
                     peg$currPos++;
                   } else {
                     s7 = peg$FAILED;
-                    if (peg$silentFails === 0) { peg$fail(peg$c144); }
+                    if (peg$silentFails === 0) { peg$fail(peg$c145); }
                   }
                   if (s7 !== peg$FAILED) {
                     peg$savedPos = s0;
-                    s1 = peg$c227(s1, s5);
+                    s1 = peg$c228(s1, s5);
                     s0 = s1;
                   } else {
                     peg$currPos = s0;
@@ -46859,7 +46919,7 @@ var parsers = {'C#':(function() {
               s5 = peg$parsearray_access_list();
               if (s5 !== peg$FAILED) {
                 peg$savedPos = s0;
-                s1 = peg$c228(s1, s3, s5);
+                s1 = peg$c229(s1, s3, s5);
                 s0 = s1;
               } else {
                 peg$currPos = s0;
@@ -46904,36 +46964,36 @@ var parsers = {'C#':(function() {
             if (peg$silentFails === 0) { peg$fail(peg$c25); }
           }
           if (s2 === peg$FAILED) {
-            if (input.substr(peg$currPos, 6) === peg$c230) {
-              s2 = peg$c230;
+            if (input.substr(peg$currPos, 6) === peg$c231) {
+              s2 = peg$c231;
               peg$currPos += 6;
             } else {
               s2 = peg$FAILED;
-              if (peg$silentFails === 0) { peg$fail(peg$c231); }
+              if (peg$silentFails === 0) { peg$fail(peg$c232); }
             }
             if (s2 === peg$FAILED) {
-              if (input.substr(peg$currPos, 7) === peg$c232) {
-                s2 = peg$c232;
+              if (input.substr(peg$currPos, 7) === peg$c233) {
+                s2 = peg$c233;
                 peg$currPos += 7;
               } else {
                 s2 = peg$FAILED;
-                if (peg$silentFails === 0) { peg$fail(peg$c233); }
+                if (peg$silentFails === 0) { peg$fail(peg$c234); }
               }
               if (s2 === peg$FAILED) {
-                if (input.substr(peg$currPos, 6) === peg$c234) {
-                  s2 = peg$c234;
+                if (input.substr(peg$currPos, 6) === peg$c235) {
+                  s2 = peg$c235;
                   peg$currPos += 6;
                 } else {
                   s2 = peg$FAILED;
-                  if (peg$silentFails === 0) { peg$fail(peg$c235); }
+                  if (peg$silentFails === 0) { peg$fail(peg$c236); }
                 }
                 if (s2 === peg$FAILED) {
-                  if (input.substr(peg$currPos, 5) === peg$c236) {
-                    s2 = peg$c236;
+                  if (input.substr(peg$currPos, 5) === peg$c237) {
+                    s2 = peg$c237;
                     peg$currPos += 5;
                   } else {
                     s2 = peg$FAILED;
-                    if (peg$silentFails === 0) { peg$fail(peg$c237); }
+                    if (peg$silentFails === 0) { peg$fail(peg$c238); }
                   }
                   if (s2 === peg$FAILED) {
                     if (input.substr(peg$currPos, 5) === peg$c61) {
@@ -46944,44 +47004,44 @@ var parsers = {'C#':(function() {
                       if (peg$silentFails === 0) { peg$fail(peg$c62); }
                     }
                     if (s2 === peg$FAILED) {
-                      if (input.substr(peg$currPos, 2) === peg$c197) {
-                        s2 = peg$c197;
+                      if (input.substr(peg$currPos, 2) === peg$c198) {
+                        s2 = peg$c198;
                         peg$currPos += 2;
                       } else {
                         s2 = peg$FAILED;
-                        if (peg$silentFails === 0) { peg$fail(peg$c198); }
+                        if (peg$silentFails === 0) { peg$fail(peg$c199); }
                       }
                       if (s2 === peg$FAILED) {
-                        if (input.substr(peg$currPos, 4) === peg$c194) {
-                          s2 = peg$c194;
+                        if (input.substr(peg$currPos, 4) === peg$c195) {
+                          s2 = peg$c195;
                           peg$currPos += 4;
                         } else {
                           s2 = peg$FAILED;
-                          if (peg$silentFails === 0) { peg$fail(peg$c195); }
+                          if (peg$silentFails === 0) { peg$fail(peg$c196); }
                         }
                         if (s2 === peg$FAILED) {
-                          if (input.substr(peg$currPos, 3) === peg$c238) {
-                            s2 = peg$c238;
+                          if (input.substr(peg$currPos, 3) === peg$c239) {
+                            s2 = peg$c239;
                             peg$currPos += 3;
                           } else {
                             s2 = peg$FAILED;
-                            if (peg$silentFails === 0) { peg$fail(peg$c239); }
+                            if (peg$silentFails === 0) { peg$fail(peg$c240); }
                           }
                           if (s2 === peg$FAILED) {
-                            if (input.substr(peg$currPos, 3) === peg$c240) {
-                              s2 = peg$c240;
+                            if (input.substr(peg$currPos, 3) === peg$c241) {
+                              s2 = peg$c241;
                               peg$currPos += 3;
                             } else {
                               s2 = peg$FAILED;
-                              if (peg$silentFails === 0) { peg$fail(peg$c241); }
+                              if (peg$silentFails === 0) { peg$fail(peg$c242); }
                             }
                             if (s2 === peg$FAILED) {
-                              if (input.substr(peg$currPos, 4) === peg$c242) {
-                                s2 = peg$c242;
+                              if (input.substr(peg$currPos, 4) === peg$c243) {
+                                s2 = peg$c243;
                                 peg$currPos += 4;
                               } else {
                                 s2 = peg$FAILED;
-                                if (peg$silentFails === 0) { peg$fail(peg$c243); }
+                                if (peg$silentFails === 0) { peg$fail(peg$c244); }
                               }
                             }
                           }
@@ -47004,22 +47064,22 @@ var parsers = {'C#':(function() {
       }
       if (s1 !== peg$FAILED) {
         s2 = [];
-        if (peg$c244.test(input.charAt(peg$currPos))) {
+        if (peg$c245.test(input.charAt(peg$currPos))) {
           s3 = input.charAt(peg$currPos);
           peg$currPos++;
         } else {
           s3 = peg$FAILED;
-          if (peg$silentFails === 0) { peg$fail(peg$c245); }
+          if (peg$silentFails === 0) { peg$fail(peg$c246); }
         }
         if (s3 !== peg$FAILED) {
           while (s3 !== peg$FAILED) {
             s2.push(s3);
-            if (peg$c244.test(input.charAt(peg$currPos))) {
+            if (peg$c245.test(input.charAt(peg$currPos))) {
               s3 = input.charAt(peg$currPos);
               peg$currPos++;
             } else {
               s3 = peg$FAILED;
-              if (peg$silentFails === 0) { peg$fail(peg$c245); }
+              if (peg$silentFails === 0) { peg$fail(peg$c246); }
             }
           }
         } else {
@@ -47027,7 +47087,7 @@ var parsers = {'C#':(function() {
         }
         if (s2 !== peg$FAILED) {
           peg$savedPos = s0;
-          s1 = peg$c246();
+          s1 = peg$c247();
           s0 = s1;
         } else {
           peg$currPos = s0;
@@ -47040,7 +47100,7 @@ var parsers = {'C#':(function() {
       peg$silentFails--;
       if (s0 === peg$FAILED) {
         s1 = peg$FAILED;
-        if (peg$silentFails === 0) { peg$fail(peg$c229); }
+        if (peg$silentFails === 0) { peg$fail(peg$c230); }
       }
 
       return s0;
@@ -47061,7 +47121,7 @@ var parsers = {'C#':(function() {
               s5 = peg$parsekey_value_list();
               if (s5 !== peg$FAILED) {
                 peg$savedPos = s0;
-                s1 = peg$c247(s1, s3, s5);
+                s1 = peg$c248(s1, s3, s5);
                 s0 = s1;
               } else {
                 peg$currPos = s0;
@@ -47105,7 +47165,7 @@ var parsers = {'C#':(function() {
               s5 = peg$parse_initializer_list();
               if (s5 !== peg$FAILED) {
                 peg$savedPos = s0;
-                s1 = peg$c248(s1, s3, s5);
+                s1 = peg$c249(s1, s3, s5);
                 s0 = s1;
               } else {
                 peg$currPos = s0;
@@ -47149,7 +47209,7 @@ var parsers = {'C#':(function() {
               s5 = peg$parsearray_access_list();
               if (s5 !== peg$FAILED) {
                 peg$savedPos = s0;
-                s1 = peg$c249(s1, s3, s5);
+                s1 = peg$c250(s1, s3, s5);
                 s0 = s1;
               } else {
                 peg$currPos = s0;
@@ -47184,22 +47244,22 @@ var parsers = {'C#':(function() {
       peg$silentFails++;
       s0 = peg$currPos;
       s1 = [];
-      if (peg$c251.test(input.charAt(peg$currPos))) {
+      if (peg$c252.test(input.charAt(peg$currPos))) {
         s2 = input.charAt(peg$currPos);
         peg$currPos++;
       } else {
         s2 = peg$FAILED;
-        if (peg$silentFails === 0) { peg$fail(peg$c252); }
+        if (peg$silentFails === 0) { peg$fail(peg$c253); }
       }
       if (s2 !== peg$FAILED) {
         while (s2 !== peg$FAILED) {
           s1.push(s2);
-          if (peg$c251.test(input.charAt(peg$currPos))) {
+          if (peg$c252.test(input.charAt(peg$currPos))) {
             s2 = input.charAt(peg$currPos);
             peg$currPos++;
           } else {
             s2 = peg$FAILED;
-            if (peg$silentFails === 0) { peg$fail(peg$c252); }
+            if (peg$silentFails === 0) { peg$fail(peg$c253); }
           }
         }
       } else {
@@ -47207,13 +47267,13 @@ var parsers = {'C#':(function() {
       }
       if (s1 !== peg$FAILED) {
         peg$savedPos = s0;
-        s1 = peg$c253();
+        s1 = peg$c254();
       }
       s0 = s1;
       peg$silentFails--;
       if (s0 === peg$FAILED) {
         s1 = peg$FAILED;
-        if (peg$silentFails === 0) { peg$fail(peg$c250); }
+        if (peg$silentFails === 0) { peg$fail(peg$c251); }
       }
 
       return s0;
@@ -47224,27 +47284,27 @@ var parsers = {'C#':(function() {
 
       peg$silentFails++;
       s0 = [];
-      if (peg$c255.test(input.charAt(peg$currPos))) {
+      if (peg$c256.test(input.charAt(peg$currPos))) {
         s1 = input.charAt(peg$currPos);
         peg$currPos++;
       } else {
         s1 = peg$FAILED;
-        if (peg$silentFails === 0) { peg$fail(peg$c256); }
+        if (peg$silentFails === 0) { peg$fail(peg$c257); }
       }
       while (s1 !== peg$FAILED) {
         s0.push(s1);
-        if (peg$c255.test(input.charAt(peg$currPos))) {
+        if (peg$c256.test(input.charAt(peg$currPos))) {
           s1 = input.charAt(peg$currPos);
           peg$currPos++;
         } else {
           s1 = peg$FAILED;
-          if (peg$silentFails === 0) { peg$fail(peg$c256); }
+          if (peg$silentFails === 0) { peg$fail(peg$c257); }
         }
       }
       peg$silentFails--;
       if (s0 === peg$FAILED) {
         s1 = peg$FAILED;
-        if (peg$silentFails === 0) { peg$fail(peg$c254); }
+        if (peg$silentFails === 0) { peg$fail(peg$c255); }
       }
 
       return s0;
@@ -47255,30 +47315,30 @@ var parsers = {'C#':(function() {
 
       peg$silentFails++;
       s0 = peg$currPos;
-      if (peg$c255.test(input.charAt(peg$currPos))) {
+      if (peg$c256.test(input.charAt(peg$currPos))) {
         s1 = input.charAt(peg$currPos);
         peg$currPos++;
       } else {
         s1 = peg$FAILED;
-        if (peg$silentFails === 0) { peg$fail(peg$c256); }
+        if (peg$silentFails === 0) { peg$fail(peg$c257); }
       }
       if (s1 !== peg$FAILED) {
         s2 = [];
-        if (peg$c255.test(input.charAt(peg$currPos))) {
+        if (peg$c256.test(input.charAt(peg$currPos))) {
           s3 = input.charAt(peg$currPos);
           peg$currPos++;
         } else {
           s3 = peg$FAILED;
-          if (peg$silentFails === 0) { peg$fail(peg$c256); }
+          if (peg$silentFails === 0) { peg$fail(peg$c257); }
         }
         while (s3 !== peg$FAILED) {
           s2.push(s3);
-          if (peg$c255.test(input.charAt(peg$currPos))) {
+          if (peg$c256.test(input.charAt(peg$currPos))) {
             s3 = input.charAt(peg$currPos);
             peg$currPos++;
           } else {
             s3 = peg$FAILED;
-            if (peg$silentFails === 0) { peg$fail(peg$c256); }
+            if (peg$silentFails === 0) { peg$fail(peg$c257); }
           }
         }
         if (s2 !== peg$FAILED) {
@@ -47295,7 +47355,7 @@ var parsers = {'C#':(function() {
       peg$silentFails--;
       if (s0 === peg$FAILED) {
         s1 = peg$FAILED;
-        if (peg$silentFails === 0) { peg$fail(peg$c257); }
+        if (peg$silentFails === 0) { peg$fail(peg$c258); }
       }
 
       return s0;
@@ -47306,25 +47366,25 @@ var parsers = {'C#':(function() {
 
       s0 = peg$currPos;
       if (input.charCodeAt(peg$currPos) === 34) {
-        s1 = peg$c258;
+        s1 = peg$c259;
         peg$currPos++;
       } else {
         s1 = peg$FAILED;
-        if (peg$silentFails === 0) { peg$fail(peg$c259); }
+        if (peg$silentFails === 0) { peg$fail(peg$c260); }
       }
       if (s1 !== peg$FAILED) {
         s2 = peg$parse_string_literal();
         if (s2 !== peg$FAILED) {
           if (input.charCodeAt(peg$currPos) === 34) {
-            s3 = peg$c258;
+            s3 = peg$c259;
             peg$currPos++;
           } else {
             s3 = peg$FAILED;
-            if (peg$silentFails === 0) { peg$fail(peg$c259); }
+            if (peg$silentFails === 0) { peg$fail(peg$c260); }
           }
           if (s3 !== peg$FAILED) {
             peg$savedPos = s0;
-            s1 = peg$c260(s2);
+            s1 = peg$c261(s2);
             s0 = s1;
           } else {
             peg$currPos = s0;
@@ -47341,25 +47401,25 @@ var parsers = {'C#':(function() {
       if (s0 === peg$FAILED) {
         s0 = peg$currPos;
         if (input.charCodeAt(peg$currPos) === 39) {
-          s1 = peg$c261;
+          s1 = peg$c262;
           peg$currPos++;
         } else {
           s1 = peg$FAILED;
-          if (peg$silentFails === 0) { peg$fail(peg$c262); }
+          if (peg$silentFails === 0) { peg$fail(peg$c263); }
         }
         if (s1 !== peg$FAILED) {
           s2 = peg$parse__string_literal();
           if (s2 !== peg$FAILED) {
             if (input.charCodeAt(peg$currPos) === 39) {
-              s3 = peg$c261;
+              s3 = peg$c262;
               peg$currPos++;
             } else {
               s3 = peg$FAILED;
-              if (peg$silentFails === 0) { peg$fail(peg$c262); }
+              if (peg$silentFails === 0) { peg$fail(peg$c263); }
             }
             if (s3 !== peg$FAILED) {
               peg$savedPos = s0;
-              s1 = peg$c263(s2);
+              s1 = peg$c264(s2);
               s0 = s1;
             } else {
               peg$currPos = s0;
@@ -47383,22 +47443,22 @@ var parsers = {'C#':(function() {
 
       s0 = peg$currPos;
       s1 = [];
-      if (peg$c264.test(input.charAt(peg$currPos))) {
+      if (peg$c265.test(input.charAt(peg$currPos))) {
         s2 = input.charAt(peg$currPos);
         peg$currPos++;
       } else {
         s2 = peg$FAILED;
-        if (peg$silentFails === 0) { peg$fail(peg$c265); }
+        if (peg$silentFails === 0) { peg$fail(peg$c266); }
       }
       if (s2 !== peg$FAILED) {
         while (s2 !== peg$FAILED) {
           s1.push(s2);
-          if (peg$c264.test(input.charAt(peg$currPos))) {
+          if (peg$c265.test(input.charAt(peg$currPos))) {
             s2 = input.charAt(peg$currPos);
             peg$currPos++;
           } else {
             s2 = peg$FAILED;
-            if (peg$silentFails === 0) { peg$fail(peg$c265); }
+            if (peg$silentFails === 0) { peg$fail(peg$c266); }
           }
         }
       } else {
@@ -47406,7 +47466,7 @@ var parsers = {'C#':(function() {
       }
       if (s1 !== peg$FAILED) {
         peg$savedPos = s0;
-        s1 = peg$c246();
+        s1 = peg$c247();
       }
       s0 = s1;
 
@@ -47418,22 +47478,22 @@ var parsers = {'C#':(function() {
 
       s0 = peg$currPos;
       s1 = [];
-      if (peg$c266.test(input.charAt(peg$currPos))) {
+      if (peg$c267.test(input.charAt(peg$currPos))) {
         s2 = input.charAt(peg$currPos);
         peg$currPos++;
       } else {
         s2 = peg$FAILED;
-        if (peg$silentFails === 0) { peg$fail(peg$c267); }
+        if (peg$silentFails === 0) { peg$fail(peg$c268); }
       }
       if (s2 !== peg$FAILED) {
         while (s2 !== peg$FAILED) {
           s1.push(s2);
-          if (peg$c266.test(input.charAt(peg$currPos))) {
+          if (peg$c267.test(input.charAt(peg$currPos))) {
             s2 = input.charAt(peg$currPos);
             peg$currPos++;
           } else {
             s2 = peg$FAILED;
-            if (peg$silentFails === 0) { peg$fail(peg$c267); }
+            if (peg$silentFails === 0) { peg$fail(peg$c268); }
           }
         }
       } else {
@@ -47441,7 +47501,7 @@ var parsers = {'C#':(function() {
       }
       if (s1 !== peg$FAILED) {
         peg$savedPos = s0;
-        s1 = peg$c246();
+        s1 = peg$c247();
       }
       s0 = s1;
 
@@ -47624,6 +47684,18 @@ var parsers = {'C#':(function() {
 				return d.var1 +","+ d.var2;
 			}
 		break;
+		case "type":
+			if(d.var2 === undefined){
+				return d.var1;
+			}
+			else
+				return d.var1 + d.var2;
+		case "array_type_suffix":
+			if(d.var2 === undefined){
+				return d.var1;
+			}
+			else
+				return d.var1 + d.var2;
 		default:
 			return pattern_to_output(d,parseTree[0],outputLang);
 	}
