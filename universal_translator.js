@@ -560,7 +560,7 @@ statement_with_semicolon,var1:statement
 		var1 ;
 	Python,Z3,Swift,Wolfram,Gambas,Pascal,Delphi,AutoHotKey,REBOL,Octave,Janus,Cython,Mathematical notation,Picat,Lua,Ruby,Haskell,Erlang,Prolog,Scala,Visual Basic .NET,Fortran,Julia,R
 		var1
-dot_notation,var1:Identifier,var2:dot_notation
+dot_notation,var_name:Identifier,var_name:dot_notation
 	Java,JavaScript,D,Haxe,C#,Perl 6
 		var1 . var2
 	PHP,C
@@ -861,7 +861,7 @@ function_call_named_parameter,name:Identifier,value:expression
 		name := value
 	Ruby
 		name : value
-	JavaScript,Lua,Java,C,PHP,Haxe,MiniZinc
+	JavaScript,Lua,Java,C,PHP,Haxe,MiniZinc,C++
 		value
 function_call,theName:dot_notation,args:function_call_parameters
 	C,Chapel,Elixir,Janus,Perl 6,Pascal,Rust,Hack,Katahdin,MiniZinc,Pawn,Aldor,Picat,D,Genie,ooc,PL/I,Delphi,Standard ML,REXX,Falcon,IDP,Processing,Maxima,Swift,Boo,R,MATLAB,AutoIt,Pike,Gosu,AWK,AutoHotKey,Gambas,Kotlin,Nemerle,EngScript,Prolog,Groovy,Scala,CoffeeScript,Julia,TypeScript,Fortran,Octave,C++,Go,Cobra,Ruby,Vala,F#,Java,Ceylon,OCaml,Erlang,Python,C#,Lua,Haxe,JavaScript,Dart,bc,Visual Basic,Visual Basic .NET,PHP,Perl
@@ -1793,16 +1793,16 @@ function generateCode(parseTree, outputLang){
 				'statement_with_semicolon = var1:(print / return / function_call ) {return ["statement_with_semicolon", {var1:var1}]}',
 		},
 		'elif_or_else':{
-			'Java,JavaScript,TypeScript,C,C#,Haxe,PHP,Lua,Ruby,R,Fortran,Perl':
+			'Java,JavaScript,TypeScript,C,C#,Haxe,PHP,Lua,Ruby,R,Fortran,Perl,C++':
 				"elif_or_else = elif / else",
 			'Z3,CLIPS':
 				'',
 		},
 		'function_parameters':{
 			'JavaScript,Dafny,Wolfram,Gambas,D,Frink,Chapel,Swift,Perl 6,OCaml,Janus,Mathematical notation,Pascal,Rust,Picat,AutoHotKey,Maxima,Octave,Julia,R,Prolog,Fortran,Go,MiniZinc,Erlang,CoffeeScript,PHP,Hack,Java,C#,C,C++,Lua,TypeScript,Dart,Ruby,Python,Haxe,Scala,Visual Basic,Visual Basic .NET':
-				'function_parameters =  var1:function_parameter _ "," _ var2:function_parameters {return ["parameters", {var1:var1, var2:var2}];} /  function_parameter',
+				'function_parameters =  var1:function_parameter _ "," _ var2:function_parameters {return ["parameters", {var1:var1, var2:var2}];} /  function_parameter / _ {return ""}',
 			'Hy,Z3,Scheme,Racket,Common Lisp,CLIPS,REBOL,Haskell,Racket,Clojure':
-				'function_parameters =  var1:function_parameter __ var2:function_parameters {return ["parameters", {var1:var1, var2:var2}];} /  function_parameter',
+				'function_parameters =  var1:function_parameter __ var2:function_parameters {return ["parameters", {var1:var1, var2:var2}];} /  function_parameter / _ {return ""}',
 
 		},
 		'class':{
@@ -1935,7 +1935,7 @@ function generateCode(parseTree, outputLang){
 				'Factor = function_call / split / Integer / Identifier / string_literal / "(" expr:expression ")" { return expr; }',
 		},
 		'type':{
-			"Java,C,C#,Haxe":
+			"Java,C,C#,Haxe,C++":
 				'type = var1:_type var2:array_type_suffix {return var1 + var2;} / var1:_type {return var1;}',
 			"JavaScript,PHP,Z3,Lua,Ruby,R,Fortran":
 				'type = type:_type {return type}',
@@ -1974,9 +1974,9 @@ function generateCode(parseTree, outputLang){
 		},
 		'array_type_suffix':{
 			"Java,C#,C++,Haxe":
-				'array_type_suffix = var1:"[]" var2:array_type_suffix {return var1 + var2;} / "[]"',
+				'array_type_suffix = var1:"[]" var2:array_type_suffix {return ["array_type_suffix", {var1:var1, var2:var2}];} / "[]"',
 			"C":
-				'array_type_suffix = var1:("[]"/"*") var2:array_type_suffix {return var1 + var2;} / ("[]"/ "*")',
+				'array_type_suffix = var1:("[]"/"*") var2:array_type_suffix {return ["array_type_suffix", {var1:var1, var2:var2}];} / ("[]"/ "*")',
 			"JavaScript,PHP,Z3,Lua,Ruby":
 				"",
 		},
