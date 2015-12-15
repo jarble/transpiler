@@ -1812,9 +1812,15 @@ function generateCode(parseTree, outputLang){
 		},
 		'function_parameters':{
 			'JavaScript,Dafny,Wolfram,Gambas,D,Frink,Chapel,Swift,Perl 6,OCaml,Janus,Mathematical notation,Pascal,Rust,Picat,AutoHotKey,Maxima,Octave,Julia,R,Prolog,Fortran,Go,MiniZinc,Erlang,CoffeeScript,PHP,Hack,Java,C#,C,C++,Lua,TypeScript,Dart,Ruby,Python,Haxe,Scala,Visual Basic,Visual Basic .NET':
+<<<<<<< HEAD
 				'function_parameters =  var1:function_parameter _ "," _ var2:function_parameters {return ["parameters", {var1:var1, var2:var2}];} /  function_parameter / _',
 			'Hy,Z3,Scheme,Racket,Common Lisp,CLIPS,REBOL,Haskell,Racket,Clojure':
 				'function_parameters =  var1:function_parameter __ var2:function_parameters {return ["parameters", {var1:var1, var2:var2}];} /  function_parameter / _',
+=======
+				'function_parameters =  var1:function_parameter _ "," _ var2:function_parameters {return ["parameters", {var1:var1, var2:var2}];} /  function_parameter / _ {return ""}',
+			'Hy,Z3,Scheme,Racket,Common Lisp,CLIPS,REBOL,Haskell,Racket,Clojure':
+				'function_parameters =  var1:function_parameter __ var2:function_parameters {return ["parameters", {var1:var1, var2:var2}];} /  function_parameter / _ {return ""}',
+>>>>>>> a388725d431e2709a9cab6efab772df2f5af5740
 
 		},
 		'class':{
@@ -1948,9 +1954,17 @@ function generateCode(parseTree, outputLang){
 		},
 		'type':{
 			"Java,C,C#,Haxe,C++":
+<<<<<<< HEAD
 				'type = var1:_type var2:array_type_suffix {return ["type",{var1:var1, var2:var2}];} / var1:_type {return var1;}',
 			"JavaScript,PHP,Z3,Lua,Ruby,R,Fortran,Z3":
 				'type = var1:_type {return ["type", {var1:var1}]}',
+=======
+				'type = var1:_type var2:array_type_suffix {return var1 + var2;} / var1:_type {return var1;}',
+			"JavaScript,PHP,Z3,Lua,Ruby,R,Fortran":
+				'type = type:_type {return type}',
+			'Z3':
+				'',
+>>>>>>> a388725d431e2709a9cab6efab772df2f5af5740
 		},
 		'_type':{
 			"Java,C,C#,Haxe,Ruby,Fortran":
