@@ -5,9 +5,9 @@ var fs = require('fs');
 //Convert this source code to EcmaScript 5 using Babel:
 //    http://babeljs.io/
 
-//This list specifies the languages that will be parsed.,
+//This list specifies the languages that will be parsed.
 
-const list_of_languages = "C#,PHP,C,JavaScript,Lua,Java,Haxe".split(",");
+const list_of_languages = "Z3,C++,C#,PHP,C,JavaScript,Lua,Java,Haxe".split(",");
 //const list_of_languages = "Java,JavaScript,Lua,C#".split(",");
 
 var PEG=function(undefined){"use strict";var modules={define:function(u,e){function A(u){for(var e=t+u,A=/[^\/]+\/\.\.\/|\.\//;A.test(e);)e=e.replace(A,"");return modules[e]}var t=u.replace(/(^|\/)[^/]+$/,"$1"),r={exports:{}};e(r,A),this[u]=r.exports}};return modules.define("utils/arrays",function(u,e){var A={range:function(u,e){var A,t,r=e-u,n=new Array(r);for(A=0,t=u;r>A;A++,t++)n[A]=t;return n},find:function(u,e){var A,t=u.length;if("function"==typeof e){for(A=0;t>A;A++)if(e(u[A]))return u[A]}else for(A=0;t>A;A++)if(u[A]===e)return u[A]},indexOf:function(u,e){var A,t=u.length;if("function"==typeof e){for(A=0;t>A;A++)if(e(u[A]))return A}else for(A=0;t>A;A++)if(u[A]===e)return A;return-1},contains:function(u,e){return-1!==A.indexOf(u,e)},each:function(u,e){var A,t=u.length;for(A=0;t>A;A++)e(u[A],A)},map:function(u,e){var A,t=u.length,r=new Array(t);for(A=0;t>A;A++)r[A]=e(u[A],A);return r},pluck:function(u,e){return A.map(u,function(u){return u[e]})},every:function(u,e){var A,t=u.length;for(A=0;t>A;A++)if(!e(u[A]))return!1;return!0},some:function(u,e){var A,t=u.length;for(A=0;t>A;A++)if(e(u[A]))return!0;return!1}};u.exports=A}),modules.define("utils/objects",function(u,e){var A={keys:function(u){var e,A=[];for(e in u)u.hasOwnProperty(e)&&A.push(e);return A},values:function(u){var e,A=[];for(e in u)u.hasOwnProperty(e)&&A.push(u[e]);return A},clone:function(u){var e,A={};for(e in u)u.hasOwnProperty(e)&&(A[e]=u[e]);return A},defaults:function(u,e){var A;for(A in e)e.hasOwnProperty(A)&&(A in u||(u[A]=e[A]))}};u.exports=A}),modules.define("utils/classes",function(u,e){var A={subclass:function(u,e){function A(){this.constructor=u}A.prototype=e.prototype,u.prototype=new A}};u.exports=A}),modules.define("grammar-error",function(u,e){function A(u,e){this.name="GrammarError",this.message=u,this.location=e,"function"==typeof Error.captureStackTrace&&Error.captureStackTrace(this,A)}var t=e("./utils/classes");t.subclass(A,Error),u.exports=A}),modules.define("parser",function(u,e){u.exports=function(){function u(u,e){function A(){this.constructor=u}A.prototype=e.prototype,u.prototype=new A}function e(u,A,t,r){this.message=u,this.expected=A,this.found=t,this.location=r,this.name="SyntaxError","function"==typeof Error.captureStackTrace&&Error.captureStackTrace(this,e)}function A(u){function A(){return u.substring(Un,jn)}function t(){return E(Un,jn)}function r(e){throw s(e,null,u.substring(Un,jn),E(Un,jn))}function n(e){var A,t,r=Hn[e];if(r)return r;for(A=e-1;!Hn[A];)A--;for(r=Hn[A],r={line:r.line,column:r.column,seenCR:r.seenCR};e>A;)t=u.charAt(A),"\n"===t?(r.seenCR||r.line++,r.column=1,r.seenCR=!1):"\r"===t||"\u2028"===t||"\u2029"===t?(r.line++,r.column=1,r.seenCR=!0):(r.column++,r.seenCR=!1),A++;return Hn[e]=r,r}function E(u,e){var A=n(u),t=n(e);return{start:{offset:u,line:A.line,column:A.column},end:{offset:e,line:t.line,column:t.column}}}function C(u){zn>jn||(jn>zn&&(zn=jn,Mn=[]),Mn.push(u))}function s(u,A,t,r){function n(u){var e=1;for(u.sort(function(u,e){return u.description<e.description?-1:u.description>e.description?1:0});e<u.length;)u[e-1]===u[e]?u.splice(e,1):e++}function E(u,e){function A(u){function e(u){return u.charCodeAt(0).toString(16).toUpperCase()}return u.replace(/\\/g,"\\\\").replace(/"/g,'\\"').replace(/\x08/g,"\\b").replace(/\t/g,"\\t").replace(/\n/g,"\\n").replace(/\f/g,"\\f").replace(/\r/g,"\\r").replace(/[\x00-\x07\x0B\x0E\x0F]/g,function(u){return"\\x0"+e(u)}).replace(/[\x10-\x1F\x80-\xFF]/g,function(u){return"\\x"+e(u)}).replace(/[\u0100-\u0FFF]/g,function(u){return"\\u0"+e(u)}).replace(/[\u1000-\uFFFF]/g,function(u){return"\\u"+e(u)})}var t,r,n,E=new Array(u.length);for(n=0;n<u.length;n++)E[n]=u[n].description;return t=u.length>1?E.slice(0,-1).join(", ")+" or "+E[u.length-1]:E[0],r=e?'"'+A(e)+'"':"end of input","Expected "+t+" but "+r+" found."}return null!==A&&n(A),new e(null!==u?u:E(A,t),A,t,r)}function i(){var u,e,A,t,r,n,E;if(u=jn,e=ee(),e!==Fe)if(A=jn,t=a(),t!==Fe?(r=ee(),r!==Fe?(t=[t,r],A=t):(jn=A,A=Fe)):(jn=A,A=Fe),A===Fe&&(A=null),A!==Fe){if(t=[],r=jn,n=F(),n!==Fe?(E=ee(),E!==Fe?(n=[n,E],r=n):(jn=r,r=Fe)):(jn=r,r=Fe),r!==Fe)for(;r!==Fe;)t.push(r),r=jn,n=F(),n!==Fe?(E=ee(),E!==Fe?(n=[n,E],r=n):(jn=r,r=Fe)):(jn=r,r=Fe);else t=Fe;t!==Fe?(Un=u,e=pe(A,t),u=e):(jn=u,u=Fe)}else jn=u,u=Fe;else jn=u,u=Fe;return u}function a(){var u,e,A;return u=jn,e=Eu(),e!==Fe?(A=te(),A!==Fe?(Un=u,e=Be(e),u=e):(jn=u,u=Fe)):(jn=u,u=Fe),u}function F(){var e,A,t,r,n,E,s,i;return e=jn,A=I(),A!==Fe?(t=ee(),t!==Fe?(r=jn,n=M(),n!==Fe?(E=ee(),E!==Fe?(n=[n,E],r=n):(jn=r,r=Fe)):(jn=r,r=Fe),r===Fe&&(r=null),r!==Fe?(61===u.charCodeAt(jn)?(n=De,jn++):(n=Fe,0===Gn&&C(le)),n!==Fe?(E=ee(),E!==Fe?(s=o(),s!==Fe?(i=te(),i!==Fe?(Un=e,A=de(A,r,s),e=A):(jn=e,e=Fe)):(jn=e,e=Fe)):(jn=e,e=Fe)):(jn=e,e=Fe)):(jn=e,e=Fe)):(jn=e,e=Fe)):(jn=e,e=Fe),e}function o(){var e,A,t,r,n,E,s,i;if(e=jn,A=c(),A!==Fe){for(t=[],r=jn,n=ee(),n!==Fe?(47===u.charCodeAt(jn)?(E=fe,jn++):(E=Fe,0===Gn&&C(he)),E!==Fe?(s=ee(),s!==Fe?(i=c(),i!==Fe?(n=[n,E,s,i],r=n):(jn=r,r=Fe)):(jn=r,r=Fe)):(jn=r,r=Fe)):(jn=r,r=Fe);r!==Fe;)t.push(r),r=jn,n=ee(),n!==Fe?(47===u.charCodeAt(jn)?(E=fe,jn++):(E=Fe,0===Gn&&C(he)),E!==Fe?(s=ee(),s!==Fe?(i=c(),i!==Fe?(n=[n,E,s,i],r=n):(jn=r,r=Fe)):(jn=r,r=Fe)):(jn=r,r=Fe)):(jn=r,r=Fe);t!==Fe?(Un=e,A=ve(A,t),e=A):(jn=e,e=Fe)}else jn=e,e=Fe;return e}function c(){var u,e,A,t,r;return u=jn,e=p(),e!==Fe?(A=jn,t=ee(),t!==Fe?(r=Eu(),r!==Fe?(t=[t,r],A=t):(jn=A,A=Fe)):(jn=A,A=Fe),A===Fe&&(A=null),A!==Fe?(Un=u,e=ge(e,A),u=e):(jn=u,u=Fe)):(jn=u,u=Fe),u}function p(){var u,e,A,t,r,n;if(u=jn,e=B(),e!==Fe){for(A=[],t=jn,r=ee(),r!==Fe?(n=B(),n!==Fe?(r=[r,n],t=r):(jn=t,t=Fe)):(jn=t,t=Fe);t!==Fe;)A.push(t),t=jn,r=ee(),r!==Fe?(n=B(),n!==Fe?(r=[r,n],t=r):(jn=t,t=Fe)):(jn=t,t=Fe);A!==Fe?(Un=u,e=me(e,A),u=e):(jn=u,u=Fe)}else jn=u,u=Fe;return u}function B(){var e,A,t,r,n,E;return e=jn,A=S(),A!==Fe?(t=ee(),t!==Fe?(58===u.charCodeAt(jn)?(r=ye,jn++):(r=Fe,0===Gn&&C(Pe)),r!==Fe?(n=ee(),n!==Fe?(E=D(),E!==Fe?(Un=e,A=be(A,E),e=A):(jn=e,e=Fe)):(jn=e,e=Fe)):(jn=e,e=Fe)):(jn=e,e=Fe)):(jn=e,e=Fe),e===Fe&&(e=D()),e}function D(){var u,e,A,t;return u=jn,e=l(),e!==Fe?(A=ee(),A!==Fe?(t=d(),t!==Fe?(Un=u,e=xe(e,t),u=e):(jn=u,u=Fe)):(jn=u,u=Fe)):(jn=u,u=Fe),u===Fe&&(u=d()),u}function l(){var e;return 36===u.charCodeAt(jn)?(e=_e,jn++):(e=Fe,0===Gn&&C($e)),e===Fe&&(38===u.charCodeAt(jn)?(e=Re,jn++):(e=Fe,0===Gn&&C(ke)),e===Fe&&(33===u.charCodeAt(jn)?(e=Se,jn++):(e=Fe,0===Gn&&C(Ie)))),e}function d(){var u,e,A,t;return u=jn,e=h(),e!==Fe?(A=ee(),A!==Fe?(t=f(),t!==Fe?(Un=u,e=Oe(e,t),u=e):(jn=u,u=Fe)):(jn=u,u=Fe)):(jn=u,u=Fe),u===Fe&&(u=h()),u}function f(){var e;return 63===u.charCodeAt(jn)?(e=Le,jn++):(e=Fe,0===Gn&&C(Te)),e===Fe&&(42===u.charCodeAt(jn)?(e=we,jn++):(e=Fe,0===Gn&&C(Ne)),e===Fe&&(43===u.charCodeAt(jn)?(e=je,jn++):(e=Fe,0===Gn&&C(Ue)))),e}function h(){var e,A,t,r,n,E;return e=z(),e===Fe&&(e=Y(),e===Fe&&(e=nu(),e===Fe&&(e=v(),e===Fe&&(e=g(),e===Fe&&(e=jn,40===u.charCodeAt(jn)?(A=He,jn++):(A=Fe,0===Gn&&C(ze)),A!==Fe?(t=ee(),t!==Fe?(r=o(),r!==Fe?(n=ee(),n!==Fe?(41===u.charCodeAt(jn)?(E=Me,jn++):(E=Fe,0===Gn&&C(Ge)),E!==Fe?(Un=e,A=qe(r),e=A):(jn=e,e=Fe)):(jn=e,e=Fe)):(jn=e,e=Fe)):(jn=e,e=Fe)):(jn=e,e=Fe)))))),e}function v(){var e,A,t,r,n,E,s,i;return e=jn,A=I(),A!==Fe?(t=jn,Gn++,r=jn,n=ee(),n!==Fe?(E=jn,s=M(),s!==Fe?(i=ee(),i!==Fe?(s=[s,i],E=s):(jn=E,E=Fe)):(jn=E,E=Fe),E===Fe&&(E=null),E!==Fe?(61===u.charCodeAt(jn)?(s=De,jn++):(s=Fe,0===Gn&&C(le)),s!==Fe?(n=[n,E,s],r=n):(jn=r,r=Fe)):(jn=r,r=Fe)):(jn=r,r=Fe),Gn--,r===Fe?t=void 0:(jn=t,t=Fe),t!==Fe?(Un=e,A=Ye(A),e=A):(jn=e,e=Fe)):(jn=e,e=Fe),e}function g(){var u,e,A,t;return u=jn,e=m(),e!==Fe?(A=ee(),A!==Fe?(t=Eu(),t!==Fe?(Un=u,e=Ve(e,t),u=e):(jn=u,u=Fe)):(jn=u,u=Fe)):(jn=u,u=Fe),u}function m(){var e;return 38===u.charCodeAt(jn)?(e=Re,jn++):(e=Fe,0===Gn&&C(ke)),e===Fe&&(33===u.charCodeAt(jn)?(e=Se,jn++):(e=Fe,0===Gn&&C(Ie))),e}function y(){var e;return u.length>jn?(e=u.charAt(jn),jn++):(e=Fe,0===Gn&&C(We)),e}function P(){var e,A;return Gn++,9===u.charCodeAt(jn)?(e=Je,jn++):(e=Fe,0===Gn&&C(Ze)),e===Fe&&(11===u.charCodeAt(jn)?(e=Ke,jn++):(e=Fe,0===Gn&&C(Qe)),e===Fe&&(12===u.charCodeAt(jn)?(e=uA,jn++):(e=Fe,0===Gn&&C(eA)),e===Fe&&(32===u.charCodeAt(jn)?(e=AA,jn++):(e=Fe,0===Gn&&C(tA)),e===Fe&&(160===u.charCodeAt(jn)?(e=rA,jn++):(e=Fe,0===Gn&&C(nA)),e===Fe&&(65279===u.charCodeAt(jn)?(e=EA,jn++):(e=Fe,0===Gn&&C(CA)),e===Fe&&(e=du())))))),Gn--,e===Fe&&(A=Fe,0===Gn&&C(Xe)),e}function b(){var e;return sA.test(u.charAt(jn))?(e=u.charAt(jn),jn++):(e=Fe,0===Gn&&C(iA)),e}function x(){var e,A;return Gn++,10===u.charCodeAt(jn)?(e=FA,jn++):(e=Fe,0===Gn&&C(oA)),e===Fe&&(u.substr(jn,2)===cA?(e=cA,jn+=2):(e=Fe,0===Gn&&C(pA)),e===Fe&&(13===u.charCodeAt(jn)?(e=BA,jn++):(e=Fe,0===Gn&&C(DA)),e===Fe&&(8232===u.charCodeAt(jn)?(e=lA,jn++):(e=Fe,0===Gn&&C(dA)),e===Fe&&(8233===u.charCodeAt(jn)?(e=fA,jn++):(e=Fe,0===Gn&&C(hA)))))),Gn--,e===Fe&&(A=Fe,0===Gn&&C(aA)),e}function _(){var u,e;return Gn++,u=$(),u===Fe&&(u=k()),Gn--,u===Fe&&(e=Fe,0===Gn&&C(vA)),u}function $(){var e,A,t,r,n,E;if(e=jn,u.substr(jn,2)===gA?(A=gA,jn+=2):(A=Fe,0===Gn&&C(mA)),A!==Fe){for(t=[],r=jn,n=jn,Gn++,u.substr(jn,2)===yA?(E=yA,jn+=2):(E=Fe,0===Gn&&C(PA)),Gn--,E===Fe?n=void 0:(jn=n,n=Fe),n!==Fe?(E=y(),E!==Fe?(n=[n,E],r=n):(jn=r,r=Fe)):(jn=r,r=Fe);r!==Fe;)t.push(r),r=jn,n=jn,Gn++,u.substr(jn,2)===yA?(E=yA,jn+=2):(E=Fe,0===Gn&&C(PA)),Gn--,E===Fe?n=void 0:(jn=n,n=Fe),n!==Fe?(E=y(),E!==Fe?(n=[n,E],r=n):(jn=r,r=Fe)):(jn=r,r=Fe);t!==Fe?(u.substr(jn,2)===yA?(r=yA,jn+=2):(r=Fe,0===Gn&&C(PA)),r!==Fe?(A=[A,t,r],e=A):(jn=e,e=Fe)):(jn=e,e=Fe)}else jn=e,e=Fe;return e}function R(){var e,A,t,r,n,E;if(e=jn,u.substr(jn,2)===gA?(A=gA,jn+=2):(A=Fe,0===Gn&&C(mA)),A!==Fe){for(t=[],r=jn,n=jn,Gn++,u.substr(jn,2)===yA?(E=yA,jn+=2):(E=Fe,0===Gn&&C(PA)),E===Fe&&(E=b()),Gn--,E===Fe?n=void 0:(jn=n,n=Fe),n!==Fe?(E=y(),E!==Fe?(n=[n,E],r=n):(jn=r,r=Fe)):(jn=r,r=Fe);r!==Fe;)t.push(r),r=jn,n=jn,Gn++,u.substr(jn,2)===yA?(E=yA,jn+=2):(E=Fe,0===Gn&&C(PA)),E===Fe&&(E=b()),Gn--,E===Fe?n=void 0:(jn=n,n=Fe),n!==Fe?(E=y(),E!==Fe?(n=[n,E],r=n):(jn=r,r=Fe)):(jn=r,r=Fe);t!==Fe?(u.substr(jn,2)===yA?(r=yA,jn+=2):(r=Fe,0===Gn&&C(PA)),r!==Fe?(A=[A,t,r],e=A):(jn=e,e=Fe)):(jn=e,e=Fe)}else jn=e,e=Fe;return e}function k(){var e,A,t,r,n,E;if(e=jn,u.substr(jn,2)===bA?(A=bA,jn+=2):(A=Fe,0===Gn&&C(xA)),A!==Fe){for(t=[],r=jn,n=jn,Gn++,E=b(),Gn--,E===Fe?n=void 0:(jn=n,n=Fe),n!==Fe?(E=y(),E!==Fe?(n=[n,E],r=n):(jn=r,r=Fe)):(jn=r,r=Fe);r!==Fe;)t.push(r),r=jn,n=jn,Gn++,E=b(),Gn--,E===Fe?n=void 0:(jn=n,n=Fe),n!==Fe?(E=y(),E!==Fe?(n=[n,E],r=n):(jn=r,r=Fe)):(jn=r,r=Fe);t!==Fe?(A=[A,t],e=A):(jn=e,e=Fe)}else jn=e,e=Fe;return e}function S(){var u,e,A;return u=jn,e=jn,Gn++,A=N(),Gn--,A===Fe?e=void 0:(jn=e,e=Fe),e!==Fe?(A=I(),A!==Fe?(Un=u,e=_A(A),u=e):(jn=u,u=Fe)):(jn=u,u=Fe),u}function I(){var u,e,A,t;if(Gn++,u=jn,e=O(),e!==Fe){for(A=[],t=L();t!==Fe;)A.push(t),t=L();A!==Fe?(Un=u,e=RA(e,A),u=e):(jn=u,u=Fe)}else jn=u,u=Fe;return Gn--,u===Fe&&(e=Fe,0===Gn&&C($A)),u}function O(){var e,A,t;return e=T(),e===Fe&&(36===u.charCodeAt(jn)?(e=_e,jn++):(e=Fe,0===Gn&&C($e)),e===Fe&&(95===u.charCodeAt(jn)?(e=kA,jn++):(e=Fe,0===Gn&&C(SA)),e===Fe&&(e=jn,92===u.charCodeAt(jn)?(A=IA,jn++):(A=Fe,0===Gn&&C(OA)),A!==Fe?(t=Au(),t!==Fe?(Un=e,A=LA(t),e=A):(jn=e,e=Fe)):(jn=e,e=Fe)))),e}function L(){var e;return e=O(),e===Fe&&(e=w(),e===Fe&&(e=Bu(),e===Fe&&(e=lu(),e===Fe&&(8204===u.charCodeAt(jn)?(e=TA,jn++):(e=Fe,0===Gn&&C(wA)),e===Fe&&(8205===u.charCodeAt(jn)?(e=NA,jn++):(e=Fe,0===Gn&&C(jA))))))),e}function T(){var u;return u=ou(),u===Fe&&(u=su(),u===Fe&&(u=Fu(),u===Fe&&(u=iu(),u===Fe&&(u=au(),u===Fe&&(u=Du()))))),u}function w(){var u;return u=pu(),u===Fe&&(u=cu()),u}function N(){var u;return u=j(),u===Fe&&(u=U(),u===Fe&&(u=zu(),u===Fe&&(u=H()))),u}function j(){var u;return u=fu(),u===Fe&&(u=hu(),u===Fe&&(u=vu(),u===Fe&&(u=yu(),u===Fe&&(u=Pu(),u===Fe&&(u=bu(),u===Fe&&(u=xu(),u===Fe&&(u=_u(),u===Fe&&(u=$u(),u===Fe&&(u=Ou(),u===Fe&&(u=Lu(),u===Fe&&(u=Tu(),u===Fe&&(u=wu(),u===Fe&&(u=ju(),u===Fe&&(u=Uu(),u===Fe&&(u=Hu(),u===Fe&&(u=Mu(),u===Fe&&(u=qu(),u===Fe&&(u=Yu(),u===Fe&&(u=Vu(),u===Fe&&(u=Xu(),u===Fe&&(u=Ju(),u===Fe&&(u=Zu(),u===Fe&&(u=Ku(),u===Fe&&(u=Qu(),u===Fe&&(u=ue()))))))))))))))))))))))))),u}function U(){var u;return u=gu(),u===Fe&&(u=mu(),u===Fe&&(u=Ru(),u===Fe&&(u=ku(),u===Fe&&(u=Su(),u===Fe&&(u=Nu(),u===Fe&&(u=Gu())))))),u}function H(){var u;return u=Wu(),u===Fe&&(u=Iu()),u}function z(){var e,A,t;return Gn++,e=jn,A=M(),A!==Fe?(105===u.charCodeAt(jn)?(t=HA,jn++):(t=Fe,0===Gn&&C(zA)),t===Fe&&(t=null),t!==Fe?(Un=e,A=MA(A,t),e=A):(jn=e,e=Fe)):(jn=e,e=Fe),Gn--,e===Fe&&(A=Fe,0===Gn&&C(UA)),e}function M(){var e,A,t,r;if(Gn++,e=jn,34===u.charCodeAt(jn)?(A=qA,jn++):(A=Fe,0===Gn&&C(YA)),A!==Fe){for(t=[],r=G();r!==Fe;)t.push(r),r=G();t!==Fe?(34===u.charCodeAt(jn)?(r=qA,jn++):(r=Fe,0===Gn&&C(YA)),r!==Fe?(Un=e,A=VA(t),e=A):(jn=e,e=Fe)):(jn=e,e=Fe)}else jn=e,e=Fe;if(e===Fe)if(e=jn,39===u.charCodeAt(jn)?(A=WA,jn++):(A=Fe,0===Gn&&C(XA)),A!==Fe){for(t=[],r=q();r!==Fe;)t.push(r),r=q();t!==Fe?(39===u.charCodeAt(jn)?(r=WA,jn++):(r=Fe,0===Gn&&C(XA)),r!==Fe?(Un=e,A=VA(t),e=A):(jn=e,e=Fe)):(jn=e,e=Fe)}else jn=e,e=Fe;return Gn--,e===Fe&&(A=Fe,0===Gn&&C(GA)),e}function G(){var e,A,t;return e=jn,A=jn,Gn++,34===u.charCodeAt(jn)?(t=qA,jn++):(t=Fe,0===Gn&&C(YA)),t===Fe&&(92===u.charCodeAt(jn)?(t=IA,jn++):(t=Fe,0===Gn&&C(OA)),t===Fe&&(t=b())),Gn--,t===Fe?A=void 0:(jn=A,A=Fe),A!==Fe?(t=y(),t!==Fe?(Un=e,A=JA(),e=A):(jn=e,e=Fe)):(jn=e,e=Fe),e===Fe&&(e=jn,92===u.charCodeAt(jn)?(A=IA,jn++):(A=Fe,0===Gn&&C(OA)),A!==Fe?(t=J(),t!==Fe?(Un=e,A=LA(t),e=A):(jn=e,e=Fe)):(jn=e,e=Fe),e===Fe&&(e=X())),e}function q(){var e,A,t;return e=jn,A=jn,Gn++,39===u.charCodeAt(jn)?(t=WA,jn++):(t=Fe,0===Gn&&C(XA)),t===Fe&&(92===u.charCodeAt(jn)?(t=IA,jn++):(t=Fe,0===Gn&&C(OA)),t===Fe&&(t=b())),Gn--,t===Fe?A=void 0:(jn=A,A=Fe),A!==Fe?(t=y(),t!==Fe?(Un=e,A=JA(),e=A):(jn=e,e=Fe)):(jn=e,e=Fe),e===Fe&&(e=jn,92===u.charCodeAt(jn)?(A=IA,jn++):(A=Fe,0===Gn&&C(OA)),A!==Fe?(t=J(),t!==Fe?(Un=e,A=LA(t),e=A):(jn=e,e=Fe)):(jn=e,e=Fe),e===Fe&&(e=X())),e}function Y(){var e,A,t,r,n,E;if(Gn++,e=jn,91===u.charCodeAt(jn)?(A=KA,jn++):(A=Fe,0===Gn&&C(QA)),A!==Fe)if(94===u.charCodeAt(jn)?(t=ut,jn++):(t=Fe,0===Gn&&C(et)),t===Fe&&(t=null),t!==Fe){for(r=[],n=V(),n===Fe&&(n=W());n!==Fe;)r.push(n),n=V(),n===Fe&&(n=W());r!==Fe?(93===u.charCodeAt(jn)?(n=At,jn++):(n=Fe,0===Gn&&C(tt)),n!==Fe?(105===u.charCodeAt(jn)?(E=HA,jn++):(E=Fe,0===Gn&&C(zA)),E===Fe&&(E=null),E!==Fe?(Un=e,A=rt(t,r,E),e=A):(jn=e,e=Fe)):(jn=e,e=Fe)):(jn=e,e=Fe)}else jn=e,e=Fe;else jn=e,e=Fe;return Gn--,e===Fe&&(A=Fe,0===Gn&&C(ZA)),e}function V(){var e,A,t,r;return e=jn,A=W(),A!==Fe?(45===u.charCodeAt(jn)?(t=nt,jn++):(t=Fe,0===Gn&&C(Et)),t!==Fe?(r=W(),r!==Fe?(Un=e,A=Ct(A,r),e=A):(jn=e,e=Fe)):(jn=e,e=Fe)):(jn=e,e=Fe),e}function W(){var e,A,t;return e=jn,A=jn,Gn++,93===u.charCodeAt(jn)?(t=At,jn++):(t=Fe,0===Gn&&C(tt)),t===Fe&&(92===u.charCodeAt(jn)?(t=IA,jn++):(t=Fe,0===Gn&&C(OA)),t===Fe&&(t=b())),Gn--,t===Fe?A=void 0:(jn=A,A=Fe),A!==Fe?(t=y(),t!==Fe?(Un=e,A=JA(),e=A):(jn=e,e=Fe)):(jn=e,e=Fe),e===Fe&&(e=jn,92===u.charCodeAt(jn)?(A=IA,jn++):(A=Fe,0===Gn&&C(OA)),A!==Fe?(t=J(),t!==Fe?(Un=e,A=LA(t),e=A):(jn=e,e=Fe)):(jn=e,e=Fe),e===Fe&&(e=X())),e}function X(){var e,A,t;return e=jn,92===u.charCodeAt(jn)?(A=IA,jn++):(A=Fe,0===Gn&&C(OA)),A!==Fe?(t=x(),t!==Fe?(Un=e,A=st(),e=A):(jn=e,e=Fe)):(jn=e,e=Fe),e}function J(){var e,A,t,r;return e=Z(),e===Fe&&(e=jn,48===u.charCodeAt(jn)?(A=it,jn++):(A=Fe,0===Gn&&C(at)),A!==Fe?(t=jn,Gn++,r=tu(),Gn--,r===Fe?t=void 0:(jn=t,t=Fe),t!==Fe?(Un=e,A=Ft(),e=A):(jn=e,e=Fe)):(jn=e,e=Fe),e===Fe&&(e=eu(),e===Fe&&(e=Au()))),e}function Z(){var u;return u=K(),u===Fe&&(u=Q()),u}function K(){var e,A;return 39===u.charCodeAt(jn)?(e=WA,jn++):(e=Fe,0===Gn&&C(XA)),e===Fe&&(34===u.charCodeAt(jn)?(e=qA,jn++):(e=Fe,0===Gn&&C(YA)),e===Fe&&(92===u.charCodeAt(jn)?(e=IA,jn++):(e=Fe,0===Gn&&C(OA)),e===Fe&&(e=jn,98===u.charCodeAt(jn)?(A=ot,jn++):(A=Fe,0===Gn&&C(ct)),A!==Fe&&(Un=e,A=pt()),e=A,e===Fe&&(e=jn,102===u.charCodeAt(jn)?(A=Bt,jn++):(A=Fe,0===Gn&&C(Dt)),A!==Fe&&(Un=e,A=lt()),e=A,e===Fe&&(e=jn,110===u.charCodeAt(jn)?(A=dt,jn++):(A=Fe,0===Gn&&C(ft)),A!==Fe&&(Un=e,A=ht()),e=A,e===Fe&&(e=jn,114===u.charCodeAt(jn)?(A=vt,jn++):(A=Fe,0===Gn&&C(gt)),A!==Fe&&(Un=e,A=mt()),e=A,e===Fe&&(e=jn,116===u.charCodeAt(jn)?(A=yt,jn++):(A=Fe,0===Gn&&C(Pt)),A!==Fe&&(Un=e,A=bt()),e=A,e===Fe&&(e=jn,118===u.charCodeAt(jn)?(A=xt,jn++):(A=Fe,0===Gn&&C(_t)),A!==Fe&&(Un=e,A=$t()),e=A)))))))),e}function Q(){var u,e,A;return u=jn,e=jn,Gn++,A=uu(),A===Fe&&(A=b()),Gn--,A===Fe?e=void 0:(jn=e,e=Fe),e!==Fe?(A=y(),A!==Fe?(Un=u,e=JA(),u=e):(jn=u,u=Fe)):(jn=u,u=Fe),u}function uu(){var e;return e=K(),e===Fe&&(e=tu(),e===Fe&&(120===u.charCodeAt(jn)?(e=Rt,jn++):(e=Fe,0===Gn&&C(kt)),e===Fe&&(117===u.charCodeAt(jn)?(e=St,jn++):(e=Fe,0===Gn&&C(It))))),e}function eu(){var e,A,t,r,n,E;return e=jn,120===u.charCodeAt(jn)?(A=Rt,jn++):(A=Fe,0===Gn&&C(kt)),A!==Fe?(t=jn,r=jn,n=ru(),n!==Fe?(E=ru(),E!==Fe?(n=[n,E],r=n):(jn=r,r=Fe)):(jn=r,r=Fe),t=r!==Fe?u.substring(t,jn):r,t!==Fe?(Un=e,A=Ot(t),e=A):(jn=e,e=Fe)):(jn=e,e=Fe),e}function Au(){var e,A,t,r,n,E,s,i;return e=jn,117===u.charCodeAt(jn)?(A=St,jn++):(A=Fe,0===Gn&&C(It)),A!==Fe?(t=jn,r=jn,n=ru(),n!==Fe?(E=ru(),E!==Fe?(s=ru(),s!==Fe?(i=ru(),i!==Fe?(n=[n,E,s,i],r=n):(jn=r,r=Fe)):(jn=r,r=Fe)):(jn=r,r=Fe)):(jn=r,r=Fe),t=r!==Fe?u.substring(t,jn):r,t!==Fe?(Un=e,A=Ot(t),e=A):(jn=e,e=Fe)):(jn=e,e=Fe),e}function tu(){var e;return Lt.test(u.charAt(jn))?(e=u.charAt(jn),jn++):(e=Fe,0===Gn&&C(Tt)),e}function ru(){var e;return wt.test(u.charAt(jn))?(e=u.charAt(jn),jn++):(e=Fe,0===Gn&&C(Nt)),e}function nu(){var e,A;return e=jn,46===u.charCodeAt(jn)?(A=jt,jn++):(A=Fe,0===Gn&&C(Ut)),A!==Fe&&(Un=e,A=Ht()),e=A}function Eu(){var e,A,t,r;return Gn++,e=jn,123===u.charCodeAt(jn)?(A=Mt,jn++):(A=Fe,0===Gn&&C(Gt)),A!==Fe?(t=Cu(),t!==Fe?(125===u.charCodeAt(jn)?(r=qt,jn++):(r=Fe,0===Gn&&C(Yt)),r!==Fe?(Un=e,A=Vt(t),e=A):(jn=e,e=Fe)):(jn=e,e=Fe)):(jn=e,e=Fe),Gn--,e===Fe&&(A=Fe,0===Gn&&C(zt)),e}function Cu(){var e,A,t,r,n,E;if(e=jn,A=[],t=[],r=jn,n=jn,Gn++,Wt.test(u.charAt(jn))?(E=u.charAt(jn),jn++):(E=Fe,0===Gn&&C(Xt)),Gn--,E===Fe?n=void 0:(jn=n,n=Fe),n!==Fe?(E=y(),E!==Fe?(n=[n,E],r=n):(jn=r,r=Fe)):(jn=r,r=Fe),r!==Fe)for(;r!==Fe;)t.push(r),r=jn,n=jn,Gn++,Wt.test(u.charAt(jn))?(E=u.charAt(jn),jn++):(E=Fe,0===Gn&&C(Xt)),Gn--,E===Fe?n=void 0:(jn=n,n=Fe),n!==Fe?(E=y(),E!==Fe?(n=[n,E],r=n):(jn=r,r=Fe)):(jn=r,r=Fe);else t=Fe;for(t===Fe&&(t=jn,123===u.charCodeAt(jn)?(r=Mt,jn++):(r=Fe,0===Gn&&C(Gt)),r!==Fe?(n=Cu(),n!==Fe?(125===u.charCodeAt(jn)?(E=qt,jn++):(E=Fe,0===Gn&&C(Yt)),E!==Fe?(r=[r,n,E],t=r):(jn=t,t=Fe)):(jn=t,t=Fe)):(jn=t,t=Fe));t!==Fe;){if(A.push(t),t=[],r=jn,n=jn,Gn++,Wt.test(u.charAt(jn))?(E=u.charAt(jn),jn++):(E=Fe,0===Gn&&C(Xt)),Gn--,E===Fe?n=void 0:(jn=n,n=Fe),n!==Fe?(E=y(),E!==Fe?(n=[n,E],r=n):(jn=r,r=Fe)):(jn=r,r=Fe),r!==Fe)for(;r!==Fe;)t.push(r),r=jn,n=jn,Gn++,Wt.test(u.charAt(jn))?(E=u.charAt(jn),jn++):(E=Fe,0===Gn&&C(Xt)),Gn--,E===Fe?n=void 0:(jn=n,n=Fe),n!==Fe?(E=y(),E!==Fe?(n=[n,E],r=n):(jn=r,r=Fe)):(jn=r,r=Fe);else t=Fe;t===Fe&&(t=jn,123===u.charCodeAt(jn)?(r=Mt,jn++):(r=Fe,0===Gn&&C(Gt)),r!==Fe?(n=Cu(),n!==Fe?(125===u.charCodeAt(jn)?(E=qt,jn++):(E=Fe,0===Gn&&C(Yt)),E!==Fe?(r=[r,n,E],t=r):(jn=t,t=Fe)):(jn=t,t=Fe)):(jn=t,t=Fe))}return e=A!==Fe?u.substring(e,jn):A}function su(){var e;return Jt.test(u.charAt(jn))?(e=u.charAt(jn),jn++):(e=Fe,0===Gn&&C(Zt)),e}function iu(){var e;return Kt.test(u.charAt(jn))?(e=u.charAt(jn),jn++):(e=Fe,0===Gn&&C(Qt)),e}function au(){var e;return ur.test(u.charAt(jn))?(e=u.charAt(jn),jn++):(e=Fe,0===Gn&&C(er)),e}function Fu(){var e;return Ar.test(u.charAt(jn))?(e=u.charAt(jn),jn++):(e=Fe,0===Gn&&C(tr)),e}function ou(){var e;return rr.test(u.charAt(jn))?(e=u.charAt(jn),jn++):(e=Fe,0===Gn&&C(nr)),e}function cu(){var e;return Er.test(u.charAt(jn))?(e=u.charAt(jn),jn++):(e=Fe,0===Gn&&C(Cr)),e}function pu(){var e;return sr.test(u.charAt(jn))?(e=u.charAt(jn),jn++):(e=Fe,0===Gn&&C(ir)),e}function Bu(){var e;return ar.test(u.charAt(jn))?(e=u.charAt(jn),jn++):(e=Fe,0===Gn&&C(Fr)),e}function Du(){var e;return or.test(u.charAt(jn))?(e=u.charAt(jn),jn++):(e=Fe,0===Gn&&C(cr)),e}function lu(){var e;return pr.test(u.charAt(jn))?(e=u.charAt(jn),jn++):(e=Fe,0===Gn&&C(Br)),e}function du(){var e;return Dr.test(u.charAt(jn))?(e=u.charAt(jn),jn++):(e=Fe,0===Gn&&C(lr)),e}function fu(){var e,A,t,r;return e=jn,u.substr(jn,5)===dr?(A=dr,jn+=5):(A=Fe,0===Gn&&C(fr)),A!==Fe?(t=jn,Gn++,r=L(),Gn--,r===Fe?t=void 0:(jn=t,t=Fe),t!==Fe?(A=[A,t],e=A):(jn=e,e=Fe)):(jn=e,e=Fe),e}function hu(){var e,A,t,r;return e=jn,u.substr(jn,4)===hr?(A=hr,jn+=4):(A=Fe,0===Gn&&C(vr)),A!==Fe?(t=jn,Gn++,r=L(),Gn--,r===Fe?t=void 0:(jn=t,t=Fe),t!==Fe?(A=[A,t],e=A):(jn=e,e=Fe)):(jn=e,e=Fe),e}function vu(){var e,A,t,r;return e=jn,u.substr(jn,5)===gr?(A=gr,jn+=5):(A=Fe,0===Gn&&C(mr)),A!==Fe?(t=jn,Gn++,r=L(),Gn--,r===Fe?t=void 0:(jn=t,t=Fe),t!==Fe?(A=[A,t],e=A):(jn=e,e=Fe)):(jn=e,e=Fe),e}function gu(){var e,A,t,r;return e=jn,u.substr(jn,5)===yr?(A=yr,jn+=5):(A=Fe,0===Gn&&C(Pr)),A!==Fe?(t=jn,Gn++,r=L(),Gn--,r===Fe?t=void 0:(jn=t,t=Fe),t!==Fe?(A=[A,t],e=A):(jn=e,e=Fe)):(jn=e,e=Fe),e}function mu(){var e,A,t,r;return e=jn,u.substr(jn,5)===br?(A=br,jn+=5):(A=Fe,0===Gn&&C(xr)),A!==Fe?(t=jn,Gn++,r=L(),Gn--,r===Fe?t=void 0:(jn=t,t=Fe),t!==Fe?(A=[A,t],e=A):(jn=e,e=Fe)):(jn=e,e=Fe),e}function yu(){var e,A,t,r;return e=jn,u.substr(jn,8)===_r?(A=_r,jn+=8):(A=Fe,0===Gn&&C($r)),A!==Fe?(t=jn,Gn++,r=L(),Gn--,r===Fe?t=void 0:(jn=t,t=Fe),t!==Fe?(A=[A,t],e=A):(jn=e,e=Fe)):(jn=e,e=Fe),e}function Pu(){var e,A,t,r;return e=jn,u.substr(jn,8)===Rr?(A=Rr,jn+=8):(A=Fe,0===Gn&&C(kr)),A!==Fe?(t=jn,Gn++,r=L(),Gn--,r===Fe?t=void 0:(jn=t,t=Fe),t!==Fe?(A=[A,t],e=A):(jn=e,e=Fe)):(jn=e,e=Fe),e}function bu(){var e,A,t,r;return e=jn,u.substr(jn,7)===Sr?(A=Sr,jn+=7):(A=Fe,0===Gn&&C(Ir)),A!==Fe?(t=jn,Gn++,r=L(),Gn--,r===Fe?t=void 0:(jn=t,t=Fe),t!==Fe?(A=[A,t],e=A):(jn=e,e=Fe)):(jn=e,e=Fe),e}function xu(){var e,A,t,r;return e=jn,u.substr(jn,6)===Or?(A=Or,jn+=6):(A=Fe,0===Gn&&C(Lr)),A!==Fe?(t=jn,Gn++,r=L(),Gn--,r===Fe?t=void 0:(jn=t,t=Fe),t!==Fe?(A=[A,t],e=A):(jn=e,e=Fe)):(jn=e,e=Fe),e}function _u(){var e,A,t,r;return e=jn,u.substr(jn,2)===Tr?(A=Tr,jn+=2):(A=Fe,0===Gn&&C(wr)),A!==Fe?(t=jn,Gn++,r=L(),Gn--,r===Fe?t=void 0:(jn=t,t=Fe),t!==Fe?(A=[A,t],e=A):(jn=e,e=Fe)):(jn=e,e=Fe),e}function $u(){var e,A,t,r;return e=jn,u.substr(jn,4)===Nr?(A=Nr,jn+=4):(A=Fe,0===Gn&&C(jr)),A!==Fe?(t=jn,Gn++,r=L(),Gn--,r===Fe?t=void 0:(jn=t,t=Fe),t!==Fe?(A=[A,t],e=A):(jn=e,e=Fe)):(jn=e,e=Fe),e}function Ru(){var e,A,t,r;return e=jn,u.substr(jn,4)===Ur?(A=Ur,jn+=4):(A=Fe,0===Gn&&C(Hr)),A!==Fe?(t=jn,Gn++,r=L(),Gn--,r===Fe?t=void 0:(jn=t,t=Fe),t!==Fe?(A=[A,t],e=A):(jn=e,e=Fe)):(jn=e,e=Fe),e}function ku(){var e,A,t,r;return e=jn,u.substr(jn,6)===zr?(A=zr,jn+=6):(A=Fe,0===Gn&&C(Mr)),A!==Fe?(t=jn,Gn++,r=L(),Gn--,r===Fe?t=void 0:(jn=t,t=Fe),t!==Fe?(A=[A,t],e=A):(jn=e,e=Fe)):(jn=e,e=Fe),e}function Su(){var e,A,t,r;return e=jn,u.substr(jn,7)===Gr?(A=Gr,jn+=7):(A=Fe,0===Gn&&C(qr)),A!==Fe?(t=jn,Gn++,r=L(),Gn--,r===Fe?t=void 0:(jn=t,t=Fe),t!==Fe?(A=[A,t],e=A):(jn=e,e=Fe)):(jn=e,e=Fe),e}function Iu(){var e,A,t,r;return e=jn,u.substr(jn,5)===Yr?(A=Yr,jn+=5):(A=Fe,0===Gn&&C(Vr)),A!==Fe?(t=jn,Gn++,r=L(),Gn--,r===Fe?t=void 0:(jn=t,t=Fe),t!==Fe?(A=[A,t],e=A):(jn=e,e=Fe)):(jn=e,e=Fe),e}function Ou(){var e,A,t,r;return e=jn,u.substr(jn,7)===Wr?(A=Wr,jn+=7):(A=Fe,0===Gn&&C(Xr)),A!==Fe?(t=jn,Gn++,r=L(),Gn--,r===Fe?t=void 0:(jn=t,t=Fe),t!==Fe?(A=[A,t],e=A):(jn=e,e=Fe)):(jn=e,e=Fe),e}function Lu(){var e,A,t,r;return e=jn,u.substr(jn,3)===Jr?(A=Jr,jn+=3):(A=Fe,0===Gn&&C(Zr)),A!==Fe?(t=jn,Gn++,r=L(),Gn--,r===Fe?t=void 0:(jn=t,t=Fe),t!==Fe?(A=[A,t],e=A):(jn=e,e=Fe)):(jn=e,e=Fe),e}function Tu(){var e,A,t,r;return e=jn,u.substr(jn,8)===Kr?(A=Kr,jn+=8):(A=Fe,0===Gn&&C(Qr)),A!==Fe?(t=jn,Gn++,r=L(),Gn--,r===Fe?t=void 0:(jn=t,t=Fe),t!==Fe?(A=[A,t],e=A):(jn=e,e=Fe)):(jn=e,e=Fe),e}function wu(){var e,A,t,r;return e=jn,u.substr(jn,2)===un?(A=un,jn+=2):(A=Fe,0===Gn&&C(en)),A!==Fe?(t=jn,Gn++,r=L(),Gn--,r===Fe?t=void 0:(jn=t,t=Fe),t!==Fe?(A=[A,t],e=A):(jn=e,e=Fe)):(jn=e,e=Fe),e}function Nu(){var e,A,t,r;return e=jn,u.substr(jn,6)===An?(A=An,jn+=6):(A=Fe,0===Gn&&C(tn)),A!==Fe?(t=jn,Gn++,r=L(),Gn--,r===Fe?t=void 0:(jn=t,t=Fe),t!==Fe?(A=[A,t],e=A):(jn=e,e=Fe)):(jn=e,e=Fe),e}function ju(){var e,A,t,r;return e=jn,u.substr(jn,10)===rn?(A=rn,jn+=10):(A=Fe,0===Gn&&C(nn)),A!==Fe?(t=jn,Gn++,r=L(),Gn--,r===Fe?t=void 0:(jn=t,t=Fe),t!==Fe?(A=[A,t],e=A):(jn=e,e=Fe)):(jn=e,e=Fe),e}function Uu(){var e,A,t,r;return e=jn,u.substr(jn,2)===En?(A=En,jn+=2):(A=Fe,0===Gn&&C(Cn)),A!==Fe?(t=jn,Gn++,r=L(),Gn--,r===Fe?t=void 0:(jn=t,t=Fe),t!==Fe?(A=[A,t],e=A):(jn=e,e=Fe)):(jn=e,e=Fe),e}function Hu(){var e,A,t,r;return e=jn,u.substr(jn,3)===sn?(A=sn,jn+=3):(A=Fe,0===Gn&&C(an)),A!==Fe?(t=jn,Gn++,r=L(),Gn--,r===Fe?t=void 0:(jn=t,t=Fe),t!==Fe?(A=[A,t],e=A):(jn=e,e=Fe)):(jn=e,e=Fe),e}function zu(){var e,A,t,r;return e=jn,u.substr(jn,4)===Fn?(A=Fn,jn+=4):(A=Fe,0===Gn&&C(on)),A!==Fe?(t=jn,Gn++,r=L(),Gn--,r===Fe?t=void 0:(jn=t,t=Fe),t!==Fe?(A=[A,t],e=A):(jn=e,e=Fe)):(jn=e,e=Fe),e}function Mu(){var e,A,t,r;return e=jn,u.substr(jn,6)===cn?(A=cn,jn+=6):(A=Fe,0===Gn&&C(pn)),A!==Fe?(t=jn,Gn++,r=L(),Gn--,r===Fe?t=void 0:(jn=t,t=Fe),t!==Fe?(A=[A,t],e=A):(jn=e,e=Fe)):(jn=e,e=Fe),e}function Gu(){var e,A,t,r;return e=jn,u.substr(jn,5)===Bn?(A=Bn,jn+=5):(A=Fe,0===Gn&&C(Dn)),A!==Fe?(t=jn,Gn++,r=L(),Gn--,r===Fe?t=void 0:(jn=t,t=Fe),t!==Fe?(A=[A,t],e=A):(jn=e,e=Fe)):(jn=e,e=Fe),e}function qu(){var e,A,t,r;return e=jn,u.substr(jn,6)===ln?(A=ln,jn+=6):(A=Fe,0===Gn&&C(dn)),A!==Fe?(t=jn,Gn++,r=L(),Gn--,r===Fe?t=void 0:(jn=t,t=Fe),t!==Fe?(A=[A,t],e=A):(jn=e,e=Fe)):(jn=e,e=Fe),e}function Yu(){var e,A,t,r;return e=jn,u.substr(jn,4)===fn?(A=fn,jn+=4):(A=Fe,0===Gn&&C(hn)),A!==Fe?(t=jn,Gn++,r=L(),Gn--,r===Fe?t=void 0:(jn=t,t=Fe),t!==Fe?(A=[A,t],e=A):(jn=e,e=Fe)):(jn=e,e=Fe),e}function Vu(){var e,A,t,r;return e=jn,u.substr(jn,5)===vn?(A=vn,jn+=5):(A=Fe,0===Gn&&C(gn)),A!==Fe?(t=jn,Gn++,r=L(),Gn--,r===Fe?t=void 0:(jn=t,t=Fe),t!==Fe?(A=[A,t],e=A):(jn=e,e=Fe)):(jn=e,e=Fe),e}function Wu(){var e,A,t,r;return e=jn,u.substr(jn,4)===mn?(A=mn,jn+=4):(A=Fe,0===Gn&&C(yn)),A!==Fe?(t=jn,Gn++,r=L(),Gn--,r===Fe?t=void 0:(jn=t,t=Fe),t!==Fe?(A=[A,t],e=A):(jn=e,e=Fe)):(jn=e,e=Fe),e}function Xu(){var e,A,t,r;return e=jn,u.substr(jn,3)===Pn?(A=Pn,jn+=3):(A=Fe,0===Gn&&C(bn)),A!==Fe?(t=jn,Gn++,r=L(),Gn--,r===Fe?t=void 0:(jn=t,t=Fe),t!==Fe?(A=[A,t],e=A):(jn=e,e=Fe)):(jn=e,e=Fe),e}function Ju(){var e,A,t,r;return e=jn,u.substr(jn,6)===xn?(A=xn,jn+=6):(A=Fe,0===Gn&&C(_n)),A!==Fe?(t=jn,Gn++,r=L(),Gn--,r===Fe?t=void 0:(jn=t,t=Fe),t!==Fe?(A=[A,t],e=A):(jn=e,e=Fe)):(jn=e,e=Fe),e}function Zu(){var e,A,t,r;return e=jn,u.substr(jn,3)===$n?(A=$n,jn+=3):(A=Fe,0===Gn&&C(Rn)),A!==Fe?(t=jn,Gn++,r=L(),Gn--,r===Fe?t=void 0:(jn=t,t=Fe),t!==Fe?(A=[A,t],e=A):(jn=e,e=Fe)):(jn=e,e=Fe),e}function Ku(){var e,A,t,r;return e=jn,u.substr(jn,4)===kn?(A=kn,jn+=4):(A=Fe,0===Gn&&C(Sn)),A!==Fe?(t=jn,Gn++,r=L(),Gn--,r===Fe?t=void 0:(jn=t,t=Fe),t!==Fe?(A=[A,t],e=A):(jn=e,e=Fe)):(jn=e,e=Fe),e}function Qu(){var e,A,t,r;return e=jn,u.substr(jn,5)===In?(A=In,jn+=5):(A=Fe,0===Gn&&C(On)),A!==Fe?(t=jn,Gn++,r=L(),Gn--,r===Fe?t=void 0:(jn=t,t=Fe),t!==Fe?(A=[A,t],e=A):(jn=e,e=Fe)):(jn=e,e=Fe),e}function ue(){var e,A,t,r;return e=jn,u.substr(jn,4)===Ln?(A=Ln,jn+=4):(A=Fe,0===Gn&&C(Tn)),A!==Fe?(t=jn,Gn++,r=L(),Gn--,r===Fe?t=void 0:(jn=t,t=Fe),t!==Fe?(A=[A,t],e=A):(jn=e,e=Fe)):(jn=e,e=Fe),e}function ee(){var u,e;for(u=[],e=P(),e===Fe&&(e=x(),e===Fe&&(e=_()));e!==Fe;)u.push(e),e=P(),e===Fe&&(e=x(),e===Fe&&(e=_()));return u}function Ae(){var u,e;for(u=[],e=P(),e===Fe&&(e=R());e!==Fe;)u.push(e),e=P(),e===Fe&&(e=R());return u}function te(){var e,A,t,r;return e=jn,A=ee(),A!==Fe?(59===u.charCodeAt(jn)?(t=wn,jn++):(t=Fe,0===Gn&&C(Nn)),t!==Fe?(A=[A,t],e=A):(jn=e,e=Fe)):(jn=e,e=Fe),e===Fe&&(e=jn,A=Ae(),A!==Fe?(t=k(),t===Fe&&(t=null),t!==Fe?(r=x(),r!==Fe?(A=[A,t,r],e=A):(jn=e,e=Fe)):(jn=e,e=Fe)):(jn=e,e=Fe),e===Fe&&(e=jn,A=ee(),A!==Fe?(t=re(),t!==Fe?(A=[A,t],e=A):(jn=e,e=Fe)):(jn=e,e=Fe))),e}function re(){var e,A;return e=jn,Gn++,u.length>jn?(A=u.charAt(jn),jn++):(A=Fe,0===Gn&&C(We)),Gn--,A===Fe?e=void 0:(jn=e,e=Fe),e}function ne(u){var e,A=[];for(e=0;e<u.length;e++)""!==u[e]&&A.push(u[e]);return A}function Ee(u,e){return u?u[e]:null}function Ce(u,e){var A,t=new Array(u.length);for(A=0;A<u.length;A++)t[A]=u[A][e];return t}function se(u,e,A){return[u].concat(Ce(e,A))}var ie,ae=arguments.length>1?arguments[1]:{},Fe={},oe={Grammar:i},ce=i,pe=function(u,e){return{type:"grammar",initializer:Ee(u,0),rules:Ce(e,0),location:t()}},Be=function(u){return{type:"initializer",code:u,location:t()}},De="=",le={type:"literal",value:"=",description:'"="'},de=function(u,e,A){return{type:"rule",name:u,expression:null!==e?{type:"named",name:e[0],expression:A,location:t()}:A,location:t()}},fe="/",he={type:"literal",value:"/",description:'"/"'},ve=function(u,e){return e.length>0?{type:"choice",alternatives:se(u,e,3),location:t()}:u},ge=function(u,e){return null!==e?{type:"action",expression:u,code:e[1],location:t()}:u},me=function(u,e){return e.length>0?{type:"sequence",elements:se(u,e,1),location:t()}:u},ye=":",Pe={type:"literal",value:":",description:'":"'},be=function(u,e){return{type:"labeled",label:u,expression:e,location:t()}},xe=function(u,e){return{type:qn[u],expression:e,location:t()}},_e="$",$e={type:"literal",value:"$",description:'"$"'},Re="&",ke={type:"literal",value:"&",description:'"&"'},Se="!",Ie={type:"literal",value:"!",description:'"!"'},Oe=function(u,e){return{type:Yn[e],expression:u,location:t()}},Le="?",Te={type:"literal",value:"?",description:'"?"'},we="*",Ne={type:"literal",value:"*",description:'"*"'},je="+",Ue={type:"literal",value:"+",description:'"+"'},He="(",ze={type:"literal",value:"(",description:'"("'},Me=")",Ge={type:"literal",value:")",description:'")"'},qe=function(u){return u},Ye=function(u){return{type:"rule_ref",name:u,location:t()}},Ve=function(u,e){return{type:Vn[u],code:e,location:t()}},We={type:"any",description:"any character"},Xe={type:"other",description:"whitespace"},Je="	",Ze={type:"literal",value:"	",description:'"\\t"'},Ke="",Qe={type:"literal",value:"",description:'"\\x0B"'},uA="\f",eA={type:"literal",value:"\f",description:'"\\f"'},AA=" ",tA={type:"literal",value:" ",description:'" "'},rA=" ",nA={type:"literal",value:" ",description:'"\\xA0"'},EA="\ufeff",CA={type:"literal",value:"\ufeff",description:'"\\uFEFF"'},sA=/^[\n\r\u2028\u2029]/,iA={type:"class",value:"[\\n\\r\\u2028\\u2029]",description:"[\\n\\r\\u2028\\u2029]"},aA={type:"other",description:"end of line"},FA="\n",oA={type:"literal",value:"\n",description:'"\\n"'},cA="\r\n",pA={type:"literal",value:"\r\n",description:'"\\r\\n"'},BA="\r",DA={type:"literal",value:"\r",description:'"\\r"'},lA="\u2028",dA={type:"literal",value:"\u2028",description:'"\\u2028"'},fA="\u2029",hA={type:"literal",value:"\u2029",description:'"\\u2029"'},vA={type:"other",description:"comment"},gA="/*",mA={type:"literal",value:"/*",description:'"/*"'},yA="*/",PA={type:"literal",value:"*/",description:'"*/"'},bA="//",xA={type:"literal",value:"//",description:'"//"'},_A=function(u){return u},$A={type:"other",description:"identifier"},RA=function(u,e){return u+e.join("")},kA="_",SA={type:"literal",value:"_",description:'"_"'},IA="\\",OA={type:"literal",value:"\\",description:'"\\\\"'},LA=function(u){return u},TA="‌",wA={type:"literal",value:"‌",description:'"\\u200C"'},NA="‍",jA={type:"literal",value:"‍",description:'"\\u200D"'},UA={type:"other",description:"literal"},HA="i",zA={type:"literal",value:"i",description:'"i"'},MA=function(u,e){return{type:"literal",value:u,ignoreCase:null!==e,location:t()}},GA={type:"other",description:"string"},qA='"',YA={type:"literal",value:'"',description:'"\\""'},VA=function(u){return u.join("")},WA="'",XA={type:"literal",value:"'",description:'"\'"'},JA=function(){return A()},ZA={type:"other",description:"character class"},KA="[",QA={type:"literal",value:"[",description:'"["'},ut="^",et={type:"literal",value:"^",description:'"^"'},At="]",tt={type:"literal",
@@ -107,7 +107,7 @@ var string_to_dict =
 	PHP
 		include __ \' a .php\' ;
 	C,C++
-		#include __ \\" a .h\\"
+		#include __ \' a .h\'
 	C#
 		using __ a ;
 	Julia
@@ -120,6 +120,8 @@ var string_to_dict =
 		require __ \' a \'
 	Perl,Perl 6,Chapel
 		\"use a ;\"
+	Z3
+		_
 key_value_separator
 	Python,C,Dart,Visual Basic .NET,D,C#,Frink,Swift,JavaScript,TypeScript,PHP,Perl,Lua,Ruby,Prolog,Julia,Haxe,C++,Scala,Octave,Elixir,Wolfram
 		,
@@ -127,6 +129,8 @@ key_value_separator
 		;
 	REBOL
 		__
+	Z3
+		_
 dictionary,a:key_value_list,input:type,output:type
 	Python,C,Dart,JavaScript,TypeScript,Lua,Ruby,Julia,C++,EngScript,Visual Basic .NET
 		{ a }
@@ -146,6 +150,8 @@ dictionary,a:key_value_list,input:type,output:type
 		struct ( a )
 	REBOL
 		to-hash [ a ]
+	Z3
+		_
 var_name,name:Identifier
 	PHP,Perl,Bash,Tcl,AutoIt,Perl 6,Puppet,Hack,AWK,PowerShell
 		$ name
@@ -156,7 +162,7 @@ var_name,name:Identifier
 default_parameter,type:type,name:var_name,value:expression
 	Python,AutoHotKey,Julia,Nemerle,PHP
 		name = value
-	C#,D,Groovy
+	C#,D,Groovy,C++
 		type __ name = value
 	Ruby
 		name : value
@@ -166,8 +172,6 @@ default_parameter,type:type,name:var_name,value:expression
 		? name = value
 	Visual Basic .NET
 		Optional __ name __ As __ type = value
-	Java,JavaScript,Lua,C
-		_
 _initializer_list,var1:expression,var2:initializer_list_separator,var3:_initializer_list
 	Lua,Java,C++,JavaScript,C#,Perl,Fortran,C,PHP,Haskell,Haxe,Python,Ruby,TypeScript,MiniZinc
 		var1 var2 var3
@@ -279,6 +283,8 @@ not_equal,a:Add,b:Add
 		a .NE. b
 	Z3
 		( not ( = __ a __ b ) )
+	Haskell
+		a /= b
 key_value_list,var1:key_value,var2:key_value_separator,var3:key_value_list
 	Lua,JavaScript,Java,C#,C++,C,Ruby,PHP,Python,Perl,Fortran,Haxe,TypeScript
 		var1 var2 var3
@@ -291,6 +297,10 @@ Or,var1:greater_than,var2:Or
 		var1 __ .OR. __ var2
 	Z3
 		( or __ var1 __ var2 )
+	Prolog
+		a ; b
+	MiniZinc
+		a \\/ b
 And,a:Or,b:And
 	Java,JavaScript,C#
 		a && b
@@ -300,6 +310,8 @@ And,a:Or,b:And
 		a /\\ b
 	Fortran
 		a .AND. b
+	Prolog
+		a , b
 	Z3
 		( and __ a __ b )
 this,a:Identifier
@@ -356,11 +368,13 @@ array_length,a:parentheses_expression
 		size ( a )
 	Wolfram
 		Length [ a ]
+	Z3
+		_
 initializer_list_separator
 	Python,D,Frink,Fortran,Chapel,Octave,Julia,English,Pascal,Delphi,Prolog,MiniZinc,EngScript,Cython,Groovy,Dart,TypeScript,CoffeeScript,Nemerle,JavaScript,Haxe,Haskell,Ruby,REBOL,Polish notation,Swift,Java,Picat,C#,Go,Lua,C++,C,Visual Basic .NET,Visual Basic,PHP,Scala,Perl,Wolfram
 		,
-	REBOL
-		__
+	REBOL,Z3
+		_
 initializer_list,a:_initializer_list
 	Java,Picat,C#,Go,Lua,C++,C,Visual Basic .NET,Visual Basic,Wolfram
 		{ a }
@@ -374,6 +388,8 @@ initializer_list,a:_initializer_list
 		( a )
 	Fortran
 		(/ a /)
+	Z3
+		_
 key_value,a:Identifier,b:expression
 	Groovy,D,Dart,JavaScript,CoffeeScript,Swift,Elixir,Swift
 		a : b
@@ -395,6 +411,8 @@ key_value,a:Identifier,b:expression
 		[ a , b ]
 	Java
 		put ( a , b )
+	Z3
+		_
 strcmp,a:parentheses_expression,b:parentheses_expression
 	crosslanguage
 		( strcmp __ a __ b )
@@ -441,6 +459,8 @@ sqrt,x:expression
 		math:sqrt ( x )
 	Wolfram
 		Sqrt [ x ]
+	Z3
+		( ^ x ( / 1 2 ) )
 parentheses_expression,a:expression
 	Pascal,Katahdin,Frink,MiniZinc,Picat,Java,ECLiPSe,D,ooc,Genie,Janus,PL/I,IDP,Processing,Maxima,Seed7,Self,GNU Smalltalk,Drools,Standard ML,Oz,Cobra,Pike,Prolog,EngScript,Kotlin,Pawn,FreeBASIC,MATLAB,Ada,FreeBASIC,Gosu,Gambas,Nimrod,AutoIt,ALGOL 68,Ceylon,Groovy,Rust,CoffeeScript,TypeScript,Fortran,Octave,ML,Hack,AutoHotKey,Scala,Delphi,Tcl,Swift,Vala,C,F#,C++,Dart,JavaScript,REBOL,Julia,Erlang,OCaml,crosslanguage,C#,Nemerle,AWK,Java,Lua,Perl,Haxe,Python,PHP,Haskell,Go,Ruby,R,bc,Visual Basic,Visual Basic .NET
 		( a )
@@ -552,6 +572,8 @@ pow,a:expression,b:expression
 		( expt __ num1 __ num2 )
 	Erlang
 		math:pow ( a , b )
+	Z3
+		( ^ a b )
 case_statements,a:case,b:case_statements
 	Java,C,C#,C++,JavaScript,PHP,Haxe,Fortran,Ruby,Lua,Dart,TypeScript
 		a __ b
@@ -561,7 +583,7 @@ statement_with_semicolon,var1:statement
 	Python,Z3,Swift,Wolfram,Gambas,Pascal,Delphi,AutoHotKey,REBOL,Octave,Janus,Cython,Mathematical notation,Picat,Lua,Ruby,Haskell,Erlang,Prolog,Scala,Visual Basic .NET,Fortran,Julia,R
 		var1
 dot_notation,var_name:Identifier,var_name:dot_notation
-	Java,JavaScript,D,Haxe,C#,Perl 6
+	Java,JavaScript,D,Haxe,C#,Perl 6,C++
 		var1 . var2
 	PHP,C
 		var1 -> var2
@@ -570,7 +592,7 @@ sin,var1:expression
 		Math . sin ( var1 )
 	Lua,Python
 		math . sin ( var1 )
-	C,D,PHP,Perl,Perl 6,Maxima,Fortran,MiniZinc,Swift,Prolog,Octave,Dart,Haskell
+	C,C++,D,PHP,Perl,Perl 6,Maxima,Fortran,MiniZinc,Swift,Prolog,Octave,Dart,Haskell
 		sin ( var1 )
 	C#,Visual Basic .NET
 		Math . Sin ( var1 )
@@ -581,7 +603,7 @@ cos,var1:expression
 		Math . cos ( var1 )
 	Lua,Python
 		math . cos ( var1 )
-	C,D,PHP,Perl,Perl 6,Maxima,Fortran,MiniZinc,Swift,Prolog,Octave,Dart,Haskell
+	C,C++,D,PHP,Perl,Perl 6,Maxima,Fortran,MiniZinc,Swift,Prolog,Octave,Dart,Haskell
 		cos ( var1 )
 	C#,Visual Basic .NET
 		Math . Cos ( var1 )
@@ -592,7 +614,7 @@ tan,var1:expression
 		Math . tan ( var1 )
 	Lua,Python
 		math . tan ( var1 )
-	C,D,PHP,Perl,Perl 6,Maxima,Fortran,MiniZinc,Swift,Prolog,Octave,Dart,Haskell
+	C,C++,D,PHP,Perl,Perl 6,Maxima,Fortran,MiniZinc,Swift,Prolog,Octave,Dart,Haskell
 		tan ( var1 )
 	C#,Visual Basic .NET
 		Math . Tan ( var1 )
@@ -861,7 +883,7 @@ function_call_named_parameter,name:Identifier,value:expression
 		name := value
 	Ruby
 		name : value
-	JavaScript,Lua,Java,C,PHP,Haxe,MiniZinc,C++
+	JavaScript,Lua,Java,C,PHP,Haxe,MiniZinc,C++,Z3,Prolog
 		value
 function_call,theName:dot_notation,args:function_call_parameters
 	C,Chapel,Elixir,Janus,Perl 6,Pascal,Rust,Hack,Katahdin,MiniZinc,Pawn,Aldor,Picat,D,Genie,ooc,PL/I,Delphi,Standard ML,REXX,Falcon,IDP,Processing,Maxima,Swift,Boo,R,MATLAB,AutoIt,Pike,Gosu,AWK,AutoHotKey,Gambas,Kotlin,Nemerle,EngScript,Prolog,Groovy,Scala,CoffeeScript,Julia,TypeScript,Fortran,Octave,C++,Go,Cobra,Ruby,Vala,F#,Java,Ceylon,OCaml,Erlang,Python,C#,Lua,Haxe,JavaScript,Dart,bc,Visual Basic,Visual Basic .NET,PHP,Perl
@@ -989,11 +1011,11 @@ else,a:series_of_statements
 	Hack,Dafny,Perl 6,Frink,Chapel,Katahdin,Pawn,PowerShell,Puppet,Ceylon,D,Rust,TypeScript,Scala,AutoHotKey,Gosu,Groovy,Java,Swift,Dart,AWK,JavaScript,Haxe,PHP,C#,Go,Perl,C++,C,Tcl,R,Vala,bc
 		else { a }
 	Ruby,Janus,Lua,Haskell,CLIPS,MiniZinc,Julia,Octave,Picat,Pascal,Maxima
-		else \n a
+		else __ a
 	Erlang
 		true -> a
 	Python,Cython
-		else : \n #indent \n b \n #unindent
+		else : \\n #indent \\n b \\n #unindent
 	Prolog
 		a
 	Visual Basic .NET
@@ -1004,9 +1026,9 @@ else,a:series_of_statements
 		( t __ a )
 	English
 		otherwise __ a
-	Wolfram,Z3
+	Z3,Wolfram
 		a
-elif,condition:And,body:series_of_statements,next:elif_or_else
+elif,a:And,b:series_of_statements,c:elif_or_else
 	D,Chapel,Pawn,Ceylon,Scala,TypeScript,AutoHotKey,AWK,R,Groovy,Gosu,Katahdin,Java,Swift,Nemerle,C,Dart,Vala,JavaScript,C#,C++,Haxe
 		else __ if ( a ) { b } c
 	Z3
@@ -1069,7 +1091,7 @@ return,a:And
 set_var,name:(access_array/var_name),value:expression
 	Z3
 		( declare_const __ name:Identifier __ value )
-	JavaScript,Perl 6,Wolfram,Chapel,Katahdin,Frink,MiniZinc,Picat,ooc,D,Genie,Janus,Ceylon,IDP,Sympy,Prolog,Processing,Java,EBNF,Boo,Gosu,Pike,Kotlin,Icon,PowerShell,EngScript,Pawn,FreeBASIC,Hack,Nimrod,OpenOffice Basic,Groovy,TypeScript,Rust,CoffeeScript,Fortran,AWK,Go,Swift,Vala,C,Julia,Scala,Cobra,Erlang,AutoIt,Dart,Java,OCaml,Haxe,C#,MATLAB,C++,PHP,Perl,Python,Lua,Ruby,Gambas,Octave,Visual Basic,Visual Basic .NET,bc
+	JavaScript,Haskell,Perl 6,Wolfram,Chapel,Katahdin,Frink,MiniZinc,Picat,ooc,D,Genie,Janus,Ceylon,IDP,Sympy,Prolog,Processing,Java,EBNF,Boo,Gosu,Pike,Kotlin,Icon,PowerShell,EngScript,Pawn,FreeBASIC,Hack,Nimrod,OpenOffice Basic,Groovy,TypeScript,Rust,CoffeeScript,Fortran,AWK,Go,Swift,Vala,C,Julia,Scala,Cobra,Erlang,AutoIt,Dart,Java,OCaml,Haxe,C#,MATLAB,C++,PHP,Perl,Python,Lua,Ruby,Gambas,Octave,Visual Basic,Visual Basic .NET,bc
 		name = value
 print,a:expression
 	Erlang
@@ -1112,6 +1134,8 @@ print,a:expression
 		print [ a ]
 	Wolfram
 		Print [ a ]
+	Z3
+		( echo __ a )
 series_of_statements,var1:statement,var2:series_of_statements
 	Java,Dafny,Z3,Elm,Bash,Perl 6,Mathematical notation,Katahdin,Frink,MiniZinc,Aldor,COBOL,ooc,Genie,ECLiPSe,nools,Agda,PL/I,REXX,IDP,Falcon,Processing,Sympy,Maxima,Pyke,Elixir,GNU Smalltalk,Seed7,Standard ML,Occam,Boo,Drools,Icon,Mercury,EngScript,Pike,Oz,Kotlin,Pawn,FreeBASIC,Ada,PowerShell,Gosu,Nimrod,Cython,OpenOffice Basic,ALGOL 68,D,Ceylon,Rust,CoffeeScript,ActionScript,TypeScript,Fortran,Octave,ML,AutoHotKey,Delphi,Pascal,F#,Self,Swift,Nemerle,Dart,C,AutoIt,Cobra,Julia,Groovy,Scala,OCaml,Erlang,Gambas,Hack,C++,MATLAB,REBOL,Red,Lua,Go,AWK,Haskell,Perl,Python,JavaScript,C#,PHP,Ruby,R,Haxe,Visual Basic,Visual Basic .NET,Vala,bc
 		var1 __ var2
@@ -1212,7 +1236,7 @@ int,t1:type
 	Ruby
 		fixnum
 char
-	Java,C
+	Java,C,C++
 		char
 string
 	Java,Ceylon,Gambas,Dart,Gosu,Groovy,Scala,Pascal,Swift,Ruby,Haxe,Haskell,Visual Basic,Visual Basic .NET
@@ -1265,7 +1289,7 @@ if,c:elif_or_else,b:series_of_statements,a:And
 	MiniZinc
 		if __ a __ then __ b __ c __ endif
 	Python,Cython
-		if __ a : \n #indent \n b \n #unindent \n c
+		if __ a : \\n #indent \\n b \\n #unindent \\n c
 	Prolog
 		( a -> b ; c )
 	Visual Basic
@@ -1314,7 +1338,7 @@ foreach,array:expression,var_name:var_name,typeInArray:type,body:series_of_state
 	REBOL
 		foreach __ var_name __ array [ body ]
 	C++
-		for ( typeInArray __ & __ var_name : array ){ body }
+		for ( typeInArray __ & __ var_name : array ) { body }
 	Perl
 		foreach __ var_name ( array ) { body }
 	D
@@ -1408,7 +1432,7 @@ switch,a:expression,b:case_statements,c:default
 	Python,Lua
 		
 case,a:expression,b:series_of_statements
-	Lua,Python
+	Lua,Python,Z3
 		_
 	crosslanguage
 		( case __ a __ b )
@@ -1451,9 +1475,13 @@ access_array,a:Identifier,b:array_access_list
 		( a !! b )
 	Frink
 		a @ b
+	Z3
+		( select __ a __ b:access_array )
 array_access_list,var1:expression,var2:array_access_list,separator:array_access_separator
-	Java,C#,Lua,C++,Python,JavaScript,C,PHP,Ruby,Scala,Haxe,Fortran,TypeScript,MiniZinc,Dart
+	Java,Haskell,C#,Lua,C++,Python,JavaScript,C,PHP,Ruby,Scala,Haxe,Fortran,TypeScript,MiniZinc,Dart
 		var1 separator var2
+	Z3
+		access_array
 array_access_separator
 	C#,MiniZinc,Fortran,Julia,Visual Basic,Visual Basic .NET
 		,
@@ -1465,8 +1493,10 @@ array_access_separator
 		)(
 	Frink
 		@
+	Z3
+		__
 default,a:series_of_statements
-	Python,Cython,Lua,MiniZinc,Prolog,Lua
+	Python,Cython,Lua,MiniZinc,Prolog,Lua,Z3
 		_
 	Fortran
 		CASE __ DEFAULT __ a
@@ -1734,46 +1764,47 @@ function generateCode(parseTree, outputLang){
 
 	var output_dict = {
 		'statement':{
-			"Java,JavaScript,C#,PHP,Haxe,Ruby":
-				"statement = function / foreach / import / switch / if / class / while / for / statement_with_semicolon / comment / multiline_comment",
+			"Java,JavaScript,C#,PHP,Haxe,Ruby,C++,Z3,Prolog,Haskell,MiniZinc,Fortran":
+				"statement = statement_with_semicolon / function / foreach / import / switch / if / class / while / for / comment / multiline_comment",
 			"C,Lua,R,Julia,Perl":
 				"statement = if / import / while / for / function / statement_with_semicolon / comment / multiline_comment",
-			"Z3,Prolog,Haskell":
-				"statement = function / import / if / statement_with_semicolon / comment",
 		},
 		'join':{
-			'C':'join = Integer',
+			'C,C++,Z3,Prolog':'join = Integer',
 		},
 		'foreach':{
-			'C':'foreach = for',
+			'C,Z3,Prolog':'foreach = for',
 		},
 		'int_to_string':{
-			'C':'int_to_string = Integer',
+			'C,Z3':'int_to_string = Integer',
 		},
 		'split':{
-			'C':'split = Integer',
+			'C,C++,Z3,Prolog,MiniZinc':'split = Integer',
 		},
 		'instance_method':{
-			'C':'instance_method = function',
+			'C,Z3,Prolog,MiniZinc':'instance_method = function',
 		},
 		'typeless_instance_method':{
-			'C':'typeless_instance_method = function',
+			'C,Z3,Prolog,MiniZinc,Haskell,Erlang':'typeless_instance_method = function',
 		},
 		'typeless_static_method':{
-			'C':'typeless_static_method = function',
+			'C,Z3,MiniZinc,Prolog,Haskell,Erlang':'typeless_static_method = function',
+		},
+		'static_method':{
+			'Z3,Prolog,MiniZinc,Haskell,Erlang':'static_method = function',
 		},
 		'case_statements':{
 			'Java,C#,C++,JavaScript,PHP,Haxe,Fortran':
 				'case_statements = a:case _ b:case_statements {return ["case_statements", {a:a, b:b}]} / case',
-			'Lua,Python,R,Julia':
+			'Lua,Python,R,Julia,Z3,Prolog,MiniZinc':
 				'',
 		},
 		'switch':{
-			'Lua,Python,R,Julia':
-				'',
+			'Lua,Python,R,Julia,Z3,Prolog,MiniZinc':
+				'switch = if',
 		},
 		'default':{
-			'Lua,Python,R,Julia':
+			'Lua,Python,R,Julia,Z3,Prolog':
 				'',
 		},
 		'series_of_statements':{
@@ -1795,20 +1826,35 @@ function generateCode(parseTree, outputLang){
 				'"=begin comment\\n" var1:((!("=begin comment" / "end_comment" / "=cut") .)+) "=end comment\\n=cut\\n"',
 		},
 		'statement_with_semicolon':{
-			'Java,C#,JavaScript,C,PHP,Haxe,Ruby':
-				'statement_with_semicolon = var1:(print / set_var / plus_equals / minus_equals / declare_constant / initialize_var / typeless_initialize_var / initialize_empty_var / return / function_call ) _ ";" {return ["statement_with_semicolon", {var1:var1}]}',
+			'Java,C#,JavaScript,C,PHP,Haxe,Ruby,C++':
+				'statement_with_semicolon = var1:(print / set_var / plus_equals / minus_equals / declare_constant / typeless_declare_constant / initialize_var / typeless_initialize_var / initialize_empty_var / return / function_call ) _ ";" {return ["statement_with_semicolon", {var1:var1}]}',
 			'Z3,Lua':
-				'statement_with_semicolon = var1:(print / set_var / plus_equals / minus_equals / declare_constant / initialize_var / typeless_initialize_var / return / function_call ) {return ["statement_with_semicolon", {var1:var1}]}',
+				'statement_with_semicolon = var1:(print / set_var / plus_equals / minus_equals / declare_constant / typeless_declare_constant / initialize_var / typeless_initialize_var / return / function_call ) {return ["statement_with_semicolon", {var1:var1}]}',
 			'Lua':
-				'statement_with_semicolon = var1:(print / set_var / initialize_empty_var / plus_equals / minus_equals / declare_constant / initialize_var / typeless_initialize_var / return / function_call ) {return ["statement_with_semicolon", {var1:var1}]}',
+				'statement_with_semicolon = var1:(print / set_var / initialize_empty_var / plus_equals / minus_equals / declare_constant / typeless_declare_constant / initialize_var / typeless_initialize_var / return / function_call ) {return ["statement_with_semicolon", {var1:var1}]}',
 			'Haskell':
 				'statement_with_semicolon = var1:(print / return / function_call ) {return ["statement_with_semicolon", {var1:var1}]}',
 		},
+		'plus_equals':{
+			'Z3,MiniZinc,Prolog,Haskell,Erlang':'plus_equals = set_var'
+		},
+		'minus_equals':{
+			'Z3,MiniZinc,Prolog':'minus_equals = set_var'
+		},
+		'typeless_declare_constant':{
+			'Z3,MiniZinc,Prolog,Fortran':'typeless_declare_constant = declare_constant'
+		},
+		'typeless_initialize_var':{
+			'Z3,MiniZinc,Fortran':'typeless_initialize_var = initialize_var'
+		},
 		'elif_or_else':{
-			'Java,JavaScript,TypeScript,C,C#,Haxe,PHP,Lua,Ruby,R,Fortran,Perl,C++':
+			'Java,JavaScript,TypeScript,C,C#,Haxe,PHP,Lua,Ruby,R,Fortran,Perl,C++,MiniZinc,Prolog,Haskell,Erlang':
 				"elif_or_else = elif / else",
 			'Z3,CLIPS':
-				'',
+				'elif_or_else = if',
+		},
+		'else':{
+			'Z3':pattern_to_input('else', 'Z3'),
 		},
 		'function_parameters':{
 			'JavaScript,Dafny,Wolfram,Gambas,D,Frink,Chapel,Swift,Perl 6,OCaml,Janus,Mathematical notation,Pascal,Rust,Picat,AutoHotKey,Maxima,Octave,Julia,R,Prolog,Fortran,Go,MiniZinc,Erlang,CoffeeScript,PHP,Hack,Java,C#,C,C++,Lua,TypeScript,Dart,Ruby,Python,Haxe,Scala,Visual Basic,Visual Basic .NET':
@@ -1818,12 +1864,12 @@ function generateCode(parseTree, outputLang){
 
 		},
 		'class':{
-			"C,Z3,Lua":
+			"C,Z3,Lua,MiniZinc":
 				'class = function',
 		},
 		'while':{
-			"Z3":
-				"",
+			"Z3,MiniZinc,Haskell,MiniZinc,Prolog,Racket":
+				"while = if",
 			"Lua,Ruby,Julia":
 				'while = "while" (_ "(" _ condition:Or _ ")" / __ condition:Or) __ body:series_of_statements __ "end" {return ["while", {condition:condition, body:body}]}',
 
@@ -1839,6 +1885,8 @@ function generateCode(parseTree, outputLang){
 				pattern_to_input('And', "MiniZinc") + ' / Or',
 			"Z3":
 				pattern_to_input('And', "Z3") + ' / Or',
+			"Prolog":
+				pattern_to_input('And', "Prolog") + ' / Or',
 		},
 		'Or':{
 			"JavaScript,Wolfram,Chapel,Elixir,Frink,ooc,Picat,Janus,Processing,Pike,nools,Pawn,MATLAB,Hack,Gosu,Rust,AutoIt,AutoHotKey,TypeScript,Ceylon,Groovy,D,Octave,AWK,Julia,Scala,F#,Swift,Nemerle,Vala,Go,Perl,Java,Haskell,Haxe,C,C++,C#,Dart,R":
@@ -1852,7 +1900,9 @@ function generateCode(parseTree, outputLang){
 			"Fortran":
 				pattern_to_input('Or', "Fortran") + ' / greater_than',
 			"MiniZinc":
-				pattern_to_input('Or', "JavaScript") + ' / greater_than',
+				pattern_to_input('Or', "MiniZinc") + ' / greater_than',
+			"Prolog":
+				pattern_to_input('Or', "Prolog") + ' / greater_than',
 			
 		},
 		'greater_than':{
@@ -1904,8 +1954,8 @@ function generateCode(parseTree, outputLang){
 				'dot_notation = var1:Identifier "." var2:dot_notation {return ["dot_notation", {var1:var1, var2:var2}];} / Identifier',
 			'PHP,C':
 				'dot_notation = var1:Identifier "->" var2:dot_notation {return ["dot_notation", {var1:var1, var2:var2}];} / Identifier',
-			'Z3,R':
-				"",
+			'Z3,R,Prolog,MiniZinc':
+				"dot_notation = Identifier",
 		},
 		'function_call':{
 			"C,Chapel,Elixir,Janus,Perl 6,Pascal,Rust,Hack,Katahdin,MiniZinc,Pawn,Aldor,Picat,D,Genie,ooc,PL/I,Delphi,Standard ML,REXX,Falcon,IDP,Processing,Maxima,Swift,Boo,R,MATLAB,AutoIt,Pike,Gosu,AWK,AutoHotKey,Gambas,Kotlin,Nemerle,EngScript,Prolog,Groovy,Scala,CoffeeScript,Julia,TypeScript,Fortran,Octave,C++,Go,Cobra,Ruby,Vala,F#,Java,Ceylon,OCaml,Erlang,Python,C#,Lua,Haxe,JavaScript,Dart,bc,Visual Basic,Visual Basic .NET,PHP,Perl":
@@ -1924,10 +1974,10 @@ function generateCode(parseTree, outputLang){
 				'function_call_parameters = (var1:(function_call_named_parameter/expression) __ var2:function_call_parameters) {return ["function_call_parameters", {var1:var1, var2:var2}]} / (function_call_named_parameter/expression)',
 		},
 		'this':{
-			'Lua,C':'this = Identifier'
+			'Lua,C,Z3':'this = Identifier'
 		},
 		'anonymous_function':{
-			'C,C#,Fortran':'anonymous_function = set_var'
+			'C,C#,Fortran,Z3':'anonymous_function = Identifier'
 		},
 		'sin':{
 			'Z3':'sin = Integer'
@@ -1939,27 +1989,33 @@ function generateCode(parseTree, outputLang){
 			'Z3':'tan = Integer'
 		},
 		'Factor':{
-			"Java,Haxe,JavaScript,TypeScript,C,C++,PHP,Lua,Ruby,R,Lua":
+			"Java,Haxe,JavaScript,TypeScript,C,C++,PHP,Lua,Ruby,R,Fortran,Prolog,MiniZinc,Haskell":
 				'Factor = anonymous_function / this / dictionary / initializer_list / access_array / string_to_int / int_to_string / strcmp / function_call / strlen / sqrt / split / string_literal / "(" expr:expression ")" { return ["parentheses_expression", {"a":expr}]; } / pow / sin / cos / tan / dot_notation / Identifier / Integer',
 			"C#":
 				'Factor =  string_to_int / int_to_string / strcmp / this / dictionary / initializer_list / access_array / function_call / strlen / sqrt / split / string_literal / "(" expr:expression ")" {return ["parentheses_expression", {"a":expr}]} / pow / sin / cos / tan / dot_notation / Identifier / Integer',
 			'Z3':
 				'Factor = function_call / split / Integer / Identifier / string_literal / "(" expr:expression ")" { return expr; }',
 		},
+		'string_to_int':{
+			'Z3':'string_to_int = int'
+		},
+		'strlen':{
+			'Z3':'strlen = int'
+		},
 		'type':{
 			"Java,C,C#,Haxe,C++":
 				'type = var1:_type var2:array_type_suffix {return ["type",{var1:var1, var2:var2}];} / var1:_type {return var1;}',
-			"JavaScript,PHP,Z3,Lua,Ruby,R,Fortran,Z3":
+			"JavaScript,PHP,Z3,Lua,Ruby,R,Fortran,Z3,Haskell,Erlang":
 				'type = var1:_type {return ["type", {var1:var1}]}',
 		},
 		'_type':{
-			"Java,C,C#,Haxe,Ruby,Fortran":
+			"Java,C,C#,Haxe,Ruby,Fortran,C++":
 				'_type = char / boolean / int / string / void',
 			"Ruby":
 				'_type = char / int / string',
 			"Z3":
 				'_type = int / boolean',
-			"PHP,Lua,JavaScript,TypeScript,R":
+			"PHP,Lua,JavaScript,TypeScript,R,MiniZinc":
 				'_type = int / string / boolean',
 		},
 		'boolean':{
@@ -1991,8 +2047,32 @@ function generateCode(parseTree, outputLang){
 				"",
 		},
 		'case':{
-			'Lua,Python':
+			'Lua,Python,MiniZinc,Prolog':
 				'',
+		},
+		'strcmp':{
+			'Z3':'strcmp = compare_ints'
+		},
+		'default_parameter':{
+			'Java,JavaScript,Lua,C,Z3':'default_parameter = function_parameter'
+		},
+		'for':{
+			'Z3,Haskell,MiniZinc,Prolog':'for = if',
+		},
+		'declare_new_object':{
+			'Z3':'declare_new_object = initialize_var',
+		},
+		'key_value_list':{
+			'Lua,JavaScript,Java,C#,C++,C,Ruby,PHP,Python,Perl,Fortran,Haxe,TypeScript':
+				 pattern_to_input('key_value_list', "Java") + ' / key_value',
+			'Z3,MiniZinc':
+				'key_value_list = Identifier',
+		},
+		'_initializer_list':{
+			'Lua,Java,C++,JavaScript,C#,Perl,Fortran,C,PHP,Haskell,Haxe,Python,Ruby,TypeScript,MiniZinc':
+				pattern_to_input('_initializer_list', "Java") +' / expression',
+			'Z3':
+				'_initializer_list = Identifier',
 		},
 	}
 
@@ -2048,12 +2128,8 @@ function generateParser(lang){
 		toReturn += getOutput(lang, current);
 	}
 	toReturn += `
-Identifier "identifier" = !(type / Integer / "split" / "equals" / "Console" / "System" / "break" / "while" / "if" / "else" / "ite" / "end" / "then") [a-zA-Z0-9]+ {return text();}
-key_value_list = var1:key_value _ var2:key_value_separator _ var3:key_value_list {return ["key_value_list", {var1:var1,var2:var2,var3:var3}]}
-/ key_value
-_initializer_list = var1:expression _ var2:initializer_list_separator _ var3:_initializer_list {return ["_initializer_list", {var1:var1,var2:var2,var3:var3}];}
-/ expression
-array_access_list =  var1:expression _ separator:array_access_separator _ var2:array_access_list {return ["array_access_list", {var1:var1, separator:separator, var2:var2}]} / expression
+Identifier = []
+_Identifier "identifier" = !(type / Integer / "split" / "equals" / "Console" / "System" / "break" / "while" / "if" / "else" / "ite" / "end" / "then") [a-zA-Z0-9_]+ {return text();}
 Integer "integer" = [0-9]+ { return text(); }
 _ "whitespace" = [ \\t\\n\\r]*
 __ "whitespace2" = [ \\t\\n\\r] [ \\t\\n\\r]*  
