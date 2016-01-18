@@ -379,7 +379,7 @@ typeless_function,name:Identifier,params:function_parameters,body:series_of_stat
 	C++,D
 		auto __ name ( params ) { body }
 	Java
-		Object __ name ( params ) { body }
+		public __ static __ Object __ name ( params ) { body }
 	Ruby
 		def __ name ( params ) __ body __ end
 	Perl
