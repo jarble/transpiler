@@ -2,9 +2,9 @@
 <body>
 
   Code to translate:
-  <input type="text" id="inputText" value="public static int add(int a, int b){int i = 0; System.out.println(&#34hello&#34); return a + b;}">
+  <input type="text" id="inputText" value="var i = a || b;">
   <br/>Input language:
-  <input type="text" id="inputLang" value="Java">
+  <input type="text" id="inputLang" value="Detect language">
   <br/>Output language:
   <input type="text" id="outputLang" value="C">
   <br/>
@@ -21,12 +21,35 @@ function myFunction() {
     var inputLang = document.getElementById("inputLang").value;
     var outputLang = document.getElementById("outputLang").value;
     var inputText = document.getElementById("inputText").value;
-    try{
-		document.getElementById("demo").innerHTML = translateLang(inputLang, outputLang, inputText);
+	if(inputLang === "Detect language"){
+		for(const current of list_of_languages){
+			try{
+				document.getElementById("demo").innerHTML = translateLang(current, outputLang, inputText)
+				.replace(/&/g, "&amp;")
+				.replace(/</g, "&lt;")
+				.replace(/>/g, "&gt;")
+				.replace(/"/g, "&quot;")
+				.replace(/'/g, "&#039;");
+			}
+			catch(e){
+				
+			}
+		}
 	}
-	catch(e){
-		alert(e);
-	}
+	else{
+		try{
+			document.getElementById("demo").innerHTML = translateLang(inputLang, outputLang, inputText)
+			.replace(/&/g, "&amp;")
+			.replace(/</g, "&lt;")
+			.replace(/>/g, "&gt;")
+			.replace(/"/g, "&quot;")
+			.replace(/'/g, "&#039;");
+		}
+		catch(e){
+			alert(e);
+			alert(e.stack);
+		}
+    }
 }
 
 /*
