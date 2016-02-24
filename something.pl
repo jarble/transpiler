@@ -1,6 +1,6 @@
 %This is a language translator written in Prolog.
 %For example, this query translates JavaScript code into Ruby:
-%	translate("function add(a) b end",ruby,X).
+%	translate("function add(a){b}",ruby,X).
 
 
 :- set_prolog_flag(double_quotes, chars).
