@@ -1,4 +1,4 @@
-%This is a language translator written in Prolog. Write queries like this one:
+%This is a language translator written in Prolog. This query translates a JavaScript function into a Ruby function:
 %	translate("function add(a) b end",ruby,X).
 
 
