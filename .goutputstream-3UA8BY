@@ -1,6 +1,5 @@
 "use strict";
 var fs = require('fs');
-var nearley = require('nearley');
 var child_process = require("child_process");
 //Copy the information into this file from grammar.txt.
 //A demo of this script is in pegjs_test.html.
@@ -13,10 +12,10 @@ var child_process = require("child_process");
 
 //const list_of_languages = "Vala,Erlang,Octave,Picat,MiniZinc,Perl,Go,Swift,C,Fortran,Z3,Python,REBOL,Haskell,Visual Basic .NET,PHP,Ruby,Lua,C++,Haxe,Java,JavaScript,C#".toLowerCase().split(",");
 
-const list_of_languages = "Yapps".toLowerCase().split(",");
+const list_of_languages = "Seed7".toLowerCase().split(",");
 
 
-const list_of_grammar_notations = "Parboiled,Yapps,Rley,Jison,Bison,SmaCC,Ragel,Treetop,Waxeye,OMeta,syntax definition formalism,ABNF,Wirth syntax notation,Coco/R,Yacc,pypeg,Parslet,PEG.js,Pyparsing,EBNF,Nearley,ANTLR,Marpa,earley-parser-js,LPeg".toLowerCase().split(',');
+const list_of_grammar_notations = "OMeta,syntax definition formalism,ABNF,Wirth syntax notation,Coco/R,Yacc,pypeg,Parslet,PEG.js,Pyparsing,EBNF,Nearley,ANTLR,Marpa,earley-parser-js,LPeg".toLowerCase().split(',');
 
 //const list_of_languages = "Parslet,EBNF,Nearley,Marpa,PEG.js".toLowerCase().split(',');
 //const list_of_languages = 'Wirth syntax notation,Pydatalog,EBNF,Yacc,Parslet,Marpa,LPEG,PEG.js'.toLowerCase().split(",");
@@ -125,25 +124,16 @@ const thePatterns = {
 	
 };
 var string_to_dict =
-`grammar_output,name:Identifier,value:grammar_Or,output:grammar_Or
-	PEG.js
-		name = value { return __ output ; }
-	nearley
-		name -> value {% function ( data ) { return __ output ; } %}
-grammar_statement,name:Identifier,value:grammar_Or
-	Waxeye
-		name <- value
+`grammar_statement,name:Identifier,value:grammar_Or
 	Nearley
 		name -> value
-	earley-parser-js
-		\\" name -> value \\"
 	Parslet
 		rule ( : name ) { value }
 	Marpa
 		name ::= value
 	EBNF
 		name = value ;
-	Yacc,Jison,ANTLR
+	Yacc
 		name : value ;
 	PEG.js,LPeg,ABNF,OMeta
 		name = value
@@ -155,14 +145,6 @@ grammar_statement,name:Identifier,value:grammar_Or
 		name --> value .
 	REBOL
 		name : __ value
-	Treetop
-		rule __ name __ value __ end
-	Hampi
-		cfg __ name := value ;
-	Parboiled
-		public __ Rule __ name ( ) { return __ value ; }
-	Yapps
-		rule __ name : __ value
 statement,a:statement
 	Lua
 		a:(if/import/while/for/function/statement_with_semicolon/comment/multiline_comment)
@@ -170,7 +152,7 @@ statement,a:statement
 		a:(if/import/while/foreach/function/statement_with_semicolon/comment/multiline_comment)
 	MiniZinc
 		a:(if/function/foreach/statement_with_semicolon/comment)
-	EnglishScript,Seed7,VBScript,Java,Nim,Scala,Python,Dart,JavaScript,TypeScript,C#,PHP,Haxe,Ruby,C++,Visual Basic .NET,Go,Swift,REBOL,Fortran
+	EnglishScript,VBScript,Java,Scala,Python,Dart,JavaScript,TypeScript,C#,PHP,Haxe,Ruby,C++,Visual Basic .NET,Go,Swift,REBOL,Fortran
 		a:(function/foreach/import/switch/if/class/class_extends/enum/while/for/statement_with_semicolon/comment/multiline_comment)
 	C,R,Julia,Perl
 		a:(if/import/while/for/function/statement_with_semicolon/comment/multiline_comment)
@@ -197,19 +179,6 @@ statement_with_semicolon,var1:(print/set_var/plus_equals/minus_equals/exception/
 		var1:(print/set_var/initialize_empty_var/plus_equals/minus_equals/declare_constant/initialize_var/typeless_initialize_var/return/function_call)
 	Haskell,Erlang,Common Lisp
 		var1:(print/function_call/return)
-macro,name:Identifier,params:macro_parameters,c:series_of_statements
-	Racket
-		( define-syntax-rule __ ( name __ params ) __ body )
-	C
-		#define __ name ( params ) __ body
-	Common Lisp
-		( defmacro __ name __ ( params ) __ body )
-	Rust
-		macro_rules! __ name { ( params ) => { body } ; }
-	Z3
-		( define-fun __ name ( params ) __ type __ body )
-	Nearley
-		name [ params ] -> body
 one_or_more,a:grammar_expression
 	Marpa,PEG.js,Perl 6,ANTLR
 		( a ) +
@@ -221,15 +190,11 @@ one_or_more,a:grammar_expression
 		( a ) . repeat ( 1 )
 	LPEG
 		( a ^ 1 )
-	Parboiled
-		OneOrMore ( a )
 zero_or_more,a:grammar_expression
 	LPEG
 		( a ^ 0 )
 	pypeg
 		optional ( a )
-	Waxeye
-		? ( a )
 	EBNF
 		{ a }
 	Marpa,PEG.js,Perl 6,ANTLR
@@ -247,17 +212,13 @@ grammar_parameter,name:Identifier,type:Identifier
 		lpeg.V" type "
 	Parslet
 		type . as ( name )
-	Marpa,Yacc,EBNF,REBOL,Prolog,ABNF,Treetop
+	Marpa,Yacc,EBNF,REBOL,Prolog,ABNF
 		type
 	Perl 6
 		< type >
-	Hampi
-		type
 grammar,name:Identifier,var1:grammar_series_of_statements
 	PEG.js,EBNF,nearley,Marpa,REBOL
 		var1
-	Antlr
-		grammar __ name ; var1
 	OMeta
 		ometa __ name { var1 }
 	Perl 6
@@ -266,23 +227,15 @@ grammar,name:Identifier,var1:grammar_series_of_statements
 		name = lpeg . P { var1 }
 	Parslet
 		class __ name > Parslet::Parser __ var1 __ end
-	Treetop
-		grammar __ name __ var1 __ end
-	Earley-parser-js
-		var __ grammar = new __ tinynlp . Grammar ( [ var1 ] ) ;
-	Parboiled
-		class __ CalculatorParser __ extends __ BaseParser<Object> { var1 }
 nameless_grammar_parameter,type:Identifier
-	PEG.js,Yapps,Hampi,ANTLR,Parslet,nearley,Marpa,Yacc,EBNF,REBOL,Prolog,ABNF,Treetop
+	PEG.js,Parslet,nearley,Marpa,Yacc,EBNF,REBOL,Prolog,ABNF
 		type
 	LPeg
 		lpeg.V" type "
 	Perl 6
 		< type >
-	Parboiled
-		type ( )
 grammar_string_literal,the_str:string_literal
-	PEG.js,Parboiled,earley-parser-js,Antlr,LPeg,Marpa,Yacc,EBNF,REBOL,ABNF,OMeta,Treetop
+	PEG.js,LPeg,Marpa,Yacc,EBNF,REBOL,ABNF,OMeta
 		the_str
 	Parslet
 		str ( the_str )
@@ -317,8 +270,6 @@ initialize_instance_variable_with_value,type:type,name:var_name,value:expression
 enum,name:Identifier,body:enum_list
 	C
 		typedef __ enum { body } name ;
-	Seed7
-		const __ type : name __ is __ new __ enum __ body __ end __ enum ;
 	Ada
 		type __ name __ is __ ( body ) ;
 	Perl 6
@@ -342,14 +293,14 @@ enum,name:Identifier,body:enum_list
 	Scala
 		object __ name __ extends __ Enumeration { val __ body = Value }
 _enum_list,a:Identifier
-	Java,Seed7,Vala,Perl 6,Swift,C++,C#,Visual Basic .NET,Haxe,Fortran,TypeScript,C,Ada,Scala
+	Java,Vala,Perl 6,Swift,C++,C#,Visual Basic .NET,Haxe,Fortran,TypeScript,C,Ada,Scala
 		a
 	Go
 		a = iota
 	Python
 		a = ( )
 enum_list,a:_enum_list,b:enum_list
-	Java,Seed7,Vala,C++,C#,C,TypeScript,Fortran,Ada,Scala
+	Java,Vala,C++,C#,C,TypeScript,Fortran,Ada,Scala
 		a , b
 	Haxe
 		a ; b
@@ -396,8 +347,6 @@ array_type,var1:_type,var2:"[]"
 		array [ var1 ] __ of __ var1
 	Go
 		var2:array_type_suffix var1:_type
-	Seed7
-		var2:array_type_suffix __ var1:_type
 	Dart
 		array_type = List< var1:_type >
 	Swift
@@ -596,7 +545,7 @@ atan,a:expression
 	Clojure
 		( Math/atan __ a )
 less_than,a:Add,b:Add
-	Pascal,Z3Py,ATS,Pydatalog,E,VBScript,LiveCode,Monkey X,Perl 6,EnglishScript,Cython,GAP,Mathematical notation,Wolfram,Chapel,Elixir,Katahdin,Frink,MiniZinc,Picat,Java,ECLiPSe,D,ooc,Genie,Janus,PL/I,IDP,Processing,Maxima,Seed7,Self,GNU Smalltalk,Drools,Standard ML,Oz,Cobra,Pike,EngScript,Kotlin,Pawn,FreeBASIC,MATLAB,Ada,FreeBASIC,Gosu,Gambas,Nim,AutoIt,ALGOL 68,Ceylon,Groovy,Rust,CoffeeScript,TypeScript,Fortran,Octave,ML,Hack,AutoHotKey,Scala,Delphi,Tcl,Swift,Vala,C,F#,C++,Dart,JavaScript,REBOL,Julia,Erlang,OCaml,crosslanguage,C#,Nemerle,AWK,Java,Lua,Perl,Haxe,Python,PHP,Haskell,Go,Ruby,R,bc,Visual Basic,Visual Basic .NET
+	Pascal,Pydatalog,E,VBScript,LiveCode,Monkey X,Perl 6,EnglishScript,Cython,GAP,Mathematical notation,Wolfram,Chapel,Elixir,Katahdin,Frink,MiniZinc,Picat,Java,ECLiPSe,D,ooc,Genie,Janus,PL/I,IDP,Processing,Maxima,Seed7,Self,GNU Smalltalk,Drools,Standard ML,Oz,Cobra,Pike,EngScript,Kotlin,Pawn,FreeBASIC,MATLAB,Ada,FreeBASIC,Gosu,Gambas,Nimrod,AutoIt,ALGOL 68,Ceylon,Groovy,Rust,CoffeeScript,TypeScript,Fortran,Octave,ML,Hack,AutoHotKey,Scala,Delphi,Tcl,Swift,Vala,C,F#,C++,Dart,JavaScript,REBOL,Julia,Erlang,OCaml,crosslanguage,C#,Nemerle,AWK,Java,Lua,Perl,Haxe,Python,PHP,Haskell,Go,Ruby,R,bc,Visual Basic,Visual Basic .NET
 		a < b
 	Prolog
 		a #< b
@@ -609,7 +558,7 @@ less_than,a:Add,b:Add
 	Reverse Polish notation
 		a __ b __ <
 less_than_or_equal,a:Add,b:Add
-	C,Z3Py,ATS,Seed7,Pydatalog,VBScript,LiveCode,Monkey X,EnglishScript,GAP,Dafny,Janus,Perl 6,Wolfram,Chapel,Fortran,Elixir,Frink,Mathematical notation,MiniZinc,Picat,ooc,Genie,PL/I,IDP,Processing,EngScript,Maxima,GNU Smalltalk,Pyke,Self,Boo,Cobra,Standard ML,Prolog,Kotlin,Pawn,FreeBASIC,Ada,MATLAB,ALGOL 68,Gambas,Nim,Gosu,AutoIt,Ceylon,D,Groovy,Rust,CoffeeScript,TypeScript,Octave,Hack,AutoHotKey,Julia,Scala,Pascal,Delphi,Swift,Visual Basic,F#,Objective-C,Pike,Python,Cython,Oz,ML,Vala,Dart,C++,Java,OCaml,REBOL,C#,Nemerle,Ruby,PHP,Lua,Visual Basic .NET,Haskell,Haxe,Perl,JavaScript,R,AWK,crosslanguage,Go
+	C,Seed7,Pydatalog,VBScript,LiveCode,Monkey X,EnglishScript,GAP,Dafny,Janus,Perl 6,Wolfram,Chapel,Fortran,Elixir,Frink,Mathematical notation,MiniZinc,Picat,ooc,Genie,PL/I,IDP,Processing,EngScript,Maxima,GNU Smalltalk,Pyke,Self,Boo,Cobra,Standard ML,Prolog,Kotlin,Pawn,FreeBASIC,Ada,MATLAB,ALGOL 68,Gambas,Nimrod,Gosu,AutoIt,Ceylon,D,Groovy,Rust,CoffeeScript,TypeScript,Octave,Hack,AutoHotKey,Julia,Scala,Pascal,Delphi,Swift,Visual Basic,F#,Objective-C,Pike,Python,Cython,Oz,ML,Vala,Dart,C++,Java,OCaml,REBOL,C#,Nemerle,Ruby,PHP,Lua,Visual Basic .NET,Haskell,Haxe,Perl,JavaScript,R,AWK,crosslanguage,Go
 		a <= b
 	Erlang
 		a =< b
@@ -622,7 +571,7 @@ less_than_or_equal,a:Add,b:Add
 	Reverse Polish notation
 		a __ b __ <=
 Multiply,a:Factor,b:Multiply,symbol:("*"/"/")
-	C,Pydatalog,E,LiveCode,VBScript,Monkey X,Perl 6,EnglishScript,Cython,Agda,GAP,POP-11,Dafny,Wolfram,Chapel,Katahdin,Mathematical notation,Frink,MiniZinc,COBOL,ooc,Genie,B-Prolog,ECLiPSe,Elixir,nools,Pyke,Picat,PL/I,REXX,IDP,Falcon,Processing,Maxima,Sympy,Mercury,Self,GNU Smalltalk,Boo,Drools,Seed7,Occam,Standard ML,EngScript,Pike,Oz,Kotlin,Pawn,MATLAB,Ada,PowerShell,Gosu,AWK,Gambas,Nim,AutoHotKey,Julia,OpenOffice Basic,ALGOL 68,D,Groovy,Ceylon,Rust,CoffeeScript,ActionScript,TypeScript,Fortran,Octave,ML,Haxe,Pascal,Delphi,Swift,Nemerle,Vala,R,Red,C++,Erlang,Scala,AutoIt,Cobra,F#,Perl,PHP,Go,Ruby,Lua,Haskell,Hack,Java,OCaml,REBOL,Python,JavaScript,C#,Visual Basic,Visual Basic .NET,Dart
+	C,Pydatalog,E,LiveCode,VBScript,Monkey X,Perl 6,EnglishScript,Cython,Agda,GAP,POP-11,Dafny,Wolfram,Chapel,Katahdin,Mathematical notation,Frink,MiniZinc,COBOL,ooc,Genie,B-Prolog,ECLiPSe,Elixir,nools,Pyke,Picat,PL/I,REXX,IDP,Falcon,Processing,Maxima,Sympy,Mercury,Self,GNU Smalltalk,Boo,Drools,Seed7,Occam,Standard ML,EngScript,Pike,Oz,Kotlin,Pawn,MATLAB,Ada,PowerShell,Gosu,AWK,Gambas,Nimrod,AutoHotKey,Julia,OpenOffice Basic,ALGOL 68,D,Groovy,Ceylon,Rust,CoffeeScript,ActionScript,TypeScript,Fortran,Octave,ML,Haxe,Pascal,Delphi,Swift,Nemerle,Vala,R,Red,C++,Erlang,Scala,AutoIt,Cobra,F#,Perl,PHP,Go,Ruby,Lua,Haskell,Hack,Java,OCaml,REBOL,Python,JavaScript,C#,Visual Basic,Visual Basic .NET,Dart
 		a symbol b
 	Racket,Z3,crosslanguage,Common Lisp,CLIPS,newLisp,Hy,Scheme,Clojure,Common Lisp,Emacs Lisp,Sibilant,LispyScript
 		( symbol __ a:Factor __ b:Factor )
@@ -633,7 +582,7 @@ Multiply,a:Factor,b:Multiply,symbol:("*"/"/")
 	Reverse Polish notation
 		a __ b __ symbol
 Add,a:Multiply,b:Add,symbol:("+"/"-")
-	Java,Pydatalog,E,LiveCode,VBScript,Monkey X,EnglishScript,GAP,POP-11,Dafny,Janus,Wolfram,Chapel,Bash,Perl 6,Mathematical notation,Katahdin,Frink,MiniZinc,Aldor,COBOL,ooc,Genie,ECLiPSe,nools,B-Prolog,Agda,Picat,PL/I,REXX,IDP,Falcon,Processing,Sympy,Maxima,Pyke,Elixir,GNU Smalltalk,Seed7,Standard ML,Occam,Boo,Drools,Icon,Mercury,EngScript,Pike,Oz,Kotlin,Pawn,FreeBASIC,Ada,PowerShell,Gosu,Nim,Cython,OpenOffice Basic,ALGOL 68,D,Ceylon,Rust,CoffeeScript,ActionScript,TypeScript,Fortran,Octave,ML,AutoHotKey,Delphi,Pascal,F#,Self,Swift,Nemerle,Dart,C,AutoIt,Cobra,Julia,Groovy,Scala,OCaml,Erlang,Gambas,Hack,C++,MATLAB,REBOL,Red,Lua,Go,AWK,Haskell,Perl,Python,JavaScript,C#,PHP,Ruby,R,Haxe,Visual Basic,Visual Basic .NET,Vala,bc
+	Java,Pydatalog,E,LiveCode,VBScript,Monkey X,EnglishScript,GAP,POP-11,Dafny,Janus,Wolfram,Chapel,Bash,Perl 6,Mathematical notation,Katahdin,Frink,MiniZinc,Aldor,COBOL,ooc,Genie,ECLiPSe,nools,B-Prolog,Agda,Picat,PL/I,REXX,IDP,Falcon,Processing,Sympy,Maxima,Pyke,Elixir,GNU Smalltalk,Seed7,Standard ML,Occam,Boo,Drools,Icon,Mercury,EngScript,Pike,Oz,Kotlin,Pawn,FreeBASIC,Ada,PowerShell,Gosu,Nimrod,Cython,OpenOffice Basic,ALGOL 68,D,Ceylon,Rust,CoffeeScript,ActionScript,TypeScript,Fortran,Octave,ML,AutoHotKey,Delphi,Pascal,F#,Self,Swift,Nemerle,Dart,C,AutoIt,Cobra,Julia,Groovy,Scala,OCaml,Erlang,Gambas,Hack,C++,MATLAB,REBOL,Red,Lua,Go,AWK,Haskell,Perl,Python,JavaScript,C#,PHP,Ruby,R,Haxe,Visual Basic,Visual Basic .NET,Vala,bc
 		a symbol b
 	Prolog
 		a symbol:"#+"/"#-" b
@@ -644,7 +593,7 @@ Add,a:Multiply,b:Add,symbol:("+"/"-")
 	Reverse Polish notation
 		a __ b __ symbol
 greater_than_or_equal,a:Add,b:Add
-	C,Z3Py,ATS,Seed7,Pydatalog,VBScript,LiveCode,Monkey X,EnglishScript,GAP,Dafny,Perl 6,Wolfram,Chapel,Frink,Mathematical notation,MiniZinc,Picat,ooc,Genie,PL/I,IDP,Processing,EngScript,Maxima,GNU Smalltalk,Pyke,Self,Boo,Cobra,Standard ML,Prolog,Kotlin,Pawn,FreeBASIC,Ada,MATLAB,ALGOL 68,Gambas,Nim,Gosu,AutoIt,Ceylon,D,Groovy,Rust,CoffeeScript,TypeScript,Octave,Hack,AutoHotKey,Julia,Scala,Pascal,Delphi,Swift,Visual Basic,F#,Objective-C,Pike,Python,Cython,Oz,ML,Vala,Dart,C++,Java,OCaml,REBOL,Erlang,C#,Nemerle,Ruby,PHP,Lua,Visual Basic .NET,Haskell,Haxe,Perl,JavaScript,R,AWK,crosslanguage,Go,Janus
+	C,Seed7,Pydatalog,VBScript,LiveCode,Monkey X,EnglishScript,GAP,Dafny,Perl 6,Wolfram,Chapel,Frink,Mathematical notation,MiniZinc,Picat,ooc,Genie,PL/I,IDP,Processing,EngScript,Maxima,GNU Smalltalk,Pyke,Self,Boo,Cobra,Standard ML,Prolog,Kotlin,Pawn,FreeBASIC,Ada,MATLAB,ALGOL 68,Gambas,Nimrod,Gosu,AutoIt,Ceylon,D,Groovy,Rust,CoffeeScript,TypeScript,Octave,Hack,AutoHotKey,Julia,Scala,Pascal,Delphi,Swift,Visual Basic,F#,Objective-C,Pike,Python,Cython,Oz,ML,Vala,Dart,C++,Java,OCaml,REBOL,Erlang,C#,Nemerle,Ruby,PHP,Lua,Visual Basic .NET,Haskell,Haxe,Perl,JavaScript,R,AWK,crosslanguage,Go,Janus
 		a >= b
 	Fortran
 		a __ .GE. __ b
@@ -655,12 +604,12 @@ greater_than_or_equal,a:Add,b:Add
 	Reverse Polish notation
 		a __ b __ >=
 function_call_parameters,var1:(function_call_named_parameter/expression),var2:function_call_parameters
-	JavaScript,Nim,Seed7,Vala,Wolfram,D,Frink,Delphi,EngScript,Chapel,Perl,Swift,Perl 6,OCaml,Janus,Mathematical notation,Pascal,Rust,Picat,AutoHotKey,Maxima,Octave,Julia,R,Prolog,Fortran,Go,MiniZinc,Erlang,CoffeeScript,PHP,Hack,Java,C#,C,C++,Lua,TypeScript,Dart,Ruby,Python,Haxe,Scala,Visual Basic,Visual Basic .NET':
+	JavaScript,Seed7,Vala,Wolfram,D,Frink,Delphi,EngScript,Chapel,Perl,Swift,Perl 6,OCaml,Janus,Mathematical notation,Pascal,Rust,Picat,AutoHotKey,Maxima,Octave,Julia,R,Prolog,Fortran,Go,MiniZinc,Erlang,CoffeeScript,PHP,Hack,Java,C#,C,C++,Lua,TypeScript,Dart,Ruby,Python,Haxe,Scala,Visual Basic,Visual Basic .NET':
 		var1 , var2
 	Hy,crosslanguage,Coq,Scheme,Racket,Common Lisp,CLIPS,REBOL,Haskell,Racket,Clojure,Z3
 		function_call_parameters = var1 __ var2
 greater_than,a:Add,b:Add
-	Pascal,Z3Py,ATS,Pydatalog,E,VBScript,LiveCode,Monkey X,Perl 6,EnglishScript,Cython,GAP,Mathematical notation,Wolfram,Chapel,Katahdin,Frink,MiniZinc,Picat,Java,ECLiPSe,D,ooc,Genie,Janus,PL/I,IDP,Processing,Maxima,Seed7,Self,GNU Smalltalk,Drools,Standard ML,Oz,Cobra,Pike,Prolog,EngScript,Kotlin,Pawn,FreeBASIC,MATLAB,Ada,FreeBASIC,Gosu,Gambas,Nim,AutoIt,ALGOL 68,Ceylon,Groovy,Rust,CoffeeScript,TypeScript,Fortran,Octave,ML,Hack,AutoHotKey,Scala,Delphi,Tcl,Swift,Vala,C,F#,C++,Dart,JavaScript,REBOL,Julia,Erlang,OCaml,crosslanguage,C#,Nemerle,AWK,Java,Lua,Perl,Haxe,Python,PHP,Haskell,Go,Ruby,R,bc,Visual Basic,Visual Basic .NET
+	Pascal,Pydatalog,E,VBScript,LiveCode,Monkey X,Perl 6,EnglishScript,Cython,GAP,Mathematical notation,Wolfram,Chapel,Katahdin,Frink,MiniZinc,Picat,Java,ECLiPSe,D,ooc,Genie,Janus,PL/I,IDP,Processing,Maxima,Seed7,Self,GNU Smalltalk,Drools,Standard ML,Oz,Cobra,Pike,Prolog,EngScript,Kotlin,Pawn,FreeBASIC,MATLAB,Ada,FreeBASIC,Gosu,Gambas,Nimrod,AutoIt,ALGOL 68,Ceylon,Groovy,Rust,CoffeeScript,TypeScript,Fortran,Octave,ML,Hack,AutoHotKey,Scala,Delphi,Tcl,Swift,Vala,C,F#,C++,Dart,JavaScript,REBOL,Julia,Erlang,OCaml,crosslanguage,C#,Nemerle,AWK,Java,Lua,Perl,Haxe,Python,PHP,Haskell,Go,Ruby,R,bc,Visual Basic,Visual Basic .NET
 		a > b
 	Racket,Z3,CLIPS,GNU Smalltalk,newLisp,Hy,Common Lisp,Emacs Lisp,Clojure,Sibilant,LispyScript
 		( > __ a:Factor __ b:Factor )
@@ -860,12 +809,12 @@ dictionary,a:(key_value_list/key_value),input:type,output:type
 var_name,name:Identifier
 	PHP,Perl,Bash,Tcl,AutoIt,Perl 6,Puppet,Hack,AWK,PowerShell
 		$ name
-	EngScript,EnglishScript,VBScript,Polish notation,Reverse Polish notation,Wolfram,crosslanguage,Erlang,English,Mathematical notation,Pascal,Picat,Prolog,Katahdin,TypeScript,JavaScript,Frink,MiniZinc,Aldor,Flora-2,F-logic,D,Genie,ooc,Janus,Chapel,ABAP,COBOL,PicoLisp,REXX,PL/I,Falcon,IDP,Processing,Sympy,Maxima,Z3,Shen,Ceylon,nools,Pyke,Self,GNU Smalltalk,Elixir,LispyScript,Standard ML,Nim,Occam,Boo,Seed7,pyparsing,Agda,Icon,Octave,Cobra,Kotlin,C++,Drools,Oz,Pike,Delphi,Racket,ML,Java,Pawn,Fortran,Ada,FreeBASIC,MATLAB,newLisp,Hy,OCaml,Julia,AutoIt,C#,Gosu,AutoHotKey,Groovy,Rust,R,Swift,Vala,Go,Scala,Nemerle,Visual Basic,Visual Basic .NET,Clojure,Haxe,CoffeeScript,Dart,JavaScript,C#,Python,Ruby,Haskell,C,Lua,Gambas,Common Lisp,Scheme,REBOL,F#
+	EngScript,EnglishScript,VBScript,Polish notation,Reverse Polish notation,Wolfram,crosslanguage,Erlang,English,Mathematical notation,Pascal,Picat,Prolog,Katahdin,TypeScript,JavaScript,Frink,MiniZinc,Aldor,Flora-2,F-logic,D,Genie,ooc,Janus,Chapel,ABAP,COBOL,PicoLisp,REXX,PL/I,Falcon,IDP,Processing,Sympy,Maxima,Z3,Shen,Ceylon,nools,Pyke,Self,GNU Smalltalk,Elixir,LispyScript,Standard ML,Nimrod,Occam,Boo,Seed7,pyparsing,Agda,Icon,Octave,Cobra,Kotlin,C++,Drools,Oz,Pike,Delphi,Racket,ML,Java,Pawn,Fortran,Ada,FreeBASIC,MATLAB,newLisp,Hy,OCaml,Julia,AutoIt,C#,Gosu,AutoHotKey,Groovy,Rust,R,Swift,Vala,Go,Scala,Nemerle,Visual Basic,Visual Basic .NET,Clojure,Haxe,CoffeeScript,Dart,JavaScript,C#,Python,Ruby,Haskell,C,Lua,Gambas,Common Lisp,Scheme,REBOL,F#
 		name
 	CLIPS
 		? name
 default_parameter,type:type,name:var_name,value:expression
-	Python,AutoHotKey,Julia,Nemerle,PHP,JavaScript
+	Python,AutoHotKey,Julia,Nemerle,PHP
 		name = value
 	C#,D,Groovy,C++
 		type __ name = value
@@ -880,7 +829,7 @@ default_parameter,type:type,name:var_name,value:expression
 	Visual Basic .NET
 		Optional __ name __ As __ type = value
 _initializer_list,var1:expression,var2:initializer_list_separator,var3:(_initializer_list/expression)
-	Lua,Nim,Seed7,Erlang,Vala,Perl 6,Octave,Picat,Julia,Polish notation,Reverse Polish notation,Visual Basic .NET,Dart,Java,Go,C++,JavaScript,C#,Perl,Fortran,C,PHP,Haskell,Haxe,Python,Ruby,TypeScript,MiniZinc,Prolog,REBOL,Swift
+	Lua,Erlang,Vala,Perl 6,Octave,Picat,Julia,Polish notation,Reverse Polish notation,Visual Basic .NET,Dart,Java,Go,C++,JavaScript,C#,Perl,Fortran,C,PHP,Haskell,Haxe,Python,Ruby,TypeScript,MiniZinc,Prolog,REBOL,Swift
 		var1 var2 var3
 initialize_empty_var,type:type,name:var_name
 	Swift,Scala,TypeScript
@@ -905,11 +854,6 @@ initialize_empty_var,type:type,name:var_name
 		my __ name
 	Perl 6
 		my __ type __ name
-	Z3Py
-		name = type ( ' name ' )
-initialize_empty_vars,type:type,vars:_initialize_empty_vars
-	C++,Java
-		type __ vars
 anonymous_function,params:function_parameters,b:series_of_statements,type:type
 	Matlab,Octave
 		( @ ( params ) body )
@@ -954,12 +898,12 @@ anonymous_function,params:function_parameters,b:series_of_statements,type:type
 function_parameters,a:function_parameter,b:function_parameter
 	Hy,F#,Polish notation,Reverse Polish notation,Z3,Scheme,Racket,Common Lisp,CLIPS,REBOL,Haskell,Racket,Clojure,Perl
 		a __ b
-	JavaScript,Nim,Seed7,Pydatalog,E,VBScript,Monkey X,LiveCode,Ceylon,Delphi,EnglishScript,Cython,Vala,Dafny,Wolfram,Gambas,D,Frink,Chapel,Swift,Perl 6,OCaml,Janus,Mathematical notation,Pascal,Rust,Picat,AutoHotKey,Maxima,Octave,Julia,R,Prolog,Fortran,Go,MiniZinc,Erlang,CoffeeScript,PHP,Hack,Java,C#,C,C++,Lua,TypeScript,Dart,Ruby,Python,Haxe,Scala,Visual Basic,Visual Basic .NET
+	JavaScript,Seed7,Pydatalog,E,VBScript,Monkey X,LiveCode,Ceylon,Delphi,EnglishScript,Cython,Vala,Dafny,Wolfram,Gambas,D,Frink,Chapel,Swift,Perl 6,OCaml,Janus,Mathematical notation,Pascal,Rust,Picat,AutoHotKey,Maxima,Octave,Julia,R,Prolog,Fortran,Go,MiniZinc,Erlang,CoffeeScript,PHP,Hack,Java,C#,C,C++,Lua,TypeScript,Dart,Ruby,Python,Haxe,Scala,Visual Basic,Visual Basic .NET
 		a , b
 strlen,a:parentheses_expression
 	crosslanguage
 		( strlen __ a __ b )
-	Python,Go,Erlang,Nim
+	Python,Go,Erlang
 		len ( a )
 	R
 		nchar ( a )
@@ -989,7 +933,7 @@ strlen,a:parentheses_expression
 		( length __ a )
 	Racket,Scheme
 		( string-length __ a )
-	Perl,Seed7,Octave
+	Perl,Octave
 		length ( a )
 	Nemerle
 		a . Length
@@ -1010,7 +954,7 @@ not_equal,a:parentheses_expression,b:parentheses_expression
 		a ~= b
 	JavaScript,PHP,TypeScript
 		a !== b
-	Java,Nim,Octave,R,Picat,EnglishScript,Perl 6,Wolfram,C,C++,D,C#,Julia,Perl,Ruby,Haxe,Python,Cython,MiniZinc,Scala,Swift,Go,Rust,Vala
+	Java,Octave,R,Picat,EnglishScript,Perl 6,Wolfram,C,C++,D,C#,Julia,Perl,Ruby,Haxe,Python,Cython,MiniZinc,Scala,Swift,Go,Rust,Vala
 		a != b
 	English
 		a __ does __ not __ equal __ b
@@ -1053,8 +997,6 @@ not,a:parentheses_expression
 		not __ a __ b
 	Reverse Polish notation
 		a __ not
-	Z3Py
-		Not ( a )
 async_function,name:var_name,params:function_parameters,type:type,body:series_of_statements
 	C#
 		async __ type __ name ( params ) { body }
@@ -1081,20 +1023,18 @@ key_value_list,var1:key_value,var2:key_value_separator,var3:(key_value_list/key_
 	Lua,Octave,Picat,Julia,JavaScript,Dart,Java,C#,C++,Ruby,PHP,Python,Perl,Haxe,TypeScript,Visual Basic .NET,Scala,Swift,REBOL,Go
 		var1 var2 var3
 grammar_Or,var1:grammar_concatenate_string,var2:grammar_Or
-	Marpa,Yapps,ANTLR,Jison,Waxeye,OMeta,EBNF,Nearley,Parslet,Yacc,Perl 6,REBOL,Hampi,earley-parser-js
+	Marpa,OMeta,EBNF,Nearley,Parslet,Yacc,Perl 6,REBOL
 		var1 | var2
 	LPEG
 		var1 + var2
-	PEG.js,ABNF,Treetop
+	PEG.js,ABNF
 		var1 / var2
 	Prolog
 		var1 ; var2
-	Parboiled
-		Sequence ( var1 , var2 )
 Or,var1:greater_than,var2:Or
-	JavaScript,Katahdin,Perl 6,Wolfram,Chapel,Elixir,Frink,ooc,Picat,Janus,Processing,Pike,nools,Pawn,MATLAB,Hack,Gosu,Rust,AutoIt,AutoHotKey,TypeScript,Ceylon,Groovy,D,Octave,AWK,Julia,Scala,F#,Swift,Nemerle,Vala,Go,Perl,Java,Haskell,Haxe,C,C++,C#,Dart,R
+	JavaScript,Perl 6,Wolfram,Chapel,Elixir,Frink,ooc,Picat,Janus,Processing,Pike,nools,Pawn,MATLAB,Hack,Gosu,Rust,AutoIt,AutoHotKey,TypeScript,Ceylon,Groovy,D,Octave,AWK,Julia,Scala,F#,Swift,Nemerle,Vala,Go,Perl,Java,Haskell,Haxe,C,C++,C#,Dart,R
 		var1 || var2
-	Python,Seed7,Pydatalog,LiveCode,EnglishScript,Cython,GAP,Mathematical notation,Genie,IDP,Maxima,EngScript,Ada,newLisp,OCaml,Nim,CoffeeScript,Pascal,Delphi,Erlang,REBOL,Lua,PHP,crosslanguage,Ruby
+	Python,Pydatalog,LiveCode,EnglishScript,Cython,GAP,Mathematical notation,Genie,IDP,Maxima,EngScript,Ada,newLisp,OCaml,Nimrod,CoffeeScript,Pascal,Delphi,Erlang,REBOL,Lua,PHP,crosslanguage,Ruby
 		var1 __ or __ var2
 	Fortran
 		var1 __ .OR. __ var2
@@ -1110,14 +1050,12 @@ Or,var1:greater_than,var2:Or
 		or __ a __ b
 	Reverse Polish notation
 		a __ b __ or
-	Or
-		Or ( a , b )
 And,a:Or,b:And
-	JavaScript,ATS,Katahdin,Perl 6,Wolfram,Chapel,Elixir,Frink,ooc,Picat,Janus,Processing,Pike,nools,Pawn,MATLAB,Hack,Gosu,Rust,AutoIt,AutoHotKey,TypeScript,Ceylon,Groovy,D,Octave,AWK,Julia,Scala,F#,Swift,Nemerle,Vala,Go,Perl,Java,Haskell,Haxe,C,C++,C#,Dart,R
+	JavaScript,Perl 6,Wolfram,Chapel,Elixir,Frink,ooc,Picat,Janus,Processing,Pike,nools,Pawn,MATLAB,Hack,Gosu,Rust,AutoIt,AutoHotKey,TypeScript,Ceylon,Groovy,D,Octave,AWK,Julia,Scala,F#,Swift,Nemerle,Vala,Go,Perl,Java,Haskell,Haxe,C,C++,C#,Dart,R
 		a && b
 	Pydatalog
 		a & b
-	Python,Seed7,LiveCode,EnglishScript,Cython,GAP,Mathematical notation,Genie,IDP,Maxima,EngScript,Ada,newLisp,OCaml,Nim,CoffeeScript,Pascal,Delphi,Erlang,REBOL,Lua,PHP,crosslanguage,Ruby
+	Python,Seed7,LiveCode,EnglishScript,Cython,GAP,Mathematical notation,Genie,IDP,Maxima,EngScript,Ada,newLisp,OCaml,Nimrod,CoffeeScript,Pascal,Delphi,Erlang,REBOL,Lua,PHP,crosslanguage,Ruby
 		a __ and __ b
 	MiniZinc
 		a /\\\\ b
@@ -1133,8 +1071,6 @@ And,a:Or,b:And
 		and __ a __ b
 	Reverse Polish notation
 		a __ b __ and
-	Z3Py
-		And ( a , b )
 this,a:Identifier
 	Ruby,CoffeeScript
 		@ a
@@ -1187,21 +1123,21 @@ array_length,a:parentheses_expression
 		( count __ array )
 	Hy
 		( len __ a )
-	Octave,Seed7
+	Octave
 		length ( a )
 	Fortran,Janus
 		size ( a )
 	Wolfram
 		Length [ a ]
 initializer_list_separator
-	Python,Nim,Seed7,Vala,Polish notation,Reverse Polish notation,D,Frink,Fortran,Chapel,Octave,Julia,English,Pascal,Delphi,Prolog,MiniZinc,EngScript,Cython,Groovy,Dart,TypeScript,CoffeeScript,Nemerle,JavaScript,Haxe,Haskell,Ruby,REBOL,Polish notation,Swift,Java,Picat,C#,Go,Lua,C++,C,Visual Basic .NET,Visual Basic,PHP,Scala,Perl,Wolfram
+	Python,Vala,Polish notation,Reverse Polish notation,D,Frink,Fortran,Chapel,Octave,Julia,English,Pascal,Delphi,Prolog,MiniZinc,EngScript,Cython,Groovy,Dart,TypeScript,CoffeeScript,Nemerle,JavaScript,Haxe,Haskell,Ruby,REBOL,Polish notation,Swift,Java,Picat,C#,Go,Lua,C++,C,Visual Basic .NET,Visual Basic,PHP,Scala,Perl,Wolfram
 		,
 	REBOL
 		__
 initializer_list,a:(_initializer_list/expression)
 	Java,Picat,C#,Go,Lua,C++,C,Visual Basic .NET,Visual Basic,Wolfram
 		{ a }
-	Python,Nim,D,Frink,REBOL,Octave,Julia,Prolog,MiniZinc,EngScript,Cython,Groovy,Dart,TypeScript,CoffeeScript,Nemerle,JavaScript,Haxe,Haskell,Ruby,REBOL,Polish notation,Swift
+	Python,D,Frink,REBOL,Octave,Julia,Prolog,MiniZinc,EngScript,Cython,Groovy,Dart,TypeScript,CoffeeScript,Nemerle,JavaScript,Haxe,Haskell,Ruby,REBOL,Polish notation,Swift
 		[ a ]
 	PHP
 		array ( a )
@@ -1295,14 +1231,12 @@ sqrt,x:expression
 	Go
 		math . Sqrt ( x )
 grammar_parentheses_expression,a:grammar_Or
-	Marpa,earley-parser-js,Antlr,Treetop,Waxeye,OMeta,Wirth syntax notation,Yacc,LPeg,Parslet,PEG.js,EBNF,Nearley,Prolog,Perl 6,ABNF
+	Marpa,OMeta,Wirth syntax notation,Yacc,LPeg,Parslet,PEG.js,EBNF,Nearley,Prolog,Perl 6,ABNF
 		( a )
 	REBOL
 		[ a ]
-	Parboiled
-		Sequence ( "(" , a , ")" )
 parentheses_expression,a:expression
-	Pydatalog,Pascal,VBScript,Monkey X,LiveCode,Perl 6,EnglishScript,Wolfram,Cython,Mathematical notation,Katahdin,Frink,MiniZinc,Picat,Java,ECLiPSe,D,ooc,Genie,Janus,PL/I,IDP,Processing,Maxima,Seed7,Self,GNU Smalltalk,Drools,Standard ML,Oz,Cobra,Pike,Prolog,EngScript,Kotlin,Pawn,FreeBASIC,MATLAB,Ada,FreeBASIC,Gosu,Gambas,Nim,AutoIt,ALGOL 68,Ceylon,Groovy,Rust,CoffeeScript,TypeScript,Fortran,Octave,ML,Hack,AutoHotKey,Scala,Delphi,Tcl,Swift,Vala,C,F#,C++,Dart,JavaScript,REBOL,Julia,Erlang,OCaml,crosslanguage,C#,Nemerle,AWK,Java,Lua,Perl,Haxe,Python,PHP,Haskell,Go,Ruby,R,bc,Visual Basic,Visual Basic .NET
+	Pydatalog,Pascal,VBScript,Monkey X,LiveCode,Perl 6,EnglishScript,Wolfram,Cython,Mathematical notation,Katahdin,Frink,MiniZinc,Picat,Java,ECLiPSe,D,ooc,Genie,Janus,PL/I,IDP,Processing,Maxima,Seed7,Self,GNU Smalltalk,Drools,Standard ML,Oz,Cobra,Pike,Prolog,EngScript,Kotlin,Pawn,FreeBASIC,MATLAB,Ada,FreeBASIC,Gosu,Gambas,Nimrod,AutoIt,ALGOL 68,Ceylon,Groovy,Rust,CoffeeScript,TypeScript,Fortran,Octave,ML,Hack,AutoHotKey,Scala,Delphi,Tcl,Swift,Vala,C,F#,C++,Dart,JavaScript,REBOL,Julia,Erlang,OCaml,crosslanguage,C#,Nemerle,AWK,Java,Lua,Perl,Haxe,Python,PHP,Haskell,Go,Ruby,R,bc,Visual Basic,Visual Basic .NET
 		( a )
 	Racket,Polish notation,Reverse Polish notation,Z3,CLIPS,GNU Smalltalk,newLisp,Hy,Common Lisp,Emacs Lisp,Clojure,Sibilant,LispyScript
 		a
@@ -1330,7 +1264,7 @@ join,array:parentheses_expression,separator:parentheses_expression
 	Visual Basic .NET
 		Join ( array, separator )
 plus_equals,a:(access_array/dot_notation/Identifier),b:expression
-	Janus,Nim,Vala,Perl 6,Dart,Visual Basic .NET,TypeScript,Python,Lua,Java,C,C++,C#,JavaScript,Haxe,PHP,Chapel,Perl,Julia,Scala,Rust,Go,Swift
+	Janus,Vala,Perl 6,Dart,Visual Basic .NET,TypeScript,Python,Lua,Java,C,C++,C#,JavaScript,Haxe,PHP,Chapel,Perl,Julia,Scala,Rust,Go,Swift
 		a += b
 	Ruby,Haskell,Erlang,Fortran,OCaml,MiniZinc,Octave,Delphi
 		a = a + b
@@ -1343,7 +1277,7 @@ plus_equals,a:(access_array/dot_notation/Identifier),b:expression
 	Seed7
 		a +:= b
 minus_equals,a:(dot_notation/access_array/Identifier),b:expression
-	Janus,Nim,Perl 6,Dart,Perl,Visual Basic .NET,TypeScript,Python,Lua,Java,C,C++,C#,JavaScript,PHP,Haxe,Hack,Julia,Scala,Rust,Go,Swift
+	Janus,Perl 6,Dart,Perl,Visual Basic .NET,TypeScript,Python,Lua,Java,C,C++,C#,JavaScript,PHP,Haxe,Hack,Julia,Scala,Rust,Go,Swift
 		a -= b
 	Ruby,Haskell,Erlang,Fortran,OCaml,MiniZinc,Octave,Delphi
 		a = a - b
@@ -1360,12 +1294,10 @@ grammar_concatenate_string,a:Factor,b:grammar_concatenate_string
 		a , b
 	LPEG
 		a * b
-	PEG.js,Yapps,earley-parser-js,Hampi,ANTLR,Jison,Treetop,Waxeye,OMeta,Marpa,nearley,Yacc,Wirth syntax notation,Perl 6,REBOL,ABNF
+	PEG.js,OMeta,Marpa,nearley,Yacc,Wirth syntax notation,Perl 6,REBOL,ABNF
 		a __ b
 	Parslet
 		a >> b
-	Parboiled
-		Sequence ( a , b )
 concatenate_string,a:Multiply,b:concatenate_string
 	R
 		paste0 ( a , b )
@@ -1373,7 +1305,7 @@ concatenate_string,a:Multiply,b:concatenate_string
 		sconcat ( a , b )
 	Common Lisp
 		( concatenate __ 'string __ a __ b )
-	C,Z3Py,Monkey X,EnglishScript,Mathematical notation,Go,Java,Chapel,Frink,FreeBASIC,Nemerle,D,Cython,Ceylon,CoffeeScript,TypeScript,Dart,Gosu,Groovy,Scala,Swift,F#,Python,JavaScript,C#,Haxe,Ruby,C++,Vala
+	C,Monkey X,EnglishScript,Mathematical notation,Go,Java,Chapel,Frink,FreeBASIC,Nemerle,D,Cython,Ceylon,CoffeeScript,TypeScript,Dart,Gosu,Groovy,Scala,Swift,F#,Python,JavaScript,C#,Haxe,Ruby,C++,Vala
 		a + b
 	Lua,EngScript
 		a .. b
@@ -1401,7 +1333,7 @@ concatenate_string,a:Multiply,b:concatenate_string
 		( string-append a b )
 	Delphi
 		Concat ( a , b )
-	Visual Basic,Seed7,Gambas,Nim,AutoIt,Visual Basic .NET,OpenOffice Basic,LiveCode,VBScript
+	Visual Basic,Seed7,Gambas,Nimrod,AutoIt,Visual Basic .NET,OpenOffice Basic,LiveCode,VBScript
 		a & b
 	Elixir,Wolfram
 		a <> b
@@ -1460,7 +1392,7 @@ pow,a:expression,b:expression
 		Math . Pow ( a , b )
 	JavaScript,Java,TypeScript,Haxe
 		Math . pow ( a , b )
-	Python,Seed7,Cython,Chapel,Haskell,COBOL,Picat,ooc,PL/I,REXX,Maxima,AWK,R,F#,AutoHotKey,Tcl,AutoIt,Groovy,Octave,Ruby,Perl,Perl 6,Fortran
+	Python,Cython,Chapel,Haskell,COBOL,Picat,ooc,PL/I,REXX,Maxima,AWK,R,F#,AutoHotKey,Tcl,AutoIt,Groovy,Octave,Ruby,Perl,Perl 6,Fortran
 		( a ** b )
 	REBOL
 		power __ a __ b
@@ -1813,7 +1745,7 @@ typeless_declare_constant,name:var_name,value:expression
 		name __ value __ =
 	Go
 		const __ type __ name = value
-	PHP,JavaScript,TypeScript,Nim
+	PHP,JavaScript,TypeScript
 		const __ name = value
 	Visual Basic .NET
 		Public __ Const __ name = value
@@ -1932,7 +1864,7 @@ function_call_named_parameter,name:Identifier,value:expression
 	Perl
 		 name => value
 function_call,theName:dot_notation,args:(function_call_parameters/_)
-	C,Nim,Seed7,GAP,Mathematical notation,Chapel,Elixir,Janus,Perl 6,Pascal,Rust,Hack,Katahdin,MiniZinc,Pawn,Aldor,Picat,D,Genie,ooc,PL/I,Delphi,Standard ML,REXX,Falcon,IDP,Processing,Maxima,Swift,Boo,R,MATLAB,AutoIt,Pike,Gosu,AWK,AutoHotKey,Gambas,Kotlin,Nemerle,EngScript,Prolog,Groovy,Scala,CoffeeScript,Julia,TypeScript,Fortran,Octave,C++,Go,Cobra,Ruby,Vala,F#,Java,Ceylon,OCaml,Erlang,Python,C#,Lua,Haxe,JavaScript,Dart,bc,Visual Basic,Visual Basic .NET,PHP,Perl
+	C,Seed7,GAP,Mathematical notation,Chapel,Elixir,Janus,Perl 6,Pascal,Rust,Hack,Katahdin,MiniZinc,Pawn,Aldor,Picat,D,Genie,ooc,PL/I,Delphi,Standard ML,REXX,Falcon,IDP,Processing,Maxima,Swift,Boo,R,MATLAB,AutoIt,Pike,Gosu,AWK,AutoHotKey,Gambas,Kotlin,Nemerle,EngScript,Prolog,Groovy,Scala,CoffeeScript,Julia,TypeScript,Fortran,Octave,C++,Go,Cobra,Ruby,Vala,F#,Java,Ceylon,OCaml,Erlang,Python,C#,Lua,Haxe,JavaScript,Dart,bc,Visual Basic,Visual Basic .NET,PHP,Perl
 		theName ( args )
 	Haskell,Z3,CLIPS,Clojure,Common Lisp,CLIPS,Racket,Scheme,crosslanguage,REBOL
 		( theName __ args )
@@ -1940,7 +1872,7 @@ function_call,theName:dot_notation,args:(function_call_parameters/_)
 		theName __ args
 	Reverse Polish notation
 		args __ theName
-	Pydatalog,Nearley
+	Pydatalog
 		theName [ args ]
 reverse_string,a:expression
 	Python
@@ -2060,8 +1992,6 @@ exception,a:expression
 	PHP
 		throw __ new __ Exception ( a )
 function,type:type,params:function_parameters,name:Identifier,body:series_of_statements
-	Seed7
-		const __ func __ type : name ( params ) __ is __ func __ begin __ body __ end __ func ;
 	LiveCode
 		function __ name __ params __ body __ end __ name
 	Monkey X
@@ -2192,7 +2122,7 @@ else,a:series_of_statements
 	Reverse Polish notation
 		a __ else
 true
-	Java,LiveCode,GAP,Dafny,Z3,Perl 6,Chapel,C,Frink,Elixir,English,Pascal,MiniZinc,EngScript,Picat,Rust,Clojure,Nim,Hack,Ceylon,D,Groovy,CoffeeScript,TypeScript,Octave,Prolog,Julia,F#,Swift,Nemerle,Vala,C++,Dart,JavaScript,Ruby,Erlang,C#,Haxe,Go,OCaml,Lua,Scala,PHP,REBOL
+	Java,LiveCode,GAP,Dafny,Z3,Perl 6,Chapel,C,Frink,Elixir,English,Pascal,MiniZinc,EngScript,Picat,Rust,Clojure,Nimrod,Hack,Ceylon,D,Groovy,CoffeeScript,TypeScript,Octave,Prolog,Julia,F#,Swift,Nemerle,Vala,C++,Dart,JavaScript,Ruby,Erlang,C#,Haxe,Go,OCaml,Lua,Scala,PHP,REBOL
 		true
 	Python,Pydatalog,Hy,Cython,AutoIt,Haskell,Visual Basic .NET,VBScript,Visual Basic,Monkey X,Wolfram,Delphi
 		True
@@ -2207,7 +2137,7 @@ true
 	R,Seed7
 		TRUE
 false
-	Java,LiveCode,GAP,Dafny,Z3,Perl 6,Chapel,C,Frink,Elixir,Pascal,Rust,MiniZinc,EngScript,Picat,Clojure,Nim,Groovy,D,Ceylon,TypeScript,CoffeeScript,Octave,Prolog,Julia,Vala,F#,Swift,C++,Nemerle,Dart,JavaScript,Ruby,Erlang,C#,Haxe,Go,OCaml,Lua,Scala,PHP,REBOL,Hack
+	Java,LiveCode,GAP,Dafny,Z3,Perl 6,Chapel,C,Frink,Elixir,Pascal,Rust,MiniZinc,EngScript,Picat,Clojure,Nimrod,Groovy,D,Ceylon,TypeScript,CoffeeScript,Octave,Prolog,Julia,Vala,F#,Swift,C++,Nemerle,Dart,JavaScript,Ruby,Erlang,C#,Haxe,Go,OCaml,Lua,Scala,PHP,REBOL,Hack
 		false
 	Python,Pydatalog,Hy,Cython,AutoIt,Haskell,Visual Basic .NET,VBScript,Visual Basic,Monkey X,Wolfram,Delphi
 		False
@@ -2298,17 +2228,8 @@ return,a:expression,function_name:Identifier
 		a -> Result
 	Delphi,Pascal
 		Result = a
-constraint,value:expression
-	MiniZinc
-		constraint __ value
-	Z3,Prolog
-		value
-	Z3py
-		solver . add ( value )
-	Hampi
-		assert __ value
 set_var,name:(access_array/var_name),value:expression
-	JavaScript,Mathematical notation,Perl 6,Wolfram,Chapel,Katahdin,Frink,Picat,ooc,D,Genie,Janus,Ceylon,IDP,Sympy,Prolog,Processing,Java,Boo,Gosu,Pike,Kotlin,Icon,PowerShell,EngScript,Pawn,FreeBASIC,Hack,Nim,OpenOffice Basic,Groovy,TypeScript,Rust,CoffeeScript,Fortran,AWK,Go,Swift,Vala,C,Julia,Scala,Cobra,Erlang,AutoIt,Dart,Java,OCaml,Haxe,C#,MATLAB,C++,PHP,Perl,Python,Lua,Ruby,Gambas,Octave,Visual Basic,Visual Basic .NET,bc
+	JavaScript,Mathematical notation,Perl 6,Wolfram,Chapel,Katahdin,Frink,Picat,ooc,D,Genie,Janus,Ceylon,IDP,Sympy,Prolog,Processing,Java,Boo,Gosu,Pike,Kotlin,Icon,PowerShell,EngScript,Pawn,FreeBASIC,Hack,Nimrod,OpenOffice Basic,Groovy,TypeScript,Rust,CoffeeScript,Fortran,AWK,Go,Swift,Vala,C,Julia,Scala,Cobra,Erlang,AutoIt,Dart,Java,OCaml,Haxe,C#,MATLAB,C++,PHP,Perl,Python,Lua,Ruby,Gambas,Octave,Visual Basic,Visual Basic .NET,bc
 		name = value
 	MiniZinc
 		constraint __ name = value ;
@@ -2382,12 +2303,10 @@ print,a:expression
 	Seed7
 		writeln ( a )
 grammar_series_of_statements,var1:grammar_statement,var2:grammar_series_of_statements
-	PEG.js,Yapps,Parboiled,Waxeye,Treetop,OMeta,Wirth syntax notation,Yacc,Pyparsing,EBNF,Nearley,ANTLR,Marpa,Parslet,Perl 6,Prolog,REBOL,ABNF
+	PEG.js,OMeta,Wirth syntax notation,Yacc,Pyparsing,EBNF,Nearley,ANTLR,Marpa,Parslet,Perl 6,Prolog,REBOL,ABNF
 		var1 __ var2
-	earley-parser-js,LPeg
-		var1 , var2
 series_of_statements,var1:statement,var2:(series_of_statements/statement)
-	Pydatalog,Java,Racket,VBScript,Monkey X,LiveCode,Polish notation,Reverse Polish notation,Clojure,CLIPS,Common Lisp,Emacs Lisp,Scheme,Prolog,Dafny,Z3,Elm,Bash,Perl 6,Mathematical notation,Katahdin,Frink,MiniZinc,Aldor,COBOL,ooc,Genie,ECLiPSe,nools,Agda,PL/I,REXX,IDP,Falcon,Processing,Sympy,Maxima,Pyke,Elixir,GNU Smalltalk,Seed7,Standard ML,Occam,Boo,Drools,Icon,Mercury,EngScript,Pike,Oz,Kotlin,Pawn,FreeBASIC,Ada,PowerShell,Gosu,Nim,Cython,OpenOffice Basic,ALGOL 68,D,Ceylon,Rust,CoffeeScript,ActionScript,TypeScript,Fortran,Octave,ML,AutoHotKey,Delphi,Pascal,F#,Self,Swift,Nemerle,Dart,C,AutoIt,Cobra,Julia,Groovy,Scala,OCaml,Gambas,Hack,C++,MATLAB,REBOL,Red,Lua,Go,AWK,Haskell,Perl,Python,JavaScript,C#,PHP,Ruby,R,Haxe,Visual Basic,Visual Basic .NET,Vala,bc
+	Pydatalog,Java,Racket,VBScript,Monkey X,LiveCode,Polish notation,Reverse Polish notation,Clojure,CLIPS,Common Lisp,Emacs Lisp,Scheme,Prolog,Dafny,Z3,Elm,Bash,Perl 6,Mathematical notation,Katahdin,Frink,MiniZinc,Aldor,COBOL,ooc,Genie,ECLiPSe,nools,Agda,PL/I,REXX,IDP,Falcon,Processing,Sympy,Maxima,Pyke,Elixir,GNU Smalltalk,Seed7,Standard ML,Occam,Boo,Drools,Icon,Mercury,EngScript,Pike,Oz,Kotlin,Pawn,FreeBASIC,Ada,PowerShell,Gosu,Nimrod,Cython,OpenOffice Basic,ALGOL 68,D,Ceylon,Rust,CoffeeScript,ActionScript,TypeScript,Fortran,Octave,ML,AutoHotKey,Delphi,Pascal,F#,Self,Swift,Nemerle,Dart,C,AutoIt,Cobra,Julia,Groovy,Scala,OCaml,Gambas,Hack,C++,MATLAB,REBOL,Red,Lua,Go,AWK,Haskell,Perl,Python,JavaScript,C#,PHP,Ruby,R,Haxe,Visual Basic,Visual Basic .NET,Vala,bc
 		var1 __ var2
 	Wolfram
 		var1 ; var2
@@ -2420,7 +2339,7 @@ comment,var1:[^\\n]+
 		! var1 \\n
 	Z3
 		; var1 \\n
-	Bash,Perl 6,PowerShell,Seed7,Cobra,Icon,EngScript,Nim,CoffeeScript,Julia,AWK,Ruby,Perl,R,Tcl,bc,Python,Cython
+	Bash,Perl 6,PowerShell,Seed7,Cobra,Icon,EngScript,Nimrod,CoffeeScript,Julia,AWK,Ruby,Perl,R,Tcl,bc,Python,Cython
 		# var1 \\n
 	Lua,Haskell,Ada
 		-- var1 \\n
@@ -2543,7 +2462,7 @@ char
 string
 	Z3,Java,Ceylon,Gambas,Dart,Gosu,Groovy,Scala,Pascal,Swift,Ruby,Haxe,Haskell,Visual Basic,Visual Basic .NET,Monkey X
 		String
-	Vala,Seed7,Octave,Picat,Mathematical notation,Polish notation,Reverse Polish notation,Prolog,D,crosslanguage,Chapel,MiniZinc,Genie,Hack,Nim,ALGOL 68,TypeScript,CoffeeScript,Octave,Tcl,AWK,Julia,C#,F#,Perl,Lua,JavaScript,Go,PHP,C++,Nemerle,Erlang
+	Vala,Seed7,Octave,Picat,Mathematical notation,Polish notation,Reverse Polish notation,Prolog,D,crosslanguage,Chapel,MiniZinc,Genie,Hack,Nimrod,ALGOL 68,TypeScript,CoffeeScript,Octave,Tcl,AWK,Julia,C#,F#,Perl,Lua,JavaScript,Go,PHP,C++,Nemerle,Erlang
 		string
 	C
 		char*
@@ -2563,9 +2482,9 @@ void
 boolean
 	TypeScript,Seed7,Python,Hy,Java,JavaScript,Lua,Perl
 		boolean
-	C++,Nim,Octave,Dafny,Chapel,C,crosslanguage,Rust,MiniZinc,EngScript,Dart,D,Vala,crosslanguage,Go,Cobra,C#,F#,PHP,Hack
+	C++,Octave,Dafny,Chapel,C,crosslanguage,Rust,MiniZinc,EngScript,Dart,D,Vala,crosslanguage,Go,Cobra,C#,F#,PHP,Hack
 		bool
-	Haxe,Haskell,Swift,Julia,Perl 6,Z3,Z3py,Monkey X
+	Haxe,Haskell,Swift,Julia,Perl 6,Z3,Monkey X
 		Bool
 	Fortran
 		LOGICAL
@@ -2592,7 +2511,7 @@ double
 		decimal!
 	Fortran
 		double __ precision
-	Z3,Z3py
+	Z3
 		Real
 	Octave
 		scalar
@@ -2641,9 +2560,11 @@ if,c:elif_or_else,b:series_of_statements,a:expression
 		a __ b __ if
 	Monkey X
 		if __ a __ b __ c __ EndIf
+	Clojure
+		
 foreach,array:expression,var_name:var_name,typeInArray:type,body:series_of_statements
 	Seed7
-		for __ var_name __ range __ array __ do __ body __ end __ for;
+		for __ currObject __ range __ array __ do __ body __ end __ for;
 	JavaScript,TypeScript
 		array . forEach ( function ( var_name ) { body  } ) ;
 	Octave
@@ -2707,7 +2628,7 @@ foreach,array:expression,var_name:var_name,typeInArray:type,body:series_of_state
 compare_ints,var1:Add,var2:Add
 	R
 		identical ( var1 , var2 )
-	Lua,Nim,Z3Py,Pydatalog,E,Ceylon,Perl 6,EnglishScript,Cython,Mathematical notation,Dafny,Wolfram,D,Rust,R,MiniZinc,Frink,Picat,Pike,Pawn,Processing,C++,Ceylon,CoffeeScript,Octave,Swift,AWK,Julia,Perl,Groovy,Erlang,Haxe,Scala,Java,Vala,Dart,Python,C#,C,Go,Haskell,Ruby
+	Lua,Pydatalog,E,Ceylon,Perl 6,EnglishScript,Cython,Mathematical notation,Dafny,Wolfram,D,Rust,R,MiniZinc,Frink,Picat,Pike,Pawn,Processing,C++,Ceylon,CoffeeScript,Octave,Swift,AWK,Julia,Perl,Groovy,Erlang,Haxe,Scala,Java,Vala,Dart,Python,C#,C,Go,Haskell,Ruby
 		var1 == var2
 	JavaScript,PHP,TypeScript,Hack
 		var1 === var2
@@ -2768,11 +2689,11 @@ class_extends,c1:Identifier,c2:Identifier,b:class_statements
 	Monkey X
 		Class __ c1 __ Extends __ c2 __ b __ End
 function_parameter,type:type,name:var_name
-	Seed7
-		in __ type : name
+	crosslanguage
+		( parameter __ type __ name )
 	C#,Java,EnglishScript,Ceylon,ALGOL 68,Groovy,D,C++,Pawn,Pike,Vala,C,Janus
 		type __ name
-	Haxe,Dafny,Chapel,Pascal,Rust,Genie,Hack,Nim,TypeScript,Gosu,Delphi,Nemerle,Scala,Swift
+	Haxe,Dafny,Chapel,Pascal,Rust,Genie,Hack,Nimrod,TypeScript,Gosu,Delphi,Nemerle,Scala,Swift
 		name : type
 	Go
 		name __ type
@@ -2863,7 +2784,7 @@ case,a:expression,b:series_of_statements
 	Wolfram
 		a , b
 access_array,a:Identifier,b:(array_access_index/array_access_list)
-	Python,Lua,C#,Julia,D,Swift,Julia,Janus,MiniZinc,Picat,Nim,AutoIt,Cython,CoffeeScript,Dart,TypeScript,AWK,Vala,Perl,Java,JavaScript,Ruby,Go,C++,PHP,Haxe,C
+	Python,Lua,C#,Julia,D,Swift,Julia,Janus,MiniZinc,Picat,Nimrod,AutoIt,Cython,CoffeeScript,Dart,TypeScript,AWK,Vala,Perl,Java,JavaScript,Ruby,Go,C++,PHP,Haxe,C
 		a [ b ]
 	Scala,Octave,Fortran,Visual Basic,Visual Basic .NET
 		a ( b )
@@ -2881,7 +2802,7 @@ array_access_list,var1:array_access_index,var2:array_access_list,separator:array
 array_access_separator
 	C#,MiniZinc,Fortran,Julia,Visual Basic,Visual Basic .NET,Octave
 		,
-	Python,Pydatalog,D,Lua,Picat,Janus,Nim,AutoIt,Cython,CoffeeScript,Dart,TypeScript,AWK,Vala,Perl,Java,JavaScript,Ruby,Go,C++,PHP,Haxe,C,Swift
+	Python,Pydatalog,D,Lua,Picat,Janus,Nimrod,AutoIt,Cython,CoffeeScript,Dart,TypeScript,AWK,Vala,Perl,Java,JavaScript,Ruby,Go,C++,PHP,Haxe,C,Swift
 		][
 	Haskell
 		!!
@@ -2896,17 +2817,17 @@ array_access_separator
 array_access_index,a:expression
 	Lua,MiniZinc,REBOL
 		a:array_access_index_2
-	Haskell,Perl 6,D,Frink,C#,Visual Basic,Janus,Visual Basic .NET,Scala,Octave,Fortran,Python,Swift,Julia,Picat,Nim,AutoIt,Cython,CoffeeScript,Dart,TypeScript,AWK,Vala,Perl,Java,JavaScript,Ruby,Go,C++,PHP,Haxe,C
+	Haskell,Perl 6,D,Frink,C#,Visual Basic,Janus,Visual Basic .NET,Scala,Octave,Fortran,Python,Swift,Julia,Picat,Nimrod,AutoIt,Cython,CoffeeScript,Dart,TypeScript,AWK,Vala,Perl,Java,JavaScript,Ruby,Go,C++,PHP,Haxe,C
 		a:array_access_index_1
 array_access_index_1,a:expression
 	Lua,MiniZinc,REBOL
 		a + 1
-	Haskell,Perl 6,D,Frink,C#,Visual Basic,Janus,Visual Basic .NET,Scala,Octave,Fortran,Python,Swift,Julia,Picat,Nim,AutoIt,Cython,CoffeeScript,Dart,TypeScript,AWK,Vala,Perl,Java,JavaScript,Ruby,Go,C++,PHP,Haxe,C
+	Haskell,Perl 6,D,Frink,C#,Visual Basic,Janus,Visual Basic .NET,Scala,Octave,Fortran,Python,Swift,Julia,Picat,Nimrod,AutoIt,Cython,CoffeeScript,Dart,TypeScript,AWK,Vala,Perl,Java,JavaScript,Ruby,Go,C++,PHP,Haxe,C
 		a
 array_access_index_2,a:expression
 	Lua,MiniZinc,REBOL
 		a
-	Haskell,Perl 6,D,Frink,C#,Visual Basic,Janus,Visual Basic .NET,Scala,Octave,Fortran,Python,Swift,Julia,Picat,Nim,AutoIt,Cython,CoffeeScript,Dart,TypeScript,AWK,Vala,Perl,Java,JavaScript,Ruby,Go,C++,PHP,Haxe,C
+	Haskell,Perl 6,D,Frink,C#,Visual Basic,Janus,Visual Basic .NET,Scala,Octave,Fortran,Python,Swift,Julia,Picat,Nimrod,AutoIt,Cython,CoffeeScript,Dart,TypeScript,AWK,Vala,Perl,Java,JavaScript,Ruby,Go,C++,PHP,Haxe,C
 		a - 1
 initialize_static_variable,type:type,name:var_name
 	Swift
@@ -3370,7 +3291,7 @@ function generateCode(parseTree, outputLang){
 				'function_call = "(" theName:Identifier __ args:( function_call_parameters / _ ) _ ")" {return ["function_call", {theName:theName, args:args}]}',
 		},
 		'parentheses_expression':{
-			'Pascal,Perl 6,Katahdin,Frink,MiniZinc,Picat,Java,ECLiPSe,D,ooc,Genie,Janus,PL/I,IDP,Processing,Maxima,Seed7,Self,GNU Smalltalk,Drools,Standard ML,Oz,Cobra,Pike,Prolog,EngScript,Kotlin,Pawn,FreeBASIC,MATLAB,Ada,FreeBASIC,Gosu,Gambas,Nim,AutoIt,ALGOL 68,Ceylon,Groovy,Rust,CoffeeScript,TypeScript,Fortran,Octave,ML,Hack,AutoHotKey,Scala,Delphi,Tcl,Swift,Vala,C,F#,C++,Dart,JavaScript,REBOL,Julia,Erlang,OCaml,crosslanguage,C#,Nemerle,AWK,Java,Lua,Perl,Haxe,Python,PHP,Haskell,Go,Ruby,R,bc,Visual Basic,Visual Basic .NET':
+			'Pascal,Perl 6,Katahdin,Frink,MiniZinc,Picat,Java,ECLiPSe,D,ooc,Genie,Janus,PL/I,IDP,Processing,Maxima,Seed7,Self,GNU Smalltalk,Drools,Standard ML,Oz,Cobra,Pike,Prolog,EngScript,Kotlin,Pawn,FreeBASIC,MATLAB,Ada,FreeBASIC,Gosu,Gambas,Nimrod,AutoIt,ALGOL 68,Ceylon,Groovy,Rust,CoffeeScript,TypeScript,Fortran,Octave,ML,Hack,AutoHotKey,Scala,Delphi,Tcl,Swift,Vala,C,F#,C++,Dart,JavaScript,REBOL,Julia,Erlang,OCaml,crosslanguage,C#,Nemerle,AWK,Java,Lua,Perl,Haxe,Python,PHP,Haskell,Go,Ruby,R,bc,Visual Basic,Visual Basic .NET':
 				'parentheses_expression = string_literal / "(" var1:expression ")" {return ["parentheses_expression", {"a":var1}];} / function_call / dot_notation'
 		},
 		'function_call_parameters':{
@@ -3576,7 +3497,7 @@ for(var current1 of Object.keys(thePatterns)){
 }
 }
 else{ //This is for the metasyntax languages
-for(var current1 of "grammar,grammar_concatenate_string,grammar_Or,one_or_more,zero_or_more,grammar_statement,grammar_output,grammar_series_of_statements,grammar_parentheses_expression,grammar_parameter,nameless_grammar_parameter,grammar_string_literal".split(",")){
+for(var current1 of "grammar,grammar_concatenate_string,grammar_Or,one_or_more,zero_or_more,grammar_statement,grammar_series_of_statements,grammar_parentheses_expression".split(",")){
 	try{
 		pattern_to_input(current1, current);
 	}
