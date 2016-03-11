@@ -11,9 +11,9 @@ var child_process = require("child_process");
 
 //const list_of_languages = "Vala,R,Clojure,Monkey X,Delphi,LiveCode,Ceylon,F#,ooc,Perl 6,EnglishScript,Julia,Maxima,Wolfram,OCaml,Common Lisp,Scala,REBOL,Go,Scala,Rust,Visual Basic .NET,Common Lisp,Cython,C++,Scala,Prolog,Z3,C#,PHP,C,JavaScript,Lua,Java,Haxe".split(',');
 
-//const list_of_languages = "Vala,Erlang,Octave,Picat,MiniZinc,Perl,Go,Swift,C,Fortran,Z3,Python,REBOL,Haskell,Visual Basic .NET,PHP,Ruby,Lua,C++,Haxe,Java,JavaScript,C#".toLowerCase().split(",");
+const list_of_languages = "Erlang,Octave,Picat,MiniZinc,Perl,Go,Swift,C,Fortran,Z3,Python,REBOL,Haskell,Visual Basic .NET,PHP,Ruby,Lua,C++,Haxe,Java,JavaScript,C#".toLowerCase().split(",");
 
-const list_of_languages = "Yapps".toLowerCase().split(",");
+//const list_of_languages = "Yapps".toLowerCase().split(",");
 
 
 const list_of_grammar_notations = "Parboiled,Yapps,Rley,Jison,Bison,SmaCC,Ragel,Treetop,Waxeye,OMeta,syntax definition formalism,ABNF,Wirth syntax notation,Coco/R,Yacc,pypeg,Parslet,PEG.js,Pyparsing,EBNF,Nearley,ANTLR,Marpa,earley-parser-js,LPeg".toLowerCase().split(',');
@@ -197,7 +197,7 @@ statement_with_semicolon,var1:(print/set_var/plus_equals/minus_equals/exception/
 		var1:(print/set_var/initialize_empty_var/plus_equals/minus_equals/declare_constant/initialize_var/typeless_initialize_var/return/function_call)
 	Haskell,Erlang,Common Lisp
 		var1:(print/function_call/return)
-macro,name:Identifier,params:macro_parameters,c:series_of_statements
+macro,name:Identifier,params:function_parameters,c:series_of_statements
 	Racket
 		( define-syntax-rule __ ( name __ params ) __ body )
 	C
@@ -210,7 +210,7 @@ macro,name:Identifier,params:macro_parameters,c:series_of_statements
 		( define-fun __ name ( params ) __ type __ body )
 	Nearley
 		name [ params ] -> body
-one_or_more,a:grammar_expression
+one_or_more,a:grammar_Or
 	Marpa,PEG.js,Perl 6,ANTLR
 		( a ) +
 	REBOL
@@ -223,7 +223,7 @@ one_or_more,a:grammar_expression
 		( a ^ 1 )
 	Parboiled
 		OneOrMore ( a )
-zero_or_more,a:grammar_expression
+zero_or_more,a:grammar_Or
 	LPEG
 		( a ^ 0 )
 	pypeg
@@ -907,8 +907,8 @@ initialize_empty_var,type:type,name:var_name
 		my __ type __ name
 	Z3Py
 		name = type ( ' name ' )
-initialize_empty_vars,type:type,vars:_initialize_empty_vars
-	C++,Java
+initialize_empty_vars,type:type,vars:initialize_empty_vars_1
+	C++,Java,C#
 		type __ vars
 anonymous_function,params:function_parameters,b:series_of_statements,type:type
 	Matlab,Octave
@@ -1081,7 +1081,7 @@ key_value_list,var1:key_value,var2:key_value_separator,var3:(key_value_list/key_
 	Lua,Octave,Picat,Julia,JavaScript,Dart,Java,C#,C++,Ruby,PHP,Python,Perl,Haxe,TypeScript,Visual Basic .NET,Scala,Swift,REBOL,Go
 		var1 var2 var3
 grammar_Or,var1:grammar_concatenate_string,var2:grammar_Or
-	Marpa,Yapps,ANTLR,Jison,Waxeye,OMeta,EBNF,Nearley,Parslet,Yacc,Perl 6,REBOL,Hampi,earley-parser-js
+	Marpa,REBOL,Yapps,ANTLR,Jison,Waxeye,OMeta,EBNF,Nearley,Parslet,Yacc,Perl 6,REBOL,Hampi,earley-parser-js
 		var1 | var2
 	LPEG
 		var1 + var2
@@ -1194,7 +1194,7 @@ array_length,a:parentheses_expression
 	Wolfram
 		Length [ a ]
 initializer_list_separator
-	Python,Nim,Seed7,Vala,Polish notation,Reverse Polish notation,D,Frink,Fortran,Chapel,Octave,Julia,English,Pascal,Delphi,Prolog,MiniZinc,EngScript,Cython,Groovy,Dart,TypeScript,CoffeeScript,Nemerle,JavaScript,Haxe,Haskell,Ruby,REBOL,Polish notation,Swift,Java,Picat,C#,Go,Lua,C++,C,Visual Basic .NET,Visual Basic,PHP,Scala,Perl,Wolfram
+	Python,Erlang,Nim,Seed7,Vala,Polish notation,Reverse Polish notation,D,Frink,Fortran,Chapel,Octave,Julia,English,Pascal,Delphi,Prolog,MiniZinc,EngScript,Cython,Groovy,Dart,TypeScript,CoffeeScript,Nemerle,JavaScript,Haxe,Haskell,Ruby,REBOL,Polish notation,Swift,Java,Picat,C#,Go,Lua,C++,C,Visual Basic .NET,Visual Basic,PHP,Scala,Perl,Wolfram
 		,
 	REBOL
 		__
@@ -1343,7 +1343,7 @@ plus_equals,a:(access_array/dot_notation/Identifier),b:expression
 	Seed7
 		a +:= b
 minus_equals,a:(dot_notation/access_array/Identifier),b:expression
-	Janus,Nim,Perl 6,Dart,Perl,Visual Basic .NET,TypeScript,Python,Lua,Java,C,C++,C#,JavaScript,PHP,Haxe,Hack,Julia,Scala,Rust,Go,Swift
+	Janus,Vala,Nim,Perl 6,Dart,Perl,Visual Basic .NET,TypeScript,Python,Lua,Java,C,C++,C#,JavaScript,PHP,Haxe,Hack,Julia,Scala,Rust,Go,Swift
 		a -= b
 	Ruby,Haskell,Erlang,Fortran,OCaml,MiniZinc,Octave,Delphi
 		a = a - b
@@ -2060,6 +2060,8 @@ exception,a:expression
 	PHP
 		throw __ new __ Exception ( a )
 function,type:type,params:function_parameters,name:Identifier,body:series_of_statements
+	SQL
+		CREATE __ FUNCTION __ dbo . name ( function_parameters ) __ RETURNS __ type __ body
 	Seed7
 		const __ func __ type : name ( params ) __ is __ func __ begin __ body __ end __ func ;
 	LiveCode
@@ -2298,6 +2300,8 @@ return,a:expression,function_name:Identifier
 		a -> Result
 	Delphi,Pascal
 		Result = a
+	SQL
+		RETURN __ a
 constraint,value:expression
 	MiniZinc
 		constraint __ value
@@ -2422,7 +2426,7 @@ comment,var1:[^\\n]+
 		; var1 \\n
 	Bash,Perl 6,PowerShell,Seed7,Cobra,Icon,EngScript,Nim,CoffeeScript,Julia,AWK,Ruby,Perl,R,Tcl,bc,Python,Cython
 		# var1 \\n
-	Lua,Haskell,Ada
+	Lua,Haskell,Ada,Transact-SQL,SQL
 		-- var1 \\n
 	Gambas,Visual Basic,Visual Basic .NET,Monkey X,VBScript
 		' var1 \\n
@@ -2509,7 +2513,7 @@ typeless_initialize_var,name:var_name,value:expression
 	Reverse Polish notation
 		name __ value __ =
 int,t1:type
-	Hack,Dafny,Janus,Chapel,MiniZinc,EngScript,Cython,ALGOL 68,D,Octave,Tcl,crosslanguage,ML,AWK,Julia,Gosu,OCaml,F#,Pike,Objective-C,Go,Cobra,Dart,Groovy,Python,Hy,Java,C#,C,C++,Vala,Nemerle,crosslanguage
+	Hack,Transact-SQL,Dafny,Janus,Chapel,MiniZinc,EngScript,Cython,ALGOL 68,D,Octave,Tcl,crosslanguage,ML,AWK,Julia,Gosu,OCaml,F#,Pike,Objective-C,Go,Cobra,Dart,Groovy,Python,Hy,Java,C#,C,C++,Vala,Nemerle,crosslanguage
 		int
 	PHP,Common Lisp,Picat
 		integer
@@ -2528,7 +2532,7 @@ int,t1:type
 	Ruby
 		fixnum
 char
-	Java,C,C++,Seed7
+	Java,C,C++,Seed7,C#
 		char
 	Visual Basic .NET,Haskell
 		Char
@@ -2574,7 +2578,7 @@ boolean
 	REBOL
 		logic!
 double
-	Java,C,C#,C++,Dart
+	Java,C,C#,C++,Dart,Vala
 		double
 	Go
 		float64
@@ -2774,7 +2778,7 @@ function_parameter,type:type,name:var_name
 		type __ name
 	Haxe,Dafny,Chapel,Pascal,Rust,Genie,Hack,Nim,TypeScript,Gosu,Delphi,Nemerle,Scala,Swift
 		name : type
-	Go
+	Go,SQL
 		name __ type
 	MiniZinc
 		var __ type : name
@@ -3242,6 +3246,9 @@ function generateCode(parseTree, outputLang){
 		'int_to_string':{
 			'C,Fortran,Picat':'int_to_string = Integer',
 		},
+		'initialize_empty_vars_1':{
+			'C,Java,C#,C++,Swift':'initialize_empty_vars_1 = var_name / var_name _ "," _ initialize_empty_vars_1',
+		},
 		'split':{
 			'C,C++,Prolog,Erlang,Fortran,Z3,MiniZinc':'split = Integer',
 		},
@@ -3626,7 +3633,8 @@ __ "whitespace2" = [ \\t\\n\\r] [ \\t\\n\\r]*
 string_literal = '"' var1:_string_literal '"' {return ["string_literal", {var1:var1}];} / "'" var1:__string_literal "'" {return ["string literal", var1];}
 _string_literal = [^"]+ {return text();}
 __string_literal = [^']+ {return text();}`
-	console.log("\n\n\n\n\n"+toReturn);
+	//console.log("\n\n\n\n\n"+toReturn);
+	console.log("Generated parser for " + lang);
 	return toReturn;
 }
 
