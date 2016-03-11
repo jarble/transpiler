@@ -1,3 +1,10 @@
+% This is a program that translates several programming languages into several other languages.
+% For example:
+%    translate("int add(a){ if(g){ return a; } }",E,c,java)
+% will translate a short C program into the equivalent Java syntax. Conversely, we can write
+%    translate("public static int add(a){ if(g){ return a; } }",E,java,c)
+% to translate a Java function into C.
+
 :- initialization(main).
 :-set_prolog_flag(double_quotes, chars).  % This is for SWI 7+ to revert to the prior interpretation of quoted strings.
 
