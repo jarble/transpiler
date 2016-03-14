@@ -8,99 +8,170 @@
 :- initialization(main).
 :-set_prolog_flag(double_quotes, chars).  % This is for SWI 7+ to revert to the prior interpretation of quoted strings.
 
-%Lua-like if statements
-if_statement(Lang,M,N) -->
-	{member(Lang,[lua,ruby,pseudocode])},
-	"if ",whitespace,expression(Lang,M),whitespace," then ",whitespace,statement(Lang,N),whitespace," end".
+%Use this rule to define operators for various languages
+infix_operator(Lang,Symbol,Exp1,Exp2) -->
+	(symbol(Exp1);parentheses_expr(Lang,Exp1)),ws,Symbol,ws,expr(Lang,Exp2).
 
-%Java-like if statements
-if_statement(Lang,M,N) -->
-	{member(Lang,[java,javascript,c,perl,pseudocode])},
-	"if",whitespace,"(",whitespace,expression(Lang,M),whitespace,")",whitespace,"{",whitespace,statement(Lang,N),whitespace,"}".
+parentheses_expr(Lang,A) -->
+	{member(Lang,[c,java,javascript,perl,haxe,lua,ruby,rebol])},
+	"(",ws,expr(Lang,A),ws,")".
 
-%java-like functions
-function(Lang,Name,Type,Params,Body) -->
-	{member(Lang,[java,c_sharp])},
-	"public ",whitespace," static ",whitespace,type(Lang,Type)," ",whitespace,symbol(Name),whitespace,"(",whitespace,expression(Lang,Params),whitespace,")",whitespace,"{",whitespace,statement(Lang,Body),whitespace,"}".
+expr(Lang,parentheses_expr(A)) --> parentheses_expr(Lang,A).
 
-%C-like functions
-function(Lang,Name,Type,Params,Body) -->
-	{member(Lang,[c])},
-	type(Lang,Type)," ",whitespace,symbol(Name),whitespace,"(",whitespace,expression(Lang,Params),whitespace,")",whitespace,"{",whitespace,statement(Lang,Body),whitespace,"}".
-	
-%javascript-like functions
-function(Lang,Name,Type,Params,Body) -->
+expr(Lang,symbol(A)) --> symbol(A).
+
+expr(Lang,arithmetic(Exp1,Exp2,Symbol)) -->
+	{member(Lang,[c,java,javascript,perl,haxe,lua,ruby,rebol,fortran]), member(Symbol,["+","-","*","/"])},
+	infix_operator(Lang,Symbol,Exp1,Exp2).
+
+expr(Lang,power(Exp1_,Exp2_)) -->
+	{member(Lang,[c,java,javascript,perl,haxe,lua,ruby,rebol,fortran]), member(Symbol,["+","-","*","/"])},
+	"Math",ws,".",ws,"pow",ws,"(",ws,expr(Lang,Exp1),ws,expr(Lang,Exp2),ws,")".
+
+statement(Lang,function(Name1,Type1,Params1,Body1)) -->
+	{
+		Type = type(Lang,Type1),
+		Body = statements(Lang,Body1),
+		Params = parameters(Lang,Params1),
+		Name = symbol(Name1)
+	},
+	({member(Lang,[c])},
+		Type," ",ws,Name,ws,"(",ws,Params,ws,")",ws,"{",ws,Body,ws,"}";
 	{member(Lang,[javascript])},
-	"function ",whitespace,symbol(Name),whitespace,"(",whitespace,expression(Lang,Params),whitespace,")",whitespace,"{",whitespace,statement(Lang,Body),whitespace,"}".
-
-%ruby-like functions
-function(Lang,Name,Type,Params,Body) -->
+		"function ",ws,Name,ws,"(",ws,Params,ws,")",ws,"{",ws,Body,ws,"}";
 	{member(Lang,[ruby])},
-	"def ",whitespace,symbol(Name),whitespace,"(",whitespace,expression(Lang,Params),whitespace,")",whitespace,statement(Lang,Body),whitespace," end".
+		"def ",ws,Name,ws,"(",ws,Params,ws,")",ws,Body,ws," end";
+	{member(Lang,[lua])},
+		"function ",ws,Name,ws,"(",ws,Params,ws,")",ws,Body,ws," end";
+	{member(Lang,[java,c_sharp])},
+		"public ",ws,"static ",ws,Type," ",ws,Name,ws,"(",ws,Params,ws,")",ws,"{",ws,Body,ws,"}").
+	
 
 
 %java-like class statements
-class(Lang,Name,Body) --> 
-	{member(Lang,[java,pseudocode])},
-	"public ", whitespace, "class ",whitespace,symbol(Name), "{", statement(Body), "}".
-	
-%javascript-like class statements
-class(Lang,Name,Body) --> 
+statement(Lang,class(Name1,Body1)) --> 
+	{
+		Name = statements(Name1),
+		Body=statements(Body1)
+	},
+	({member(Lang,[java,c_sharp])},
+		"public ", ws, "class ",ws,Name, "{", Body, "}";
 	{member(Lang,[javascript,pseudocode])},
-	"class", symbol(Name), "{", statement(Body), "}".
+		"class ",ws,Name,ws,"{",ws,Body,ws,"}").
 
-%prolog if-statement
-if_statement(Lang,M,N) --> 
+statement(Lang,if_statement(M1,N1)) -->
+	{
+		N=statements(Lang,N1),
+		M=expr(Lang,M1)
+	},
+	({member(Lang,[lua,ruby])},
+		"if ",ws,M,ws," then ",ws,N,ws," end";
+	{member(Lang,[java,javascript,c,perl,pseudocode,php,c_sharp])},
+		"if",ws,"(",ws,M,ws,")",ws,"{",ws,N,ws,"}";
 	{member(Lang,[prolog])},
-	expression(Lang,M),whitespace,"->",whitespace,statement(Lang,N).
-
-%english if-statement
-if_statement(Lang,M,N) -->
+		M,ws,"->",ws,N;
 	{member(Lang,[english])},
-	((statement(Lang,N),whitespace," then ",whitespace,expression(Lang,M));("if ",whitespace,expression(Lang,M),whitespace," then ",whitespace,statement(Lang,N))).
+		((N,ws," then ",ws,M);("if ",ws,M,ws," then ",ws,N))).
 
 
-%java return statement
-return(Lang,Name,To_return) --> 
-	{member(Lang,[java,perl,javascript,c])},
-	"return ",whitespace,expression(Lang,To_return),whitespace,";".
-
-%lua return statement
-return(Lang,Name,To_return) --> 
+statement(Lang,return(Name1,To_return1)) --> 
+	{
+		To_return = expr(Lang,To_return1)
+	},
+	({member(Lang,[java,perl,javascript,c,haxe,c_sharp])},
+		"return ",ws,To_return,ws,";";
 	{member(Lang,[lua,ruby,english,haxe])},
-	"return ",whitespace,expression(Lang,To_return).
-	
-int(Lang,"int") --> {member(Lang,[java,python,c])},"int".
-bool(Lang,"boolean") --> {member(Lang,[java])},"boolean".
-bool(Lang,"bool") --> {member(Lang,[c,c_sharp])},"bool".
-char(Lang,"char") --> {member(Lang,[java])},"char".
-void(Lang,"void") --> {member(Lang,[java,c])},"void".
+		"return ",ws,To_return).
 
-type(Lang,int(A)) --> int(Lang,A).
-type(Lang,bool(A)) --> bool(Lang,A).
-type(Lang,char(A)) --> char(Lang,A).
-type(Lang,void(A)) --> void(Lang,A).
+statement(Lang,initialize_var(Type1,Name1,Expr1)) -->
+	{
+		Expr = expr(Lang,Expr1),
+		Type = type(Lang,Type1),
+		Name = symbol(Name1)
+	},
+	({member(Lang,[c,java,c_sharp])},
+		Type," ",ws,Name,ws,"=",ws,Expr,ws,";";
+	{member(Lang,[javascript])},
+		"var ",ws,Name,ws,"=",ws,Expr,ws,";";
+	{member(Lang,[lua])},
+		"local ",ws,Name,ws,"=",ws,Expr,ws;
+	{member(Lang,[ruby])},
+		Name,ws,"=",ws,Expr,ws).
+		
+statement(Lang,set_var(Name1,Expr1)) -->
+	{
+		Expr = expr(Lang,Expr1),
+		Name = symbol(Name1)
+	},
+	({member(Lang,[c,java,c_sharp])},
+		Name,ws,"=",ws,Expr,ws,";";
+	{member(Lang,[javascript])},
+		Name,ws,"=",ws,Expr,ws,";";
+	{member(Lang,[lua])},
+		Name,ws,"=",ws,Expr,ws;
+	{member(Lang,[ruby])},
+		Name,ws,"=",ws,Expr,ws).
 
-statement(Lang, if_statement(M,N)) --> if_statement(Lang,M,N).
-statement(Lang, class(Name,Body)) --> class(Lang,Name,Body).
-statement(Lang, function(Name,Type,Params,Body)) --> function(Lang,Name,Type,Params,Body).
+parameter(Lang,[Type1,Name1]) -->
+	{
+		Type = type(Lang,Type1),
+		Name = symbol(Name1)
+	},
+	({member(Lang,[lua,javascript,php,ruby])},
+		Name;
+	{member(Lang,[java,c,c_sharp])},
+		Type," ",ws,Name).
 
-statement(Lang, return(Name,To_return)) --> return(Lang,Name,To_return).
-expression(Lang,symbol(A)) --> symbol(A).
+parameters(Lang,[A]) --> parameter(Lang,A).
+parameters(Lang,[A,B]) --> parameter(Lang,A),ws,",",ws,parameters(Lang,B).
 
-whitespace --> "";(" ",whitespace).
+type(Lang,string) -->
+	{member(Lang,[java])},
+		"String";
+	{member(Lang,[c_sharp])},
+		"string";
+	{member(Lang,[c])},
+		"char*".
+
+type(Lang,int) -->
+	{member(Lang,[java,python,c,c_sharp])},
+		"int";
+	{member(Lang,[haxe])},
+		"Int";
+	{member(Lang,[javascript])},
+		"number".
+
+type(Lang, bool) -->
+	{member(Lang,[java])},
+		"boolean";
+	{member(Lang,[c,c_sharp])},
+		"bool".
+
+type(Lang,void) -->
+	{member(Lang,[c,c_sharp,java])},
+		"void".
+
+statements(Lang,[A]) --> statement(Lang,A).
+statements(Lang,[A,B]) --> statement(Lang,A),(" ";"\n";""),ws,statements(Lang,B).
+
+identifier(A) --> symbol(A).
+
+% whitespace
+ws --> "";((" ";"\n"),ws).
+
 symbol([L|Ls]) --> letter(L), symbol_r(Ls).
 symbol_r([L|Ls]) --> letter(L), symbol_r(Ls).
 symbol_r([])     --> [].
 letter(Let)     --> [Let], { code_type(Let, alpha) }.
 
-statement(Lang, tkSym(Token)) --> symbol(Token).
 
-translate(Input,Output,Lang1,Lang2) :-
-	phrase(statement(Lang1,Ls), Input),
-	phrase(statement(Lang2,Ls), Output).
+translate(Input1,Output1,Lang1,Lang2) :-
+	atom_chars(Input1, Input),
+	phrase(statements(Lang1,Ls), Input),
+	phrase(statements(Lang2,Ls), Output),
+	atom_chars(Output1, Output).
 	
 translate(Input,Output,Lang2) :-
 	member(Lang1,[java,javascript,lua,perl,ruby,prolog,c]), translate(Input,Output,Lang1,Lang2).
 
-main :- translate("int add(a){ if(g){ return a; } }",E,c,java), writeln('\n'), writeln(E), writeln('\n').
+main :- translate('char* d = f; d = (g - a) + g;',E,c,javascript), writeln('\n'), writeln(E), writeln('\n').
