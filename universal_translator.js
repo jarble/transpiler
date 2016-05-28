@@ -1,3 +1,2993 @@
+/*
+translateLang is the most important function in this file.
+
+Use TurboTop to keep the output window visible.
+key_value_separator(
+        {memberchk(Lang,['python','picat','go','dart','visual basic .net','d','c#','frink','swift','javascript','typescript','php','perl','lua','ruby','julia','haxe','c++','scala','octave','elixir','wolfram'])}->
+                ",";
+        {memberchk(Lang,['java'])}->
+                ";";
+        {memberchk(Lang,['rebol'])}->
+                ws_;
+        {not_defined_for(Data,'key_value_separator')}).
+initializer_list_separator(
+        {memberchk(Lang,['python','erlang','nim','seed7','vala','polish notation','reverse polish notation','d','frink','fortran','chapel','octave','julia','english','pascal','delphi','prolog','minizinc','engscript','cython','groovy','dart','typescript','coffeescript','nemerle','javascript','haxe','haskell','ruby','rebol','polish notation','swift','java','picat','c#','go','lua','c++','c','visual basic .net','visual basic','php','scala','perl','wolfram'])}->
+                ",";
+        {memberchk(Lang,['rebol'])}->
+                ws_;
+        {not_defined_for(Data,'initializer_list_separator')}).
+true(
+        {memberchk(Lang,['java','livecode','gap','dafny','z3','perl 6','chapel','c','frink','elixir','english','pascal','minizinc','engscript','picat','rust','clojure','nim','hack','ceylon','d','groovy','coffeescript','typescript','octave','prolog','julia','f#','swift','nemerle','vala','c++','dart','javascript','ruby','erlang','c#','haxe','go','ocaml','lua','scala','php','rebol'])}->
+                "true";
+        {memberchk(Lang,['python','pydatalog','hy','cython','autoit','haskell','visual basic .net','vbscript','visual basic','monkey x','wolfram','delphi'])}->
+                "True";
+        {memberchk(Lang,['perl','awk','tcl'])}->
+                "1";
+        {memberchk(Lang,['racket'])}->
+                "#t";
+        {memberchk(Lang,['common lisp'])}->
+                "t";
+        {memberchk(Lang,['fortran'])}->
+                ".TRUE.";
+        {memberchk(Lang,['r','seed7'])}->
+                "TRUE";
+        {not_defined_for(Data,'true')}).
+false(
+        {memberchk(Lang,['java','livecode','gap','dafny','z3','perl 6','chapel','c','frink','elixir','pascal','rust','minizinc','engscript','picat','clojure','nim','groovy','d','ceylon','typescript','coffeescript','octave','prolog','julia','vala','f#','swift','c++','nemerle','dart','javascript','ruby','erlang','c#','haxe','go','ocaml','lua','scala','php','rebol','hack'])}->
+                "false";
+        {memberchk(Lang,['python','pydatalog','hy','cython','autoit','haskell','visual basic .net','vbscript','visual basic','monkey x','wolfram','delphi'])}->
+                "False";
+        {memberchk(Lang,['perl','awk','tcl'])}->
+                "0";
+        {memberchk(Lang,['common lisp'])}->
+                "nil";
+        {memberchk(Lang,['racket'])}->
+                "#f";
+        {memberchk(Lang,['fortran'])}->
+                ".FALSE.";
+        {memberchk(Lang,['seed7','r'])}->
+                "FALSE";
+        {not_defined_for(Data,'false')}).
+char(
+        {memberchk(Lang,['java','c','c++','seed7','c#'])}->
+                "char";
+        {memberchk(Lang,['visual basic .net','haskell'])}->
+                "Char";
+        {memberchk(Lang,['swift'])}->
+                "Character";
+        {memberchk(Lang,['rebol'])}->
+                "char!";
+        {memberchk(Lang,['fortran'])}->
+                "CHARACTER";
+        {memberchk(Lang,['go'])}->
+                "rune";
+        {not_defined_for(Data,'char')}).
+string(
+        {memberchk(Lang,['z3','java','ceylon','gambas','dart','gosu','groovy','scala','pascal','swift','ruby','haxe','haskell','visual basic','visual basic .net','monkey x'])}->
+                "String";
+        {memberchk(Lang,['vala','seed7','octave','picat','mathematical notation','polish notation','reverse polish notation','prolog','d','crosslanguage','chapel','minizinc','genie','hack','nim','algol 68','typescript','coffeescript','octave','tcl','awk','julia','c#','f#','perl','lua','javascript','go','php','c++','nemerle','erlang'])}->
+                "string";
+        {memberchk(Lang,['c'])}->
+                "char*";
+        {memberchk(Lang,['rebol'])}->
+                "string!";
+        {memberchk(Lang,['fortran'])}->
+                "CHARACTER","(","LEN","=","*",")";
+        {memberchk(Lang,['python','hy'])}->
+                "str";
+        {not_defined_for(Data,'string')}).
+void(
+        {memberchk(Lang,['engscript','seed7','php','hy','cython','go','pike','objective-c','java','c','c++','c#','vala','typescript','d','javascript','lua','dart'])}->
+                "void";
+        {memberchk(Lang,['haxe','swift'])}->
+                "Void";
+        {memberchk(Lang,['scala'])}->
+                "Unit";
+        {not_defined_for(Data,'void')}).
+boolean(
+        {memberchk(Lang,['typescript','seed7','python','hy','java','javascript','lua','perl'])}->
+                "boolean";
+        {memberchk(Lang,['c++','nim','octave','dafny','chapel','c','crosslanguage','rust','minizinc','engscript','dart','d','vala','crosslanguage','go','cobra','c#','f#','php','hack'])}->
+                "bool";
+        {memberchk(Lang,['haxe','haskell','swift','julia','perl 6','z3','z3py','monkey x'])}->
+                "Bool";
+        {memberchk(Lang,['fortran'])}->
+                "LOGICAL";
+        {memberchk(Lang,['visual basic','openoffice basic','ceylon','delphi','pascal','scala','visual basic .net'])}->
+                "Boolean";
+        {memberchk(Lang,['rebol'])}->
+                "logic!";
+        {not_defined_for(Data,'boolean')}).
+double(
+        {memberchk(Lang,['java','c','c#','c++','dart','vala'])}->
+                "double";
+        {memberchk(Lang,['go'])}->
+                "float64";
+        {memberchk(Lang,['haxe'])}->
+                "Float";
+        {memberchk(Lang,['javascript','lua'])}->
+                "number";
+        {memberchk(Lang,['ruby','minizinc','php','python'])}->
+                "float";
+        {memberchk(Lang,['visual basic .net','swift'])}->
+                "Double";
+        {memberchk(Lang,['haskell'])}->
+                "Num";
+        {memberchk(Lang,['rebol'])}->
+                "decimal!";
+        {memberchk(Lang,['fortran'])}->
+                "double",ws_,"precision";
+        {memberchk(Lang,['z3','z3py'])}->
+                "Real";
+        {memberchk(Lang,['octave'])}->
+                "scalar";
+        {not_defined_for(Data,'double')}).
+array_access_separator(
+        {memberchk(Lang,['c#','minizinc','fortran','julia','visual basic','visual basic .net','octave'])}->
+                ",";
+        {memberchk(Lang,['python','pydatalog','d','lua','picat','janus','nim','autoit','cython','coffeescript','dart','typescript','awk','vala','perl','java','javascript','ruby','go','c++','php','haxe','c','swift'])}->
+                "][";
+        {memberchk(Lang,['haskell'])}->
+                "!!";
+        {memberchk(Lang,['scala'])}->
+                ")(";
+        {memberchk(Lang,['frink'])}->
+                "@";
+        {memberchk(Lang,['rebol'])}->
+                "/";
+        {memberchk(Lang,['perl 6'])}->
+                ";";
+        {not_defined_for(Data,'array_access_separator')}).
+(
+        {not_defined_for(Data,'')}).
+grammar_output(
+        {memberchk(Lang,['peg.js'])}->
+                Name,ws,"=",ws,Value,ws,"{",ws,"return",ws_,Output,ws,";",ws,"}";
+        {memberchk(Lang,['nearley'])}->
+                Name,ws,"->",ws,Value,ws,"{%",ws,"function",ws,"(",ws,"data",ws,")",ws,"{",ws,"return",ws_,Output,ws,";",ws,"}",ws,"%}";
+        {not_defined_for(Data,'grammar_output')}).
+grammar_statement(
+        {memberchk(Lang,['waxeye'])}->
+                Name,ws,"<-",ws,Value;
+        {memberchk(Lang,['nearley'])}->
+                Name,ws,"->",ws,Value;
+        {memberchk(Lang,['earley-parser-js'])}->
+                "\"",ws,Name,ws,"->",ws,Value,ws,"\"";
+        {memberchk(Lang,['parslet'])}->
+                "rule",ws,"(",ws,":",ws,Name,ws,")",ws,"{",ws,Value,ws,"}";
+        {memberchk(Lang,['marpa'])}->
+                Name,ws,"::=",ws,Value;
+        {memberchk(Lang,['ebnf'])}->
+                Name,ws,"=",ws,Value,ws,";";
+        {memberchk(Lang,['yacc','jison','antlr'])}->
+                Name,ws,":",ws,Value,ws,";";
+        {memberchk(Lang,['peg.js','lpeg','abnf','ometa'])}->
+                Name,ws,"=",ws,Value;
+        {memberchk(Lang,['wirth syntax notation'])}->
+                Name,ws,"=",ws,Value,ws,".";
+        {memberchk(Lang,['perl 6'])}->
+                "token",ws_,Name,ws,"{",ws,Value,ws,"}";
+        {memberchk(Lang,['prolog'])}->
+                Name,ws,"-->",ws,Value,ws,".";
+        {memberchk(Lang,['rebol'])}->
+                Name,ws,":",ws_,Value;
+        {memberchk(Lang,['treetop'])}->
+                "rule",ws_,Name,ws_,Value,ws_,"end";
+        {memberchk(Lang,['hampi'])}->
+                "cfg",ws_,Name,ws,":=",ws,Value,ws,";";
+        {memberchk(Lang,['parboiled'])}->
+                "public",ws_,"Rule",ws_,Name,ws,"(",ws,")",ws,"{",ws,"return",ws_,Value,ws,";",ws,"}";
+        {memberchk(Lang,['yapps'])}->
+                "rule",ws_,Name,ws,":",ws_,Value;
+        {not_defined_for(Data,'grammar_statement')}).
+statement(
+        {memberchk(Lang,['lua'])}->
+                A;
+        {memberchk(Lang,['octave'])}->
+                A;
+        {memberchk(Lang,['minizinc'])}->
+                A;
+        {memberchk(Lang,['englishscript','seed7','vbscript','java','nim','scala','python','dart','javascript','typescript','c#','php','haxe','ruby','c++','visual basic .net','go','swift','rebol','fortran'])}->
+                A;
+        {memberchk(Lang,['c','r','julia','perl'])}->
+                A;
+        {memberchk(Lang,['picat'])}->
+                A;
+        {memberchk(Lang,['z3','prolog','haskell','erlang','common lisp','emacs lisp','minizinc'])}->
+                A;
+        {memberchk(Lang,['mathematical notation','polish notation','reverse polish notation'])}->
+                A;
+        {not_defined_for(Data,'statement')}).
+statement_with_semicolon(
+        {memberchk(Lang,['c','php','dafny','chapel','katahdin','frink','falcon','aldor','idp','processing','maxima','seed7','drools','engscript','openoffice basic','ada','algol 68','d','ceylon','rust','typescript','octave','autohotkey','pascal','delphi','javascript','pike','objective-c','ocaml','java','scala','dart','php','c#','c++','haxe','awk','bc','perl','perl 6','nemerle','vala'])}->
+                Var1,";";
+        {memberchk(Lang,['minizinc'])}->
+                Var1;
+        {memberchk(Lang,['visual basic .net','lua','swift','rebol','fortran','python','go','picat','julia'])}->
+                Var1;
+        {memberchk(Lang,['prolog'])}->
+                Var1;
+        {memberchk(Lang,['mathematical notation','polish notation','reverse polish notation'])}->
+                Var1;
+        {memberchk(Lang,['z3'])}->
+                Var1;
+        {memberchk(Lang,['ruby'])}->
+                Var1;
+        {memberchk(Lang,['haskell','erlang','common lisp'])}->
+                Var1;
+        {not_defined_for(Data,'statement_with_semicolon')}).
+macro(
+        {memberchk(Lang,['racket'])}->
+                "(",ws,"define-syntax-rule",ws_,"(",ws,Name,ws_,Params,ws,")",ws_,"body",ws,")";
+        {memberchk(Lang,['c'])}->
+                "#define",ws_,Name,ws,"(",ws,Params,ws,")",ws_,"body";
+        {memberchk(Lang,['common lisp'])}->
+                "(",ws,"defmacro",ws_,Name,ws_,"(",ws,Params,ws,")",ws_,"body",ws,")";
+        {memberchk(Lang,['rust'])}->
+                "macro_rules!",ws_,Name,ws,"{",ws,"(",ws,Params,ws,")",ws,"=>",ws,"{",ws,"body",ws,"}",ws,";",ws,"}";
+        {memberchk(Lang,['z3'])}->
+                "(",ws,"define-fun",ws_,Name,ws,"(",ws,Params,ws,")",ws_,"type",ws_,"body",ws,")";
+        {memberchk(Lang,['nearley'])}->
+                Name,ws,"[",ws,Params,ws,"]",ws,"->",ws,"body";
+        {not_defined_for(Data,'macro')}).
+one_or_more(
+        {memberchk(Lang,['marpa','peg.js','perl 6','antlr'])}->
+                "(",ws,A,ws,")",ws,"+";
+        {memberchk(Lang,['rebol'])}->
+                "[",ws,"some",ws,"[",ws,A,ws,"]",ws,"]";
+        {memberchk(Lang,['abnf'])}->
+                "1",ws,"*",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['parslet'])}->
+                "(",ws,A,ws,")",ws,".",ws,"repeat",ws,"(",ws,"1",ws,")";
+        {memberchk(Lang,['lpeg'])}->
+                "(",ws,A,ws,"^",ws,"1",ws,")";
+        {memberchk(Lang,['parboiled'])}->
+                "OneOrMore",ws,"(",ws,A,ws,")";
+        {not_defined_for(Data,'one_or_more')}).
+zero_or_more(
+        {memberchk(Lang,['lpeg'])}->
+                "(",ws,A,ws,"^",ws,"0",ws,")";
+        {memberchk(Lang,['pypeg'])}->
+                "optional",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['waxeye'])}->
+                "?",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['ebnf'])}->
+                "{",ws,A,ws,"}";
+        {memberchk(Lang,['marpa','peg.js','perl 6','antlr'])}->
+                "(",ws,A,ws,")",ws,"*";
+        {memberchk(Lang,['abnf'])}->
+                "*",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['rebol'])}->
+                "[",ws,"any",ws,"[",ws,A,ws,"]",ws,"]";
+        {memberchk(Lang,['parslet'])}->
+                "(",ws,A,ws,")",ws,".",ws,"repeat",ws,"(",ws,"0",ws,")";
+        {not_defined_for(Data,'zero_or_more')}).
+grammar_parameter(
+        {memberchk(Lang,['peg.js'])}->
+                Name,ws,":",ws,Type;
+        {memberchk(Lang,['lpeg'])}->
+                "lpeg.V"",ws,Type,ws,""";
+        {memberchk(Lang,['parslet'])}->
+                Type,ws,".",ws,"as",ws,"(",ws,Name,ws,")";
+        {memberchk(Lang,['marpa','yacc','ebnf','rebol','prolog','abnf','treetop'])}->
+                Type;
+        {memberchk(Lang,['perl 6'])}->
+                "<",ws,Type,ws,">";
+        {memberchk(Lang,['hampi'])}->
+                Type;
+        {not_defined_for(Data,'grammar_parameter')}).
+grammar(
+        {memberchk(Lang,['peg.js','ebnf','nearley','marpa','rebol'])}->
+                Var1;
+        {memberchk(Lang,['antlr'])}->
+                "grammar",ws_,Name,ws,";",ws,Var1;
+        {memberchk(Lang,['ometa'])}->
+                "ometa",ws_,Name,ws,"{",ws,Var1,ws,"}";
+        {memberchk(Lang,['perl 6'])}->
+                "grammar",ws_,Name,ws,"{",ws,Var1,ws,"}";
+        {memberchk(Lang,['lpeg'])}->
+                Name,ws,"=",ws,"lpeg",ws,".",ws,"P",ws,"{",ws,Var1,ws,"}";
+        {memberchk(Lang,['parslet'])}->
+                "class",ws_,Name,ws,">",ws,Parslet,ws_,Var1,ws_,"end";
+        {memberchk(Lang,['treetop'])}->
+                "grammar",ws_,Name,ws_,Var1,ws_,"end";
+        {memberchk(Lang,['earley-parser-js'])}->
+                "var",ws_,"grammar",ws,"=",ws,"new",ws_,"tinynlp",ws,".",ws,"Grammar",ws,"(",ws,"[",ws,Var1,ws,"]",ws,")",ws,";";
+        {memberchk(Lang,['parboiled'])}->
+                "class",ws_,"CalculatorParser",ws_,"extends",ws_,"BaseParser<Object>",ws,"{",ws,Var1,ws,"}";
+        {not_defined_for(Data,'grammar')}).
+nameless_grammar_parameter(
+        {memberchk(Lang,['peg.js','yapps','hampi','antlr','parslet','nearley','marpa','yacc','ebnf','rebol','prolog','abnf','treetop'])}->
+                Type;
+        {memberchk(Lang,['lpeg'])}->
+                "lpeg.V"",ws,Type,ws,""";
+        {memberchk(Lang,['perl 6'])}->
+                "<",ws,Type,ws,">";
+        {memberchk(Lang,['parboiled'])}->
+                Type,ws,"(",ws,")";
+        {not_defined_for(Data,'nameless_grammar_parameter')}).
+grammar_string_literal(
+        {memberchk(Lang,['peg.js','parboiled','earley-parser-js','antlr','lpeg','marpa','yacc','ebnf','rebol','abnf','ometa','treetop'])}->
+                The_str;
+        {memberchk(Lang,['parslet'])}->
+                "str",ws,"(",ws,The_str,ws,")";
+        {not_defined_for(Data,'grammar_string_literal')}).
+initialize_instance_variable(
+        {memberchk(Lang,['java','c#'])}->
+                "private",ws_,Type,ws_,Name;
+        {memberchk(Lang,['php'])}->
+                "private",ws_,Name;
+        {memberchk(Lang,['c++','d'])}->
+                Type,ws_,Name;
+        {memberchk(Lang,['haxe','swift'])}->
+                "var",ws_,Name,ws,":",ws,Type;
+        {memberchk(Lang,['visual basic .net'])}->
+                "Private",ws_,Name,ws_,"As",ws_,Type;
+        {memberchk(Lang,['vbscript'])}->
+                "Private",ws_,Name;
+        {not_defined_for(Data,'initialize_instance_variable')}).
+initialize_instance_variable_with_value(
+        {memberchk(Lang,['java','c#'])}->
+                "private",ws_,Type,ws_,Name,ws,"=",ws,Value;
+        {memberchk(Lang,['php'])}->
+                "private",ws_,Name,ws,"=",ws,Value;
+        {memberchk(Lang,['c++'])}->
+                Type,ws_,Name,ws,"=",ws,Value;
+        {memberchk(Lang,['python'])}->
+                "self",ws,".",ws,Name,ws,"=",ws,Value;
+        {memberchk(Lang,['haxe','swift'])}->
+                "var",ws_,Name,ws,":",ws,Type,ws,"=",ws,Value;
+        {memberchk(Lang,['ruby'])}->
+                "@",ws,Name,ws,"=",ws,Value;
+        {memberchk(Lang,['visual basic .net'])}->
+                "Private",ws_,Name,ws_,"As",ws_,Type,ws,"=",ws,Value;
+        {not_defined_for(Data,'initialize_instance_variable_with_value')}).
+enum(
+        {memberchk(Lang,['c'])}->
+                "typedef",ws_,"enum",ws,"{",ws,Body,ws,"}",ws,Name,ws,";";
+        {memberchk(Lang,['seed7'])}->
+                "const",ws_,"type",ws,":",ws,Name,ws_,"is",ws_,"new",ws_,"enum",ws_,Body,ws_,"end",ws_,"enum",ws,";";
+        {memberchk(Lang,['ada'])}->
+                "type",ws_,Name,ws_,"is",ws_,"(",ws,Body,ws,")",ws,";";
+        {memberchk(Lang,['perl 6'])}->
+                "enum",ws_,Name,ws_,"<",ws,Body,ws,">",ws,";";
+        {memberchk(Lang,['python'])}->
+                "class",ws_,Name,ws,"(",ws,"AutoNumber",ws,")",ws,":",ws,"\n",ws,"#indent",ws,"\n",ws,"b",ws,"\n",ws,"#unindent";
+        {memberchk(Lang,['java'])}->
+                "public",ws_,"enum",ws_,Name,ws,"{",ws,Body,ws,"}";
+        {memberchk(Lang,['c#','c++','typescript'])}->
+                "enum",ws_,Name,ws,"{",ws,Body,ws,"}",ws,";";
+        {memberchk(Lang,['haxe','rust','swift','vala'])}->
+                "enum",ws_,Name,ws,"{",ws,Body,ws,"}";
+        {memberchk(Lang,['swift'])}->
+                "enum",ws_,Name,ws,"{",ws,"case",ws_,Body,ws,"}";
+        {memberchk(Lang,['visual basic .net'])}->
+                "Enum",ws_,Name,ws_,Body,ws_,"End",ws_,"Enum";
+        {memberchk(Lang,['fortran'])}->
+                "ENUM",ws,"::",ws,Name,ws_,Body,ws_,"END",ws_,"ENUM";
+        {memberchk(Lang,['go'])}->
+                "type",ws_,Name,ws_,"int",ws_,"const",ws,"(",ws_,Body,ws_,")";
+        {memberchk(Lang,['scala'])}->
+                "object",ws_,Name,ws_,"extends",ws_,"Enumeration",ws,"{",ws,"val",ws_,Body,ws,"=",ws,"Value",ws,"}";
+        {not_defined_for(Data,'enum')}).
+_enum_list(
+        {memberchk(Lang,['java','seed7','vala','perl 6','swift','c++','c#','visual basic .net','haxe','fortran','typescript','c','ada','scala'])}->
+                A;
+        {memberchk(Lang,['go'])}->
+                A,ws,"=",ws,"iota";
+        {memberchk(Lang,['python'])}->
+                A,ws,"=",ws,"(",ws,")";
+        {not_defined_for(Data,'_enum_list')}).
+enum_list(
+        {memberchk(Lang,['java','seed7','vala','c++','c#','c','typescript','fortran','ada','scala'])}->
+                A,ws,",",ws,B;
+        {memberchk(Lang,['haxe'])}->
+                A,ws,";",ws,B;
+        {memberchk(Lang,['go','perl 6','swift','visual basic .net'])}->
+                A,ws_,B;
+        {not_defined_for(Data,'enum_list')}).
+list_comprehension(
+        {memberchk(Lang,['python','cython'])}->
+                "[",ws,Result,ws_,"for",ws_,Variable,ws_,"in",ws_,Array,ws_,"if",ws_,Condition,ws,"]";
+        {memberchk(Lang,['ceylon'])}->
+                "{",ws,"for",ws,"(",ws,Variable,ws_,"in",ws_,Array,ws,")",ws_,"if",ws,"(",ws,Condition,ws,")",ws_,Result,ws,"}";
+        {memberchk(Lang,['javascript'])}->
+                "[",ws,Result,ws_,"for",ws,"(",ws,Variable,ws_,"of",ws_,Array,ws,")",ws,"if",ws_,Condition,ws,"]";
+        {memberchk(Lang,['coffeescript'])}->
+                "(",ws,Result,ws_,"for",ws_,Variable,ws_,"in",ws_,Array,ws_,"when",ws_,Condition,ws,")";
+        {memberchk(Lang,['minizinc'])}->
+                "[",ws,Result,ws,"|",ws,Variable,ws_,"in",ws_,Array,ws_,"where",ws_,Condition,ws,"]";
+        {memberchk(Lang,['haxe'])}->
+                "[",ws,"for",ws,"(",ws,Variable,ws_,"in",ws_,Array,ws,")",ws,"if",ws,"(",ws,Condition,ws,")",ws,Result,ws,"]";
+        {memberchk(Lang,['c#'])}->
+                "(",ws,"from",ws_,Variable,ws_,"in",ws_,Array,ws_,"where",ws_,Condition,ws_,"select",ws_,Result,ws,")";
+        {memberchk(Lang,['haskell'])}->
+                "[",ws,Result,ws,"|",ws,Variable,ws,"<-",ws,Array,ws,",",ws,Condition,ws,"]";
+        {memberchk(Lang,['erlang'])}->
+                "[",ws,Result,ws,"||",ws,Variable,ws,"<-",ws,Array,ws,",",ws,Condition,ws,"]";
+        {memberchk(Lang,['ruby'])}->
+                Array,ws,".",ws,"select",ws,"{",ws,"|",ws,Variable,ws,"|",ws,Condition,ws,"}",ws,".",ws,"collect",ws,"{",ws,"|",ws,Variable,ws,"|",ws,Result,ws,"}";
+        {memberchk(Lang,['scala'])}->
+                "(",ws,"for",ws,"(",ws,Variable,ws,"<-",ws,Array,ws_,"if",ws_,Condition,ws,")",ws,"yield",ws_,Result,ws,")";
+        {memberchk(Lang,['groovy'])}->
+                "array.grep",ws,"{",ws,Variable,ws,"->",ws,Condition,ws,"}.collect",ws,"{",ws,Variable,ws,"->",ws,Result,ws,"}";
+        {memberchk(Lang,['dart'])}->
+                Array,ws,".",ws,"where",ws,"(",ws,Variable,ws,"=>",ws,Condition,ws,")",ws,".",ws,"map",ws,"(",ws,Variable,ws,"=>",ws,Result,ws,")";
+        {memberchk(Lang,['picat'])}->
+                "[",ws,Result,ws,":",ws,Variable,ws_,"in",ws_,Array,ws,",",ws,Condition,ws,"]";
+        {not_defined_for(Data,'list_comprehension')}).
+list_comprehension_2(
+        {memberchk(Lang,['python','julia'])}->
+                "[",ws,Result,ws_,"for",ws_,Variable,ws_,"in",ws_,Array,ws,"]";
+        {memberchk(Lang,['haskell'])}->
+                "[",ws,Result,ws,"|",ws,Variable,ws,"<-",ws,Array,ws,"]";
+        {not_defined_for(Data,'list_comprehension_2')}).
+array_type(
+        {memberchk(Lang,['java','c','c#','haxe','c++'])}->
+                Var1,Var2;
+        {memberchk(Lang,['minizinc'])}->
+                "array",ws,"[",ws,Var1,ws,"]",ws_,"of",ws_,Var1;
+        {memberchk(Lang,['go'])}->
+                Var2,Var1;
+        {memberchk(Lang,['seed7'])}->
+                Var2,ws_,Var1;
+        {memberchk(Lang,['dart'])}->
+                "array_type",ws,"=",ws,"List<",ws,Var1,ws,">";
+        {memberchk(Lang,['swift'])}->
+                "[",ws,Var1,ws,"]";
+        {memberchk(Lang,['z3'])}->
+                "(",ws,"Array",ws_,Var1,ws_,Var1,ws,")";
+        {memberchk(Lang,['python','picat'])}->
+                Var1;
+        {memberchk(Lang,['lua'])}->
+                Var1;
+        {memberchk(Lang,['javascript','ruby'])}->
+                Var1;
+        {memberchk(Lang,['php'])}->
+                Var1;
+        {memberchk(Lang,['rebol'])}->
+                Var1;
+        {memberchk(Lang,['octave'])}->
+                Var1;
+        {memberchk(Lang,['erlang'])}->
+                Var1;
+        {not_defined_for(Data,'array_type')}).
+constructor(
+        {memberchk(Lang,['rebol'])}->
+                "new:",ws_,"func",ws,"[",ws,Params,ws,"]",ws,"[",ws,"make",ws_,"self",ws,"[",ws,Body,ws,"]",ws,"]";
+        {memberchk(Lang,['crosslanguage'])}->
+                "(",ws,"constructor",ws_,Name,ws_,Params,ws_,Body,ws,")";
+        {memberchk(Lang,['visual basic .net'])}->
+                "Sub",ws_,"New",ws,"(",ws,Params,ws,")",ws_,Body,ws_,"End",ws_,"Sub";
+        {memberchk(Lang,['python'])}->
+                "def",ws_,"__init__",ws,"(",ws,"",ws,"self",ws,",",ws,Params,ws,")",ws,":",ws,"\n",ws,"#indent",ws,"\n",ws,Body,ws,"\n",ws,"#unindent";
+        {memberchk(Lang,['java','c#','vala'])}->
+                "public",ws_,Name,ws,"(",ws,Params,ws,")",ws,"{",ws,Body,ws,"}";
+        {memberchk(Lang,['swift'])}->
+                "init",ws,"(",ws,Params,ws,")",ws,"{",ws,Body,ws,"}";
+        {memberchk(Lang,['javascript'])}->
+                "constructor",ws,"(",ws,Params,ws,")",ws,"{",ws,Body,ws,"}";
+        {memberchk(Lang,['ruby'])}->
+                "def",ws_,"initialize",ws,"(",ws,Params,ws,")",ws_,Body,ws_,"end";
+        {memberchk(Lang,['php'])}->
+                "function",ws_,"construct",ws,"(",ws,Params,ws,")",ws,"{",ws,Body,ws,"}";
+        {memberchk(Lang,['perl'])}->
+                "sub",ws_,"new",ws,"{",ws,Body,ws,"}";
+        {memberchk(Lang,['haxe'])}->
+                "public",ws_,"function",ws_,"new",ws,"(",ws,Params,ws,")",ws,"{",ws,Body,ws,"}";
+        {memberchk(Lang,['c++','dart'])}->
+                Name,ws,"(",ws,Params,ws,")",ws,"{",ws,Body,ws,"}";
+        {memberchk(Lang,['d'])}->
+                "this",ws,"(",ws,Params,ws,")",ws,"{",ws,Body,ws,"}";
+        {memberchk(Lang,['chapel'])}->
+                "proc",ws_,Name,ws,"(",ws,Params,ws,")",ws,"{",ws,Body,ws,"}";
+        {memberchk(Lang,['julia'])}->
+                "function",ws_,Name,ws,"(",ws,Params,ws,")",ws_,Body,ws_,"end";
+        {not_defined_for(Data,'constructor')}).
+set_array_size(
+        {memberchk(Lang,['scala'])}->
+                "var",ws_,Name,ws,"=",ws,"Array",ws,".",ws,"fill",ws,"(",ws,Size,ws,")",ws,"{",ws,"0",ws,"}";
+        {memberchk(Lang,['octave'])}->
+                Name,ws,"=",ws,"zeros",ws,"(",ws,Size,ws,")";
+        {memberchk(Lang,['minizinc'])}->
+                "array",ws,"[",ws,"1",ws,"..",ws,Size,ws,"]",ws_,"of",ws_,Type,ws,":",ws,Name,ws,";";
+        {memberchk(Lang,['dart'])}->
+                "List",ws_,Name,ws,"=",ws,"new",ws_,"List",ws,"(",ws,Size,ws,")";
+        {memberchk(Lang,['java','c#'])}->
+                Type,ws,"[]",ws_,Name,ws,"",ws,"=",ws,"new",ws_,Type,ws,"[",ws,Size,ws,"]";
+        {memberchk(Lang,['fortran'])}->
+                Type,ws,"(",ws,"LEN",ws,"=",ws,Size,ws,")",ws,"",ws,"::",ws,Name;
+        {memberchk(Lang,['go'])}->
+                "var",ws_,Name,ws_,"[",ws,Size,ws,"]",ws,Type;
+        {memberchk(Lang,['swift'])}->
+                "var",ws_,Name,ws,"=",ws,"[",ws,Type,ws,"]",ws,"(",ws,"count:",ws,Size,ws,",",ws,"repeatedValue",ws,":",ws,"0",ws,")";
+        {memberchk(Lang,['c','c++'])}->
+                Type,ws_,Name,ws,"[",ws,Size,ws,"]";
+        {memberchk(Lang,['rebol'])}->
+                Name,ws,":",ws,"array",ws_,Size;
+        {memberchk(Lang,['visual basic .net'])}->
+                "Dim",ws_,Name,ws,"(",ws,Size,ws,")",ws_,"as",ws_,Type;
+        {memberchk(Lang,['php'])}->
+                Name,ws,"=",ws,"array_fill",ws,"(",ws,"0",ws,",",ws,Size,ws,",",ws,"0",ws,")";
+        {memberchk(Lang,['haxe'])}->
+                "var",ws_,"vector",ws,"=",ws,"",ws_,"haxe",ws,".",ws,"ds",ws,".",ws,"Vector",ws,"(",ws,Size,ws,")";
+        {memberchk(Lang,['javascript'])}->
+                "var",ws_,Name,ws,"=",ws,"Array",ws,".",ws,"apply",ws,"(",ws,"null",ws,",",ws,"Array",ws,"(",ws,Size,ws,")",ws,")",ws,".",ws,"map",ws,"(",ws,"function",ws,"(",ws,")",ws,"{",ws,"}",ws,")";
+        {memberchk(Lang,['vbscript'])}->
+                "Dim",ws_,Name,ws,"(",ws,Size,ws,")";
+        {not_defined_for(Data,'set_array_size')}).
+typeless_parameter(
+        {memberchk(Lang,['haskell','livecode','typescript','visual basic .net','rebol','prolog','haxe','scheme','python','mathematical notation','lispyscript','clips','clojure','f#','ml','racket','ocaml','tcl','common lisp','newlisp','python','cython','frink','picat','idp','powershell','maxima','icon','coffeescript','fortran','octave','autohotkey','julia','prolog','awk','kotlin','dart','javascript','nemerle','erlang','php','autoit','lua','ruby','r','bc'])}->
+                Name;
+        {memberchk(Lang,['java','c#'])}->
+                "Object",ws_,Name;
+        {memberchk(Lang,['c++'])}->
+                "auto",ws_,Name;
+        {memberchk(Lang,['perl'])}->
+                Name,ws,"=",ws,"push",ws,";";
+        {not_defined_for(Data,'typeless_parameter')}).
+asin(
+        {memberchk(Lang,['java','javascript','ruby','haxe','typescript'])}->
+                "Math",ws,".",ws,"asin",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['python','lua'])}->
+                "math",ws,".",ws,"asin",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['perl','seed7','c','fortran','d','php','hack','dart','scala'])}->
+                "asin",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['c#','visual basic','visual basic .net'])}->
+                "Math",ws,".",ws,"Asin",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['gambas'])}->
+                "Asin",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['erlang'])}->
+                "math",ws,":",ws,"asin",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['c++'])}->
+                "std",ws,"::",ws,"asin",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['wolfram'])}->
+                "ArcSin",ws,"[",ws,A,ws,"]";
+        {memberchk(Lang,['common lisp','racket'])}->
+                "(",ws,"asin",ws_,A,ws,")";
+        {memberchk(Lang,['clojure'])}->
+                "(",ws,"Math/asin",ws_,A,ws,")";
+        {not_defined_for(Data,'asin')}).
+typeless_function(
+        {memberchk(Lang,['visual basic .net','vbscript'])}->
+                "Function",ws_,Name,ws,"(",ws,Params,ws,")",ws_,Body,ws_,"End",ws_,"Function";
+        {memberchk(Lang,['javascript','php','typescript'])}->
+                "function",ws_,Name,ws,"(",ws,Params,ws,")",ws,"{",ws,Body,ws,"}";
+        {memberchk(Lang,['python'])}->
+                "def",ws_,Name,ws,"(",ws,Params,ws,")",ws,":",ws,"\n",ws,"#indent",ws,"\n",ws,Body,ws,"\n",ws,"#unindent";
+        {memberchk(Lang,['englishscript'])}->
+                "def",ws_,Name,ws,"(",ws,Params,ws,")",ws,":",ws,"\n",ws,Body,ws,"\n",ws,"end";
+        {memberchk(Lang,['rebol'])}->
+                Name,ws,":",ws_,"func",ws,"[",ws,Params,ws,"]",ws,"[",ws,Body,ws,"]";
+        {memberchk(Lang,['c#'])}->
+                "public",ws_,"static",ws_,"object",ws_,Name,ws,"(",ws,Params,ws,")",ws,"{",ws,Body,ws,"}";
+        {memberchk(Lang,['c++','d'])}->
+                "auto",ws_,Name,ws,"(",ws,Params,ws,")",ws,"{",ws,Body,ws,"}";
+        {memberchk(Lang,['java'])}->
+                "public",ws_,"static",ws_,"Object",ws_,Name,ws,"(",ws,Params,ws,")",ws,"{",ws,Body,ws,"}";
+        {memberchk(Lang,['ruby'])}->
+                "def",ws_,Name,ws,"(",ws,Params,ws,")",ws_,Body,ws_,"end";
+        {memberchk(Lang,['perl'])}->
+                "sub",ws_,Name,ws,"{",ws,Params,ws,Body,ws,"}";
+        {memberchk(Lang,['lua'])}->
+                "function",ws_,Name,ws,"(",ws,Params,ws,")",ws_,Body,ws_,"end";
+        {memberchk(Lang,['octave'])}->
+                "function",ws_,"retval",ws,"=",ws,Name,ws,"(",ws,Params,ws,")",ws_,Body,ws_,"endfunction";
+        {memberchk(Lang,['prolog'])}->
+                Name,ws,"(",ws,Params,ws,")",ws_,":-",ws_,Body,ws,".";
+        {memberchk(Lang,['picat'])}->
+                Name,ws,"(",ws,Params,ws,")",ws,"=",ws,"retval",ws,"=>",ws,Body,ws,".";
+        {memberchk(Lang,['erlang'])}->
+                Name,ws,"(",ws,Params,ws,")",ws,"->",ws,Body,ws,".";
+        {memberchk(Lang,['haxe'])}->
+                "static",ws_,"function",ws_,Name,ws,"(",ws,Params,ws,")",ws,"{",ws,Body,ws,"}";
+        {memberchk(Lang,['wolfram'])}->
+                Name,ws,"[",ws,Params,ws,"]",ws,":=",ws,"[",ws,Body,ws,"]";
+        {memberchk(Lang,['dart'])}->
+                Name,ws,"(",ws,Params,ws,")",ws,"{",ws,Body,ws,"}";
+        {memberchk(Lang,['haskell'])}->
+                Name,ws_,Params,ws,"=",ws,Body;
+        {memberchk(Lang,['pydatalog'])}->
+                Name,ws,"[",ws,Params,ws,"]",ws,"=",ws,Body;
+        {memberchk(Lang,['emacs lisp'])}->
+                "(",ws,"defun",ws_,Name,ws_,"(",ws,Params,ws,")",ws_,Body,ws,")";
+        {not_defined_for(Data,'typeless_function')}).
+acos(
+        {memberchk(Lang,['java','javascript','ruby','haxe','typescript'])}->
+                "Math",ws,".",ws,"acos",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['c#','visual basic','visual basic .net'])}->
+                "Math",ws,".",ws,"Acos",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['python','lua'])}->
+                "math",ws,".",ws,"acos",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['perl','seed7','c','fortran','d','php','scala'])}->
+                "acos",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['gambas'])}->
+                "Acos",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['c++'])}->
+                "std",ws,"::",ws,"acos",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['erlang'])}->
+                "math",ws,":",ws,"acos",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['wolfram'])}->
+                "ArcCos",ws,"[",ws,A,ws,"]";
+        {memberchk(Lang,['common lisp','racket'])}->
+                "(",ws,"acos",ws_,A,ws,")";
+        {memberchk(Lang,['clojure'])}->
+                "(",ws,"Math/acos",ws_,A,ws,")";
+        {not_defined_for(Data,'acos')}).
+atan(
+        {memberchk(Lang,['java','javascript','ruby','haxe','typescript'])}->
+                "Math",ws,".",ws,"atan",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['python','lua'])}->
+                "math",ws,".",ws,"atan",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['erlang'])}->
+                "math",ws,":",ws,"atan",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['perl','seed7','c','fortran','d','php','scala'])}->
+                "atan",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['c#','visual basic','visual basic .net'])}->
+                "Math",ws,".",ws,"Atan",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['gambas'])}->
+                "Atan",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['c++'])}->
+                "std",ws,"::",ws,"atan",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['wolfram'])}->
+                "ArcTan",ws,"[",ws,A,ws,"]";
+        {memberchk(Lang,['common lisp','racket'])}->
+                "(",ws,"atan",ws_,A,ws,")";
+        {memberchk(Lang,['clojure'])}->
+                "(",ws,"Math/atan",ws_,A,ws,")";
+        {not_defined_for(Data,'atan')}).
+less_than(
+        {memberchk(Lang,['pascal','z3py','ats','pydatalog','e','vbscript','livecode','monkey x','perl 6','englishscript','cython','gap','mathematical notation','wolfram','chapel','elixir','katahdin','frink','minizinc','picat','java','eclipse','d','ooc','genie','janus','pl/i','idp','processing','maxima','seed7','self','gnu smalltalk','drools','standard ml','oz','cobra','pike','engscript','kotlin','pawn','freebasic','matlab','ada','freebasic','gosu','gambas','nim','autoit','algol 68','ceylon','groovy','rust','coffeescript','typescript','fortran','octave','ml','hack','autohotkey','scala','delphi','tcl','swift','vala','c','f#','c++','dart','javascript','rebol','julia','erlang','ocaml','crosslanguage','c#','nemerle','awk','java','lua','perl','haxe','python','php','haskell','go','ruby','r','bc','visual basic','visual basic .net'])}->
+                A,ws,"<",ws,B;
+        {memberchk(Lang,['prolog'])}->
+                A,ws,"#<",ws,B;
+        {memberchk(Lang,['racket','z3','clips','gnu smalltalk','newlisp','hy','common lisp','emacs lisp','clojure','sibilant','lispyscript'])}->
+                "(",ws,"<",ws_,A,ws_,B,ws,")";
+        {memberchk(Lang,['english'])}->
+                A,ws_,"is",ws_,"less",ws_,"than",ws_,B;
+        {memberchk(Lang,['polish notation'])}->
+                "<",ws_,A,ws_,B;
+        {memberchk(Lang,['reverse polish notation'])}->
+                A,ws_,B,ws_,"<";
+        {not_defined_for(Data,'less_than')}).
+less_than_or_equal(
+        {memberchk(Lang,['c','z3py','ats','seed7','pydatalog','vbscript','livecode','monkey x','englishscript','gap','dafny','janus','perl 6','wolfram','chapel','fortran','elixir','frink','mathematical notation','minizinc','picat','ooc','genie','pl/i','idp','processing','engscript','maxima','gnu smalltalk','pyke','self','boo','cobra','standard ml','prolog','kotlin','pawn','freebasic','ada','matlab','algol 68','gambas','nim','gosu','autoit','ceylon','d','groovy','rust','coffeescript','typescript','octave','hack','autohotkey','julia','scala','pascal','delphi','swift','visual basic','f#','objective-c','pike','python','cython','oz','ml','vala','dart','c++','java','ocaml','rebol','c#','nemerle','ruby','php','lua','visual basic .net','haskell','haxe','perl','javascript','r','awk','crosslanguage','go'])}->
+                A,ws,"<=",ws,B;
+        {memberchk(Lang,['erlang'])}->
+                A,ws,"=<",ws,B;
+        {memberchk(Lang,['racket','z3','clips','newlisp','hy','sibilant','lispyscript','scheme','clojure','common lisp','emacs lisp','crosslanguage'])}->
+                "(",ws,"<=",ws_,A,ws_,B,ws,")";
+        {memberchk(Lang,['english'])}->
+                A,ws_,"is",ws_,"less",ws_,"than",ws_,"or",ws_,"equal",ws_,"to",ws_,B;
+        {memberchk(Lang,['polish notation'])}->
+                "<=",ws_,A,ws_,B;
+        {memberchk(Lang,['reverse polish notation'])}->
+                A,ws_,B,ws_,"<=";
+        {not_defined_for(Data,'less_than_or_equal')}).
+Multiply(
+        {memberchk(Lang,['c','pydatalog','e','livecode','vbscript','monkey x','perl 6','englishscript','cython','agda','gap','pop-11','dafny','wolfram','chapel','katahdin','mathematical notation','frink','minizinc','cobol','ooc','genie','b-prolog','eclipse','elixir','nools','pyke','picat','pl/i','rexx','idp','falcon','processing','maxima','sympy','mercury','self','gnu smalltalk','boo','drools','seed7','occam','standard ml','engscript','pike','oz','kotlin','pawn','matlab','ada','powershell','gosu','awk','gambas','nim','autohotkey','julia','openoffice basic','algol 68','d','groovy','ceylon','rust','coffeescript','actionscript','typescript','fortran','octave','ml','haxe','pascal','delphi','swift','nemerle','vala','r','red','c++','erlang','scala','autoit','cobra','f#','perl','php','go','ruby','lua','haskell','hack','java','ocaml','rebol','python','javascript','c#','visual basic','visual basic .net','dart'])}->
+                A,ws,Symbol,ws,B;
+        {memberchk(Lang,['racket','z3','crosslanguage','common lisp','clips','newlisp','hy','scheme','clojure','common lisp','emacs lisp','sibilant','lispyscript'])}->
+                "(",ws,Symbol,ws_,A,ws_,B,ws,")";
+        {memberchk(Lang,['prolog'])}->
+                A,ws,Symbol,ws,B;
+        {memberchk(Lang,['polish notation'])}->
+                Symbol,ws_,A,ws_,B;
+        {memberchk(Lang,['reverse polish notation'])}->
+                A,ws_,B,ws_,Symbol;
+        {not_defined_for(Data,'Multiply')}).
+Add(
+        {memberchk(Lang,['java','pydatalog','e','livecode','vbscript','monkey x','englishscript','gap','pop-11','dafny','janus','wolfram','chapel','bash','perl 6','mathematical notation','katahdin','frink','minizinc','aldor','cobol','ooc','genie','eclipse','nools','b-prolog','agda','picat','pl/i','rexx','idp','falcon','processing','sympy','maxima','pyke','elixir','gnu smalltalk','seed7','standard ml','occam','boo','drools','icon','mercury','engscript','pike','oz','kotlin','pawn','freebasic','ada','powershell','gosu','nim','cython','openoffice basic','algol 68','d','ceylon','rust','coffeescript','actionscript','typescript','fortran','octave','ml','autohotkey','delphi','pascal','f#','self','swift','nemerle','dart','c','autoit','cobra','julia','groovy','scala','ocaml','erlang','gambas','hack','c++','matlab','rebol','red','lua','go','awk','haskell','perl','python','javascript','c#','php','ruby','r','haxe','visual basic','visual basic .net','vala','bc'])}->
+                A,ws,Symbol,ws,B;
+        {memberchk(Lang,['prolog'])}->
+                A,ws,Symbol,ws,B;
+        {memberchk(Lang,['racket','z3','crosslanguage','common lisp','clips','newlisp','hy','scheme','clojure','common lisp','emacs lisp','sibilant','lispyscript'])}->
+                "(",ws,Symbol,ws_,A,ws_,B,ws,")";
+        {memberchk(Lang,['polish notation'])}->
+                Symbol,ws_,A,ws_,B;
+        {memberchk(Lang,['reverse polish notation'])}->
+                A,ws_,B,ws_,Symbol;
+        {not_defined_for(Data,'Add')}).
+greater_than_or_equal(
+        {memberchk(Lang,['c','z3py','ats','seed7','pydatalog','vbscript','livecode','monkey x','englishscript','gap','dafny','perl 6','wolfram','chapel','frink','mathematical notation','minizinc','picat','ooc','genie','pl/i','idp','processing','engscript','maxima','gnu smalltalk','pyke','self','boo','cobra','standard ml','prolog','kotlin','pawn','freebasic','ada','matlab','algol 68','gambas','nim','gosu','autoit','ceylon','d','groovy','rust','coffeescript','typescript','octave','hack','autohotkey','julia','scala','pascal','delphi','swift','visual basic','f#','objective-c','pike','python','cython','oz','ml','vala','dart','c++','java','ocaml','rebol','erlang','c#','nemerle','ruby','php','lua','visual basic .net','haskell','haxe','perl','javascript','r','awk','crosslanguage','go','janus'])}->
+                A,ws,">=",ws,B;
+        {memberchk(Lang,['fortran'])}->
+                A,ws_,".GE.",ws_,B;
+        {memberchk(Lang,['racket','z3','crosslanguage','common lisp','clips','newlisp','hy','scheme','clojure','common lisp','emacs lisp','sibilant','lispyscript'])}->
+                "(",ws,">=",ws_,A,ws_,B,ws,")";
+        {memberchk(Lang,['polish notation'])}->
+                ">=",ws_,A,ws_,B;
+        {memberchk(Lang,['reverse polish notation'])}->
+                A,ws_,B,ws_,">=";
+        {not_defined_for(Data,'greater_than_or_equal')}).
+function_call_parameters(
+        {memberchk(Lang,['javascript','nim','seed7','vala','wolfram','d','frink','delphi','engscript','chapel','perl','swift','perl 6','ocaml','janus','mathematical notation','pascal','rust','picat','autohotkey','maxima','octave','julia','r','prolog','fortran','go','minizinc','erlang','coffeescript','php','hack','java','c#','c','c++','lua','typescript','dart','ruby','python','haxe','scala','visual basic','visual basic .net'])}->
+                Var1,ws,",",ws,Var2;
+        {memberchk(Lang,['hy','crosslanguage','coq','scheme','racket','common lisp','clips','rebol','haskell','racket','clojure','z3'])}->
+                "function_call_parameters",ws,"=",ws,Var1,ws_,Var2;
+        {not_defined_for(Data,'function_call_parameters')}).
+greater_than(
+        {memberchk(Lang,['pascal','z3py','ats','pydatalog','e','vbscript','livecode','monkey x','perl 6','englishscript','cython','gap','mathematical notation','wolfram','chapel','katahdin','frink','minizinc','picat','java','eclipse','d','ooc','genie','janus','pl/i','idp','processing','maxima','seed7','self','gnu smalltalk','drools','standard ml','oz','cobra','pike','prolog','engscript','kotlin','pawn','freebasic','matlab','ada','freebasic','gosu','gambas','nim','autoit','algol 68','ceylon','groovy','rust','coffeescript','typescript','fortran','octave','ml','hack','autohotkey','scala','delphi','tcl','swift','vala','c','f#','c++','dart','javascript','rebol','julia','erlang','ocaml','crosslanguage','c#','nemerle','awk','java','lua','perl','haxe','python','php','haskell','go','ruby','r','bc','visual basic','visual basic .net'])}->
+                A,ws,">",ws,B;
+        {memberchk(Lang,['racket','z3','clips','gnu smalltalk','newlisp','hy','common lisp','emacs lisp','clojure','sibilant','lispyscript'])}->
+                "(",ws,">",ws_,A,ws_,B,ws,")";
+        {memberchk(Lang,['polish notation'])}->
+                ">",ws_,A,ws_,B;
+        {memberchk(Lang,['reverse polish notation'])}->
+                A,ws_,B,ws_,">";
+        {not_defined_for(Data,'greater_than')}).
+typeof(
+        {memberchk(Lang,['python','lua'])}->
+                "type",ws,"(",ws,TheObject,ws,")";
+        {memberchk(Lang,['javascript'])}->
+                "typeof",ws,"(",ws,TheObject,ws,")";
+        {memberchk(Lang,['visual basic .net'])}->
+                "(",ws,"TypeOf",ws,TheObject,ws,")";
+        {memberchk(Lang,['crosslanguage'])}->
+                "(",ws,"typeof",ws_,TheObject,ws,")";
+        {memberchk(Lang,['go'])}->
+                "reflect",ws,".",ws,"TypeOf",ws,"(",ws,TheObject,ws,")",ws,".",ws,"Name",ws,"(",ws,")";
+        {memberchk(Lang,['java'])}->
+                TheObject,ws,".",ws,"getClass",ws,"(",ws,")",ws,".",ws,"getName",ws,"(",ws,")";
+        {memberchk(Lang,['haxe'])}->
+                "Type",ws,".",ws,"typeof",ws,"(",ws,TheObject,ws,")";
+        {memberchk(Lang,['ruby'])}->
+                "class",ws,"(",ws,TheObject,ws,")";
+        {memberchk(Lang,['c#'])}->
+                TheObject,ws,".",ws,"getType",ws,"(",ws,")";
+        {memberchk(Lang,['perl'])}->
+                "ref",ws,"(",ws,TheObject,ws,")";
+        {memberchk(Lang,['php'])}->
+                "getType",ws,"(",ws,TheObject,ws,")";
+        {memberchk(Lang,['c++'])}->
+                "typeid",ws,"(",ws,TheObject,ws,")",ws,".",ws,"name",ws,"(",ws,")";
+        {not_defined_for(Data,'typeof')}).
+absolute_value(
+        {memberchk(Lang,['lua'])}->
+                "math",ws,".",ws,"abs",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['c','seed7','octave','picat','c++','swift','python','fortran','php','hack','perl','perl 6','dart','julia','scala','livecode'])}->
+                "abs",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['c#','visual basic','visual basic .net'])}->
+                "Math",ws,".",ws,"Abs",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['ruby'])}->
+                A,ws,".",ws,"abs";
+        {memberchk(Lang,['java','javascript','haxe','typescript'])}->
+                "Math",ws,".",ws,"abs",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['wolfram'])}->
+                "Abs",ws,"[",ws,A,ws,"]";
+        {memberchk(Lang,['rebol'])}->
+                "absolute",ws_,A;
+        {memberchk(Lang,['go'])}->
+                "math",ws,".",ws,"Abs",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['z3'])}->
+                "(",ws,"ite",ws_,"(",ws,">=",ws_,A,ws_,"0",ws,")",ws_,A,ws_,"(",ws,"-",ws_,A,ws,")",ws,")";
+        {memberchk(Lang,['common lisp','racket'])}->
+                "(",ws,"abs",ws_,A,ws,")";
+        {not_defined_for(Data,'absolute_value')}).
+natural_logarithm(
+        {memberchk(Lang,['python','lua'])}->
+                "math",ws,".",ws,"log",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['javascript','java','ruby','haxe','typescript'])}->
+                "Math",ws,".",ws,"log",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['c#','visual basic','visual basic .net'])}->
+                "Math",ws,".",ws,"Log",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['c','fortran','perl','php','c++'])}->
+                "log",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['mathematical notation'])}->
+                "ln",ws,"(",ws,A,ws,")";
+        {not_defined_for(Data,'natural_logarithm')}).
+charAt(
+        {memberchk(Lang,['java','haxe','scala','javascript','typescript'])}->
+                AString,ws,".",ws,"charAt",ws,"(",ws,Index,ws,")";
+        {memberchk(Lang,['z3'])}->
+                "(",ws,"CharAt",ws_,"expression",ws_,Index,ws,")";
+        {memberchk(Lang,['python','c','php','c#','minizinc','c++','ruby','picat','haskell','dart'])}->
+                AString,ws,"[",ws,Index,ws,"]";
+        {memberchk(Lang,['lua'])}->
+                AString,ws,":",ws,"sub(",ws,Index,ws,"+",ws,"1",ws,",",ws,Index,ws,"+",ws,"1",ws,")";
+        {memberchk(Lang,['octave'])}->
+                AString,ws,"(",ws,Index,ws,")";
+        {memberchk(Lang,['chapel'])}->
+                AString,ws,".",ws,"substring",ws,"(",ws,Index,ws,")";
+        {memberchk(Lang,['visual basic .net'])}->
+                AString,ws,".",ws,"Chars",ws,"(",ws,Index,ws,")";
+        {memberchk(Lang,['go'])}->
+                "string",ws,"(",ws,"[",ws,"]",ws,"rune",ws,"(",ws,AString,ws,")",ws,"[",ws,Index,ws,"]",ws,")";
+        {memberchk(Lang,['swift'])}->
+                AString,ws,"[",ws,AString,ws,".",ws,"startIndex",ws,".",ws,"advancedBy",ws,"(",ws,Index,ws,")",ws,"]";
+        {memberchk(Lang,['rebol'])}->
+                AString,ws,"/",ws,Index;
+        {memberchk(Lang,['perl'])}->
+                "substr",ws,"(",ws,AString,ws,",",ws,Index,ws,"-",ws,"1",ws,",",ws,"1",ws,")";
+        {not_defined_for(Data,'charAt')}).
+import(
+        {memberchk(Lang,['r'])}->
+                "source",ws,"(",ws,"\"",ws,A,ws,".",ws,"r\"",ws,")";
+        {memberchk(Lang,['javascript'])}->
+                "import",ws_,"*",ws_,"as",ws_,A,ws_,"from",ws_,"'",ws,A,ws,"'",ws,";";
+        {memberchk(Lang,['clojure'])}->
+                "(",ws,"import",ws_,A,ws,")";
+        {memberchk(Lang,['monkey x'])}->
+                "Import",ws_,A;
+        {memberchk(Lang,['fortran'])}->
+                "USE",ws_,A;
+        {memberchk(Lang,['visual basic .net'])}->
+                "Imports",ws_,A;
+        {memberchk(Lang,['rebol'])}->
+                A,ws,":",ws_,"load",ws_,"%",ws,A,ws,".r";
+        {memberchk(Lang,['prolog'])}->
+                ":-",ws,"consult(",ws,A,ws,")",ws,".";
+        {memberchk(Lang,['minizinc'])}->
+                "include",ws_,"'",ws,A,ws,".mzn'",ws,";";
+        {memberchk(Lang,['php'])}->
+                "include",ws_,"'",ws,A,ws,".php'",ws,";";
+        {memberchk(Lang,['c','c++'])}->
+                "#include",ws_,"\"",ws,A,ws,".h\"";
+        {memberchk(Lang,['c#','vala'])}->
+                "using",ws_,A,ws,";";
+        {memberchk(Lang,['julia'])}->
+                "using",ws_,A;
+        {memberchk(Lang,['haskell','engscript','python','scala','go','groovy','picat','elm','swift','monkey x'])}->
+                "import",ws_,A;
+        {memberchk(Lang,['java','d','haxe','ceylon'])}->
+                "import",ws_,A,ws,";";
+        {memberchk(Lang,['dart'])}->
+                "import",ws_,"'",ws,A,ws,".dart'",ws,";";
+        {memberchk(Lang,['ruby','lua'])}->
+                "require",ws_,"'",ws,A,ws,"'";
+        {memberchk(Lang,['perl','perl 6','chapel'])}->
+                "\"use",ws,A,ws,";\"";
+        {not_defined_for(Data,'import')}).
+regex_matches_string(
+        {memberchk(Lang,['python'])}->
+                "re",ws,".",ws,"compile",ws,"(",ws,"regex",ws,")",ws,".",ws,"match",ws,"(",ws,"aString",ws,")";
+        {memberchk(Lang,['java','scala'])}->
+                "aString",ws,".",ws,"matches",ws,"(",ws,"regex",ws,")";
+        {memberchk(Lang,['c#'])}->
+                "regex",ws,".",ws,"isMatch",ws,"(",ws,"aString",ws,")";
+        {memberchk(Lang,['javascript','coffeescript','nools'])}->
+                "$regex",ws,".",ws,"test",ws,"(",ws,"aString",ws,")";
+        {memberchk(Lang,['haxe'])}->
+                "regex",ws,".",ws,"match",ws,"(",ws,"aString",ws,")";
+        {memberchk(Lang,['php'])}->
+                "(",ws,"preg_match",ws,"(",ws,"regex",ws,",",ws,"aString",ws,")",ws,">",ws,"0",ws,")";
+        {memberchk(Lang,['ruby'])}->
+                "(",ws,"aString",ws,"=~",ws,"regex",ws,")";
+        {not_defined_for(Data,'regex_matches_string')}).
+array_contains(
+        {memberchk(Lang,['python','julia','minizinc'])}->
+                Container,ws_,"in",ws_,Contained;
+        {memberchk(Lang,['swift'])}->
+                "contains",ws,"(",ws,Container,ws,",",ws,Contained,ws,")";
+        {memberchk(Lang,['lua'])}->
+                Container,ws,"[",ws,Contained,ws,"]",ws,"~=",ws,"nil";
+        {memberchk(Lang,['rebol'])}->
+                "not",ws_,"none?",ws_,"find",ws_,Container,ws_,Contained;
+        {memberchk(Lang,['javascript','coffeescript'])}->
+                Container,ws,".",ws,"indexOf",ws,"(",ws,Contained,ws,")",ws,"!==",ws,"-1";
+        {memberchk(Lang,['coffeescript'])}->
+                Container,ws,".",ws,"indexOf",ws,"(",ws,Contained,ws,")",ws,"!=",ws,"-1";
+        {memberchk(Lang,['ruby'])}->
+                Container,ws,".",ws,"include?",ws,"(",ws,Contained,ws,")";
+        {memberchk(Lang,['haxe'])}->
+                "Lambda",ws,".",ws,"has",ws,"(",ws,Container,ws,",",ws,Contained,ws,")";
+        {memberchk(Lang,['php'])}->
+                "in_array",ws,"(",ws,Container,ws,",",ws,Container,ws,")";
+        {memberchk(Lang,['c#','visual basic .net'])}->
+                Container,ws,".",ws,"Contains",ws,"(",ws,Contained,ws,")";
+        {memberchk(Lang,['java'])}->
+                "Arrays",ws,".",ws,"asList",ws,"(",ws,Container,ws,")",ws,".",ws,"contains",ws,"(",ws,Contained,ws,")";
+        {memberchk(Lang,['haskell'])}->
+                "(",ws,"elem",ws_,Contained,ws_,Container,ws,")";
+        {memberchk(Lang,['c++'])}->
+                "(",ws,"std",ws,"::",ws,"find",ws,"(",ws,Std,ws,"(",ws,Container,ws,")",ws,",",ws,"std",ws,"::",ws,"end",ws,"(",ws,Container,ws,")",ws,",",ws,Contained,ws,")",ws,"!=",ws,"std",ws,"::",ws,"end",ws,"(",ws,Container,ws,")",ws,")";
+        {not_defined_for(Data,'array_contains')}).
+dictionary(
+        {memberchk(Lang,['python','dart','javascript','typescript','lua','ruby','julia','c++','engscript','visual basic .net'])}->
+                "{",ws,A,ws,"}";
+        {memberchk(Lang,['picat'])}->
+                "new_map",ws,"(",ws,"[",ws,A,ws,"]",ws,")";
+        {memberchk(Lang,['go'])}->
+                "map",ws,"[",ws,Input,ws,"]",ws,Output,ws,"{",ws,A,ws,"}";
+        {memberchk(Lang,['java'])}->
+                "new",ws_,"HashMap",ws,"<",ws,Input,ws,",",ws,Output,ws,">",ws,"(",ws,")",ws,"{",ws,"{",ws,A,ws,"}",ws,"}";
+        {memberchk(Lang,['c#'])}->
+                "new",ws_,"Dictionary",ws,"<",ws,Input,ws,",",ws,Output,ws,">",ws,"{",ws,A,ws,"}";
+        {memberchk(Lang,['perl'])}->
+                "(",ws,A,ws,")";
+        {memberchk(Lang,['php'])}->
+                "array",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['haxe','frink','swift','elixir','d','wolfram'])}->
+                "[",ws,A,ws,"]";
+        {memberchk(Lang,['scala'])}->
+                "Map(",ws,A,ws,")";
+        {memberchk(Lang,['octave'])}->
+                "struct",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['rebol'])}->
+                "to-hash",ws,"[",ws,A,ws,"]";
+        {not_defined_for(Data,'dictionary')}).
+var_name(
+        {memberchk(Lang,['php','perl','bash','tcl','autoit','perl 6','puppet','hack','awk','powershell'])}->
+                "$",Name;
+        {memberchk(Lang,['engscript','englishscript','vbscript','polish notation','reverse polish notation','wolfram','crosslanguage','english','mathematical notation','pascal','katahdin','typescript','javascript','frink','minizinc','aldor','flora-2','f-logic','d','genie','ooc','janus','chapel','abap','cobol','picolisp','rexx','pl/i','falcon','idp','processing','sympy','maxima','z3','shen','ceylon','nools','pyke','self','gnu smalltalk','elixir','lispyscript','standard ml','nim','occam','boo','seed7','pyparsing','agda','icon','octave','cobra','kotlin','c++','drools','oz','pike','delphi','racket','ml','java','pawn','fortran','ada','freebasic','matlab','newlisp','hy','ocaml','julia','autoit','c#','gosu','autohotkey','groovy','rust','r','swift','vala','go','scala','nemerle','visual basic','visual basic .net','clojure','haxe','coffeescript','dart','javascript','c#','python','ruby','haskell','c','lua','gambas','common lisp','scheme','rebol','f#'])}->
+                Name;
+        {memberchk(Lang,['clips'])}->
+                "?",Name;
+        {not_defined_for(Data,'var_name')}).
+default_parameter(
+        {memberchk(Lang,['python','autohotkey','julia','nemerle','php','javascript'])}->
+                Name,ws,"=",ws,Value;
+        {memberchk(Lang,['c#','d','groovy','c++'])}->
+                Type,ws_,Name,ws,"=",ws,Value;
+        {memberchk(Lang,['dart'])}->
+                "[",ws,Type,ws_,Name,ws,"=",ws,Value,ws,"]";
+        {memberchk(Lang,['ruby'])}->
+                Name,ws,":",ws,Value;
+        {memberchk(Lang,['scala','swift','python'])}->
+                Name,ws,":",ws,Type,ws,"=",ws,Value;
+        {memberchk(Lang,['haxe'])}->
+                "?",ws,Name,ws,"=",ws,Value;
+        {memberchk(Lang,['visual basic .net'])}->
+                "Optional",ws_,Name,ws_,"As",ws_,Type,ws,"=",ws,Value;
+        {not_defined_for(Data,'default_parameter')}).
+_initializer_list(
+        {memberchk(Lang,['lua','nim','seed7','erlang','vala','perl 6','octave','picat','julia','polish notation','reverse polish notation','visual basic .net','dart','java','go','c++','javascript','c#','perl','fortran','c','php','haskell','haxe','python','ruby','typescript','minizinc','prolog','rebol','swift'])}->
+                Var1,ws,Var2,ws,Var3;
+        {not_defined_for(Data,'_initializer_list')}).
+initialize_empty_var(
+        {memberchk(Lang,['swift','scala','typescript'])}->
+                "var",ws_,Name,ws,":",ws,Type;
+        {memberchk(Lang,['java','c#','c++','c','d','janus','fortran','dart'])}->
+                Type,ws_,Name;
+        {memberchk(Lang,['javascript','haxe'])}->
+                "var",ws_,Name;
+        {memberchk(Lang,['minizinc'])}->
+                Type,ws,":",ws,Name;
+        {memberchk(Lang,['pascal'])}->
+                Name,ws,":",ws,Type;
+        {memberchk(Lang,['go'])}->
+                "var",ws_,Name,ws_,Type;
+        {memberchk(Lang,['z3'])}->
+                "(",ws,"declare-const",ws_,Name,ws_,Type,ws,")";
+        {memberchk(Lang,['lua','julia'])}->
+                "local",ws_,Name;
+        {memberchk(Lang,['visual basic .net'])}->
+                "Dim",ws_,Name,ws_,"As",ws_,Type;
+        {memberchk(Lang,['perl'])}->
+                "my",ws_,Name;
+        {memberchk(Lang,['perl 6'])}->
+                "my",ws_,Type,ws_,Name;
+        {memberchk(Lang,['z3py'])}->
+                Name,ws,"=",ws,Type,ws,"(",ws,"'",ws,Name,ws,"'",ws,")";
+        {not_defined_for(Data,'initialize_empty_var')}).
+initialize_empty_vars(
+        {memberchk(Lang,['c++','java','c#'])}->
+                Type,ws_,Vars;
+        {not_defined_for(Data,'initialize_empty_vars')}).
+anonymous_function(
+        {memberchk(Lang,['matlab','octave'])}->
+                "(",ws,"@",ws,"(",ws,Params,ws,")",ws,"body",ws,")";
+        {memberchk(Lang,['picat'])}->
+                "lambda",ws,"(",ws,"[",ws,Params,ws,"]",ws,",",ws,"body",ws,")";
+        {memberchk(Lang,['visual basic .net'])}->
+                "Function",ws,"(",ws,Params,ws,")",ws_,"body",ws_,"End",ws_,"Function";
+        {memberchk(Lang,['ruby'])}->
+                "Proc",ws,".",ws,"new",ws,"{",ws,"|",ws,Params,ws,"|",ws,B,ws,"}";
+        {memberchk(Lang,['javascript','typescript','haxe','r','php'])}->
+                "function",ws,"(",ws,Params,ws,")",ws,"{",ws,B,ws,"}";
+        {memberchk(Lang,['haskell'])}->
+                "(",ws,"\\",ws,Params,ws,"->",ws,B,ws,")";
+        {memberchk(Lang,['frink'])}->
+                "{",ws,"|",ws,Params,ws,"|",ws,"body",ws,"}";
+        {memberchk(Lang,['erlang'])}->
+                "fun",ws,"(",ws,Params,ws,")",ws_,B,ws_,"end";
+        {memberchk(Lang,['lua','julia'])}->
+                "function",ws,"(",ws,Params,ws,")",ws_,B,ws_,"end";
+        {memberchk(Lang,['swift'])}->
+                "{",ws,"(",ws,Params,ws,")",ws,"->",ws,Type,ws_,"in",ws_,B,ws,"}";
+        {memberchk(Lang,['go'])}->
+                "func",ws,"(",ws,Params,ws,")",ws,Type,ws,"{",ws,B,ws,"}";
+        {memberchk(Lang,['dart','scala'])}->
+                "(",ws,"(",ws,Params,ws,")",ws,"=>",ws,B,ws,")";
+        {memberchk(Lang,['c++'])}->
+                "[",ws,"=",ws,"]",ws,"(",ws,Params,ws,")",ws,"->",ws,Type,ws,"{",ws,B,ws,"}";
+        {memberchk(Lang,['java'])}->
+                "(",ws,Params,ws,")",ws,"->",ws,"{",ws,B,ws,"}";
+        {memberchk(Lang,['haxe'])}->
+                "(",ws,"name",ws_,Params,ws,"->",ws,B,ws,")";
+        {memberchk(Lang,['python'])}->
+                "(",ws,"lambda",ws_,Params,ws,":",ws,B,ws,")";
+        {memberchk(Lang,['delphi'])}->
+                "function",ws,"(",ws,Params,ws,")",ws,"begin",ws_,B,ws_,"end",ws,";";
+        {memberchk(Lang,['d'])}->
+                "(",ws,Params,ws,")",ws,"{",ws,"body",ws,"}";
+        {memberchk(Lang,['rebol'])}->
+                "func",ws_,"[",ws,Params,ws,"]",ws,"[",ws,"body",ws,"]";
+        {memberchk(Lang,['rust'])}->
+                "fn",ws,"(",ws,Params,ws,")",ws,"{",ws,B,ws,"}";
+        {not_defined_for(Data,'anonymous_function')}).
+function_parameters(
+        {memberchk(Lang,['hy','f#','polish notation','reverse polish notation','z3','scheme','racket','common lisp','clips','rebol','haskell','racket','clojure','perl'])}->
+                A,ws_,B;
+        {memberchk(Lang,['javascript','nim','seed7','pydatalog','e','vbscript','monkey x','livecode','ceylon','delphi','englishscript','cython','vala','dafny','wolfram','gambas','d','frink','chapel','swift','perl 6','ocaml','janus','mathematical notation','pascal','rust','picat','autohotkey','maxima','octave','julia','r','prolog','fortran','go','minizinc','erlang','coffeescript','php','hack','java','c#','c','c++','lua','typescript','dart','ruby','python','haxe','scala','visual basic','visual basic .net'])}->
+                A,ws,",",ws,B;
+        {not_defined_for(Data,'function_parameters')}).
+strlen(
+        {memberchk(Lang,['crosslanguage'])}->
+                "(",ws,"strlen",ws_,A,ws_,"b",ws,")";
+        {memberchk(Lang,['python','go','erlang','nim'])}->
+                "len",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['r'])}->
+                "nchar",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['erlang'])}->
+                String,ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['visual basic','visual basic .net','gambas'])}->
+                "Len",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['javascript','typescript','ruby','scala','gosu','picat','haxe','ocaml','d','dart'])}->
+                A,ws,".",ws,"length";
+        {memberchk(Lang,['rebol'])}->
+                "length?",ws_,A;
+        {memberchk(Lang,['java','c++','kotlin'])}->
+                A,ws,".",ws,"length",ws,"(",ws,")";
+        {memberchk(Lang,['php','c','pawn','hack'])}->
+                "strlen",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['minizinc','julia','perl','seed7','octave'])}->
+                "length",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['c#','nemerle'])}->
+                A,ws,".",ws,"Length";
+        {memberchk(Lang,['swift'])}->
+                "countElements",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['autoit'])}->
+                "StringLen",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['common lisp','haskell'])}->
+                "(",ws,"length",ws_,A,ws,")";
+        {memberchk(Lang,['racket','scheme'])}->
+                "(",ws,"string-length",ws_,A,ws,")";
+        {memberchk(Lang,['fortran'])}->
+                "LEN",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['lua'])}->
+                "string",ws,".",ws,"len",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['wolfram'])}->
+                "StringLength",ws,"[",ws,A,ws,"]";
+        {memberchk(Lang,['z3'])}->
+                "(",ws,"Length",ws_,A,ws,")";
+        {not_defined_for(Data,'strlen')}).
+not_equal(
+        {memberchk(Lang,['clojure'])}->
+                "(",ws,"not=",ws_,A,ws_,B,ws,")";
+        {memberchk(Lang,['maxima'])}->
+                A,ws_,"not",ws_,"=",ws_,B;
+        {memberchk(Lang,['lua'])}->
+                A,ws,"~=",ws,B;
+        {memberchk(Lang,['javascript','php','typescript'])}->
+                A,ws,"!==",ws,B;
+        {memberchk(Lang,['java','nim','octave','r','picat','englishscript','perl 6','wolfram','c','c++','d','c#','julia','perl','ruby','haxe','python','cython','minizinc','scala','swift','go','rust','vala'])}->
+                A,ws,"!=",ws,B;
+        {memberchk(Lang,['english'])}->
+                A,ws_,"does",ws_,"not",ws_,"equal",ws_,B;
+        {memberchk(Lang,['prolog'])}->
+                "not",ws,"(",ws,A,ws,"==",ws,B,ws,")";
+        {memberchk(Lang,['common lisp','z3'])}->
+                "(",ws,"not",ws,"(",ws,"=",ws_,A,ws_,B,ws,")",ws,")";
+        {memberchk(Lang,['mathematical notation'])}->
+                A,ws,"!=",ws,"",ws,B;
+        {memberchk(Lang,['janus'])}->
+                A,ws,"#",ws,B;
+        {memberchk(Lang,['fortran'])}->
+                A,ws,".NE.",ws,B;
+        {memberchk(Lang,['rebol','seed7','visual basic .net','visual basic','gap','ocaml','livecode','monkey x','vbscript','delphi'])}->
+                A,ws,"<>",ws,B;
+        {memberchk(Lang,['erlang','haskell'])}->
+                A,ws,"/=",ws,B;
+        {not_defined_for(Data,'not_equal')}).
+not(
+        {memberchk(Lang,['python','cython','mathematical notation','emacs lisp','minizinc','picat','genie','seed7','z3','idp','maxima','clips','engscript','hy','ocaml','clojure','erlang','pascal','delphi','f#','ml','lua','racket','common lisp','crosslanguage','rebol','haskell','sibilant'])}->
+                "(",ws,"not",ws_,A,ws,")";
+        {memberchk(Lang,['java','perl 6','katahdin','coffeescript','frink','d','ooc','ceylon','processing','janus','pawn','autohotkey','groovy','scala','hack','rust','octave','typescript','julia','awk','swift','scala','vala','nemerle','pike','perl','c','c++','objective-c','tcl','javascript','r','dart','java','go','ruby','php','haxe','c#','wolfram'])}->
+                "!",A;
+        {memberchk(Lang,['prolog'])}->
+                "\\+",A;
+        {memberchk(Lang,['visual basic','visual basic .net','autoit','livecode','monkey x','vbscript'])}->
+                "(",ws,"Not",ws_,A,ws,")";
+        {memberchk(Lang,['fortran'])}->
+                ".NOT.",A;
+        {memberchk(Lang,['gambas'])}->
+                "NOT",ws_,A;
+        {memberchk(Lang,['rexx'])}->
+                "\\",A;
+        {memberchk(Lang,['pl/i'])}->
+                "^",A;
+        {memberchk(Lang,['powershell'])}->
+                "-not",ws_,A;
+        {memberchk(Lang,['polish notation'])}->
+                "not",ws_,A,ws_,"b";
+        {memberchk(Lang,['reverse polish notation'])}->
+                A,ws_,"not";
+        {memberchk(Lang,['z3py'])}->
+                "Not",ws,"(",ws,A,ws,")";
+        {not_defined_for(Data,'not')}).
+async_function(
+        {memberchk(Lang,['c#'])}->
+                "async",ws_,Type,ws_,Name,ws,"(",ws,Params,ws,")",ws,"{",ws,Body,ws,"}";
+        {memberchk(Lang,['javascript','hack'])}->
+                "async",ws_,"function",ws_,Name,ws,"(",ws,Params,ws,")",ws,"{",ws,Body,ws,"}";
+        {memberchk(Lang,['visual basic .net'])}->
+                "Async",ws_,"Function",ws_,Name,ws,"(",ws,Params,ws,")",ws,"As",ws_,"return_type";
+        {not_defined_for(Data,'async_function')}).
+varargs(
+        {memberchk(Lang,['java'])}->
+                Type,ws,"...",ws_,Name;
+        {memberchk(Lang,['php'])}->
+                "",ws,Type,ws,"...",ws_,"$",ws,Name;
+        {memberchk(Lang,['c#'])}->
+                "params",ws_,Type,ws_,Name;
+        {memberchk(Lang,['perl 6'])}->
+                "*@",Name;
+        {memberchk(Lang,['ruby'])}->
+                "*",Name;
+        {memberchk(Lang,['scala'])}->
+                Name,ws,":",ws,Type,ws,"*";
+        {memberchk(Lang,['go'])}->
+                Name,ws,"...",ws,Type;
+        {not_defined_for(Data,'varargs')}).
+key_value_list(
+        {memberchk(Lang,['lua','octave','picat','julia','javascript','dart','java','c#','c++','ruby','php','python','perl','haxe','typescript','visual basic .net','scala','swift','rebol','go'])}->
+                Var1,ws,Var2,ws,Var3;
+        {not_defined_for(Data,'key_value_list')}).
+grammar_Or(
+        {memberchk(Lang,['marpa','rebol','yapps','antlr','jison','waxeye','ometa','ebnf','nearley','parslet','yacc','perl 6','rebol','hampi','earley-parser-js'])}->
+                Var1,ws,"|",ws,Var2;
+        {memberchk(Lang,['lpeg'])}->
+                Var1,ws,"+",ws,Var2;
+        {memberchk(Lang,['peg.js','abnf','treetop'])}->
+                Var1,ws,"/",ws,Var2;
+        {memberchk(Lang,['prolog'])}->
+                Var1,ws,";",ws,Var2;
+        {memberchk(Lang,['parboiled'])}->
+                "Sequence",ws,"(",ws,Var1,ws,",",ws,Var2,ws,")";
+        {not_defined_for(Data,'grammar_Or')}).
+Or(
+        {memberchk(Lang,['javascript','katahdin','perl 6','wolfram','chapel','elixir','frink','ooc','picat','janus','processing','pike','nools','pawn','matlab','hack','gosu','rust','autoit','autohotkey','typescript','ceylon','groovy','d','octave','awk','julia','scala','f#','swift','nemerle','vala','go','perl','java','haskell','haxe','c','c++','c#','dart','r'])}->
+                Var1,ws,"||",ws,Var2;
+        {memberchk(Lang,['python','seed7','pydatalog','livecode','englishscript','cython','gap','mathematical notation','genie','idp','maxima','engscript','ada','newlisp','ocaml','nim','coffeescript','pascal','delphi','erlang','rebol','lua','php','crosslanguage','ruby'])}->
+                Var1,ws_,"or",ws_,Var2;
+        {memberchk(Lang,['fortran'])}->
+                Var1,ws_,".OR.",ws_,Var2;
+        {memberchk(Lang,['z3','clips','clojure','common lisp','emacs lisp','clojure','racket'])}->
+                "(",ws,"or",ws_,Var1,ws_,Var2,ws,")";
+        {memberchk(Lang,['prolog'])}->
+                Var1,ws,";",ws,Var2;
+        {memberchk(Lang,['minizinc'])}->
+                Var1,ws,"\\/",ws,Var2;
+        {memberchk(Lang,['visual basic','visual basic .net','monkey x'])}->
+                Var1,ws_,"Or",ws_,Var2;
+        {memberchk(Lang,['polish notation'])}->
+                "or",ws_,"a",ws_,"b";
+        {memberchk(Lang,['reverse polish notation'])}->
+                "a",ws_,"b",ws_,"or";
+        {memberchk(Lang,['or'])}->
+                "Or",ws,"(",ws,"a",ws,",",ws,"b",ws,")";
+        {not_defined_for(Data,'Or')}).
+And(
+        {memberchk(Lang,['javascript','ats','katahdin','perl 6','wolfram','chapel','elixir','frink','ooc','picat','janus','processing','pike','nools','pawn','matlab','hack','gosu','rust','autoit','autohotkey','typescript','ceylon','groovy','d','octave','awk','julia','scala','f#','swift','nemerle','vala','go','perl','java','haskell','haxe','c','c++','c#','dart','r'])}->
+                A,ws,"&&",ws,B;
+        {memberchk(Lang,['pydatalog'])}->
+                A,ws,"&",ws,B;
+        {memberchk(Lang,['python','seed7','livecode','englishscript','cython','gap','mathematical notation','genie','idp','maxima','engscript','ada','newlisp','ocaml','nim','coffeescript','pascal','delphi','erlang','rebol','lua','php','crosslanguage','ruby'])}->
+                A,ws_,"and",ws_,B;
+        {memberchk(Lang,['minizinc'])}->
+                A,ws,"/\\",ws,B;
+        {memberchk(Lang,['fortran'])}->
+                A,ws,".AND.",ws,B;
+        {memberchk(Lang,['common lisp','z3','newlisp','racket','clojure','sibilant','hy','clips','emacs lisp'])}->
+                "(",ws,"and",ws_,A,ws_,B,ws,")";
+        {memberchk(Lang,['prolog'])}->
+                A,ws,",",ws,B;
+        {memberchk(Lang,['visual basic','visual basic .net','vbscript','openoffice basic','monkey x'])}->
+                A,ws_,"And",ws_,B;
+        {memberchk(Lang,['polish notation'])}->
+                "and",ws_,A,ws_,B;
+        {memberchk(Lang,['reverse polish notation'])}->
+                A,ws_,B,ws_,"and";
+        {memberchk(Lang,['z3py'])}->
+                "And",ws,"(",ws,A,ws,",",ws,B,ws,")";
+        {not_defined_for(Data,'And')}).
+this(
+        {memberchk(Lang,['ruby','coffeescript'])}->
+                "@",A;
+        {memberchk(Lang,['java','engscript','dart','groovy','typescript','javascript','c#','c++','haxe','chapel','julia'])}->
+                "this",ws,".",ws,A;
+        {memberchk(Lang,['python'])}->
+                "self",ws,".",ws,A;
+        {memberchk(Lang,['php','hack'])}->
+                "$",ws,"this",ws,"->",ws,A;
+        {memberchk(Lang,['swift','scala'])}->
+                A;
+        {memberchk(Lang,['rebol'])}->
+                "self",ws,"/",ws,A;
+        {memberchk(Lang,['visual basic .net'])}->
+                "Me",ws,".",ws,A;
+        {memberchk(Lang,['perl'])}->
+                "$self",ws,"->",ws,A;
+        {not_defined_for(Data,'this')}).
+array_length(
+        {memberchk(Lang,['crosslanguage'])}->
+                "(",ws,"array_length",ws_,A,ws,")";
+        {memberchk(Lang,['lua'])}->
+                "#",A;
+        {memberchk(Lang,['python','cython','go'])}->
+                "len",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['java','picat','scala','d','coffeescript','typescript','dart','vala','javascript','ruby','haxe','cobra'])}->
+                A,ws,".",ws,"length";
+        {memberchk(Lang,['c#','visual basic','visual basic .net','powershell'])}->
+                A,ws,".",ws,"Length";
+        {memberchk(Lang,['minizinc','julia','r'])}->
+                "length",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['common lisp'])}->
+                "(",ws,"list-length",ws_,A,ws,")";
+        {memberchk(Lang,['php'])}->
+                "count",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['rust'])}->
+                A,ws,".",ws,"len",ws,"(",ws,")";
+        {memberchk(Lang,['emacs lisp','scheme','racket','haskell'])}->
+                "(",ws,"length",ws_,A,ws,")";
+        {memberchk(Lang,['c++','groovy'])}->
+                A,ws,".",ws,"size",ws,"(",ws,")";
+        {memberchk(Lang,['c'])}->
+                "sizeof",ws,"(",ws,A,ws,")",ws,"/",ws,"sizeof",ws,"(",ws,A,ws,"[",ws,"0",ws,"]",ws,")";
+        {memberchk(Lang,['perl'])}->
+                "scalar",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['rebol'])}->
+                "length?",ws_,A;
+        {memberchk(Lang,['swift'])}->
+                A,ws,".",ws,"count";
+        {memberchk(Lang,['clojure'])}->
+                "(",ws,"count",ws_,"array",ws,")";
+        {memberchk(Lang,['hy'])}->
+                "(",ws,"len",ws_,A,ws,")";
+        {memberchk(Lang,['octave','seed7'])}->
+                "length",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['fortran','janus'])}->
+                "size",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['wolfram'])}->
+                "Length",ws,"[",ws,A,ws,"]";
+        {not_defined_for(Data,'array_length')}).
+initializer_list(
+        {memberchk(Lang,['java','picat','c#','go','lua','c++','c','visual basic .net','visual basic','wolfram'])}->
+                "{",ws,A,ws,"}";
+        {memberchk(Lang,['python','nim','d','frink','rebol','octave','julia','prolog','minizinc','engscript','cython','groovy','dart','typescript','coffeescript','nemerle','javascript','haxe','haskell','ruby','rebol','polish notation','swift'])}->
+                "[",ws,A,ws,"]";
+        {memberchk(Lang,['php'])}->
+                "array",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['scala'])}->
+                "Array",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['perl','chapel'])}->
+                "(",ws,A,ws,")";
+        {memberchk(Lang,['fortran'])}->
+                "(/",ws,A,ws,"/)";
+        {not_defined_for(Data,'initializer_list')}).
+key_value(
+        {memberchk(Lang,['groovy','d','dart','javascript','typescript','coffeescript','swift','elixir','swift','go'])}->
+                A,ws,":",ws,B;
+        {memberchk(Lang,['python'])}->
+                "'",ws,A,ws,"'",ws,":",ws,B;
+        {memberchk(Lang,['ruby','php','haxe','perl','julia'])}->
+                A,ws,"=>",ws,B;
+        {memberchk(Lang,['rebol'])}->
+                A,ws_,B;
+        {memberchk(Lang,['lua','picat'])}->
+                A,ws,"=",ws,B;
+        {memberchk(Lang,['c++','c#','visual basic .net'])}->
+                "{",ws,A,ws,",",ws,B,ws,"}";
+        {memberchk(Lang,['scala','wolfram'])}->
+                A,ws,"->",ws,B;
+        {memberchk(Lang,['octave'])}->
+                A,ws,",",ws,B;
+        {memberchk(Lang,['frink'])}->
+                "[",ws,A,ws,",",ws,B,ws,"]";
+        {memberchk(Lang,['java'])}->
+                "put",ws,"(",ws,A,ws,",",ws,B,ws,")";
+        {not_defined_for(Data,'key_value')}).
+strcmp(
+        {memberchk(Lang,['r'])}->
+                "identical",ws,"(",ws,A,ws,",",ws,B,ws,")";
+        {memberchk(Lang,['emacs lisp'])}->
+                "(",ws,"string=",ws_,A,ws_,B,ws,")";
+        {memberchk(Lang,['clojure'])}->
+                "(",ws,"=",ws_,A,ws_,B,ws,")";
+        {memberchk(Lang,['visual basic','delphi','visual basic .net','vbscript','f#','prolog','mathematical notation','ocaml','livecode','monkey x'])}->
+                A,ws,"=",ws,B;
+        {memberchk(Lang,['python','pydatalog','perl 6','englishscript','chapel','julia','fortran','minizinc','picat','go','vala','autoit','rebol','ceylon','groovy','scala','coffeescript','awk','ruby','haskell','haxe','dart','lua','swift'])}->
+                A,ws,"==",ws,B;
+        {memberchk(Lang,['javascript','php','typescript','hack'])}->
+                A,ws,"===",ws,B;
+        {memberchk(Lang,['c','octave'])}->
+                "strcmp",ws,"(",ws,A,ws,",",ws,B,ws,")",ws,"==",ws,"0";
+        {memberchk(Lang,['c++'])}->
+                A,ws,".",ws,"compare",ws,"(",ws,B,ws,")";
+        {memberchk(Lang,['c#'])}->
+                A,ws,".",ws,"Equals",ws,"(",ws,B,ws,")";
+        {memberchk(Lang,['java'])}->
+                A,ws,".",ws,"equals",ws,"(",ws,B,ws,")";
+        {memberchk(Lang,['common lisp'])}->
+                "(",ws,"equal",ws_,A,ws_,B,ws,")";
+        {memberchk(Lang,['clips'])}->
+                "(",ws,"str-compare",ws_,A,ws_,B,ws,")";
+        {memberchk(Lang,['hy'])}->
+                "(",ws,"=",ws_,A,ws_,B,ws,")";
+        {memberchk(Lang,['perl'])}->
+                A,ws_,"eq",ws_,B;
+        {memberchk(Lang,['erlang'])}->
+                "string",ws,":",ws,"equal",ws,"(",ws,A,ws,",",ws,B,ws,")";
+        {memberchk(Lang,['polish notation'])}->
+                "=",ws_,A,ws_,B;
+        {memberchk(Lang,['reverse polish notation'])}->
+                A,ws_,B,ws_,"=";
+        {not_defined_for(Data,'strcmp')}).
+sqrt(
+        {memberchk(Lang,['livecode'])}->
+                "(",ws,"the",ws_,"sqrt",ws_,"of",ws_,X,ws,")";
+        {memberchk(Lang,['java','javascript','typescript','ruby','haxe'])}->
+                "Math",ws,".",ws,"sqrt",ws,"(",ws,X,ws,")";
+        {memberchk(Lang,['c#','visual basic .net'])}->
+                "Math",ws,".",ws,"Sqrt",ws,"(",ws,X,ws,")";
+        {memberchk(Lang,['c','seed7','julia','perl','php','perl 6','maxima','minizinc','prolog','octave','d','haskell','swift','mathematical notation','dart','picat'])}->
+                "sqrt",ws,"(",ws,X,ws,")";
+        {memberchk(Lang,['lua','python'])}->
+                "math",ws,".",ws,"sqrt",ws,"(",ws,X,ws,")";
+        {memberchk(Lang,['rebol'])}->
+                "square-root",ws_,X;
+        {memberchk(Lang,['scala'])}->
+                "scala",ws,".",ws,"math",ws,".",ws,"sqrt",ws,"(",ws,X,ws,")";
+        {memberchk(Lang,['c++'])}->
+                "std",ws,"::",ws,"sqrt",ws,"(",ws,X,ws,")";
+        {memberchk(Lang,['erlang'])}->
+                "math",ws,":",ws,"sqrt",ws,"(",ws,X,ws,")";
+        {memberchk(Lang,['wolfram'])}->
+                "Sqrt",ws,"[",ws,X,ws,"]";
+        {memberchk(Lang,['common lisp','racket'])}->
+                "(",ws,"sqrt",ws_,X,ws,")";
+        {memberchk(Lang,['fortran'])}->
+                "SQRT",ws,"(",ws,X,ws,")";
+        {memberchk(Lang,['go'])}->
+                "math",ws,".",ws,"Sqrt",ws,"(",ws,X,ws,")";
+        {not_defined_for(Data,'sqrt')}).
+grammar_parentheses_expression(
+        {memberchk(Lang,['marpa','earley-parser-js','antlr','treetop','waxeye','ometa','wirth syntax notation','yacc','lpeg','parslet','peg.js','ebnf','nearley','prolog','perl 6','abnf'])}->
+                "(",ws,A,ws,")";
+        {memberchk(Lang,['rebol'])}->
+                "[",ws,A,ws,"]";
+        {memberchk(Lang,['parboiled'])}->
+                "Sequence",ws,"(",ws,""("",ws,",",ws,A,ws,",",ws,"")"",ws,")";
+        {not_defined_for(Data,'grammar_parentheses_expression')}).
+parentheses_expression(
+        {memberchk(Lang,['pydatalog','pascal','vbscript','monkey x','livecode','perl 6','englishscript','wolfram','cython','mathematical notation','katahdin','frink','minizinc','picat','java','eclipse','d','ooc','genie','janus','pl/i','idp','processing','maxima','seed7','self','gnu smalltalk','drools','standard ml','oz','cobra','pike','prolog','engscript','kotlin','pawn','freebasic','matlab','ada','freebasic','gosu','gambas','nim','autoit','algol 68','ceylon','groovy','rust','coffeescript','typescript','fortran','octave','ml','hack','autohotkey','scala','delphi','tcl','swift','vala','c','f#','c++','dart','javascript','rebol','julia','erlang','ocaml','crosslanguage','c#','nemerle','awk','java','lua','perl','haxe','python','php','haskell','go','ruby','r','bc','visual basic','visual basic .net'])}->
+                "(",ws,A,ws,")";
+        {memberchk(Lang,['racket','polish notation','reverse polish notation','z3','clips','gnu smalltalk','newlisp','hy','common lisp','emacs lisp','clojure','sibilant','lispyscript'])}->
+                A;
+        {not_defined_for(Data,'parentheses_expression')}).
+join(
+        {memberchk(Lang,['swift'])}->
+                Array,ws,".",ws,"joinWithSeparator",ws,"(",ws,Separator,ws,")";
+        {memberchk(Lang,['c#'])}->
+                "String",ws,".",ws,"Join",ws,"(",ws,Separator,ws,",",ws,Array,ws,")";
+        {memberchk(Lang,['php'])}->
+                "implode",ws,"(",ws,Separator,ws,",",ws,Array,ws,")";
+        {memberchk(Lang,['perl'])}->
+                "join",ws,"(",ws,Separator,ws,",",ws,Array,ws,")";
+        {memberchk(Lang,['d','julia'])}->
+                "join",ws,"(",ws,Array,ws,",",ws,Separator,ws,")";
+        {memberchk(Lang,['lua'])}->
+                "table",ws,".",ws,"concat",ws,"(",ws,Array,ws,",",ws,Separator,ws,")";
+        {memberchk(Lang,['go'])}->
+                "Strings",ws,".",ws,"join",ws,"(",ws,Array,ws,",",ws,Separator,ws,")";
+        {memberchk(Lang,['javascript','haxe','coffeescript','ruby','groovy','java','typescript','rust','dart'])}->
+                Array,ws,".",ws,"join",ws,"(",ws,Separator,ws,")";
+        {memberchk(Lang,['python'])}->
+                Separator,ws,".",ws,"join",ws,"(",ws,Array,ws,")";
+        {memberchk(Lang,['scala'])}->
+                Array,ws,".",ws,"mkString",ws,"(",ws,Separator,ws,")";
+        {memberchk(Lang,['visual basic .net'])}->
+                "Join",ws,"(",ws,"array,",ws,Separator,ws,")";
+        {not_defined_for(Data,'join')}).
+plus_equals(
+        {memberchk(Lang,['janus','nim','vala','perl 6','dart','visual basic .net','typescript','python','lua','java','c','c++','c#','javascript','haxe','php','chapel','perl','julia','scala','rust','go','swift'])}->
+                A,ws,"+=",ws,B;
+        {memberchk(Lang,['ruby','haskell','erlang','fortran','ocaml','minizinc','octave','delphi'])}->
+                A,ws,"=",ws,A,ws,"+",ws,B;
+        {memberchk(Lang,['picat'])}->
+                A,ws,":=",ws,A,ws,"+",ws,B;
+        {memberchk(Lang,['rebol'])}->
+                A,ws,":",ws,A,ws,"+",ws,B;
+        {memberchk(Lang,['livecode'])}->
+                "add",ws_,B,ws_,"to",ws_,A;
+        {memberchk(Lang,['seed7'])}->
+                A,ws,"+:=",ws,B;
+        {not_defined_for(Data,'plus_equals')}).
+minus_equals(
+        {memberchk(Lang,['janus','vala','nim','perl 6','dart','perl','visual basic .net','typescript','python','lua','java','c','c++','c#','javascript','php','haxe','hack','julia','scala','rust','go','swift'])}->
+                A,ws,"-=",ws,B;
+        {memberchk(Lang,['ruby','haskell','erlang','fortran','ocaml','minizinc','octave','delphi'])}->
+                A,ws,"=",ws,A,ws,"-",ws,B;
+        {memberchk(Lang,['picat'])}->
+                A,ws,":=",ws,A,ws,"-",ws,B;
+        {memberchk(Lang,['rebol'])}->
+                A,ws,":",ws,A,ws,"-",ws,B;
+        {memberchk(Lang,['livecode'])}->
+                "subtract",ws_,B,ws_,"from",ws_,A;
+        {memberchk(Lang,['seed7'])}->
+                A,ws,"-:=",ws,B;
+        {not_defined_for(Data,'minus_equals')}).
+grammar_concatenate_string(
+        {memberchk(Lang,['ebnf','prolog'])}->
+                A,ws,",",ws,B;
+        {memberchk(Lang,['lpeg'])}->
+                A,ws,"*",ws,B;
+        {memberchk(Lang,['peg.js','yapps','earley-parser-js','hampi','antlr','jison','treetop','waxeye','ometa','marpa','nearley','yacc','wirth syntax notation','perl 6','rebol','abnf'])}->
+                A,ws_,B;
+        {memberchk(Lang,['parslet'])}->
+                A,ws,">>",ws,B;
+        {memberchk(Lang,['parboiled'])}->
+                "Sequence",ws,"(",ws,A,ws,",",ws,B,ws,")";
+        {not_defined_for(Data,'grammar_concatenate_string')}).
+concatenate_string(
+        {memberchk(Lang,['r'])}->
+                "paste0",ws,"(",ws,A,ws,",",ws,B,ws,")";
+        {memberchk(Lang,['maxima'])}->
+                "sconcat",ws,"(",ws,A,ws,",",ws,B,ws,")";
+        {memberchk(Lang,['common lisp'])}->
+                "(",ws,"concatenate",ws_,"'string",ws_,A,ws_,B,ws,")";
+        {memberchk(Lang,['c','z3py','monkey x','englishscript','mathematical notation','go','java','chapel','frink','freebasic','nemerle','d','cython','ceylon','coffeescript','typescript','dart','gosu','groovy','scala','swift','f#','python','javascript','c#','haxe','ruby','c++','vala'])}->
+                A,ws,"+",ws,B;
+        {memberchk(Lang,['lua','engscript'])}->
+                A,ws,"..",ws,B;
+        {memberchk(Lang,['fortran'])}->
+                A,ws,"//",ws,B;
+        {memberchk(Lang,['php','autohotkey','hack','perl'])}->
+                A,ws,".",ws,B;
+        {memberchk(Lang,['ocaml'])}->
+                A,ws,"^",ws,B;
+        {memberchk(Lang,['rebol'])}->
+                "append",ws_,A,ws_,B;
+        {memberchk(Lang,['haskell','minizinc','picat','elm'])}->
+                A,ws,"++",ws,B;
+        {memberchk(Lang,['clips'])}->
+                "(",ws,"str-cat",ws,A,ws,B,ws,")";
+        {memberchk(Lang,['clojure'])}->
+                "(",ws,"str",ws,A,ws,B,ws,")";
+        {memberchk(Lang,['erlang'])}->
+                "string",ws,":",ws,"concat",ws,"(",ws,A,ws,",",ws,B,ws,")";
+        {memberchk(Lang,['julia'])}->
+                "string",ws,"(",ws,A,ws,",",ws,B,ws,")";
+        {memberchk(Lang,['octave'])}->
+                "strcat",ws,"(",ws,A,ws,",",ws,B,ws,")";
+        {memberchk(Lang,['racket'])}->
+                "(",ws,"string-append",ws,A,ws,B,ws,")";
+        {memberchk(Lang,['delphi'])}->
+                "Concat",ws,"(",ws,A,ws,",",ws,B,ws,")";
+        {memberchk(Lang,['visual basic','seed7','gambas','nim','autoit','visual basic .net','openoffice basic','livecode','vbscript'])}->
+                A,ws,"&",ws,B;
+        {memberchk(Lang,['elixir','wolfram'])}->
+                A,ws,"<>",ws,B;
+        {memberchk(Lang,['perl 6'])}->
+                A,ws,"~",ws,B;
+        {memberchk(Lang,['z3'])}->
+                "(",ws,"Concat",ws_,A,ws_,B,ws,")";
+        {memberchk(Lang,['emacs lisp'])}->
+                "(",ws,"concat",ws_,A,ws_,B,ws,")";
+        {memberchk(Lang,['polish notation'])}->
+                "+",ws_,A,ws_,B;
+        {memberchk(Lang,['reverse polish notation'])}->
+                A,ws_,B,ws_,"+";
+        {not_defined_for(Data,'concatenate_string')}).
+range(
+        {memberchk(Lang,['swift','perl','picat','ruby','minizinc','chapel'])}->
+                A,ws,"..",ws,B;
+        {memberchk(Lang,['python'])}->
+                "range",ws,"(",ws,A,ws,",",ws,B,ws,"-",ws,"1",ws,")";
+        {memberchk(Lang,['octave','julia','r'])}->
+                A,ws,":",ws,B;
+        {memberchk(Lang,['haxe'])}->
+                A,ws,"...",ws,"(",ws,B,ws,"-",ws,"1",ws,")";
+        {not_defined_for(Data,'range')}).
+split(
+        {memberchk(Lang,['swift'])}->
+                AString,ws,".",ws,"componentsSeparatedByString",ws,"(",ws,Separator,ws,")";
+        {memberchk(Lang,['octave'])}->
+                "strsplit",ws,"(",ws,AString,ws,",",ws,Separator,ws,")";
+        {memberchk(Lang,['go'])}->
+                "strings",ws,".",ws,"Split",ws,"(",ws,AString,ws,",",ws,Separator,ws,")";
+        {memberchk(Lang,['javascript','coffeescript','java','python','dart','scala','groovy','haxe','ruby','rust','typescript','cython','vala'])}->
+                AString,ws,".",ws,"split",ws,"(",ws,Separator,ws,")";
+        {memberchk(Lang,['lua'])}->
+                "string",ws,".",ws,"gmatch",ws,"(",ws,AString,ws,",",ws,Separator,ws,")";
+        {memberchk(Lang,['php'])}->
+                "explode",ws,"(",ws,Separator,ws,",",ws,AString,ws,")";
+        {memberchk(Lang,['perl','processing'])}->
+                "split",ws,"(",ws,Separator,ws,",",ws,AString,ws,")";
+        {memberchk(Lang,['rebol'])}->
+                "split",ws_,AString,ws_,Separator;
+        {memberchk(Lang,['c#'])}->
+                AString,ws,".",ws,"Split",ws,"(",ws,"new",ws,"string[]",ws,"{",ws,Separator,ws,"}",ws,",",ws,"StringSplitOptions",ws,".",ws,"None",ws,")";
+        {memberchk(Lang,['picat','d','julia'])}->
+                "split",ws,"(",ws,AString,ws,",",ws,Separator,ws,")";
+        {memberchk(Lang,['haskell'])}->
+                "(",ws,"splitOn",ws_,AString,ws_,Separator,ws,")";
+        {memberchk(Lang,['wolfram'])}->
+                "StringSplit",ws,"[",ws,AString,ws,",",ws,Separator,ws,"]";
+        {memberchk(Lang,['visual basic .net'])}->
+                "Split",ws,"(",ws,AString,ws,",",ws,Separator,ws,")";
+        {not_defined_for(Data,'split')}).
+pow(
+        {memberchk(Lang,['lua'])}->
+                "math",ws,".",ws,"pow",ws,"(",ws,A,ws,",",ws,B,ws,")";
+        {memberchk(Lang,['scala'])}->
+                "scala.math.pow",ws,"(",ws,A,ws,",",ws,B,ws,")";
+        {memberchk(Lang,['c#','visual basic .net'])}->
+                "Math",ws,".",ws,"Pow",ws,"(",ws,A,ws,",",ws,B,ws,")";
+        {memberchk(Lang,['javascript','java','typescript','haxe'])}->
+                "Math",ws,".",ws,"pow",ws,"(",ws,A,ws,",",ws,B,ws,")";
+        {memberchk(Lang,['python','seed7','cython','chapel','haskell','cobol','picat','ooc','pl/i','rexx','maxima','awk','r','f#','autohotkey','tcl','autoit','groovy','octave','ruby','perl','perl 6','fortran'])}->
+                "(",ws,A,ws,"**",ws,B,ws,")";
+        {memberchk(Lang,['rebol'])}->
+                "power",ws_,A,ws_,B;
+        {memberchk(Lang,['c','c++','php','hack','swift','minizinc','dart','d'])}->
+                "pow",ws,"(",ws,A,ws,",",ws,B,ws,")";
+        {memberchk(Lang,['julia','engscript','visual basic','visual basic .net','gambas','go','ceylon','wolfram','mathematical notation'])}->
+                A,ws,"^",ws,B;
+        {memberchk(Lang,['rust'])}->
+                Num,ws,"(",ws,A,ws,",",ws,B,ws,")";
+        {memberchk(Lang,['hy','common lisp','racket','clojure'])}->
+                "(",ws,"expt",ws_,"num1",ws_,"num2",ws,")";
+        {memberchk(Lang,['erlang'])}->
+                "math",ws,":",ws,"pow",ws,"(",ws,A,ws,",",ws,B,ws,")";
+        {not_defined_for(Data,'pow')}).
+case_statements(
+        {memberchk(Lang,['java','vala','octave','ocaml','c','c#','c++','javascript','php','haxe','fortran','ruby','dart','typescript','scala','haskell','visual basic .net','swift','rebol'])}->
+                A,ws_,B;
+        {memberchk(Lang,['erlang'])}->
+                A,ws,";",ws,B;
+        {not_defined_for(Data,'case_statements')}).
+substring(
+        {memberchk(Lang,['javascript','coffeescript','typescript','java','scala','dart'])}->
+                A,ws,".",ws,"substring",ws,"(",ws,B,ws,",",ws,C,ws,")";
+        {memberchk(Lang,['c++'])}->
+                A,ws,".",ws,"substring",ws,"(",ws,B,ws,",",ws,C,ws,"-",ws,B,ws,")";
+        {memberchk(Lang,['z3'])}->
+                "(",ws,"Substring",ws_,A,ws_,B,ws_,C,ws,")";
+        {memberchk(Lang,['python','cython','icon','go'])}->
+                A,ws,"[",ws,B,ws,":",ws,C,ws,"]";
+        {memberchk(Lang,['julia:'])}->
+                A,ws,"[",ws,B,ws,"-",ws,"1",ws,":",ws,C,ws,"]";
+        {memberchk(Lang,['fortran'])}->
+                A,ws,"(",ws,B,ws,":",ws,C,ws,")";
+        {memberchk(Lang,['c#','visual basic .net','nemerle'])}->
+                A,ws,".",ws,"Substring",ws,"(",ws,B,ws,",",ws,C,ws,")";
+        {memberchk(Lang,['haskell'])}->
+                "take",ws,"(",ws,C,ws,"-",ws,B,ws,")",ws,".",ws,"drop",ws,B,ws,"$",ws,A;
+        {memberchk(Lang,['php','awk','perl','hack'])}->
+                "substr",ws,"(",ws,A,ws,",",ws,B,ws,",",ws,C,ws,")";
+        {memberchk(Lang,['haxe'])}->
+                A,ws,".",ws,"substr",ws,"(",ws,B,ws,",",ws,C,ws,")";
+        {memberchk(Lang,['rebol'])}->
+                "copy/part",ws_,"skip",ws_,A,ws_,B,ws_,C;
+        {memberchk(Lang,['clojure'])}->
+                "(",ws,"subs",ws_,A,ws_,B,ws_,C,ws,")";
+        {memberchk(Lang,['erlang'])}->
+                "string",ws,":",ws,"sub_string",ws,"(",ws,A,ws,",",ws,B,ws,",",ws,C,ws,")";
+        {memberchk(Lang,['ruby','pike','groovy'])}->
+                A,ws,"[",ws,B,ws,"..",ws,C,ws,"]";
+        {memberchk(Lang,['racket'])}->
+                "(",ws,"substring",ws_,A,ws_,B,ws_,C,ws,")";
+        {memberchk(Lang,['common lisp'])}->
+                "(",ws,"subseq",ws_,A,ws_,B,ws_,C,ws,")";
+        {memberchk(Lang,['lua'])}->
+                "string",ws,".",ws,"sub",ws,"(",ws,A,ws,",",ws,B,ws,",",ws,C,ws,")";
+        {not_defined_for(Data,'substring')}).
+mod(
+        {memberchk(Lang,['java','perl 6','cython','rust','typescript','frink','ooc','genie','pike','ceylon','pawn','powershell','coffeescript','gosu','groovy','engscript','awk','julia','scala','f#','swift','r','perl','nemerle','haxe','php','hack','vala','lua','tcl','go','dart','javascript','python','c','c++','c#','ruby'])}->
+                A,ws,"%",ws,B;
+        {memberchk(Lang,['rebol'])}->
+                "mod",ws_,A,ws_,B;
+        {memberchk(Lang,['haskell','seed7','minizinc','ocaml','delphi','pascal','picat','livecode'])}->
+                A,ws_,"mod",ws_,B;
+        {memberchk(Lang,['prolog','octave','matlab','autohotkey','fortran'])}->
+                "mod",ws,"(",ws,A,ws,",",ws,B,ws,")";
+        {memberchk(Lang,['erlang'])}->
+                A,ws_,"rem",ws_,B;
+        {memberchk(Lang,['clips','clojure','common lisp','z3'])}->
+                "(",ws,"mod",ws_,A,ws_,B,ws,")";
+        {memberchk(Lang,['visual basic','visual basic .net','monkey x'])}->
+                A,ws_,"Mod",ws_,B;
+        {memberchk(Lang,['wolfram'])}->
+                "Mod",ws,"[",ws,A,ws,",",ws,B,ws,"]";
+        {not_defined_for(Data,'mod')}).
+dot_notation(
+        {memberchk(Lang,['java','octave','scala','julia','python','javascript','typescript','dart','d','haxe','c#','perl 6','lua','c++','visual basic .net','ruby','go','swift'])}->
+                "var1",ws,".",ws,"var2";
+        {memberchk(Lang,['php','c','perl'])}->
+                "var1",ws,"->",ws,"var2";
+        {memberchk(Lang,['rebol'])}->
+                "var1",ws,"/",ws,"var2";
+        {memberchk(Lang,['fortran'])}->
+                "var1",ws,"%",ws,"var2";
+        {not_defined_for(Data,'dot_notation')}).
+sin(
+        {memberchk(Lang,['java','javascript','typescript','ruby','haxe'])}->
+                "Math",ws,".",ws,"sin",ws,"(",ws,Var1,ws,")";
+        {memberchk(Lang,['lua','python'])}->
+                "math",ws,".",ws,"sin",ws,"(",ws,Var1,ws,")";
+        {memberchk(Lang,['c','seed7','erlang','picat','mathematical notation','julia','d','php','perl','perl 6','maxima','fortran','minizinc','swift','prolog','octave','dart','haskell','c++','scala'])}->
+                "sin",ws,"(",ws,Var1,ws,")";
+        {memberchk(Lang,['c#','visual basic .net'])}->
+                "Math",ws,".",ws,"Sin",ws,"(",ws,Var1,ws,")";
+        {memberchk(Lang,['wolfram'])}->
+                "Sin",ws,"[",ws,Var1,ws,"]";
+        {memberchk(Lang,['rebol'])}->
+                "sine/radians",ws_,Var1;
+        {memberchk(Lang,['go'])}->
+                "math",ws,".",ws,"Sin",ws,"(",ws,Var1,ws,")";
+        {memberchk(Lang,['common lisp','racket'])}->
+                "(",ws,"sin",ws_,"a",ws,")";
+        {memberchk(Lang,['clojure'])}->
+                "(",ws,"Math/sin",ws_,"a",ws,")";
+        {not_defined_for(Data,'sin')}).
+cos(
+        {memberchk(Lang,['java','javascript','typescript','ruby','haxe'])}->
+                "Math",ws,".",ws,"cos",ws,"(",ws,Var1,ws,")";
+        {memberchk(Lang,['lua','python'])}->
+                "math",ws,".",ws,"cos",ws,"(",ws,Var1,ws,")";
+        {memberchk(Lang,['c','seed7','erlang','picat','mathematical notation','julia','d','php','perl','perl 6','maxima','fortran','minizinc','swift','prolog','octave','dart','haskell','c++','scala'])}->
+                "cos",ws,"(",ws,Var1,ws,")";
+        {memberchk(Lang,['c#','visual basic .net'])}->
+                "Math",ws,".",ws,"Cos",ws,"(",ws,Var1,ws,")";
+        {memberchk(Lang,['wolfram'])}->
+                "Cos",ws,"[",ws,Var1,ws,"]";
+        {memberchk(Lang,['go'])}->
+                "math",ws,".",ws,"Cos",ws,"(",ws,Var1,ws,")";
+        {memberchk(Lang,['rebol'])}->
+                "cosine/radians",ws_,Var1;
+        {memberchk(Lang,['common lisp','racket'])}->
+                "(",ws,"cos",ws_,"a",ws,")";
+        {memberchk(Lang,['clojure'])}->
+                "(",ws,"Math/cos",ws_,"a",ws,")";
+        {not_defined_for(Data,'cos')}).
+tan(
+        {memberchk(Lang,['java','javascript','typescript','ruby','haxe'])}->
+                "Math",ws,".",ws,"tan",ws,"(",ws,Var1,ws,")";
+        {memberchk(Lang,['lua','python'])}->
+                "math",ws,".",ws,"tan",ws,"(",ws,Var1,ws,")";
+        {memberchk(Lang,['c','seed7','erlang','picat','mathematical notation','julia','d','php','perl','perl 6','maxima','fortran','minizinc','swift','prolog','octave','dart','haskell','c++','scala'])}->
+                "tan",ws,"(",ws,Var1,ws,")";
+        {memberchk(Lang,['c#','visual basic .net'])}->
+                "Math",ws,".",ws,"Tan",ws,"(",ws,Var1,ws,")";
+        {memberchk(Lang,['wolfram'])}->
+                "Tan",ws,"[",ws,Var1,ws,"]";
+        {memberchk(Lang,['rebol'])}->
+                "tangent/radians",ws_,Var1;
+        {memberchk(Lang,['go'])}->
+                "math",ws,".",ws,"Tan",ws,"(",ws,Var1,ws,")";
+        {memberchk(Lang,['common lisp','racket'])}->
+                "(",ws,"tan",ws_,"a",ws,")";
+        {memberchk(Lang,['clojure'])}->
+                "(",ws,"Math/tan",ws_,"a",ws,")";
+        {not_defined_for(Data,'tan')}).
+instance_method(
+        {memberchk(Lang,['swift'])}->
+                "func",ws_,Name,ws,"(",ws,Params,ws,")",ws,"->",ws,Type,ws,"{",ws,Body,ws,"}";
+        {memberchk(Lang,['visual basic .net'])}->
+                "Public",ws_,"Function",ws_,"InstanceMethod",ws,"(",ws,Params,ws,")",ws,"As",ws_,Type,ws_,Body,ws_,"End",ws_,"Function";
+        {memberchk(Lang,['javascript'])}->
+                Name,ws,"(",ws,Params,ws,")",ws,"{",ws,Body,ws,"}";
+        {memberchk(Lang,['perl 6'])}->
+                "method",ws_,Name,ws_,"(",ws,Params,ws,")",ws,"{",ws,Body,ws,"}";
+        {memberchk(Lang,['chapel'])}->
+                "def",ws_,Name,ws,"(",ws,Params,ws,")",ws,":",ws,Type,ws,"{",ws,Body,ws,"}";
+        {memberchk(Lang,['java','c#'])}->
+                "public",ws_,Type,ws_,Name,ws,"(",ws,Params,ws,")",ws,"{",ws,Body,ws,"}";
+        {memberchk(Lang,['php'])}->
+                "public",ws_,"function",ws_,Name,ws,"(",ws,Params,ws,")",ws,"{",ws,Body,ws,"}";
+        {memberchk(Lang,['ruby'])}->
+                "def",ws_,Name,ws,"(",ws,Params,ws,")",ws_,Body,ws_,"end";
+        {memberchk(Lang,['c++','d','dart'])}->
+                Type,ws_,Name,ws,"(",ws,Params,ws,")",ws,"{",ws,Body,ws,"}";
+        {memberchk(Lang,['haxe'])}->
+                "public",ws_,"function",ws_,Name,ws,"(",ws,Params,ws,")",ws,":",ws,Type,ws,"{",ws,Body,ws,"}";
+        {memberchk(Lang,['lua'])}->
+                ws;
+        {memberchk(Lang,['python'])}->
+                "def",ws_,Name,ws,"(",ws,"self,",ws,Params,ws,")",ws,":",ws,"\n",ws,"#indent",ws,"\n",ws,Body,ws,"\n",ws,"#unindent";
+        {not_defined_for(Data,'instance_method')}).
+typeless_instance_method(
+        {memberchk(Lang,['swift'])}->
+                "func",ws_,Name,ws,"(",ws,Params,ws,")",ws,"{",ws,Body,ws,"}";
+        {memberchk(Lang,['visual basic .net'])}->
+                "Public",ws_,"Function",ws_,"InstanceMethod",ws,"(",ws,Params,ws,")",ws_,Body,ws_,"End",ws_,"Function";
+        {memberchk(Lang,['javascript','dart'])}->
+                Name,ws,"(",ws,Params,ws,")",ws,"{",ws,Body,ws,"}";
+        {memberchk(Lang,['chapel'])}->
+                "def",ws_,Name,ws,"(",ws,Params,ws,")",ws,"{",ws,Body,ws,"}";
+        {memberchk(Lang,['java'])}->
+                "public",ws_,"Object",ws_,Name,ws,"(",ws,Params,ws,")",ws,"{",ws,Body,ws,"}";
+        {memberchk(Lang,['c#'])}->
+                "public",ws_,"object",ws_,Name,ws,"(",ws,Params,ws,")",ws,"{",ws,Body,ws,"}";
+        {memberchk(Lang,['php'])}->
+                "public",ws_,"function",ws_,Name,ws,"(",ws,Params,ws,")",ws,"{",ws,Body,ws,"}";
+        {memberchk(Lang,['ruby'])}->
+                "def",ws_,Name,ws,"(",ws,Params,ws,")",ws_,Body,ws_,"end";
+        {memberchk(Lang,['c++','d'])}->
+                "auto",ws_,Name,ws,"(",ws,Params,ws,")",ws,"{",ws,Body,ws,"}";
+        {memberchk(Lang,['haxe'])}->
+                "public",ws_,"function",ws_,Name,ws,"(",ws,Params,ws,")",ws,"{",ws,Body,ws,"}";
+        {memberchk(Lang,['lua'])}->
+                ws;
+        {memberchk(Lang,['python'])}->
+                "def",ws_,Name,ws,"(",ws,"self,",ws,Params,ws,")",ws,":",ws,"\n",ws,"#indent",ws,"\n",ws,Body,ws,"\n",ws,"#unindent";
+        {not_defined_for(Data,'typeless_instance_method')}).
+typeless_static_method(
+        {memberchk(Lang,['swift'])}->
+                "class",ws_,"func",ws_,Name,ws,"(",ws,Params,ws,")",ws,"{",ws,Body,ws,"}";
+        {memberchk(Lang,['visual basic .net'])}->
+                "Public",ws_,"Shared",ws_,"Function",ws_,"InstanceMethod",ws,"(",ws,Params,ws,")",ws_,Body,ws_,"End",ws_,"Function";
+        {memberchk(Lang,['javascript'])}->
+                "static",ws_,Name,ws,"(",ws,Params,ws,")",ws,"{",ws,Body,ws,"}";
+        {memberchk(Lang,['haxe'])}->
+                "public",ws_,"static",ws_,"function",ws_,Name,ws,"(",ws,Params,ws,")",ws,"{",ws,Body,ws,"}";
+        {memberchk(Lang,['lua','julia'])}->
+                "function",ws_,Name,ws,"(",ws,Params,ws,")",ws_,Body,ws_,"end";
+        {memberchk(Lang,['java'])}->
+                "public",ws_,"static",ws_,"Object",ws_,Name,ws,"(",ws,Params,ws,")",ws,"{",ws,Body,ws,"}";
+        {memberchk(Lang,['c#'])}->
+                "public",ws_,"static",ws_,"object",ws_,Name,ws,"(",ws,Params,ws,")",ws,"{",ws,Body,ws,"}";
+        {memberchk(Lang,['dart'])}->
+                "static",ws_,Name,ws,"(",ws,Params,ws,")",ws,"{",ws,Body,ws,"}";
+        {memberchk(Lang,['c++'])}->
+                "static",ws_,"auto",ws_,Name,ws,"(",ws,Params,ws,")",ws,"{",ws,Body,ws,"}";
+        {memberchk(Lang,['php'])}->
+                "public",ws_,"static",ws_,"function",ws_,Name,ws,"(",ws,Params,ws,")",ws,"{",ws,Body,ws,"}";
+        {memberchk(Lang,['ruby'])}->
+                "def",ws_,"self",ws,".",ws,Name,ws,"(",ws,Params,ws,")",ws_,Body,ws_,"end";
+        {memberchk(Lang,['python'])}->
+                "@staticmethod",ws,"\n",ws_,"def",ws_,Name,ws,"(",ws,"",ws,Params,ws,")",ws,":",ws,"\n",ws,"#indent",ws,"\n",ws,Body,ws,"\n",ws,"#unindent";
+        {not_defined_for(Data,'typeless_static_method')}).
+static_method(
+        {memberchk(Lang,['swift'])}->
+                "class",ws_,"func",ws_,Name,ws,"(",ws,Params,ws,")",ws,"->",ws,Type,ws,"{",ws,Body,ws,"}";
+        {memberchk(Lang,['visual basic .net'])}->
+                "Public",ws_,"Shared",ws_,"Function",ws_,"InstanceMethod",ws,"(",ws,Params,ws,")",ws_,"As",ws_,Type,ws_,Body,ws_,"End",ws_,"Function";
+        {memberchk(Lang,['haxe'])}->
+                "public",ws_,"static",ws_,"function",ws_,Name,ws,"(",ws,Params,ws,")",ws,"{",ws,Body,ws,"}";
+        {memberchk(Lang,['lua','julia'])}->
+                "function",ws_,Name,ws,"(",ws,Params,ws,")",ws_,Body,ws_,"end";
+        {memberchk(Lang,['java','c#'])}->
+                "public",ws_,"static",ws_,Type,ws_,Name,ws,"(",ws,Params,ws,")",ws,"{",ws,Body,ws,"}";
+        {memberchk(Lang,['c++','dart'])}->
+                "static",ws_,Type,ws_,Name,ws,"(",ws,Params,ws,")",ws,"{",ws,Body,ws,"}";
+        {memberchk(Lang,['php'])}->
+                "public",ws_,"static",ws_,"function",ws_,Name,ws,"(",ws,Params,ws,")",ws,"{",ws,Body,ws,"}";
+        {memberchk(Lang,['ruby'])}->
+                "def",ws_,"self",ws,".",ws,Name,ws,"(",ws,Params,ws,")",ws_,Body,ws_,"end";
+        {memberchk(Lang,['c'])}->
+                Type,ws_,Name,ws,"(",ws,Params,ws,")",ws,"{",ws,Body,ws,"}";
+        {memberchk(Lang,['javascript'])}->
+                "static",ws_,Name,ws,"(",ws,Params,ws,")",ws,"{",ws,Body,ws,"}";
+        {memberchk(Lang,['picat'])}->
+                ws;
+        {memberchk(Lang,['python'])}->
+                "@staticmethod",ws,"\n",ws_,"def",ws_,Name,ws,"(",ws,"",ws,Params,ws,")",ws,":",ws,"\n",ws,"#indent",ws,"\n",ws,Body,ws,"\n",ws,"#unindent";
+        {not_defined_for(Data,'static_method')}).
+declare_new_object(
+        {memberchk(Lang,['visual basic .net'])}->
+                "Private",ws_,Var_name,ws_,"As",ws_,"New",ws_,Class_name,ws,"(",ws,Params,ws,")";
+        {memberchk(Lang,['java','c#','d','dart'])}->
+                Class_name,ws_,Var_name,ws,"=",ws,"new",ws_,Class_name,ws,"(",ws,Params,ws,")";
+        {memberchk(Lang,['javascript','haxe','chapel','scala'])}->
+                "var",ws_,Var_name,ws,"=",ws,"new",ws_,Class_name,ws,"(",ws,Params,ws,")";
+        {memberchk(Lang,['php'])}->
+                Var_name,ws,"=",ws,"new",ws_,Class_name,ws,"(",ws,Params,ws,")";
+        {memberchk(Lang,['python','swift','octave'])}->
+                Var_name,ws,"=",ws,Class_name,ws,"(",ws,Params,ws,")";
+        {memberchk(Lang,['ruby'])}->
+                Var_name,ws,"=",ws,Class_name,ws,".",ws,"new",ws,"(",ws,Params,ws,")";
+        {memberchk(Lang,['perl'])}->
+                "my",ws_,Var_name,ws,"=",ws,Class_name,ws,"->",ws,"new",ws,"(",ws,Params,ws,")";
+        {memberchk(Lang,['perl 6'])}->
+                "my",ws_,Var_name,ws,"=",ws,Class_name,ws,"->",ws,"new",ws,"(",ws,Params,ws,")";
+        {memberchk(Lang,['c++'])}->
+                Class_name,ws_,Var_name,ws,"(",ws,Params,ws,")";
+        {not_defined_for(Data,'declare_new_object')}).
+string_to_int(
+        {memberchk(Lang,['common lisp'])}->
+                "(",ws,"parse-integer",ws_,A,ws,")";
+        {memberchk(Lang,['rust'])}->
+                A,ws,".",ws,"parse",ws,"::",ws,"<int>",ws,"(",ws,")";
+        {memberchk(Lang,['perl 6'])}->
+                "+",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['go'])}->
+                "strconv",ws,".",ws,"Atoi",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['python','julia'])}->
+                "int",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['haxe'])}->
+                "Std",ws,".",ws,"parseInt",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['php'])}->
+                "(",ws,"int",ws,")",ws,A;
+        {memberchk(Lang,['haskell'])}->
+                "(",ws,"read",ws_,A,ws,")";
+        {memberchk(Lang,['c#'])}->
+                "Int32",ws,".",ws,"Parse(",ws,A,ws,")";
+        {memberchk(Lang,['visual basic .net'])}->
+                "Convert",ws,".",ws,"toInt32",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['java'])}->
+                "Integer",ws,".",ws,"parseInt",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['ceylon'])}->
+                "parseInteger",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['c'])}->
+                "atoi",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['scala'])}->
+                A,ws,".",ws,"toInt";
+        {memberchk(Lang,['d'])}->
+                "std",ws,".",ws,"conv",ws,".",ws,"to!int",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['ruby'])}->
+                "Integer",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['rebol'])}->
+                "to",ws_,"integer!",ws_,A;
+        {memberchk(Lang,['lua'])}->
+                "tonumber",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['javascript','typescript'])}->
+                "parseInt",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['c++'])}->
+                "atoi",ws,"(",ws,A,ws,".",ws,"c_str",ws,"(",ws,")",ws,")";
+        {memberchk(Lang,['dart'])}->
+                "int",ws,".",ws,"parse",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['swift'])}->
+                "Int",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['octave'])}->
+                "str2double",ws,"(",ws,A,ws,")";
+        {not_defined_for(Data,'string_to_int')}).
+int_to_string(
+        {memberchk(Lang,['perl 6'])}->
+                "~",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['go'])}->
+                "strconv",ws,".",ws,"Itoa",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['python'])}->
+                "str",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['wolfram'])}->
+                "ToString",ws,"[",ws,A,ws,"]";
+        {memberchk(Lang,['swift','javascript','typescript'])}->
+                "String",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['java'])}->
+                "Integer",ws,".",ws,"toString",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['haskell'])}->
+                "(",ws,"show",ws_,A,ws,")";
+        {memberchk(Lang,['perl'])}->
+                A;
+        {memberchk(Lang,['c#','visual basic .net'])}->
+                "Convert",ws,".",ws,"ToString",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['ruby'])}->
+                A,ws,".",ws,"to_s";
+        {memberchk(Lang,['rebol'])}->
+                "to",ws_,"string!",ws_,A;
+        {memberchk(Lang,['c++'])}->
+                "std",ws,"::",ws,"to_string",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['lua'])}->
+                "tostring",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['haxe'])}->
+                "Std",ws,".",ws,"toString",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['d'])}->
+                "std",ws,".",ws,"conv",ws,".",ws,"to!string",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['php'])}->
+                "(",ws,"string",ws,")",ws,A;
+        {memberchk(Lang,['dart'])}->
+                A,ws,".",ws,"toString",ws,"(",ws,")";
+        {memberchk(Lang,['scala'])}->
+                A,ws,".",ws,"toString";
+        {memberchk(Lang,['rust'])}->
+                A,ws,".",ws,"to_string",ws,"(",ws,")";
+        {memberchk(Lang,['julia'])}->
+                "string",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['octave'])}->
+                "num2str",ws,"(",ws,A,ws,")";
+        {not_defined_for(Data,'int_to_string')}).
+typeless_declare_constant(
+        {memberchk(Lang,['polish notation'])}->
+                "=",ws_,Name,ws_,Value;
+        {memberchk(Lang,['reverse polish notation'])}->
+                Name,ws_,Value,ws_,"=";
+        {memberchk(Lang,['go'])}->
+                "const",ws_,"type",ws_,Name,ws,"=",ws,Value;
+        {memberchk(Lang,['php','javascript','typescript','nim'])}->
+                "const",ws_,Name,ws,"=",ws,Value;
+        {memberchk(Lang,['visual basic .net'])}->
+                "Public",ws_,"Const",ws_,Name,ws,"=",ws,Value;
+        {memberchk(Lang,['rust','swift'])}->
+                "let",ws_,Name,ws,"=",ws,Value;
+        {memberchk(Lang,['c'])}->
+                "static",ws_,"const",ws_,Name,ws,"=",ws,Value;
+        {memberchk(Lang,['c#'])}->
+                "const",ws_,"object",ws_,Name,ws,"=",ws,Value;
+        {memberchk(Lang,['d','c++'])}->
+                "const",ws_,"auto",ws_,Name,ws,"=",ws,Value;
+        {memberchk(Lang,['common lisp'])}->
+                "(",ws,"setf",ws_,Name,ws_,Value,ws,")";
+        {memberchk(Lang,['scala'])}->
+                "val",ws_,Name,ws,"=",ws,Value;
+        {memberchk(Lang,['python','ruby','haskell','erlang','julia','picat','prolog'])}->
+                Name,ws,"=",ws,Value;
+        {memberchk(Lang,['lua'])}->
+                "local",ws_,Name,ws,"=",ws,Value;
+        {memberchk(Lang,['perl'])}->
+                "my",ws_,Name,ws,"=",ws,Value;
+        {memberchk(Lang,['rebol'])}->
+                Name,ws,":",ws,Value;
+        {memberchk(Lang,['haxe'])}->
+                "static",ws_,"inline",ws_,"var",ws_,Name,ws,"=",ws,Value;
+        {memberchk(Lang,['java'])}->
+                "final",ws_,"Object",ws_,Name,ws,"=",ws,Value;
+        {memberchk(Lang,['dart'])}->
+                "final",ws_,Name,ws,"=",ws,Value;
+        {memberchk(Lang,['chapel'])}->
+                "var",ws,Name,ws,"=",ws,Value;
+        {memberchk(Lang,['perl 6'])}->
+                "constant",ws_,Name,ws,"=",ws,Value;
+        {not_defined_for(Data,'typeless_declare_constant')}).
+assert(
+        {memberchk(Lang,['c','c++','lua','python','swift','php','ceylon'])}->
+                "assert",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['c#','visual basic .net'])}->
+                "Debug",ws,".",ws,"Assert",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['java','englishscript','f#'])}->
+                "assert",A;
+        {memberchk(Lang,['clojure'])}->
+                "(",ws,"assert",ws_,A,ws,")";
+        {memberchk(Lang,['r'])}->
+                "stopifnot",ws,"(",ws,A,ws,")";
+        {not_defined_for(Data,'assert')}).
+declare_constant(
+        {memberchk(Lang,['seed7'])}->
+                "const",ws_,Type,ws,":",ws,Name,ws_,"is",ws_,Value;
+        {memberchk(Lang,['polish notation'])}->
+                "=",ws_,Name,ws_,Value;
+        {memberchk(Lang,['reverse polish notation'])}->
+                Name,ws_,Value,ws_,"=";
+        {memberchk(Lang,['fortran'])}->
+                Type,ws,",",ws,"PARAMETER",ws,"::",ws,Name,ws,"=",ws,"expression";
+        {memberchk(Lang,['go'])}->
+                "const",ws_,Type,ws_,Name,ws,"=",ws,Value;
+        {memberchk(Lang,['perl 6'])}->
+                "constant",ws_,Type,ws_,Name,ws,"=",ws,Value;
+        {memberchk(Lang,['php','javascript','dart'])}->
+                "const",ws_,Name,ws,"=",ws,Value;
+        {memberchk(Lang,['z3'])}->
+                "(",ws,"declare-const",ws_,Name,ws_,Type,ws,")",ws,"(",ws,"assert",ws_,"(",ws,"=",ws_,Name,ws_,Value,ws,")",ws,")";
+        {memberchk(Lang,['visual basic .net'])}->
+                "Public",ws_,"Const",ws_,Name,ws_,"As",ws_,Type,ws,"=",ws,Value;
+        {memberchk(Lang,['rust','swift'])}->
+                "let",ws_,Name,ws,"=",ws,Value;
+        {memberchk(Lang,['c++','c','d','c#'])}->
+                "const",ws_,Type,ws_,Name,ws,"=",ws,Value;
+        {memberchk(Lang,['common lisp'])}->
+                "(",ws,"setf",ws_,Name,ws_,Value,ws,")";
+        {memberchk(Lang,['minizinc'])}->
+                Type,ws,":",ws,Name,ws,"=",ws,Value;
+        {memberchk(Lang,['scala'])}->
+                "val",ws_,Name,ws,":",ws,Type,ws,"=",ws,Value;
+        {memberchk(Lang,['python','ruby','haskell','erlang','julia','picat','prolog'])}->
+                Name,ws,"=",ws,Value;
+        {memberchk(Lang,['lua'])}->
+                "local",ws_,Name,ws,"=",ws,Value;
+        {memberchk(Lang,['perl'])}->
+                "my",ws_,Name,ws,"=",ws,Value;
+        {memberchk(Lang,['rebol'])}->
+                Name,ws,":",ws,Value;
+        {memberchk(Lang,['haxe'])}->
+                "static",ws_,"inline",ws_,"var",ws_,Name,ws,"=",ws,Value;
+        {memberchk(Lang,['java','dart'])}->
+                "final",ws_,Type,ws_,Name,ws,"=",ws,Value;
+        {memberchk(Lang,['c'])}->
+                "static",ws_,"const",ws_,Name,ws,"=",ws,Value;
+        {memberchk(Lang,['chapel'])}->
+                "var",ws_,Name,ws,":",ws,Type,ws,"=",ws,Value;
+        {memberchk(Lang,['typescript'])}->
+                "const",ws_,Name,ws,":",ws,Type,ws,"=",ws,Value;
+        {not_defined_for(Data,'declare_constant')}).
+index_of(
+        {memberchk(Lang,['javascript','java'])}->
+                String,ws,".",ws,"indexOf",ws,"(",ws,Substring,ws,")";
+        {memberchk(Lang,['d'])}->
+                String,ws,".",ws,"indexOfAny",ws,"(",ws,Substring,ws,")";
+        {memberchk(Lang,['ruby'])}->
+                String,ws,".",ws,"index",ws,"(",ws,Substring,ws,")";
+        {memberchk(Lang,['c#'])}->
+                String,ws,".",ws,"IndexOf",ws,"(",ws,Substring,ws,")";
+        {memberchk(Lang,['python'])}->
+                String,ws,".",ws,"find",ws,"(",ws,Substring,ws,")";
+        {memberchk(Lang,['go'])}->
+                "strings",ws,".",ws,"Index",ws,"(",ws,String,ws,",",ws,Substring,ws,")";
+        {not_defined_for(Data,'index_of')}).
+function_call_named_parameter(
+        {memberchk(Lang,['python','c#','fortran','scala'])}->
+                Name,ws,"=",ws,Value;
+        {memberchk(Lang,['modula-3','visual basic .net'])}->
+                Name,ws,":=",ws,Value;
+        {memberchk(Lang,['ruby','swift','dart'])}->
+                Name,ws,":",ws,Value;
+        {memberchk(Lang,['javascript','erlang','octave','picat','julia','mathematical notation','lua','java','c','php','haxe','minizinc','c++','prolog','z3','rebol','haskell','go','polish notation','reverse polish notation'])}->
+                Value;
+        {memberchk(Lang,['perl'])}->
+                "",ws,Name,ws,"=>",ws,Value;
+        {not_defined_for(Data,'function_call_named_parameter')}).
+function_call(
+        {memberchk(Lang,['c','nim','seed7','gap','mathematical notation','chapel','elixir','janus','perl 6','pascal','rust','hack','katahdin','minizinc','pawn','aldor','picat','d','genie','ooc','pl/i','delphi','standard ml','rexx','falcon','idp','processing','maxima','swift','boo','r','matlab','autoit','pike','gosu','awk','autohotkey','gambas','kotlin','nemerle','engscript','prolog','groovy','scala','coffeescript','julia','typescript','fortran','octave','c++','go','cobra','ruby','vala','f#','java','ceylon','ocaml','erlang','python','c#','lua','haxe','javascript','dart','bc','visual basic','visual basic .net','php','perl'])}->
+                TheName,ws,"(",ws,Args,ws,")";
+        {memberchk(Lang,['haskell','z3','clips','clojure','common lisp','clips','racket','scheme','crosslanguage','rebol'])}->
+                "(",ws,TheName,ws_,Args,ws,")";
+        {memberchk(Lang,['polish notation'])}->
+                TheName,ws_,Args;
+        {memberchk(Lang,['reverse polish notation'])}->
+                Args,ws_,TheName;
+        {memberchk(Lang,['pydatalog','nearley'])}->
+                TheName,ws,"[",ws,Args,ws,"]";
+        {not_defined_for(Data,'function_call')}).
+reverse_string(
+        {memberchk(Lang,['python'])}->
+                A,ws,"",ws,"[",ws,"::",ws,"-1",ws,"]";
+        {memberchk(Lang,['ruby'])}->
+                A,ws,".",ws,"reverse!";
+        {memberchk(Lang,['java'])}->
+                "new",ws_,"StringBuilder",ws,"(",ws,"theString",ws,")",ws,".",ws,"reverse",ws,"(",ws,")",ws,".",ws,"toString",ws,"(",ws,")";
+        {memberchk(Lang,['javascript'])}->
+                A,ws,".",ws,"reverse",ws,"(",ws,")";
+        {memberchk(Lang,['php'])}->
+                "strrev",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['visual basic .net'])}->
+                "StrReverse",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['haskell'])}->
+                "(",ws,"reverse",ws_,A,ws,")";
+        {memberchk(Lang,['perl'])}->
+                "reverse",ws,"(",ws,A,ws,")";
+        {not_defined_for(Data,'reverse_string')}).
+remove_dictionary_key(
+        {memberchk(Lang,['javascript'])}->
+                "delete",ws_,Dictionary,ws,"[",ws,Key,ws,"]";
+        {memberchk(Lang,['perl'])}->
+                "delete",ws_,Dictionary,ws,"{",ws,Key,ws,"}";
+        {memberchk(Lang,['python'])}->
+                Dictionary,ws,".",ws,"pop",ws,"(",ws,Key,ws,",",ws,"None",ws,")";
+        {memberchk(Lang,['ruby'])}->
+                Dictionary,ws,".",ws,"delete",ws,"(",ws,Key,ws,")";
+        {not_defined_for(Data,'remove_dictionary_key')}).
+dictionary_keys(
+        {memberchk(Lang,['javascript'])}->
+                "Object",ws,".",ws,"keys",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['python'])}->
+                A,ws,".",ws,"keys",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['php'])}->
+                "array_keys",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['ruby'])}->
+                A,ws,".",ws,"keys";
+        {memberchk(Lang,['perl'])}->
+                "keys",ws,"(",ws,A,ws,")";
+        {not_defined_for(Data,'dictionary_keys')}).
+reverse_array(
+        {memberchk(Lang,['haskell'])}->
+                "(",ws,"reverse",ws_,A,ws,")";
+        {memberchk(Lang,['ruby'])}->
+                A,ws,".",ws,"reverse";
+        {memberchk(Lang,['javascript','haxe'])}->
+                A,ws,".",ws,"reverse",ws,"(",ws,")";
+        {memberchk(Lang,['python'])}->
+                A,ws,"[",ws,"::",ws,"-1",ws,"]";
+        {memberchk(Lang,['perl'])}->
+                "reverse",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['php'])}->
+                "array_reverse",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['visual basic .net','c#'])}->
+                "Array",ws,".",ws,"Reverse",ws,"(",ws,A,ws,")";
+        {not_defined_for(Data,'reverse_array')}).
+for(
+        {memberchk(Lang,['java','d','pawn','groovy','javascript','dart','typescript','php','hack','c#','perl','c++','awk','pike'])}->
+                "for",ws,"(",ws,Statement_1,ws,";",ws,Condition,ws,";",ws,Statement_2,ws,")",ws,"{",ws,Body,ws,"}";
+        {memberchk(Lang,['c'])}->
+                Init,ws,";",ws,"for",ws,"(",ws,Statement_1,ws,";",ws,Condition,ws,";",ws,Statement_2,ws,")",ws,"{",ws,Body,ws,"}";
+        {memberchk(Lang,['haxe'])}->
+                Statement_1,ws,";",ws,"",ws,"while",ws,"(",ws,Condition,ws,")",ws,"{",ws,Body,ws,Statement_2,ws,";",ws,"}";
+        {memberchk(Lang,['lua','ruby'])}->
+                Statement_1,ws_,"while",ws_,Condition,ws_,"do",ws_,Body,ws_,Statement_2,ws_,"end";
+        {not_defined_for(Data,'for')}).
+while(
+        {memberchk(Lang,['gap'])}->
+                "while",ws_,A,ws_,"do",ws_,B,ws_,"od",ws,";";
+        {memberchk(Lang,['englishscript'])}->
+                "while",ws_,A,ws_,"do",ws_,B,ws_,"od",ws,";";
+        {memberchk(Lang,['fortran'])}->
+                "WHILE",ws_,"(",ws,A,ws,")",ws_,"DO",ws_,B,ws_,"ENDDO";
+        {memberchk(Lang,['pascal'])}->
+                "while",ws_,A,ws_,"do",ws_,"begin",ws_,B,ws_,"end;";
+        {memberchk(Lang,['delphi'])}->
+                "While",ws_,A,ws_,"do",ws_,"begin",ws_,B,ws_,"end;";
+        {memberchk(Lang,['rust','frink','dafny'])}->
+                "while",ws_,A,ws,"{",ws,B,ws,"}";
+        {memberchk(Lang,['c','perl 6','katahdin','chapel','ooc','processing','pike','kotlin','pawn','powershell','hack','gosu','autohotkey','ceylon','d','typescript','actionscript','nemerle','dart','swift','groovy','scala','java','javascript','php','c#','perl','c++','haxe','r','awk','vala'])}->
+                "while",ws,"(",ws,A,ws,")",ws,"{",ws,B,ws,"}";
+        {memberchk(Lang,['lua','ruby','julia'])}->
+                "while",ws_,A,ws_,B,ws_,"end";
+        {memberchk(Lang,['picat'])}->
+                "while",ws_,"(",ws,A,ws,")",ws_,B,ws_,"end";
+        {memberchk(Lang,['rebol'])}->
+                "while",ws,"[",ws,A,ws,"]",ws,"[",ws,B,ws,"]";
+        {memberchk(Lang,['common lisp'])}->
+                "(",ws,"loop",ws_,"while",ws_,A,ws_,"do",ws_,B,ws,")";
+        {memberchk(Lang,['hy','newlisp','clips'])}->
+                "(",ws,"while",ws_,A,ws_,B,ws,")";
+        {memberchk(Lang,['python','cython'])}->
+                "while",ws_,A,ws,":",ws,"\n",ws,"#indent",ws,"\n",ws,B,ws,"\n",ws,"#unindent";
+        {memberchk(Lang,['visual basic','visual basic .net','vbscript'])}->
+                "While",ws_,A,ws_,B,ws_,"End",ws,"While";
+        {memberchk(Lang,['octave'])}->
+                "while",ws,"(",ws,A,ws,")",ws_,"endwhile";
+        {memberchk(Lang,['wolfram'])}->
+                "While",ws,"[",ws,A,ws,",",ws,B,ws,"]";
+        {memberchk(Lang,['go'])}->
+                "for",ws_,A,ws,"{",ws,B,ws,"}";
+        {memberchk(Lang,['vbscript'])}->
+                "Do",ws_,"While",ws_,A,ws_,B,ws_,"Loop";
+        {memberchk(Lang,['seed7'])}->
+                "while",ws_,A,ws_,"do",ws_,B,ws_,"end",ws_,"while",ws,";";
+        {not_defined_for(Data,'while')}).
+exception(
+        {memberchk(Lang,['python'])}->
+                "raise",ws_,"Exception",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['ruby','ocaml'])}->
+                "raise",ws_,A;
+        {memberchk(Lang,['javascript','dart','java','c++','swift','rebol','haxe','c#','picat','scala'])}->
+                "throw",ws_,A;
+        {memberchk(Lang,['julia','e'])}->
+                "throw",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['visual basic .net'])}->
+                "Throw",ws_,A;
+        {memberchk(Lang,['perl','perl 6'])}->
+                "die",ws_,A;
+        {memberchk(Lang,['octave'])}->
+                "error",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['php'])}->
+                "throw",ws_,"new",ws_,"Exception",ws,"(",ws,A,ws,")";
+        {not_defined_for(Data,'exception')}).
+function(
+        {memberchk(Lang,['sql'])}->
+                "CREATE",ws_,"FUNCTION",ws_,"dbo",ws,".",ws,Name,ws,"(",ws,"function_parameters",ws,")",ws_,"RETURNS",ws_,Type,ws_,Body;
+        {memberchk(Lang,['seed7'])}->
+                "const",ws_,"func",ws_,Type,ws,":",ws,Name,ws,"(",ws,Params,ws,")",ws_,"is",ws_,"func",ws_,"begin",ws_,Body,ws_,"end",ws_,"func",ws,";";
+        {memberchk(Lang,['livecode'])}->
+                "function",ws_,Name,ws_,Params,ws_,Body,ws_,"end",ws_,Name;
+        {memberchk(Lang,['monkey x'])}->
+                "Function",ws,Name,ws,":",ws,Type,ws,"(",ws,Params,ws,")",ws,Body,ws_,"End";
+        {memberchk(Lang,['emacs lisp'])}->
+                "(",ws,"defun",ws_,Name,ws_,"(",ws,Params,ws,")",ws_,Body,ws,")";
+        {memberchk(Lang,['go'])}->
+                "func",ws_,Name,ws,"(",ws,Params,ws,")",ws_,Type,ws,"{",ws,Body,ws,"}";
+        {memberchk(Lang,['c++','vala','c','dart','ceylon','pike','d','englishscript'])}->
+                Type,ws_,Name,ws,"(",ws,Params,ws,")",ws,"{",ws,Body,ws,"}";
+        {memberchk(Lang,['pydatalog'])}->
+                Name,ws,"(",ws,Params,ws,")",ws,"<=",ws,Body;
+        {memberchk(Lang,['java','c#'])}->
+                "public",ws_,"static",ws_,Type,ws_,Name,ws,"(",ws,Params,ws,")",ws,"{",ws,Body,ws,"}";
+        {memberchk(Lang,['javascript','php'])}->
+                "function",ws_,Name,ws,"(",ws,Params,ws,")",ws,"{",ws,Body,ws,"}";
+        {memberchk(Lang,['lua','julia'])}->
+                "function",ws_,Name,ws,"(",ws,Params,ws,")",ws_,Body,ws_,"end";
+        {memberchk(Lang,['wolfram'])}->
+                Name,ws,"[",ws,Params,ws,"]",ws,":=",ws,Body;
+        {memberchk(Lang,['frink'])}->
+                Name,ws,"[",ws,Params,ws,"]",ws,":=",ws,"{",ws,Body,ws,"}";
+        {memberchk(Lang,['pop-11'])}->
+                "define",ws_,Name,ws,"(",ws,Params,ws,")",ws,"->",ws,"Result;",ws_,Body,ws_,"enddefine;";
+        {memberchk(Lang,['z3'])}->
+                "(",ws,"define-fun",ws_,Name,ws,"(",ws,Params,ws,")",ws_,Type,ws_,Body,ws,")";
+        {memberchk(Lang,['mathematical notation'])}->
+                Name,ws,"(",ws,Params,ws,")",ws,"=",ws,"{",ws,Body,ws,"}";
+        {memberchk(Lang,['chapel'])}->
+                "proc",ws_,Name,ws,"(",ws,Params,ws,")",ws,":",ws,Type,ws,"{",ws,Body,ws,"}";
+        {memberchk(Lang,['prolog'])}->
+                Name,ws,"(",ws,Params,ws,")",ws_,":-",ws_,Body,ws,".";
+        {memberchk(Lang,['picat'])}->
+                Name,ws,"(",ws,Params,ws,")",ws,"=",ws,"retval",ws,"=>",ws,Body,ws,".";
+        {memberchk(Lang,['swift'])}->
+                "func",ws_,Name,ws,"(",ws,Params,ws,")",ws,"->",ws,Type,ws,"{",ws,Body,ws,"}";
+        {memberchk(Lang,['maxima'])}->
+                Name,ws,"(",ws,Params,ws,")",ws,":=",ws,Body;
+        {memberchk(Lang,['rust'])}->
+                "fn",ws_,Name,ws,"(",ws,Params,ws,")",ws,"->",ws,Type,ws,"{",ws,Body,ws,"}";
+        {memberchk(Lang,['clojure'])}->
+                "(",ws,"defn",ws,Name,ws,"[",ws,Params,ws,"]",ws,Body,ws,")";
+        {memberchk(Lang,['octave'])}->
+                "function",ws_,"retval",ws,"=",ws,Name,ws,"(",ws,Params,ws,")",ws,Body,ws_,"endfunction";
+        {memberchk(Lang,['haskell'])}->
+                Name,ws_,Params,ws,"=",ws,Body;
+        {memberchk(Lang,['common lisp'])}->
+                "(defun",ws_,Name,ws,"(",ws,Params,ws,")",ws,Body,ws,")";
+        {memberchk(Lang,['fortran'])}->
+                "FUNC",ws_,Name,ws_,"(",ws,Params,ws,")",ws_,"RESULT",ws,"(",ws,"retval",ws,")",ws_,Type,ws,"::",ws,"retval",ws_,Body,ws_,"END",ws_,"FUNCTION",ws_,Name;
+        {memberchk(Lang,['scala'])}->
+                "def",ws_,Name,ws,"(",ws,Params,ws,")",ws,":",ws,Type,ws,"=",ws,"{",ws,Body,ws,"}";
+        {memberchk(Lang,['minizinc'])}->
+                "function",ws_,Type,ws,":",ws,Name,ws,"(",ws,Params,ws,")",ws,"=",ws,Body,ws,";";
+        {memberchk(Lang,['clips'])}->
+                "(",ws,"deffunction",ws_,Name,ws,"(",ws,Params,ws,")",ws,Body,ws,")";
+        {memberchk(Lang,['erlang'])}->
+                Name,ws,"(",ws,Params,ws,")",ws,"->",ws,Body;
+        {memberchk(Lang,['perl'])}->
+                "sub",ws_,Name,ws,"{",ws,Params,ws,Body,ws,"}";
+        {memberchk(Lang,['perl 6'])}->
+                "sub",ws_,Name,ws,"(",ws,Params,ws,")",ws,"{",ws,Body,ws,"}";
+        {memberchk(Lang,['pawn'])}->
+                Name,ws,"(",ws,Params,ws,")",ws,"{",ws,Body,ws,"}";
+        {memberchk(Lang,['ruby'])}->
+                "def",ws_,Name,ws,"(",ws,Params,ws,")",ws_,Body,ws_,"end";
+        {memberchk(Lang,['typescript'])}->
+                "function",ws_,Name,ws,"(",ws,Params,ws,")",ws,":",ws,Type,ws,"{",ws,Body,ws,"}";
+        {memberchk(Lang,['rebol'])}->
+                Name,ws,":",ws_,"func",ws,"[",ws,Params,ws,"]",ws,"[",ws,Body,ws,"]";
+        {memberchk(Lang,['haxe'])}->
+                "public",ws_,"static",ws_,"function",ws_,Name,ws,"(",ws,Params,ws,")",ws,":",ws,Type,ws,"{",ws,Body,ws,"}";
+        {memberchk(Lang,['hack'])}->
+                "function",ws_,Name,ws,"(",ws,Params,ws,")",ws,":",ws,Type,ws,"{",ws,Body,ws,"}";
+        {memberchk(Lang,['r'])}->
+                Name,ws,"<-",ws,"function",ws,"(",ws,Params,ws,")",ws,"{",ws,Body,ws,"}";
+        {memberchk(Lang,['bc'])}->
+                "define",ws_,Name,ws,"(",ws,Params,ws,")",ws,"{",ws,Body,ws,"}";
+        {memberchk(Lang,['visual basic','visual basic .net'])}->
+                "Function",ws_,Name,ws,"(",ws,Params,ws,")",ws,"As",ws_,Type,ws_,Body,ws_,"End",ws_,"Function";
+        {memberchk(Lang,['vbscript'])}->
+                "Function",ws_,Name,ws,"(",ws,Params,ws,")",ws_,Body,ws_,"End",ws_,"Function";
+        {memberchk(Lang,['racket','newlisp'])}->
+                "(define",ws,"(name",ws,"params)",ws,Body,ws,")";
+        {memberchk(Lang,['janus'])}->
+                "procedure",ws_,Name,ws,"(",ws,Params,ws,")",ws,Body;
+        {memberchk(Lang,['python'])}->
+                "def",ws_,Name,ws,"(",ws,Params,ws,")",ws,"->",ws,Type,ws,":",ws,"\n",ws,"#indent",ws,"\n",ws,Body,ws,"\n",ws,"#unindent";
+        {memberchk(Lang,['f#'])}->
+                "let",ws_,Name,ws_,Params,ws,"=",ws,"\n",ws,"#indent",ws,"\n",ws,Body,ws,"\n",ws,"#unindent";
+        {memberchk(Lang,['polish notation'])}->
+                "=",ws,Name,ws,"(",ws,Params,ws,")",ws_,Body;
+        {memberchk(Lang,['reverse polish notation'])}->
+                Name,ws,"(",ws,Params,ws,")",ws_,Body,ws_,"=";
+        {memberchk(Lang,['ocaml'])}->
+                "let",ws_,Name,ws_,Params,ws,"=",ws,Body;
+        {memberchk(Lang,['e'])}->
+                "def",ws_,Name,ws,"(",ws,Params,ws,")",ws,Type,ws,"{",ws,Body,ws,"}";
+        {memberchk(Lang,['pascal','delphi'])}->
+                "function",ws_,Name,ws,"(",ws,Params,ws,")",ws,":",ws,Type,ws,";",ws,"begin",ws_,Body,ws_,"end",ws,";";
+        {not_defined_for(Data,'function')}).
+else(
+        {memberchk(Lang,['clojure'])}->
+                ":else",ws_,A;
+        {memberchk(Lang,['fortran'])}->
+                "ELSE",ws_,A;
+        {memberchk(Lang,['hack','e','ooc','englishscript','mathematical notation','dafny','perl 6','frink','chapel','katahdin','pawn','powershell','puppet','ceylon','d','rust','typescript','scala','autohotkey','gosu','groovy','java','swift','dart','awk','javascript','haxe','php','c#','go','perl','c++','c','tcl','r','vala','bc'])}->
+                "else",ws,"{",ws,A,ws,"}";
+        {memberchk(Lang,['ruby','seed7','livecode','janus','lua','haskell','clips','minizinc','julia','octave','picat','pascal','delphi','maxima','ocaml','f#'])}->
+                "else",ws_,A;
+        {memberchk(Lang,['erlang'])}->
+                "true",ws,"->",ws,A;
+        {memberchk(Lang,['wolfram','prolog'])}->
+                A;
+        {memberchk(Lang,['z3'])}->
+                A;
+        {memberchk(Lang,['python','cython'])}->
+                "else",ws,":",ws,"\n",ws,"#indent",ws,"\n",ws,"b",ws,"\n",ws,"#unindent";
+        {memberchk(Lang,['visual basic .net','monkey x','vbscript'])}->
+                "Else",ws_,A;
+        {memberchk(Lang,['rebol'])}->
+                "true",ws,"[",ws,A,ws,"]";
+        {memberchk(Lang,['common lisp'])}->
+                "(",ws,"t",ws_,A,ws,")";
+        {memberchk(Lang,['english'])}->
+                "otherwise",ws_,A;
+        {memberchk(Lang,['polish notation'])}->
+                "else",ws_,A;
+        {memberchk(Lang,['reverse polish notation'])}->
+                A,ws_,"else";
+        {not_defined_for(Data,'else')}).
+elif_or_else(
+        {memberchk(Lang,['java','seed7','common lisp','octave','picat','minizinc','vala','clojure','monkey x','ooc','ceylon','f#','delphi','perl 6','englishscript','wolfram','julia','ocaml','maxima','python','cython','erlang','mathematical notation','rebol','scheme','dart','javascript','typescript','c','c#','haxe','php','lua','ruby','r','fortran','perl','c++','visual basic .net','vbscript','prolog','scala','rust','go','swift','haskell','z3'])}->
+                A;
+        {memberchk(Lang,['z3'])}->
+                A;
+        {not_defined_for(Data,'elif_or_else')}).
+elif(
+        {memberchk(Lang,['d','e','mathematical notation','chapel','pawn','ceylon','scala','typescript','autohotkey','awk','r','groovy','gosu','katahdin','java','swift','nemerle','c','dart','vala','javascript','c#','c++','haxe'])}->
+                "else",ws_,"if",ws,"(",ws,A,ws,")",ws,"{",ws,B,ws,"}",ws,C;
+        {memberchk(Lang,['z3'])}->
+                "(",ws,"ite",ws_,A,ws_,B,ws_,C,ws,")";
+        {memberchk(Lang,['rust','go','englishscript'])}->
+                "else",ws_,"if",ws_,A,ws,"{",ws,B,ws,"}",ws,C;
+        {memberchk(Lang,['php','hack','perl'])}->
+                "elseif",ws,"(",ws,A,ws,")",ws,"{",ws,B,ws,"}",ws,C;
+        {memberchk(Lang,['julia','octave','lua'])}->
+                "elseif",ws_,A,ws_,B,ws_,C;
+        {memberchk(Lang,['monkey x'])}->
+                "ElseIf",ws_,A,ws_,B,ws_,C;
+        {memberchk(Lang,['ruby','seed7'])}->
+                "elsif",ws_,A,ws_,"then",ws_,B,ws_,C;
+        {memberchk(Lang,['perl 6'])}->
+                "elsif",ws_,A,ws_,"{",ws,B,ws,"}",ws,C;
+        {memberchk(Lang,['picat'])}->
+                "elseif",ws_,A,ws_,"then",ws_,B,ws_,C;
+        {memberchk(Lang,['erlang'])}->
+                A,ws,"->",ws,B,ws_,C;
+        {memberchk(Lang,['prolog'])}->
+                "(",ws,A,ws,"->",ws,B,ws,";",ws,C,ws,")";
+        {memberchk(Lang,['r','f#'])}->
+                A,ws,"<-",ws,B,ws_,C;
+        {memberchk(Lang,['clips'])}->
+                "(",ws,"if",ws_,A,ws_,"then",ws_,"(",ws,B,ws_,C,ws,")",ws,")";
+        {memberchk(Lang,['minizinc','ocaml','haskell','pascal','maxima','delphi','f#','livecode'])}->
+                "else",ws_,"if",ws_,A,ws_,"then",ws_,B,ws_,C;
+        {memberchk(Lang,['python','cython'])}->
+                "elif",ws_,A,ws,":",ws,"\n",ws,"#indent",ws,"\n",ws,B,ws,"\n",ws,"#unindent",ws_,C;
+        {memberchk(Lang,['visual basic .net'])}->
+                "ElseIf",ws_,A,ws_,"Then",ws_,B,ws_,C;
+        {memberchk(Lang,['fortran'])}->
+                "ELSE",ws_,"IF",ws_,A,ws_,"THEN",ws_,B,ws_,C;
+        {memberchk(Lang,['rebol'])}->
+                A,ws,"[",ws,B,ws,"]",ws_,C;
+        {memberchk(Lang,['common lisp'])}->
+                "(",ws,A,ws_,B,ws,")",ws_,C;
+        {memberchk(Lang,['wolfram'])}->
+                "If",ws,"[",ws,A,ws,",",ws,B,ws,",",ws,C,ws,"]";
+        {memberchk(Lang,['polish notation'])}->
+                "elif",ws_,A,ws_,B,ws_,C;
+        {memberchk(Lang,['reverse polish notation'])}->
+                A,ws_,B,ws_,C,ws_,"elif";
+        {memberchk(Lang,['clojure'])}->
+                A,ws_,B,ws_,C;
+        {not_defined_for(Data,'elif')}).
+return(
+        {memberchk(Lang,['vbscript'])}->
+                Function_name,ws,"=",ws,A;
+        {memberchk(Lang,['java','seed7','xl','e','livecode','englishscript','cython','gap','kal','engscript','pawn','ada','powershell','rust','d','ceylon','typescript','hack','autohotkey','gosu','swift','pike','objective-c','c','groovy','scala','coffeescript','julia','dart','c#','javascript','go','haxe','php','c++','perl','vala','lua','python','rebol','ruby','tcl','awk','bc','chapel','perl 6'])}->
+                "return",ws_,A;
+        {memberchk(Lang,['minizinc','pydatalog','polish notation','reverse polish notation','mathematical notation','emacs lisp','z3','erlang','maxima','standard ml','icon','oz','clips','newlisp','hy','sibilant','lispyscript','algol 68','clojure','prolog','common lisp','f#','ocaml','haskell','ml','racket','nemerle'])}->
+                A;
+        {memberchk(Lang,['visual basic','visual basic .net','autoit','monkey x'])}->
+                "Return",ws_,A;
+        {memberchk(Lang,['octave','fortran','picat'])}->
+                "retval",ws,"=",ws,A;
+        {memberchk(Lang,['pascal'])}->
+                "Exit",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['r'])}->
+                "return",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['wolfram'])}->
+                "Return",ws,"[",ws,A,ws,"]";
+        {memberchk(Lang,['pop-11'])}->
+                A,ws,"->",ws,"Result";
+        {memberchk(Lang,['delphi','pascal'])}->
+                "Result",ws,"=",ws,A;
+        {memberchk(Lang,['sql'])}->
+                "RETURN",ws_,A;
+        {not_defined_for(Data,'return')}).
+constraint(
+        {memberchk(Lang,['minizinc'])}->
+                "constraint",ws_,Value;
+        {memberchk(Lang,['z3','prolog'])}->
+                Value;
+        {memberchk(Lang,['z3py'])}->
+                "solver",ws,".",ws,"add",ws,"(",ws,Value,ws,")";
+        {memberchk(Lang,['hampi'])}->
+                "assert",ws_,Value;
+        {not_defined_for(Data,'constraint')}).
+set_var(
+        {memberchk(Lang,['javascript','mathematical notation','perl 6','wolfram','chapel','katahdin','frink','picat','ooc','d','genie','janus','ceylon','idp','sympy','prolog','processing','java','boo','gosu','pike','kotlin','icon','powershell','engscript','pawn','freebasic','hack','nim','openoffice basic','groovy','typescript','rust','coffeescript','fortran','awk','go','swift','vala','c','julia','scala','cobra','erlang','autoit','dart','java','ocaml','haxe','c#','matlab','c++','php','perl','python','lua','ruby','gambas','octave','visual basic','visual basic .net','bc'])}->
+                Name,ws,"=",ws,Value;
+        {memberchk(Lang,['minizinc'])}->
+                "constraint",ws_,Name,ws,"=",ws,Value,ws,";";
+        {memberchk(Lang,['rebol'])}->
+                Name,ws,":",ws,Value;
+        {memberchk(Lang,['z3'])}->
+                "(",ws,"assert",ws,"(",ws,"=",ws_,Name,ws_,Value,ws,")",ws,")";
+        {memberchk(Lang,['gap','seed7','delphi'])}->
+                Name,ws,":=",ws,Value;
+        {memberchk(Lang,['livecode'])}->
+                "put",ws_,"expression",ws_,"into",ws_,Name;
+        {memberchk(Lang,['vbscript'])}->
+                "Set",ws_,"a",ws,"=",ws,"b";
+        {not_defined_for(Data,'set_var')}).
+print(
+        {memberchk(Lang,['ocaml'])}->
+                "print_string",ws_,A;
+        {memberchk(Lang,['minizinc'])}->
+                "trace",ws,"(",ws,A,ws,",",ws,"true",ws,")";
+        {memberchk(Lang,['perl 6'])}->
+                "say",ws_,A;
+        {memberchk(Lang,['erlang'])}->
+                "io",ws,":",ws,"fwrite",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['c++'])}->
+                "cout",ws,"<<",ws,A;
+        {memberchk(Lang,['haxe'])}->
+                "trace",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['go'])}->
+                "fmt",ws,".",ws,"Println",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['c#'])}->
+                "Console",ws,".",ws,"WriteLine",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['rebol','fortran','perl','php'])}->
+                "print",ws_,A;
+        {memberchk(Lang,['ruby'])}->
+                "puts",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['visual basic .net'])}->
+                "System",ws,".",ws,"Console",ws,".",ws,"WriteLine",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['scala','julia','swift','picat'])}->
+                "println",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['javascript','typescript'])}->
+                "console",ws,".",ws,"log",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['python','englishscript','cython','ceylon','r','gosu','dart','vala','perl','php','hack','awk','lua'])}->
+                "print",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['java'])}->
+                "System",ws,".",ws,"out",ws,".",ws,"println",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['c'])}->
+                "printf",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['haskell'])}->
+                "(",ws,"putStrLn",ws_,A,ws,")";
+        {memberchk(Lang,['hy','common lisp','crosslanguage'])}->
+                "(",ws,"print",ws_,A,ws,")";
+        {memberchk(Lang,['rust'])}->
+                "println!(",ws,A,ws,")";
+        {memberchk(Lang,['octave'])}->
+                "disp",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['chapel','d','seed7','prolog'])}->
+                "writeln",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['delphi'])}->
+                "WriteLn",ws,"(",ws,A,ws,")";
+        {memberchk(Lang,['frink'])}->
+                "print",ws,"[",ws,A,ws,"]";
+        {memberchk(Lang,['wolfram'])}->
+                "Print",ws,"[",ws,A,ws,"]";
+        {memberchk(Lang,['z3'])}->
+                "(",ws,"echo",ws_,A,ws,")";
+        {memberchk(Lang,['monkey x'])}->
+                "Print",ws_,A;
+        {not_defined_for(Data,'print')}).
+grammar_series_of_statements(
+        {memberchk(Lang,['peg.js','yapps','parboiled','waxeye','treetop','ometa','wirth syntax notation','yacc','pyparsing','ebnf','nearley','antlr','marpa','parslet','perl 6','prolog','rebol','abnf'])}->
+                Var1,ws_,Var2;
+        {memberchk(Lang,['earley-parser-js','lpeg'])}->
+                Var1,ws,",",ws,Var2;
+        {not_defined_for(Data,'grammar_series_of_statements')}).
+series_of_statements(
+        {memberchk(Lang,['pydatalog','java','racket','vbscript','monkey x','livecode','polish notation','reverse polish notation','clojure','clips','common lisp','emacs lisp','scheme','prolog','dafny','z3','elm','bash','perl 6','mathematical notation','katahdin','frink','minizinc','aldor','cobol','ooc','genie','eclipse','nools','agda','pl/i','rexx','idp','falcon','processing','sympy','maxima','pyke','elixir','gnu smalltalk','seed7','standard ml','occam','boo','drools','icon','mercury','engscript','pike','oz','kotlin','pawn','freebasic','ada','powershell','gosu','nim','cython','openoffice basic','algol 68','d','ceylon','rust','coffeescript','actionscript','typescript','fortran','octave','ml','autohotkey','delphi','pascal','f#','self','swift','nemerle','dart','c','autoit','cobra','julia','groovy','scala','ocaml','gambas','hack','c++','matlab','rebol','red','lua','go','awk','haskell','perl','python','javascript','c#','php','ruby','r','haxe','visual basic','visual basic .net','vala','bc'])}->
+                Var1,ws_,Var2;
+        {memberchk(Lang,['wolfram'])}->
+                Var1,ws,";",ws,Var2;
+        {memberchk(Lang,['englishscript','python'])}->
+                Var1,ws,"\n",ws,Var2;
+        {memberchk(Lang,['picat','prolog','erlang','lpeg'])}->
+                Var1,ws,",",ws,Var2;
+        {not_defined_for(Data,'series_of_statements')}).
+class_statements(
+        {memberchk(Lang,['java','perl 6','scala','julia','python','dart','c#','ruby','c++','javascript','typescript','visual basic .net','php','haxe','visual basic .net','swift'])}->
+                Var1,ws_,Var2;
+        {not_defined_for(Data,'class_statements')}).
+class_statement(
+        {memberchk(Lang,['java','julia','c#','visual basic .net','ruby','php','c++','haxe','swift','dart','python'])}->
+                A;
+        {memberchk(Lang,['javascript','typescript'])}->
+                A;
+        {not_defined_for(Data,'class_statement')}).
+comment(
+        {memberchk(Lang,['java','dafny','janus','chapel','rust','frink','d','genie','ceylon','hack','maxima','kotlin','delphi','dart','typescript','swift','vala','c#','javascript','haxe','scala','go','c','c++','pike','php','f#','nemerle','crosslanguage','gosu','groovy'])}->
+                "//",ws,Var1,ws,"\n";
+        {memberchk(Lang,['ocaml','standard ml','ml'])}->
+                "(*{",ws,Var1,ws,"}*)";
+        {memberchk(Lang,['matlab','minizinc','octave','erlang','prolog','picat'])}->
+                "%",ws,Var1,ws,"\n";
+        {memberchk(Lang,['rebol'])}->
+                "comment",ws,"[",ws,Var1,ws,"]";
+        {memberchk(Lang,['wolfram'])}->
+                "(*",ws,Var1,ws,"*)";
+        {memberchk(Lang,['pascal'])}->
+                "{",ws,Var1,ws,"}";
+        {memberchk(Lang,['fortran'])}->
+                "!",ws,Var1,ws,"\n";
+        {memberchk(Lang,['z3'])}->
+                ";",ws,Var1,ws,"\n";
+        {memberchk(Lang,['bash','perl 6','powershell','seed7','cobra','icon','engscript','nim','coffeescript','julia','awk','ruby','perl','r','tcl','bc','python','cython'])}->
+                "#",ws,Var1,ws,"\n";
+        {memberchk(Lang,['lua','haskell','ada','transact-sql','sql'])}->
+                "--",ws,Var1,ws,"\n";
+        {memberchk(Lang,['gambas','visual basic','visual basic .net','monkey x','vbscript'])}->
+                "'",ws,Var1,ws,"\n";
+        {not_defined_for(Data,'comment')}).
+initialize_var(
+        {memberchk(Lang,['polish notation'])}->
+                "=",ws_,Name,ws_,Value;
+        {memberchk(Lang,['reverse polish notation'])}->
+                Name,ws_,Value,ws_,"=";
+        {memberchk(Lang,['go'])}->
+                "var",ws_,Name,ws_,Type,ws,"=",ws,Value;
+        {memberchk(Lang,['rust'])}->
+                "let",ws_,"mut",ws_,Name,ws,"=",ws,Value;
+        {memberchk(Lang,['dafny'])}->
+                "var",ws,Name,ws,":",ws,Type,ws,":=",ws,Value;
+        {memberchk(Lang,['z3'])}->
+                "(",ws,"declare-const",ws_,Name,ws_,Type,ws,")",ws,"(",ws,"assert",ws_,"(",ws,"=",ws_,Name,ws_,Value,ws,")",ws,")";
+        {memberchk(Lang,['f#'])}->
+                "let",ws_,"mutable",ws_,Name,ws,"=",ws,Value;
+        {memberchk(Lang,['common lisp'])}->
+                "(",ws,"setf",ws_,Name,ws_,Value,ws,")";
+        {memberchk(Lang,['minizinc'])}->
+                Type,ws,":",ws,Name,ws,"=",ws,Value,ws,";";
+        {memberchk(Lang,['python','ruby','haskell','erlang','prolog','julia','picat','octave','wolfram'])}->
+                Name,ws,"=",ws,Value;
+        {memberchk(Lang,['javascript','hack','swift'])}->
+                "var",ws_,Name,ws,"=",ws,Value;
+        {memberchk(Lang,['lua'])}->
+                "local",ws_,Name,ws,"=",ws,Value;
+        {memberchk(Lang,['janus'])}->
+                "local",ws_,Type,ws_,Name,ws,"=",ws,Value;
+        {memberchk(Lang,['perl'])}->
+                "my",ws_,Name,ws,"=",ws,Value;
+        {memberchk(Lang,['perl 6'])}->
+                "my",ws_,Type,ws_,Name,ws,"=",ws,Value;
+        {memberchk(Lang,['c','java','c#','c++','d','dart','englishscript','ceylon','vala'])}->
+                Type,ws_,Name,ws,"=",ws,Value;
+        {memberchk(Lang,['rebol'])}->
+                Name,ws,":",ws,Value;
+        {memberchk(Lang,['visual basic','visual basic .net','openoffice basic'])}->
+                "Dim",ws_,Name,ws_,"As",ws_,Type,ws,"=",ws,Value;
+        {memberchk(Lang,['r'])}->
+                Name,ws,"<-",ws,Value;
+        {memberchk(Lang,['fortran'])}->
+                Type,ws,"::",ws,Name,ws,"=",ws,Value;
+        {memberchk(Lang,['chapel','haxe','scala','typescript'])}->
+                "var",ws_,Name,ws,":",ws,Type,ws,"=",ws,Value;
+        {memberchk(Lang,['monkey x'])}->
+                "Local",ws_,Name,ws,":",ws,Type,ws,"=",ws,Value;
+        {memberchk(Lang,['vbscript'])}->
+                "Dim",ws_,Name,ws_,"Set",ws_,Name,ws,"=",ws,Value;
+        {memberchk(Lang,['seed7'])}->
+                "var",ws_,Type,ws,":",ws,Name,ws_,"is",ws_,Value;
+        {not_defined_for(Data,'initialize_var')}).
+typeless_initialize_var(
+        {memberchk(Lang,['monkey x'])}->
+                "Local",ws_,Name,ws,"=",ws,Value;
+        {memberchk(Lang,['rust'])}->
+                "let",ws_,"mut",ws_,Name,ws,"=",ws,Value;
+        {memberchk(Lang,['r'])}->
+                Name,ws,"<-",ws,Value;
+        {memberchk(Lang,['c++','d'])}->
+                "auto",ws_,Name,ws,"=",ws,Value;
+        {memberchk(Lang,['c#','dafny','javascript','haxe','php','typescript','dart','swift','scala','go','vala'])}->
+                "var",ws_,Name,ws,"=",ws,Value;
+        {memberchk(Lang,['lua'])}->
+                "local",ws_,Name,ws,"=",ws,Value;
+        {memberchk(Lang,['python','ruby','haskell','erlang','prolog','julia','picat','octave','php','wolfram'])}->
+                Name,ws,"=",ws,Value;
+        {memberchk(Lang,['c'])}->
+                "__auto_type",ws_,Name,ws,"=",ws,Value;
+        {memberchk(Lang,['java'])}->
+                "Object",ws_,Name,ws,"=",ws,Value;
+        {memberchk(Lang,['c#','javascript','haxe','swift'])}->
+                "var",ws_,Name,ws,"=",ws,Value;
+        {memberchk(Lang,['perl','perl 6'])}->
+                "my",ws_,Name,ws,"=",ws,Value;
+        {memberchk(Lang,['rebol'])}->
+                Name,ws,":",ws,Value;
+        {memberchk(Lang,['visual basic .net'])}->
+                "Dim",ws_,Name,ws,"=",ws,Value;
+        {memberchk(Lang,['vbscript'])}->
+                "Dim",ws_,Name,ws_,"Set",ws_,Name,ws,"=",ws,Value;
+        {memberchk(Lang,['polish notation'])}->
+                "=",ws_,Name,ws_,Value;
+        {memberchk(Lang,['reverse polish notation'])}->
+                Name,ws_,Value,ws_,"=";
+        {not_defined_for(Data,'typeless_initialize_var')}).
+int(
+        {memberchk(Lang,['hack','transact-sql','dafny','janus','chapel','minizinc','engscript','cython','algol 68','d','octave','tcl','crosslanguage','ml','awk','julia','gosu','ocaml','f#','pike','objective-c','go','cobra','dart','groovy','python','hy','java','c#','c','c++','vala','nemerle','crosslanguage'])}->
+                "int";
+        {memberchk(Lang,['php','common lisp','picat'])}->
+                "integer";
+        {memberchk(Lang,['fortran'])}->
+                "INTEGER";
+        {memberchk(Lang,['rebol'])}->
+                "integer!";
+        {memberchk(Lang,['ceylon','gambas','openoffice basic','pascal','erlang','delphi','visual basic','visual basic .net'])}->
+                "Integer";
+        {memberchk(Lang,['haxe','ooc','swift','scala','perl 6','z3','monkey x'])}->
+                "Int";
+        {memberchk(Lang,['javascript','typescript','coffeescript','lua','perl'])}->
+                "number";
+        {memberchk(Lang,['haskell'])}->
+                "Num";
+        {memberchk(Lang,['ruby'])}->
+                "fixnum";
+        {not_defined_for(Data,'int')}).
+if(
+        {memberchk(Lang,['erlang'])}->
+                "if",ws_,A,ws,"->",ws,B,ws_,C,ws_,"end";
+        {memberchk(Lang,['fortran'])}->
+                "IF",ws_,A,ws_,"THEN",ws_,B,ws_,C,ws_,"END",ws_,"IF";
+        {memberchk(Lang,['rebol'])}->
+                "case",ws,"[",ws,A,ws,"[",ws,B,ws,"]",ws,C,ws,"]";
+        {memberchk(Lang,['julia'])}->
+                "if",ws_,A,ws_,B,ws_,C,ws_,"end";
+        {memberchk(Lang,['lua','ruby','picat'])}->
+                "if",ws_,A,ws_,"then",ws_,B,ws_,C,ws_,"end";
+        {memberchk(Lang,['octave'])}->
+                "if",ws_,A,ws_,B,ws_,C,ws_,"endif";
+        {memberchk(Lang,['haskell','pascal','delphi','maxima','ocaml'])}->
+                "if",ws_,A,ws_,"then",ws_,B,ws_,C;
+        {memberchk(Lang,['livecode'])}->
+                "if",ws_,A,ws_,"then",ws_,B,ws_,C,ws_,"end",ws_,"if";
+        {memberchk(Lang,['java','e','ooc','englishscript','mathematical notation','polish notation','reverse polish notation','perl 6','chapel','katahdin','pawn','powershell','d','ceylon','typescript','actionscript','hack','autohotkey','gosu','nemerle','swift','nemerle','pike','groovy','scala','dart','javascript','c#','c','c++','perl','haxe','php','r','awk','vala','bc','squirrel'])}->
+                "if",ws,"(",ws,A,ws,")",ws,"{",ws,B,ws,"}",ws,C;
+        {memberchk(Lang,['rust','go'])}->
+                "if",ws_,A,ws,"{",ws,B,ws,"}",ws,C;
+        {memberchk(Lang,['visual basic','visual basic .net'])}->
+                "If",ws_,A,ws_,B,ws_,C;
+        {memberchk(Lang,['clips'])}->
+                "(",ws,"if",ws_,A,ws_,"then",ws_,B,ws_,C,ws,")";
+        {memberchk(Lang,['z3'])}->
+                "(",ws,"ite",ws_,A,ws_,B,ws_,C,ws,")";
+        {memberchk(Lang,['minizinc'])}->
+                "if",ws_,A,ws_,"then",ws_,B,ws_,C,ws_,"endif";
+        {memberchk(Lang,['python','cython'])}->
+                "if",ws_,A,ws,":",ws,"\n",ws,"#indent",ws,"\n",ws,B,ws,"\n",ws,"#unindent",ws,"\n",ws,C;
+        {memberchk(Lang,['prolog'])}->
+                "(",ws,A,ws,"->",ws,B,ws,";",ws,C,ws,")";
+        {memberchk(Lang,['visual basic'])}->
+                "If",ws_,A,ws_,"Then",ws_,B,ws_,C,ws_,"End",ws_,"If";
+        {memberchk(Lang,['common lisp'])}->
+                "(",ws,"cond",ws,"(",ws,A,ws_,B,ws,")",ws_,C,ws,")";
+        {memberchk(Lang,['wolfram'])}->
+                "If",ws,"[",ws,A,ws,",",ws,B,ws,",",ws,C,ws,"]";
+        {memberchk(Lang,['polish notation'])}->
+                "if",ws_,A,ws_,B;
+        {memberchk(Lang,['reverse polish notation'])}->
+                A,ws_,B,ws_,"if";
+        {memberchk(Lang,['monkey x'])}->
+                "if",ws_,A,ws_,B,ws_,C,ws_,"EndIf";
+        {not_defined_for(Data,'if')}).
+foreach(
+        {memberchk(Lang,['seed7'])}->
+                "for",ws_,Var_name,ws_,"range",ws_,Array,ws_,"do",ws_,Body,ws_,"end",ws_,"for;";
+        {memberchk(Lang,['javascript','typescript'])}->
+                Array,ws,".",ws,"forEach",ws,"(",ws,"function",ws,"(",ws,Var_name,ws,")",ws,"{",ws,Body,ws,"",ws,"}",ws,")",ws,";";
+        {memberchk(Lang,['octave'])}->
+                "for",ws_,Var_name,ws,"=",ws,Array,ws_,Body,ws_,"endfor";
+        {memberchk(Lang,['z3'])}->
+                "(",ws,"forall",ws_,"(",ws,"(",ws,Var_name,ws_,"a",ws,")",ws,")",ws_,"(",ws,"=>",ws,"select",ws_,Array,ws,")",ws,")";
+        {memberchk(Lang,['gap'])}->
+                "for",ws_,Var_name,ws_,"in",ws_,Array,ws_,"do",ws_,Body,ws_,"od;";
+        {memberchk(Lang,['minizinc'])}->
+                "forall",ws,"(",ws,Var_name,ws_,"in",ws_,Array,ws,")",ws,"(",ws,Body,ws,")";
+        {memberchk(Lang,['php','hack'])}->
+                "foreach",ws,"(",ws,Array,ws_,"as",ws_,Var_name,ws,")",ws,"{",ws,Body,ws,"}";
+        {memberchk(Lang,['java'])}->
+                "for",ws,"(",ws,TypeInArray,ws_,Var_name,ws,":",ws,Array,ws,")",ws,"{",ws,Body,ws,"}";
+        {memberchk(Lang,['c#','vala'])}->
+                "foreach",ws,"(",ws,TypeInArray,ws_,Var_name,ws_,"in",ws_,Array,ws,")",ws,"{",ws,Body,ws,"}";
+        {memberchk(Lang,['lua'])}->
+                "for",ws_,Var_name,ws_,"in",ws_,Array,ws_,"do",ws_,Body,ws_,"end";
+        {memberchk(Lang,['python','cython'])}->
+                "for",ws_,Var_name,ws_,"in",ws_,Array,ws,":",ws,"\n",ws,"#indent",ws,"\n",ws,Body,ws,"\n",ws,"#unindent";
+        {memberchk(Lang,['julia'])}->
+                "for",ws_,Var_name,ws_,"in",ws_,Array,ws_,Body,ws_,"end";
+        {memberchk(Lang,['chapel','swift'])}->
+                "for",ws_,Var_name,ws_,"in",ws_,Array,ws,"{",ws,Body,ws,"}";
+        {memberchk(Lang,['pawn'])}->
+                "foreach",ws,"(",ws,"new",ws_,Var_name,ws,":",ws,Array,ws,")",ws,"{",ws,Body,ws,"}";
+        {memberchk(Lang,['picat'])}->
+                "foreach",ws,"(",ws,Var_name,ws_,"in",ws_,Array,ws,")",ws,"(",ws,Body,ws,")",ws,"end";
+        {memberchk(Lang,['awk','ceylon'])}->
+                "for",ws_,"(",ws_,Var_name,ws_,"in",ws_,Array,ws,")",ws,"{",ws,Body,ws,"}";
+        {memberchk(Lang,['go'])}->
+                "for",ws_,Var_name,ws,":=",ws,"range",ws_,Array,ws,"{",ws,Body,ws,"}";
+        {memberchk(Lang,['haxe','groovy'])}->
+                "for",ws,"(",ws,Var_name,ws_,"in",ws_,Array,ws,")",ws,"{",ws,Body,ws,"}";
+        {memberchk(Lang,['ruby'])}->
+                Array,ws,".",ws,"each",ws_,"do",ws,"|",ws,Var_name,ws,"|",ws_,Body,ws_,"end";
+        {memberchk(Lang,['nemerle','powershell'])}->
+                "foreach",ws,"(",ws,Var_name,ws_,"in",ws_,Array,ws,")",ws,"{",ws,Body,ws,"}";
+        {memberchk(Lang,['scala'])}->
+                "for",ws,"(",ws,Var_name,ws,"->",ws,Array,ws,")",ws,"{",ws,Body,ws,"}";
+        {memberchk(Lang,['rebol'])}->
+                "foreach",ws_,Var_name,ws_,Array,ws,"[",ws,Body,ws,"]";
+        {memberchk(Lang,['c++'])}->
+                "for",ws,"(",ws,TypeInArray,ws_,"&",ws_,Var_name,ws,":",ws,Array,ws,"){",ws,Body,ws,"}";
+        {memberchk(Lang,['perl'])}->
+                "for",ws_,Array,ws,"->",ws,Var_name,ws,"{",ws,Body,ws,"}";
+        {memberchk(Lang,['d'])}->
+                "foreach",ws,"(",ws,Var_name,ws,",",ws,Array,ws,")",ws,"{",ws,Body,ws,"}";
+        {memberchk(Lang,['gambas'])}->
+                "FOR",ws_,"EACH",ws_,Var_name,ws_,"IN",ws_,Array,ws_,Body,ws_,"NEXT";
+        {memberchk(Lang,['visual basic .net'])}->
+                "For",ws_,"Each",ws_,Var_name,ws_,"As",ws_,TypeInArray,ws_,"In",ws_,Array,ws_,Body,ws_,"Next";
+        {memberchk(Lang,['vbscript'])}->
+                "For",ws_,"Each",ws_,Var_name,ws_,"In",ws_,Array,ws_,Body,ws_,"Next";
+        {memberchk(Lang,['dart'])}->
+                "for",ws,"(",ws,"var",ws_,Var_name,ws_,"in",ws_,Array,ws,")",ws,"{",ws,Body,ws,"}";
+        {not_defined_for(Data,'foreach')}).
+compare_ints(
+        {memberchk(Lang,['r'])}->
+                "identical",ws,"(",ws,Var1,ws,",",ws,Var2,ws,")";
+        {memberchk(Lang,['lua','nim','z3py','pydatalog','e','ceylon','perl 6','englishscript','cython','mathematical notation','dafny','wolfram','d','rust','r','minizinc','frink','picat','pike','pawn','processing','c++','ceylon','coffeescript','octave','swift','awk','julia','perl','groovy','erlang','haxe','scala','java','vala','dart','python','c#','c','go','haskell','ruby'])}->
+                Var1,ws,"==",ws,Var2;
+        {memberchk(Lang,['javascript','php','typescript','hack'])}->
+                Var1,ws,"===",ws,Var2;
+        {memberchk(Lang,['z3','emacs lisp','common lisp','clips','racket'])}->
+                "(",ws,"=",ws_,Var1,ws_,Var2,ws,")";
+        {memberchk(Lang,['fortran'])}->
+                Var1,ws,".eq.",ws,Var2;
+        {memberchk(Lang,['maxima','seed7','monkey x','gap','rebol','f#','autoit','pascal','delphi','visual basic','visual basic .net','ocaml','livecode','vbscript'])}->
+                Var1,ws,"=",ws,Var2;
+        {memberchk(Lang,['prolog'])}->
+                Var1,ws,"=:=",ws,Var2;
+        {memberchk(Lang,['clojure'])}->
+                "(",ws,"=",ws_,"a",ws_,"b",ws,")";
+        {memberchk(Lang,['reverse polish notation'])}->
+                "a",ws_,"b",ws_,"=";
+        {memberchk(Lang,['polish notation'])}->
+                "=",ws_,"a",ws_,"b";
+        {not_defined_for(Data,'compare_ints')}).
+class(
+        {memberchk(Lang,['julia'])}->
+                "type",ws_,Name,ws_,Body,ws_,"end";
+        {memberchk(Lang,['c','z3','lua','prolog','haskell','minizinc','r','go','rebol','fortran'])}->
+                Body;
+        {memberchk(Lang,['java','c#'])}->
+                "public",ws_,"class",ws_,Name,ws,"{",ws,Body,ws,"}";
+        {memberchk(Lang,['c++'])}->
+                "class",ws_,Name,ws,"{",ws,Body,ws,"}",ws,";";
+        {memberchk(Lang,['javascript','hack','php','scala','haxe','chapel','swift','d','typescript','dart','perl 6'])}->
+                "class",ws_,Name,ws,"{",ws,Body,ws,"}";
+        {memberchk(Lang,['ruby'])}->
+                "class",ws_,Name,ws_,Body,ws_,"end";
+        {memberchk(Lang,['visual basic .net'])}->
+                "Public",ws_,"Class",ws_,Name,ws_,Body,ws_,"End",ws_,"Class";
+        {memberchk(Lang,['vbscript'])}->
+                "Public",ws_,"Class",ws_,Name,ws_,Body,ws_,"End",ws_,"Class";
+        {memberchk(Lang,['python'])}->
+                "class",ws_,Name,ws,":",ws,"\n",ws,"#indent",ws,"\n",ws,Body,ws,"\n",ws,"#unindent";
+        {memberchk(Lang,['monkey x'])}->
+                "Class",ws_,Name,ws_,Body,ws_,"End";
+        {not_defined_for(Data,'class')}).
+class_extends(
+        {memberchk(Lang,['python'])}->
+                "class",ws_,C1,ws,"(",ws,C2,ws,")",ws,":",ws,"\n",ws,"#indent",ws,"\n",ws,B,ws,"\n",ws,"#unindent";
+        {memberchk(Lang,['visual basic .net'])}->
+                "Public",ws_,"Class",ws_,C1,ws_,"Inherits",ws_,C2,ws_,B,ws_,"End",ws_,"Class";
+        {memberchk(Lang,['swift','chapel','d','swift'])}->
+                "class",ws_,C1,ws,":",ws,C2,ws,"{",ws,B,ws,"}";
+        {memberchk(Lang,['haxe','php','javascript','dart','typescript'])}->
+                "class",ws_,C1,ws_,"extends",ws_,C2,ws,"{",ws,B,ws,"}";
+        {memberchk(Lang,['java','c#','scala'])}->
+                "public",ws_,"class",ws_,C1,ws_,"extends",ws_,C2,ws,"{",ws,B,ws,"}";
+        {memberchk(Lang,['c'])}->
+                "#include",ws_,"'",ws,C2,ws,".h'",ws_,B;
+        {memberchk(Lang,['c++'])}->
+                "class",ws_,C1,ws,":",ws,"public",ws_,C2,ws,"{",ws,B,ws,"}";
+        {memberchk(Lang,['ruby'])}->
+                "class",ws_,C1,ws_,"<",ws_,C2,ws_,B,ws_,"end";
+        {memberchk(Lang,['perl 6'])}->
+                "class",ws_,C1,ws_,"is",ws_,C2,ws,"{",ws,B,ws,"}";
+        {memberchk(Lang,['monkey x'])}->
+                "Class",ws_,C1,ws_,"Extends",ws_,C2,ws_,B,ws_,"End";
+        {not_defined_for(Data,'class_extends')}).
+function_parameter(
+        {memberchk(Lang,['seed7'])}->
+                "in",ws_,Type,ws,":",ws,Name;
+        {memberchk(Lang,['c#','java','englishscript','ceylon','algol 68','groovy','d','c++','pawn','pike','vala','c','janus'])}->
+                Type,ws_,Name;
+        {memberchk(Lang,['haxe','dafny','chapel','pascal','rust','genie','hack','nim','typescript','gosu','delphi','nemerle','scala','swift'])}->
+                Name,ws,":",ws,Type;
+        {memberchk(Lang,['go','sql'])}->
+                Name,ws_,Type;
+        {memberchk(Lang,['minizinc'])}->
+                "var",ws_,Type,ws,":",ws,Name;
+        {memberchk(Lang,['haskell','polish notation','reverse polish notation','scheme','python','mathematical notation','lispyscript','clips','clojure','f#','ml','racket','ocaml','tcl','common lisp','newlisp','python','cython','frink','picat','idp','powershell','maxima','icon','coffeescript','fortran','octave','autohotkey','prolog','awk','kotlin','dart','javascript','nemerle','erlang','php','autoit','lua','ruby','r','bc'])}->
+                Name;
+        {memberchk(Lang,['julia'])}->
+                Name,ws,"::",ws,Type;
+        {memberchk(Lang,['rebol'])}->
+                Type,ws,"[",ws,Name,ws,"]";
+        {memberchk(Lang,['openoffice basic','gambas'])}->
+                Name,ws_,"As",ws_,Type;
+        {memberchk(Lang,['visual basic','visual basic .net'])}->
+                Name,ws_,"as",ws_,Type;
+        {memberchk(Lang,['perl'])}->
+                Name,ws,"=",ws,"push",ws,";";
+        {memberchk(Lang,['wolfram'])}->
+                Name,ws;
+        {memberchk(Lang,['z3'])}->
+                "(",ws,Name,ws_,Type,ws,")";
+        {not_defined_for(Data,'function_parameter')}).
+switch(
+        {memberchk(Lang,['crosslanguage'])}->
+                "(",ws,"switch",ws_,A,ws_,B,ws_,C,ws,")";
+        {memberchk(Lang,['rust'])}->
+                "match",ws_,A,ws,"{",ws,B,ws_,C,ws,"}";
+        {memberchk(Lang,['ocaml'])}->
+                "match",ws_,A,ws_,"with";
+        {memberchk(Lang,['elixir'])}->
+                "case",ws_,A,ws_,"do",ws_,B,ws_,C,ws_,"end";
+        {memberchk(Lang,['scala'])}->
+                A,ws_,"match",ws,"{",ws,B,ws_,C,ws,"}";
+        {memberchk(Lang,['octave'])}->
+                "switch",ws,"(",ws,A,ws,")",ws,B,ws_,"endswitch";
+        {memberchk(Lang,['java','d','powershell','nemerle','d','typescript','hack','swift','groovy','dart','awk','c#','javascript','c++','php','c','go','haxe','vala'])}->
+                "switch",ws,"(",ws,A,ws,")",ws,"{",ws,B,ws_,C,ws,"}";
+        {memberchk(Lang,['ruby'])}->
+                "case",ws_,A,ws_,B,ws_,C,ws_,"end";
+        {memberchk(Lang,['haskell','erlang'])}->
+                "case",ws_,A,ws_,"of",ws_,B,ws_,C,ws_,"end";
+        {memberchk(Lang,['delphi','pascal'])}->
+                "Case",ws_,A,ws_,"of",ws_,B,ws_,C,ws_,"end;";
+        {memberchk(Lang,['clips'])}->
+                "(",ws,"switch",ws_,A,ws_,B,ws_,C,ws,")";
+        {memberchk(Lang,['visual basic .net','visual basic'])}->
+                "Select",ws_,"Case",ws_,A,ws_,B,ws_,C,ws_,"End",ws_,"Select";
+        {memberchk(Lang,['rebol'])}->
+                "switch/default",ws,"[",ws,A,ws_,B,ws,"]";
+        {memberchk(Lang,['fortran'])}->
+                "SELECT",ws_,"CASE",ws,"(",ws,A,ws,")",ws_,B,ws_,C,ws_,"END",ws_,"SELECT";
+        {memberchk(Lang,['clojure'])}->
+                "(",ws,"case",ws_,A,ws_,B,ws_,C,ws,")";
+        {memberchk(Lang,['chapel'])}->
+                "select",ws,"(",ws,A,ws,")",ws,"{",ws,B,ws,C,ws,"}";
+        {memberchk(Lang,['wolfram'])}->
+                "Switch",ws,"[",ws,A,ws,",",ws,B,ws,",",ws,C,ws,"]";
+        {not_defined_for(Data,'switch')}).
+case(
+        {memberchk(Lang,['crosslanguage'])}->
+                "(",ws,"case",ws_,A,ws_,B,ws,")";
+        {memberchk(Lang,['javascript','d','java','c#','c','c++','typescript','dart','php','hack'])}->
+                "case",ws_,A,ws,":",ws,B,ws,"break",ws,";";
+        {memberchk(Lang,['go','haxe','swift'])}->
+                "case",ws_,A,ws,":",ws,B;
+        {memberchk(Lang,['fortran'])}->
+                "CASE",ws,"(",ws,A,ws,")",ws_,B;
+        {memberchk(Lang,['rust'])}->
+                A,ws,"=>",ws,"{",ws,B,ws,"}";
+        {memberchk(Lang,['ruby'])}->
+                "when",ws_,A,ws_,B;
+        {memberchk(Lang,['haskell','erlang','elixir','ocaml'])}->
+                A,ws,"->",ws,B;
+        {memberchk(Lang,['clips'])}->
+                "(",ws,"case",ws_,A,ws_,"then",ws_,B,ws,")";
+        {memberchk(Lang,['scala'])}->
+                "case",ws_,A,ws,"=>",ws,B;
+        {memberchk(Lang,['visual basic .net'])}->
+                "Case",ws_,A,ws_,B;
+        {memberchk(Lang,['rebol'])}->
+                A,ws,"[",ws,B,ws,"]";
+        {memberchk(Lang,['octave'])}->
+                "case",ws_,A,ws_,B;
+        {memberchk(Lang,['clojure'])}->
+                "(",ws,A,ws_,B,ws,")";
+        {memberchk(Lang,['pascal','delphi:'])}->
+                A,ws,":",ws,B;
+        {memberchk(Lang,['chapel'])}->
+                "when",ws_,A,ws,"{",ws,B,ws,"}";
+        {memberchk(Lang,['wolfram'])}->
+                A,ws,",",ws,B;
+        {not_defined_for(Data,'case')}).
+access_array(
+        {memberchk(Lang,['python','lua','c#','julia','d','swift','julia','janus','minizinc','picat','nim','autoit','cython','coffeescript','dart','typescript','awk','vala','perl','java','javascript','ruby','go','c++','php','haxe','c'])}->
+                A,ws,"[",ws,B,ws,"]";
+        {memberchk(Lang,['scala','octave','fortran','visual basic','visual basic .net'])}->
+                A,ws,"(",ws,B,ws,")";
+        {memberchk(Lang,['haskell'])}->
+                "(",ws,A,ws,"!!",ws,B,ws,")";
+        {memberchk(Lang,['frink'])}->
+                A,ws,"@",ws,B;
+        {memberchk(Lang,['z3'])}->
+                "(",ws,"select",ws_,A,ws_,B,ws,")";
+        {memberchk(Lang,['rebol'])}->
+                A,ws,"/",ws,B;
+        {not_defined_for(Data,'access_array')}).
+array_access_list(
+        {memberchk(Lang,['java','perl 6','octave','picat','julia','go','c#','lua','c++','python','javascript','c','php','ruby','scala','haxe','fortran','typescript','minizinc','dart','visual basic .net','perl','swift','haskell','rebol'])}->
+                Var1,ws,Separator,ws,Var2;
+        {not_defined_for(Data,'array_access_list')}).
+array_access_index(
+        {memberchk(Lang,['lua','minizinc','rebol'])}->
+                A;
+        {memberchk(Lang,['haskell','perl 6','d','frink','c#','visual basic','janus','visual basic .net','scala','octave','fortran','python','swift','julia','picat','nim','autoit','cython','coffeescript','dart','typescript','awk','vala','perl','java','javascript','ruby','go','c++','php','haxe','c'])}->
+                A;
+        {not_defined_for(Data,'array_access_index')}).
+array_access_index_1(
+        {memberchk(Lang,['lua','minizinc','rebol'])}->
+                A,ws,"+",ws,"1";
+        {memberchk(Lang,['haskell','perl 6','d','frink','c#','visual basic','janus','visual basic .net','scala','octave','fortran','python','swift','julia','picat','nim','autoit','cython','coffeescript','dart','typescript','awk','vala','perl','java','javascript','ruby','go','c++','php','haxe','c'])}->
+                A;
+        {not_defined_for(Data,'array_access_index_1')}).
+array_access_index_2(
+        {memberchk(Lang,['lua','minizinc','rebol'])}->
+                A;
+        {memberchk(Lang,['haskell','perl 6','d','frink','c#','visual basic','janus','visual basic .net','scala','octave','fortran','python','swift','julia','picat','nim','autoit','cython','coffeescript','dart','typescript','awk','vala','perl','java','javascript','ruby','go','c++','php','haxe','c'])}->
+                A,ws,"-",ws,"1";
+        {not_defined_for(Data,'array_access_index_2')}).
+initialize_static_variable(
+        {memberchk(Lang,['swift'])}->
+                "static",ws_,"var",ws_,Name;
+        {memberchk(Lang,['java','c#'])}->
+                "public",ws_,"static",ws_,Type,ws_,Name;
+        {memberchk(Lang,['php'])}->
+                "public",ws_,"static",ws_,Name;
+        {memberchk(Lang,['c++','dart'])}->
+                "static",ws_,Type,ws_,Name;
+        {memberchk(Lang,['python'])}->
+                ws;
+        {memberchk(Lang,['haxe'])}->
+                "static",ws_,"var",ws_,Name,ws,":",ws,Type;
+        {memberchk(Lang,['ruby'])}->
+                ws_;
+        {memberchk(Lang,['visual basic .net'])}->
+                "Public",ws_,"Shared",ws_,Name,ws_,"As",ws_,Type;
+        {not_defined_for(Data,'initialize_static_variable')}).
+initialize_static_variable_with_value(
+        {memberchk(Lang,['swift'])}->
+                "static",ws_,"var",ws_,Name,ws,"=",ws,Value;
+        {memberchk(Lang,['java','c#'])}->
+                "public",ws_,"static",ws_,Type,ws_,Name,ws,"=",ws,Value;
+        {memberchk(Lang,['php'])}->
+                "public",ws_,"static",ws_,Name,ws,"=",ws,Value;
+        {memberchk(Lang,['c++','dart'])}->
+                "static",ws_,Type,ws_,Name,ws,"=",ws,Value;
+        {memberchk(Lang,['python'])}->
+                Name,ws,"=",ws,Value;
+        {memberchk(Lang,['ruby'])}->
+                "@@",ws,Name,ws,"=",ws,Type;
+        {memberchk(Lang,['haxe'])}->
+                "static",ws_,"var",ws_,Name,ws,":",ws,Type,ws,"=",ws,Value;
+        {memberchk(Lang,['visual basic .net'])}->
+                "Public",ws_,"Shared",ws_,Name,ws_,"As",ws_,Type,ws,"=",ws,Value;
+        {not_defined_for(Data,'initialize_static_variable_with_value')}).
+default(
+        {memberchk(Lang,['fortran'])}->
+                "CASE",ws_,"DEFAULT",ws_,A;
+        {memberchk(Lang,['crosslanguage'])}->
+                "(",ws,"default",ws_,A,ws,")";
+        {memberchk(Lang,['javascript','d','c','java','c#','c++','typescript','dart','php','haxe','hack','go','swift'])}->
+                "default",ws,":",ws,A;
+        {memberchk(Lang,['ruby','pascal','delphi'])}->
+                "else",ws_,A;
+        {memberchk(Lang,['haskell','erlang','ocaml'])}->
+                ws,ws,"->",ws_,A;
+        {memberchk(Lang,['rust'])}->
+                ws,ws,"=>",ws,A;
+        {memberchk(Lang,['clips'])}->
+                "(",ws,"default",ws_,A,ws,")";
+        {memberchk(Lang,['scala'])}->
+                "case",ws_,ws,"=>",ws,A;
+        {memberchk(Lang,['visual basic .net'])}->
+                "Case",ws_,"Else",ws_,A;
+        {memberchk(Lang,['rebol'])}->
+                "][",A;
+        {memberchk(Lang,['octave'])}->
+                "otherwise",ws_,A;
+        {memberchk(Lang,['chapel'])}->
+                "otherwise",ws,"{",ws,A,ws,"}";
+        {memberchk(Lang,['clojure'])}->
+                A;
+        {memberchk(Lang,['wolfram'])}->
+                ws,ws,",",ws,A;
+        {not_defined_for(Data,'default')}).
+C:\Users\andy\Dropbox\All source code goes here - don't put this folder inside any other folder\translator_generator\universal_translator.js:3056
+        return toReturn;
+               ^
+
+ReferenceError: toReturn is not defined
+    at pattern_to_input (C:\Users\andy\Dropbox\All source code goes here - don't put this folder inside any other folder\translator_generator\universal_translator.js:3056:9)
+    at Object.<anonymous> (C:\Users\andy\Dropbox\All source code goes here - don't put this folder inside any other folder\translator_generator\universal_translator.js:6015:1)
+    at Module._compile (module.js:435:26)
+    at Object.Module._extensions..js (module.js:442:10)
+    at Module.load (module.js:356:32)
+    at Function.Module._load (module.js:313:12)
+    at Function.Module.runMain (module.js:467:10)
+    at startup (node.js:136:18)
+    at node.js:963:3
+ Press any key to continue . . .
+*/
 "use strict";
 var fs = require('fs');
 var nearley = require('nearley');
@@ -11,9 +3001,9 @@ var child_process = require("child_process");
 
 //const list_of_languages = "Vala,R,Clojure,Monkey X,Delphi,LiveCode,Ceylon,F#,ooc,Perl 6,EnglishScript,Julia,Maxima,Wolfram,OCaml,Common Lisp,Scala,REBOL,Go,Scala,Rust,Visual Basic .NET,Common Lisp,Cython,C++,Scala,Prolog,Z3,C#,PHP,C,JavaScript,Lua,Java,Haxe".split(',');
 
-const list_of_languages = "Erlang,Octave,Picat,MiniZinc,Perl,Go,Swift,C,Fortran,Z3,Python,REBOL,Haskell,Visual Basic .NET,PHP,Ruby,Lua,C++,Haxe,Java,JavaScript,C#".toLowerCase().split(",");
+//const list_of_languages = "Erlang,Octave,Picat,MiniZinc,Perl,Go,Swift,C,Fortran,Z3,Python,REBOL,Haskell,Visual Basic .NET,PHP,Ruby,Lua,C++,Haxe,Java,JavaScript,C#".toLowerCase().split(",");
 
-//const list_of_languages = "Yapps".toLowerCase().split(",");
+const list_of_languages = "javascript".toLowerCase().split(",");
 
 
 const list_of_grammar_notations = "Parboiled,Yapps,Rley,Jison,Bison,SmaCC,Ragel,Treetop,Waxeye,OMeta,syntax definition formalism,ABNF,Wirth syntax notation,Coco/R,Yacc,pypeg,Parslet,PEG.js,Pyparsing,EBNF,Nearley,ANTLR,Marpa,earley-parser-js,LPeg".toLowerCase().split(',');
@@ -34,34 +3024,36 @@ function acs(lang, theString){
 	return (theString.toLowerCase().split(",").indexOf(lang.toLowerCase()) !== -1);
 }
 
-function pattern_to_input(functionName, lang){
-	var theString;
-	for(var i in thePatterns[functionName]){
-		if(acs(lang, i)){
-			theString = thePatterns[functionName][i];
-			break;
-		}
-	}
-	if(theString === undefined){
-		throw(functionName + " is not yet defined for " + lang + " in string_to_dict")
-	}
-	theString = theString.split(" ");
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+function pattern_to_input(){
+	for(var functionName in thePatterns){
+		console.log(functionName +"(");
+	for(var current_language_list in thePatterns[functionName]){
+		var theString;
+	var theString = thePatterns[functionName][current_language_list].split(" ");
 	var stringInput = "{return [\""+functionName+"\", {";
 	for(var i = 0; i < theString.length; i++){
 		if((theString[i].indexOf(":") !== -1) && theString[i][0] !== ":" && /^[a-z0-9]+$/i.test(theString[i][0]) && theString[i][theString[i].length-1] !== ":"){
-			theString[i] = theString[i].split(":");
-			stringInput += theString[i][0]+":"+theString[i][0]+",";
-			theString[i] = theString[i][0]+":"+theString[i][1];
+			theString[i] = capitalizeFirstLetter(theString[i].split(":")[0]);
 		}
-		else if(theString[i] === "_" || theString[i] === "__"){
-			theString[i] = " " + theString[i];
+		else if(theString[i] === "__"){
+			theString[i] = "ws_";
+		}
+		else if(theString[i] === "_"){
+			theString[i] = "ws";
 		}
 		else{
 			theString[i] = '"'+theString[i]+'"';
 		}
 	}
-	
-	return functionName + " = " + theString.join(" ") + " " + stringInput + "}];}";
+	console.log("\t{memberchk(Lang,['"+current_language_list.split(",").join("','").toLowerCase()+"'])}->\n\t\t"+theString.join(",")+";");
+	}
+	console.log("\t{not_defined_for(Data,'"+functionName+"')}).");
+	}
+	return toReturn;
 }
 
 function pattern_to_output(theDict, thePattern, theLang){
@@ -655,12 +3647,12 @@ greater_than_or_equal,a:Add,b:Add
 	Reverse Polish notation
 		a __ b __ >=
 function_call_parameters,var1:(function_call_named_parameter/expression),var2:function_call_parameters
-	JavaScript,Nim,Seed7,Vala,Wolfram,D,Frink,Delphi,EngScript,Chapel,Perl,Swift,Perl 6,OCaml,Janus,Mathematical notation,Pascal,Rust,Picat,AutoHotKey,Maxima,Octave,Julia,R,Prolog,Fortran,Go,MiniZinc,Erlang,CoffeeScript,PHP,Hack,Java,C#,C,C++,Lua,TypeScript,Dart,Ruby,Python,Haxe,Scala,Visual Basic,Visual Basic .NET':
+	JavaScript,Nim,Seed7,Vala,Wolfram,D,Frink,Delphi,EngScript,Chapel,Perl,Swift,Perl 6,OCaml,Janus,Mathematical notation,Pascal,Rust,Picat,AutoHotKey,Maxima,Octave,Julia,R,Prolog,Fortran,Go,MiniZinc,Erlang,CoffeeScript,PHP,Hack,Java,C#,C,C++,Lua,TypeScript,Dart,Ruby,Python,Haxe,Scala,Visual Basic,Visual Basic .NET
 		var1 , var2
 	Hy,crosslanguage,Coq,Scheme,Racket,Common Lisp,CLIPS,REBOL,Haskell,Racket,Clojure,Z3
 		function_call_parameters = var1 __ var2
 greater_than,a:Add,b:Add
-	Pascal,Z3Py,ATS,Pydatalog,E,VBScript,LiveCode,Monkey X,Perl 6,EnglishScript,Cython,GAP,Mathematical notation,Wolfram,Chapel,Katahdin,Frink,MiniZinc,Picat,Java,ECLiPSe,D,ooc,Genie,Janus,PL/I,IDP,Processing,Maxima,Seed7,Self,GNU Smalltalk,Drools,Standard ML,Oz,Cobra,Pike,Prolog,EngScript,Kotlin,Pawn,FreeBASIC,MATLAB,Ada,FreeBASIC,Gosu,Gambas,Nim,AutoIt,ALGOL 68,Ceylon,Groovy,Rust,CoffeeScript,TypeScript,Fortran,Octave,ML,Hack,AutoHotKey,Scala,Delphi,Tcl,Swift,Vala,C,F#,C++,Dart,JavaScript,REBOL,Julia,Erlang,OCaml,crosslanguage,C#,Nemerle,AWK,Java,Lua,Perl,Haxe,Python,PHP,Haskell,Go,Ruby,R,bc,Visual Basic,Visual Basic .NET
+	pascal,z3py,ats,pydatalog,e,vbscript,livecode,monkey x,perl 6,englishscript,cython,gap,mathematical notation,wolfram,chapel,katahdin,frink,minizinc,picat,java,eclipse,d,ooc,genie,janus,pl/i,idp,processing,maxima,seed7,self,gnu smalltalk,drools,standard ml,oz,cobra,pike,prolog,engscript,kotlin,pawn,freebasic,matlab,ada,freebasic,gosu,gambas,nim,autoit,algol 68,ceylon,groovy,rust,coffeescript,typescript,fortran,octave,ml,hack,autohotkey,scala,delphi,tcl,swift,vala,c,f#,c++,dart,javascript,rebol,julia,erlang,ocaml,crosslanguage,c#,nemerle,awk,java,lua,perl,haxe,python,php,haskell,go,ruby,r,bc,visual basic,visual basic .net
 		a > b
 	Racket,Z3,CLIPS,GNU Smalltalk,newLisp,Hy,Common Lisp,Emacs Lisp,Clojure,Sibilant,LispyScript
 		( > __ a:Factor __ b:Factor )
@@ -785,7 +3777,7 @@ import,a:Identifier
 		require __ \' a \'
 	Perl,Perl 6,Chapel
 		\\"use a ;\\"
-regex_matches_string,aString,regex
+regex_matches_string,string:expression:aString,string:expression:regex
 	Python
 		re . compile ( regex ) . match ( aString )
 	Java,Scala
@@ -860,7 +3852,7 @@ dictionary,a:(key_value_list/key_value),input:type,output:type
 var_name,name:Identifier
 	PHP,Perl,Bash,Tcl,AutoIt,Perl 6,Puppet,Hack,AWK,PowerShell
 		$ name
-	EngScript,EnglishScript,VBScript,Polish notation,Reverse Polish notation,Wolfram,crosslanguage,Erlang,English,Mathematical notation,Pascal,Picat,Prolog,Katahdin,TypeScript,JavaScript,Frink,MiniZinc,Aldor,Flora-2,F-logic,D,Genie,ooc,Janus,Chapel,ABAP,COBOL,PicoLisp,REXX,PL/I,Falcon,IDP,Processing,Sympy,Maxima,Z3,Shen,Ceylon,nools,Pyke,Self,GNU Smalltalk,Elixir,LispyScript,Standard ML,Nim,Occam,Boo,Seed7,pyparsing,Agda,Icon,Octave,Cobra,Kotlin,C++,Drools,Oz,Pike,Delphi,Racket,ML,Java,Pawn,Fortran,Ada,FreeBASIC,MATLAB,newLisp,Hy,OCaml,Julia,AutoIt,C#,Gosu,AutoHotKey,Groovy,Rust,R,Swift,Vala,Go,Scala,Nemerle,Visual Basic,Visual Basic .NET,Clojure,Haxe,CoffeeScript,Dart,JavaScript,C#,Python,Ruby,Haskell,C,Lua,Gambas,Common Lisp,Scheme,REBOL,F#
+	EngScript,EnglishScript,VBScript,Polish notation,Reverse Polish notation,Wolfram,crosslanguage,English,Mathematical notation,Pascal,Katahdin,TypeScript,JavaScript,Frink,MiniZinc,Aldor,Flora-2,F-logic,D,Genie,ooc,Janus,Chapel,ABAP,COBOL,PicoLisp,REXX,PL/I,Falcon,IDP,Processing,Sympy,Maxima,Z3,Shen,Ceylon,nools,Pyke,Self,GNU Smalltalk,Elixir,LispyScript,Standard ML,Nim,Occam,Boo,Seed7,pyparsing,Agda,Icon,Octave,Cobra,Kotlin,C++,Drools,Oz,Pike,Delphi,Racket,ML,Java,Pawn,Fortran,Ada,FreeBASIC,MATLAB,newLisp,Hy,OCaml,Julia,AutoIt,C#,Gosu,AutoHotKey,Groovy,Rust,R,Swift,Vala,Go,Scala,Nemerle,Visual Basic,Visual Basic .NET,Clojure,Haxe,CoffeeScript,Dart,JavaScript,C#,Python,Ruby,Haskell,C,Lua,Gambas,Common Lisp,Scheme,REBOL,F#
 		name
 	CLIPS
 		? name
@@ -975,24 +3967,18 @@ strlen,a:parentheses_expression
 		a . length ( )
 	PHP,C,Pawn,Hack
 		strlen ( a )
-	MiniZinc,Julia
+	MiniZinc,Julia,Perl,Seed7,Octave
 		length ( a )
-	Haskell
-		( length a )
-	C#
+	C#,Nemerle
 		a . Length
 	Swift
 		countElements ( a )
 	AutoIt
 		StringLen ( a )
-	Common Lisp
+	Common Lisp,Haskell
 		( length __ a )
 	Racket,Scheme
 		( string-length __ a )
-	Perl,Seed7,Octave
-		length ( a )
-	Nemerle
-		a . Length
 	Fortran
 		LEN ( a )
 	Lua
@@ -1016,7 +4002,7 @@ not_equal,a:parentheses_expression,b:parentheses_expression
 		a __ does __ not __ equal __ b
 	Prolog
 		not ( a == b )
-	Common Lisp
+	Common Lisp,Z3
 		( not ( = __ a __ b ) )
 	Mathematical notation
 		a !=  b
@@ -1024,8 +4010,6 @@ not_equal,a:parentheses_expression,b:parentheses_expression
 		a # b
 	Fortran
 		a .NE. b
-	Z3
-		( not ( = __ a __ b ) )
 	REBOL,Seed7,Visual Basic .NET,Visual Basic,GAP,OCaml,LiveCode,Monkey X,VBScript,Delphi
 		a <> b
 	Erlang,Haskell
@@ -1038,17 +4022,17 @@ not,a:parentheses_expression
 	Prolog
 		\\\\+ a
 	Visual Basic,Visual Basic .NET,AutoIt,LiveCode,Monkey X,VBScript
-		( Not a )
+		( Not __ a )
 	Fortran
 		.NOT. a
 	Gambas
-		NOT a
+		NOT __ a
 	Rexx
 		\\\\ a
 	PL/I
 		^ a
 	PowerShell
-		-not a
+		-not __ a
 	Polish notation
 		not __ a __ b
 	Reverse Polish notation
@@ -1348,8 +4332,8 @@ minus_equals,a:(dot_notation/access_array/Identifier),b:expression
 	Ruby,Haskell,Erlang,Fortran,OCaml,MiniZinc,Octave,Delphi
 		a = a - b
 	Picat
-		a := a + b
-	REBOL,Picat
+		a := a - b
+	REBOL
 		a : a - b
 	LiveCode
 		subtract __ b __ from __ a
@@ -1513,7 +4497,7 @@ substring,a:parentheses_expression,b:expression,c:expression
 	Common Lisp
 		( subseq __ a __ b __ c )
 	Lua
-		string . sub ( a , start , end )
+		string . sub ( a , b , c )
 mod,a:parentheses_expression,b:parentheses_expression
 	Java,Perl 6,Cython,Rust,TypeScript,Frink,ooc,Genie,Pike,Ceylon,Pawn,PowerShell,CoffeeScript,Gosu,Groovy,EngScript,AWK,Julia,Scala,F#,Swift,R,Perl,Nemerle,Haxe,PHP,Hack,Vala,Lua,Tcl,Go,Dart,JavaScript,Python,C,C++,C#,Ruby
 		a % b
@@ -2286,12 +5270,10 @@ return,a:expression,function_name:Identifier
 		a
 	Visual Basic,Visual Basic .NET,AutoIt,Monkey X
 		Return __ a
-	Octave,Fortran
+	Octave,Fortran,Picat
 		retval = a
 	Pascal
 		Exit ( a )
-	Picat
-		retval = a
 	R
 		return ( a )
 	Wolfram
@@ -2341,8 +5323,6 @@ print,a:expression
 		trace ( a )
 	Go
 		fmt . Println ( a )
-	Prolog
-		write ( a )
 	C#
 		Console . WriteLine ( a )
 	REBOL,Fortran,Perl,PHP
@@ -2351,7 +5331,7 @@ print,a:expression
 		puts ( a )
 	Visual Basic .NET
 		System . Console . WriteLine ( a )
-	Scala,Julia,Swift
+	Scala,Julia,Swift,Picat
 		println ( a )
 	JavaScript,TypeScript
 		console . log ( a )
@@ -2369,7 +5349,7 @@ print,a:expression
 		println!( a )
 	Octave
 		disp ( a )
-	Chapel,D
+	Chapel,D,Seed7,prolog
 		writeln ( a )
 	Delphi
 		WriteLn ( a )
@@ -2379,12 +5359,8 @@ print,a:expression
 		Print [ a ]
 	Z3
 		( echo __ a )
-	Picat
-		println ( a )
 	Monkey X
 		Print __ a
-	Seed7
-		writeln ( a )
 grammar_series_of_statements,var1:grammar_statement,var2:grammar_series_of_statements
 	PEG.js,Yapps,Parboiled,Waxeye,Treetop,OMeta,Wirth syntax notation,Yacc,Pyparsing,EBNF,Nearley,ANTLR,Marpa,Parslet,Perl 6,Prolog,REBOL,ABNF
 		var1 __ var2
@@ -2451,7 +5427,7 @@ initialize_var,name:var_name,type:type,value:expression
 		type : name = value ;
 	Python,Ruby,Haskell,Erlang,Prolog,Julia,Picat,Octave,Wolfram
 		name = value
-	JavaScript,PHP,Hack,Swift
+	JavaScript,Hack,Swift
 		var __ name = value
 	Lua
 		local __ name = value
@@ -3036,6 +6012,8 @@ for(var current in thePatterns){
 	}
 }
 //throw(JSON.stringify(thePatterns));
+pattern_to_input();
+throw("done");
 
 function getOtherLangs(pattern, lang){
 	for(current in thePatterns){
@@ -3050,68 +6028,8 @@ function getOtherLangs(pattern, lang){
 }
 
 function typeInference(parseTree){
-	const arithmetic_expressions = "Add,sin,cos,Multiply,sqrt,pow,-,*,/";
-	const string_expressions = "join,concatenate_string,int_to_string,string_literal";
-	if(typeof(parseTree) === "string"){
-		return parseTree;
-	}
-	else if(typeof(parseTree) === "number"){
-		return parseTree;
-	}
-	console.log(JSON.stringify(parseTree))
-	for(var current in parseTree[1]){
-		parseTree[1][current] = typeInference(parseTree[1][current]);
-	}
-	if(acs(parseTree[0], "set_var,key_value,initializer_list_separator,initializer_list,_initializer_list,split,statement_with_semicolon,Or,And,parameters,function_call_parameters,var_name,if,elif,else,function_parameter,int,boolean,void,double,function_parameter,default_parameter,type,sin,cos,tan,pow,print,-,/,*,string_literal,pow")){
-		return parseTree;
-	}
-	else if(acs(parseTree[0], 'add')){
-		if(acs(parseTree[1]["var1"][0], string_expressions)){
-			parseTree[0] = 'concatenate_string';
-		}
-		else if(acs(parseTree[1]["var2"][0], string_expressions)){
-			parseTree[0] = 'concatenate_string';
-		}
-	}
-	else if(acs(parseTree[0], 'concatenate_string')){
-		if(acs(parseTree[1]["var1"][0], arithmetic_expressions)){
-			parseTree[0] = '+';
-		}
-		else if(acs(parseTree[1]["var2"][0], arithmetic_expressions)){
-			parseTree[0] = '+';
-		}
-	}
-	else if(parseTree[0] === 'array_type' && parseTree[1]["var2"] === undefined){
-		parseTree[1]["var2"] = '[]';
-	}
-	else if(acs(parseTree[0], "typeless_initialize_var,initialize_var,initialize_static_variable,initialize_static_variable_with_value,declare_constant,typeless_declare_constant,typeless_declare_constant")){
-		if(acs(parseTree[1]["value"][0], arithmetic_expressions)){
-			parseTree[1]["type"] = ["double", {}];
-			return parseTree;
-		}
-		else if(acs(parseTree[1]["value"][0], "And,Or")){
-			parseTree[1]["type"] = ["boolean", {}];
-			return parseTree;
-		}
-		else if(acs(parseTree[1]["value"][0], "split")){
-			parseTree[1]["type"] = ["type",{"var1":["string",{}],"var2":"[]"}];
-			return parseTree;
-		}
-		else if(acs(parseTree[1]["value"][0], "string_to_int")){
-			parseTree[1]["type"] = ["int", {}];
-			return parseTree;
-		}
-		else if(acs(parseTree[1]["value"][0], string_expressions)){
-			parseTree[1]["type"] = ["string", {}];
-			return parseTree;
-		}
-		else if(parseTree[1]["type"] !== undefined){
-			return parseTree;
-		}
-	}
-	else{
-		throw("typeInference is not yet defined for " +parseTree[0]);
-	}
+	console.log(JSON.stringify(parseTree));
+	return parseTree;
 }
 
 function generateCode(parseTree, outputLang){
@@ -3132,6 +6050,9 @@ function generateCode(parseTree, outputLang){
 			}
 			else if(acs(outputLang, "Hy,Z3,Scheme,Racket,Common Lisp,CLIPS,REBOL,Haskell,Racket,Clojure")){
 				return d.var1 +" "+d.var2;
+			}
+			else{
+				alert("Something's wrong with the parameters!");
 			}
 		break;
 		case "compare_ints":
@@ -3669,7 +6590,7 @@ for(var current of list_of_languages){
 }
 
 function translateLang(lang1, lang2, text){
-	var parseTree = parsers[lang1.toLowerCase()].parse(text);
+	var parseTree = TypeInference(parsers[lang1.toLowerCase()].parse(text));
 	//alert(JSON.stringify(parseTree));
 	return generateCode(parseTree, lang2.toLowerCase())
 }
