@@ -1,5 +1,5 @@
-# transpiler-generator
-A universal programming language translator generator
+# universal-transpiler
+A universal programming language translator
 
 This is a script that translates programs between several different programming languages.
 A demonstration of this translator is shown [here](https://rawgit.com/jarble/transpiler-generator/master/pegjs_test.html).
