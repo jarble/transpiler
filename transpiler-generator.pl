@@ -8,15 +8,6 @@
 :- use_module(library(prolog_stack)).
 :- use_module(library(error)).
 
-main_ :- 
-   get_user_input('Type name of the the input language:',Lang1),get_user_input('Type name of the the output language:',Lang2),get_user_input('Type name of the the input file:',File),read_file_to_codes(File,Input_,[]),atom_codes(Input,Input_),
-   writeln(Input), translate(Input,Output,Lang1,Lang2), writeln('\n'), writeln(Input), writeln('\n'), writeln(Output), writeln('\n'),
-   
-   get_user_input('Type the name of the output file:',Output_file),
-   open(Output_file,write,Stream),
-   write(Stream,Output),
-   close(Stream),main_.
-
 user:prolog_exception_hook(Exception, Exception, Frame, _):-
     (   Exception = error(Term)
     ;   Exception = error(Term, _)),
@@ -33,6 +24,13 @@ user:prolog_exception_hook(Exception, Exception, Frame, _):-
 :- set_prolog_flag(double_quotes,chars).
 % :- [library(dcg/basics)].
 
+main :- 
+   get_user_input('\nEdit the source code in input.txt, type the name of the the input language, and press Enter:',Lang1),get_user_input('Type name of the the output language, then press Enter. The file will be saved in output.txt.',Lang2),File='input.txt',read_file_to_codes(File,Input_,[]),atom_codes(Input,Input_),
+   writeln(Input), translate(Input,Output,Lang1,Lang2), writeln('\n'), writeln(Input), writeln('\n'), writeln(Output), writeln('\n'),
+   Output_file='output.txt',
+   open(Output_file,write,Stream),
+   write(Stream,Output),
+   close(Stream),halt.
 
 %Use this rule to define operators for various languages
 
@@ -798,16 +796,16 @@ print_var_types([A]) :-
 print_var_types([A|Rest]) :-
     writeln(A),print_var_types(Rest).
 
+list_of_langs(X) :-
+	X = [python,javascript,lua,perl,ruby,prolog,c,z3,'c#',java].
+
 translate(Input,Output,Lang2) :-
-        member(Lang1,[python,javascript,lua,perl,ruby,prolog,c,z3,'c#',java])-> translate(Input,Output,Lang1,Lang2).
+    list_of_langs(X),member(Lang1,X)-> translate(Input,Output,Lang1,Lang2).
 
 
 
 get_user_input(V1,V2) :-
 	writeln(V1),read_line(V3),atom_string(V2,V3).
-
-main :-
-	main_.
 
 
 statement_with_semicolon(Data,_,prolog_concatenate_string(Output_,Str1_,Str2_)) --> 
