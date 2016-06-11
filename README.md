@@ -34,7 +34,7 @@ and this is the Java code that it generates:
 #How to extend the translator
 
 A limited number of translation rules are provided here, but you can easily add your own rules to `universal-translator.pl`.
-This is a simplified version of one of its translation rules:
+This is a simplified version of one of its translation rules, implementing the sine function:
 
 	%The type of this expression is double.
 	parentheses_expr(Data,double,sin(Var1_)) -->
