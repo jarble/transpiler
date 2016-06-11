@@ -1,5 +1,4 @@
 # Universal-transpiler
-A universal programming language translator
 
 *Universal-transpiler* is a source-to-source compiler that translates a subset of most programming languages into several others.
 
