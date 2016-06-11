@@ -1387,8 +1387,10 @@ parentheses_expr(Data,int,ceiling(Params1)) -->
 					("Math",ws,".",ws,"ceil",ws,"(",ws,Params,ws,")")]
         ]).
 
-parentheses_expr(Data,int,cos(Var1_)) -->
-        {Var1 = expr(Data,int,Var1_)},
+parentheses_expr(Data,double,cos(Var1_)) -->
+        {
+				Var1 = expr(Data,double,Var1_)
+		},
 		langs_to_output(Data,cos,[[['java','javascript','typescript','ruby','haxe'],
                 ("Math",ws,".",ws,"cos",ws,"(",ws,Var1,ws,")")],
         [['lua','python'],
@@ -1410,8 +1412,10 @@ parentheses_expr(Data,int,cos(Var1_)) -->
         [['clojure'],
                 ("(",ws,"Math/cos",ws_,Var1,ws,")")]
         ]).        
-parentheses_expr(Data,int,sin(Var1_)) -->
-        {Var1 = expr(Data,int,Var1_)},
+parentheses_expr(Data,double,sin(Var1_)) -->
+        {
+			Var1 = expr(Data,double,Var1_)
+		},
         langs_to_output(Data,sin,[[['java','javascript','typescript','ruby','haxe'],
                 ("Math",ws,".",ws,"sin",ws,"(",ws,Var1,ws,")")],
         [['lua','python'],
