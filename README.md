@@ -35,7 +35,7 @@ and this is the Java code that it generates:
 #How to extend the translator
 
 A limited number of translation rules are provided here, but you can easily add your own rules to `universal-translator.pl`.
-For example, the sine function is translated by this rule:
+This is a simplified version of one of its translation rules:
 
 	%The type of this expression is double.
 	parentheses_expr(Data,double,sin(Var1_)) -->
@@ -44,24 +44,8 @@ For example, the sine function is translated by this rule:
 			Var1 = expr(Data,double,Var1_)
 		},
         langs_to_output(Data,sin,[
-        [['java','javascript','typescript','ruby','haxe'],
+        [['java','javascript'],
                 ("Math",ws,".",ws,"sin",ws,"(",ws,Var1,ws,")")],
         [['lua','python'],
                 ("math",python_ws,".",python_ws,"sin",python_ws,"(",python_ws,Var1,python_ws,")")],
-        [['english'],
-                ("the sine of",ws_,Var1)],
-        [['c','seed7','erlang','picat','mathematical notation','julia','d','php','perl','perl 6','maxima','fortran','minizinc','swift','prolog','octave','dart','haskell','c++','scala'],
-                ("sin",ws,"(",ws,Var1,ws,")")],
-        [['c#','visual basic .net'],
-                ("Math",ws,".",ws,"Sin",ws,"(",ws,Var1,ws,")")],
-        [['wolfram'],
-                ("Sin",ws,"[",ws,Var1,ws,"]")],
-        [['rebol'],
-                ("sine/radians",ws_,Var1)],
-        [['go'],
-                ("math",ws,".",ws,"Sin",ws,"(",ws,Var1,ws,")")],
-        [['common lisp','racket'],
-                ("(",ws,"sin",ws_,Var1,ws,")")],
-        [['clojure'],
-                ("(",ws,"Math/sin",ws_,Var1,ws,")")]
         ]).
