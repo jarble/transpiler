@@ -28,7 +28,7 @@ and this is the Java code that it generates:
 
 #How to use this translator
 * First, write some source code in input.txt. 
-* Open transpiler-generator.pl in the SWI-Prolog console.
+* Open universal-transpiler.pl in the SWI-Prolog console.
 * Type the input and output languages. The translated source code will be saved in output.txt.
 
 #How to extend the translator
