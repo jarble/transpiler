@@ -43,8 +43,8 @@ This is a simplified version of one of its translation rules, implementing the s
 			Var1 = expr(Data,double,Var1_)
 		},
         langs_to_output(Data,sin,[
-        [['java','javascript'],
-                ("Math",ws,".",ws,"sin",ws,"(",ws,Var1,ws,")")],
-        [['lua','python'],
-                ("math",python_ws,".",python_ws,"sin",python_ws,"(",python_ws,Var1,python_ws,")")],
+        ['java','javascript']:
+                ("Math",ws,".",ws,"sin",ws,"(",ws,Var1,ws,")"),
+        ['lua','python']:
+                ("math",python_ws,".",python_ws,"sin",python_ws,"(",python_ws,Var1,python_ws,")"),
         ]).
