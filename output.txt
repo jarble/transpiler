@@ -1,4 +1,8 @@
 
+public static int add(int a,int b){
+    int[] g={3,4,5};
+    return a+b+(g[0])+(g.length);
+} 
 public static int divide(int a,int b){
     return a/b;
 }
