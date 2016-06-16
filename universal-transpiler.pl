@@ -27,13 +27,8 @@ user:prolog_exception_hook(Exception, Exception, Frame, _):-
 % :- [library(dcg/basics)].
 
 main :- 
-   get_user_input('\nEdit the source code in input.txt, type the name of the the input language, and press Enter:',Lang1),get_user_input('Type name of the the output language, then press Enter. The file will be saved in output.txt.',Lang2),File='input.txt',read_file_to_codes(File,Input_,[]),atom_codes(Input,Input_),
-   writeln(Input), translate(Input,Output,Lang1,Lang2), writeln('\n'), writeln(Input), writeln('\n'), writeln(Output), writeln('\n'),
-   Output_file='output.txt',
-   open(Output_file,write,Stream),
-   write(Stream,Output),
-   close(Stream),main.
-
+   File='input.txt',read_file_to_codes(File,Input_,[]),atom_codes(Input,Input_),
+   writeln(Input),translate_langs(Input).
 
 %Use this rule to define operators for various languages
 
@@ -837,12 +832,24 @@ print_var_types([A|Rest]) :-
     writeln(A),print_var_types(Rest).
 
 list_of_langs(X) :-
-	X = [python,javascript,lua,perl,ruby,prolog,c,z3,'c#',java].
+	X = [javascript,'c#',java,c,swift,'c++',haxe,php,lua,ruby,'visual basic .net',perl].
 
 translate(Input,Output,Lang2) :-
-    list_of_langs(X),member(Lang1,X)-> translate(Input,Output,Lang1,Lang2).
+    list_of_langs(X),member(Lang1,X),translate(Input,Output,Lang1,Lang2).
 
+translate_langs(Input_) :-
+	atom_chars(Input_,Input),
+	list_of_langs(X),
+	member(Lang,X), phrase(statements_with_ws([Lang,true,[],Var_types,"\n"],Ls), Input),
+	translate_langs(Var_types,Ls,X).
 
+translate_langs(_,_,[]) :-
+	true.
+	
+translate_langs(Var_types,Ls,[Lang|Langs]) :-
+    phrase(statements_with_ws([Lang,false,[],Var_types,"\n"],Ls), Output),
+    atom_chars(Output_,Output),writeln(Output_),
+    translate_langs(Var_types,Ls,Langs).
 
 get_user_input(V1,V2) :-
 	writeln(V1),read_line(V3),atom_string(V2_,V3),downcase_atom(V2_,V2).
@@ -1947,7 +1954,7 @@ expr(Data,string,concatenate_string(A_,B_)) -->
                 ("sconcat",ws,"(",ws,A,ws,",",ws,B,ws,")"),
         ['common lisp']:
                 ("(",ws,"concatenate",ws_,"'string",ws_,A,ws_,B,ws,")"),
-        ['c','cosmos','z3py','monkey x','englishscript','mathematical notation','go','java','chapel','frink','freebasic','nemerle','d','cython','ceylon','coffeescript','typescript','dart','gosu','groovy','scala','swift','f#','python','javascript','c#','haxe','c++','vala']:
+        ['c','ruby','cosmos','z3py','monkey x','englishscript','mathematical notation','go','java','chapel','frink','freebasic','nemerle','d','cython','ceylon','coffeescript','typescript','dart','gosu','groovy','scala','swift','f#','python','javascript','c#','haxe','c++','vala']:
                 (A,python_ws,"+",python_ws,B),
         ['lua','engscript']:
                 (A,ws,"..",ws,B),
@@ -2661,6 +2668,8 @@ statement(Data,Type1,function(Name1,Type1,Params1,Body1)) -->
         },
         %put this at the beginning of each statement without a semicolon
 		(Indent;""),langs_to_output(Data,function,[
+		['c++','vala','c','dart','ceylon','pike','d','englishscript']:
+                (Type,ws_,Name,ws,"(",ws,Params,ws,")",ws,"{",ws,Body,(Indent;ws),"}"),
 		['sql']:
                 ("CREATE",ws_,"FUNCTION",ws_,"dbo",ws,".",ws,Name,ws,"(",ws,"function_parameters",ws,")",ws_,"RETURNS",ws_,Type,ws_,Body),
         ['hy']:
@@ -2675,8 +2684,6 @@ statement(Data,Type1,function(Name1,Type1,Params1,Body1)) -->
                 ("(",ws,"defun",ws_,Name,ws_,"(",ws,Params,ws,")",ws_,Body,ws,")"),
         ['go']:
                 ("func",ws_,Name,ws,"(",ws,Params,ws,")",ws_,Type,ws,"{",ws,Body,(Indent;ws),"}"),
-        ['c++','vala','c','dart','ceylon','pike','d','englishscript']:
-                (Type,ws_,Name,ws,"(",ws,Params,ws,")",ws,"{",ws,Body,(Indent;ws),"}"),
         ['pydatalog']:
                 (Name,ws,"(",ws,Params,ws,")",ws,"<=",ws,Body),
         ['java','c#']:
@@ -2783,8 +2790,6 @@ statement(Data,Name1,class(Name1,Body1)) -->
 		langs_to_output(Data,class,[
 		['julia']:
                 ("type",ws_,Name,ws_,Body,(Indent;ws_),"end"),
-        ['c','z3','lua','prolog','haskell','minizinc','r','go','rebol','fortran']:
-                (Body),
         ['java','c#']:
                 ("public",ws_,"class",ws_,Name,ws,"{",ws,Body,(Indent;ws),"}"),
         ['hy']:
@@ -2793,7 +2798,7 @@ statement(Data,Name1,class(Name1,Body1)) -->
                 ("package",ws_,Name,";",ws,Body),
         ['c++']:
                 ("class",ws_,Name,ws,"{",ws,Body,(Indent;ws),"}",ws,";"),
-         ['logtalk']:
+        ['logtalk']:
                 ("object",ws,"(",Name,")",ws,".",ws,Body,(Indent;ws),"end_object",ws,"."),
         ['javascript','hack','php','scala','haxe','chapel','swift','d','typescript','dart','perl 6']:
                 ("class",ws_,Name,ws,"{",ws,Body,(Indent;ws),"}"),
