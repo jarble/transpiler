@@ -1,5 +1,16 @@
-function add(a,b){
-	var i = 1;
-	var g = [3,4,5];
-	return a + b;
-}
+def subtract(a,b)
+	return a - b
+end
+
+def multiply(a,b)
+	d = a + 1
+	while d < 10 do
+		d = d + 1
+	end
+	puts(d)
+	return a * b
+end
+
+def sum(a,b)
+	return a + b + 0
+end
