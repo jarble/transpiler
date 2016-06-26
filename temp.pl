@@ -8,6 +8,22 @@
 :- initialization(main).
 :-set_prolog_flag(double_quotes, chars).  % This is for SWI 7+ to revert to the prior interpretation of quoted strings.
 
+
+
+parentheses_expr(Data,int,number(A)) -->
+	a_number(A).
+
+a_number([A,B]) -->
+        (a__number(A), ".", a__number(B)).
+
+a_number(A) -->
+        a__number(A).
+
+a__number([L|Ls]) --> digit(L), a__number_r(Ls).
+a__number_r([L|Ls]) --> digit(L), a__number_r(Ls).
+a__number_r([])     --> [].
+digit(Let)     --> [Let], { code_type(Let, digit) }.
+
 %Use this rule to define operators for various languages
 infix_operator(Data,Type,Symbol,Exp1,Exp2) -->
 	(parentheses_expr(Data,Type,Exp1)),ws,Symbol,ws,expr(Data,Type,Exp2).
@@ -29,6 +45,12 @@ expr(Data,int,add(Exp1,Exp2)) -->
 
 expr(Data,int,subtract(Exp1,Exp2)) -->
 	infix_operator(Data,int,"-",Exp1,Exp2).
+
+expr(Data,bool,less_than(Exp1,Exp2)) -->
+	infix_operator(Data,int,"<",Exp1,Exp2).
+
+expr(Data,bool,greater_than(Exp1,Exp2)) -->
+	infix_operator(Data,int,">",Exp1,Exp2).
 
 statement(Data,Return_type,function(Name1,Params1,Body1)) -->
 	{
@@ -61,6 +83,19 @@ function(lua,[Name,_,Params,Body]) -->
 	"function",ws_,Name,ws,"(",ws,Params,ws,")",ws_,Body,ws_,"end".
 
 function('c++',A) --> function('c',A).
+
+statement(Data,Type,while(Expr1,Body1)) --> 
+	{
+		Data = [Lang|_],
+		Expr = expr(Data,bool,Expr1),
+		Body=statements(Data,Type,Body1)
+	},
+	while(Lang,[Expr,Body]).
+
+while('java',[Expr,Body]) --> "while",ws,"(",ws,Expr,ws,")",ws,"{",ws,Body,ws,"}".
+while('javascript',A)--> while('java',A).
+while('c++',A) --> while('java',A).
+while('c',A) --> while('c++',A).
 
 %java-like class statements
 statement(Data,_,class(Name1,Body1)) --> 
@@ -129,7 +164,6 @@ initialize_var(perl,[_,Name,Expr]) --> "my",ws_,Name,ws,"=",ws,Expr,ws,";".
 
 
 initialize_var(java,[Type,Name,Expr]) --> Type,ws_,Name,ws,"=",ws,Expr,ws,";".
-
 initialize_var(c,A) --> initialize_var(java,A).
 
 initialize_var('c#',A) --> initialize_var(c,A).
@@ -178,6 +212,7 @@ type(c,int) --> "int".
 type(java,bool) --> "boolean".
 
 type('c#',bool) --> "bool".
+type('c',bool) --> "int".
 
 type(c,void) --> "void".
 type(java,void) --> type(c,void).
@@ -232,4 +267,4 @@ statements_with_ws(Data,A) -->
     ws,statements(Data,_,A),ws.
 
 list_of_langs(X) :-
-	X = [javascript,ruby,lua,c].
+	X = [javascript,java].
