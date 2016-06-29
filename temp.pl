@@ -35,13 +35,21 @@ parentheses_expr(Data,Type,var_name(Name)) -->
 	var_name(Data,Type,Name).
 
 var_name(Data,Type,Name) -->
-	symbol(Name).
+	symbol(Name),{is_var_type(Data, A, Type)}.
+	
+is_var_type([_,_,Namespace,Var_types,_], Name, Type) :-
+    memberchk([[Name|Namespace],Type1], Var_types), Type = Type1.
+
+
 expr(Data,Type,parentheses_expr(A)) --> parentheses_expr(Data,Type,A).
 
 expr(_,Type,var_name(Data,Type,A)) --> var_name(Data,Type,A).
 
 expr(Data,int,add(Exp1,Exp2)) -->
 	infix_operator(Data,int,"+",Exp1,Exp2).
+
+expr(Data,bool,or(Exp1,Exp2)) -->
+	infix_operator(Data,bool,"||",Exp1,Exp2).
 
 expr(Data,int,subtract(Exp1,Exp2)) -->
 	infix_operator(Data,int,"-",Exp1,Exp2).

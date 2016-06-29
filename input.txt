@@ -1,3 +1,11 @@
-def addition_example(a,b)
-	return a + "b"
-end
+
+def add(a,b):
+	print(a)  
+	return a + b
+def subtract(a,b):
+	theArr = [3,4,5]
+	z = a + b
+	while z < 10:
+		print(z)  
+		z += 1
+	return a - b  
