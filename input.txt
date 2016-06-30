@@ -1,9 +1,21 @@
 
+a = 1
+b = 2
+bool_1 = a <= b
+bool_2 = a >= b
+bool_3 = a != b
+bool_4 = a > b
 def add(a,b):
 	print(a)  
 	return a + b
 def subtract(a,b):
+	aString = [1,2,3,4,5][0:3]
 	theArr = [3,4,5]
+	theArr += [7]
+	arr1 = theArr + [2,6,5]
+	theResult = (arr2 == theArr)
+	for index in theArr:
+		print(index)
 	z = a + b
 	while z < 10:
 		print(z)  

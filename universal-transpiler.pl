@@ -368,7 +368,7 @@ parameter(Data,[Type1,Name1]) -->
             (Name,ws_,Type),
         ['minizinc']:
             ("var",ws_,Type,ws,":",ws,Name),
-        ['haskell','python','ruby','lua','hy','perl 6','cosmos','polish notation','reverse polish notation','scheme','mathematical notation','lispyscript','clips','clojure','f#','ml','racket','ocaml','tcl','common lisp','newlisp','cython','frink','picat','idp','powershell','maxima','icon','coffeescript','fortran','octave','autohotkey','prolog','logtalk','awk','kotlin','dart','javascript','nemerle','erlang','php','autoit','r','bc']:
+        ['haskell','elixir','python','ruby','lua','hy','perl 6','cosmos','polish notation','reverse polish notation','scheme','mathematical notation','lispyscript','clips','clojure','f#','ml','racket','ocaml','tcl','common lisp','newlisp','cython','frink','picat','idp','powershell','maxima','icon','coffeescript','fortran','octave','autohotkey','prolog','logtalk','awk','kotlin','dart','javascript','nemerle','erlang','php','autoit','r','bc']:
             (Name),
         ['julia']:
             (Name,ws,"::",ws,Type),
@@ -411,7 +411,7 @@ function_parameter_separator(Data) -->
         langs_to_output(Data,function_parameter_separator,[
         ['hy','f#','polish notation','reverse polish notation','z3','scheme','racket','common lisp','clips','rebol','haskell','racket','clojure','perl']:
                 ws_,
-        ['pseudocode','visual basic .net','python','ruby','lua','javascript','logtalk','cosmos','nim','seed7','pydatalog','e','vbscript','monkey x','livecode','ceylon','delphi','englishscript','cython','vala','dafny','wolfram','gambas','d','frink','chapel','swift','perl 6','ocaml','janus','mathematical notation','pascal','rust','picat','autohotkey','maxima','octave','julia','r','prolog','fortran','go','minizinc','erlang','coffeescript','php','hack','java','c#','c','c++','typescript','dart','haxe','scala','visual basic']:
+        ['pseudocode','elixir','visual basic .net','python','ruby','lua','javascript','logtalk','cosmos','nim','seed7','pydatalog','e','vbscript','monkey x','livecode','ceylon','delphi','englishscript','cython','vala','dafny','wolfram','gambas','d','frink','chapel','swift','perl 6','ocaml','janus','mathematical notation','pascal','rust','picat','autohotkey','maxima','octave','julia','r','prolog','fortran','go','minizinc','erlang','coffeescript','php','hack','java','c#','c','c++','typescript','dart','haxe','scala','visual basic']:
                 ",",
         [perl]:
                 ws
@@ -433,7 +433,7 @@ parameter_separator(Data) -->
         langs_to_output(Data,parameter_separator,[
         ['hy','f#','polish notation','reverse polish notation','z3','scheme','racket','common lisp','clips','rebol','haskell','racket','clojure','perl']:
                 ws_,
-        ['pseudocode','javascript','logtalk','nim','seed7','pydatalog','e','vbscript','monkey x','livecode','ceylon','delphi','englishscript','cython','vala','dafny','wolfram','gambas','d','frink','chapel','swift','perl 6','ocaml','janus','mathematical notation','pascal','rust','picat','autohotkey','maxima','octave','julia','r','prolog','fortran','go','minizinc','erlang','coffeescript','php','hack','java','c#','c','c++','typescript','dart','haxe','scala','visual basic']:
+        ['pseudocode','visual basic .net','javascript','logtalk','nim','seed7','pydatalog','e','vbscript','monkey x','livecode','ceylon','delphi','englishscript','cython','vala','dafny','wolfram','gambas','d','frink','chapel','swift','perl 6','ocaml','janus','mathematical notation','pascal','rust','picat','autohotkey','maxima','octave','julia','r','prolog','fortran','go','minizinc','erlang','coffeescript','php','hack','java','c#','c','c++','typescript','dart','haxe','scala','visual basic']:
                 ","
         ]).
 
@@ -639,7 +639,7 @@ statement_separator(Data) -->
 
 initializer_list_separator(Data) -->
     langs_to_output(Data,initializer_list_separator,[
-    ['ruby','lua','python','cosmos','erlang','nim','seed7','vala','polish notation','reverse polish notation','d','frink','fortran','chapel','octave','julia','pseudocode','pascal','delphi','prolog','minizinc','engscript','cython','groovy','dart','typescript','coffeescript','nemerle','javascript','haxe','haskell','rebol','polish notation','swift','java','picat','c#','go','c++','c','visual basic','php','scala','perl','wolfram']:
+    ['ruby','visual basic .net','lua','python','cosmos','erlang','nim','seed7','vala','polish notation','reverse polish notation','d','frink','fortran','chapel','octave','julia','pseudocode','pascal','delphi','prolog','minizinc','engscript','cython','groovy','dart','typescript','coffeescript','nemerle','javascript','haxe','haskell','rebol','polish notation','swift','java','picat','c#','go','c++','c','visual basic','php','scala','perl','wolfram']:
             ",",
     ['rebol']:
             ws_,
@@ -768,6 +768,10 @@ regex_literal(Data,S_) -->
         ("~/",S,"/"),
     ['java']:
         ("Pattern",ws,".",ws,"compile",ws,"(\"",S,"\")"),
+    ['python']:
+        ("re",python_ws,".",python_ws,"compile",python_ws,"(\"",S,"\")"),
+    ['erlang']:
+        ("re",ws,":",ws,"compile",ws,"(\"",S,"\")"),
     ['c++']:
         ("regex::regex",ws,"(\"",S,"\")"),
     ['scala','c#']:
@@ -827,7 +831,7 @@ print_var_types([A|Rest]) :-
 
 list_of_langs(X) :-
 	%X = [ruby,javascript,java,c,'c#','c++','go','haxe','php','swift','octave',lua].
-	X = [javascript,ruby,lua,python,'visual basic .net',java].
+	X = [python,java,'coffeescript','visual basic .net',erlang,elixir,ruby,lua,javascript,'c#','c++'].
 
 translate(Input,Output,Lang2) :-
     list_of_langs(X),member(Lang1,X),translate(Input,Output,Lang1,Lang2).
@@ -870,7 +874,7 @@ statement_with_semicolon(Data,Return_type,return(To_return1,Function_name)) -->
 			(Function_name,ws,"=",ws,A),
 	['pseudocode','python','lua','ruby','java','seed7','xl','e','livecode','englishscript','cython','gap','kal','engscript','pawn','ada','powershell','rust','d','ceylon','typescript','hack','autohotkey','gosu','swift','pike','objective-c','c','groovy','scala','coffeescript','julia','dart','c#','javascript','go','haxe','php','c++','perl','vala','rebol','tcl','awk','bc','chapel','perl 6']:
 			("return",python_ws_,A),
-	['minizinc','prolog','logtalk','pydatalog','polish notation','reverse polish notation','mathematical notation','emacs lisp','z3','erlang','maxima','standard ml','icon','oz','clips','newlisp','hy','sibilant','lispyscript','algol 68','clojure','common lisp','f#','ocaml','haskell','ml','racket','nemerle']:
+	['minizinc','elixir','prolog','logtalk','pydatalog','polish notation','reverse polish notation','mathematical notation','emacs lisp','z3','erlang','maxima','standard ml','icon','oz','clips','newlisp','hy','sibilant','lispyscript','algol 68','clojure','common lisp','f#','ocaml','haskell','ml','racket','nemerle']:
 			(A),
 	['pseudocode','visual basic','visual basic .net','autoit','monkey x']:
 			("Return",ws_,A),
@@ -1023,7 +1027,7 @@ statement_with_semicolon(Data,_,set_var(Name1,Expr1,Type)) -->
 		Value = expr(Data,Type,Expr1)
 	},
 	langs_to_output(Data,set_var,[
-    ['javascript','lua','ruby','scriptol','mathematical notation','perl 6','wolfram','chapel','katahdin','frink','picat','ooc','d','genie','janus','ceylon','idp','sympy','processing','java','boo','gosu','pike','kotlin','icon','powershell','engscript','pawn','freebasic','hack','nim','openoffice basic','groovy','typescript','rust','coffeescript','fortran','awk','go','swift','vala','c','julia','scala','cobra','erlang','autoit','dart','java','ocaml','haxe','c#','matlab','c++','php','perl','gambas','octave','visual basic','bc']:
+    ['javascript','elixir','visual basic .net','lua','ruby','scriptol','mathematical notation','perl 6','wolfram','chapel','katahdin','frink','picat','ooc','d','genie','janus','ceylon','idp','sympy','processing','java','boo','gosu','pike','kotlin','icon','powershell','engscript','pawn','freebasic','hack','nim','openoffice basic','groovy','typescript','rust','coffeescript','fortran','awk','go','swift','vala','c','julia','scala','cobra','erlang','autoit','dart','java','ocaml','haxe','c#','matlab','c++','php','perl','gambas','octave','visual basic','bc']:
 			(Name,ws,"=",ws,Value),
 	['python']:
 			(Name,python_ws,"=",python_ws,Value),
@@ -1170,10 +1174,14 @@ statement_with_semicolon(Data,_,append_to_array(Name1,Expr1)) -->
                 Name = var_name(Data,[array,Type],Name1)
         },
         langs_to_output(Data,append_to_array,[
-        ['javascript']:
+        ['javascript','ruby']:
                 (Name,ws,".",ws,"push",ws,"(",ws,Expr,ws,")"),
-        [php]:
-                ("array_push",ws,"(",ws,Expr,ws,")")
+        ['php']:
+                ("array_push",ws,"(",ws,Name,ws,",",ws,Expr,ws,")"),
+        ['perl']:
+                ("push",ws,"(",ws,Name,ws,",",ws,Expr,ws,")"),
+        ['python']:
+				(Name,python_ws,"+=",python_ws,"[",Expr,"]")
         ]).
 
 
@@ -1183,7 +1191,7 @@ statement_with_semicolon(Data,_,plus_equals(Name1,Expr1)) -->
                 B = expr(Data,int,Expr1)
 		},
         langs_to_output(Data,plus_equals,[
-        ['janus','nim','python','vala','perl 6','dart','typescript','java','c','c++','c#','javascript','haxe','php','chapel','perl','julia','scala','rust','go','swift']:
+        ['janus','visual basic','nim','python','vala','perl 6','dart','typescript','java','c','c++','c#','javascript','haxe','php','chapel','perl','julia','scala','rust','go','swift']:
                 (A,python_ws,"+=",python_ws,B),
         ['haskell','ruby','lua','erlang','fortran','ocaml','minizinc','octave','delphi']:
                 (A,ws,"=",ws,A,ws,"+",ws,B),
@@ -1234,8 +1242,18 @@ statement_with_semicolon(Data,_,times_equals(Name1,Expr1)) -->
                 Expr = expr(Data,int,Expr1)
         },
         langs_to_output(Data,times_equals,[
-        [c,java,'c#',javascript,php,perl]:
-                (Name,ws,"*=",ws,Expr)
+        [c,java,'c#','python',javascript,php,perl]:
+                (Name,python_ws,"*=",python_ws,Expr)
+        ]).
+
+statement_with_semicolon(Data,_,divide_equals(Name1,Expr1)) -->
+        {
+                Name = var_name(Data,int,Name1),
+                Expr = expr(Data,int,Expr1)
+        },
+        langs_to_output(Data,divide_equals,[
+        ['python']:
+                (Name,python_ws,"/=",python_ws,Expr)
         ]).
 
 %print without newline
@@ -1326,7 +1344,7 @@ parentheses_expr(Data,Type, function_call(Name1,Params1,Params2)) -->
 			(Args = function_call_parameters(Data,Params1,Params2))
 	},
     langs_to_output(Data,function_call,[
-    ['c','ruby','logtalk','nim','seed7','gap','mathematical notation','chapel','elixir','janus','perl 6','pascal','rust','hack','katahdin','minizinc','pawn','aldor','picat','d','genie','ooc','pl/i','delphi','standard ml','rexx','falcon','idp','processing','maxima','swift','boo','r','matlab','autoit','pike','gosu','awk','autohotkey','gambas','kotlin','nemerle','engscript','prolog','groovy','scala','coffeescript','julia','typescript','fortran','octave','c++','go','cobra','vala','f#','java','ceylon','ocaml','erlang','c#','haxe','javascript','dart','bc','visual basic','php','perl']:
+    ['c','ruby','visual basic .net','logtalk','nim','seed7','gap','mathematical notation','chapel','elixir','janus','perl 6','pascal','rust','hack','katahdin','minizinc','pawn','aldor','picat','d','genie','ooc','pl/i','delphi','standard ml','rexx','falcon','idp','processing','maxima','swift','boo','r','matlab','autoit','pike','gosu','awk','autohotkey','gambas','kotlin','nemerle','engscript','prolog','groovy','scala','coffeescript','julia','typescript','fortran','octave','c++','go','cobra','vala','f#','java','ceylon','ocaml','erlang','c#','haxe','javascript','dart','bc','visual basic','php','perl']:
 			(Name,python_ws,"(",python_ws,Args,python_ws,")"),
 	['haskell','z3','clips','clojure','common lisp','clips','racket','scheme','rebol']:
 			("(",ws,Name,ws_,Args,ws,")"),
@@ -1554,7 +1572,7 @@ parentheses_expr(Data,bool,"true") -->
 	langs_to_output(Data,'true',[
 	['java','livecode','gap','dafny','z3','perl 6','chapel','c','frink','elixir','pseudocode','pascal','minizinc','engscript','picat','rust','clojure','nim','hack','ceylon','d','groovy','coffeescript','typescript','octave','prolog','julia','f#','swift','nemerle','vala','c++','dart','javascript','erlang','c#','haxe','go','ocaml','scala','php','rebol']:
 			("true"),
-	['pydatalog','hy','cython','autoit','haskell','vbscript','visual basic','monkey x','wolfram','delphi']:
+	['pydatalog','hy','cython','autoit','haskell','vbscript','visual basic','visual basic .net','monkey x','wolfram','delphi']:
 			("True"),
 	['perl','awk','tcl']:
 			("1"),
@@ -1571,7 +1589,7 @@ parentheses_expr(Data,bool,"false") -->
     langs_to_output(Data,'false',[
     ['java','livecode','gap','dafny','z3','perl 6','chapel','c','frink','elixir','pascal','rust','minizinc','engscript','picat','clojure','nim','groovy','d','ceylon','typescript','coffeescript','octave','prolog','julia','vala','f#','swift','c++','nemerle','dart','javascript','erlang','c#','haxe','go','ocaml','scala','php','rebol','hack']:
 			("false"),
-	['pydatalog','hy','cython','autoit','haskell','vbscript','visual basic','monkey x','wolfram','delphi']:
+	['pydatalog','hy','cython','autoit','haskell','vbscript','visual basic','visual basic .net','monkey x','wolfram','delphi']:
 			("False"),
 	['perl','awk','tcl']:
 			("0"),
@@ -1618,7 +1636,7 @@ parentheses_expr(Data,[array,Type1],initializer_list(A_)) -->
                 Type = type(Data,Type1)
         },
         langs_to_output(Data,initializer_list,[
-        ['java','lua','pseudocode','picat','c#','c++','c','visual basic','wolfram']:
+        ['java','lua','pseudocode','picat','c#','c++','c','visual basic','visual basic .net','wolfram']:
                 ("{",ws,A,ws,"}"),
         ['go']:
 				("[]",Type,"{",ws,A,ws,"}"),
@@ -1784,6 +1802,16 @@ expr(Data,int,index_of(Str1_,Str2_)) -->
         ("index",ws,"(",ws,String,ws,",",ws,Substring,ws,")")
     ]).
 
+expr(Data,[array,Type],array_slice(Str_,Index1_,Index2_)) -->
+        {
+                A = parentheses_expr(Data,[array,Type],Str_),
+                B = parentheses_expr(Data,int,Index1_),
+                C = parentheses_expr(Data,int,Index2_)
+        },
+        langs_to_output(Data,array_slice,[
+			['python']:
+                (A,python_ws,"[",python_ws,B,python_ws,":",python_ws,C,python_ws,"]")
+        ]).
 
 expr(Data,string,substring(Str_,Index1_,Index2_)) -->
         {
@@ -1798,7 +1826,7 @@ expr(Data,string,substring(Str_,Index1_,Index2_)) -->
                 (A,ws,".",ws,"substring",ws,"(",ws,B,ws,",",ws,C,ws,"-",ws,B,ws,")"),
         ['z3']:
                 ("(",ws,"Substring",ws_,A,ws_,B,ws_,C,ws,")"),
-        ['cython','icon','go']:
+        ['cython','python','icon','go']:
                 (A,python_ws,"[",python_ws,B,python_ws,":",python_ws,C,python_ws,"]"),
         ['julia:']:
                 (A,ws,"[",ws,B,ws,"-",ws,"1",ws,":",ws,C,ws,"]"),
@@ -1831,7 +1859,7 @@ expr(Data,bool,not(A1)) -->
                 A = parentheses_expr(Data,bool,A1)
         },
         langs_to_output(Data,'not',[
-        ['cython','mathematical notation','emacs lisp','minizinc','picat','genie','seed7','z3','idp','maxima','clips','engscript','hy','ocaml','clojure','erlang','pascal','delphi','f#','ml','racket','common lisp','rebol','haskell','sibilant']:
+        ['cython','python','mathematical notation','emacs lisp','minizinc','picat','genie','seed7','z3','idp','maxima','clips','engscript','hy','ocaml','clojure','erlang','pascal','delphi','f#','ml','racket','common lisp','rebol','haskell','sibilant']:
                 ("(",python_ws,"not",python_ws_,A,python_ws,")"),
         ['java','perl 6','katahdin','coffeescript','frink','d','ooc','ceylon','processing','janus','pawn','autohotkey','groovy','scala','hack','rust','octave','typescript','julia','awk','swift','scala','vala','nemerle','pike','perl','c','c++','objective-c','tcl','javascript','r','dart','java','go','php','haxe','c#','wolfram']:
                 ("!",A),
@@ -1886,12 +1914,12 @@ expr(Data,bool, and(A_,B_)) -->
     ]).
 
 expr(Data,bool,int_not_equal(A,B)) -->
-        langs_to_output(Data,'not equal',[
-        [javascript,php],
+        langs_to_output(Data,'int_not_equal',[
+        [javascript,php,elixir]:
                 (infix_operator(Data,int,("!==";"!="),A,B)),
-        [java,cosmos,nim,octave,r,picat,englishscript,'perl 6',wolfram,c,'c++',d,'c#',julia,perl,haxe,cython,minizinc,scala,swift,go,rust,vala]:
+        [java,'ruby',python,cosmos,nim,octave,r,picat,englishscript,'perl 6',wolfram,c,'c++',d,'c#',julia,perl,haxe,cython,minizinc,scala,swift,go,rust,vala]:
                 (infix_operator(Data,int,"!=",A,B)),
-        [rebol,scriptol,seed7,'visual basic',gap,ocaml,livecode,'monkey x',vbscript,delphi]:
+        [rebol,scriptol,seed7,'visual basic','visual basic .net',gap,ocaml,livecode,'monkey x',vbscript,delphi]:
                 (infix_operator(Data,int,"<>",A,B)),
         ['common lisp',z3]:
                 ("(","not",ws,"(","=",ws_,A,ws_,B,")",")")
@@ -1899,24 +1927,24 @@ expr(Data,bool,int_not_equal(A,B)) -->
                 
 expr(Data,bool,greater_than(A,B)) -->
         langs_to_output(Data,'greater_than',[
-        ['pascal','ruby','lua','scriptol', 'z3py','ats','pydatalog','e','vbscript','livecode','monkey x','perl 6','englishscript','cython','gap','mathematical notation','wolfram','chapel','katahdin','frink','minizinc','picat','java','eclipse','d','ooc','genie','janus','pl/i','idp','processing','maxima','seed7','self','gnu smalltalk','drools','standard ml','oz','cobra','pike','prolog','engscript','kotlin','pawn','freebasic','matlab','ada','freebasic','gosu','gambas','nim','autoit','algol 68','ceylon','groovy','rust','coffeescript','typescript','fortran','octave','ml','hack','autohotkey','scala','delphi','tcl','swift','vala','c','f#','c++','dart','javascript','rebol','julia','erlang','ocaml','c#','nemerle','awk','java','perl','haxe','php','haskell','go','r','bc','visual basic']:
+        ['pascal','elixir','python','visual basic .net','ruby','lua','scriptol', 'z3py','ats','pydatalog','e','vbscript','livecode','monkey x','perl 6','englishscript','cython','gap','mathematical notation','wolfram','chapel','katahdin','frink','minizinc','picat','java','eclipse','d','ooc','genie','janus','pl/i','idp','processing','maxima','seed7','self','gnu smalltalk','drools','standard ml','oz','cobra','pike','prolog','engscript','kotlin','pawn','freebasic','matlab','ada','freebasic','gosu','gambas','nim','autoit','algol 68','ceylon','groovy','rust','coffeescript','typescript','fortran','octave','ml','hack','autohotkey','scala','delphi','tcl','swift','vala','c','f#','c++','dart','javascript','rebol','julia','erlang','ocaml','c#','nemerle','awk','java','perl','haxe','php','haskell','go','r','bc','visual basic']:
                 (infix_operator(Data,int,">",A,B)),
         ['racket','z3','clips','gnu smalltalk','newlisp','hy','common lisp','emacs lisp','clojure','sibilant','lispyscript']:
                 ("(",ws,">",ws_,A,ws_,B,ws,")")
         ]).
 expr(Data,bool,greater_than_or_equal(A,B)) -->
         langs_to_output(Data,'greater_than_or_equal',[
-        ['pascal','lua','ruby','scriptol','z3py','ats','pydatalog','e','vbscript','livecode','monkey x','perl 6','englishscript','cython','gap','mathematical notation','wolfram','chapel','katahdin','frink','minizinc','picat','java','eclipse','d','ooc','genie','janus','pl/i','idp','processing','maxima','seed7','self','gnu smalltalk','drools','standard ml','oz','cobra','pike','prolog','engscript','kotlin','pawn','freebasic','matlab','ada','freebasic','gosu','gambas','nim','autoit','algol 68','ceylon','groovy','rust','coffeescript','typescript','fortran','octave','ml','hack','autohotkey','scala','delphi','tcl','swift','vala','c','f#','c++','dart','javascript','rebol','julia','erlang','ocaml','c#','nemerle','awk','java','perl','haxe','php','haskell','go','r','bc','visual basic']:
+        ['pascal','elixir','visual basic .net','python','lua','ruby','scriptol','z3py','ats','pydatalog','e','vbscript','livecode','monkey x','perl 6','englishscript','cython','gap','mathematical notation','wolfram','chapel','katahdin','frink','minizinc','picat','java','eclipse','d','ooc','genie','janus','pl/i','idp','processing','maxima','seed7','self','gnu smalltalk','drools','standard ml','oz','cobra','pike','prolog','engscript','kotlin','pawn','freebasic','matlab','ada','freebasic','gosu','gambas','nim','autoit','algol 68','ceylon','groovy','rust','coffeescript','typescript','fortran','octave','ml','hack','autohotkey','scala','delphi','tcl','swift','vala','c','f#','c++','dart','javascript','rebol','julia','erlang','ocaml','c#','nemerle','awk','java','perl','haxe','php','haskell','go','r','bc','visual basic']:
                 (infix_operator(Data,int,">=",A,B))
         ]).                
 expr(Data,bool,less_than_or_equal(A,B)) -->
         langs_to_output(Data,less_than_or_equal,[
-        ['pascal','lua','ruby','scriptol','z3py','ats','pydatalog','e','vbscript','livecode','monkey x','perl 6','englishscript','cython','gap','mathematical notation','wolfram','chapel','katahdin','frink','minizinc','picat','java','eclipse','d','ooc','genie','janus','pl/i','idp','processing','maxima','seed7','self','gnu smalltalk','drools','standard ml','oz','cobra','pike','prolog','engscript','kotlin','pawn','freebasic','matlab','ada','freebasic','gosu','gambas','nim','autoit','algol 68','ceylon','groovy','rust','coffeescript','typescript','fortran','octave','ml','hack','autohotkey','scala','delphi','tcl','swift','vala','c','f#','c++','dart','javascript','rebol','julia','erlang','ocaml','c#','nemerle','awk','java','perl','haxe','php','haskell','go','r','bc','visual basic']:
+        ['pascal','python','elixir','visual basic .net','lua','ruby','scriptol','z3py','ats','pydatalog','e','vbscript','livecode','monkey x','perl 6','englishscript','cython','gap','mathematical notation','wolfram','chapel','katahdin','frink','minizinc','picat','java','eclipse','d','ooc','genie','janus','pl/i','idp','processing','maxima','seed7','self','gnu smalltalk','drools','standard ml','oz','cobra','pike','prolog','engscript','kotlin','pawn','freebasic','matlab','ada','freebasic','gosu','gambas','nim','autoit','algol 68','ceylon','groovy','rust','coffeescript','typescript','fortran','octave','ml','hack','autohotkey','scala','delphi','tcl','swift','vala','c','f#','c++','dart','javascript','rebol','julia','erlang','ocaml','c#','nemerle','awk','java','perl','haxe','php','haskell','go','r','bc','visual basic']:
                 (infix_operator(Data,int,"<=",A,B))
         ]).                
 expr(Data,bool,less_than(A,B)) -->
         langs_to_output(Data,less_than,[
-        ['pascal','lua','ruby','python','scriptol','z3py','ats','pydatalog','e','vbscript','livecode','monkey x','perl 6','englishscript','cython','gap','mathematical notation','wolfram','chapel','katahdin','frink','minizinc','picat','java','eclipse','d','ooc','genie','janus','pl/i','idp','processing','maxima','seed7','self','gnu smalltalk','drools','standard ml','oz','cobra','pike','prolog','engscript','kotlin','pawn','freebasic','matlab','ada','freebasic','gosu','gambas','nim','autoit','algol 68','ceylon','groovy','rust','coffeescript','typescript','fortran','octave','ml','hack','autohotkey','scala','delphi','tcl','swift','vala','c','f#','c++','dart','javascript','rebol','julia','erlang','ocaml','c#','nemerle','awk','java','perl','haxe','php','haskell','go','r','bc','visual basic']:
+        ['pascal','visual basic .net','lua','ruby','python','scriptol','z3py','ats','pydatalog','e','vbscript','livecode','monkey x','perl 6','englishscript','cython','gap','mathematical notation','wolfram','chapel','katahdin','frink','minizinc','picat','java','eclipse','d','ooc','genie','janus','pl/i','idp','processing','maxima','seed7','self','gnu smalltalk','drools','standard ml','oz','cobra','pike','prolog','engscript','kotlin','pawn','freebasic','matlab','ada','freebasic','gosu','gambas','nim','autoit','algol 68','ceylon','groovy','rust','coffeescript','typescript','fortran','octave','ml','hack','autohotkey','scala','delphi','tcl','swift','vala','c','f#','c++','dart','javascript','rebol','julia','erlang','ocaml','c#','nemerle','awk','java','perl','haxe','php','haskell','go','r','bc','visual basic']:
                 (infix_operator(Data,int,"<",A,B)),
         ['racket','z3','clips','gnu smalltalk','newlisp','hy','common lisp','emacs lisp','clojure','sibilant','lispyscript']:
                 ("(",ws,"<",ws_,A,ws_,B,ws,")")
@@ -1927,7 +1955,7 @@ expr(Data,bool,compare(int,Var1_,Var2_)) -->
         langs_to_output(Data,compare,[
         ['r']:
                 ("identical",ws,"(",ws,Var1,ws,",",ws,Var2,ws,")"),
-        ['nim','lua','z3py','pydatalog','e','ceylon','perl 6','englishscript','cython','mathematical notation','dafny','wolfram','d','rust','r','minizinc','frink','picat','pike','pawn','processing','c++','ceylon','coffeescript','octave','swift','awk','julia','perl','groovy','erlang','haxe','scala','java','vala','dart','c#','c','go','haskell']:
+        ['nim','python','lua','z3py','pydatalog','e','ceylon','perl 6','englishscript','cython','mathematical notation','dafny','wolfram','d','rust','r','minizinc','frink','picat','pike','pawn','processing','c++','ceylon','coffeescript','octave','swift','awk','julia','perl','groovy','erlang','haxe','scala','java','vala','dart','c#','c','go','haskell']:
                 (Var1,python_ws,"==",python_ws,Var2),
         ['javascript','php','typescript','hack']:
                 (Var1,ws,"===",ws,Var2),
@@ -1949,7 +1977,7 @@ expr(Data,bool,compare(int,Var1_,Var2_)) -->
         
 expr(Data,bool,compare(bool,Exp1,Exp2)) -->
         langs_to_output(Data,compare,[
-        ['nim','z3py','pydatalog','e','ceylon','perl 6','englishscript','cython','mathematical notation','dafny','wolfram','d','rust','r','minizinc','frink','picat','pike','pawn','processing','c++','ceylon','coffeescript','octave','swift','awk','julia','perl','groovy','erlang','haxe','scala','java','vala','dart','c#','c','go','haskell']:
+        ['nim','python','z3py','pydatalog','e','ceylon','perl 6','englishscript','cython','mathematical notation','dafny','wolfram','d','rust','r','minizinc','frink','picat','pike','pawn','processing','c++','ceylon','coffeescript','octave','swift','awk','julia','perl','groovy','erlang','haxe','scala','java','vala','dart','c#','c','go','haskell']:
                 (infix_operator(Data,bool,"==",Exp1,Exp2)),
         [javascript,php]:
                 (infix_operator(Data,bool,("===";"=="),Exp1,Exp2)),
@@ -1957,12 +1985,30 @@ expr(Data,bool,compare(bool,Exp1,Exp2)) -->
                 (infix_operator(Data,bool,"=",Exp1,Exp2))
         ]).
 
+expr(Data,bool,compare([array,Type],Exp1_,Exp2_)) -->
+        {
+                A = parentheses_expr(Data,[array,Type],Exp1_),
+                B = expr(Data,[array,Type],Exp2_)
+        },
+        langs_to_output(Data,compare_arrays,[
+			['python','ruby']:
+				(A,python_ws,"==",python_ws,B),
+			['c++']:
+				("std::equal(std::begin(",ws,A,ws,"),std::end(",ws,A,ws,"),std::begin(",ws,B,ws,"))"),
+			['php']:
+				(A,ws,"===",ws,B),
+			['c#']:
+				(A,ws,".",ws,"SequenceEqual",ws,"(",ws,B,ws,")"),
+			['java']:
+				("Arrays",ws,".",ws,"deepEquals",ws,"(",ws,A,ws,",",ws,B,ws,")")
+        ]).
+
 expr(Data,bool,compare(string,Exp1_,Exp2_)) -->
         {
                 A = parentheses_expr(Data,string,Exp1_),
                 B = expr(Data,string,Exp2_)
         },
-    langs_to_output(Data,compare,[
+    langs_to_output(Data,compare_strings,[
     ['r']:
 			("identical",ws,"(",ws,A,ws,",",ws,B,ws,")"),
 	['emacs lisp']:
@@ -1971,7 +2017,7 @@ expr(Data,bool,compare(string,Exp1_,Exp2_)) -->
 			("(",ws,"=",ws_,A,ws_,B,ws,")"),
 	['visual basic','delphi','vbscript','f#','prolog','mathematical notation','ocaml','livecode','monkey x']:
 			(A,ws,"=",ws,B),
-	['pydatalog','perl 6','englishscript','chapel','julia','fortran','minizinc','picat','go','vala','autoit','rebol','ceylon','groovy','scala','coffeescript','awk','haskell','haxe','dart','swift']:
+	['pydatalog','python','perl 6','englishscript','chapel','julia','fortran','minizinc','picat','go','vala','autoit','rebol','ceylon','groovy','scala','coffeescript','awk','haskell','haxe','dart','swift']:
 			(A,python_ws,"==",python_ws,B),
 	['javascript','php','typescript','hack']:
 			(A,ws,"===",ws,B),
@@ -2105,7 +2151,7 @@ expr(Data,int,pow(Exp1_,Exp2_)) -->
 			("Math",ws,".",ws,"Pow",ws,"(",ws,A,ws,",",ws,B,ws,")"),
 	['javascript','java','typescript','haxe']:
 			("Math",ws,".",ws,"pow",ws,"(",ws,A,ws,",",ws,B,ws,")"),
-	['seed7','cython','chapel','haskell','cobol','picat','ooc','pl/i','rexx','maxima','awk','r','f#','autohotkey','tcl','autoit','groovy','octave','perl','perl 6','fortran']:
+	['seed7','cython','python','chapel','haskell','cobol','picat','ooc','pl/i','rexx','maxima','awk','r','f#','autohotkey','tcl','autoit','groovy','octave','perl','perl 6','fortran']:
 			("(",python_ws,A,python_ws,"**",python_ws,B,python_ws,")"),
 	['rebol']:
 			("power",ws_,A,ws_,B),
@@ -2132,7 +2178,7 @@ expr(Data,[array,string],split(Exp1,Exp2)) -->
 			("strsplit",ws,"(",ws,AString,ws,",",ws,Separator,ws,")"),
 	['go']:
 			("strings",ws,".",ws,"Split",ws,"(",ws,AString,ws,",",ws,Separator,ws,")"),
-	['javascript','coffeescript','java','dart','scala','groovy','haxe','rust','typescript','cython','vala']:
+	['javascript','python','coffeescript','java','dart','scala','groovy','haxe','rust','typescript','cython','vala']:
 			(AString,python_ws,".",python_ws,"split",python_ws,"(",python_ws,Separator,python_ws,")"),
 	['php']:
 			("explode",ws,"(",ws,Separator,ws,",",ws,AString,ws,")"),
@@ -2150,16 +2196,18 @@ expr(Data,[array,string],split(Exp1,Exp2)) -->
 			("StringSplit",ws,"[",ws,AString,ws,",",ws,Separator,ws,"]")
     ]).
 
-expr(Data,[array,string],concatenate_arrays(A1_,A2_)) -->
+expr(Data,[array,Type],concatenate_arrays(A1_,A2_)) -->
         {
-                A1 = parentheses_expr(Data,string,A1_),
-                A2 = parentheses_expr(Data,string,A2_)
+                A1 = parentheses_expr(Data,[array,Type],A1_),
+                A2 = parentheses_expr(Data,[array,Type],A2_)
         },
         langs_to_output(Data,concatenate_arrays,[
         [javascript]:
                 (A1,ws,".",ws,"concat",ws,"(",ws,A2,ws,")"),
         [haskell]:
                 (A1,ws,"++",ws,A2),
+        [python,ruby]:
+                (A1,ws,"+",ws,A2),
         [d]:
                 (A1,python_ws,"~",python_ws,A2),
         [perl]:
@@ -2235,7 +2283,7 @@ expr(Data,Type1,list_comprehension(Result1,Var1,Condition1,Array1)) -->
                 Condition = expr(Data,bool,Condition1)
         },
         langs_to_output(Data,list_comprehension,[
-        ['cython']:
+        ['cython','python']:
                 ("[",python_ws,Result,python_ws_,"for",python_ws_,Variable,python_ws_,"in",python_ws_,Array,python_ws_,"if",python_ws_,Condition,python_ws,"]"),
         ['ceylon']:
                 ("{",ws,"for",ws,"(",ws,Variable,ws_,"in",ws_,Array,ws,")",ws_,"if",ws,"(",ws,Condition,ws,")",ws_,Result,ws,"}"),
@@ -2412,6 +2460,8 @@ expr(Data,bool,string_contains(Str1_,Str2_)) -->
                 ("(",ws,"strstr",ws,"(",ws,Str1,ws,",",ws,Str2,ws,")",ws,"!=",ws,"NULL",ws,")"),
         [java]:
                 (Str1,ws,".",ws,"contains",ws,"(",ws,Str2,ws,")"),
+        ['python']:
+                (Str1,python_ws,".",python_ws,"find",python_ws,"(",python_ws,Str2,python_ws,")"),
         ['c#']:
                 (Str1,ws,".",ws,"Contains",ws,"(",ws,Str2,ws,")"),
         [perl]:
@@ -2448,7 +2498,7 @@ expr(Data,Type,access_array(Array_,Index_)) -->
                 Index = parentheses_expr(Data,int,Index_)
         },
         langs_to_output(Data,access_array,[
-        ['ruby','c#','julia','d','swift','julia','janus','minizinc','picat','nim','autoit','cython','coffeescript','dart','typescript','awk','vala','perl','java','javascript','go','c++','php','haxe','c']:
+        ['ruby','c#','julia','d','swift','julia','janus','minizinc','picat','nim','autoit','cython','python','coffeescript','dart','typescript','awk','vala','perl','java','javascript','go','c++','php','haxe','c']:
                 (Array,python_ws,"[",python_ws,Index,python_ws,"]"),
         ['scala','octave','fortran','visual basic']:
                 (Array,ws,"(",ws,Index,ws,")"),
@@ -2510,7 +2560,7 @@ expr(Data,Class_name_,call_constructor(Params1,Params2)) -->
     langs_to_output(Data,call_constructor,[
     ['java','javascript','haxe','chapel','scala','php']:
 		("new",ws_,Name,ws,"(",ws,Args,ws,")"),
-	['visual basic']:
+	['visual basic','visual basic .net']:
 		("New",ws_,Name,ws,"(",ws,Args,ws,")"),
 	['perl','perl 6']:
 		(Name,ws,"->",ws,"new",ws,"(",ws,Args,ws,")"),
@@ -2536,7 +2586,7 @@ expr(Data,int,strlen(A1)) -->
                 ("nchar",ws,"(",ws,A,ws,")"),
         ['erlang']:
                 ("string:len",ws,"(",ws,A,ws,")"),
-        ['visual basic','gambas']:
+        ['visual basic','visual basic .net','gambas']:
                 ("Len",ws,"(",ws,A,ws,")"),
         ['javascript','typescript','scala','gosu','picat','haxe','ocaml','d','dart']:
                 (A,ws,".",ws,"length"),
@@ -2614,11 +2664,11 @@ expr(Data,int,array_length(A1,Type)) -->
 		langs_to_output(Data,array_length,[
         ['go']:
                 ("len",ws,"(",ws,A,ws,")"),
-        ['cython']:
+        ['cython','python']:
                 ("len",python_ws,"(",python_ws,A,python_ws,")"),
         ['java','picat','scala','d','coffeescript','typescript','dart','vala','javascript','haxe','cobra']:
                 (A,ws,".",ws,"length"),
-        ['c#','visual basic','powershell']:
+        ['c#','visual basic','visual basic .net','powershell']:
                 (A,ws,".",ws,"Length"),
         ['minizinc','julia','r']:
                 ("length",ws,"(",ws,A,ws,")"),
@@ -2744,6 +2794,8 @@ statement(Data,Type1,function(Name1,Type1,Params1,Body1)) -->
 		optional_indent(Data,Indent),langs_to_output(Data,function,[
 		['c++','vala','c','dart','ceylon','pike','d','englishscript']:
                 (Type,ws_,Name,ws,"(",ws,Params,ws,")",ws,"{",ws,Body,(Indent;ws),"}"),
+		['coffeescript']:
+				(Name,python_ws,"=",python_ws,"(",python_ws,Params,python_ws,")",python_ws,"->",python_ws,Body),
 		['python']:
 				("def",python_ws_,Name,"(",Params,")",":",python_ws,Body),
 		['sql']:
@@ -2816,6 +2868,8 @@ statement(Data,Type1,function(Name1,Type1,Params1,Body1)) -->
                 (Name,ws,"(",ws,Params,ws,")",ws,"{",ws,Body,(Indent;ws),"}"),
         ['ruby']:
                 ("def",ws_,Name,ws,"(",ws,Params,ws,")",ws_,Body,(Indent;ws_),"end"),
+        ['elixir']:
+                ("def",ws_,Name,ws,"(",ws,Params,ws,")",ws_,"do",ws_,Body,(Indent;ws_),"end"),
         ['typescript']:
                 ("function",ws_,Name,ws,"(",ws,Params,ws,")",ws,":",ws,Type,ws,"{",ws,Body,(Indent;ws),"}"),
         ['rebol']:
@@ -2919,7 +2973,7 @@ statement(Data,Return_type,semicolon(A_)) -->
                 (A,ws,";"),
         ['pseudocode']:
                 (A,("";ws,";")),
-        ['visual basic .net','ruby','lua','hy',picolisp,logtalk,minizinc,swift,rebol,fortran,go,picat,julia,prolog,haskell,'mathematical notation',erlang,z3]:
+        ['visual basic .net','elixir','erlang','ruby','lua','hy',picolisp,logtalk,minizinc,swift,rebol,fortran,go,picat,julia,prolog,haskell,'mathematical notation',erlang,z3]:
                 A,
         Offside_rule_langs:
 				(A,python_ws)
@@ -2939,6 +2993,21 @@ statement(Data,Return_type,for(Statement1_,Expr_,Statement2_,Body1)) -->
                 ("for",ws,"(",ws,Statement1,ws,";",ws,Condition,ws,";",ws,Statement2,ws,")",ws,"{",ws,Body,(Indent;ws),"}")
         ]).
 
+statement(Data,Return_type,lua_foreach(Array1,Var1,Body1,Type1,Index1)) -->
+        {
+                indent_data(Indent,Data,Data1),
+                Array = expr(Data,[array,Type1],Array1),
+                Key = var_name(Data,Type1,Var1),
+                Value = expr(Data,int,Index1),
+                TypeInArray = type(Data,Type1),
+                Body = statements(Data1,Return_type,Body1)
+        },
+        optional_indent(Data,Indent),
+        (Data,lua_foreach,[
+			['lua']:
+				("for",ws_,Key,ws,",",ws,Value,ws_,"in",ws_,Array,ws_,"do",ws_,Body,(Indent;ws_),"end")
+			]).
+
 statement(Data,Return_type,foreach(Array1,Var1,Body1,Type1)) -->
         {
                 indent_data(Indent,Data,Data1),
@@ -2949,6 +3018,12 @@ statement(Data,Return_type,foreach(Array1,Var1,Body1,Type1)) -->
         },
         optional_indent(Data,Indent),
         langs_to_output(Data,foreach,[
+        ['ruby']:
+				(Array,ws,".",ws,"each",ws_,"do",ws,"|",ws,Var_name,ws,"|",ws,Body,(Indent;ws_),"end"),
+        ['erlang']:
+				("foreach",ws,"(",ws,"fun",ws,"(",ws,Var_name,ws,")",ws,"->",ws,Body,ws_,"end",ws,",",ws,Array,ws,")"),
+        ['lua']:
+				("for",ws_,Var_name,ws_,"in",ws_,Array,ws_,"do",ws_,Body,(Indent;ws_),"end"),
         ['seed7']:
                 ("for",ws_,Var_name,ws_,"range",ws_,Array,ws_,"do",ws_,Body,(Indent;ws_),"end",ws_,"for;"),
         ['javascript','typescript']:
@@ -2999,7 +3074,7 @@ statement(Data,Return_type,foreach(Array1,Var1,Body1,Type1)) -->
                 ("foreach",ws,"(",ws,Var_name,ws,",",ws,Array,ws,")",ws,"{",ws,Body,(Indent;ws),"}"),
         ['gambas']:
                 ("FOR",ws_,"EACH",ws_,Var_name,ws_,"IN",ws_,Array,ws_,Body,ws_,"NEXT"),
-        ['vbscript']:
+        ['vbscript','visual basic .net']:
                 ("For",ws_,"Each",ws_,Var_name,ws_,"In",ws_,Array,ws_,Body,ws_,"Next"),
         ['dart']:
                 ("for",ws,"(",ws,"var",ws_,Var_name,ws_,"in",ws_,Array,ws,")",ws,"{",ws,Body,(Indent;ws),"}")
@@ -3069,7 +3144,9 @@ statement(Data,Return_type,while(Expr1,Body1)) -->
                 ("(",ws,"while",ws_,A,ws_,B,ws,")"),
         ['cython','python']:
                 ("while",python_ws_,A,python_ws,":",B),
-        ['visual basic','vbscript']:
+        ['coffeescript']:
+                ("while",python_ws_,A,python_ws,":",B),
+        ['visual basic','visual basic .net','vbscript']:
                 ("While",ws_,A,ws_,B,(Indent;ws_),"End",ws_,"While"),
         ['octave']:
                 ("while",ws,"(",ws,A,ws,")",(Indent;ws_),"endwhile"),
@@ -3320,7 +3397,7 @@ class_statement(Data,_,initialize_static_var_with_value(Type1,Name1,Expr1)) -->
 			(Type,ws_,Name,ws,"=",ws,Value),
 		['rebol']:
 			(Name,ws,":",ws,Value),
-		['visual basic','openoffice basic']:
+		['visual basic','openoffice basic','visual basic .net']:
 			("Dim",ws_,Name,ws_,"As",ws_,Type,ws,"=",ws,Value),
 		['r']:
 			(Name,ws,"<-",ws,Value),
