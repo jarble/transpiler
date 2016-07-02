@@ -778,6 +778,9 @@ regex_literal(Data,S_) -->
         ("new",ws,"Regex",ws,"(\"",S,"\")")
     ]).
 
+comment_inner([A]) --> comment_inner_(A).
+comment_inner([A|B]) --> comment_inner_(A),comment_inner(B).
+comment_inner_(A) --> {dif(A,'\n')},[A].
 string_inner([A]) --> string_inner_(A).
 string_inner([A|B]) --> string_inner_(A),string_inner(B).
 string_inner_(A) --> {A="\\\""},A;{dif(A,'"'),dif(A,'\n')},[A].
@@ -830,8 +833,8 @@ print_var_types([A|Rest]) :-
     writeln(A),print_var_types(Rest).
 
 list_of_langs(X) :-
-	%X = [ruby,javascript,java,c,'c#','c++','go','haxe','php','swift','octave',lua].
-	X = [python,java,'coffeescript','visual basic .net',erlang,elixir,ruby,lua,javascript,'c#','c++'].
+	X = [python,javascript].
+	%X = [python,javascript,ruby,java,'coffeescript','visual basic .net',elixir,lua,'c#','c++',octave,r,swift].
 
 translate(Input,Output,Lang2) :-
     list_of_langs(X),member(Lang1,X),translate(Input,Output,Lang1,Lang2).
@@ -1044,6 +1047,8 @@ statement_with_semicolon(Data,_,set_var(Name1,Expr1,Type)) -->
 			("(",ws,"assert",ws,"(",ws,"=",ws_,Name,ws_,Value,ws,")",ws,")"),
 	['gap','seed7','delphi']:
 			(Name,ws,":=",ws,Value),
+	['r']:
+			(Name,ws,"<-",ws,Value),
 	['livecode']:
 			("put",ws_,"expression",ws_,"into",ws_,Name),
 	['vbscript']:
@@ -1168,22 +1173,75 @@ statement_with_semicolon(Data,_,initialize_var(Type1,Name1,Value1)) -->
 		(Name,python_ws,"=",python_ws,Value)
 	])).
 
-statement_with_semicolon(Data,_,append_to_array(Name1,Expr1)) -->
+%insert an item at a position, moving the other elements forward
+statement_with_semicolon(Data,_,insert_array(Array1,Type,Expr1,Pos1)) -->
         {
-                Expr = expr(Data,Type,Expr1),
-                Name = var_name(Data,[array,Type],Name1)
+                Pos = parentheses_expr(Data,int,Pos1),
+                Expr = parentheses_expr(Data,Type,Expr1),
+                Array = parentheses_expr(Data,[array,Type],Array1)
+        },
+        langs_to_output(Data,insert_array,[
+			['php']:
+				("array_splice",ws,"(",ws,Array,ws,",",ws,Pos,ws,",",ws,"0",ws,",",ws,Expr,ws,")"),
+			['perl']:
+				("splice",ws,"(",ws,Array,ws,",",ws,Pos,ws,",",ws,"0",ws,",",ws,Expr,ws,")"),
+			['javascript']:
+				(Array,ws,".",ws,"splice",ws,"(",ws,Pos,ws,",",ws,"0",ws,",",ws,Expr,ws,")"),
+			['lua']:
+				("table",ws,".",ws,"insert",ws,"(",ws,Array,ws,",",ws,Pos,ws,"+",ws,"1",ws,",",ws,ws,Expr,ws,")"),
+			['python']:
+				(Array,python_ws,".",python_ws,"insert",python_ws,"(",python_ws,Pos,",",python_ws,Expr,python_ws,")"),
+			['ruby']:
+				(Array,ws,".",ws,"insert",ws,"(",ws,Pos,",",ws,Expr,ws,")"),
+			['swift']:
+				(Array,ws,".",ws,"insert",ws,"(",ws,Expr,",",ws,"atIndex:",Pos,ws,")")
+        ]).
+
+statement_with_semicolon(Data,_,append_to_array(Name1,Type,Expr1)) -->
+        {
+                Expr = parentheses_expr(Data,Type,Expr1),
+                Name = parentheses_expr(Data,[array,Type],Name1)
         },
         langs_to_output(Data,append_to_array,[
         ['javascript','ruby']:
                 (Name,ws,".",ws,"push",ws,"(",ws,Expr,ws,")"),
+        ['swift']:
+                (Name,ws,".",ws,"append",ws,"(",ws,Expr,ws,")"),
         ['php']:
                 ("array_push",ws,"(",ws,Name,ws,",",ws,Expr,ws,")"),
         ['perl']:
                 ("push",ws,"(",ws,Name,ws,",",ws,Expr,ws,")"),
         ['python']:
-				(Name,python_ws,"+=",python_ws,"[",Expr,"]")
+				(Name,python_ws,".",python_ws,"append",python_ws,"(",python_ws,Expr,python_ws,")";
+				Name,python_ws,"+=",python_ws,"[",Expr,"]")
         ]).
 
+expr(Data,Type,pop(Name1)) -->
+        {
+                Name = parentheses_expr(Data,[array,Type],Name1)
+        },
+		langs_to_output(Data,pop,[
+			['javascript']:
+				(Name,ws,".",ws,"pop",ws,"(",ws,")"),
+			['ruby']:
+				(Name,ws,".",ws,"pop"),
+			['python']:
+				(Name,python_ws,".",python_ws,"pop",python_ws,"(",python_ws,")"),
+			['php']:
+				("array_pop",ws,"(",ws,Name,ws,")"),
+			['perl']:
+				("pop",ws,"(",ws,Name,ws,")")
+		]).
+
+%Remove from the array at the index and return the result
+expr(Data,Type,remove_from_array(Name1,Index1)) -->
+        {
+                Name = parentheses_expr(Data,[array,Type],Name1),
+                Index = parentheses_expr(Data,int,Index1)
+        },
+		langs_to_output(Data,remove_from_array,[
+			['']
+		]).
 
 statement_with_semicolon(Data,_,plus_equals(Name1,Expr1)) -->
         {
@@ -1191,9 +1249,9 @@ statement_with_semicolon(Data,_,plus_equals(Name1,Expr1)) -->
                 B = expr(Data,int,Expr1)
 		},
         langs_to_output(Data,plus_equals,[
-        ['janus','visual basic','nim','python','vala','perl 6','dart','typescript','java','c','c++','c#','javascript','haxe','php','chapel','perl','julia','scala','rust','go','swift']:
+        ['janus','coffeescript','visual basic','nim','python','vala','perl 6','dart','typescript','java','c','c++','c#','javascript','haxe','php','chapel','perl','julia','scala','rust','go','swift']:
                 (A,python_ws,"+=",python_ws,B),
-        ['haskell','ruby','lua','erlang','fortran','ocaml','minizinc','octave','delphi']:
+        ['haskell','r','ruby','lua','erlang','fortran','ocaml','minizinc','octave','delphi']:
                 (A,ws,"=",ws,A,ws,"+",ws,B),
         ['picat']:
                 (A,ws,":=",ws,A,ws,"+",ws,B),
@@ -1211,9 +1269,9 @@ statement_with_semicolon(Data,_,minus_equals(Name1,Expr1)) -->
 		B = expr(Data,int,Expr1)
 	},
     langs_to_output(Data,minus_equals,[
-    ['janus','vala','nim','perl 6','dart','perl','typescript','java','c','c++','c#','javascript','php','haxe','hack','julia','scala','rust','go','swift']:
+    ['janus','coffeescript','vala','nim','perl 6','dart','perl','typescript','java','c','c++','c#','javascript','php','haxe','hack','julia','scala','rust','go','swift']:
 			(A,python_ws,"-=",python_ws,B),
-	['haskell','erlang','fortran','ocaml','minizinc','octave','delphi']:
+	['haskell','r','erlang','fortran','ocaml','minizinc','octave','delphi']:
 			(A,ws,"=",ws,A,ws,"-",ws,B),
 	['picat']:
 			(A,ws,":=",ws,A,ws,"-",ws,B),
@@ -1259,7 +1317,7 @@ statement_with_semicolon(Data,_,divide_equals(Name1,Expr1)) -->
 %print without newline
 statement_with_semicolon(Data,Type,print(Expr1)) -->
         {
-                A = expr(Data,Type,Expr1)
+                A = expr(A,Type,Expr1)
         },
         langs_to_output(Data,print,[
         ['java']:
@@ -1813,6 +1871,27 @@ expr(Data,[array,Type],array_slice(Str_,Index1_,Index2_)) -->
                 (A,python_ws,"[",python_ws,B,python_ws,":",python_ws,C,python_ws,"]")
         ]).
 
+expr(Data,string,global_replace_in_string(Str1,To_replace1,Replacement1)) -->
+        {
+                Str = parentheses_expr(Data,string,Str1),
+                To_replace = parentheses_expr(Data,string,To_replace1),
+                Replacement = parentheses_expr(Data,string,Replacement1)
+        },
+        langs_to_output(Data,global_replace_in_string,[
+			['python','java']:
+				(Str,python_ws,".",python_ws,"replace",python_ws,"(",python_ws,To_replace,python_ws,",",python_ws,Replacement,python_ws,")"),
+			['php']:
+				("str_replace",ws,"(",ws,To_replace,ws,",",ws,Replacement,ws,",",ws,Str,ws,")"),
+			['javascript']:
+				(Str,ws,".",ws,"split",ws,"(",ws,To_replace,ws,")",ws,".",ws,"join",ws,"(",ws,Replacement,ws,")"),
+			['c#']:
+				(Str,ws,".",ws,"Replace",ws,"(",ws,To_replace,ws,")"),
+			['ruby']:
+				(Str,ws,".",ws,"gsub",ws,"(",ws,To_replace,ws,")"),
+			['swift']:
+				(Str,ws,".",ws,"stringByReplacingOccurrencesOfString",ws,"(",ws,To_replace,ws,",",ws,"withString:",ws,Replacement,ws,")")
+        ]).
+
 expr(Data,string,substring(Str_,Index1_,Index2_)) -->
         {
                 A = parentheses_expr(Data,string,Str_),
@@ -2160,11 +2239,38 @@ expr(Data,int,pow(Exp1_,Exp2_)) -->
 	['julia','engscript','visual basic','gambas','go','ceylon','wolfram','mathematical notation']:
 			(A,ws,"^",ws,B),
 	['hy','common lisp','racket','clojure']:
-			("(",ws,"expt",ws_,"num1",ws_,"num2",ws,")"),
+			("(",ws,"expt",ws_,A,ws_,B,ws,")"),
 	['erlang']:
 			("math",ws,":",ws,"pow",ws,"(",ws,A,ws,",",ws,B,ws,")")
     ]).
 
+expr(Data,Type,ternary_if(If1,Then1,Else1,Type)) -->
+	{
+		If = parentheses_expr(Data,bool,If1),
+		Then = parentheses_expr(Data,Type,Then1),
+		Else = expr(Data,Type,Else1)
+	},
+	langs_to_output(Data,ternary_if,[
+		['erlang']:
+			("if",ws_,If,ws,"->",ws,Then,ws,";",ws,"true",ws,"->",ws,Else,ws,"end"),
+		['javascript','actionscript','c++','c#','java','perl','ruby']:
+			(If,ws,"?",ws,Then,ws,":",ws,Else),
+		['php']:
+			("(",ws,If,ws,"?",ws,Then,ws,":",ws,Else,ws,")"),
+		['perl 6']:
+			(If,ws,"??",ws,Then,ws,"!!",ws,Else),
+		['coffeescript','haskell']:
+			("if",ws_,If,ws_,"then",ws_,Then,ws_,"else",ws_,Else),
+		['rust']:
+			("if",ws_,If,ws,"{",ws,Then,ws,"}",ws,"else",ws,"{",ws,Else,ws,"}"),
+		['python']:
+			(Then,python_ws_,"if",python_ws_,If,python_ws_,"else",python_ws_,Else),
+		['common lisp','scheme']:
+			("(",ws,"if",ws_,If,ws_,Then,ws_,Else,")"),
+		['lua'],
+			("(",ws,If,ws_,"and",ws_,Then,ws_,"or",ws_,Else,ws,")")
+	]).
+	
 
 expr(Data,[array,string],split(Exp1,Exp2)) -->
 	{
@@ -2206,7 +2312,7 @@ expr(Data,[array,Type],concatenate_arrays(A1_,A2_)) -->
                 (A1,ws,".",ws,"concat",ws,"(",ws,A2,ws,")"),
         [haskell]:
                 (A1,ws,"++",ws,A2),
-        [python,ruby]:
+        [python,ruby,swift]:
                 (A1,ws,"+",ws,A2),
         [d]:
                 (A1,python_ws,"~",python_ws,A2),
@@ -2343,6 +2449,8 @@ expr(Data,string,endswith(Str1_,Str2_)) -->
                 Str2 = expr(Data,string,Str2_)
         },
         langs_to_output(Data,endswith,[
+        [python]:
+                (Str1,python_ws,".",python_ws,"endswith",python_ws,"(",python_ws,Str2,python_ws,")"),
         [java,javascript]:
                 (Str1,ws,".",ws,"endsWith",ws,"(",ws,Str2,ws,")"),
         [java,'c#']:
@@ -2351,9 +2459,11 @@ expr(Data,string,endswith(Str1_,Str2_)) -->
 
 expr(Data,string,reverse_string(Str_)) -->
         {
-                Str = expr(Data,string,Str_)
+                Str = parentheses_expr(Data,string,Str_)
         },
         langs_to_output(Data,reverse_string,[
+        [python]:
+				(Str,"[::-1]"),
         [java]:
                 ("new",ws_,"StringBuilder",ws,"(",ws,Str,ws,")",ws,".",ws,"reverse",ws,"(",ws,")",ws,".",ws,"toString",ws,"(",ws,")"),
         [perl]:
@@ -2479,6 +2589,8 @@ expr(Data,string,startswith(Str1_,Str2_)) -->
         langs_to_output(Data,startswith,[
         [java,javascript]:
                 (Str1,ws,".",ws,"startsWith",ws,"(",ws,Str2,ws,")"),
+        [python]:
+                (Str1,python_ws,".",python_ws,"startswith",python_ws,"(",python_ws,Str2,python_ws,")"),
         [swift]:
                 (Str1,ws,".",ws,"hasPrefix",ws,"(",ws,Str2,ws,")"),
         ['c#']:
@@ -2655,7 +2767,16 @@ expr(Data,bool,string_matches_string(Str1,Reg1)) -->
 			("preg_match",ws,"(",ws,Reg,ws,",",ws,Str,ws,")")
         ]).
 
-		
+expr(Data,bool,type_check(Type1,Var1)) -->
+	{
+		Var = expr(Data,Type1,Var1),
+	},
+	langs_to_output(Data,type_check,[
+		['python','lua']:
+			("type",python_ws,"(",python_ws,Var,python_ws,")"),
+		['java']:
+			(Var,ws_,"instanceof",ws_,Type)
+	]).
 
 expr(Data,int,array_length(A1,Type)) -->
         {
@@ -2710,6 +2831,25 @@ statement(Data,grammar_statement(Name_,Body_)) -->
 	langs_to_output(Data,grammar_statement,[
 	['pegjs']:
 		(Name,ws,"=",ws,Body)
+    ]).
+
+statement(Data,_,comment(A_)) -->
+	{
+	A = comment_inner(A_)
+	},
+	langs_to_output(Data,grammar_statement,[
+	['java','javascript','c','c#','c++','php','perl','swift']:
+		("//",A,"\n"),
+	['python','perl','octave','ruby']:
+		("#",A),
+	['lua','haskell']:
+		("--",A,"\n"),
+	['ocaml']:
+		("(*",A,"*)"),
+	['prolog','erlang']:
+		("%",A,"\n"),
+	['visual basic','visual basic .net']:
+		("'",A,"\n")
     ]).
 
 statement(Data,import(Module_)) -->
@@ -2780,6 +2920,25 @@ statement(Data,enum(Name1,Body1)) -->
         ['scala']:
                 ("object",ws_,Name,ws_,"extends",ws_,"Enumeration",ws,"{",ws,"val",ws_,Body,ws,"=",ws,"Value",ws,"}")
         ]).
+
+statement(Data,Type1,function_without_args(Name1,Type1,Body1)) -->
+		{
+				Data = [Lang,Is_input,Namespace,Var_types,Indent],
+                Data1 = [Lang,Is_input,[Name1|Namespace],Var_types,indent(Indent)],
+                Name = function_name(Data,Type1,Name1,[]),
+                Type = type(Data,Type1),
+                Body = statements(Data1,Type1,Body1)
+		},
+		optional_indent(Data,Indent),langs_to_output(Data,function_without_args,[
+			['ruby']:
+				("def",ws_,Name,ws_,Body,(Indent;ws_),"end"),
+			['elixir']:
+				("def",ws_,Name,ws_,"do",ws_,Body,(Indent;ws_),"end"),
+			['c','c++']:
+				(Type,ws_,Name,ws,"(",ws,"void",ws,")",ws,"{",ws,Body,(Indent;ws),"}"),
+			['coffeescript']:
+				(Name,python_ws,"=",python_ws,"->",python_ws,Body)
+		]).
 
 statement(Data,Type1,function(Name1,Type1,Params1,Body1)) -->
         {
@@ -2973,7 +3132,7 @@ statement(Data,Return_type,semicolon(A_)) -->
                 (A,ws,";"),
         ['pseudocode']:
                 (A,("";ws,";")),
-        ['visual basic .net','elixir','erlang','ruby','lua','hy',picolisp,logtalk,minizinc,swift,rebol,fortran,go,picat,julia,prolog,haskell,'mathematical notation',erlang,z3]:
+        ['visual basic .net','r','elixir','erlang','ruby','lua','hy',picolisp,logtalk,minizinc,swift,rebol,fortran,go,picat,julia,prolog,haskell,'mathematical notation',erlang,z3]:
                 A,
         Offside_rule_langs:
 				(A,python_ws)
