@@ -377,13 +377,15 @@ statement(Data,Return_type,foreach(Array1,Var1,Body1,Type1)) -->
 statement(Data,Return_type,iff(Expr1,Body1)) -->
         {
                 indent_data(Indent,Data,Data1),
-                Body = statements(Data1,Return_type,Body1),
-                Condition = expr(Data,bool,Expr1)
+                parentheses_expr = expr(Data,bool,Expr1)
+                Body = expr(Data,bool,Expr1)
         },
         Indent,
         langs_to_output(Data,iff,[
         ['z3']:
-			("(",ws,"iff",ws_,Condition,ws_,Body,ws_,")")
+			("(",ws,("iff";"<=>"),ws_,Condition,ws_,Body,ws_,")"),
+		['minizinc']:
+			(Condition,ws,"<->",ws,Body)
         ]).
 
 statement(Data,bool,predicate(Name1,Params1,Body1)) -->

@@ -1,4 +1,8 @@
-struct Things{
-	int a;
-	int b;
+function add(a,b){
+	var c = 0;
+	while(c < 10){
+		c += 1;
+		console.log(a+b+c);
+	}
+	return c;
 }
