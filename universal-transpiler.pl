@@ -824,7 +824,7 @@ print_var_types([A|Rest]) :-
 
 list_of_langs(X) :-
 	%X = [ruby,javascript,java,c,'c#','c++','go','haxe','php','swift','octave',lua].
-	X = [javascript,python,haskell,'common lisp','scala','z3'].
+	X = [c,javascript,python,haskell,'common lisp','scala','z3'].
 	%X = [python,'visual basic .net',ruby,lua,java,javascript,'gnu smalltalk','minizinc','cobra','prolog'].
 
 

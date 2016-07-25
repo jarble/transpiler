@@ -1,4 +1,4 @@
-function add(a,b){
-	console.log(a);
-	return a + b;
+struct Things{
+	int a;
+	int b;
 }
