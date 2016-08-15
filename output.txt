@@ -1,2 +1,9 @@
-def add(a,b):
-        return a+b
+
+public static String add(String a,String b){
+    String g=a+b;
+    return g;
+} 
+public static Object subtract(Object a,Object b){
+    Object g=add(g,a);
+    return g;
+}

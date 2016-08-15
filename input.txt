@@ -1,8 +1,9 @@
-function add(a,b){
-	var c = 0;
-	while(c < 10){
-		c += 1;
-		console.log(a+b+c);
+function multiply(a,b){
+	return a * b;
+}
+
+class example{
+	add(a,b){
+		return a + b;
 	}
-	return c;
 }
