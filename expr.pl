@@ -311,7 +311,7 @@ expr(Data,int,strlen(A1)) -->
         {
                 A = parentheses_expr(Data,string,A1)
         },
-        strlen_(Data,A).
+        strlen_(Data,[A]).
  
 expr(Data,regex,new_regex(A1)) -->
         {

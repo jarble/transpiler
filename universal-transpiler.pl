@@ -122,9 +122,12 @@ elif(Data,Return_type,[Expr_,Statements_]) -->
                 A=expr(Data,bool,Expr_)
         },
         elif(Data,[Indent,A,B]).
+        
+        
 is_var_type([_,_,Namespace,Var_types,_,_], Name, Type) :-
     memberchk([[Name|Namespace],Type1], Var_types), Type = Type1.
 
+%This is only for checking types of functions in global scope
 is_var_type_([_,_,Namespace,Var_types,_,_], Name, Type) :-
     memberchk([[Name|_],Type], Var_types).
 
@@ -283,8 +286,7 @@ print_var_types([A|Rest]) :-
     writeln(A),print_var_types(Rest).
 
 list_of_langs(X) :-
-	X = [javascript,ruby,java,c,'c#','c++','go','haxe','php','swift','octave',lua].
-	
+	X = [javascript,c,'c#','c++','go','haxe','php','swift','octave',lua,java].
 
 translate_langs(Input_) :-
 	atom_chars(Input_,Input),

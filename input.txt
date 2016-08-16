@@ -1,3 +1,9 @@
 function add(a,b){
-	return a + b;
+    var g = [3,4,5];
+    var aString = "example";
+    return a + b + (g[0]) + (g.length) + (aString.length);
+} 
+
+function divide(a,b){
+    return add(a,b) - 1;
 }

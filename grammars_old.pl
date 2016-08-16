@@ -278,7 +278,7 @@ concatenate_string_(Data,[A,B]) -->
                 (A,ws_,B,ws_,"+")
         ]).
 
-array_length_(Data,A)-->
+array_length_(Data,[A])-->
         langs_to_output(Data,array_length,[
         ['go']:
                 ("len",ws,"(",ws,A,ws,")"),
@@ -320,7 +320,7 @@ array_length_(Data,A)-->
                 ("Length",ws,"[",ws,A,ws,"]")
         ]).
 
-strlen_(Data,A) -->
+strlen_(Data,[A]) -->
         langs_to_output(Data,strlen,[
         ['go','erlang','nim']:
                 ("len",ws,"(",ws,A,ws,")"),
@@ -1116,10 +1116,7 @@ plus_plus_(Data,[Name]) -->
         ]).
 
 set_array_index_(Data,[Name,Index,Value]) -->
-	{Data = [Lang|_]},
-	({Lang='prolog'}->
-		("nth0",ws,"(",ws,Index,ws,",",ws,Name,ws,",",ws,Value,ws,")");
-	set_var_(Data,[access_array_(Data,[Name,Index]),Value])).
+	set_var_(Data,[access_array_(Data,[Name,Index]),Value]).
 
 mod_(Data,[A,B]) -->
     langs_to_output(Data,mod,[
@@ -1921,6 +1918,18 @@ type(Data,auto_type) -->
                 ("object";"Object";"__auto_type";"auto")
         ]).
 
+type(Data,[array,Type]) -->
+    langs_to_output(Data,array,[
+    ['java','c','c++','c#']:
+            (type(Data,Type),"[]"),
+    ['cython']:
+            "list",
+    ['javascript','cosmos']:
+            "Array",
+    ['pseudocode']:
+            (type(Data,Type),"[]";"Array";"list")
+    ]).
+
 type(Data,regex) -->
         langs_to_output(Data,regex,[
         ['javascript']:
@@ -2054,18 +2063,6 @@ type(Data,double) -->
         ['pseudocode']:
                 ("double","real","decimal","Num","float","Float","Real","float64","number")
         ]).
-
-type_(Data,[array,Type]) -->
-    langs_to_output(Data,array,[
-    ['java','c','c++','c#']:
-            (type(Data,Type),"[]"),
-    ['cython']:
-            "list",
-    ['javascript','cosmos']:
-            "Array",
-    ['pseudocode']:
-            (type(Data,Type),"[]";"Array";"list")
-    ]).
 
 grammar_statement_(Data,[Name,Body]) -->
 	langs_to_output(Data,grammar_statement,[
