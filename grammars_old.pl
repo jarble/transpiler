@@ -1979,19 +1979,6 @@ type(Data,int) -->
                 ({member(Lang1,['java','pascal','rebol','fortran','haxe','php','haskell'])}, type([Lang1|_],int))
         ]).
 
-type_(Data,[array,Type]) -->
-    langs_to_output(Data,array,[
-    ['java','c','c++','c#']:
-            (type(Data,Type),"[]"),
-    ['cython']:
-            "list",
-    ['javascript','cosmos']:
-            "Array",
-    ['pseudocode']:
-            (type(Data,Type),"[]";"Array";"list")
-    ]).
-
-
 type(Data,string) -->
     langs_to_output(Data,string,[
     ['z3',cosmos,'visual basic .net','java','ceylon','gambas','dart','gosu','groovy','scala','pascal','swift','haxe','haskell','visual basic','monkey x']:
@@ -2067,6 +2054,18 @@ type(Data,double) -->
         ['pseudocode']:
                 ("double","real","decimal","Num","float","Float","Real","float64","number")
         ]).
+
+type_(Data,[array,Type]) -->
+    langs_to_output(Data,array,[
+    ['java','c','c++','c#']:
+            (type(Data,Type),"[]"),
+    ['cython']:
+            "list",
+    ['javascript','cosmos']:
+            "Array",
+    ['pseudocode']:
+            (type(Data,Type),"[]";"Array";"list")
+    ]).
 
 grammar_statement_(Data,[Name,Body]) -->
 	langs_to_output(Data,grammar_statement,[

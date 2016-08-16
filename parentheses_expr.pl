@@ -1,3 +1,6 @@
+parentheses_expr(_,string,string_literal(A)) -->
+	string_literal(A).
+
 parentheses_expr(Data,Type, function_call(Name1,Params1,Params2)) -->
 	{
 			Name = function_name(Data,Type,Name1,Params2),

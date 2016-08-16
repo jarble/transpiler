@@ -71,7 +71,7 @@ statement_with_semicolon(Data,_,prolog_split_string(Mode,Output_,Str1_,Str2_)) -
 	({Lang='prolog'}-> ("split_string",ws,"(",ws,Str1,ws,",",ws,Str2,ws,",",ws,"\"\"",ws,",",ws,Output,ws,")");
 	set_or_initialize_var(Data, Mode, Output, split_(Data,[Str1,Str2]),string)).
 
-statement_with_semicolon(Data,Return_type,return(To_return1)) --> 
+statement_with_semicolon(Data,Return_type,return(To_return1)) -->
 	{
 			A = expr(Data,Return_type,To_return1)
 	},
