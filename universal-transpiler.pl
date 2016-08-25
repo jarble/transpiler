@@ -1,10 +1,7 @@
 % This is a program that translates several programming languages into several other languages.
 
 %It should be updated to support Constraint Handling Grammar Rules.
-
 :- use_module(library(prolog_stack)).
-:- use_module(library(error)).
-:- use_module(library(pio)).
 
 user:prolog_exception_hook(Exception, Exception, Frame, _) :-
     (   Exception = error(Term)
@@ -32,7 +29,7 @@ offside_rule_langs(X) :-
 prefix_arithmetic_langs(X) :-
 	X = ['racket','z3','clips','gnu smalltalk','newlisp','hy','common lisp','emacs lisp','clojure','sibilant','lispyscript'].
 
-main :- 
+main :-
    File='input.txt',read_file_to_codes(File,Input_,[]),atom_codes(Input,Input_),
    writeln(Input),translate_langs(Input).
 
@@ -79,7 +76,7 @@ first_case(Data,Return_type,Switch_expr,int,[Expr_,Statements_,Case_or_default_]
             B=statements(Data1,Return_type,Statements_),
             Compare_expr = expr(Data,bool,compare(int,Switch_expr,Expr_)),
             Expr = expr(Data,int,Expr_),
-            
+
             Case_or_default = (case(Data,Return_type,Switch_expr,int,Case_or_default_);default(Data,Return_type,int,Case_or_default_))
     },
     optional_indent(Data,Indent),
@@ -122,8 +119,8 @@ elif(Data,Return_type,[Expr_,Statements_]) -->
                 A=expr(Data,bool,Expr_)
         },
         elif(Data,[Indent,A,B]).
-        
-        
+
+
 is_var_type([_,_,Namespace,Var_types,_,_], Name, Type) :-
     memberchk([[Name|Namespace],Type1], Var_types), Type = Type1.
 
@@ -168,8 +165,6 @@ function_call_parameters(Data,[Params1_|Params1__],[[Params2_,_]|Params2__]) -->
         (parentheses_expr(Data,Params2_,Params1_),function_call_parameter_separator(Data),function_call_parameters(Data,Params1__,Params2__)).
 
 function_call_parameter_separator([Lang|_]) -->
-    {Lang = 'perl'}->
-        ",";
     parameter_separator([Lang|_]).
 
 top_level_statement_separator([Lang|_]) -->
@@ -244,7 +239,7 @@ between_(A,B,C) :- char_code(A,A1),char_code(B,B1),nonvar(C),char_code(C,C1),bet
 
 string_literal(S) --> "\"",string_inner(S),"\"".
 string_literal1(S) --> "\'",string_inner1(S),"\'".
-regex_literal(Data,S_) --> 
+regex_literal(Data,S_) -->
     {S = regex_inner(S_)},
     regex_literal_(Data,[S]).
 
@@ -279,14 +274,15 @@ statements_with_ws(Data,A) -->
 
 include_in_each_file(Data) -->
 	include_in_each_file_(Data).
-        
+
 print_var_types([A]) :-
     writeln(A).
 print_var_types([A|Rest]) :-
     writeln(A),print_var_types(Rest).
 
 list_of_langs(X) :-
-	X = [javascript,c,'c#','c++','go','haxe','php','swift','octave',lua,java].
+	X = [javascript,'c#',ruby,java,c,'c++','go','haxe','php','swift','octave',lua,java,pydatalog,prolog,'constraint handling rules',perl].
+	%X = [javascript,'c#',java,prolog].
 
 translate_langs(Input_) :-
 	atom_chars(Input_,Input),
@@ -296,7 +292,7 @@ translate_langs(Input_) :-
 
 translate_langs(_,_,[],_) :-
 	true.
-	
+
 translate_langs(Var_types,Ls,[Lang|Langs],Lang2) :-
     phrase(statements_with_ws([Lang,false,[],Var_types,"\n",Lang2],Ls), Output),
     atom_chars(Output_,Output),writeln(''),writeln(Lang),writeln(''),writeln(Output_),writeln(''),
@@ -309,13 +305,12 @@ set_or_initialize_var(Data,Mode,Name,Expr,Type) -->
 	({Mode = initialize_var},
 		initialize_var_(Data,[Name,Expr,type(Data,Type)]);
 	{Mode = return},
-		return_(Data,Expr);
+		return_(Data,[Expr]);
 	{Mode = set_var},
 		set_var_(Data,[Name,Expr]);
 	{Mode=initialize_constant},
 		initialize_constant_(Data,[Name,type(Data,Type),Expr])).
 
-%:- include(grammars). %The line below should be replaced by this eventually
 :- include(grammars_old).
 :- include(statement).
 :- include(statement_with_semicolon).

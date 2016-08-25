@@ -2,18 +2,23 @@
 
 :- set_prolog_flag(double_quotes,chars).
 :- initialization(main).
-:- compile(chrg).
-:- chrg_option(show_rules, off).
-:- chrg_symbols var_name/1, whitespace_token/0, ws/0, if_then/2.
+%If X is an animal, then X is a bird or a mammal, and vice-versa.
+:- use_module(library(chr)).
 
-%This implementation of ws is very slow. It should be improved somehow.
+:- chr_constraint type/2.
 
-" " ::> whitespace_token.
-"	" ::> whitespace_token.
-whitespace_token,optional(ws) ::> ws.
+species(X,X1),species(X,X2) <=> X1 = X2.
 
-"if",optional(ws),"(",optional(ws),var_name(X),optional(ws),")",optional(ws),"{",optional(ws),var_name(Y),optional(ws),"}" ::> if_then(java,[X,Y]),{writeln(""),writeln(X),writeln(Y)}.
-[A] ::> var_name([A]).
-end_of_CHRG_source.
+animal(X) <=> 
+    (mammal(X);bird(X)),
+    (male(X);female(X)).
 
-main :- parse("if  (	A ){ B }").
+male(X),female(X) ==> false.
+
+bird(X) <=> species(X,pigeon);species(X,parrot).
+
+mammal(X) <=> species(X,dog);species(X,cat);species(X,bull).
+
+species(X,bull) ==> male(X).
+
+main :- species(X,bull), age(X,20), age(X,13), writeln(X).

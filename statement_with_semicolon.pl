@@ -4,7 +4,7 @@ statement_with_semicolon(Data,Return_type,return(To_return1)) -->
 	{
 			A = expr(Data,Return_type,To_return1)
 	},
-	return_(Data,A).
+	return_(Data,[A]).
 	
 statement_with_semicolon(Data,_,plus_plus(Name1)) --> 
         {

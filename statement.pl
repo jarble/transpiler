@@ -32,7 +32,7 @@ statement(Data,Type1,function(Name1,Type1,Params1,Body1)) -->
                 (Params1 = [], Params = ""; Params = parameters(Data1,Params1))
         },
         %put this at the beginning of each statement without a semicolon
-		optional_indent(Data,Indent),
+		(Indent;""),
 		function_(Data,[Name,Type,Params,Body,Indent]).
 
 %java-like class statements

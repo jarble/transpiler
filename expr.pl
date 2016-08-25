@@ -176,7 +176,6 @@ expr(Data,[array,string],split(Exp1,Exp2)) -->
 
 expr(Data,string,reverse_list_in_place(List_,Type)) -->
         {
-                Data = [Lang|_],
                 List = parentheses_expr(Data,[array,Type],List_)
         },
         reverse_in_place_(Data,[List]).
