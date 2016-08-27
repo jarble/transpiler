@@ -195,6 +195,17 @@ top_level_statement(Data,Type,A_) -->
 statements(Data,Return_type,[A]) --> statement(Data,Return_type,A).
 statements(Data,Return_type,[A|B]) --> statement(Data,Return_type,A),statement_separator(Data),statements(Data,Return_type,B).
 
+
+set_same_value(Data,Return_type,[A]) --> expr(Data,Return_type,A).
+set_same_value(Data,Return_type,[A|B]) --> expr(Data,Return_type,A),same_value_separator(Data),set_same_value(Data,Return_type,B).
+
+
+vars_list(Data,Type,[A]) --> var_name_(Data,Type,A).
+vars_list(Data,Type,[A|B]) --> var_name_(Data,Type,A),",",vars_list(Data,Type,B).
+
+initialize_vars_list(Data,Type,[A]) --> {A = [A1,A2],A1_=var_name_(Data,Type,A1),A2_=parentheses_expr(Data,Type,A2)},set_var_(Data,[A1_,A2_]).
+initialize_vars_list(Data,Type,[A|B]) --> {A = [A1,A2],A1_=var_name_(Data,Type,A1),A2_=parentheses_expr(Data,Type,A2)},set_var_(Data,[A1_,A2_]),",",initialize_vars_list(Data,Type,B).
+
 ws_separated_statements(Data,[A]) --> top_level_statement(Data,_,A).
 ws_separated_statements(Data,[A|B]) --> top_level_statement(Data,_,A),top_level_statement_separator(Data),ws_separated_statements(Data,B).
 
@@ -281,8 +292,8 @@ print_var_types([A|Rest]) :-
     writeln(A),print_var_types(Rest).
 
 list_of_langs(X) :-
-	X = [javascript,'c#',ruby,java,c,'c++','go','haxe','php','swift','octave',lua,java,pydatalog,prolog,'constraint handling rules',perl].
-	%X = [javascript,'c#',java,prolog].
+	X = ['javascript','c#',ruby,'java',c,'c++','go','php','swift','octave','lua','java','pydatalog',prolog,'constraint handling rules',perl,'haxe'].
+	%X = ['javascript','c#','java',prolog].
 
 translate_langs(Input_) :-
 	atom_chars(Input_,Input),

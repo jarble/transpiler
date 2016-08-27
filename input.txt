@@ -1,4 +1,4 @@
-public static int add(int a,int b){
-        int[] arr={3,4,5};
-        return a+b+arr[1];
-}
+def add(a,b)
+	a,b = a+1,a+2
+	return a + b
+end
