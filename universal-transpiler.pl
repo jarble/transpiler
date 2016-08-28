@@ -81,6 +81,7 @@ first_case(Data,Return_type,Switch_expr,int,[Expr_,Statements_,Case_or_default_]
     },
     optional_indent(Data,Indent),
     first_case_(Data,[B,Compare_expr,Expr,Case_or_default]).
+
 case(Data,Return_type,Switch_expr,int,[Expr_,Statements_,Case_or_default_]) -->
         {
                 indent_data(Indent,Data,Data1),
@@ -167,9 +168,9 @@ function_call_parameters(Data,[Params1_|Params1__],[[Params2_,_]|Params2__]) -->
 function_call_parameter_separator([Lang|_]) -->
     parameter_separator([Lang|_]).
 
-top_level_statement_separator([Lang|_]) -->
-	{memberchk(Lang,['picat','prolog','logtalk','erlang'])} -> ws;
-	statement_separator([Lang|_]).
+top_level_statement_separator(Data) -->
+	{Data = [Lang|_], memberchk(Lang,['picat','prolog','logtalk','erlang'])} -> ws;
+	statement_separator(Data).
 
 key_value(Data,Type,[Key_,Val_]) -->
         {
@@ -194,10 +195,6 @@ top_level_statement(Data,Type,A_) -->
 
 statements(Data,Return_type,[A]) --> statement(Data,Return_type,A).
 statements(Data,Return_type,[A|B]) --> statement(Data,Return_type,A),statement_separator(Data),statements(Data,Return_type,B).
-
-
-set_same_value(Data,Return_type,[A]) --> expr(Data,Return_type,A).
-set_same_value(Data,Return_type,[A|B]) --> expr(Data,Return_type,A),same_value_separator(Data),set_same_value(Data,Return_type,B).
 
 
 vars_list(Data,Type,[A]) --> var_name_(Data,Type,A).
@@ -292,8 +289,8 @@ print_var_types([A|Rest]) :-
     writeln(A),print_var_types(Rest).
 
 list_of_langs(X) :-
-	X = ['javascript','c#',ruby,'java',c,'c++','go','php','swift','octave','lua','java','pydatalog',prolog,'constraint handling rules',perl,'haxe'].
-	%X = ['javascript','c#','java',prolog].
+	%X = ['javascript','c#',ruby,'java',c,'c++','go','php','swift','octave','lua','java','pydatalog',prolog,'constraint handling rules',perl,'haxe'].
+	X = ['python','javascript','php','c#','java'].
 
 translate_langs(Input_) :-
 	atom_chars(Input_,Input),

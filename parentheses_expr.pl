@@ -9,11 +9,11 @@ parentheses_expr(Data,Type, function_call(Name1,Params1,Params2)) -->
     function_call_(Data,[Name,Args]).
 
 
-parentheses_expr(Data,string,type_conversion(int,Arg1)) -->
+parentheses_expr(Data,Type2,type_conversion(Type1,Arg1)) -->
         {
-                Arg = parentheses_expr(Data,int,Arg1)
+                Arg = parentheses_expr(Data,Type1,Arg1)
         },
-        type_conversion_(Data,[int,Arg]).
+        type_conversion_(Data,[Type1,Type2,Arg]).
 
 parentheses_expr(Data,Type1,anonymous_function(Type1,Params1,Body1)) -->
         {
@@ -26,7 +26,6 @@ parentheses_expr(Data,Type1,anonymous_function(Type1,Params1,Body1)) -->
 parentheses_expr(Data,int,floor(Params1)) -->
         {Params = expr(Data,int,Params1)},
         floor_(Data,[Params]).
-
 
 parentheses_expr(Data,int,ceiling(Params1)) -->
         {Params = expr(Data,int,Params1)},

@@ -157,11 +157,3 @@ statement_with_semicolon(Data,_,multiple_assignment(Vars1,Exprs1,Type1)) -->
 			Exprs = initializer_list_(Data,Type1,Exprs1)
 		},
 		multiple_assignment_(Data,[Vars,Exprs,Type]).
-
-statement_with_semicolon(Data,_,set_same_value(Vars1,Expr1,Type1)) -->
-		{
-			Type = type(Data,Type1),
-			Vars = set_same_value(Data,Type1,Vars1),
-			Exprs = expr(Data,Type1,Expr1)
-		},
-		set_same_value_(Data,[Vars,Expr,Type]).

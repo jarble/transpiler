@@ -324,15 +324,16 @@ expr(Data,bool,regex_matches_string(Str1,Reg1)) -->
         },
         regex_matches_string_(Data,[Reg,Str]).
  
-expr(Data,bool,string_matches_string(Str1,Reg1)) -->
-        {
-                Str = parentheses_expr(Data,string,Str1),
-                Reg = parentheses_expr(Data,string,Reg1)
-        },
-        string_matches_string_(Data,[Str1,Reg1]).
- 
+
 expr(Data,int,array_length(A1,Type)) -->
         {
                 A = parentheses_expr(Data,[array,Type],A1)
         },
         array_length_(Data,[A]).
+
+expr(Data,bool,instanceof(Expr1,Type1,Type2_)) -->
+	{
+		Type2 = type(Data,Type2_),
+		Expr = parentheses_expr(Data,Type1,Expr1)
+	},
+	instanceof_(Data,[Expr,Type1,Type2]).

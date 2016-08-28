@@ -1,20 +1,3 @@
-statement(Data,grammar_statement(Name_,Body_)) -->
-	{
-	Name=var_name_(Data,grammar,Name_),
-	Body=expr(Data,grammar,Body_)
-	},
-	grammar_statement_(Data,[Name,Body]).
-
-statement(Data,_,comment(A_)) -->
-	{
-	A = comment_inner(A_)
-	},
-	comment_(Data,[A]).
-
-statement(Data,_,import(Module_)) -->
-        {A = symbol(Module_)},
-        import_(Data,[A]).
-
 statement(Data,enum(Name1,Body1)) -->
         {
                 namespace(Data,Data1,Name1,Indent),
@@ -32,7 +15,7 @@ statement(Data,Type1,function(Name1,Type1,Params1,Body1)) -->
                 (Params1 = [], Params = ""; Params = parameters(Data1,Params1))
         },
         %put this at the beginning of each statement without a semicolon
-		(Indent;""),
+		optional_indent(Data,Indent),
 		function_(Data,[Name,Type,Params,Body,Indent]).
 
 %java-like class statements
