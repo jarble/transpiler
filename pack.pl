@@ -2,7 +2,7 @@ name('transpiler').
 title('A universal translator for programming languages').
 
 version('0.1').
-download('https://github.com/jarble/universal-transpiler/archive/transpiler-0.1.zip').
+download('https://github.com/jarble/universal-transpiler/archive/v0.1.zip').
 
 
 author('Anderson Green','jarble@gmail.com').
