@@ -27,8 +27,16 @@ and this is the Java code that it generates:
 	}
 
 #How to use this translator
-* First, write some source code in [input.txt](https://github.com/jarble/universal-transpiler/tree/master/prolog/input.txt). 
-* Open [universal-transpiler.pl](https://github.com/jarble/universal-transpiler/blob/master/prolog/universal-transpiler.pl) in the SWI-Prolog console. The translated source code will be printed in several programming languages.
+
+Install the package by typing `pack-install(transpiler)` in the SWI-Prolog console.
+Now, you can use the translator to convert JavaScript source code into Lua:
+
+	:- use_module(library(transpiler)).
+	:- set_prolog_flag(double_quotes,chars).
+	:- initialization(main).
+
+	main :- translate('function add(a,b){return a + b;}',lua,X),writeln(X).
+
 
 #How to extend the translator
 
