@@ -1,0 +1,8 @@
+
+def add(a,b):
+	return a + b
+def add2(a,b):
+	while a < 10:
+		b += 1
+		a += 2
+	return add(a,b)

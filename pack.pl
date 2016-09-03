@@ -1,4 +1,4 @@
-name('transpiler').
+name('universal-transpiler').
 title('A universal translator for programming languages').
 
 version('0.1').
