@@ -1,8 +1,0 @@
-
-def add(a,b):
-	g = a + b
-	q = [1,2,3]
-	for r in q:
-		print(q)
-def subtract(a,b):
-	return a - b

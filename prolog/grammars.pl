@@ -173,7 +173,7 @@ initialize_var_(Data,[Name,Expr,Type]) -->
         ("(",ws,"setf",ws_,Name,ws_,Expr,ws,")"),
     ['minizinc']:
         (Type,ws,":",ws,Name,ws,"=",ws,Expr),
-    ['ruby','python','php','haskell','erlang','prolog','logtalk','julia','picat','octave','wolfram']:
+    ['ruby','python','php','haskell','erlang','prolog','constraint handling rules','logtalk','julia','picat','octave','wolfram']:
         (Name,python_ws,"=",python_ws,Expr),
     ['javascript','hack','swift']:
         ("var",ws_,Name,ws,"=",ws,Expr),
@@ -228,8 +228,8 @@ index_in_array_(Data,[Container,Contained]) -->
 
 concatenate_string_(Data,[A,B]) -->
         langs_to_output(Data,concatenate_string,[
-        ['prolog']:
-				("(",ws,"append",ws_,"$(",ws,A,ws,",",ws,B,ws,")"),
+        ['prolog','constraint handling rules']:
+				("(",ws,"append",ws_,"$(",ws,A,ws,",",ws,B,ws,")",ws,")"),
         ['r']:
                 ("paste0",ws,"(",ws,A,ws,",",ws,B,ws,")"),
         ['maxima']:
@@ -284,7 +284,7 @@ array_length_(Data,[A])-->
         langs_to_output(Data,array_length,[
         ['go']:
                 ("len",ws,"(",ws,A,ws,")"),
-		['prolog']:
+		['prolog','constraint handling rules']:
 				("(",ws,"length",ws_,"$",ws,A,ws,")",ws,")"),
         ['python','cython']:
                 ("len",python_ws,"(",python_ws,A,python_ws,")"),
@@ -326,10 +326,12 @@ array_length_(Data,[A])-->
 
 strlen_(Data,[A]) -->
         langs_to_output(Data,strlen,[
-		['prolog']:
+		['prolog','constraint handling rules']:
 				("(",ws,"length",ws_,"$",ws,A,ws,")",ws,")"),
         ['go','erlang','nim']:
                 ("len",ws,"(",ws,A,ws,")"),
+        ['lua']:
+                ("string",ws,".",ws,"length",ws,"(",ws,A,ws,")"),
         ['r']:
                 ("nchar",ws,"(",ws,A,ws,")"),
         ['erlang']:
@@ -366,10 +368,12 @@ strlen_(Data,[A]) -->
 
 access_array_(Data,[Array,Index]) -->
         langs_to_output(Data,access_array,[
-        ['prolog']:
+        ['prolog','constraint handling rules']:
 				("(",ws,"nth0",ws_,"$",ws,"(",ws,Array,ws,",",ws,Index,ws,")",ws,")"),
         ['ruby','c#','julia','d','swift','julia','janus','minizinc','picat','nim','autoit','python','cython','coffeescript','dart','typescript','awk','vala','perl','java','javascript','go','c++','php','haxe','c']:
                 (Array,python_ws,"[",python_ws,Index,python_ws,"]"),
+		['lua']:
+				(Array,ws,"[",ws,Index,ws,"+",ws,"1",ws,"]"),
         ['scala','octave','fortran','visual basic']:
                 (Array,ws,"(",ws,Index,ws,")"),
         ['haskell']:
@@ -393,7 +397,7 @@ reverse_list_(Data,[List]) -->
 			['haskell']:
 				("(",ws,"reverse",ws_,List,ws,")"),
 			['javascript']:
-				(List,ws,".map(function(arr){return arr.slice();})")
+				(List,ws,".",ws,"map",ws,"(",ws,"function",ws,"(",ws,"arr",ws,")",ws,"{",ws,"return",ws_,"arr",ws,".",ws,"slice()",ws,";",ws,"}",ws,")")
 		]).
 
 charAt_(Data,[AString,Index]) -->
@@ -420,7 +424,7 @@ charAt_(Data,[AString,Index]) -->
 
 join_(Data,[Array,Separator]) -->
         langs_to_output(Data,join,[
-        ['prolog']:
+        ['prolog','constraint handling rules']:
 				("(",ws,"join",ws_,"$(",ws,Array,ws,",",ws,Separator,ws,")",")"),
         ['swift']:
                 (Array,ws,".",ws,"joinWithSeparator",ws,"(",ws,Separator,ws,")"),
@@ -442,7 +446,7 @@ join_(Data,[Array,Separator]) -->
 
 concatenate_arrays_(Data,[A1,A2]) -->
         langs_to_output(Data,concatenate_arrays,[
-        ['prolog']:
+        ['prolog','constraint handling rules']:
 				("(",ws,"append",ws_,"$(",ws,A1,ws,",",ws,A2,ws,")"),
         [javascript]:
                 (A1,ws,".",ws,"concat",ws,"(",ws,A2,ws,")"),
@@ -464,7 +468,7 @@ concatenate_arrays_(Data,[A1,A2]) -->
 
 split_(Data,[AString,Separator]) -->
     langs_to_output(Data,split,[
-    ['prolog']:
+    ['prolog','constraint handling rules']:
 			("(",ws,"split",ws_,"$(",ws,AString,ws,",",ws,Separator,ws,")",ws,")"),
     ['swift']:
             (AString,ws,".",ws,"componentsSeparatedByString",ws,"(",ws,Separator,ws,")"),
@@ -534,7 +538,7 @@ initialize_static_var_with_value_(Data,[Type,Name,Value]) -->
 			("(",ws,"setf",ws_,Name,ws_,Value,ws,")"),
 		['minizinc']:
 			(Type,ws,":",ws,Name,ws,"=",ws,Value,ws,";"),
-		['haskell','erlang','prolog','julia','picat','octave','wolfram']:
+		['haskell','erlang','prolog','constraint handling rules','julia','picat','octave','wolfram']:
 			(Name,ws,"=",ws,Value),
 		['javascript','hack','swift']:
 			("var",ws_,Name,ws,"=",ws,Value),
@@ -616,8 +620,8 @@ static_method_(Data, [Name,Type,Params,Body]) -->
         ]).
 
 
-constructor_(Data,[Params,Body]) -->
-        optional_indent(Data,Indent),langs_to_output(Data,constructor,[
+constructor_(Data,[Name,Params,Body,Indent]) -->
+        langs_to_output(Data,constructor,[
         ['rebol']:
                 ("new:",ws_,"func",ws,"[",ws,Params,ws,"]",ws,"[",ws,"make",ws_,"self",ws,"[",ws,Body,ws,"]",ws,"]"),
         ['hy']:
@@ -699,7 +703,7 @@ print_(Data,[A]) -->
 			("System",ws,".",ws,"out",ws,".",ws,"print",ws,"(",ws,A,ws,")"),
 		['c#']:
 			("Console",ws,".",ws,"Write",ws,"(",ws,A,ws,")"),
-		['prolog']:
+		['prolog','constraint handling rules']:
 			("write",ws,"(",ws,A,ws,")"),
 		['perl']:
 			("print",ws,"(",ws,A,ws,")"),
@@ -753,7 +757,7 @@ println_(Data,[A]) -->
                 ("println!(",ws,A,ws,")"),
         ['octave']:
                 ("disp",ws,"(",ws,A,ws,")"),
-        ['chapel','d','seed7','prolog']:
+        ['chapel','d','seed7','prolog','constraint handling rules']:
                 ("writeln",ws,"(",ws,A,ws,")"),
         ['delphi']:
                 ("WriteLn",ws,"(",ws,A,ws,")"),
@@ -814,7 +818,7 @@ initialize_empty_var_(Data,[Name,Type]) -->
 			("var",ws_,Name,ws,":",ws,Type),
 	['java','c#','c++','c','d','janus','fortran','dart']:
 			(Type,ws_,Name),
-	['prolog']:
+	['prolog','constraint handling rules']:
 			(Type,ws,"(",ws,Name,ws,")"),
 	['javascript','haxe']:
 			("var",ws_,Name),
@@ -842,7 +846,7 @@ set_dict_(Data,[Name,Index,Value]) -->
 			(Name,ws,"[\"",ws,Index,ws,"\"]",ws,"=",ws,Value),
 	['gnu smalltalk']:
 			(Name,ws_,"at:",ws_,Index,ws_,"put:",ws_,Value),
-	['prolog']:
+	['prolog','constraint handling rules']:
 			("member",ws,"(",ws,Name,ws,",",ws,Index,ws,"-",ws,Value,ws,")"),
 	['java']:	
 			(Name,ws,".",ws,"put",ws,"(",ws,Value,ws,")")
@@ -864,7 +868,7 @@ initializer_list_(Data,[A,Type]) -->
                 ("{",ws,A,ws,"}"),
         ['go']:
 				("[]",Type,"{",ws,A,ws,"}"),
-        [ 'ruby', 'cosmos', 'python', 'cython', 'nim','d','frink','rebol','octave','julia','prolog','minizinc','engscript','cython','groovy','dart','typescript','coffeescript','nemerle','javascript','haxe','haskell','rebol','polish notation','swift']:
+        [ 'ruby', 'cosmos', 'python', 'cython', 'nim','d','frink','rebol','octave','julia','prolog','constraint handling rules','minizinc','engscript','cython','groovy','dart','typescript','coffeescript','nemerle','javascript','haxe','haskell','rebol','polish notation','swift']:
                 ("[",python_ws,A,python_ws,"]"),
         ['php']:
                 ("array",ws,"(",ws,A,ws,")"),
@@ -887,7 +891,7 @@ dict_(Data,[A]) -->
                 ("(",ws,A,ws,")"),
         ['php']:
                 ("array",ws,"(",ws,A,ws,")"),
-        ['haxe','frink','swift','elixir','d','wolfram','prolog']:
+        ['haxe','frink','swift','elixir','d','wolfram','prolog','constraint handling rules']:
                 ("[",ws,A,ws,"]"),
         ['scala']:
                 ("Map",ws,"(",ws,A,ws,")"),
@@ -922,7 +926,7 @@ tan_(Data,[Var1]) -->
         ]).
 false_(Data) -->
     langs_to_output(Data,'false',[
-    ['java','livecode','gap','dafny','z3','perl 6','chapel','c','frink','elixir','pascal','rust','minizinc','engscript','picat','clojure','nim','groovy','d','ceylon','typescript','coffeescript','octave','prolog','julia','vala','f#','swift','c++','nemerle','dart','javascript','erlang','c#','haxe','go','ocaml','scala','php','rebol','hack']:
+    ['java','constraint handling rules','livecode','gap','dafny','z3','perl 6','chapel','c','frink','elixir','pascal','rust','minizinc','engscript','picat','clojure','nim','groovy','d','ceylon','typescript','coffeescript','octave','prolog','julia','vala','f#','swift','c++','nemerle','dart','javascript','erlang','c#','haxe','go','ocaml','scala','php','rebol','hack']:
 			("false"),
 	['pydatalog','hy','cython','autoit','haskell','vbscript','visual basic','monkey x','wolfram','delphi']:
 			("False"),
@@ -940,7 +944,7 @@ false_(Data) -->
 
 true_(Data) --> 
 	langs_to_output(Data,'true',[
-	['java','livecode','gap','dafny','z3','perl 6','chapel','c','frink','elixir','pseudocode','pascal','minizinc','engscript','picat','rust','clojure','nim','hack','ceylon','d','groovy','coffeescript','typescript','octave','prolog','julia','f#','swift','nemerle','vala','c++','dart','javascript','erlang','c#','haxe','go','ocaml','scala','php','rebol']:
+	['java','constraint handling rules','livecode','gap','dafny','z3','perl 6','chapel','c','frink','elixir','pseudocode','pascal','minizinc','engscript','picat','rust','clojure','nim','hack','ceylon','d','groovy','coffeescript','typescript','octave','prolog','julia','f#','swift','nemerle','vala','c++','dart','javascript','erlang','c#','haxe','go','ocaml','scala','php','rebol']:
 			("true"),
 	['pydatalog','hy','cython','autoit','haskell','vbscript','visual basic','monkey x','wolfram','delphi']:
 			("True"),
@@ -1007,6 +1011,8 @@ sin_(Data,[Var1]) -->
         langs_to_output(Data,sin,[
         ['java','javascript','typescript','haxe']:
                 ("Math",ws,".",ws,"sin",ws,"(",ws,Var1,ws,")"),
+        ['python','cython']:
+                ("math",ws,".",ws,"sin",ws,"(",ws,Var1,ws,")"),
         ['english']:
                 ("the sine of",ws_,Var1),
         ['c','seed7','erlang','picat','mathematical notation','julia','d','php','perl','perl 6','maxima','fortran','minizinc','swift','prolog','octave','dart','haskell','c++','scala']:
@@ -1145,11 +1151,7 @@ type_conversion_(Data,[string,bool,Arg]) -->
 		langs_to_output(Data,type_conversion,[
         ['java']:
 				("Boolean",ws,".",ws,"parseBoolean",ws,"(",ws,Arg,ws,")";
-				"Boolean",ws,".",ws,"valueOf",ws,"(",ws,Arg,ws,")"),
-		['javascript']:
-			(Arg,ws,"==",ws,"\"true\""),
-		['php']:
-			(Arg,ws,"===",ws,"\"true\"")
+				"Boolean",ws,".",ws,"valueOf",ws,"(",ws,Arg,ws,")")
         ]).
 
 type_conversion_(Data,[string,int,Arg]) -->
@@ -1226,7 +1228,7 @@ mod_(Data,[A,B]) -->
 
 arithmetic_(Data,[Exp1,Exp2,Symbol,Prefix_arithmetic_langs]) -->
         langs_to_output(Data,arithmetic,[
-        ['java', 'visual basic .net', 'cython', 'python', 'ruby', 'lua','logtalk', 'prolog', 'cosmos','pydatalog','e','livecode','vbscript','monkey x','englishscript','gap','pop-11','dafny','janus','wolfram','chapel','bash','perl 6','mathematical notation','katahdin','frink','minizinc','aldor','cobol','ooc','genie','eclipse','nools','b-prolog','agda','picat','pl/i','rexx','idp','falcon','processing','sympy','maxima','pyke','elixir','gnu smalltalk','seed7','standard ml','occam','boo','drools','icon','mercury','engscript','pike','oz','kotlin','pawn','freebasic','ada','powershell','gosu','nim','cython','openoffice basic','algol 68','d','ceylon','rust','coffeescript','actionscript','typescript','fortran','octave','ml','autohotkey','delphi','pascal','f#','self','swift','nemerle','dart','c','autoit','cobra','julia','groovy','scala','ocaml','erlang','gambas','hack','c++','matlab','rebol','red','go','awk','haskell','perl','javascript','c#','php','r','haxe','visual basic','vala','bc']:
+        ['java', 'visual basic .net', 'constraint handling rules', 'cython', 'python', 'ruby', 'lua','logtalk', 'prolog', 'cosmos','pydatalog','e','livecode','vbscript','monkey x','englishscript','gap','pop-11','dafny','janus','wolfram','chapel','bash','perl 6','mathematical notation','katahdin','frink','minizinc','aldor','cobol','ooc','genie','eclipse','nools','b-prolog','agda','picat','pl/i','rexx','idp','falcon','processing','sympy','maxima','pyke','elixir','gnu smalltalk','seed7','standard ml','occam','boo','drools','icon','mercury','engscript','pike','oz','kotlin','pawn','freebasic','ada','powershell','gosu','nim','cython','openoffice basic','algol 68','d','ceylon','rust','coffeescript','actionscript','typescript','fortran','octave','ml','autohotkey','delphi','pascal','f#','self','swift','nemerle','dart','c','autoit','cobra','julia','groovy','scala','ocaml','erlang','gambas','hack','c++','matlab','rebol','red','go','awk','haskell','perl','javascript','c#','php','r','haxe','visual basic','vala','bc']:
                 (Exp1,python_ws,Symbol,python_ws,Exp2),
 		Prefix_arithmetic_langs:
                 ("(",ws,Symbol,ws_,Exp1,ws_,Exp2,ws,")")
@@ -1249,6 +1251,22 @@ new_regex_(Data,[A]) -->
         ['c++']:
             ("regex",ws,"::",ws,"regex",ws,"(",ws,A,ws,")")
         ]).
+
+foreach_with_index_(Data,[Array,Var,Index,Type,Body,Indent]) -->
+        langs_to_output(Data,foreach_with_index,[
+			['lua']:
+				("for",ws_,Index,ws,",",ws,Var,ws_,"in",ws_,Array,ws_,"do",ws_,Body,(Indent;ws_),"end"),
+			['python']:
+				("for",python_ws_,Index,python_ws,",",python_ws,Var,python_ws_,"in",python_ws_,"enumerate",python_ws,"(",python_ws,Array,python_ws,"):",python_ws,Body),
+			['php']:
+				("foreach",ws,"(",ws,Array,ws_,"as",ws_,Index,ws,"=>",ws,Var,ws,")",ws,"{",ws,Body,(Indent;ws),"}"),
+			['javascript','typescript']:
+				(Array,ws,".",ws,"forEach",ws,"(",ws,"function",ws,"(",ws,Var,ws,",",ws,Index,ws,")",ws,"{",ws,Body,(Indent;ws),"}",ws,")",ws,";"),
+			['ruby']:
+				(Array,ws,".",ws,"each_with_index",ws_,"do",ws,"|",ws,Var,ws,",",ws,Index,ws,"|",ws,Body,(Indent;ws_),"end"),
+			['swift']:
+				("for",ws,"(",ws,Index,ws,",",ws,Var,ws,")",ws_,"in",ws_,Array,ws,".",ws,"enumerated()",ws,"{",ws,Body,(Indent;ws),"}")
+		]).
 
 foreach_(Data,[Array,Var,Type,Body,Indent]) -->
         langs_to_output(Data,foreach,[
@@ -1389,6 +1407,36 @@ if(Data,[A,B,C,D,Indent]) -->
 		['monkey x']:
 				("if",ws_,A,ws_,B,ws_,C,(Indent;ws_),"EndIf")
         ]).
+
+do_while_(Data,[Condition,Body,Indent]) -->
+        langs_to_output(Data,do_while,[
+        ['javascript','actionscript','java','c','php','d','c++','c#','perl']:
+			("do",ws,"{",ws,Body,(Indent;ws),"}",ws,"while",ws,"(",ws,Condition,ws,")",ws,";"),
+		['kotlin']:
+			("do",ws,"{",ws,Body,(Indent;ws),"}",ws,"while",ws,"(",ws,Condition,ws,")"),
+		['swift']:
+			("repeat",ws,"{",ws,Body,(Indent;ws),"}",ws,"while",(ws_,Condition;ws,"(",ws,Condition,ws,")")),
+		['visual basic .net']:
+			("Do",ws_,Body,(Indent;ws_),"Loop",ws_,"While",ws,Condition),
+		['ruby']:
+			("begin",ws_,Body,(Indent;ws_),"end",ws_,"while",ws,Condition),
+		['lua']:
+			("repeat",ws_,Body,(Indent;ws_),"until",ws,"(",ws,Condition,ws,")")
+]).
+
+map_(Data,[Func,Arr]) -->
+        langs_to_output(Data,map,[
+			['common lisp']:
+				("(",ws,"mapcar",ws_,Func,ws_,Arr,ws,")"),
+			['clojure','haskell']:
+				("(",ws,"map",ws_,Func,ws_,Arr,ws,")"),
+			['groovy']:
+				(Arr,ws,".",ws,"collect",ws,"(",ws,Func,ws,")"),
+			['python']:
+				("map",python_ws,"(",python_ws,Func,python_ws,",",python_ws,Arr,python_ws,")"),
+			['php']:
+				("array_map",ws,"(",ws,Func,ws,",",ws,Arr,ws,")")
+]).
 
 while_(Data,[A,B,Indent]) -->
         langs_to_output(Data,while,[
@@ -1563,7 +1611,7 @@ function_(Data,[Name,Type,Params,Body,Indent]) -->
         ['prolog',logtalk]:
                 ({Params = ""} -> (Name,ws,"(",ws,"Return",ws,")",ws_,":-",ws_,Body); (Name,ws,"(",ws,"(",ws,Params,ws,")",ws,",",ws,"Return",ws,")",ws_,":-",ws_,Body)),
 		['constraint handling rules']:
-                ({Params = ""} -> (Name,ws,"(",ws,"Return",ws,")",ws_,"<=>",ws_,Body); (Name,ws,"(",ws,"(",ws,Params,ws,")",ws,",",ws,"Return",ws,")",ws_,"<=>",ws_,Body)),
+                ({Params = ""} -> (":- chr_constraint",ws_,Name,"/1",ws,".",ws_,Name,ws,"(",ws,"Return",ws,")",ws_,"<=>",ws_,Body); (":- chr_constraint",ws_,Name,"/2",ws,".",ws_,Name,ws,"(",ws,"(",ws,Params,ws,")",ws,",",ws,"Return",ws,")",ws_,"<=>",ws_,Body)),
         ['picat']:
                 (Name,ws,"(",ws,Params,ws,")",ws,"=",ws,"retval",ws,"=>",ws,Body),
         ['swift']:
@@ -2240,10 +2288,8 @@ regex_literal_(Data,[S]) -->
 
 include_in_each_file_(Data) -->
     langs_to_output(Data,include_in_each_file,[
-    ['prolog']:
+    ['prolog','constraint handling rules']:
         (":- initialization(main).\n:- set_prolog_flag(double_quotes, chars).\n:- use_module(library(clpfd)).\n:- use_module(library(func))."),
-    ['constraint handling rules']:
-		(":- use_module(library(chr))."),
     ['perl']:
         ("use strict;\nuse warnings;"),
 	['haxe']:
@@ -2495,6 +2541,13 @@ list_comprehension_(Data,[Variable,Array,Result,Condition]) -->
                 (Array,ws,".",ws,"where",ws,"(",ws,Variable,ws,"=>",ws,Condition,ws,")",ws,".",ws,"map",ws,"(",ws,Variable,ws,"=>",ws,Result,ws,")"),
         ['picat']:
                 ("[",ws,Result,ws,":",ws,Variable,ws_,"in",ws_,Array,ws,",",ws,Condition,ws,"]")
+        ]).
+
+
+list_comprehension_1_(Data,[Variable,Array,Result]) -->
+        langs_to_output(Data,list_comprehension_1,[
+        ['cython','python']:
+                ("[",python_ws,Result,python_ws_,"for",python_ws_,Variable,python_ws_,"in",python_ws_,Array,python_ws,"]")
         ]).
 
 endswith_(Data,[Str1,Str2]) -->
