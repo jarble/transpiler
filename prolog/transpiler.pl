@@ -1,4 +1,4 @@
-:- module('universal-transpiler', [translate/3,translate/4]).
+:- module('transpiler', [translate/3,translate/4]).
 :- set_prolog_flag(double_quotes,chars).
 % This is a program that translates several programming languages into several other languages.
 
