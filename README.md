@@ -1,4 +1,4 @@
-[![Build Status](https://api.travis-ci.org/jarble/transpiler.svg)](https://api.travis-ci.org/jarble/transpiler)
+[![Build Status](https://api.travis-ci.org/jarble/transpiler.svg)](https://travis-ci.org/jarble/transpiler)
 
 # Universal-transpiler
 
