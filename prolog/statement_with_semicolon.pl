@@ -47,13 +47,17 @@ statement_with_semicolon(Data,_,set_array_index(Name,Index,Expr,Type)) -->
 	]).
 
 
-statement_with_semicolon(Data,_,set_var(Name1,Expr1,Type)) -->
+statement_with_semicolon(Data,_,set_var(Name,Expr,Type)) -->
 	set_var_(Data,[
-		var_name_(Data,Type,Name1),
-		expr(Data,Type,Expr1)
+		var_name_(Data,Type,Name),
+		expr(Data,Type,Expr)
 	]).
 	
-	
+statement_with_semicolon(Data,_,set_instance_var(Name,Expr,Type)) -->
+	set_var_(Data,[
+		expr(Data,Type,this(Name)),
+		expr(Data,Type,Expr)
+	]).	
 
 statement_with_semicolon(Data,_,initialize_empty_var(Type1,Name1)) -->
 	initialize_empty_var_(Data,[

@@ -1,4 +1,4 @@
-:- module('transpiler', [translate/3,translate/4,translate_langs/1]).
+:- module('transpiler', [translate/2,translate/3,translate/4,translate_langs/1]).
 :- set_prolog_flag(double_quotes,chars).
 
 % This is a program that translates several programming languages into several other languages.
@@ -8,6 +8,11 @@ list_of_langs(X) :-
 	%X = ['javascript','c#',ruby,'java',c,'c++','go','php','swift','octave','lua','java','pydatalog',prolog,'constraint handling rules',perl,'haxe'].
 	X = ['ruby','javascript','python','php','c#','java','haxe','lua','constraint handling rules','prolog','perl'].
 
+translate((Input,Lang2),Output) :-
+	translate(Input,Lang2,Output).
+translate((Input,Lang1,Lang2),Output) :-
+	translate(Input,Lang1,Lang2,Output).
+	
 translate(Input_,Lang2,Output) :-
 	atom_chars(Input_,Input), list_of_langs(X),member(Lang1,X),translate(Input,Lang1,Lang2,Output_), atom_chars(Output,Output_).
 translate(Input,Lang1,Lang2,Output) :-
