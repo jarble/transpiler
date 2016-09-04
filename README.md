@@ -1,3 +1,5 @@
+[![Build Status](https://api.travis-ci.org/jarble/transpiler.svg)](https://api.travis-ci.org/jarble/transpiler)
+
 # Universal-transpiler
 
 *Universal-transpiler* is a source-to-source compiler that translates a subset of most programming languages into several others.
