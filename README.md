@@ -2,7 +2,7 @@
 
 # Universal-transpiler
 
-*Universal-transpiler* is a source-to-source compiler that translates a subset of most programming languages into several others.
+*Universal-transpiler* is a source-to-source compiler that translates a subset of several programming languages into several others.
 
 The original version of this translator was written in JavaScript, but [a better version has been written in Prolog](universal-transpiler.pl).
 
