@@ -37,7 +37,10 @@ Now, you can use the translator to convert JavaScript source code into Lua:
 	:- set_prolog_flag(double_quotes,chars).
 	:- initialization(main).
 
-	main :- translate('function add(a,b){return a + b;}',lua,X),writeln(X).
+	main :- 
+		translate("function add(a,b){return a + b;}",javascript,lua,X),
+		atom_chars(Y,X),
+		writeln(Y).
 
 
 #How to extend the translator

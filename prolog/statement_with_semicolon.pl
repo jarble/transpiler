@@ -1,7 +1,9 @@
 %The grammar files are saved in grammars.pl
 
-statement_with_semicolon(Data,Return_type,return(To_return1)) -->
-	return_(Data,[expr(Data,Return_type,To_return1)]).
+statement_with_semicolon(Data,Return_type,return(To_return)) -->
+	return_(Data,[
+		expr(Data,Return_type,To_return)
+	]).
 	
 statement_with_semicolon(Data,_,plus_plus(Name)) --> 
         plus_plus_(Data,[
@@ -116,23 +118,4 @@ statement_with_semicolon(Data,_,print(Expr,Type)) -->
 statement_with_semicolon(Data,Type,println(Expr)) -->
         println_(Data,[
 			expr(Data,Type,Expr)
-		]).
-
-statement_with_semicolon(Data,_,initialize_vars(Vars,Type)) -->
-		initialize_vars_(Data,[
-			initialize_vars_list(Data,Type,Vars),
-			type(Data,Type)
-		]).
-statement_with_semicolon(Data,_,declare_vars(Vars,Type)) -->
-		declare_vars_(Data,[
-			vars_list(Data,Type,Vars),
-			type(Data,Type)
-		]).
-
-%This is for parallel assignment.
-statement_with_semicolon(Data,_,multiple_assignment(Vars,Exprs,Type)) -->
-		multiple_assignment_(Data,[
-			vars_list(Data,Type,Vars),
-			initializer_list_(Data,Type,Exprs),
-			type(Data,Type)
 		]).

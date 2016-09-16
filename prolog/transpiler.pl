@@ -5,8 +5,8 @@
 
 % Edit this list to specify the languages that should be translated. Each language should be written in lowercase:
 list_of_langs(X) :-
-	%X = ['javascript','c#',ruby,'java',c,'c++','go','php','swift','octave','lua','java','pydatalog',prolog,'constraint handling rules',perl,'haxe'].
-	X = ['ruby','javascript','python','php','c#','java','haxe','lua','constraint handling rules','prolog','perl'].
+	%X = ['javascript','c#',ruby,c,'c++','go','php','swift','octave','lua','pydatalog',prolog,'constraint handling rules',perl,'haxe'].
+	X = ['lua','ruby','javascript','php','c#','java','c#','haxe','lua','python','constraint handling rules','prolog','perl'].
 
 translate((Input,Lang2),Output) :-
 	translate(Input,Lang2,Output).

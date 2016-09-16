@@ -20,7 +20,7 @@ class_statement(Data,_,static_method(Name1,Type1,Params1,Body1)) -->
                 (Params1 = [], Params = ""; Params = parameters(Data1,Params1))
         },
         %put this at the beginning of each statement without a semicolon
-        static_method_(Data, [Name,Type,Params,Body,Indent]),writeln(Type).
+        static_method_(Data, [Name,Type,Params,Body,Indent]).
 
 class_statement(Data,_,instance_method(Name1,Type1,Params1,Body1)) -->
 	{
@@ -39,4 +39,17 @@ class_statement(Data,_,initialize_static_var_with_value(Type,Name,Expr)) -->
 		type(Data,Type),
 		var_name_(Data,Type,Name),
 		expr(Data,Type,Expr)
+	]).
+
+class_statement(Data,_,initialize_instance_var(Type,Name)) -->
+	initialize_instance_var_(Data,[
+		type(Data,Type),
+		var_name_(Data,Type,Name)
+	]).
+
+class_statement(Data,_,initialize_instance_var_with_value_(Name,Expr,Type)) -->
+	initialize_instance_var_with_value_(Data,[
+		var_name_(Data,Type,Name),
+		expr(Data,Type,Expr),
+		type(Data,Type)
 	]).
