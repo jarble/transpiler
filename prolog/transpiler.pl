@@ -23,6 +23,8 @@ namespace(Data,Data1,Name1,Indent) :-
 	Data = [Lang,Is_input,Namespace,Var_types,Indent,Lang2],
 	Data1 = [Lang,Is_input,[Name1|Namespace],Var_types,indent(Indent),Lang2].
 
+% slighly different offside_rule may be useful for langs like
+%% [ clean , haskell , curry ]
 offside_rule_langs(X) :-
 	X = ['python','cython','coffeescript','cosmos','cobra'].
 
