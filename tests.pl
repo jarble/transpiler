@@ -1,5 +1,4 @@
 :- use_module(prolog/transpiler).
-:- use_module(library(func)).
 :- set_prolog_flag(double_quotes,chars).
 :- initialization(main).
 
