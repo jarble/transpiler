@@ -1,4 +1,9 @@
 :- module('transpiler', [translate/2,translate/3,translate/4,translate_langs/1]).
+:- use_module(library(chr)).
+:- chr_constraint var_type/3.
+var_type(Namespace,Var,Type) \ var_type(Namespace,Var,Type) <=> true.
+var_type(Namespace,Var,Type1),var_type(Namespace,Var,Type2) ==> Type1=Type2. 
+
 :- set_prolog_flag(double_quotes,chars).
 
 % This is a program that translates several programming languages into several other languages.
@@ -6,7 +11,8 @@
 % Edit this list to specify the languages that should be translated. Each language should be written in lowercase:
 list_of_langs(X) :-
 	%X = ['javascript','c#',ruby,c,'c++','go','php','swift','octave','lua','pydatalog',prolog,'constraint handling rules',perl,'haxe'].
-	X = ['lua','ruby','javascript','php','c#','java','c#','haxe','lua','python','constraint handling rules','prolog','perl'].
+	%X = ['lua','ruby','javascript','php','c#','java','c#','haxe','lua','python','constraint handling rules','prolog','perl'].
+	X=['javascript','java','python'].
 
 translate((Input,Lang2),Output) :-
 	translate(Input,Lang2,Output).
@@ -22,6 +28,12 @@ translate(Input,Lang1,Lang2,Output) :-
 namespace(Data,Data1,Name1,Indent) :-
 	Data = [Lang,Is_input,Namespace,Var_types,Indent,Lang2],
 	Data1 = [Lang,Is_input,[Name1|Namespace],Var_types,indent(Indent),Lang2].
+
+namespace(Data,Data1,Name,Indent) -->
+	    {
+                namespace(Data,Data1,Name,Indent)
+        },
+		optional_indent(Data,Indent).
 
 offside_rule_langs(X) :-
 	X = ['python','cython','coffeescript','cosmos','cobra'].
@@ -120,11 +132,11 @@ elif(Data,Return_type,[Expr_,Statements_]) -->
 
 
 is_var_type([_,_,Namespace,Var_types,_,_], Name, Type) :-
-    memberchk([[Name|Namespace],Type1], Var_types), Type = Type1.
+    var_type(Namespace,Name,Type).
 
 %This is only for checking types of functions in global scope
-is_var_type_([_,_,Namespace,Var_types,_,_], Name, Type) :-
-    memberchk([[Name|_],Type], Var_types).
+is_var_type_([_,_,_,Var_types,_,_], [Name,Params], Type) :-
+    var_type([],[Name,Params],Type).
 
 %also called optional parameters
 default_parameter(Data,[Type1,Name1,Default1]) -->
@@ -154,8 +166,13 @@ varargs(Data,[Type1,Name1]) -->
 
 %these parameters are used in a function's definition
 optional_parameters(Data,A) --> "",parameters(Data,A).
-parameters(Data,[A]) --> parameter(Data,A);default_parameter(Data,A);varargs(Data,A).
-parameters(Data,[A|B]) --> parameter(Data,A),python_ws,parameter_separator(Data),python_ws,parameters(Data,B).
+
+parameters(Data,Params) --> 
+	{Params = []}, "";parameters_(Data,Params).
+parameters_(Data,[A]) -->
+	parameter(Data,A);default_parameter(Data,A);varargs(Data,A).
+parameters_(Data,[A|B]) -->
+	parameter(Data,A),python_ws,parameter_separator(Data),python_ws,parameters_(Data,B).
 
 function_call_parameters(Data,[Params1_],[[Params2_,_]]) -->
         parentheses_expr(Data,Params2_,Params1_).
@@ -307,4 +324,5 @@ translate_langs(Ls,[Lang|Langs],Lang2) :-
 :- include(statement_with_semicolon).
 :- include(class_statement).
 :- include(expr).
+:- include(dot_expr).
 :- include(parentheses_expr).

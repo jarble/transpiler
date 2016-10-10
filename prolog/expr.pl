@@ -4,7 +4,7 @@ expr(Data,[array,string],dict_keys(A,Type)) -->
 	]).
 expr(Data,bool,compare([array,Type],Exp1,Exp2)) -->
 	compare_arrays_(Data,[
-		parentheses_expr(Data,[array,Type],Exp1),
+		dot_expr(Data,[array,Type],Exp1),
 		expr(Data,[array,Type],Exp2)
 	]).
 expr(Data,string,global_replace_in_string(Str1,To_replace1,Replacement1)) -->
@@ -17,12 +17,12 @@ expr(Data,int,pi) -->
 	pi_(Data).
 expr(Data,grammar, grammar_or(Var1,Var2)) -->
     grammar_or_(Data,[
-		parentheses_expr(Data,grammar,Var1),
+		dot_expr(Data,grammar,Var1),
 		expr(Data,bool,Var2)
 	]).
 expr(Data,bool, or(Var1,Var2)) -->
     or_(Data,[
-		parentheses_expr(Data,bool,Var1),
+		dot_expr(Data,bool,Var1),
 		expr(Data,bool,Var2)
 	]).
 expr(Data,int,last_index_of(Str1,Str2)) -->
@@ -52,12 +52,12 @@ expr(Data,bool,not(A1)) -->
 		]).
 expr(Data,bool, and(A,B)) -->
     and_(Data,[
-		parentheses_expr(Data,bool,A),
+		dot_expr(Data,bool,A),
 		expr(Data,bool,B)
 	]).
 expr(Data,bool,int_not_equal(A,B)) -->
         int_not_equal_(Data,[
-			parentheses_expr(Data,int,A),
+			dot_expr(Data,int,A),
 			expr(Data,int,B)
         ]).           
 expr(Data,bool,greater_than(A,B)) -->
@@ -66,7 +66,7 @@ expr(Data,bool,greater_than(A,B)) -->
         },
         greater_than_(Data,[
 			expr(Data,int,A),
-			parentheses_expr(Data,int,B),
+			dot_expr(Data,int,B),
 			Prefix_arithmetic_langs
 		]).
 expr(Data,bool,greater_than_or_equal(A,B)) -->
@@ -75,7 +75,7 @@ expr(Data,bool,greater_than_or_equal(A,B)) -->
         },
         greater_than_or_equal_to_(Data,[
 			expr(Data,int,A),
-			parentheses_expr(Data,int,B),
+			dot_expr(Data,int,B),
 			Prefix_arithmetic_langs
         ]).
 expr(Data,bool,less_than_or_equal(A,B)) -->
@@ -84,7 +84,7 @@ expr(Data,bool,less_than_or_equal(A,B)) -->
         },
         less_than_or_equal_to_(Data,[
 			expr(Data,int,A),
-			parentheses_expr(Data,int,B),
+			dot_expr(Data,int,B),
 			Prefix_arithmetic_langs
 		]).
 expr(Data,bool,less_than(A,B)) -->
@@ -93,25 +93,25 @@ expr(Data,bool,less_than(A,B)) -->
         },
         less_than_(Data,[
             expr(Data,int,A),
-            parentheses_expr(Data,int,B),
+            dot_expr(Data,int,B),
             Prefix_arithmetic_langs
         ]).
  
 expr(Data,bool,compare(int,Var1,Var2)) -->
         compare_int_(Data,[
-			parentheses_expr(Data,int,Var1),
+			dot_expr(Data,int,Var1),
 			expr(Data,int,Var2)
 		]).
         
 expr(Data,bool,compare(bool,Exp1,Exp2)) -->
         compare_bool_(Data,[
-			parentheses_expr(Data,bool,Exp1),
+			dot_expr(Data,bool,Exp1),
 			expr(Data,bool,Exp2)
 		]).
  
 expr(Data,bool,compare(string,Exp1,Exp2)) -->
 		compare_string_(Data,[
-                parentheses_expr(Data,string,Exp1),
+                dot_expr(Data,string,Exp1),
                 expr(Data,string,Exp2)
 		]).
 
@@ -124,13 +124,13 @@ expr(Data,[array,Type],array_slice(Str,Index1,Index2)) -->
  
 expr(Data,string,concatenate_string(A,B)) -->
         concatenate_string_(Data,[
-			parentheses_expr(Data,string,A),
+			dot_expr(Data,string,A),
 			expr(Data,string,B)
 		]).
  
 expr(Data,int,mod(A,B)) -->
     mod_(Data,[
-		parentheses_expr(Data,int,A),
+		dot_expr(Data,int,A),
         expr(Data,int,B)
     ]).
  
@@ -140,7 +140,7 @@ expr(Data,int,arithmetic(Exp1,Exp2,Symbol)) -->
                 prefix_arithmetic_langs(Prefix_arithmetic_langs)
         },
         arithmetic_(Data,[
-			parentheses_expr(Data,int,Exp1),
+			dot_expr(Data,int,Exp1),
 			expr(Data,int,Exp2),
 			Symbol,
 			Prefix_arithmetic_langs
@@ -151,22 +151,12 @@ expr(Data,int,pow(Exp1,Exp2)) -->
 		parentheses_expr(Data,int,Exp1),
 		parentheses_expr(Data,int,Exp2)
 	]).
- 
-expr(Data,[array,string],split(Exp1,Exp2)) -->
-    split_(Data,[
-		parentheses_expr(Data,string,Exp1),
-        parentheses_expr(Data,string,Exp2)
-	]).
 
-expr(Data,string,reverse_list_in_place(List,Type)) -->
-	reverse_in_place_(Data,[
-		parentheses_expr(Data,[array,Type],List)
-	]).
 
 expr(Data,[array,Type],concatenate_arrays(A1,A2)) -->
 	concatenate_arrays_(Data,[
-		parentheses_expr(Data,[array,Type],A1),
-		parentheses_expr(Data,[array,Type],A2)
+		dot_expr(Data,[array,Type],A1),
+		expr(Data,[array,Type],A2)
 	]).
  
 expr(Data,string,join_(Array,Separator)) -->
@@ -199,13 +189,13 @@ expr(Data,string,charAt(Str,Int)) -->
 		expr(Data,int,Int)
 	]).
 
-expr(Data,string,endswith(Str1,Str2)) -->
+expr(Data,bool,endswith(Str1,Str2)) -->
 	endswith_(Data,[
 		parentheses_expr(Data,string,Str1),
 		expr(Data,string,Str2)
 	]).
 
-expr(Data,string,reverse_list(List,Type)) -->
+expr(Data,[array,Type],reverse_list(List,Type)) -->
 	reverse_list_(Data,[
 		parentheses_expr(Data,[array,Type],List)
 	]).
@@ -246,13 +236,11 @@ expr(Data,bool,string_contains(Str1,Str2)) -->
 	]).
  
 
-expr(Data,string,startswith(Str1,Str2)) -->
+expr(Data,bool,startswith(Str1,Str2)) -->
 	startswith_(Data,[
 		parentheses_expr(Data,string,Str1),
 		parentheses_expr(Data,string,Str2)
 	]).
-         
-expr(Data,Type,parentheses_expr(A)) --> parentheses_expr(Data,Type,A).
  
 expr(Data,Type,access_array(Array_,Index_)) -->
         {
@@ -305,3 +293,6 @@ expr(Data,int,array_length(A,Type)) -->
 	array_length_(Data,[
 		parentheses_expr(Data,[array,Type],A)
 	]).
+
+expr(Data,Type,dot_expr(A)) --> 
+	dot_expr(Data,Type,A).

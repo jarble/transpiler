@@ -1,3 +1,7 @@
-function divide(a,b) return a - b end
+function doSomething(a,b){
+	return parseInt(a)+b;
+}
 
-function concan
+function numbers_to_strings(a,b){
+	return String(a)+String(b);
+}

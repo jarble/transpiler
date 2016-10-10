@@ -21,13 +21,6 @@ statement_with_semicolon(Data,_,initialize_constant(Type,Name,Expr)) -->
 	]).
 
 
-statement_with_semicolon(Data,Type, function_call(Name,Params1,Params2)) -->
-    function_call_(Data,[
-		function_name(Data,Type,Name,Params2),
-		function_call_parameters(Data,Params1,Params2)
-	]).
-
-
 statement_with_semicolon(Data,_,set_array_size(Name,Size,Type)) -->
 	set_array_size_(Data,[
 		var_name_(Data,Name,[array,Type]),
@@ -61,14 +54,14 @@ statement_with_semicolon(Data,_,set_instance_var(Name,Expr,Type)) -->
 		expr(Data,Type,Expr)
 	]).	
 
-statement_with_semicolon(Data,_,initialize_empty_var(Type1,Name1)) -->
+statement_with_semicolon(Data,_,initialize_empty_var(Type,Name)) -->
 	initialize_empty_var_(Data,[
-		var_name_(Data,Type1,Name1),
-		type(Data,Type1)
+		var_name_(Data,Type,Name),
+		type(Data,Type)
 	]).
 
-statement_with_semicolon(Data,_,throw(Expr1)) -->
-	throw_(Data,expr(Data,string,Expr1)).
+statement_with_semicolon(Data,_,throw(Expr)) -->
+	throw_(Data,expr(Data,string,Expr)).
 
 statement_with_semicolon(Data,_,initialize_var(Name,Expr,Type)) -->
 	initialize_var_(Data,[
@@ -83,13 +76,30 @@ statement_with_semicolon(Data,_,append_to_array(Name,Expr,Type)) -->
             expr(Data,Type,Expr)
         ]).
 
+statement_with_semicolon(Data,_,reverse_list_in_place(List,Type)) -->
+	reverse_list_in_place_(Data,[
+		parentheses_expr(Data,[array,Type],List)
+	]).
+
 
 statement_with_semicolon(Data,_,plus_equals(Name,Expr)) -->
 		plus_equals_(Data,[
 			var_name_(Data,int,Name),
             expr(Data,int,Expr)
 		]).
-        
+
+statement_with_semicolon(Data,_,array_plus_equals(Name,Expr,Type)) -->
+		array_plus_equals_(Data,[
+			var_name_(Data,[array,Type],Name),
+            expr(Data,[array,Type],Expr)
+		]).
+
+statement_with_semicolon(Data,_,string_plus_equals(Name,Expr)) -->
+		string_plus_equals_(Data,[
+			var_name_(Data,string,Name),
+            expr(Data,string,Expr)
+		]).
+
 statement_with_semicolon(Data,_,minus_equals(Name,Expr)) -->
 	minus_equals_(Data,[
 		var_name_(Data,int,Name),
@@ -101,6 +111,27 @@ statement_with_semicolon(Data,_,append_to_string(Name,Expr)) -->
 		expr(Data,string,Expr)
 	]).
 
+statement_with_semicolon(Data,_,sort_in_place(List,Type)) -->
+	sort_in_place_(Data,[
+		parentheses_expr(Data,[array,Type],List)
+	]).
+
+statement_with_semicolon(Data,_,shuffle_array(List,Type)) -->
+	shuffle_array_(Data,[
+		parentheses_expr(Data,[array,Type],List)
+	]).
+
+statement_with_semicolon(Data,_,get_user_input(Var)) -->
+	get_user_input_(Data,[
+		var_name_(Data,string,Var)
+	]).
+
+statement_with_semicolon(Data,_,get_user_input_with_prompt(Var,Prompt)) -->
+	get_user_input_with_prompt_(Data,[
+		var_name_(Data,string,Var),
+		expr(Data,string,Prompt)
+	]).
+
 statement_with_semicolon(Data,_,times_equals(Name,Expr)) -->
 	times_equals_(Data,[
 		var_name_(Data,int,Name),
@@ -110,12 +141,15 @@ statement_with_semicolon(Data,_,times_equals(Name,Expr)) -->
 statement_with_semicolon(Data,_,assert(Expr)) -->
         assert_(Data,[expr(Data,bool,Expr)]).
 
-%print without newline
-statement_with_semicolon(Data,_,print(Expr,Type)) -->
-        print_(Data,[expr(Data,Type,Expr)]).
 
 %print with newline
 statement_with_semicolon(Data,Type,println(Expr)) -->
         println_(Data,[
 			expr(Data,Type,Expr)
 		]).
+
+statement_with_semicolon(Data,Type, function_call(Name,Params1,Params2)) -->
+    function_call_(Data,[
+		function_name(Data,Type,Name,Params2),
+		function_call_parameters(Data,Params1,Params2)
+	]).

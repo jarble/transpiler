@@ -1,23 +1,13 @@
 parentheses_expr(_,string,string_literal(A)) -->
 	string_literal(A).
 
-parentheses_expr(Data,Type, function_call(Name1,Params1,Params2)) -->
-    function_call_(Data,[
-		function_name(Data,Type,Name1,Params2),
-		function_call_parameters(Data,Params1,Params2)
-	]).
-
-
-parentheses_expr(Data,Type2,type_conversion(Type1,Arg1)) -->
-        type_conversion_(Data,[Type1,Type2,parentheses_expr(Data,Type1,Arg1)]).
 
 parentheses_expr(Data,Type1,anonymous_function(Type1,Params1,Body1)) -->
-        {
-                B = statements(Data,Type1,Body1),
-                (Params1 = [], Params = ""; Params = parameters(Data,Params1)),
-                Type = type(Data,Type1)
-        },
-        anonymous_function_(Data,[Type,Params,B]).
+        anonymous_function_(Data,[
+			type(Data,Type1),
+			parameters(Data,Params1),
+			statements(Data,Type1,Body1)
+        ]).
         
 parentheses_expr(Data,int,floor(Params1)) -->
         floor_(Data,[
@@ -33,12 +23,6 @@ parentheses_expr(Data,int,cos(Var1_)) -->
         cos_(Data,[
 			expr(Data,int,Var1_)
         ]).
-        
-parentheses_expr(Data,double,sin(Var1_,Type1)) -->
-        {member(Type1,[int,double])},
-        sin_(Data,[expr(
-			Data,Type1,Var1_)
-		]).
 
 parentheses_expr(Data,double,abs(Var1)) -->
         abs_(Data,[
@@ -108,3 +92,10 @@ parentheses_expr(_,int,a_number(A)) -->
 	a_number(A).
 parentheses_expr(Data,Type,parentheses(A)) -->
 	"(",ws,expr(Data,Type,A),ws,")".
+
+parentheses_expr(Data,Type, function_call(Name,Params1,Params2)) -->
+    function_call_(Data,[
+		function_name(Data,Type,Name,Params2),
+		function_call_parameters(Data,Params1,Params2)
+	]),
+	{dif(Name,"parseInt"),dif(Name,"String"),dif(Name,"str"),dif(Name,"int"),dif(Name,"bool"),dif(Name,"sorted")}.

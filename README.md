@@ -11,7 +11,7 @@ This is some JavaScript code:
 	function add(a,b){
 		var g = [3,4,5];
 		return a+b+(g[0])+(g.length);
-	} 
+	}
 
 	function divide(a,b){
 		return a/b;
