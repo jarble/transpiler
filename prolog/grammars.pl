@@ -1796,7 +1796,7 @@ function_(Data,[Name,Type,Params,Body,Indent]) -->
         ['prolog',logtalk]:
                 ({Params = ""} -> (Name,ws,"(",ws,"Return",ws,")",ws_,":-",ws_,Body); (Name,ws,"(",ws,"(",ws,Params,ws,")",ws,",",ws,"Return",ws,")",ws_,":-",ws_,Body)),
 		['constraint handling rules']:
-                ({Params = ""} -> (":- chr_constraint",ws_,Name,"/1",ws,".",ws_,Name,ws,"(",ws,"Return",ws,")",ws_,"<=>",ws_,Body); (":- chr_constraint",ws_,Name,"/2",ws,".",ws_,Name,ws,"(",ws,"(",ws,Params,ws,")",ws,",",ws,"Return",ws,")",ws_,"<=>",ws_,Body)),
+                ({Params = ""} -> (":- chr_constraint",ws_,Name,"/1",ws,".",ws_,Name,ws,"(",ws,"Return",ws,")",ws,"\\",Name,ws,"(",ws,"Return",ws,")","<=>true.",ws_,Name,ws,"(",ws,"Return",ws,")",ws_,"<=>",ws_,Body); (":- chr_constraint",ws_,Name,"/2",ws,".",ws_,Name,ws,"(",ws,"A",ws,",",ws,"B",ws,")",ws,"\\",ws,Name,ws,"(",ws,"A",ws,",",ws,"B",ws,")",ws_,"<=>",ws,"true",ws,".",ws_,Name,ws,"(",ws,"(",ws,Params,ws,")",ws,",",ws,"Return",ws,")",ws_,"<=>",ws_,Body)),
         ['picat']:
                 (Name,ws,"(",ws,Params,ws,")",ws,"=",ws,"retval",ws,"=>",ws,Body),
         ['swift']:
@@ -2476,7 +2476,7 @@ enum_list_(Data,[A]) -->
 
 top_level_statement_(Data,Type,A) -->
     {Data = [Lang|_]},
-    ({memberchk(Lang,['prolog','erlang','picat'])}->
+    ({memberchk(Lang,['prolog','erlang','picat','logtalk','constraint handling rules'])}->
         A,".";
     {memberchk(Lang,['minizinc'])}->
         A,";";

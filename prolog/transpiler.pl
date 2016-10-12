@@ -12,7 +12,7 @@ var_type(Namespace,Var,Type1),var_type(Namespace,Var,Type2) ==> Type1=Type2.
 list_of_langs(X) :-
 	%X = ['javascript','c#',ruby,c,'c++','go','php','swift','octave','lua','pydatalog',prolog,'constraint handling rules',perl,'haxe'].
 	%X = ['lua','ruby','javascript','php','c#','java','c#','haxe','lua','python','constraint handling rules','prolog','perl'].
-	X=['javascript','java','python'].
+	X=['javascript','java','python','constraint handling rules','prolog'].
 
 translate((Input,Lang2),Output) :-
 	translate(Input,Lang2,Output).

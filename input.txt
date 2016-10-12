@@ -1,7 +1,3 @@
-function doSomething(a,b){
-	return parseInt(a)+b;
-}
-
-function numbers_to_strings(a,b){
-	return String(a)+String(b);
+function add(a,b){
+	return a + b + 0;
 }
