@@ -42,7 +42,7 @@ statement(Data,C1,class_extends(C2,B)) -->
         ]).
 
 statement(Data,Return_type,semicolon(A)) -->
-		{Data = [_,_,_,_,Indent,_],offside_rule_langs(Offside_rule_langs)},
+		{Data = [_,_,_,Indent],offside_rule_langs(Offside_rule_langs)},
         optional_indent(Data,Indent,_),
         semicolon_(Data,[
 			statement_with_semicolon(Data,Return_type,A)
@@ -110,7 +110,7 @@ statement(Data,Return_type,if(Expr_,Statements_,Elif_or_else_,Else_)) -->
         if(Data,[
                 expr(Data,bool,Expr_),
                 statements(Data1,Return_type,Statements_),
-                elif_or_else(Data,Return_type,Elif_or_else_),
+                elif_statements(Data,Return_type,Elif_or_else_),
                 else(Data,Return_type,Else_),
 				Indent
         ]).

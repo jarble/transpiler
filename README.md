@@ -30,7 +30,7 @@ and this is the Java code that it generates:
 
 #How to use this translator
 
-Install the package by typing `pack-install(transpiler)` in the SWI-Prolog console.
+Install the package by typing `pack_install(transpiler)` in the SWI-Prolog console.
 Now, you can use the translator to convert JavaScript source code into Lua:
 
 	:- use_module(library(transpiler)).

@@ -1,3 +1,6 @@
+expr(Data,Type,dot_expr(A)) --> 
+	dot_expr(Data,Type,A).
+
 expr(Data,[array,string],dict_keys(A,Type)) -->
 	dict_keys_(Data,[
 		expr(Data,[dict,Type],A)
@@ -13,8 +16,6 @@ expr(Data,string,global_replace_in_string(Str1,To_replace1,Replacement1)) -->
 		parentheses_expr(Data,string,To_replace1),
 		parentheses_expr(Data,string,Replacement1)
 	]).
-expr(Data,int,pi) -->
-	pi_(Data).
 expr(Data,grammar, grammar_or(Var1,Var2)) -->
     grammar_or_(Data,[
 		dot_expr(Data,grammar,Var1),
@@ -22,6 +23,11 @@ expr(Data,grammar, grammar_or(Var1,Var2)) -->
 	]).
 expr(Data,bool, or(Var1,Var2)) -->
     or_(Data,[
+		dot_expr(Data,bool,Var1),
+		expr(Data,bool,Var2)
+	]).
+expr(Data,bool, eager_or(Var1,Var2)) -->
+    eager_or_(Data,[
 		dot_expr(Data,bool,Var1),
 		expr(Data,bool,Var2)
 	]).
@@ -52,6 +58,12 @@ expr(Data,bool,not(A1)) -->
 		]).
 expr(Data,bool, and(A,B)) -->
     and_(Data,[
+		dot_expr(Data,bool,A),
+		expr(Data,bool,B)
+	]).
+
+expr(Data,bool, eager_and(A,B)) -->
+    eager_and_(Data,[
 		dot_expr(Data,bool,A),
 		expr(Data,bool,B)
 	]).
@@ -114,20 +126,19 @@ expr(Data,bool,compare(string,Exp1,Exp2)) -->
                 dot_expr(Data,string,Exp1),
                 expr(Data,string,Exp2)
 		]).
-
-expr(Data,[array,Type],array_slice(Str,Index1,Index2)) -->
-        array_slice_(Data,[
-			parentheses_expr(Data,[array,Type],Str),
-			parentheses_expr(Data,int,Index1),
-			parentheses_expr(Data,int,Index2)
-        ]).
  
 expr(Data,string,concatenate_string(A,B)) -->
         concatenate_string_(Data,[
 			dot_expr(Data,string,A),
 			expr(Data,string,B)
 		]).
- 
+
+expr(Data,string,concatenate_string_to_int(A,B)) -->
+        concatenate_string_to_int_(Data,[
+			dot_expr(Data,string,A),
+			expr(Data,int,B)
+		]).
+
 expr(Data,int,mod(A,B)) -->
     mod_(Data,[
 		dot_expr(Data,int,A),
@@ -146,81 +157,23 @@ expr(Data,int,arithmetic(Exp1,Exp2,Symbol)) -->
 			Prefix_arithmetic_langs
 		]).
 
-expr(Data,int,pow(Exp1,Exp2)) -->
-    pow_(Data,[
-		parentheses_expr(Data,int,Exp1),
-		parentheses_expr(Data,int,Exp2)
-	]).
+expr(Data,double,arithmetic(Exp1,Exp2,Symbol)) -->
+        {
+                member(Symbol,["+","-","*","/"]),
+                prefix_arithmetic_langs(Prefix_arithmetic_langs)
+        },
+        arithmetic_(Data,[
+			dot_expr(Data,double,Exp1),
+			expr(Data,double,Exp2),
+			Symbol,
+			Prefix_arithmetic_langs
+		]).
 
 
 expr(Data,[array,Type],concatenate_arrays(A1,A2)) -->
 	concatenate_arrays_(Data,[
 		dot_expr(Data,[array,Type],A1),
 		expr(Data,[array,Type],A2)
-	]).
- 
-expr(Data,string,join_(Array,Separator)) -->
-	join_(Data,[
-		parentheses_expr(Data,[array,string],Array),
-		parentheses_expr(Data,string,Separator)
-	]).
-        
-expr(Data,int,sqrt(Exp1)) -->
-	sqrt(Data,[expr(Data,int,Exp1)]).
- 
-expr(Data,Type,list_comprehension(Result,Var,Condition,Array)) -->
-	list_comprehension_(Data,[
-		var_name_(Data,Type,Var),
-		expr(Data,[array,Type],Array),
-		expr(Data,Type,Result),
-		expr(Data,bool,Condition)
-	]).
-
-expr(Data,Type,list_comprehension_1(Result,Var,Array)) -->
-	list_comprehension_1_(Data,[
-		var_name_(Data,Type,Var),
-		expr(Data,[array,Type],Array),
-		expr(Data,Type,Result)
-	]).
-
-expr(Data,string,charAt(Str,Int)) -->
-	charAt_(Data,[
-		parentheses_expr(Data,string,Str),
-		expr(Data,int,Int)
-	]).
-
-expr(Data,bool,endswith(Str1,Str2)) -->
-	endswith_(Data,[
-		parentheses_expr(Data,string,Str1),
-		expr(Data,string,Str2)
-	]).
-
-expr(Data,[array,Type],reverse_list(List,Type)) -->
-	reverse_list_(Data,[
-		parentheses_expr(Data,[array,Type],List)
-	]).
- 
-expr(Data,string,reverse_string(Str)) -->
-	reverse_string_(Data,[
-		expr(Data,string,Str)
-	]).
- 
-%https://en.wikipedia.org/wiki/Comparison_of_programming_languages_(string_functions)#trim
-expr(Data,string,trim(Str)) -->
-	trim_(Data,[
-		parentheses_expr(Data,string,Str)
-	]).
- 
-%all characters to lowercase
-expr(Data,string,lowercase(Str)) -->
-	lowercase_(Data,[
-		parentheses_expr(Data,string,Str)
-	]).
- 
-%all characters to uppercase
-expr(Data,string,uppercase(Str)) -->
-	uppercase_(Data,[
-		parentheses_expr(Data,string,Str)
 	]).
  
 expr(Data,bool,array_contains(Str1,Str2)) -->
@@ -234,23 +187,6 @@ expr(Data,bool,string_contains(Str1,Str2)) -->
 			parentheses_expr(Data,string,Str1),
 			parentheses_expr(Data,string,Str2)
 	]).
- 
-
-expr(Data,bool,startswith(Str1,Str2)) -->
-	startswith_(Data,[
-		parentheses_expr(Data,string,Str1),
-		parentheses_expr(Data,string,Str2)
-	]).
- 
-expr(Data,Type,access_array(Array_,Index_)) -->
-        {
-                Array = parentheses_expr(Data,[array,Type],Array_),
-                dif(Array,"this")
-        },
-        access_array_(Data,[
-			Array,
-			parentheses_expr(Data,int,Index_)
-		]).
  
  
 expr(Data,Type,this(A)) -->
@@ -285,14 +221,3 @@ expr(Data,bool,instanceof(Expr,Type1,Type2)) -->
 		Type1,
 		type(Data,Type2)
 	]).
-
-expr(Data,int,strlen(A)) -->
-	strlen_(Data,[parentheses_expr(Data,string,A)]).
-
-expr(Data,int,array_length(A,Type)) -->
-	array_length_(Data,[
-		parentheses_expr(Data,[array,Type],A)
-	]).
-
-expr(Data,Type,dot_expr(A)) --> 
-	dot_expr(Data,Type,A).

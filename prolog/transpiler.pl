@@ -12,7 +12,7 @@ var_type(Namespace,Var,Type1),var_type(Namespace,Var,Type2) ==> Type1=Type2.
 list_of_langs(X) :-
 	%X = ['javascript','c#',ruby,c,'c++','go','php','swift','octave','lua','pydatalog',prolog,'constraint handling rules',perl,'haxe'].
 	%X = ['lua','ruby','javascript','php','c#','java','c#','haxe','lua','python','constraint handling rules','prolog','perl'].
-	X=['javascript','java','python','constraint handling rules','prolog'].
+	X=['php','javascript','java','constraint handling rules','prolog','scriptol','systemverilog','vhdl','verilog','erlang','prolog'].
 
 translate((Input,Lang2),Output) :-
 	translate(Input,Lang2,Output).
@@ -26,8 +26,8 @@ translate(Input,Lang1,Lang2,Output) :-
 	parse(Lang2,Lang1,false,Output,Ls).
 
 namespace(Data,Data1,Name1,Indent) :-
-	Data = [Lang,Is_input,Namespace,Var_types,Indent,Lang2],
-	Data1 = [Lang,Is_input,[Name1|Namespace],Var_types,indent(Indent),Lang2].
+	Data = [Lang,Is_input,Namespace,Indent],
+	Data1 = [Lang,Is_input,[Name1|Namespace],indent(Indent)].
 
 namespace(Data,Data1,Name,Indent) -->
 	    {
@@ -75,7 +75,6 @@ else(Data,Return_type,Statements_) -->
                 indent_data(Indent,Data,Data1),
                 A = statements(Data1,Return_type,Statements_)
         },
-        optional_indent(Data,Indent),
         else(Data,[Indent,A]).
 
 
@@ -112,15 +111,23 @@ default(Data,Return_type,int,Statements_) -->
 
 
 
-elif_or_else(Data,Return_type,[A]) --> elif(Data,Return_type,A).
-elif_or_else(Data,Return_type,[A|B]) --> elif(Data,Return_type,A),ws(Data),elif_separator(Data),ws(Data),elif_or_else(Data,Return_type,B).
+indent(Data,Indent) :-
+	Data = [_,_,_,Indent].
 
-elif_separator([Lang|_]) -->
-	{Lang = 'prolog'} -> ";";statement_separator([Lang|_]).
+lang(Data,Lang) :-
+	Data = [Lang|_].
+
+elif_statements(Data,Return_type,[A]) --> elif(Data,Return_type,A).
+elif_statements(Data,Return_type,[A|B]) --> elif(Data,Return_type,A),elif_separator(Data),elif_statements(Data,Return_type,B).
+
+elif_separator(Data) -->
+	{lang(Data,Lang),indent(Data,Indent)},
+	({memberchk(Lang,['python','cython'])} -> Indent; {memberchk(Lang,['prolog','erlang','logtalk'])} -> ws,";",(Indent;ws);ws(Data),statement_separator(Data),(Indent;ws(Data))).
 
 indent_data(Indent,Data,Data1) :-
-    Data = [Lang,Is_input,Namespace,Var_types,Indent,Lang2],
-    Data1 = [Lang,Is_input,Namespace,Var_types,indent(Indent),Lang2].
+    Data = [Lang,Is_input,Namespace,Indent],
+    (
+    Data1 = [Lang,Is_input,Namespace,indent(Indent)]).
 
 elif(Data,Return_type,[Expr_,Statements_]) -->
         {
@@ -131,11 +138,11 @@ elif(Data,Return_type,[Expr_,Statements_]) -->
         elif(Data,[Indent,A,B]).
 
 
-is_var_type([_,_,Namespace,Var_types,_,_], Name, Type) :-
+is_var_type([_,_,Namespace|_], Name, Type) :-
     var_type(Namespace,Name,Type).
 
 %This is only for checking types of functions in global scope
-is_var_type_([_,_,_,Var_types,_,_], [Name,Params], Type) :-
+is_var_type_(_, [Name,Params], Type) :-
     var_type([],[Name,Params],Type).
 
 %also called optional parameters
@@ -214,8 +221,8 @@ statements(Data,Return_type,[A|B]) --> statement(Data,Return_type,A),statement_s
 vars_list(Data,Type,[A]) --> var_name_(Data,Type,A).
 vars_list(Data,Type,[A|B]) --> var_name_(Data,Type,A),",",vars_list(Data,Type,B).
 
-initialize_vars_list(Data,Type,[A]) --> {A = [A1,A2],A1_=var_name_(Data,Type,A1),A2_=parentheses_expr(Data,Type,A2)},set_var_(Data,[A1_,A2_]).
-initialize_vars_list(Data,Type,[A|B]) --> {A = [A1,A2],A1_=var_name_(Data,Type,A1),A2_=parentheses_expr(Data,Type,A2)},set_var_(Data,[A1_,A2_]),",",initialize_vars_list(Data,Type,B).
+initialize_vars_list(Data,Type,[A]) --> {A = [A1,A2],A1_=var_name_(Data,Type,A1),A2_=parentheses_expr(Data,Type,A2)},set_var_(Data,[A1_,Type,A2_]).
+initialize_vars_list(Data,Type,[A|B]) --> {A = [A1,A2],A1_=var_name_(Data,Type,A1),A2_=parentheses_expr(Data,Type,A2)},set_var_(Data,[A1_,Type,A2_]),",",initialize_vars_list(Data,Type,B).
 
 ws_separated_statements(Data,[A]) --> top_level_statement(Data,_,A).
 ws_separated_statements(Data,[A|B]) --> top_level_statement(Data,_,A),top_level_statement_separator(Data),ws_separated_statements(Data,B).
@@ -279,15 +286,12 @@ string_inner1([A]) --> string_inner1_(A).
 string_inner1([A|B]) --> string_inner1_(A),string_inner1(B).
 string_inner1_(A) --> {A="\\'"},A;{dif(A,'\''),dif(A,'\n')},[A].
 
-a_number([A,B]) -->
-        (a__number(A), ".", a__number(B)).
+a_double([A,B]) -->
+        (an_int(A), ".", an_int(B)).
 
-a_number(A) -->
-        a__number(A).
-
-a__number([L|Ls]) --> digit(L), a__number_r(Ls).
-a__number_r([L|Ls]) --> digit(L), a__number_r(Ls).
-a__number_r([])     --> [].
+an_int([L|Ls]) --> digit(L), an_int_r(Ls).
+an_int_r([L|Ls]) --> digit(L), an_int_r(Ls).
+an_int_r([])     --> [].
 digit(Let)     --> [Let], { code_type1(Let, digit) }.
 
 
@@ -309,7 +313,7 @@ translate_langs(Input_) :-
 	translate_langs(Ls,X,Lang2).
 
 parse(Lang1,Lang2,Is_input,Input,Ls) :-
-	phrase(statements_with_ws([Lang1,Is_input,[],_,"\n",Lang2],Ls), Input).
+	phrase(statements_with_ws([Lang1,Is_input,[],"\n"],Ls), Input).
 
 translate_langs(_,[],_) :-
 	true.
