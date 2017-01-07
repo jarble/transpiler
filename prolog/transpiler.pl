@@ -2,7 +2,7 @@
 :- use_module(library(chr)).
 :- chr_constraint var_type/3.
 var_type(Namespace,Var,Type) \ var_type(Namespace,Var,Type) <=> true.
-var_type(Namespace,Var,Type1),var_type(Namespace,Var,Type2) ==> Type1=Type2. 
+var_type(Namespace,Var,Type1),var_type(Namespace,Var,Type2) ==> Type1=Type2.
 
 :- set_prolog_flag(double_quotes,chars).
 
@@ -10,9 +10,11 @@ var_type(Namespace,Var,Type1),var_type(Namespace,Var,Type2) ==> Type1=Type2.
 
 % Edit this list to specify the languages that should be translated. Each language should be written in lowercase:
 list_of_langs(X) :-
-	%X = ['javascript','c#',ruby,c,'c++','go','php','swift','octave','lua','pydatalog',prolog,'constraint handling rules',perl,'haxe'].
+	%X = ['javascript','c#','ruby','c','c++','go','php','swift','octave','lua','pydatalog','prolog','constraint handling rules','perl','haxe'].
 	%X = ['lua','ruby','javascript','php','c#','java','c#','haxe','lua','python','constraint handling rules','prolog','perl'].
-	X=['php','javascript','java','constraint handling rules','prolog','scriptol','systemverilog','vhdl','verilog','erlang','prolog'].
+	%X=['python','javascript','php','java','constraint handling rules','prolog','scriptol','systemverilog','vhdl','verilog','erlang','prolog','sympy'].
+	%X=['definite clause grammars','nearley','lpeg','peg.js','parslet','marpa','antlr','waxeye','parboiled','ometa','wirth syntax notation'].
+	X=['ruby','javascript','python','lua','perl','prolog','haxe','java','perl'].
 
 translate((Input,Lang2),Output) :-
 	translate(Input,Lang2,Output).

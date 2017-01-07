@@ -16,11 +16,18 @@ expr(Data,string,global_replace_in_string(Str1,To_replace1,Replacement1)) -->
 		parentheses_expr(Data,string,To_replace1),
 		parentheses_expr(Data,string,Replacement1)
 	]).
-expr(Data,grammar, grammar_or(Var1,Var2)) -->
+expr(Data,string,grammar_or(Var1,Var2)) -->
     grammar_or_(Data,[
-		dot_expr(Data,grammar,Var1),
-		expr(Data,bool,Var2)
+		dot_expr(Data,string,Var1),
+		expr(Data,string,Var2)
 	]).
+
+expr(Data,string,grammar_and(Var1,Var2)) -->
+    grammar_and_(Data,[
+		dot_expr(Data,string,Var1),
+		expr(Data,string,Var2)
+	]).
+
 expr(Data,bool, or(Var1,Var2)) -->
     or_(Data,[
 		dot_expr(Data,bool,Var1),
@@ -133,11 +140,11 @@ expr(Data,string,concatenate_string(A,B)) -->
 			expr(Data,string,B)
 		]).
 
-expr(Data,string,concatenate_string_to_int(A,B)) -->
-        concatenate_string_to_int_(Data,[
-			dot_expr(Data,string,A),
-			expr(Data,int,B)
-		]).
+%expr(Data,string,concatenate_string_to_int(A,B)) -->
+%        concatenate_string_to_int_(Data,[
+%			dot_expr(Data,string,A),
+%			expr(Data,int,B)
+%		]).
 
 expr(Data,int,mod(A,B)) -->
     mod_(Data,[

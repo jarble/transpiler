@@ -3,6 +3,7 @@
 # Universal-transpiler
 
 *Universal-transpiler* is a source-to-source compiler that translates a subset of several programming languages into several others.
+It is also able to translate [definite clause grammars](https://en.wikipedia.org/wiki/Definite_clause_grammar) into other metasyntax notations, such as EBNF and ABNF.
 
 The original version of this translator was written in JavaScript, but [a better version has been written in Prolog](universal-transpiler.pl).
 
@@ -45,7 +46,7 @@ Now, you can use the translator to convert JavaScript source code into Lua:
 
 #How to extend the translator
 
-A limited number of translation rules are provided here, but you can easily add your own rules to `universal-transpiler.pl`.
+A limited number of translation rules are provided here, but you can easily add your own rules to `transpiler.pl`.
 This is a simplified version of one of its translation rules, implementing the sine function:
 
 	%The type of this expression is double.
