@@ -114,6 +114,23 @@ statement(Data,Return_type,if(Expr_,Statements_,Elif_or_else_,Else_)) -->
                 else(Data,Return_type,Else_),
 				Indent
         ]).
+
+statement(Data,Return_type,if_without_else(Expr_,Statements_,Elif_or_else_,Else_)) -->
+        optional_indent(Data,Indent,Data1),
+        if_without_else_(Data,[
+                expr(Data,bool,Expr_),
+                statements(Data1,Return_type,Statements_),
+				Indent
+        ]).
+
+statement(Data,Return_type,unless(Expr_,Statements_,Elif_or_else_,Else_)) -->
+        optional_indent(Data,Indent,Data1),
+        unless_(Data,[
+                expr(Data,bool,Expr_),
+                statements(Data1,Return_type,Statements_),
+				Indent
+        ]).
+
 statement(Data,Return_type, switch(Expr_,Expr1_,Statements_,Case_or_default_)) -->
 		optional_indent(Data,Indent,Data1),
 		switch_(Data,[

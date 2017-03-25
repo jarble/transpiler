@@ -1,3 +1,2 @@
-def no_params
-	return 3
-end
+def add(a,b){
+	return a + b + 0

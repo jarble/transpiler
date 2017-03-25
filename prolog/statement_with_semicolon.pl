@@ -31,7 +31,7 @@ statement_with_semicolon(Data,_,set_array_size(Name,Size,Type)) -->
 statement_with_semicolon(Data,_,set_dict(Name,Index,Expr,Type)) -->
 	set_dict_(Data,[
 		var_name_(Data,[dict,Type],Name),
-		symbol(Index),
+		parentheses_expr(Data,string,Index),
 		expr(Data,Type,Expr)
 	]).
 statement_with_semicolon(Data,_,set_array_index(Name,Index,Expr,Type)) -->
@@ -88,10 +88,34 @@ statement_with_semicolon(Data,_,plus_equals(Name,Expr)) -->
             expr(Data,int,Expr)
 		]).
 
+statement_with_semicolon(Data,_,divide_equals(Name,Expr)) -->
+		divide_equals_(Data,[
+			var_name_(Data,int,Name),
+            expr(Data,int,Expr)
+		]).
+
+statement_with_semicolon(Data,_,exponent_equals(Name,Expr)) -->
+		exponent_equals_(Data,[
+			var_name_(Data,int,Name),
+            expr(Data,int,Expr)
+		]).
+
+statement_with_semicolon(Data,_,modulo_equals(Name,Expr)) -->
+		modulo_equals_(Data,[
+			var_name_(Data,int,Name),
+            expr(Data,int,Expr)
+		]).
+
 statement_with_semicolon(Data,_,array_plus_equals(Name,Expr,Type)) -->
 		array_plus_equals_(Data,[
 			var_name_(Data,[array,Type],Name),
             expr(Data,[array,Type],Expr)
+		]).
+
+statement_with_semicolon(Data,_,dict_plus_equals(Name,Expr,Type)) -->
+		dict_plus_equals_(Data,[
+			var_name_(Data,[dict,Type],Name),
+            expr(Data,[dict,Type],Expr)
 		]).
 
 statement_with_semicolon(Data,_,string_plus_equals(Name,Expr)) -->
@@ -121,11 +145,6 @@ statement_with_semicolon(Data,_,shuffle_array(List,Type)) -->
 		parentheses_expr(Data,[array,Type],List)
 	]).
 
-statement_with_semicolon(Data,_,get_user_input(Var)) -->
-	get_user_input_(Data,[
-		var_name_(Data,string,Var)
-	]).
-
 statement_with_semicolon(Data,_,get_user_input_with_prompt(Var,Prompt)) -->
 	get_user_input_with_prompt_(Data,[
 		var_name_(Data,string,Var),
@@ -142,10 +161,10 @@ statement_with_semicolon(Data,_,assert(Expr)) -->
         assert_(Data,[expr(Data,bool,Expr)]).
 
 
-%print with newline
-statement_with_semicolon(Data,Type,println(Expr)) -->
+statement_with_semicolon(Data,Type,println(Expr,Type)) -->
         println_(Data,[
-			expr(Data,Type,Expr)
+			expr(Data,Type,Expr),
+			Type
 		]).
 
 statement_with_semicolon(Data,Type, function_call(Name,Params1,Params2)) -->

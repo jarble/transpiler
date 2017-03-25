@@ -1,8 +1,16 @@
 :- module('transpiler', [translate/2,translate/3,translate/4,translate_langs/1]).
 :- use_module(library(chr)).
 :- chr_constraint var_type/3.
+:- chr_constraint unique_var/1.
+
 var_type(Namespace,Var,Type) \ var_type(Namespace,Var,Type) <=> true.
+unique_var(A) \ unique_var(A) <=> true.
 var_type(Namespace,Var,Type1),var_type(Namespace,Var,Type2) ==> Type1=Type2.
+
+unique_var(V) ==>
+	gensym('v',V1),writeln(V1),atom_chars(V1,V).
+
+unique_var(V),var_type(_,V,_) ==> false.
 
 :- set_prolog_flag(double_quotes,chars).
 
@@ -14,7 +22,8 @@ list_of_langs(X) :-
 	%X = ['lua','ruby','javascript','php','c#','java','c#','haxe','lua','python','constraint handling rules','prolog','perl'].
 	%X=['python','javascript','php','java','constraint handling rules','prolog','scriptol','systemverilog','vhdl','verilog','erlang','prolog','sympy'].
 	%X=['definite clause grammars','nearley','lpeg','peg.js','parslet','marpa','antlr','waxeye','parboiled','ometa','wirth syntax notation'].
-	X=['ruby','javascript','python','lua','perl','prolog','haxe','java','perl'].
+	%X=['english','c#','ruby','lua','perl','prolog','haxe','java','perl','c++','php','erlang','c','javascript','coffeescript','haskell','english'].
+	X=['python','lua','javascript','java','haxe','ruby'].
 
 translate((Input,Lang2),Output) :-
 	translate(Input,Lang2,Output).
@@ -37,11 +46,10 @@ namespace(Data,Data1,Name,Indent) -->
         },
 		optional_indent(Data,Indent).
 
-offside_rule_langs(X) :-
-	X = ['python','cython','coffeescript','cosmos','cobra'].
+offside_rule_langs(['python','cython','coffeescript','english','cosmos','cobra']).
 
-prefix_arithmetic_langs(X) :-
-	X = ['racket','z3','clips','gnu smalltalk','newlisp','hy','common lisp','emacs lisp','clojure','sibilant','lispyscript'].
+prefix_arithmetic_langs(['racket','z3','clips','gnu smalltalk','newlisp','hy','common lisp','emacs lisp','clojure','sibilant','lispyscript']).
+infix_arithmetic_langs(['pascal','sympy','vhdl','elixir','python','visual basic .net','ruby','lua','scriptol', 'z3py','ats','pydatalog','e','vbscript','livecode','monkey x','perl 6','englishscript','cython','gap','mathematical notation','wolfram','chapel','katahdin','frink','minizinc','picat','java','eclipse','d','ooc','genie','janus','pl/i','idp','processing','maxima','seed7','self','gnu smalltalk','drools','standard ml','oz','cobra','pike','prolog','engscript','kotlin','pawn','freebasic','matlab','ada','freebasic','gosu','gambas','nim','autoit','algol 68','ceylon','groovy','rust','coffeescript','typescript','fortran','octave','ml','hack','autohotkey','scala','delphi','tcl','swift','vala','c','f#','c++','dart','javascript','rebol','julia','erlang','ocaml','c#','nemerle','awk','java','perl','haxe','php','haskell','go','r','bc','visual basic']).
 
 
 %Use this rule to define operators for various languages
@@ -66,7 +74,7 @@ first_char_uppercase(WordLC, WordUC) :-
     atom_chars(WordUC, [FirstChUpp|LWordLC]).
 
 function_name(Data,Type,A,Params) -->
-        symbol(A),{is_var_type_(Data,[A,Params], Type)}.
+        symbol(A),{reserved_words(A),is_var_type_(Data,[A,Params], Type)}.
 
 
 indent(Indent) --> (Indent,("\t")).
@@ -163,6 +171,12 @@ parameter(Data,[Type1,Name1]) -->
         },
 		parameter_(Data,[Type,Name]).
 
+reference_parameter(Data,[Type1,Name1]) -->
+        {
+                Type = type(Data,Type1),
+                Name = var_name_(Data,Type1,Name1)
+        },
+		reference_parameter_(Data,[Type,Name]).
 
 varargs(Data,[Type1,Name1]) -->
         {
@@ -176,12 +190,21 @@ varargs(Data,[Type1,Name1]) -->
 %these parameters are used in a function's definition
 optional_parameters(Data,A) --> "",parameters(Data,A).
 
+parameter1(Data,parameter(A)) -->
+	parameter(Data,A).
+parameter1(Data,reference_parameter(A)) -->
+	reference_parameter(Data,A).
+parameter1(Data,default_parameter(A)) -->
+	default_parameter(Data,A).
+parameter1(Data,varargs(A)) -->
+	varargs(Data,A).
+
 parameters(Data,Params) --> 
 	{Params = []}, "";parameters_(Data,Params).
 parameters_(Data,[A]) -->
-	parameter(Data,A);default_parameter(Data,A);varargs(Data,A).
+	parameter1(Data,A).
 parameters_(Data,[A|B]) -->
-	parameter(Data,A),python_ws,parameter_separator(Data),python_ws,parameters_(Data,B).
+	parameter1(Data,A),python_ws,parameter_separator(Data),python_ws,parameters_(Data,B).
 
 function_call_parameters(Data,[Params1_],[[Params2_,_]]) -->
         parentheses_expr(Data,Params2_,Params1_).
@@ -214,7 +237,7 @@ ws_(Data) -->
 
 top_level_statement(Data,Type,A_) -->
     {A = statement(Data,Type,A_)},
-    top_level_statement_(Data,Type,A).
+    top_level_statement_(Data,A).
 
 statements(Data,Return_type,[A]) --> statement(Data,Return_type,A).
 statements(Data,Return_type,[A|B]) --> statement(Data,Return_type,A),statement_separator(Data),statements(Data,Return_type,B).
@@ -249,27 +272,15 @@ enum_list_(Data,A_) -->
 
 
 
-% whitespace
-ws --> "";((" ";"\t";"\n";"\r"),ws).
-ws_ --> (" ";"\n";"\r"),ws.
 
-python_ws --> "";((" ";"\t"),python_ws).
-python_ws_ --> (" ";"\t"),python_ws.
-
-symbol([L|Ls]) --> letter(L), symbol_r(Ls).
-symbol_r([L|Ls]) --> csym(L), symbol_r(Ls).
-symbol_r([])     --> [].
-letter(Let)     --> [Let], { code_type1(Let, alpha) }.
-csym(Let)     --> [Let], {code_type1(Let, csym)}.
-
-code_type1(C,csym) :- code_type1(C,digit);code_type1(C,alpha);C='_'.
-code_type1(C,digit) :- between_('0','9',C).
-code_type1(C,alpha) :- between_('A','Z',C);between_('a','z',C).
 
 between_(A,B,C) :- char_code(A,A1),char_code(B,B1),nonvar(C),char_code(C,C1),between(A1,B1,C1).
 
-string_literal(S) --> "\"",string_inner(S),"\"".
-string_literal1(S) --> "\'",string_inner1(S),"\'".
+
+char_literal(A) --> "\'",{dif(A,"\'"),dif(A,"\n")},[A],"\'".
+
+:-include(common_grammar).
+
 regex_literal(Data,S_) -->
     {S = regex_inner(S_)},
     regex_literal_(Data,[S]).
@@ -277,31 +288,14 @@ regex_literal(Data,S_) -->
 comment_inner([A]) --> comment_inner_(A).
 comment_inner([A|B]) --> comment_inner_(A),comment_inner(B).
 comment_inner_(A) --> {dif(A,'\n')},[A].
-string_inner([A]) --> string_inner_(A).
-string_inner([A|B]) --> string_inner_(A),string_inner(B).
-string_inner_(A) --> {A="\\\""},A;{dif(A,'"'),dif(A,'\n')},[A].
 regex_inner([A]) --> regex_inner_(A).
 regex_inner([A|B]) --> regex_inner_(A),regex_inner(B).
 regex_inner_(A) --> {A="\\\"";A="\\\'"},A;{dif(A,'"'),dif(A,'\n')},[A].
-
-string_inner1([A]) --> string_inner1_(A).
-string_inner1([A|B]) --> string_inner1_(A),string_inner1(B).
-string_inner1_(A) --> {A="\\'"},A;{dif(A,'\''),dif(A,'\n')},[A].
-
-a_double([A,B]) -->
-        (an_int(A), ".", an_int(B)).
-
-an_int([L|Ls]) --> digit(L), an_int_r(Ls).
-an_int_r([L|Ls]) --> digit(L), an_int_r(Ls).
-an_int_r([])     --> [].
-digit(Let)     --> [Let], { code_type1(Let, digit) }.
 
 
 statements_with_ws(Data,A) -->
     (include_in_each_file(Data);""),ws_separated_statements(Data,A),ws.
 
-include_in_each_file(Data) -->
-	include_in_each_file_(Data).
 
 print_var_types([A]) :-
     writeln(A).

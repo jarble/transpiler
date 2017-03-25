@@ -1,3 +1,6 @@
+parentheses_expr(_,char,char_literal(A)) -->
+	char_literal(A).
+
 parentheses_expr(_,string,string_literal(A)) -->
 	string_literal(A).
 
@@ -22,7 +25,8 @@ parentheses_expr(Data,[array,Type],initializer_list(A)) -->
 
 parentheses_expr(Data,[dict,Type1],dict(A)) -->
 	dict_(Data,[
-		dict_(Data,Type1,A)
+		dict_(Data,Type1,A),
+		type(Data,Type1)
 	]).
 
 %should be inclusive range
@@ -48,4 +52,4 @@ parentheses_expr(Data,Type, function_call(Name,Params1,Params2)) -->
 		function_name(Data,Type,Name,Params2),
 		function_call_parameters(Data,Params1,Params2)
 	]),
-	{dif(Name,"parseInt"),dif(Name,"sha1"),dif(Name,"String"),dif(Name,"str"),dif(Name,"int"),dif(Name,"bool"),dif(Name,"sorted")}.
+	{reserved_words(Name)}.

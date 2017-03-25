@@ -8,7 +8,7 @@ dot_expr(Data,Type2,type_conversion(Type1,Arg1)) -->
         type_conversion_(Data,[Type1,Type2,parentheses_expr(Data,Type1,Arg1)]).
 
 dot_expr(Data,double,sin(Var)) -->
-	sin_(Data,[parentheses_expr(Data,double,Var)]).
+	sin_(Data,[expr(Data,double,Var)]).
 
 dot_expr(Data,int,floor(Params1,int)) -->
         floor_(Data,[
@@ -127,7 +127,16 @@ dot_expr(Data,string,join_(Array,Separator)) -->
 		parentheses_expr(Data,[array,string],Array),
 		parentheses_expr(Data,string,Separator)
 	]).
-        
+
+dot_expr(Data,int,random_int_in_range(Start,End)) -->
+	random_int_in_range(Data,[
+		expr(Data,int,Start),
+		expr(Data,int,End)
+	]).
+
+dot_expr(Data,string,get_user_input) -->
+	get_user_input_(Data).
+
 dot_expr(Data,double,sqrt(Exp1)) -->
 	sqrt(Data,[expr(Data,double,Exp1)]).
 
@@ -162,24 +171,40 @@ dot_expr(Data,string,trim(Str)) -->
 	trim_(Data,[
 		parentheses_expr(Data,string,Str)
 	]).
- 
+
+%https://en.wikipedia.org/wiki/Comparison_of_programming_languages_(string_functions)#trim
+dot_expr(Data,string,lstrip(Str)) -->
+	lstrip_(Data,[
+		parentheses_expr(Data,string,Str)
+	]).
+
+%https://en.wikipedia.org/wiki/Comparison_of_programming_languages_(string_functions)#trim
+dot_expr(Data,string,rstrip(Str)) -->
+	rstrip_(Data,[
+		parentheses_expr(Data,string,Str)
+	]).
+
 %all characters to lowercase
 dot_expr(Data,string,lowercase(Str)) -->
 	lowercase_(Data,[
 		parentheses_expr(Data,string,Str)
 	]).
- 
+
 %all characters to uppercase
 dot_expr(Data,string,uppercase(Str)) -->
 	uppercase_(Data,[
 		parentheses_expr(Data,string,Str)
 	]).
 
-
 dot_expr(Data,int,strlen(A)) -->
 	strlen_(Data,[parentheses_expr(Data,string,A)]).
 
 dot_expr(Data,int,array_length(A,Type)) -->
-	array_length_(Data,[
+	array_length(Data,[
+		parentheses_expr(Data,[array,Type],A)
+	]).
+
+dot_expr(Data,[array,Type],remove_duplicates(A,Type)) -->
+	remove_duplicates(Data,[
 		parentheses_expr(Data,[array,Type],A)
 	]).
