@@ -57,13 +57,15 @@ minus_minus('c++',A) --> minus_minus('c',A).
 minus_minus('c#',A) --> minus_minus('c',A).
 minus_minus('java',A) --> minus_minus('c',A).
 minus_minus('c',A) -->
-	A,ws,"++".
+	A,ws,"--".
+minus_minus('ruby',A) --> A,ws,"=",ws,A,ws,"+",ws,"1".
 
 plus_plus('javascript',A) --> plus_plus('c',A).
 plus_plus('c++',A) --> plus_plus('c',A).
 plus_plus('php',A) --> plus_plus('c',A).
 plus_plus('c#',A) --> plus_plus('c',A).
 plus_plus('java',A) --> plus_plus('c',A).
+plus_plus('ruby',A) --> A,ws,"=",ws,A,ws,"+",ws,"1".
 plus_plus('c',A) -->
 	A,ws,"++".
 
@@ -231,6 +233,7 @@ minus_equals_('c#',A,B) --> A,ws,"-=",!,ws,B.
 minus_equals_(javascript,A,B) --> A,ws,"-=",!,ws,B.
 minus_equals_(c,A,B) --> A,ws,"-=",!,ws,B.
 minus_equals_(haxe,A,B) --> A,ws,"-=",!,ws,B.
+minus_equals_(ruby,A,B) --> A,ws,"-=",!,ws,B.
 
 times_equals_(cython,A,B) --> A,python_ws,"*=",python_ws,B.
 times_equals_(python,A,B) --> A,python_ws,"*=",python_ws,B.
@@ -245,6 +248,7 @@ times_equals_('c++',A,B) --> A,ws,"*=",!,ws,B.
 times_equals_(javascript,A,B) --> A,ws,"*=",!,ws,B.
 times_equals_(perl,A,B) --> A,ws,"*=",!,ws,B.
 times_equals_(c,A,B) --> A,ws,"*=",!,ws,B.
+times_equals_(ruby,A,B) --> A,ws,"*=",!,ws,B.
 
 divide_equals_(cython,A,B) --> A,python_ws,"/=",python_ws,B.
 divide_equals_(lua,A,B) --> A,ws,"=",!,ws,A,ws,"/",ws,B.
@@ -254,6 +258,7 @@ divide_equals_('java',A,B) --> A,ws,"/=",!,ws,B.
 divide_equals_('c#',A,B) --> A,ws,"/=",!,ws,B.
 divide_equals_(javascript,A,B) --> A,ws,"/=",!,ws,B.
 divide_equals_(c,A,B) --> A,ws,"/=",!,ws,B.
+divide_equals_(ruby,A,B) --> A,ws,"/=",!,ws,B.
 divide_equals_(haxe,A,B) --> A,ws,"/=",!,ws,B.
 divide_equals_(perl,A,B) --> A,ws,"/=",!,ws,B.
 
@@ -309,6 +314,7 @@ random_from_list(javascript,Arr) -->
 split_(python,string,Str,Sep) --> 
 	(Str,python_ws,".",python_ws,"split",python_ws,"(",!,python_ws,Sep,python_ws,")").
 split_(java,string,Str,Sep) --> split_(python,string,Str,Sep).
+split_(ruby,string,Str,Sep) --> split_(python,string,Str,Sep).
 split_(haxe,string,Str,Sep) --> split_(python,string,Str,Sep).
 split_(rust,string,Str,Sep) --> split_(python,string,Str,Sep).
 split_(vala,string,Str,Sep) --> split_(python,string,Str,Sep).
@@ -328,7 +334,7 @@ split_('perl',string,AString,Separator) -->
 
 join_(Lang,Array,Separator) -->
 	{memberchk(Lang,['javascript','haxe','groovy','java','typescript','rust','dart','ruby'])},
-	(Array,ws,".",ws,"join",ws,"(",!,ws,Separator,ws,")").
+	(Array,ws,".",ws,"join",ws,"(",!,ws,Separator,ws,")"),!.
 join_(php,Array,Separator) -->
 	("implode",ws,"(",!,ws,Separator,ws,",",!,ws,Array,ws,")").
 join_(python,Arr,Sep) -->
@@ -425,14 +431,11 @@ initialize_var_('lua',Type,Name) -->
 	"local",ws_,Name.
 initialize_constant_(minizinc,Type,A,B) -->
 	(Type,ws,":",ws,Name,ws,"=",ws,Value).
-
 initialize_var_(rust,_,A,B) --> 
 	("let",ws_,"mut",ws_,Name,ws,"=",!,ws,Expr).
-
 initialize_var_(prolog,type(prolog,[array,_]),A,B) --> A,ws,"=",ws,B.
 initialize_var_(prolog,type(prolog,number),A,B) --> A,ws_,"is",ws_,B.
 initialize_var_(prolog,type(prolog,int),A,B) --> A,ws_,"is",ws_,B.
-
 initialize_var_(sympy,type(sympy,Type),A,B) --> equals_(sympy,Type,A,B).
 initialize_var_(python,_,A,B) --> A,python_ws,"=",python_ws,B.
 initialize_var_(sympy,_,A,B) --> "Eq",python_ws,"(",A,python_ws,",",python_ws,B,python_ws,")".
@@ -712,6 +715,7 @@ abs_(ruby,_,A) --> A,".abs".
 
 sin_('c#',A) -->
 	"Math",ws,".",ws,"Sin",ws,"(",!,ws,A,ws,")",!.
+sin_(ruby,A) --> sin_(java,A).
 sin_(javascript,A) --> sin_(java,A).
 sin_(haxe,A) --> sin_(java,A).
 sin_(java,A) -->
@@ -733,12 +737,14 @@ asin_(perl,A) --> asin_(c,A).
 asin_(php,A) --> asin_(c,A).
 asin_(c,A) -->
 	"asin",ws,"(",!,ws,A,ws,")",!.
+asin_('ruby',A) -->
+	asin_('java',A).
 asin_('javascript',A) -->
-	"Math",ws,".",ws,"asin",ws,"(",!,ws,A,ws,")",!.
+	asin_('java',A).
 asin_('java',A) -->
 	"Math",ws,".",ws,"asin",ws,"(",!,ws,A,ws,")",!.
 asin_('haxe',A) -->
-	"Math",ws,".",ws,"asin",ws,"(",!,ws,A,ws,")",!.
+	asin_('java',A).
 asin_('c#',A) -->
 	"Math",ws,".",ws,"Asin",ws,"(",!,ws,A,ws,")",!.
 asin_(lua,A) --> asin_(python,A).
@@ -758,6 +764,7 @@ acos_(python,A) -->
 	"math",python_ws,".",python_ws,"acos",python_ws,"(",!,python_ws,A,python_ws,")",!.
 acos_('c#',A) -->
 	"Math",ws,".",ws,"Acos",ws,"(",!,ws,A,ws,")",!.
+acos_(ruby,A) --> acos_(java,A),!.
 acos_(javascript,A) --> acos_(java,A),!.
 acos_(java,A) -->
 	"Math",ws,".",ws,"acos",ws,"(",!,ws,A,ws,")",!.
@@ -769,7 +776,6 @@ sqrt_(python,A) -->
 sqrt_(c,A) -->
 	"sqrt",ws,"(",!,ws,A,ws,")",!.
 	%{memberchk(Lang,['c','c++','seed7','julia','perl','php','perl 6','maxima','minizinc','prolog','octave','d','haskell','swift','mathematical notation','dart','picat'])},
-
 sqrt_('c++',A) --> sqrt_(c,A).
 sqrt_('perl',A) --> sqrt_(c,A).
 sqrt_('php',A) --> sqrt_(c,A).
@@ -777,21 +783,20 @@ sqrt_('swift',A) --> sqrt_(c,A).
 sqrt_('prolog',A) --> sqrt_(c,A).
 sqrt_('octave',A) --> sqrt_(c,A).
 sqrt_('d',A) --> sqrt_(c,A).
-
-
-
 sqrt_(lua,A) -->
 	"math",ws,".",ws,"sqrt",ws,"(",!,ws,A,ws,")",!.
 sqrt_(go,A) -->
 	"math",ws,".",ws,"Sqrt",ws,"(",!,ws,A,ws,")",!.
 sqrt_(javascript,A) --> sqrt_(java,A),!.
 sqrt_(haxe,A) --> sqrt_(java,A),!.
+sqrt_(ruby,A) --> sqrt_(java,A),!.
 sqrt_(java,A) -->
 	"Math",ws,".",ws,"sqrt",ws,"(",!,ws,A,ws,")",!.
 sqrt_('c#',A) -->
 	("Math",ws,".",ws,"Sqrt",ws,"(",!,ws,A,ws,")").
 
 asin_(haxe,A) --> asin_(java,A).	
+asin_(ruby,A) --> asin_(java,A).
 asin_(javascript,A) --> asin_(java,A).
 asin_(java,A) -->
 	"Math",ws,".",ws,"asin",ws,"(",!,ws,A,ws,")",!.
@@ -801,6 +806,7 @@ asin_(php,A) --> asin_(c,A).
 asin_(perl,A) --> asin_(c,A).
 
 
+cos_(ruby,A) --> cos_(java,A).
 cos_(haxe,A) --> cos_(java,A).
 cos_(javascript,A) --> cos_(java,A).
 cos_('c#',A) -->
@@ -819,6 +825,7 @@ cos_(perl,A) -->
 cos_('c++',A) -->
 	cos_(c,A).
 	
+tan_(ruby,A) --> tan_(java,A),!.
 tan_(javascript,A) --> tan_(java,A),!.
 tan_('perl',A) --> tan_('c',A),!.
 tan_('php',A) --> tan_('c',A),!.
@@ -835,6 +842,7 @@ tan_(haxe,A) --> tan_(java,A).
 
 atan_('c#',A) -->
 	"Math",ws,".",ws,"Atan",!,ws,"(",!,ws,A,ws,")",!.
+atan_(ruby,A) --> atan_(java,A),!.
 atan_(javascript,A) --> atan_(java,A),!.
 atan_(java,A) -->
 	"Math",ws,".",ws,"atan",ws,"(",!,ws,A,ws,")",!.
@@ -889,7 +897,7 @@ length_('c#',_,A) -->
 
 not_equals_(c,string,A,B) --> "(",ws,"strcmp",ws,"(",ws,A,ws,",",ws,B,ws,")",ws,"!=",ws,"0",ws,")",!.
 not_equals_(python,_,A,B) --> A,python_ws,"!=",!,python_ws,B.
-not_equals_(ruby,_,A,B) --> A,python_ws,"!=",!,python_ws,B.
+not_equals_(ruby,_,A,B) --> A,ws,"!=",!,ws,B.
 not_equals_(c,number,A,B) --> A,ws,"!=",!,ws,B.
 not_equals_(perl,number,A,B) --> A,ws,"!=",!,ws,B.
 not_equals_('c++',string,A,B) --> A,ws,"!=",!,ws,B.
@@ -899,7 +907,7 @@ not_equals_(perl,string,A,B) --> A,ws_,"ne",ws_,B.
 not_equals_(javascript,_,A,B) -->
 	A,ws,"!==",!,
 	%{writeln(['calling not_equals_',A])},
-	ws,B.
+	ws,B.	
 not_equals_(php,Type,A,B) --> A,ws,"!==",!,ws,B,{member(Type,[string,number,int,char])}.
 not_equals_(c,string,A,B) -->	"(",ws,"strcmp",ws,"(",ws,A,ws,",",ws,B,ws,")",ws,"!=",ws,"0",ws,")",!.
 not_equals_(java,char,A,B) --> not_equals_(c,number,A,B).
@@ -913,7 +921,6 @@ not_equals_(Lang,int,A,B) --> not_equals_(Lang,number,A,B).
 
 equals_('c#',[array,_],A,B) --> A,ws,".",ws,"SequenceEqual",ws,"(",!,ws,B,ws,")",!.
 equals_(java,[array,_],A,B) --> "Arrays",ws,".",ws,"equals",ws,"(",!,ws,A,ws,",",!,ws,B,ws,")",!.
-equals_(ruby,[array,_],A,B) --> A,ws,"==",!,ws,B.
 equals_(erlang,_,A,B) --> A,ws,"===",ws,B.
 equals_(python,_,A,B) --> A,python_ws,"==",python_ws,B.
 equals_(sympy,_,A,B) --> "Eq",python_ws,"(",A,python_ws,",",python_ws,B,python_ws,")",!.
@@ -934,16 +941,14 @@ equals_(lua,number,A,B) --> A,python_ws,"==",!,python_ws,B.
 equals_(lua,bool,A,B) --> A,ws,"==",!,ws,B.
 equals_(lua,string,A,B) --> A,ws,"==",!,ws,B.
 equals_(lua,char,A,B) --> A,ws,"==",!,ws,B.
-
-equals_(ruby,number,A,B) --> A,python_ws,"==",python_ws,B.
-equals_(ruby,bool,A,B) --> A,ws,"==",!,ws,B.
-equals_(ruby,string,A,B) --> A,ws,"==",!,ws,B.
+equals_(ruby,_,A,B) --> A,ws,"==",ws,B.
 equals_(perl,string,A,B) --> A,ws_,"eq",ws_,B.
 equals_(Lang,int,A,B) --> equals_(Lang,number,A,B).
 
 access_array_(Lang,Array,Index) --> access_array_(Lang,_,Array,Index).
 
 %this works with strings and arrays in php, python, 'c#', and c
+access_array_('ruby',_,Array,Index) --> access_array_(c,Array,Index).
 access_array_('php',_,Array,Index) --> access_array_(c,Array,Index).
 access_array_('python',_,Array,Index) --> access_array_(c,Array,Index).
 access_array_('c',_,Array,Index) --> Array,ws,"[",!,ws,Index,ws,"]",!.
@@ -1081,17 +1086,12 @@ elif_(perl,Indent,[A,B]) -->
 
 function_(sympy,Indent,Type,Name,Params,Body) -->
 	function_(python,Indent,Type,Name,Params,Body).
-
 function_(python,Indent,_,Name,Params,Body) -->
 	"def",python_ws_,Name,python_ws,"(",!,python_ws,Params,python_ws,"):",!,python_ws,Body.
-
 function_(sympy,Indent,_,Name,Params,Body) -->
 	function_(python,Indent,Type,Name,Params,Body).
-
-
 function_(perl,Indent,_,Name,Params,Body) -->
 	"sub",ws_,Name,ws,"{",ws,"my",ws,"(",Params,")",ws,"=@_",ws,";",ws,Body,(Indent;ws),"}",!.
-
 function_('haxe',Indent,Type,Name,Params,Body) -->
 	("public",ws_,"static",ws_,"function",ws_,Name,ws,"(",!,ws,Params,ws,")",ws,":",ws,Type,ws,"{",ws,Body,(Indent;ws),"}"),!.
 function_('erlang',Indent,Type,Name,Params,Body) -->
@@ -1116,6 +1116,8 @@ function_('ruby',Indent,_,Name,Params,Body) -->
 
 sort_in_place_(python,A) -->
 	A,python_ws,".",python_ws,"sort",python_ws,"(",!,python_ws,")",!.
+sort_in_place_(ruby,A) -->
+	A,ws,".",ws,"sort!",!.
 sort_in_place_(php,A) -->
 	("sort",ws,"(",!,ws,A,ws,")").
 sort_in_place_(lua,A) -->
@@ -1151,7 +1153,6 @@ while_(lua,Indent,A,B) -->
 
 if_(python,Indent,A,B) -->
 	"if",indented_block(A),!,B.
-
 if_(perl,Indent,A,B) --> if_(c,Indent,A,B),!.
 if_('c++',Indent,A,B) --> if_(c,Indent,A,B),!.
 if_('java',Indent,A,B) --> if_(c,Indent,A,B),!.
@@ -1211,7 +1212,9 @@ if_without_else('lua',Indent,A,B) --> if_(lua,Indent,A,B),(Indent;ws_),"end".
 contains_(python,_,Container,Contained) --> (Contained,ws_,"in",ws_,Container).
 %this is valid for strings and arrays in javascript
 contains_(javascript,_,Container,Contained) -->
-	Container,!,ws,".",!,ws,"indexOf",ws,"(",!,ws,Contained,ws,")",ws,"!==",!,ws,"-1".
+	Container,ws,".",ws,"indexOf",ws,"(",!,ws,Contained,ws,")",ws,"!==",!,ws,"-1".
+contains_(javascript,[array,_],Container,Contained) -->
+	Container,ws,".",ws,"includes",ws,"(",!,ws,Contained,ws,")".
 %this is valid for strings and arrays in Ruby
 contains_(ruby,_,Container,Contained) -->
 	(Container,ws,".",ws,"include?",!,ws,"(",!,ws,Contained,ws,")").

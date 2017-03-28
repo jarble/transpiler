@@ -1,11 +1,8 @@
 
 
 
-
-
-
 function infix_arithmetic_langs(lang){
-	return ["javascript","perl","python","java","java","c","c++","perl"].indexOf(lang) !== -1;
+	return ["javascript","perl","python","java","lua","c","c++","perl","ruby","haxe"].indexOf(lang) !== -1;
 }
 
 function last_char(the_string){
@@ -74,58 +71,78 @@ function elif_statement(lang,a,b){
 	}
 }
 
-
-function add(lang,a,b){
+function infix_operator(lang,operator,a,b){
 	if(infix_arithmetic_langs(lang)){
-		return a + " + " + b;
+		return a + " "+operator+" " + b;
 	}
 	else{
-		return "(+ "+a+" "+b+")";
+		return "("+operator+" "+a+" "+b+")";
 	}
+}
+
+function add(lang,a,b){
+	return infix_operator(lang,"+",a,b);
 }
 
 function subtract(lang,a,b){
-	if(infix_arithmetic_langs(lang)){
-		return a + " - " + b;
-	}
-	else{
-		return "(- "+a+" "+b+")";
-	}
+	return infix_operator(lang,"-",a,b);
 }
 
 function multiply(lang,a,b){
-	if(infix_arithmetic_langs(lang)){
-		return a + " * " + b;
-	}
-	else{
-		return "(* "+a+" "+b+")";
-	}
+	return infix_operator(lang,"*",a,b);
 }
 
 function divide(lang,a,b){
-	if(infix_arithmetic_langs(lang)){
-		return a + " / " + b;
-	}
-	else{
-		return "(/ "+a+" "+b+")";
-	}
+	return infix_operator(lang,"/",a,b);
 }
 
 function less_than(lang,a,b){
-	if(infix_arithmetic_langs(lang)){
-		return a + " < " + b;
-	}
-	else{
-		return "(< "+a+" "+b+")";
-	}
+	return infix_operator(lang,"=",a,b);
+}
+
+function less_than_or_equal(lang,a,b){
+	return infix_operator(lang,"<=",a,b);
+}
+
+function greater_than_or_equal(lang,a,b){
+	return infix_operator(lang,">=",a,b);
 }
 
 function greater_than(lang,a,b){
-	if(infix_arithmetic_langs(lang)){
-		return a + " > " + b;
+	return infix_operator(lang,">",a,b);
+}
+
+function compare(lang,a,b){
+	return infix_operator(lang,"==",a,b);
+}
+
+function concatenate_string(lang,a,b){
+	if(["lua"].indexOf(lang) !== -1){
+		return infix_operator(lang,"..",a,b);
+	}
+	else if(["php","perl"].indexOf(lang) !== -1){
+		return infix_operator(lang,".",a,b);
+	}
+	else if(["haskell"].indexOf(lang) !== -1){
+		return infix_operator(lang,"++",a,b);
 	}
 	else{
-		return "(> "+a+" "+b+")";
+		return infix_operator(lang,"+",a,b);
+	}
+}
+
+function compare_strings(lang,a,b){
+	if(['php','javascript'].indexOf(lang) !== -1){
+		return infix_operator(lang,"===",a,b);
+	}
+	else if(['prolog'].indexOf(lang) !== -1){
+		return infix_operator(lang,"=",a,b);
+	}
+	else if(['python'].indexOf(lang) !== -1){
+		return infix_operator(lang,"==",a,b);
+	}
+	else{
+		return "undefined";
 	}
 }
 

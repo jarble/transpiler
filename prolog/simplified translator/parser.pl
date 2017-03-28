@@ -99,6 +99,8 @@ parentheses_expr(Lang,char_literal(S)) -->
 	"\'",string_inner([S]),"\'".
 parentheses_expr(Lang,string_literal(S)) -->
 	string_literal(S),!.
+parentheses_expr(Lang,string_literal(S)) -->
+	string_literal1(S),!.
 parentheses_expr(Lang,abs(Type,A)) -->
 	abs_(Lang,number,expr(Lang,A)),!.
 parentheses_expr(Lang,sqrt(A)) -->

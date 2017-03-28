@@ -3,13 +3,10 @@
 string_literal("") --> "\"\"",!.
 string_literal(S) --> "\"",string_inner(S),"\"",!.
 string_literal1("") --> "\'\'",!.
-string_literal1(S) --> "\'",string_inner1(S),"\'","\'\''",{S=""}.
+string_literal1(S) --> "\'",string_inner(S),"\'".
 string_inner([A]) --> string_inner_(A).
 string_inner([A|B]) --> string_inner_(A),string_inner(B).
-string_inner_(A) --> {A="\\\""},A;{dif(A,'"'),dif(A,'\n')},[A].
-string_inner1([A]) --> string_inner1_(A).
-string_inner1([A|B]) --> string_inner1_(A),string_inner1(B).
-string_inner1_(A) --> {A="\\'"},A;{dif(A,'\''),dif(A,'\n')},[A].
+string_inner_(A) --> {A="\\\"";A="\\\'"},A;{dif(A,'"'),dif(A,'\''),dif(A,'\n')},[A].
 
 ws --> "";blanks.
 ws_ --> (" ";"\n";"\r";"\t"),blanks.

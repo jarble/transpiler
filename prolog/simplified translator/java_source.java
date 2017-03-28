@@ -1,7 +1,7 @@
 
 
 public static boolean infix_arithmetic_langs(String lang){
-	return Arrays.asList(new String[]{"javascript","perl","python","java","java","c","c++","perl"}).contains(lang);
+	return Arrays.asList(new String[]{"javascript","perl","python","java","lua","c","c++","perl","ruby","haxe"}).contains(lang);
 }
 public static char last_char(String the_string){
 	return the_string.charAt(the_string.length()-1);
@@ -63,52 +63,67 @@ public static String elif_statement(String lang,String a,String b){
 		return "undefined";
 	}
 }
-public static String add(String lang,String a,String b){
+public static String infix_operator(String lang,String operator,String a,String b){
 	if(infix_arithmetic_langs(lang)){
-		return a+" + "+b;
+		return a+" "+operator+" "+b;
 	}
 	else{
-		return "(+ "+a+" "+b+")";
+		return "("+operator+" "+a+" "+b+")";
 	}
+}
+public static String add(String lang,String a,String b){
+	return infix_operator(lang,"+",a,b);
 }
 public static String subtract(String lang,String a,String b){
-	if(infix_arithmetic_langs(lang)){
-		return a+" - "+b;
-	}
-	else{
-		return "(- "+a+" "+b+")";
-	}
+	return infix_operator(lang,"-",a,b);
 }
 public static String multiply(String lang,String a,String b){
-	if(infix_arithmetic_langs(lang)){
-		return a+" * "+b;
-	}
-	else{
-		return "(* "+a+" "+b+")";
-	}
+	return infix_operator(lang,"*",a,b);
 }
 public static String divide(String lang,String a,String b){
-	if(infix_arithmetic_langs(lang)){
-		return a+" / "+b;
-	}
-	else{
-		return "(/ "+a+" "+b+")";
-	}
+	return infix_operator(lang,"/",a,b);
 }
 public static String less_than(String lang,String a,String b){
-	if(infix_arithmetic_langs(lang)){
-		return a+" < "+b;
-	}
-	else{
-		return "(< "+a+" "+b+")";
-	}
+	return infix_operator(lang,"=",a,b);
+}
+public static String less_than_or_equal(String lang,String a,String b){
+	return infix_operator(lang,"<=",a,b);
+}
+public static String greater_than_or_equal(String lang,String a,String b){
+	return infix_operator(lang,">=",a,b);
 }
 public static String greater_than(String lang,String a,String b){
-	if(infix_arithmetic_langs(lang)){
-		return a+" > "+b;
+	return infix_operator(lang,">",a,b);
+}
+public static String compare(String lang,String a,String b){
+	return infix_operator(lang,"==",a,b);
+}
+public static String concatenate_string(String lang,String a,String b){
+	if(Arrays.asList(new String[]{"lua"}).contains(lang)){
+		return infix_operator(lang,"..",a,b);
+	}
+	else if(Arrays.asList(new String[]{"php","perl"}).contains(lang)){
+		return infix_operator(lang,".",a,b);
+	}
+	else if(Arrays.asList(new String[]{"haskell"}).contains(lang)){
+		return infix_operator(lang,"++",a,b);
 	}
 	else{
-		return "(> "+a+" "+b+")";
+		return infix_operator(lang,"+",a,b);
+	}
+}
+public static String compare_strings(String lang,String a,String b){
+	if(Arrays.asList(new String[]{"php","javascript"}).contains(lang)){
+		return infix_operator(lang,"===",a,b);
+	}
+	else if(Arrays.asList(new String[]{"prolog"}).contains(lang)){
+		return infix_operator(lang,"=",a,b);
+	}
+	else if(Arrays.asList(new String[]{"python"}).contains(lang)){
+		return infix_operator(lang,"==",a,b);
+	}
+	else{
+		return "undefined";
 	}
 }
 public static String indent_line(String line,double number_of_indents){
