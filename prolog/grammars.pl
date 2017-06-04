@@ -4012,7 +4012,7 @@ sort_in_place_(Data,[List]) -->
 			['python','javascript']:
 				(List,python_ws,".",python_ws,"sort",python_ws,"(",python_ws,")"),
 			['ruby']:
-				(List,ws,".",ws,"sort!").
+				(List,ws,".",ws,"sort!"),
 			['c++']:
 				("std::sort",ws,"(",ws,"std::begin",ws,"(",ws,List,ws,")",ws,",",ws,"std::end",ws,"(",ws,List,ws,")",ws,")"),
 			['php']:
