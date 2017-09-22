@@ -1,11 +1,3 @@
-expr(Data,Type,dot_expr(A)) --> 
-	dot_expr(Data,Type,A).
-
-expr(Data,[array,string],dict_keys(A,Type)) -->
-	dict_keys_(Data,[
-		expr(Data,[dict,Type],A)
-	]).
-
 expr(Data,string,global_replace_in_string(Str1,To_replace1,Replacement1)) -->
 	global_replace_in_string_(Data,[
 		parentheses_expr(Data,string,Str1),
@@ -27,35 +19,18 @@ expr(Data,bool,type_is_bool(Object)) -->
 		parentheses_expr(Data,Type,Object)
 	]).
 
-expr(Data,bool,type_is_int(Object)) -->
-	type_is_int(Data,[
-		parentheses_expr(Data,Type,Object)
-	]).
 
 expr(Data,bool,type_is_list(Object)) -->
 	type_is_list(Data,[
 		parentheses_expr(Data,Type,Object)
 	]).
 
-expr(Data,double,random_number) -->
-	random_number(Data).
-
 dot_expr(Data,double,random_from_list(List,Type)) -->
 	random_from_list(Data,[
 		expr(Data,[array,Type],List)
 	]).
 
-expr(Data,string,grammar_or(Var1,Var2)) -->
-    grammar_or_(Data,[
-		dot_expr(Data,string,Var1),
-		expr(Data,string,Var2)
-	]).
 
-expr(Data,string,grammar_and(Var1,Var2)) -->
-    grammar_and_(Data,[
-		dot_expr(Data,string,Var1),
-		expr(Data,string,Var2)
-	]).
 
 expr(Data,bool, or(Var1,Var2)) -->
     or_(Data,[
@@ -149,11 +124,21 @@ expr(Data,bool,less_than(A,B)) -->
             dot_expr(Data,int,B)
         ]).
 
-expr(Data,bool,compare(string,Exp1,Exp2)) -->
-		compare_(Data,string,[
-                dot_expr(Data,string,Exp1),
-                expr(Data,string,Exp2)
+expr(Data,bool,compare(Type,Exp1,Exp2)) -->
+		compare_(Data,Type,[
+                dot_expr(Data,Type,Exp1),
+                expr(Data,Type,Exp2)
 		]).
+
+expr(Data,Type,arithmetic(Exp1,Exp2,Symbol)) -->
+        {
+                member(Symbol,["+","-","*","/"])
+        },
+        arithmetic_(Data,[
+			dot_expr(Data,Type,Exp1),
+			expr(Data,Type,Exp2),
+			Symbol
+		]),{Type=int;Type=double}.
 
 expr(Data,string,arithmetic("+",A,B)) -->
         concatenate_string_(Data,[
@@ -217,9 +202,14 @@ expr(Data,bool,regex_matches_string(Str,Reg)) -->
 		parentheses_expr(Data,string,Str)
 	]).
 
-expr(Data,bool,instanceof(Expr,Type1,Type2)) -->
-	instanceof_(Data,[
-		parentheses_expr(Data,Type1,Expr),
-		Type1,
-		type(Data,Type2)
+
+expr(Data,[array,string],dict_keys(A,Type)) -->
+	dict_keys_(Data,[
+		expr(Data,[dict,Type],A)
 	]).
+
+expr(Data,double,random_number) -->
+	random_number(Data).
+
+expr(Data,Type,dot_expr(A)) --> 
+	dot_expr(Data,Type,A).

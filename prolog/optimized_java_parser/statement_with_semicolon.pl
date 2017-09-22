@@ -1,5 +1,11 @@
 %The grammar files are saved in grammars.pl
 
+statement_with_semicolon(Data,Type,println(Expr,Type)) -->
+        println_(Data,[
+			expr(Data,Type,Expr),
+			Type
+		]).
+
 statement_with_semicolon(Data,Return_type,return(To_return)) -->
 	return_(Data,[
 		expr(Data,Return_type,To_return)
@@ -94,11 +100,6 @@ statement_with_semicolon(Data,_,divide_equals(Name,Expr)) -->
             expr(Data,int,Expr)
 		]).
 
-statement_with_semicolon(Data,_,exponent_equals(Name,Expr)) -->
-		exponent_equals_(Data,[
-			var_name_(Data,int,Name),
-            expr(Data,int,Expr)
-		]).
 
 statement_with_semicolon(Data,_,modulo_equals(Name,Expr)) -->
 		modulo_equals_(Data,[
@@ -110,12 +111,6 @@ statement_with_semicolon(Data,_,array_plus_equals(Name,Expr,Type)) -->
 		array_plus_equals_(Data,[
 			var_name_(Data,[array,Type],Name),
             expr(Data,[array,Type],Expr)
-		]).
-
-statement_with_semicolon(Data,_,dict_plus_equals(Name,Expr,Type)) -->
-		dict_plus_equals_(Data,[
-			var_name_(Data,[dict,Type],Name),
-            expr(Data,[dict,Type],Expr)
 		]).
 
 statement_with_semicolon(Data,_,string_plus_equals(Name,Expr)) -->
@@ -136,18 +131,6 @@ statement_with_semicolon(Data,_,append_to_string(Name,Expr)) -->
 	]).
 
 
-
-statement_with_semicolon(Data,_,shuffle_array(List,Type)) -->
-	shuffle_array_(Data,[
-		parentheses_expr(Data,[array,Type],List)
-	]).
-
-statement_with_semicolon(Data,_,get_user_input_with_prompt(Var,Prompt)) -->
-	get_user_input_with_prompt_(Data,[
-		var_name_(Data,string,Var),
-		expr(Data,string,Prompt)
-	]).
-
 statement_with_semicolon(Data,_,times_equals(Name,Expr)) -->
 	times_equals_(Data,[
 		var_name_(Data,int,Name),
@@ -156,13 +139,6 @@ statement_with_semicolon(Data,_,times_equals(Name,Expr)) -->
 
 statement_with_semicolon(Data,_,assert(Expr)) -->
         assert_(Data,[expr(Data,bool,Expr)]).
-
-
-statement_with_semicolon(Data,Type,println(Expr,Type)) -->
-        println_(Data,[
-			expr(Data,Type,Expr),
-			Type
-		]).
 
 statement_with_semicolon(Data,Type, function_call(Name,Params1,Params2)) -->
     function_call_(Data,[

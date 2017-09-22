@@ -4,12 +4,13 @@ public static boolean infix_arithmetic_langs(String lang){
 	return Arrays.asList(new String[]{"javascript","perl","python","java","lua","c","c++","perl","ruby","haxe"}).contains(lang);
 }
 public static char last_char(String the_string){
-	return the_string.charAt(the_string.length()-1);
+	return the_string.charAt((the_string.length())-1);
 }
 public static double index_in_array(double[] the_arr,double to_find){
 	int i=0;
 	while(i<the_arr.length){
-		if(the_arr[i]+0==to_find){
+		double the_index=the_arr[i];
+		if(the_index+0==to_find){
 			return the_arr[i];
 		}
 		else{
@@ -56,7 +57,7 @@ public static String if_statement(String lang,String a,String b){
 	}
 }
 public static String elif_statement(String lang,String a,String b){
-	if(Arrays.asList(new String[]{"javascript","java","c","c++"}).contains(lang)){
+	if(Arrays.asList(new String[]{("java"+"script"),"java","c","c++"}).contains(lang)){
 		return "else if("+a+"){"+b+"}";
 	}
 	else{

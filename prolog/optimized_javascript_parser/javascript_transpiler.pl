@@ -1,54 +1,23 @@
-:- module('transpiler', [translate/2,translate/3,translate/4,translate_langs/1]).
+:- module('javascript_transpiler', [parse/5]).
 :- use_module(library(chr)).
-:- multifile parse/5.
-:- use_module(optimized_java_parser/java_transpiler).
-:- use_module(optimized_javascript_parser/javascript_transpiler).
-:- use_module(optimized_python_parser/python_transpiler).
-:- chr_constraint var_type/3.
-:- chr_constraint unique_var/1.
-
-var_type(Namespace,Var,Type) \ var_type(Namespace,Var,Type) <=> true.
-unique_var(A) \ unique_var(A) <=> true.
-var_type(Namespace,Var,Type1),var_type(Namespace,Var,Type2) ==> Type1=Type2.
-
-unique_var(V) ==>
-	gensym('v',V1),writeln(V1),atom_chars(V1,V).
-
-unique_var(V),var_type(_,V,_) ==> false.
 
 :- set_prolog_flag(double_quotes,chars).
 
 % This is a program that translates several programming languages into several other languages.
 
 % Edit this list to specify the languages that should be translated. Each language should be written in lowercase:
-list_of_langs(X) :-
-	%X = ['javascript','c#','ruby','c','c++','go','php','swift','octave','lua','pydatalog','prolog','constraint handling rules','perl','haxe'].
-	%X = ['lua','ruby','javascript','php','c#','java','c#','haxe','lua','python','constraint handling rules','prolog','perl'].
-	%X=['python','javascript','php','java','constraint handling rules','prolog','scriptol','systemverilog','vhdl','verilog','erlang','prolog','sympy'].
-	%X=['definite clause grammars','nearley','lpeg','peg.js','parslet','marpa','antlr','waxeye','parboiled','ometa','wirth syntax notation'].
-	%X=['english','c#','ruby','lua','perl','prolog','haxe','java','perl','c++','php','erlang','c','javascript','coffeescript','haskell','english'].
-	X=['python'].
 
-translate((Input,Lang2),Output) :-
-	translate(Input,Lang2,Output).
-translate((Input,Lang1,Lang2),Output) :-
-	translate(Input,Lang1,Lang2,Output).
-	
-translate(Input_,Lang2,Output) :-
-	atom_chars(Input_,Input), list_of_langs(X),member(Lang1,X),translate(Input,Lang1,Lang2,Output_), atom_chars(Output,Output_).
-translate(Input,Lang1,Lang2,Output) :-
-	parse(Lang1,Lang2,true,Input,Ls),
-	parse(Lang2,Lang1,false,Output,Ls).
+
 
 namespace(Data,Data1,Name1,Indent) :-
 	Data = [Lang,Is_input,Namespace,Indent],
-	Data1 = [Lang,Is_input,[Name1|Namespace],indent(Indent)].
+	Data1 = [Lang,Is_input,[Name1|Namespace],indent(Indent)],!.
 
 namespace(Data,Data1,Name,Indent) -->
 	    {
                 namespace(Data,Data1,Name,Indent)
         },
-		optional_indent(Data,Indent).
+		optional_indent(Data,Indent),!.
 
 offside_rule_langs(['python','cython','coffeescript','english','cosmos','cobra']).
 
@@ -58,9 +27,6 @@ infix_arithmetic_langs(['pascal','sympy','vhdl','elixir','python','visual basic 
 
 %Use this rule to define operators for various languages
 
-file_extension(java) --> "java".
-file_extension(c) --> "c".
-file_extension('c++') --> "cpp".
 
 infix_operator(Symbol,Exp1,Exp2) -->
         Exp1,python_ws,Symbol,python_ws,Exp2.
@@ -69,16 +35,9 @@ prefix_operator(Data,Type,Symbol,Exp1,Exp2) -->
         "(",Symbol,ws_,expr(Data,Type,Exp1),ws_,expr(Data,Type,Exp2),")".
 
 
-% this is from http://stackoverflow.com/questions/20297765/converting-1st-letter-of-atom-in-prolog
-first_char_uppercase(WordLC, WordUC) :-
-    atom_chars(WordLC, [FirstChLow|LWordLC]),
-    atom_chars(FirstLow, [FirstChLow]),
-    upcase_atom(FirstLow, FirstUpp),
-    atom_chars(FirstUpp, [FirstChUpp]),
-    atom_chars(WordUC, [FirstChUpp|LWordLC]).
 
 function_name(Data,Type,A,Params) -->
-        symbol(A),{reserved_words(A),is_var_type_(Data,[A,Params], Type)}.
+        symbol(A),{reserved_words(A)}.
 
 
 indent(Indent) --> (Indent,("\t")).
@@ -135,8 +94,7 @@ elif_statements(Data,Return_type,[A]) --> elif(Data,Return_type,A),!.
 elif_statements(Data,Return_type,[A|B]) --> elif(Data,Return_type,A),elif_separator(Data),elif_statements(Data,Return_type,B),!.
 
 elif_separator(Data) -->
-	{lang(Data,Lang),indent(Data,Indent)},
-	({memberchk(Lang,['python','cython'])} -> Indent; {memberchk(Lang,['prolog','erlang','logtalk'])} -> ws,";",(Indent;ws);ws(Data),statement_separator(Data),(Indent;ws(Data))).
+	ws.
 
 indent_data(Indent,Data,Data1) :-
     Data = [Lang,Is_input,Namespace,Indent],
@@ -151,13 +109,6 @@ elif(Data,Return_type,[Expr_,Statements_]) -->
         },
         elif(Data,[Indent,A,B]),!.
 
-
-is_var_type([_,_,Namespace|_], Name, Type) :-
-    var_type(Namespace,Name,Type).
-
-%This is only for checking types of functions in global scope
-is_var_type_(_, [Name,Params], Type) :-
-    var_type([],[Name,Params],Type).
 
 %also called optional parameters
 default_parameter(Data,[Type1,Name1,Default1]) -->
@@ -175,19 +126,6 @@ parameter(Data,[Type1,Name1]) -->
         },
 		parameter_(Data,[Type,Name]),!.
 
-reference_parameter(Data,[Type1,Name1]) -->
-        {
-                Type = type(Data,Type1),
-                Name = var_name_(Data,Type1,Name1)
-        },
-		reference_parameter_(Data,[Type,Name]),!.
-
-varargs(Data,[Type1,Name1]) -->
-        {
-                Type = type(Data,Type1),
-                Name = var_name_(Data,Type1,Name1)
-        },
-		varargs_(Data,[Type,Name]),!.
 
 
 
@@ -196,12 +134,8 @@ optional_parameters(Data,A) --> "",parameters(Data,A).
 
 parameter1(Data,parameter(A)) -->
 	parameter(Data,A).
-parameter1(Data,reference_parameter(A)) -->
-	reference_parameter(Data,A).
 parameter1(Data,default_parameter(A)) -->
 	default_parameter(Data,A).
-parameter1(Data,varargs(A)) -->
-	varargs(Data,A).
 
 parameters(Data,Params) --> 
 	{Params = []}, "";parameters_(Data,Params).
@@ -306,28 +240,11 @@ print_var_types([A]) :-
 print_var_types([A|Rest]) :-
     writeln(A),print_var_types(Rest).
 
-translate_langs(Input_) :-
-	atom_chars(Input_,Input),
-	list_of_langs(X),
-	member(Lang,X), parse(Lang,Lang2,true,Input,Ls),
-	translate_langs(Ls,X,Lang2).
 
-parse(python,Lang2,Is_input,Input,Ls) :-
-	javascript_transpiler:parse(javascript,Lang2,Is_input,Input,Ls).
-parse(javascript,Lang2,Is_input,Input,Ls) :-
-	javascript_transpiler:parse(javascript,Lang2,Is_input,Input,Ls).
-parse(java,Lang2,Is_input,Input,Ls) :-
-	java_transpiler:parse(java,Lang2,Is_input,Input,Ls).
-parse(Lang1,Lang2,Is_input,Input,Ls) :-
-	phrase(statements_with_ws([Lang1,Is_input,[],"\n"],Ls), Input).
+parse(javascript,_,_,Input,Ls) :-
+	phrase(statements_with_ws([Lang1,true,[],"\n"],Ls), Input),
+	writeln(Ls).
 
-translate_langs(_,[],_) :-
-	true.
-
-translate_langs(Ls,[Lang|Langs],Lang2) :-
-    parse(Lang,Lang2,false,Output,Ls),
-    atom_chars(Output_,Output),writeln(''),writeln(Lang),writeln(''),writeln(Output_),writeln(''),
-    translate_langs(Ls,Langs,Lang2).
 
 :- include(grammars).
 :- include(statement).

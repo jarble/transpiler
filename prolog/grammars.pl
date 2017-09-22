@@ -301,6 +301,16 @@ remove_duplicates_in_place(Data,[A]) -->
 			(A,ws,".",ws,"uniq!")
 	]).
 
+expr(Data,Type,arithmetic(Exp1,Exp2,Symbol)) -->
+        {
+                member(Symbol,["+","-","*","/"])
+        },
+        arithmetic_(Data,[
+			dot_expr(Data,Type,Exp1),
+			expr(Data,Type,Exp2),
+			Symbol
+		]),{Type=int;Type=double}.
+
 concatenate_string_(Data,[A,B]) -->
         langs_to_output(Data,concatenate_string,[
         ['prolog','constraint handling rules']:
@@ -365,7 +375,7 @@ array_length(Data,[A])-->
 				("(",ws,"length",ws_,"$",ws,A,ws,")",ws,")"),
         ['python','cython']:
                 ("len",python_ws,"(",python_ws,A,python_ws,")"),
-        ['java','picat','scala','d','typescript','dart','vala','javascript','haxe','cobra']:
+        ['java','picat','scala','d','typescript','dart','vala','javascript','haxe','cobra','ruby']:
                 (A,ws,".",ws,"length"),
 		['coffeescript']:
                 (A,ws,".",ws,"length"),
@@ -703,9 +713,9 @@ initialize_static_var_with_value_(Data,[Type,Name,Value]) -->
 private_instance_method_(Data,[Name,Type,Params,Body,Indent]) -->
 		langs_to_output(Data,private_instance_method,[
 			['java','c#']:
-					("private",ws_,Type,ws_,Name,ws,"(",ws,Params,ws,")",ws,"{",ws,Body,(Indent;ws),"}"),
+					("private",ws_,Type,ws_,Name,ws,"(",ws,Params,ws,")",ws,"{",!,ws,Body,(Indent;ws),"}"),
 			['php']:
-					("private",ws_,"function",ws_,Name,ws,"(",ws,Params,ws,")",ws,"{",ws,Body,(Indent;ws),"}")
+					("private",ws_,"function",ws_,Name,ws,"(",ws,Params,ws,")",ws,"{",!,ws,Body,(Indent;ws),"}")
 		]).
 
 instance_method_(Data,[Name,Type,Params,Body,Indent]) -->
@@ -715,7 +725,7 @@ instance_method_(Data,[Name,Type,Params,Body,Indent]) -->
 		['python','cython']:
 				("def",python_ws_,Name,"(",python_ws,"self",python_ws,",",Params,")",":",python_ws,Body),
 		['swift']:
-                ("func",ws_,Name,ws,"(",ws,Params,ws,")",ws,"->",ws,Type,ws,"{",ws,Body,(Indent;ws),"}"),
+                ("func",ws_,Name,ws,"(",ws,Params,ws,")",ws,"->",ws,Type,ws,"{",!,ws,Body,(Indent;ws),"}"),
         [logtalk]:
                 (Name,ws,"(",ws,Params,ws,",",ws,"Return",ws,")",ws_,":-",ws_,Body),
         ['ruby']:
@@ -723,7 +733,7 @@ instance_method_(Data,[Name,Type,Params,Body,Indent]) -->
         ['perl']:
                 ("sub",ws_,Name,ws,"{",ws,"my",ws,"(",Params,")",ws,"=@_",ws,";",ws,Body,(Indent;ws),"}"),
         ['javascript']:
-                (Name,ws,"(",ws,Params,ws,")",ws,"{",ws,Body,(Indent;ws),"}"),
+                (Name,ws,"(",ws,Params,ws,")",ws,"{",!,ws,Body,(Indent;ws),"}"),
         ['perl 6']:
                 ("method",ws_,Name,ws_,"(",ws,Params,ws,")",ws,"{",ws,Body,(Indent;ws),"}"),
         ['chapel']:
@@ -756,7 +766,7 @@ static_method_(Data, [Name,Type,Params,Body,Indent]) -->
                 ("public",ws_,"static",ws_,"function",ws_,Name,ws,"(",ws,Params,ws,")",ws,"{",ws,Body,(Indent;ws),"}"),
         ['c']:
                 (Type,ws_,Name,ws,"(",ws,Params,ws,")",ws,"{",ws,Body,(Indent;ws),"}"),
-        ['javascript','pseudocode']:
+        ['javascript','typescript','pseudocode']:
                 ("static",ws_,Name,ws,"(",ws,Params,ws,")",ws,"{",ws,Body,(Indent;ws),"}"),
         ['python_temp']:
 				("@staticmethod",Indent,"def",python_ws,"(",python_ws,Params,python_ws,")",":",python_ws,Statements),
@@ -868,7 +878,7 @@ string_plus_equals_(Data,[A,B]) -->
 
 divide_equals_(Data,[A,B]) -->
     langs_to_output(Data,divide_equals,[
-	['javascript','c#','c','c++','java']:
+	["javascript","java","c","c++","c#","perl","ruby","visual basic .net","php"]:
 			(A,ws,"/=",ws,B),
 	['python','coffeescript']:
 			(A,python_ws,"/=",python_ws,B),
@@ -957,13 +967,13 @@ print_(Data,[A]) -->
 %logarithm with e as the base
 log_base_e_(Data,[A]) -->
 	langs_to_output(Data,log_base_e,[
-		['javascript','java']:
-			("Math",ws,".",ws,"log",ws,"(",ws,A,ws,")"),
-		['c#','ruby']:
-			("Math",ws,".",ws,"Log",ws,"(",ws,A,ws,")"),
+		['javascript','java','ruby']:
+			("Math",ws,".",ws,"log",ws,"(",ws,A,ws,")",!),
+		['c#']:
+			("Math",ws,".",ws,"Log",ws,"(",ws,A,ws,")",!),
 		['python','lua']:
-			("math",python_ws,".",python_ws,"log",python_ws,"(",python_ws,A,python_ws,")"),
-		['perl','c','sympy']:
+			("math",python_ws,".",python_ws,"log",python_ws,"(",python_ws,A,python_ws,")",!),
+		['perl','c','sympy','php']:
 			("log",ws,"(",ws,A,ws,")"),
 		['haskell']:
 			("(",ws,"log",ws_,A,ws,")")
@@ -1054,7 +1064,7 @@ println_(Data,[A,Type]) -->
 
 times_equals_(Data,[Name,Expr]) -->
         langs_to_output(Data,times_equals,[
-        ['c','c++','java','c#','javascript',php,perl]:
+        ['c','c++','java','c#','javascript',php,'perl']:
                 (Name,ws,"*=",ws,Expr),
         ['coffeescript','python']:
 				(Name,python_ws,"*=",python_ws,Expr),
@@ -1070,7 +1080,7 @@ append_to_string_(Data,[Name,Expr]) -->
         langs_to_output(Data,append_to_string,[
         [c,'java','c#',javascript]:
                 (Name,python_ws,"+=",python_ws,Expr),
-        [php,perl]:
+        [php,'perl']:
                 (Name,ws,".=",ws,Expr)
         ]).
 
@@ -1342,7 +1352,7 @@ true_(Data) -->
 
 acos_(Data,[Var1]) -->
         langs_to_output(Data,acos,[
-        ['c']:
+        ['c','perl','prolog']:
                 ("acos",ws,"(",ws,Var1,ws,")"),
         ['go']:
                 ("Acos",ws,"(",ws,Var1,ws,")")
@@ -1350,7 +1360,7 @@ acos_(Data,[Var1]) -->
 
 asin_(Data,[Var1]) -->
         langs_to_output(Data,asin,[
-        ['c']:
+        ['c','perl','prolog']:
                 ("asin",ws,"(",ws,Var1,ws,")"),
         ['go']:
                 ("Asin",ws,"(",ws,Var1,ws,")")
@@ -1358,7 +1368,7 @@ asin_(Data,[Var1]) -->
 
 atan_(Data,[Var1]) -->
         langs_to_output(Data,atan,[
-        ['c']:
+        ['c','perl','prolog']:
                 ("atan",ws,"(",ws,Var1,ws,")"),
         ['go']:
                 ("Atan",ws,"(",ws,Var1,ws,")")
@@ -1381,6 +1391,7 @@ cosh_(Data,[Var1]) -->
 			("Math",ws,".",ws,"Cosh",ws,"(",ws,Var1,ws,")")
 	]).
 
+% see http://rosettacode.org/wiki/Real_constants_and_functions#Haskell
 abs_(Data,[Var1]) -->
 	langs_to_output(Data,abs,[
 	['java','javascript']:
@@ -1822,7 +1833,7 @@ foreach_with_index_(Data,[Array,Var,Index,Type,Body,Indent]) -->
 foreach_(Data,[Array,Var,Type,Body,Indent]) -->
         langs_to_output(Data,foreach,[
         ['perl']:
-                ("for",ws_,Var,ws_,"(",ws,Array,ws,")",ws,"{",ws,Body,(Indent;ws),"}"),
+                ("for",ws_,Var,ws_,"(",ws,Array,ws,")",ws,"{",!,ws,Body,(Indent;ws),"}"),
         ['ruby']:
 				(Array,ws,".",ws,"each",ws_,"do",ws,"|",ws,Var,ws,"|",ws,Body,(Indent;ws_),"end"),
         ['erlang']:
@@ -1834,7 +1845,7 @@ foreach_(Data,[Array,Var,Type,Body,Indent]) -->
         ['seed7']:
                 ("for",ws_,Var,ws_,"range",ws_,Array,ws_,"do",ws_,Body,(Indent;ws_),"end",ws_,"for;"),
         ['javascript','typescript']:
-                (Array,ws,".",ws,"forEach",ws,"(",ws,"function",ws,"(",ws,Var,ws,")",ws,"{",ws,Body,(Indent;ws),"}",ws,")",ws,";"),
+                (Array,ws,".",ws,"forEach",ws,"(",ws,"function",ws,"(",ws,Var,ws,")",ws,"{",!,ws,Body,(Indent;ws),"}",ws,")",ws,";"),
         ['octave']:
                 ("for",ws_,Var,ws,"=",ws,Array,ws_,Body,(Indent;ws_),"endfor"),
         ['prolog']:
@@ -1902,7 +1913,7 @@ switch_(Data,[A,B,Indent]) -->
 		['octave']:
 				("switch",ws,"(",ws,A,ws,")",ws,B,(Indent;ws_),"endswitch"),
 		['java','d','powershell','nemerle','d','typescript','hack','swift','groovy','dart','awk','c#','javascript','c++','php','c','go','haxe','vala']:
-				("switch",ws,"(",ws,A,ws,")",ws,"{",ws,B,(Indent;ws),"}"),
+				("switch",ws,"(",!,ws,A,ws,")",ws,"{",!,ws,B,(Indent;ws),"}"),
 		['haskell','erlang']:
 				("case",ws_,A,ws_,"of",ws_,B,(Indent;ws_),"end"),
 		['delphi','pascal']:
@@ -2024,7 +2035,7 @@ if(Data,[A,B,C,D,Indent]) -->
 do_while_(Data,[Condition,Body,Indent]) -->
         langs_to_output(Data,do_while,[
         ['javascript','actionscript','java','c','php','d','c++','c#','perl']:
-			("do",ws,"{",ws,Body,(Indent;ws),"}",ws,"while",ws,"(",ws,Condition,ws,")",ws,";"),
+			("do",ws,"{",!,ws,Body,(Indent;ws),"}",ws,"while",ws,"(",ws,Condition,ws,")",ws,";"),
 		['kotlin']:
 			("do",ws,"{",ws,Body,(Indent;ws),"}",ws,"while",ws,"(",ws,Condition,ws,")"),
 		['swift']:
@@ -2054,7 +2065,7 @@ map_(Data,[Func,Arr]) -->
 while_(Data,[A,B,Indent]) -->
         langs_to_output(Data,while,[
         ['c','perl 6','katahdin','chapel','ooc','processing','pike','kotlin','pawn','powershell','hack','gosu','autohotkey','ceylon','d','typescript','actionscript','nemerle','dart','swift','groovy','scala','java','javascript','php','c#','perl','c++','haxe','r','awk','vala']:
-                ("while",ws,"(",ws,A,ws,")",ws,"{",ws,B,(Indent;ws),"}"),
+                ("while",ws,"(",ws,A,ws,")",ws,"{",!,ws,B,(Indent;ws),"}"),
         ['ocaml']:
 				("while",ws_,A,ws_,"do",ws_,B,(Indent;ws_),"done"),
         ['gap']:
@@ -2099,7 +2110,7 @@ while_(Data,[A,B,Indent]) -->
                 ("while",ws_,A,ws_,"do",ws_,B,(Indent;ws_),"end",ws_,"while",ws,";"),
         ['vhdl']:
 				("while",ws_,A,ws_,"loop",ws_,B,(Indent;ws_),"end",ws_,"loop",ws,";")
-        ]).
+        ]),!.
 
 predicate_(Data,[Name,Params,Body,_]) -->
 		%add predicates for python and clips
@@ -2124,7 +2135,7 @@ iff_(Data,[Condition,Body]) -->
 for_(Data,[Statement1,Condition,Statement2,Body,Indent]) -->
 		langs_to_output(Data,for,[
         ['java','d','pawn','groovy','javascript','dart','typescript','php','hack','c#','perl','c++','awk','pike']:
-                ("for",ws,"(",ws,Statement1,ws,";",ws,Condition,ws,";",ws,Statement2,ws,")",ws,"{",ws,Body,(Indent;ws),"}")
+                ("for",ws,"(",!,ws,Statement1,ws,";",ws,Condition,ws,";",ws,Statement2,ws,")",ws,"{",!,ws,Body,(Indent;ws),"}")
         ]).
 
 semicolon_(Data,[A]) -->
@@ -2132,8 +2143,8 @@ semicolon_(Data,[A]) -->
         langs_to_output(Data,semicolon,[
         Grammars:
 				A,
-        ['c','vhdl','f#','php','dafny','chapel','katahdin','frink','falcon','aldor','idp','processing','maxima','seed7','drools','engscript','openoffice basic','ada','algol 68','d','ceylon','rust','typescript','octave','autohotkey','pascal','delphi','javascript','pike','objective-c','ocaml','java','scala','dart','php','c#','c++','haxe','awk','bc','perl','perl 6','nemerle','vala']:
-                (A,ws,";"),
+        ['c','hack','vhdl','f#','php','dafny','chapel','katahdin','frink','falcon','aldor','idp','processing','maxima','seed7','drools','engscript','openoffice basic','ada','algol 68','d','ceylon','rust','typescript','octave','autohotkey','pascal','delphi','javascript','pike','objective-c','ocaml','java','scala','dart','php','c#','c++','haxe','awk','bc','perl','perl 6','nemerle','vala']:
+                (A,ws,";",!),
         ['pseudocode']:
                 (A,("";ws,";")),
         ['visual basic .net','clips','pddl','sympy','r','constraint handling rules','pydatalog','common lisp','gnu smalltalk','ruby','lua','hy',picolisp,logtalk,minizinc,'swift','rebol','fortran','go','picat','julia',prolog,'haskell','mathematical notation','erlang',z3]:
@@ -2178,7 +2189,7 @@ class_extends_(Data,[C1,C2,B,Indent]) -->
         ['swift','chapel','d','swift']:
                 ("class",ws_,C1,ws,":",ws,C2,ws,"{",ws,B,(Indent;ws),"}"),
         ['haxe','php','javascript','dart','typescript']:
-                ("class",ws_,C1,ws_,"extends",ws_,C2,ws,"{",ws,B,(Indent;ws),"}"),
+                ("class",ws_,C1,ws_,"extends",!,ws_,C2,ws,"{",!,ws,B,(Indent;ws),"}"),
         ['java','c#','scala']:
                 ("public",ws_,"class",ws_,C1,ws_,"extends",ws_,C2,ws,"{",ws,B,(Indent;ws),"}"),
         ['c']:
@@ -2230,7 +2241,7 @@ class_(Data,[Name,Body,Indent]) -->
 		['julia']:
                 ("type",ws_,Name,ws_,Body,(Indent;ws_),"end"),
         ['ruby']:
-                ("classs",ws_,Name,ws_,Body,(Indent;ws_),"end"),
+                ("class",ws_,Name,ws_,Body,(Indent;ws_),"end"),
         ['java','c#']:
                 ("public",ws_,"class",ws_,Name,ws,"{",ws,Body,(Indent;ws),"}"),
         ['hy']:
@@ -2242,7 +2253,7 @@ class_(Data,[Name,Body,Indent]) -->
         ['logtalk']:
                 ("object",ws,"(",Name,")",ws,".",ws,Body,(Indent;ws),"end_object",ws,"."),
         ['javascript','hack','php','scala','haxe','chapel','swift','d','typescript','dart','perl 6']:
-                ("class",ws_,Name,ws,"{",ws,Body,(Indent;ws),"}"),
+                ("class",ws_,Name,ws,"{",!,ws,Body,(Indent;ws),"}"),
         ['vbscript']:
                 ("Public",ws_,"Class",ws_,Name,ws_,Body,(Indent;ws_),"End",ws_,"Class"),
         ['monkey x']:
@@ -2260,7 +2271,7 @@ function_(Data,[Name,Type,Params,Body,Indent]) -->
 					{Params = parameters(_,[])}, Name,python_ws,"=",python_ws,"->",python_ws,Body
 				),
 		['parboiled']:
-				("Rule",ws_,Name,ws,"(",ws,")",ws,"{",ws,"return",ws_,Body,ws,";",ws_,"}"),
+				("Rule",ws_,Name,ws,"(",ws,")",ws,"{",ws,"return",ws_,Body,ws,";",!,ws_,"}"),
 		['antlr']:
 				(Name,ws,":",ws,Body,";"),
 		['peg.js','lpeg','abnf']:
@@ -2308,7 +2319,7 @@ function_(Data,[Name,Type,Params,Body,Indent]) -->
         ['java','c#']:
                 ("public",ws_,"static",ws_,Type,ws_,Name,ws,"(",ws,Params,ws,")",ws,"{",ws,Body,(Indent;ws),"}"),
         ['javascript','php']:
-                ("function",ws_,Name,ws,"(",ws,Params,ws,")",ws,"{",ws,Body,(Indent;ws),"}"),
+                ("function",ws_,Name,ws,"(",!,ws,Params,ws,")",ws,"{",!,ws,Body,(Indent;ws),"}"),
         ['julia','lua']:
                 ("function",ws_,Name,ws,"(",ws,Params,ws,")",ws_,Body,(Indent;ws_),"end"),
         ['wolfram']:
@@ -2354,7 +2365,7 @@ function_(Data,[Name,Type,Params,Body,Indent]) -->
         ['erlang']:
                 (Name,ws,"(",ws,Params,ws,")",ws,"->",ws,Body),
         ['perl']:
-				(("sub",ws_,Name,ws,"{",ws,"my",ws,"(",Params,")",ws,"=@_",ws,";",ws,Body,(Indent;ws),"}")),
+				(("sub",ws_,Name,ws,"{",ws,"my",ws,"(",Params,")",ws,"=@_",ws,";",!,ws,Body,(Indent;ws),"}")),
         ['perl 6']:
                 ("sub",ws_,Name,ws,"(",ws,Params,ws,")",ws,"{",ws,Body,(Indent;ws),"}"),
         ['pawn']:
@@ -2397,7 +2408,7 @@ function_(Data,[Name,Type,Params,Body,Indent]) -->
         ['e']:
                 ("def",ws_,Name,ws,"(",ws,Params,ws,")",ws,Type,ws,"{",ws,Body,(Indent;ws),"}"),
         ['pascal','delphi']:
-                ("function",ws_,Name,ws,"(",ws,Params,ws,")",ws,":",ws,Type,ws,";",ws,"begin",ws_,Body,(Indent;ws_),"end",ws,";")
+                ("function",ws_,Name,ws,"(",ws,Params,ws,")",ws,":",ws,Type,ws,";",!,ws,"begin",ws_,Body,(Indent;ws_),"end",ws,";")
         ]).
 
 reserved_words(A) :-
@@ -2424,7 +2435,7 @@ var_name_(Data,Type,A) -->
         {memberchk(Lang,['parboiled'])}->
             (symbol(A),"()");
         {not_defined_for(Data,'var_name')}),
-        {is_var_type(Data, A, Type)}.
+        {is_var_type(Data, A, Type)},!.
 
 else(Data,[Indent,A]) -->
         langs_to_output(Data,else,[
@@ -2435,7 +2446,7 @@ else(Data,[Indent,A]) -->
         ['fortran']:
                 ("ELSE",ws_,A),
         ['hack','e','ooc','englishscript','mathematical notation','dafny','perl 6','frink','chapel','katahdin','pawn','powershell','puppet','ceylon','d','rust','typescript','scala','autohotkey','gosu','groovy','java','swift','dart','awk','javascript','haxe','php','c#','go','perl','c++','c','tcl','r','vala','bc']:
-                ("else",ws,"{",ws,A,(Indent;ws),"}"),
+                ("else",ws,"{",!,ws,A,(Indent;ws),"}"),
         ['seed7','vhdl','ruby','lua','livecode','janus','haskell','clips','minizinc','julia','octave','picat','pascal','delphi','maxima','ocaml','f#']:
                 ("else",ws_,A),
         ['erlang']:
@@ -2445,7 +2456,7 @@ else(Data,[Indent,A]) -->
         ['z3']:
                 (A),
         ['cython','python']:
-                (Indent,"else",python_ws,":",python_ws,A),
+                (Indent,"else",python_ws,":",!,python_ws,A),
         ['english_temp']:
                 (Indent,"else",python_ws,":",python_ws,A),
         ['monkey x','vbscript','visual basic .net']:
@@ -2457,7 +2468,7 @@ else(Data,[Indent,A]) -->
         ['pseudocode']:
                 (("otherwise",ws_,A);
                 ("else",ws_,A);
-                ("else",ws,"{",ws,A,(Indent;ws),"}")),
+                ("else",ws,"{",!,ws,A,(Indent;ws),"}")),
         ['polish notation']:
                 ("else",ws_,A),
         ['reverse polish notation']:
@@ -2598,7 +2609,7 @@ import_(Data,[A]) -->
         ['r']:
                 ("source",ws,"(",ws,"\"",ws,A,ws,".",ws,"r\"",ws,")"),
         ['javascript']:
-                ("import",ws_,"*",ws_,"as",ws_,A,ws_,"from",ws_,"'",ws,A,ws,"'",ws,";"),
+                ("import",ws_,"*",ws_,"as",ws_,A,ws_,"from",ws_,"'",ws,A,ws,"'",ws,";",!),
         ['clojure']:
                 ("(",ws,"import",ws_,A,ws,")"),
         ['monkey x']:
@@ -2653,7 +2664,7 @@ first_case_(Data,[B,Compare_expr,Expr,Case_or_default]) -->
     ['julia',octave]:
             ("if",ws_,Compare_expr,ws_,"then",ws_,B,ws_,Case_or_default),
     ['javascript','d','java','c#','c','c++','typescript','dart',php,hack]:
-			("case",ws_,Expr,ws,":",ws,B,ws,"break",ws,";",ws,Case_or_default),
+			("case",ws_,Expr,ws,":",!,ws,B,ws,"break",ws,";",!,ws,Case_or_default),
     [go,'haxe',swift]:
             ("case",ws_,Expr,ws,":",ws,B,ws,Case_or_default),
     ['fortran']:
@@ -2685,7 +2696,7 @@ case(Data,[A,B,Expr,Case_or_default,Indent]) -->
     ['julia',octave]:
             ("elsif",ws_,A,ws_,"then",ws_,B,ws,Case_or_default),
     ['javascript','d','java','c#','c','c++','typescript','dart',php,hack]:
-            ("case",ws_,Expr,ws,":",ws,B,ws,"break",ws,";",ws,Case_or_default),
+            ("case",ws_,Expr,ws,":",!,ws,B,ws,"break",ws,";",!,ws,Case_or_default),
     [go,'haxe',swift]:
             ("case",ws_,Expr,ws,":",ws,B,ws,Case_or_default),
     ['fortran']:
@@ -2718,7 +2729,7 @@ default(Data,[A,Indent]) -->
         ['fortran']:
             ("CASE",ws_,"DEFAULT",ws_,A),
         ['javascript','d','c','java','c#','c++','typescript','dart','php','haxe','hack','go','swift']:
-            ("default",ws,":",ws,A),
+            ("default",ws,":",!,ws,A),
         ['pascal','delphi']:
             ("else",ws_,A),
         ['haskell','erlang','ocaml']:
@@ -2747,11 +2758,11 @@ elif(Data,[Indent,A,B]) -->
         ['sympy']:
 			("(",ws,B,ws,",",ws,A,ws,")"),
         ['d','e','mathematical notation','chapel','pawn','ceylon','scala','typescript','autohotkey','awk','r','groovy','gosu','katahdin','java','swift','nemerle','c','dart','vala','javascript','c#','c++','haxe']:
-            ("else",ws_,"if",ws,"(",ws,A,ws,")",ws,"{",ws,B,(Indent;ws),"}"),
+            ("else",ws_,"if",ws,"(",!,ws,A,ws,")",!,ws,"{",!,ws,B,(Indent;ws),"}"),
         ['rust','go','englishscript']:
-            ("else",ws_,"if",ws_,A,ws,"{",ws,B,(Indent;ws),"}"),
+            ("else",ws_,"if",ws_,A,ws,"{",!,ws,B,(Indent;ws),"}"),
         ['php','hack','perl']:
-            ("elseif",ws,"(",ws,A,ws,")",ws,"{",ws,B,(Indent;ws),"}"),
+            ("elseif",ws,"(",ws,A,ws,")",ws,"{",!,ws,B,(Indent;ws),"}"),
         ['julia','octave']:
             ("elseif",ws_,A,ws_,B),
         ['ruby','seed7','vhdl']:
@@ -2786,7 +2797,7 @@ elif(Data,[Indent,A,B]) -->
             (A,ws_,B,ws_,C,ws_,"elif"),
         ['clojure']:
             (A,ws_,B,ws_,C)
-        ]).
+        ]),!.
 
 default_parameter_(Data,[Type,Name,Value]) -->
         langs_to_output(Data,default_parameter,[
@@ -2800,8 +2811,7 @@ default_parameter_(Data,[Type,Name,Value]) -->
             (Name,python_ws,":",python_ws,Type,python_ws,"=",python_ws,Value),
         ['haxe']:
             ("?",ws,Name,ws,"=",ws,Value)
-        ]).
-
+        ]),!.
 
 %generate a random integer from Min (inclusive) to Max (exclusive)
 random_int_in_range(Data,[Min,Max]) -->
@@ -2812,7 +2822,7 @@ random_int_in_range(Data,[Min,Max]) -->
 			("(",ws,"Math",ws,".",ws,"floor",ws,"(",ws,"Math",ws,".",ws,"random",ws,"(",ws,")",ws,"*",ws,"(",ws,Max,ws,"-",ws,Min,ws,"+",ws,"1",ws,")",ws,"+",ws,Min,ws,")"),
 		['php']:
 			("rand",ws,"(",ws,Min,ws,",",ws,Max,ws,"-",ws,"1",ws,")")
-	]).
+	]),!.
 
 %generate a random integer from Min (inclusive) to Max (inclusive)
 random_int_in_inclusive_range(Data,[Min,Max]) -->
@@ -2857,7 +2867,7 @@ random_number(Data) -->
 		['perl']:
 			("rand",ws,"(",ws,")")
 		
-	]).
+	]),!.
 
 type(Data,auto_type) -->
         langs_to_output(Data,auto_type,[
@@ -2931,7 +2941,7 @@ type(Data,int) -->
 
 type(Data,string) -->
     langs_to_output(Data,string,[
-    ['z3',cosmos,'visual basic .net','java','ceylon','gambas','dart','gosu','groovy','scala','pascal','swift','haxe','haskell','visual basic','monkey x']:
+    ['z3','ruby','cosmos','visual basic .net','java','ceylon','gambas','dart','gosu','groovy','scala','pascal','swift','haxe','haskell','visual basic','monkey x']:
             "String",
     ['vala','systemverilog','seed7','octave','picat','mathematical notation','polish notation','reverse polish notation','prolog','constraint handling rules','d','chapel','minizinc','genie','hack','nim','algol 68','typescript','coffeescript','octave','tcl','awk','julia','c#','f#','perl','javascript','go','php','c++','nemerle','erlang']:
             "string",
@@ -3017,7 +3027,7 @@ type(Data,double) -->
 type(Data,[array,Type]) -->
     {ground(Type)}, %Type contains no unknown variables
     langs_to_output(Data,array,[
-    ['java','c','c++','c#']:
+    ['java','c','c++','c#','typescript']:
             (type(Data,Type),"[]"),
     ['go']:
             ("[]", type(Data,Type)),
@@ -3172,10 +3182,10 @@ reverse_string_(Data,[Str]) -->
 key_value_(Data,[A,B]) -->
         langs_to_output(Data,key_value,[
         ['groovy','english_temp','d','dart','javascript','typescript','coffeescript','swift','elixir','swift','go']:
-                (A,ws,":",ws,B),
+                (A,ws,":",!,ws,B),
         ['python']:
                 ("\"",python_ws,A,python_ws,"\"",python_ws,":",python_ws,B),
-        ['php','haxe','perl','julia']:
+        ['php','haxe','perl','ruby','julia']:
                 (A,ws,"=>",ws,B),
         ['rebol']:
                 (A,ws_,B),
@@ -3199,7 +3209,7 @@ array_slice_(Data,[A,B,C]) -->
                 (A,python_ws,"[",python_ws,B,python_ws,":",python_ws,C,python_ws,"]")
         ]).
 
-compare_string_(Data,[A,B]) -->
+compare_(Data,string,[A,B]) -->
     langs_to_output(Data,compare_string,[
     ['r']:
             ("identical",ws,"(",ws,A,ws,",",ws,B,ws,")"),
@@ -3209,7 +3219,7 @@ compare_string_(Data,[A,B]) -->
             ("(",ws,"=",ws_,A,ws_,B,ws,")"),
     ['visual basic','delphi','vbscript','f#','prolog','mathematical notation','ocaml','livecode','monkey x']:
             (A,ws,"=",ws,B),
-    ['pydatalog','lua','perl 6','python','cython','englishscript','chapel','julia','fortran','minizinc','picat','go','vala','autoit','rebol','ceylon','groovy','scala','coffeescript','awk','haskell','haxe','dart','swift']:
+    ['pydatalog','ruby','lua','perl 6','python','cython','englishscript','chapel','julia','fortran','minizinc','picat','go','vala','autoit','rebol','ceylon','groovy','scala','coffeescript','awk','haskell','haxe','dart','swift']:
             (A,python_ws,"==",python_ws,B),
     ['javascript','php','typescript','hack']:
             (A,ws,"===",ws,B),
@@ -3239,17 +3249,17 @@ compare_string_(Data,[A,B]) -->
             (A,ws_,B,ws_,"=")
     ]).
 
-compare_bool_(Data,[Exp1,Exp2]) -->
+compare_(Data,bool,[Exp1,Exp2]) -->
         langs_to_output(Data,compare_bool,[
         ['nim','z3py','pydatalog','e','ceylon','cython','perl 6','englishscript','cython','mathematical notation','dafny','wolfram','d','rust','r','minizinc','frink','picat','pike','pawn','processing','c++','ceylon','coffeescript','octave','swift','awk','julia','perl','groovy','erlang','haxe','scala','java','vala','dart','c#','c','go','haskell']:
                 (Exp1,("=="),Exp2),
-        ['javascript',php]:
+        ['javascript','php']:
                 (Exp1,("===";"=="),Exp2),
         ['prolog']:
                 (Exp1,"=",Exp2)
         ]).
 
-compare_int_(Data,[Var1,Var2]) -->
+compare_(Data,int,[Var1,Var2]) -->
         langs_to_output(Data,compare_int,[
         ['r']:
                 ("identical",ws,"(",ws,Var1,ws,",",ws,Var2,ws,")"),
@@ -3420,9 +3430,9 @@ int_not_equal_(Data,[A,B]) -->
 				(A,ws_,synonym("does not equal"),ws_,B),
         ['javascript',php,elixir]:
                 (infix_operator(("!==";"!="),A,B)),
-        ['java','ruby','python',cosmos,'nim','octave',r,'picat','englishscript','perl 6','wolfram','c','c++','d','c#','julia','perl','haxe','cython',minizinc,'scala','swift','go','rust',vala]:
+        ['java','ruby','python','cosmos','nim','octave','r','picat','englishscript','perl 6','wolfram','c','c++','d','c#','julia','perl','haxe','cython','minizinc','scala','swift','go','rust','vala']:
                 (infix_operator("!=",A,B)),
-        [rebol,'scriptol','seed7','visual basic','visual basic .net','gap','ocaml','livecode','monkey x',vbscript,delphi]:
+        ['rebol','scriptol','seed7','visual basic','visual basic .net','gap','ocaml','livecode','monkey x',vbscript,delphi]:
                 (infix_operator("<>",A,B)),
         ['prolog']:
                 ("(",ws,A,ws,"#\\=",ws,B,ws,")";"dif",ws,"(",ws,A,ws,",",ws,B,ws,")"),
@@ -3433,7 +3443,7 @@ int_not_equal_(Data,[A,B]) -->
 pow_(Data,[A,B]) -->
     langs_to_output(Data,pow,[
     ['javascript','java','typescript','haxe','actionscript']:
-            ("Math",ws,".",ws,"pow",ws,"(",ws,A,ws,",",ws,B,ws,")"),
+            ("Math",ws,".",ws,"pow",ws,"(",!,ws,A,ws,",",ws,B,ws,")"),
     ['coffeescript']:
 			("Math",python_ws,".",python_ws,"pow",python_ws,"(",python_ws,A,python_ws,",",python_ws,B,python_ws,")"),
     ['seed7','ruby','chapel','haskell','cobol','picat','ooc','pl/i','rexx','maxima','awk','r','f#','autohotkey','tcl','autoit','groovy','octave','perl','perl 6','fortran']:
@@ -3468,8 +3478,8 @@ sqrt(Data,[X]) -->
         langs_to_output(Data,sqrt,[
         ['livecode']:
                 ("(",ws,"the",ws_,"sqrt",ws_,"of",ws_,X,ws,")"),
-        ['java','javascript','typescript','haxe']:
-                ("Math",ws,".",ws,"sqrt",ws,"(",ws,X,ws,")"),
+        ['java','javascript','typescript','haxe','ruby']:
+                ("Math",ws,".",ws,"sqrt",ws,"(",!,ws,X,ws,")"),
         ['c#']:
                 ("Math",ws,".",ws,"Sqrt",ws,"(",ws,X,ws,")"),
         ['c','seed7','julia','perl','php','perl 6','maxima','minizinc','prolog','octave','d','haskell','swift','mathematical notation','dart','picat']:
@@ -3547,7 +3557,7 @@ startswith_(Data,[Str1,Str2]) -->
         ['ruby']:
                 (Str1,ws,".",ws,"start_with?",ws,"(",ws,Str2,ws,")"),
         ['java','javascript']:
-                (Str1,ws,".",ws,"startsWith",ws,"(",ws,Str2,ws,")"),
+                (Str1,ws,".",ws,"startsWith",ws,"(",!,ws,Str2,ws,")"),
         ['english_temp']:
                 (Str1,ws_,("starts";"begins"),ws_,"with",ws_,Str2),
         ['swift']:
@@ -3569,7 +3579,7 @@ startswith_(Data,[Str1,Str2]) -->
 endswith_(Data,[Str1,Str2]) -->
         langs_to_output(Data,endswith,[
         ['java','javascript']:
-                (Str1,ws,".",ws,"endsWith",ws,"(",ws,Str2,ws,")"),
+                (Str1,ws,".",ws,"endsWith",ws,"(",!,ws,Str2,ws,")"),
         ['ruby']:
                 (Str1,ws,".",ws,"end_with?",ws,"(",ws,Str2,ws,")"),
         ['swift']:
@@ -3593,7 +3603,7 @@ endswith_(Data,[Str1,Str2]) -->
 trim_(Data,[Str]) -->
         langs_to_output(Data,trim,[
         ['java','javascript']:
-                (Str,ws,".",ws,"trim",ws,"(",ws,")"),
+                (Str,ws,".",ws,"trim",ws,"(",!,ws,")"),
         ['c#']:
                 (Str,ws,".",ws,"Trim",ws,"(",ws,")"),
         ['python']:
@@ -3663,7 +3673,7 @@ rstrip_(Data,[Str]) -->
 lowercase_(Data,[Str]) -->
         langs_to_output(Data,lowercase,[
         ['java','javascript','haxe']:
-                (Str,ws,".",ws,"toLowerCase",ws,"(",ws,")"),
+                (Str,ws,".",ws,"toLowerCase",ws,"(",!,ws,")"),
         ['c#']:
                 (Str,ws,".",ws,"ToLower",ws,"(",ws,")"),
         ['systemverilog']:
@@ -3703,7 +3713,7 @@ array_contains(Data,[Container,Contained]) -->
                 (Container,ws,"[",ws,Contained,ws,"]",ws,"~=",ws,"nil"),
         ['rebol']:
                 ("not",ws_,"none?",ws_,"find",ws_,Container,ws_,Contained),
-        ['javascript','coffeescript']:
+        ['javascript','coffeescript','typescript']:
                 ("(",ws,Container,ws,".",ws,"indexOf",ws,"(",ws,Contained,ws,")",ws,"!==",ws,"-1",ws,")";
                 Container,ws,".",ws,"includes",ws,"(",ws,Contained,ws,")"),
         ['coffeescript']:
@@ -3754,7 +3764,7 @@ this_(Data,[A]) -->
     ['coffeescript','ruby']:
             ("@",A),
     ['java','engscript','dart','groovy','typescript','javascript','c#','c++','haxe','chapel','julia']:
-            ("this",ws,".",ws,A),
+            ("this",ws,".",!,ws,A),
     ['php','hack']:
             ("$",ws,"this",ws,"->",ws,A),
     ['swift','scala']:
@@ -4012,7 +4022,7 @@ sort_in_place_(Data,[List]) -->
 			['python','javascript']:
 				(List,python_ws,".",python_ws,"sort",python_ws,"(",python_ws,")"),
 			['ruby']:
-				(List,ws,".",ws,"sort!").
+				(List,ws,".",ws,"sort!"),
 			['c++']:
 				("std::sort",ws,"(",ws,"std::begin",ws,"(",ws,List,ws,")",ws,",",ws,"std::end",ws,"(",ws,List,ws,")",ws,")"),
 			['php']:
@@ -4095,7 +4105,7 @@ grammar_or_(Data,[Var1,Var2]) -->
     ['peg.js','abnf','treetop']:
             (Var1,ws,"/",ws,Var2),
     ['prolog','definite clause grammars']:
-            (Var1,ws,";",ws,Var2)
+            (Var1,ws,";",!,ws,Var2)
     ]).
 
 grammar_and_(Data,[Var1,Var2]) -->
@@ -4104,7 +4114,7 @@ grammar_and_(Data,[Var1,Var2]) -->
             (Var1,ws,",",ws,Var2),
     ['lpeg']:
             (Var1,ws,"*",ws,Var2),
-    ['nearley','abnf','peg.js','antlr','marpa','wirth syntax notation']:
+    ['nearley','abnf','coco/r','peg.js','antlr','marpa','wirth syntax notation']:
             (Var1,ws_,Var2)
     ]).
 
@@ -4131,17 +4141,17 @@ eager_or_(Data,[Var1,Var2]) -->
 or_(Data,[Var1,Var2]) -->
     langs_to_output(Data,'or',[
     ['javascript','katahdin','perl 6','ruby','wolfram','chapel','elixir','frink','ooc','picat','janus','processing','pike','nools','pawn','matlab','hack','gosu','rust','autoit','autohotkey','typescript','ceylon','groovy','d','octave','awk','julia','scala','f#','swift','nemerle','vala','go','perl','java','haskell','haxe','c','c++','c#','dart',r]:
-        (Var1,ws,"||",ws,Var2),
-    [cosmos,'cython','vhdl','python','lua','seed7','pydatalog','livecode','englishscript','cython','gap','mathematical notation','genie','idp','maxima','engscript','ada','newlisp','ocaml','nim','coffeescript','pascal','delphi','erlang','rebol',php]:
+        (Var1,ws,"||",!,ws,Var2),
+    ['cosmos','cython','vhdl','python','lua','seed7','pydatalog','livecode','englishscript','cython','gap','mathematical notation','genie','idp','maxima','engscript','ada','newlisp','ocaml','nim','coffeescript','pascal','delphi','erlang','rebol','php']:
         (Var1,python_ws_,"or",python_ws_,Var2),
 	['english']:	
 		(Var1,python_ws_,"or",python_ws_,Var2),
     ['fortran']:
         (Var1,ws_,".OR.",ws_,Var2),
-    [z3,'clips','pddl','clojure','common lisp','emacs lisp','clojure',racket]:
+    ['z3','clips','pddl','clojure','common lisp','emacs lisp','clojure','racket']:
         ("(",ws,"or",ws_,Var1,ws_,Var2,ws,")"),
     ['prolog']:
-        (Var1,ws,";",ws,Var2),
+        (Var1,ws,";",!,ws,Var2),
     ['minizinc']:
         (Var1,ws,"\\/",ws,Var2),
     ['visual basic','monkey x','visual basic .net']:
@@ -4292,7 +4302,7 @@ sha1_(Data,[Str]) -->
 			("crypto:hash",ws,"(",ws,"sha",ws,",",ws,Str,ws,")"),
 		['ruby']:
 			("Digest::SHA1.hexdigest",ws,"(",ws,Str,ws,")")
-	]).
+	]),!.
 
 type_is_string(Data,[Object]) -->
 	langs_to_output(Data,type_is_string,[
@@ -4312,7 +4322,7 @@ type_is_string(Data,[Object]) -->
 			"\"string\"",ws,"==",ws,"type",ws,"(",ws,Object,ws,")"),
 		['javascript']:
 			(Object,ws_,"instanceof",ws_,"String",ws,"||",ws,"typeof",ws_,Object,ws,"===",ws,"\"string\"")
-	]).
+	]),!.
 
 type_is_bool(Data,[Object]) -->
 	langs_to_output(Data,type_is_bool,[
@@ -4329,7 +4339,7 @@ type_is_bool(Data,[Object]) -->
 		['javascript']:
 			("typeof",ws,"(",ws,Object,python_ws,")",ws,"==",ws,"\"boolean\"";
 			"\"boolean\"",ws,"==",ws,"typeof",ws,"(",ws,Object,ws,")")
-	]).
+	]),!.
 
 type_is_int(Data,[Object]) -->
 	langs_to_output(Data,type_is_int,[
@@ -4342,7 +4352,7 @@ type_is_int(Data,[Object]) -->
 			("is_int",ws,"(",ws,Object,ws,")"),
 		['ruby']:
 			(Object,ws,".instance_of?",ws_,"Integer")
-	]).
+	]),!.
 
 type_is_list(Data,[Object]) -->
 	langs_to_output(Data,type_is_list,[
@@ -4362,4 +4372,4 @@ type_is_list(Data,[Object]) -->
 			("is_array",ws,"(",ws,Object,ws,")"),
 		['perl']:
 			("ref",ws,"(",ws,Object,ws,")",ws_,"eq",ws_,"'ARRAY'")
-	]).
+	]),!.

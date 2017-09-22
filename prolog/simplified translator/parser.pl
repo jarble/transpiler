@@ -66,8 +66,8 @@ add_expr(Lang,add(Type,A,B)) --> add_(Lang,Type,mul_expr(Lang,A),add_expr(Lang,B
 add_expr(Lang,subtract(A,B)) --> mul_expr(Lang,A),ws,"-",!,ws,add_expr(Lang,B).
 
 mul_expr(Lang,A) --> dot_expr(Lang,A).
-mul_expr(Lang,multiply(A,B)) --> dot_expr(Lang,A),ws,"*",!,ws,mul_expr(Lang,B).
-mul_expr(Lang,divide(A,B)) --> dot_expr(Lang,A),ws,"/",!,ws,mul_expr(Lang,B).
+mul_expr(Lang,multiply(A,B)) --> parentheses_expr(Lang,A),ws,"*",!,ws,mul_expr(Lang,B).
+mul_expr(Lang,divide(A,B)) --> parentheses_expr(Lang,A),ws,"/",!,ws,mul_expr(Lang,B).
 
 expr(Lang,A) --> add_expr(Lang,A).
 expr(Lang,not_equals(Type,A,B)) --> not_equals_(Lang,Type,add_expr(Lang,A),add_expr(Lang,B)).
@@ -129,7 +129,6 @@ parentheses_expr(Lang,number(A)) --> a_double(A).
 parentheses_expr(Lang,A) --> var_name(Lang,Type,A).
 parentheses_expr(Lang,function_call(_,Name,Params)) -->
 	symbol(Name),ws,"(",!,ws,function_call_parameters(Lang,Params),ws,")",!.
-
 
 
 dot_expr(Lang,A) --> parentheses_expr(Lang,A).

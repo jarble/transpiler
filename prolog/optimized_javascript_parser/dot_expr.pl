@@ -4,6 +4,8 @@ dot_expr(Data,bool,startswith(Str1,Str2)) -->
 		parentheses_expr(Data,string,Str2)
 	]).
 
+
+
 dot_expr(Data,bool,endswith(Str1,Str2)) -->
 	endswith_(Data,[
 		parentheses_expr(Data,string,Str1),
@@ -29,9 +31,6 @@ dot_expr(Data,int,random_int_in_range(Start,End)) -->
 		expr(Data,int,End)
 	]).
 
-dot_expr(Data,string,get_user_input) -->
-	get_user_input_(Data).
-
 dot_expr(Data,double,sqrt(Exp1)) -->
 	sqrt(Data,[expr(Data,double,Exp1)]).
 
@@ -42,13 +41,6 @@ dot_expr(Data,Type,list_comprehension(Result,Var,Condition,Array)) -->
 		expr(Data,[array,Type],Array),
 		expr(Data,Type,Result),
 		expr(Data,bool,Condition)
-	]).
-
-dot_expr(Data,Type,list_comprehension_1(Result,Var,Array)) -->
-	list_comprehension_1_(Data,[
-		var_name_(Data,Type,Var),
-		expr(Data,[array,Type],Array),
-		expr(Data,Type,Result)
 	]).
 
 dot_expr(Data,[array,Type],reverse_list(List,Type)) -->
@@ -96,11 +88,6 @@ dot_expr(Data,int,strlen(A)) -->
 
 dot_expr(Data,int,array_length(A,Type)) -->
 	array_length(Data,[
-		parentheses_expr(Data,[array,Type],A)
-	]).
-
-dot_expr(Data,[array,Type],remove_duplicates(A,Type)) -->
-	remove_duplicates(Data,[
 		parentheses_expr(Data,[array,Type],A)
 	]).
 

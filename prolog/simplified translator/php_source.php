@@ -4,12 +4,13 @@ function infix_arithmetic_langs($lang){
 	return in_array($lang,array("javascript","perl","python","java","lua","c","c++","perl","ruby","haxe"));
 }
 function last_char($the_string){
-	return $the_string[strlen($the_string)-1];
+	return $the_string[(strlen($the_string))-1];
 }
 function index_in_array($the_arr,$to_find){
 	$i=0;
 	while($i<sizeof($the_arr)){
-		if($the_arr[$i]+0===$to_find){
+		$the_index=$the_arr[$i];
+		if($the_index+0===$to_find){
 			return $the_arr[$i];
 		}
 		else{
@@ -56,7 +57,7 @@ function if_statement($lang,$a,$b){
 	}
 }
 function elif_statement($lang,$a,$b){
-	if(in_array($lang,array("javascript","java","c","c++"))){
+	if(in_array($lang,array(("java"."script"),"java","c","c++"))){
 		return "else if(".$a."){".$b."}";
 	}
 	else{

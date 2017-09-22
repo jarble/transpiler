@@ -1,18 +1,20 @@
 
 
 
+
 function infix_arithmetic_langs(lang){
 	return ["javascript","perl","python","java","lua","c","c++","perl","ruby","haxe"].indexOf(lang) !== -1;
 }
 
 function last_char(the_string){
-	return the_string.charAt(the_string.length - 1);
+	return the_string.charAt((the_string.length) - 1);
 }
 
 function index_in_array(the_arr,to_find){
 	var i = 0;
 	while(i < the_arr.length){
-		if(the_arr[i]+0 === to_find){
+		var the_index = the_arr[i];
+		if(the_index+0 === to_find){
 			return the_arr[i];
 		}
 		else{
@@ -63,7 +65,7 @@ function if_statement(lang,a,b){
 }
 
 function elif_statement(lang,a,b){
-	if(["javascript","java","c","c++"].indexOf(lang) !== -1){
+	if([("java"+"script"),"java","c","c++"].indexOf(lang) !== -1){
 		return "else if("+a+"){"+ b +"}";
 	}
 	else{

@@ -4,14 +4,6 @@ optional_indent(Data,Indent,Data1) -->
         },
         optional_indent(Data,Indent),!.
 
-statement(Data,enum(Name,Body)) -->
-        namespace(Data,Data1,Name,Indent),
-        enum_(Data,[
-			symbol(Name),
-			enum_list(Data1,Body),
-			Indent
-		]),!.
-
 statement(Data,Type1,function(Name,Type,Params1,Body)) -->
         %put this at the beginning of each statement without a semicolon
 		namespace(Data,Data1,Name1,Indent),
@@ -118,14 +110,6 @@ statement(Data,Return_type,if(Expr_,Statements_,Elif_or_else_,Else_)) -->
 statement(Data,Return_type,if_without_else(Expr_,Statements_,Elif_or_else_,Else_)) -->
         optional_indent(Data,Indent,Data1),
         if_without_else_(Data,[
-                expr(Data,bool,Expr_),
-                statements(Data1,Return_type,Statements_),
-				Indent
-        ]),!.
-
-statement(Data,Return_type,unless(Expr_,Statements_,Elif_or_else_,Else_)) -->
-        optional_indent(Data,Indent,Data1),
-        unless_(Data,[
                 expr(Data,bool,Expr_),
                 statements(Data1,Return_type,Statements_),
 				Indent

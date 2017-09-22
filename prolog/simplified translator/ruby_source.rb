@@ -4,12 +4,13 @@ def infix_arithmetic_langs(lang)
 	return ["javascript","perl","python","java","lua","c","c++","perl","ruby","haxe"].include?(lang)
 end 
 def last_char(the_string) 
-	return the_string[the_string.size-1]
+	return the_string[(the_string.size)-1]
 end 
 def index_in_array(the_arr,to_find) 
 	i=0 
 	while(i<the_arr.size) do 
-		if the_arr[i]+0==to_find then 
+		the_index=the_arr[i] 
+		if the_index+0==to_find then 
 			return the_arr[i]
 		else 
 			i=i+1
@@ -51,7 +52,7 @@ def if_statement(lang,a,b)
 	end
 end 
 def elif_statement(lang,a,b) 
-	if ["javascript","java","c","c++"].include?(lang) then 
+	if [("java"+"script"),"java","c","c++"].include?(lang) then 
 		return "else if("+a+"){"+b+"}"
 	else 
 		return "undefined"

@@ -1,3 +1,4 @@
+:-style_check(-singleton).
 :- use_module(prolog/transpiler).
 :- set_prolog_flag(double_quotes,chars).
 :- initialization(main).
@@ -13,4 +14,4 @@ user:prolog_exception_hook(Exception, Exception, Frame, _):-
 
 main :-
 	File='input.txt',read_file_to_codes(File,Input_,[]),atom_codes(Input,Input_),
-	writeln(Input),translate_langs(Input).
+	writeln(Input),profile(translate_langs(Input)).
