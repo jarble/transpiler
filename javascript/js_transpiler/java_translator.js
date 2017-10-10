@@ -624,7 +624,8 @@ function generate_code(input_lang,lang,indent,arr){
 	else if(
 		matching_patterns(pattern_array,input_lang,lang,arr,[
 			[["java"],[".",[[".",["Arrays",["function_call","asList",["$a"]]]],["function_call","contains",["$b"]]]]],
-			[["javascript"],["!=",[".",["$a",["function_call","indexOf",["$b"]]]],["-",[".",["1"]]]]]
+			[["javascript"],["!=",[".",["$a",["function_call","indexOf",["$b"]]]],["-",[".",["1"]]]]],
+			[["php"],["function_call","in_array",["$b","$a"]]]
 		],matching_symbols)
 	){
 		var a1 = generate_code(input_lang,lang,indent,matching_symbols["$a"]);
@@ -2998,8 +2999,11 @@ function generate_code(input_lang,lang,indent,arr){
 		else if(member(lang,["peg.js"])){
 			to_return = params+":"+name;
 		}
-		else if(member(lang,['haskell','ocaml','smt-lib','smt-lib','clips','clojure','common lisp','clips','racket','scheme','rebol'])){
+		else if(member(lang,['haskell','ocaml','smt-lib','smt-lib','clips','clojure','common lisp','clips','racket','scheme'])){
 			to_return = "(" + name + " " + params + ")";
+		}
+		else if(member(lang,['rebol'])){
+			to_return = name + " " + params;
 		}
 		types[to_return] = types[name];
 	}
