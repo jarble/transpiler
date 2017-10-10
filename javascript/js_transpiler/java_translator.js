@@ -2351,8 +2351,11 @@ function generate_code(input_lang,lang,indent,arr){
 	}
 	else if(arr[0] === "initializer_list"){
 		var list_inner = arr[2].map(function(x){return generate_code(input_lang,lang,indent,x)});
-		if(member(lang,['ruby', 'cosmos', 'python', 'cython', 'nim','d','frink','rebol','octave','julia','prolog','constraint handling rules','minizinc','engscript','cython','groovy','dart','typescript','coffeescript','nemerle','javascript','haxe','haskell','rebol','polish notation','swift'])){
+		if(member(lang,['ruby', 'cosmos', 'python', 'cython', 'nim','d','frink','octave','julia','prolog','constraint handling rules','minizinc','engscript','cython','groovy','dart','typescript','coffeescript','nemerle','javascript','haxe','haskell','rebol','polish notation','swift'])){
 			to_return = "["+list_inner.join(",")+"]";
+		}
+		else if(member(lang,["rebol"])){
+			to_return = "["+list_inner.join(" ")+"]";
 		}
 		else if(member(lang,["perl","chapel"])){
 			to_return = "("+list_inner.join(",")+")";
