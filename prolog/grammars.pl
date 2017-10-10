@@ -1744,7 +1744,7 @@ set_array_index_(Data,[Name,Index,Value]) -->
 
 mod_(Data,[A,B]) -->
     langs_to_output(Data,mod,[
-    ['java','perl 6','python','cython','rust','typescript','frink','ooc','genie','pike','ceylon','pawn','powershell','coffeescript','gosu','groovy','engscript','awk','julia','scala','f#','swift','r','perl','nemerle','haxe','php','hack','vala','tcl','go','dart','javascript','c','c++','c#']:
+    ['java','lua','ruby','perl 6','python','cython','rust','typescript','frink','ooc','genie','pike','ceylon','pawn','powershell','coffeescript','gosu','groovy','engscript','awk','julia','scala','f#','swift','r','perl','nemerle','haxe','php','hack','vala','tcl','go','dart','javascript','c','c++','c#']:
         (A,python_ws,"%",python_ws,B),
     ['rebol']:
         ("mod",ws_,A,ws_,B),
@@ -3956,9 +3956,9 @@ substring_(Data,[A,B,C]) -->
 
 not_(Data,[A]) -->
         langs_to_output(Data,'not',[
-        ['python','cython','pddl','mathematical notation','emacs lisp','minizinc','picat','genie','seed7','z3','idp','maxima','clips','engscript','hy','ocaml','clojure','erlang','pascal','delphi','f#','ml','racket','common lisp','rebol','haskell','sibilant']:
+        ['python','lua','!','cython','pddl','mathematical notation','emacs lisp','minizinc','picat','genie','seed7','z3','idp','maxima','clips','engscript','hy','ocaml','clojure','erlang','pascal','delphi','f#','ml','racket','common lisp','rebol','haskell','sibilant']:
                 ("(",python_ws,"not",python_ws_,A,python_ws,")"),
-        ['java','perl 6','katahdin','coffeescript','frink','d','ooc','ceylon','processing','janus','pawn','autohotkey','groovy','scala','hack','rust','octave','typescript','julia','awk','swift','scala','vala','nemerle','pike','perl','c','c++','objective-c','tcl','javascript','r','dart','java','go','php','haxe','c#','wolfram']:
+        ['java','ruby','perl 6','katahdin','coffeescript','frink','d','ooc','ceylon','processing','janus','pawn','autohotkey','groovy','scala','hack','rust','octave','typescript','julia','awk','swift','scala','vala','nemerle','pike','perl','c','c++','objective-c','tcl','javascript','r','dart','java','go','php','haxe','c#','wolfram']:
                 ("!",A),
         ['prolog']:
                 ("\\+",A),
@@ -4049,6 +4049,8 @@ uppercase_(Data,[Str]) -->
                 ("uc",ws,"(",ws,Str,ws,")"),
         ['php']:
                 ("strtoupper",ws,"(",ws,Str,ws,")"),
+        ['julia']:
+                ("uppercase",ws,"(",ws,Str,ws,")"),
         ['java','javascript','haxe']:
                 (Str,ws,".",ws,"toUpperCase",ws,"(",ws,")"),
         ['c#']:
