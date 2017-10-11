@@ -834,9 +834,9 @@ function generate_code(input_lang,lang,indent,arr){
 	}
 	else if(matching_patterns(pattern_array,input_lang,lang,arr,[
 		[['javascript','ruby','coffeescript','java','dart','scala','groovy','haxe','rust','typescript','python','cython','vala'],
-			[".",["strings",["function_call","split",["$a","$b"]]]]],
+			[".",["$a",["function_call","split",["$b"]]]]],
 		[['go'],
-		[".",["$a",["function_call","split",["$b"]]]]],
+			[".",["strings",["function_call","split",["$a","$b"]]]]],
 		[['swift'],
 			[".",["$a",["function_call","componentsSeparatedByString",["$b"]]]]],
 		[["perl","processing"],
