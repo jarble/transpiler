@@ -3718,7 +3718,10 @@ function type_conversion(lang,type1, type2, expr){
 
 function while_loop(lang,arr1,arr2,indent){
 	if(member(lang,['c','perl 6','katahdin','chapel','ooc','processing','pike','kotlin','pawn','powershell','hack','gosu','autohotkey','ceylon','d','typescript','actionscript','nemerle','dart','swift','groovy','scala','java','javascript','php','c#','perl','c++','haxe','r','awk','vala'])){
-		return "while(" + arr1 + "){" + arr2 + indent+ "}";
+		return "while(" + arr1 + "){" + arr2 + indent + "}";
+	}
+	if(member(lang,['go'])){
+		return "for " + arr1 + "{" + arr2 + indent+ "}";
 	}
 	if(member(lang,["rebol"])){
 			return "while[" + arr1 + "] [" + arr2 + indent+ "]";
