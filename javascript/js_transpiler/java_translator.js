@@ -8,7 +8,7 @@ var class_name = "";
 function test_examples(){
 	var lang1;
 	var inputText;
-	for(lang1 of ["c++","haxe","java","perl","c#","ruby","python","prolog","julia"]){
+	for(lang1 of ["c++","haxe","java","perl","c#","ruby","python","prolog","julia","go"]){
 	//for(lang1 of ["java","perl","prolog","haxe","ocaml","common lisp","c++","c#","swift","go","typescript","lua","ruby","python","php","wolfram","minizinc","scala","visual basic .net","haskell"]){
 		for(inputText of [
 			"int a1 = 0; while(a1 < 10){a1 += 1;}",
@@ -583,6 +583,7 @@ function generate_code(input_lang,lang,indent,arr){
 	else if(matching_patterns(pattern_array,input_lang,lang,arr,[
 		[['java','javascript','haxe'],[".",["$a",["function_call","toUpperCase",[]]]]],
 		[['lua'],[".",["string",["function_call","toUpperCase",["$a"]]]]],
+		[['go'],[".",["string",["function_call","ToLower",["$a"]]]]],
 		[['julia'],["function_call","uppercase",["$a"]]],
 		[['c#'],[".",["$a",["function_call","UpperCase",[]]]]],
 		[['python'],[".",["$a",["function_call","upper",[]]]]],
@@ -833,7 +834,9 @@ function generate_code(input_lang,lang,indent,arr){
 	}
 	else if(matching_patterns(pattern_array,input_lang,lang,arr,[
 		[['javascript','ruby','coffeescript','java','dart','scala','groovy','haxe','rust','typescript','python','cython','vala'],
-			[".",["$a",["function_call","split",["$b"]]]]],
+			[".",["strings",["function_call","split",["$a","$b"]]]]],
+		[['go'],
+		[".",["$a",["function_call","split",["$b"]]]]],
 		[['swift'],
 			[".",["$a",["function_call","componentsSeparatedByString",["$b"]]]]],
 		[["perl","processing"],
@@ -3078,7 +3081,8 @@ function generate_code(input_lang,lang,indent,arr){
 		[['python'],[".",["$a",["function_call","lower",[]]]]],
 		[['php'],["function_call","strtolower",["$a"]]],
 		[['perl'],["function_call","lc",["$a"]]],
-		[["lua"],[".",["string",["function_call","lower",["$a"]]]]]
+		[["lua"],[".",["string",["function_call","lower",["$a"]]]]],
+		[["go"],[".",["strings",["function_call","ToLower",["$a"]]]]]
 	],matching_symbols)){
 		var a = generate_code(input_lang,lang,indent,matching_symbols["$a"]);
 		if(member(lang,['scala'])){
