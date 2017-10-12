@@ -13,6 +13,7 @@
 "else"                return 'else'
 "class"               return 'class'
 "return"              return 'return'
+"yield"               return 'yield'
 "while"               return 'while'
 "then"                return "then"
 "for"                 return 'for'
@@ -113,6 +114,7 @@ statement
 statement_with_semicolon
    : 
    function_call
+   |"yield" e  {$$ = ["yield",$2];}
    |"return" e  {$$ = ["return",$2];}
    | "local" IDENTIFIER "=" e {$$ = ["initialize_var","Object",$2,$4];}
    | "local" identifiers {$$ = ["initialize_empty_vars","Object",$2];}

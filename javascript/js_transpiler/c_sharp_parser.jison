@@ -6,6 +6,8 @@
 [0-9]+("."[0-9]+)?\b  return 'NUMBER'
 \"([^\\\"]|\\.)*\" return 'STRING_LITERAL'
 "class"               return "class"
+"yield"               return "yield"
+"await"               return "await"
 "public"              return "public"
 "extends"             return "extends"
 "implements"          return "implements"
@@ -17,6 +19,7 @@
 "else"                return "else"
 "return"              return "return"
 "while"               return "while"
+"async"               return "async"
 "foreach"             return "foreach"
 "for"                 return "for"
 "new"                 return "new"
@@ -102,6 +105,7 @@ statement
     | "foreach" "(" type IDENTIFIER "in" IDENTIFIER ")" bracket_statements {$$ = ["foreach",$3,$4,$6,$8];}
     | if_statement
     | "public" "static" type IDENTIFIER "(" parameters ")" "{" statements "}" {$$ = ["function",$1,$3,$4,$6,$9];}
+    | "public" "static" "async" type IDENTIFIER "(" parameters ")" "{" statements "}" {$$ = ["async_function",$1,$4,$5,$7,$10];}
     ;
 
 class_statement:
@@ -115,7 +119,8 @@ class_statement:
 
 statement_with_semicolon
    : 
-   "return" e  {$$ = ["return",$2];}
+   "yield" "return" e  {$$ = ["yield",$3];}
+   | "return" e  {$$ = ["return",$2];}
    | "final" type IDENTIFIER "=" e {$$ = ["initialize_constant",$2,$3,$5];}
    | "final" type identifiers {$$ = ["initialize_empty_constants",$2,$3];}
    | type IDENTIFIER "=" "{" exprs "}" {$$ = ["initialize_var",$1,$2,["initializer_list",$1,$5]]}
@@ -170,7 +175,7 @@ e:
     | not_expr
     ;
 
-not_expr: "!" dot_expr {$$ = ["!", [".",$2]];} | dot_expr {$$ = [".", $1];};
+not_expr: "!" dot_expr {$$ = ["!", [".",$2]];} | "await" dot_expr {return ["await", [".",$2]]} | dot_expr {$$ = [".", $1];};
 
 
 dot_expr: initializer_list  "." dot_expr {$$ = [$1].concat($3);} | parentheses_expr  "." dot_expr {$$ = [$1].concat($3);} | parentheses_expr {$$ =

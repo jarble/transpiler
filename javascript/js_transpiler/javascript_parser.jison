@@ -11,10 +11,11 @@
 "if"                  return 'if'
 "else"                return 'else'
 "return"              return 'return'
+"yield"               return 'yield'
 "while"               return 'while'
 "for"                 return 'for'
 "var"                 return 'var'
-"of"                 return 'of'
+"of"                  return 'of'
 ","                   return ','
 ";"                   return ';'
 "."                   return '.'
@@ -27,6 +28,7 @@
 "<"                   return '<'
 "==="                 return '==='
 "!=="                 return '!=='
+"!"                   return "!"
 "="                   return '='
 "*="                  return '*='
 "*"                   return '*'
@@ -105,6 +107,7 @@ class_statement:
 statement_with_semicolon
    : 
    "return" e  {$$ = ["return",$2];}
+   | "yield" e  {$$ = ["yield",$2];}
    | "var" IDENTIFIER "=" e {$$ = ["initialize_var","Object",$2,$4];}
    | "var" identifiers {$$ = ["initialize_empty_vars","Object",$2];}
    | access_array "=" e {$$ = ["set_var",$1,$3];}
@@ -147,8 +150,10 @@ e
         {$$ = ["/",$1,$3];}
     | '-' e %prec UMINUS
         {$$ = ["-",$2];}
-    | dot_expr {$$ = [".", $1];}
+    | not_expr
     ;
+
+not_expr: "!" dot_expr {$$ = ["!", [".",$2]];} | "await" dot_expr {return ["await", [".",$2]]} | dot_expr {$$ = [".", $1];};
 
 
 dot_expr: parentheses_expr  "." dot_expr  {$$ = [$1].concat($3);} | parentheses_expr {$$ =
