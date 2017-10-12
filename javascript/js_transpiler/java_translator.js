@@ -674,7 +674,7 @@ function generate_code(input_lang,lang,indent,arr){
 	}
 	else if(arr[0] === "await"){
 		arr[1] = generate_code(input_lang,lang,indent,arr[1]);
-		else if(member(lang,['c#','javascript','python','typescript'])){
+		if(member(lang,['c#','javascript','python','typescript'])){
 			to_return = "await "+arr[1];
 		}
 		types[to_return] = types[arr[1]];
