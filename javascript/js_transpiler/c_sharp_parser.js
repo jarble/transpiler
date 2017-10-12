@@ -202,7 +202,7 @@ case 67:
 this.$ = ["!", [".",$$[$0]]];
 break;
 case 68:
-return ["await", [".",$$[$0]]]
+this.$ = ["await", [".",$$[$0]]]
 break;
 case 69:
 this.$ = [".", $$[$0]];
