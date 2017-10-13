@@ -6,9 +6,11 @@
 [0-9]+("."[0-9]+)?\b  return 'NUMBER'
 \"([^\\\"]|\\.)*\" return 'STRING_LITERAL'
 "HashMap"             return 'HashMap'
+"default"             return 'default'
 "Object"              return 'Object'
 "class"               return 'class'
 "enum"                return 'enum'
+"case"                return 'case'
 "public"              return 'public'
 "extends"             return 'extends'
 "final"               return 'final'
@@ -22,12 +24,14 @@
 "else"                return 'else'
 "return"              return 'return'
 "while"               return 'while'
+"break"               return 'break'
+"switch"              return 'switch'
 "for"                 return 'for'
 "new"                 return 'new'
 "put"                 return 'put'
 ","                   return ','
 ";"                   return ';'
-"..."                   return '...'
+"..."                 return '...'
 "."                   return '.'
 ":"                   return ':'
 "&&"                  return '&&'
@@ -83,7 +87,7 @@ expressions: statements_ EOF {return ["top_level_statements",$1]};
 
 statements_: statement statements_ {$$ = [$1].concat($2);} | statement {$$ =
  [$1];};
- 
+
 class_statements: class_statements_ {$$ = ["class_statements",$1]};
 statements: statements_ {$$ = ["statements",$1]};
 
@@ -108,11 +112,17 @@ statement
     statement_with_semicolon ";" {$$ = ["semicolon",$1];}
     | class_
     | "while" "(" e ")" bracket_statements {$$ = ["while",$3,$5];}
+    | "switch" "(" e ")" "{" case_statements "}" {$$ = ["switch",$3,$6];}
     | "for" "(" statement_with_semicolon ";" e ";" statement_with_semicolon ")" bracket_statements {$$ = ["for",$3,$5,$7,$9];}
     | "for" "(" type IDENTIFIER ":" IDENTIFIER ")" "{" statements "}" {$$ = ["foreach",$3,$4,$6,$9];}
     | if_statement
     | "public" "static" type IDENTIFIER "(" parameters ")" "{" statements "}" {$$ = ["function",$1,$3,$4,$6,$9];}
     ;
+
+case_statement: "case" e ":" statements "break" ";" {$$ = ["case",$2,$4]};
+case_statements_: case_statement case_statements_ {$$ = [$1].concat($2);} | case_statement {$$ =
+ [$1];};
+case_statements: case_statements_ "default" ":" statements {$$ = $1.concat([["default",$4]])} | case_statements_;
 
 class_statement:
 	access_modifier IDENTIFIER "(" parameters ")" "{" statements "}" {$$ = ["constructor",$1,$2,$4,$7];}

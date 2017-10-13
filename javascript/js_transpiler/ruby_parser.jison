@@ -11,6 +11,8 @@
 "elsif"               return 'elsif'
 "if"                  return 'if'
 "else"                return 'else'
+"when"                return 'when'
+"case"                return 'case'
 "class"               return 'class'
 "return"              return 'return'
 "yield"               return 'yield'
@@ -18,7 +20,6 @@
 "then"                return "then"
 "for"                 return 'for'
 "do"                  return 'do'
-"of"                  return 'of'
 ","                   return ','
 "."                   return '.'
 ":"                   return ':'
@@ -98,6 +99,11 @@ class_statements: class_statements_ {$$ = ["class_statements",$1]};
 
 statements: statements_ {$$ = ["statements",$1]};
 
+case_statement: "when" e statements {$$ = ["case",$2,$3]};
+case_statements_: case_statement case_statements_ {$$ = [$1].concat($2);} | case_statement {$$ =
+ [$1];};
+case_statements: case_statements_ "else" statements {$$ = $1.concat([["default",$3]])} | case_statements_;
+
 
 statement
     :
@@ -106,6 +112,7 @@ statement
     | class_
     | "while" e "do" statements "end" {$$ = ["while",$2,$4];}
     | "while" e statements "end" {$$ = ["while",$2,$3];}
+    | "case" e case_statements "end" {$$ = ["switch",$2,$3];}
     | IDENTIFIER "." "each" "do" "|" IDENTIFIER "|" statements "end" {$$ = ["foreach","Object",$6,$1,$8];}
     | if_statement
     | "def" IDENTIFIER "(" parameters ")" statements "end" {$$ = ["function","public","Object",$2,$4,$6];}

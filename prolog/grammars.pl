@@ -1064,7 +1064,7 @@ println_(Data,[A,Type]) -->
 
 times_equals_(Data,[Name,Expr]) -->
         langs_to_output(Data,times_equals,[
-        ['c','c++','java','c#','javascript',php,'perl']:
+        ['c','c++','java','c#','javascript','php','perl']:
                 (Name,ws,"*=",ws,Expr),
         ['coffeescript','python']:
 				(Name,python_ws,"*=",python_ws,Expr),
@@ -1506,7 +1506,7 @@ anonymous_function_(Data,[Type,Params,B]) -->
                 ("{",ws,"|",ws,Params,ws,"|",ws,B,ws,"}"),
         ['erlang']:
                 ("fun",ws,"(",ws,Params,ws,")",ws_,B,"end"),
-        ['julia']:
+        ['julia','lua']:
                 ("function",ws,"(",ws,Params,ws,")",ws_,B,"end"),
         ['swift']:
                 ("{",ws,"(",ws,Params,ws,")",ws,"->",ws,Type,ws_,"in",ws_,B,ws,"}"),
@@ -2663,7 +2663,7 @@ first_case_(Data,[B,Compare_expr,Expr,Case_or_default]) -->
     langs_to_output(Data,first_case,[
     ['julia',octave]:
             ("if",ws_,Compare_expr,ws_,"then",ws_,B,ws_,Case_or_default),
-    ['javascript','d','java','c#','c','c++','typescript','dart',php,hack]:
+    ['javascript','d','java','c#','c','c++','typescript','dart','php',hack]:
 			("case",ws_,Expr,ws,":",!,ws,B,ws,"break",ws,";",!,ws,Case_or_default),
     [go,'haxe',swift]:
             ("case",ws_,Expr,ws,":",ws,B,ws,Case_or_default),
@@ -2695,7 +2695,7 @@ case(Data,[A,B,Expr,Case_or_default,Indent]) -->
     langs_to_output(Data,case,[
     ['julia',octave]:
             ("elsif",ws_,A,ws_,"then",ws_,B,ws,Case_or_default),
-    ['javascript','d','java','c#','c','c++','typescript','dart',php,hack]:
+    ['javascript','d','java','c#','c','c++','typescript','dart','php','hack']:
             ("case",ws_,Expr,ws,":",!,ws,B,ws,"break",ws,";",!,ws,Case_or_default),
     [go,'haxe',swift]:
             ("case",ws_,Expr,ws,":",ws,B,ws,Case_or_default),
@@ -3428,7 +3428,7 @@ int_not_equal_(Data,[A,B]) -->
         langs_to_output(Data,int_not_equal,[
         ['english']:
 				(A,ws_,synonym("does not equal"),ws_,B),
-        ['javascript',php,elixir]:
+        ['javascript','php',elixir]:
                 (infix_operator(("!==";"!="),A,B)),
         ['java','ruby','python','cosmos','nim','octave','r','picat','englishscript','perl 6','wolfram','c','c++','d','c#','julia','perl','haxe','cython','minizinc','scala','swift','go','rust','vala']:
                 (infix_operator("!=",A,B)),

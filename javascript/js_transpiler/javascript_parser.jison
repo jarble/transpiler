@@ -10,6 +10,7 @@
 "class"               return "class"
 "if"                  return 'if'
 "else"                return 'else'
+"case"                return "case"
 "return"              return 'return'
 "yield"               return 'yield'
 "while"               return 'while'
@@ -79,6 +80,9 @@ statements_: statement statements_ {$$ = [$1].concat($2);} | statement {$$ =
 class_statements: class_statements_ {$$ = ["class_statements",$1]};
 statements: statements_ {$$ = ["statements",$1]};
 
+case_statement: "case" e ":" statements "break" ";" {$$ = ["case",$2,$4]};
+case_statements: case_statement case_statements {$$ = [$1].concat($2);} | case_statement {$$ =
+ [$1];};
 
 class_statements_: class_statement class_statements_ {$$ = [$1].concat($2);} | class_statement {$$ =
  [$1];};
@@ -93,6 +97,7 @@ statement
     statement_with_semicolon ";" {$$ = ["semicolon",$1];}
     | class_
     | "while" "(" e ")" bracket_statements {$$ = ["while",$3,$5];}
+    | "switch" "(" e ")" "{" case_statements "}" {$$ = ["switch",$3,$6];}
     | "for" "(" IDENTIFIER "of" dot_expr ")" "{" statements "}" {$$ = ["foreach","Object",$3,$5,$8];}
     | "for" "(" statement_with_semicolon ";" e ";" statement_with_semicolon ")" bracket_statements {$$ = ["for",$3,$5,$7,$9];}
     | if_statement

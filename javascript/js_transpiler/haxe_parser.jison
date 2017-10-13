@@ -19,14 +19,17 @@
 "function"            return 'function'
 "if"                  return 'if'
 "else"                return 'else'
+"case"                return "case"
 "return"              return 'return'
 "while"               return 'while'
+"break"               return 'break'
+"switch"              return 'switch'
 "for"                 return 'for'
 "new"                 return 'new'
 "var"                 return 'var'
 ","                   return ','
 ";"                   return ';'
-"..."                   return '...'
+"..."                 return '...'
 "."                   return '.'
 ":"                   return ':'
 "&&"                  return '&&'
@@ -86,7 +89,9 @@ statements_: statement statements_ {$$ = [$1].concat($2);} | statement {$$ =
 class_statements: class_statements_ {$$ = ["class_statements",$1]};
 statements: statements_ {$$ = ["statements",$1]};
 
-
+case_statement: "case" e ":" statements "break" ";" {$$ = ["case",$2,$4]};
+case_statements: case_statement case_statements {$$ = [$1].concat($2);} | case_statement {$$ =
+ [$1];};
 class_statements_: class_statement class_statements_ {$$ = [$1].concat($2);} | class_statement {$$ =
  [$1];};
 
@@ -105,6 +110,7 @@ statement
     statement_with_semicolon ";" {$$ = ["semicolon",$1];}
     | class_
     | "while" "(" e ")" "{" statements "}" {$$ = ["while",$3,$6];}
+    | "switch" "(" e ")" "{" case_statements "}" {$$ = ["switch",$3,$6];}
     | "for" "(" type IDENTIFIER ":" IDENTIFIER ")" "{" statements "}" {$$ = ["foreach",$3,$4,$6,$9];}
     | if_statement
     | "function" IDENTIFIER "(" parameters ")" "{" statements "}" {$$ = ["function","public","Object",$2,$4,$7];}

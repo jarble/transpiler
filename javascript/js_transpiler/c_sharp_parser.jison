@@ -19,6 +19,7 @@
 "else"                return "else"
 "return"              return "return"
 "while"               return "while"
+"switch"               return "switch"
 "async"               return "async"
 "foreach"             return "foreach"
 "for"                 return "for"
@@ -101,12 +102,20 @@ statement
     statement_with_semicolon ";" {$$ = ["semicolon",$1];}
     | class_
     | "while" "(" e ")" bracket_statements {$$ = ["while",$3,$5];}
+    | "switch" "(" e ")" "{" case_statements "}" {$$ = ["switch",$3,$6];}
     | "for" "(" statement_with_semicolon ";" e ";" statement_with_semicolon ")" bracket_statements {$$ = ["for",$3,$5,$7,$9];}
     | "foreach" "(" type IDENTIFIER "in" IDENTIFIER ")" bracket_statements {$$ = ["foreach",$3,$4,$6,$8];}
     | if_statement
     | "public" "static" type IDENTIFIER "(" parameters ")" "{" statements "}" {$$ = ["function",$1,$3,$4,$6,$9];}
     | "public" "static" "async" type IDENTIFIER "(" parameters ")" "{" statements "}" {$$ = ["async_function",$1,$4,$5,$7,$10];}
     ;
+
+case_statement: "case" e ":" statements "break" ";" {$$ = ["case",$2,$4]};
+case_statements_: case_statement case_statements_ {$$ = [$1].concat($2);} | case_statement {$$ =
+ [$1];};
+
+case_statements: case_statements_ "default" ":" statements {$$ = $1.concat([["default",$4]])} | case_statements_;
+
 
 class_statement:
 	access_modifier type IDENTIFIER "=" e ";" {$$ = ["initialize_instance_var_with_value",$1,$2,$3,$5];}

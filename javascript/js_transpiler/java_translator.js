@@ -1029,22 +1029,75 @@ function generate_code(input_lang,lang,indent,arr){
 	}
 	else if(arr[0] === "switch"){
 		var expr = generate_code(input_lang,lang,indent,arr[1]);
-		var statements1 = generate_code(input_lang,lang,indent,arr[2]);
-		if(member(lang,["java","javascript","c","c++"])){
-			to_return = "switch("+expr+"){"+statements1+"}";
+		var statements1 = arr[2].map(function(a){
+			return generate_code(input_lang,lang,indent+"    ",a);
+		}).join("");
+		if(member(lang,['java','d','powershell','nemerle','d','typescript','hack','swift','groovy','dart','awk','c#','javascript','c++','php','c','go','haxe','vala'])){
+			to_return = "switch("+expr+"){"+statements1+indent+"}";
 		}
 		else if(member(lang,["ruby"])){
-			to_return = "case "+expr+" "+statements1 + " end";
+			to_return = "case "+expr+" "+statements1 +indent+ "end";
+		}
+		else if(member(lang,["visual basic .net"])){
+			to_return = "Select Case " + expr + statements1 + indent + "End Select";
+		}
+		else if(member(lang,["scala"])){
+			to_return = expr+" match{"+statements1 +indent+ "}";
+		}
+		else if(member(lang,["rebol"])){
+			to_return = "switch " +expr+ " ["+statements1 +indent+ "]";
+		}
+		else if(member(lang,["haskell","erlang"])){
+			to_return = "case "+expr+" of"+statements1 +indent+ "end";
 		}
 	}
 	else if(arr[0] === "case"){
-		var expr = generate_code(input_lang,lang,indent,arr[1]);
-		var statements1 = generate_code(input_lang,lang,indent,arr[2]);
+		var expr = generate_code(input_lang,lang,indent+"",arr[1]);
+		var statements1 = generate_code(input_lang,lang,indent+"    ",arr[2]);
 		if(member(lang,['javascript','d','java','c#','c','c++','typescript','dart','php','hack'])){
+			to_return = "case "+expr+": "+statements1+indent+"    break;";
+		}
+		else if(member(lang,['go','haxe','swift'])){
 			to_return = "case "+expr+": "+statements1;
 		}
-		if(member(lang,['ruby'])){
+		else if(member(lang,['visual basic .net'])){
+			to_return = "Case "+expr+statements1;
+		}
+		else if(member(lang,['ruby'])){
 			to_return = "when "+expr+" "+statements1;
+		}
+		else if(member(lang,['rebol'])){
+			to_return = expr+" ["+statements1+"]";
+		}
+		else if(member(lang,['clips'])){
+			to_return = "(case "+expr+" then "+statements1+")";
+		}
+		else if(member(lang,['haskell','erlang','elixir','ocaml'])){
+			to_return = expr+" ->"+statements1;
+		}
+		else if(member(lang,['scala'])){
+			to_return = expr+" =>"+statements1;
+		}
+	}
+	else if(arr[0] === "default"){
+		var statements1 = generate_code(input_lang,lang,indent+"    ",arr[1]);
+		if(member(lang,['javascript','swift','d','java','c#','c','c++','typescript','dart','php','hack'])){
+			to_return = "default:" + statements1;
+		}
+		else if(member(lang,['haskell','erlang','ocaml'])){
+			to_return = "_ ->" + statements1;
+		}
+		else if(member(lang,['visual basic .net'])){
+			to_return = "Case Else" + statements1;
+		}
+		else if(member(lang,['clips'])){
+			to_return = "(default " + statements1+")";
+		}
+		else if(member(lang,['rebol'])){
+			to_return = "][" + statements1;
+		}
+		else if(member(lang,['ruby'])){
+			to_return = "else" + statements1;
 		}
 	}
 	/*
@@ -1572,14 +1625,26 @@ function generate_code(input_lang,lang,indent,arr){
 		var params = parameters(input_lang,lang,arr[2]);
 		var body = generate_code(input_lang,lang,indent+"    ",arr[3]);
 		types[name] = type;
-		if(member(lang,["javascript","php"])){
+		if(member(lang,['javascript','typescript','haxe','r','php'])){
 			to_return = "function("+params+"){"+body+indent+"}";
 		}
-		else if(member(lang,["lua"])){
+		else if(member(lang,["lua","julia"])){
 			to_return = "function("+params+")"+body+indent+"end";
 		}
-		else if(member(lang,["haxe"])){
-			to_return = "function("+params+") "+body;
+		else if(member(lang,["erlang"])){
+			to_return = "fun("+params+")"+body+indent+"end";
+		}
+		else if(member(lang,["rust"])){
+			to_return = "fn("+params+"){"+body+indent+"}";
+		}
+		else if(member(lang,["haskell"])){
+			to_return = "(\\"+params+" -> "+body+")";
+		}
+		else if(member(lang,["rebol"])){
+			to_return = "func["+params+"]["+body+indent+"]";
+		}
+		else if(member(lang,["emacs lisp","scheme","clojure"])){
+			to_return = "(lambda ("+params+") "+body+")";
 		}
 		else if(member(lang,["java"])){
 			to_return = "("+params+") -> {"+body+indent+"}";
@@ -2566,6 +2631,9 @@ function generate_code(input_lang,lang,indent,arr){
 		}
 		else if(member(lang,['gap','seed7','delphi','vhdl'])){
 			to_return = arr[1] + " := " + arr[2];
+		}
+		else if(member(lang,['rebol'])){
+			to_return = arr[1] + " : " + arr[2];
 		}
 	}
 	else if(arr[0] === "number"){
@@ -3609,7 +3677,7 @@ function generate_code(input_lang,lang,indent,arr){
 }
 
 function is_a_statement(the_statement){
-	return member(the_statement,["overload_operator","async_function","yield","named_parameter","static_overload_operator","instance_overload_operator","initialize_var","class_extends","initialize_static_instance_var","initialize_static_instance_var_with_value","constructor","initialize_instance_var","initialize_instance_var_with_value","defrule","grammar_macro","predicate","grammar_statement","foreach_with_index","initialize_constant","initialize_empty_constants","println","function","initialize_empty_vars","return","else","else if","elif","if","if_statement","instance_method","static_method","class","return","set_var","while","for","foreach","++","--","+=","-=","*=","/="]);
+	return member(the_statement,["overload_operator","default","case","switch","async_function","yield","named_parameter","static_overload_operator","instance_overload_operator","initialize_var","class_extends","initialize_static_instance_var","initialize_static_instance_var_with_value","constructor","initialize_instance_var","initialize_instance_var_with_value","defrule","grammar_macro","predicate","grammar_statement","foreach_with_index","initialize_constant","initialize_empty_constants","println","function","initialize_empty_vars","return","else","else if","elif","if","if_statement","instance_method","static_method","class","return","set_var","while","for","foreach","++","--","+=","-=","*=","/="]);
 }
 
 function parse_lang(input_lang,output_lang,input_text){

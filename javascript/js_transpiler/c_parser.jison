@@ -9,8 +9,10 @@
 "else"                return "else"
 "return"              return "return"
 "void"                return "void"
+"case"                return "case"
 "printf"              return "printf"
 "while"               return "while"
+"switch"              return "switch"
 "for"                 return "for"
 ","                   return ','
 ";"                   return ';'
@@ -81,8 +83,13 @@ statement
 	type IDENTIFIER "(" parameters ")" "{" statements "}" {$$ = ["function","public",$1,$2,$4,$7];}
     | statement_with_semicolon ";" {$$ = ["semicolon",$1];}
     | "while" "(" e ")" bracket_statements {$$ = ["while",$3,$5];}
+    | "switch" "(" e ")" "{" case_statements "}" {$$ = ["switch",$3,$6];}
     | "for" "(" statement_with_semicolon ";" e ";" statement_with_semicolon ")" bracket_statements {$$ = ["for",$3,$5,$7,$9];}
     | if_statement    ;
+
+case_statement: "case" e ":" statements "break" ";" {$$ = ["case",$2,$4]};
+case_statements: case_statement case_statements {$$ = [$1].concat($2);} | case_statement {$$ =
+ [$1];};
 
 statement_with_semicolon
    : 
