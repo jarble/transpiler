@@ -11,9 +11,12 @@
 "if"                  return 'if'
 "else"                return 'else'
 "case"                return "case"
+"default"             return 'default'
 "return"              return 'return'
 "yield"               return 'yield'
 "while"               return 'while'
+"switch"              return 'switch'
+"break"               return 'break'
 "for"                 return 'for'
 "var"                 return 'var'
 "of"                  return 'of'
@@ -81,8 +84,10 @@ class_statements: class_statements_ {$$ = ["class_statements",$1]};
 statements: statements_ {$$ = ["statements",$1]};
 
 case_statement: "case" e ":" statements "break" ";" {$$ = ["case",$2,$4]};
-case_statements: case_statement case_statements {$$ = [$1].concat($2);} | case_statement {$$ =
+case_statements_: case_statement case_statements_ {$$ = [$1].concat($2);} | case_statement {$$ =
  [$1];};
+case_statements: case_statements_ "default" ":" statements {$$ = $1.concat([["default",$4]])} | case_statements_;
+
 
 class_statements_: class_statement class_statements_ {$$ = [$1].concat($2);} | class_statement {$$ =
  [$1];};

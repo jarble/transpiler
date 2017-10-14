@@ -28,7 +28,8 @@ function test_examples(){
 			"HashMap<String, String> myMap = new HashMap<String, String>(); myMap.add(\"1\",\"2\"); String str2 = myMap.get(\"2\");",
 			"int[] arr1 = {1,2,3}; arr1[0] = 2; arr1[1] = arr1[2];",
 			"public class Example{private static int b; private int a; public static int add(int a, int b){return a + b;} public int subtract(int a, int b){return a - b;}}",
-			"public class Example extends SecondExample{public int subtract(int a, int b){return a - b;}}"
+			"public class Example extends SecondExample{public int subtract(int a, int b){return a - b;}}",
+			"int a1 = 0; switch(a1){case 1: return 2; break; case 3: return 3; break; default: return 4;}"
 		]){
 			try{
 				//console.log(lang1);
@@ -1031,21 +1032,37 @@ function generate_code(input_lang,lang,indent,arr){
 		var expr = generate_code(input_lang,lang,indent,arr[1]);
 		var statements1 = arr[2].map(function(a){
 			return generate_code(input_lang,lang,indent+"    ",a);
-		}).join("");
+		});
+		if(member(lang,["ocaml"])){
+			statements1 = statements1.join(indent + "    |");
+		}
+		else{
+			statements1 = statements1.join("");
+		}
+		
 		if(member(lang,['java','d','powershell','nemerle','d','typescript','hack','swift','groovy','dart','awk','c#','javascript','c++','php','c','go','haxe','vala'])){
 			to_return = "switch("+expr+"){"+statements1+indent+"}";
 		}
 		else if(member(lang,["ruby"])){
 			to_return = "case "+expr+" "+statements1 +indent+ "end";
 		}
+		else if(member(lang,["ocaml"])){
+			to_return = "match "+expr+" with"+statements1;
+		}
 		else if(member(lang,["visual basic .net"])){
 			to_return = "Select Case " + expr + statements1 + indent + "End Select";
+		}
+		else if(member(lang,["fortran"])){
+			to_return = "select case " + expr + statements1 + indent + "end select";
 		}
 		else if(member(lang,["scala"])){
 			to_return = expr+" match{"+statements1 +indent+ "}";
 		}
 		else if(member(lang,["rebol"])){
 			to_return = "switch " +expr+ " ["+statements1 +indent+ "]";
+		}
+		else if(member(lang,["perl 6"])){
+			to_return = "given " +expr+ "{"+statements1 +indent+ "}";
 		}
 		else if(member(lang,["haskell","erlang"])){
 			to_return = "case "+expr+" of"+statements1 +indent+ "end";
@@ -1063,8 +1080,14 @@ function generate_code(input_lang,lang,indent,arr){
 		else if(member(lang,['visual basic .net'])){
 			to_return = "Case "+expr+statements1;
 		}
+		else if(member(lang,['fortran'])){
+			to_return = "case "+expr+statements1;
+		}
 		else if(member(lang,['ruby'])){
 			to_return = "when "+expr+" "+statements1;
+		}
+		else if(member(lang,['perl 6'])){
+			to_return = "when "+expr+"{"+statements1+indent+"}";
 		}
 		else if(member(lang,['rebol'])){
 			to_return = expr+" ["+statements1+"]";
@@ -1092,6 +1115,12 @@ function generate_code(input_lang,lang,indent,arr){
 		}
 		else if(member(lang,['clips'])){
 			to_return = "(default " + statements1+")";
+		}
+		else if(member(lang,['fortran'])){
+			to_return = "case default " + statements1;
+		}
+		else if(member(lang,['perl 6'])){
+			to_return = "default{" + statements1+indent+"}";
 		}
 		else if(member(lang,['rebol'])){
 			to_return = "][" + statements1;
