@@ -44,7 +44,7 @@ grammar_or:
 grammar_and:
     e grammar_and {$$= ["grammar_and",$1,$2]} | e;
 
-e: "(" grammar_or ")" {$$= $2} | grammar_var | STRING_LITERAL
+e: "(" grammar_or ")" {$$= ["parentheses", $2];} | grammar_var | STRING_LITERAL
         {$$ = yytext;};
 
 grammar_var: IDENTIFIER {$$= ["grammar_var",$1];};

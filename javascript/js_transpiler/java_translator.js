@@ -350,7 +350,7 @@ function prefix_arithmetic_lang(lang){
 	return member(lang,['racket','scheme','smt-lib','smt-lib','clips','gnu smalltalk','newlisp','hy','common lisp','emacs lisp','clojure','sibilant','lispyscript']);
 }
 function infix_arithmetic_lang(lang){
-	return member(lang,['pascal','prolog','elm','z3py','logtalk','picat','prolog','sympy','vhdl','elixir','python','visual basic .net','ruby','lua','scriptol', 'smt-libpy','ats','pydatalog','e','vbscript','livecode','monkey x','perl 6','englishscript','cython','gap','mathematical notation','wolfram','chapel','katahdin','frink','minizinc','picat','java','eclipse','d','ooc','genie','janus','pl/i','idp','processing','maxima','seed7','self','gnu smalltalk','drools','standard ml','oz','cobra','pike','prolog','engscript','kotlin','pawn','freebasic','matlab','ada','freebasic','gosu','gambas','nim','autoit','algol 68','ceylon','groovy','rust','coffeescript','typescript','fortran','octave','ml','hack','autohotkey','scala','delphi','tcl','swift','vala','c','f#','c++','dart','javascript','rebol','julia','erlang','ocaml','c#','nemerle','awk','java','perl','haxe','php','haskell','go','r','bc','visual basic']);
+	return member(lang,['pascal','jison','prolog','elm','z3py','logtalk','picat','prolog','sympy','vhdl','elixir','python','visual basic .net','ruby','lua','scriptol', 'smt-libpy','ats','pydatalog','e','vbscript','livecode','monkey x','perl 6','englishscript','cython','gap','mathematical notation','wolfram','chapel','katahdin','frink','minizinc','picat','java','eclipse','d','ooc','genie','janus','pl/i','idp','processing','maxima','seed7','self','gnu smalltalk','drools','standard ml','oz','cobra','pike','prolog','engscript','kotlin','pawn','freebasic','matlab','ada','freebasic','gosu','gambas','nim','autoit','algol 68','ceylon','groovy','rust','coffeescript','typescript','fortran','octave','ml','hack','autohotkey','scala','delphi','tcl','swift','vala','c','f#','c++','dart','javascript','rebol','julia','erlang','ocaml','c#','nemerle','awk','java','perl','haxe','php','haskell','go','r','bc','visual basic']);
 }
 
 function parameter(input_lang,lang,x){
@@ -3147,6 +3147,32 @@ function generate_code(input_lang,lang,indent,arr){
 		}
 		types[to_return] = "void";
 	}
+	else if(matching_patterns(pattern_array,input_lang,lang,arr,[
+		//takes one array as the argument
+		[["javascript"],[".",[[".",["Math","apply"]],["function_call","max",[[".",["null"]],"$a"]]]]],
+		[["python","php"],["function_call","max",["$a"]]],
+		[["lua"],[".",["math",["function_call","max",["$a"]]]]],
+		[["c#"],[".",["$a",["function_call","Max",[]]]]],
+		[["ruby"],[".",["$a","max"]]]
+		]
+	,matching_symbols)){
+		var output = generate_code(input_lang,lang,indent,matching_symbols["$a"]);
+		to_return = unparse(input_lang,lang,indent,pattern_array.value,matching_symbols);
+		types[to_return] = "int";
+	}
+		else if(matching_patterns(pattern_array,input_lang,lang,arr,[
+		//takes one array as the argument
+		[["javascript"],[".",[[".",["Math","apply"]],["function_call","min",[[".",["null"]],"$a"]]]]],
+		[["python","php"],["function_call","min",["$a"]]],
+		[["lua"],[".",["math",["function_call","min",["$a"]]]]],
+		[["c#"],[".",["$a",["function_call","Min",[]]]]],
+		[["ruby"],[".",["$a","min"]]]
+		]
+	,matching_symbols)){
+		var output = generate_code(input_lang,lang,indent,matching_symbols["$a"]);
+		to_return = unparse(input_lang,lang,indent,pattern_array.value,matching_symbols);
+		types[to_return] = "int";
+	}
 	else if(arr[0] === "function_call"){
 		var name = arr[1];
 		var params = function_call_parameters(input_lang,lang,arr[2]);
@@ -3598,38 +3624,6 @@ function generate_code(input_lang,lang,indent,arr){
 		[["go"],["function_call","Atan",["$a"]]],
 		[["wolfram"],["function_call","ArcTan",["$a"]]],
 	],matching_symbols)){
-		
-		var output = generate_code(input_lang,lang,indent,matching_symbols["$a"]);
-		to_return = unparse(input_lang,lang,indent,pattern_array.value,matching_symbols);
-		types[to_return] = "int";
-	}
-	else if(matching_patterns(pattern_array,input_lang,lang,arr,[
-		[["javascript"],[".",[[".",["Math","apply"]],["function_call","max",[[".",["null"]],"$a"]]]]],
-		[["python","php"],["function_call","max",["$a"]]],
-		[["ruby"],[".",["$a","max"]]]
-		]
-	,matching_symbols)){
-		
-		var output = generate_code(input_lang,lang,indent,matching_symbols["$a"]);
-		to_return = unparse(input_lang,lang,indent,pattern_array.value,matching_symbols);
-		types[to_return] = "int";
-	}
-	else if(matching_patterns(pattern_array,input_lang,lang,arr,[
-		[["javascript"],[".",["Math",["function_call","max","$a"]]]],
-		[["lua"],[".",["math",["function_call","max","$a"]]]],
-		]
-	,matching_symbols)){
-		
-		var output = generate_code(input_lang,lang,indent,matching_symbols["$a"]);
-		to_return = unparse(input_lang,lang,indent,pattern_array.value,matching_symbols);
-		types[to_return] = "int";
-	}
-	else if(matching_patterns(pattern_array,input_lang,lang,arr,[
-		[["javascript","php"],[".",[[".",["Math","apply"]],["function_call","min",[[".",["null"]],"$a"]]]]],
-		[["python"],["function_call","min",["$a"]]],
-		[["ruby"],[".",["$a","min"]]]
-		]
-	,matching_symbols)){
 		
 		var output = generate_code(input_lang,lang,indent,matching_symbols["$a"]);
 		to_return = unparse(input_lang,lang,indent,pattern_array.value,matching_symbols);
