@@ -18,10 +18,12 @@
 "&&"                  return '&&'
 "||"                  return '||'
 "|"                   return '|'
+"\\"                  return '\\'
 ">="                  return '>='
 ">"                   return '>'
 "<="                  return '<='
 "<-"                  return '<-'
+"->"                  return '->'
 "<"                   return '<'
 "=="                  return '=='
 "="                   return '='
@@ -117,7 +119,8 @@ e
 access_array: IDENTIFIER "!!" access_arr {$$ = ["access_array",$1,$3];};
 
 parentheses_expr:
-    "(" access_array ")" {$$ = $2}
+    "(" "\\" parameters "->" e ")" {$$ = ["anonymous_function","Object",$3,["statements",[["semicolon",["return",$5]]]]];}
+    |"(" access_array ")" {$$ = $2}
     |"[" exprs "]" {$$ = ["initializer_list","Object",$2];}
     |"[" e "|" e "<-" e "]" {$$ = ["list_comprehension",$2,$4,$6];}
     | NUMBER

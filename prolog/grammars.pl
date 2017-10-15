@@ -4112,11 +4112,11 @@ grammar_or_(Data,[Var1,Var2]) -->
 
 grammar_and_(Data,[Var1,Var2]) -->
     langs_to_output(Data,grammar_and,[
-	['definite clause grammars']:
+	['definite clause grammars','pypeg']:
             (Var1,ws,",",ws,Var2),
     ['lpeg']:
             (Var1,ws,"*",ws,Var2),
-    ['nearley','abnf','coco/r','peg.js','antlr','marpa','wirth syntax notation']:
+    ['nearley','abnf','coco/r','peg.js','antlr','marpa','wirth syntax notation','canopy']:
             (Var1,ws_,Var2)
     ]).
 
