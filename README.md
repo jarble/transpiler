@@ -29,9 +29,17 @@ and this is the Java code that it generates:
 		return a/b;
 	}
 
-# How to use this translator
+# How to use the online translator
 
-Install the package by typing `pack_install(transpiler)` in the SWI-Prolog console.
+This translator can convert many languages into many others:
+* [JavaScript to Prolog](file:///C:/Users/jarbl/Dropbox/All%20source%20code%20goes%20here%20-%20don't%20put%20this%20folder%20inside%20any%20other%20folder/Prolog%20projects/universal-transpiler/javascript/js_transpiler/test_parser.html#%7B%22inputText%22%3A%22function%20is_an_animal(thing)%7B%5Cn%20%20%20%20return%20%5B%5C%22cat%5C%22%2C%5C%22dog%5C%22%2C%5C%22horse%5C%22%5D.indexOf(thing)%20!%3D%3D%20-1%3B%5Cn%7D%22%2C%22inputLang%22%3A%22javascript%22%2C%22outputLang%22%3A%22prolog%22%7D)
+* [JavaScript to Ruby](file:///C:/Users/jarbl/Dropbox/All%20source%20code%20goes%20here%20-%20don't%20put%20this%20folder%20inside%20any%20other%20folder/Prolog%20projects/universal-transpiler/javascript/js_transpiler/test_parser.html#%7B%22inputText%22%3A%22function%20is_an_animal(thing)%7B%5Cn%20%20%20%20return%20%5B%5C%22cat%5C%22%2C%5C%22dog%5C%22%2C%5C%22horse%5C%22%5D.indexOf(thing)%20!%3D%3D%20-1%3B%5Cn%7D%22%2C%22inputLang%22%3A%22javascript%22%2C%22outputLang%22%3A%22ruby%22%7D)
+* [C into Java]
+* [Ruby to Python](file:///C:/Users/jarbl/Dropbox/All%20source%20code%20goes%20here%20-%20don't%20put%20this%20folder%20inside%20any%20other%20folder/Prolog%20projects/universal-transpiler/javascript/js_transpiler/test_parser.html#%7B%22inputText%22%3A%22def%20add(a%2Cb)%20%5Cn%20%20%20%20return%20a%2Bb%5Cnend%22%2C%22inputLang%22%3A%22ruby%22%2C%22outputLang%22%3A%22python%22%7D)
+
+# How to use the Prolog translator
+
+The Prolog translator is still unfinished and experimental. You can install the package by typing `pack_install(transpiler)` in the SWI-Prolog console.
 Now, you can use the translator to convert JavaScript source code into Lua:
 
 	:- use_module(library(transpiler)).

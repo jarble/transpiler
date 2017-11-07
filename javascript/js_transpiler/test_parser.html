@@ -162,6 +162,14 @@ function file_extension(lang){
 }
 
 function persistence(){
+	if(window.location.hash){
+		var parsed_hash = JSON.parse(decodeURIComponent(window.location.hash.substring(1)));
+		localStorage.setItem("inputText",parsed_hash["inputText"]);
+		localStorage.setItem("inputLang",parsed_hash["inputLang"]);
+		localStorage.setItem("outputLang",parsed_hash["outputLang"]);
+		//alert(window.location.hash.substring(1));
+	}
+	
 	["inputText","inputLang","outputLang"].forEach(function(element) {
     	if(localStorage.getItem(element) !== undefined){
 			document.getElementById(element).value = localStorage.getItem(element);
@@ -175,6 +183,7 @@ function myFunction() {
     var outputLang = document.getElementById("outputLang").value;
     var inputText = document.getElementById("inputText").value;
     var outputText;
+    window.location.hash=encodeURIComponent(JSON.stringify({inputText:inputText,inputLang:inputLang,outputLang:outputLang}));
     //try{
 				outputText = "<br/><pre>" + parse_lang(inputLang,outputLang.trim(), inputText)
 				.replace(/&/g, "&amp;")
