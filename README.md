@@ -29,7 +29,7 @@ and this is the Java code that it generates:
 		return a/b;
 	}
 
-#How to use this translator
+# How to use this translator
 
 Install the package by typing `pack_install(transpiler)` in the SWI-Prolog console.
 Now, you can use the translator to convert JavaScript source code into Lua:
@@ -44,7 +44,7 @@ Now, you can use the translator to convert JavaScript source code into Lua:
 		writeln(Y).
 
 
-#How to extend the translator
+# How to extend the Prolog translator
 
 A limited number of translation rules are provided here, but you can easily add your own rules to `transpiler.pl`.
 This is a simplified version of one of its translation rules, implementing the sine function:
@@ -63,4 +63,4 @@ This is a simplified version of one of its translation rules, implementing the s
         ]).
 
 #Similar projects
-There are several other source code generators that are similar to this one. [http://codeworker.free.fr/]
+There are several other source code generators that are similar to this one. This [universal code generator](http://codeworker.free.fr/) is one example.
