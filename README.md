@@ -5,7 +5,7 @@
 *Universal-transpiler* is a source-to-source compiler that translates a subset of several programming languages into several others.
 It is also able to translate [definite clause grammars](https://en.wikipedia.org/wiki/Definite_clause_grammar) into other metasyntax notations, such as EBNF and ABNF.
 
-The original version of this translator was written in JavaScript, but [a better version has been written in Prolog](universal-transpiler.pl).
+The [online version of this translator](https://jarble.github.io/transpiler/javascript/js_transpiler/test_parser.html) is written in JavaScript, but [an experimental version](universal-transpiler.pl) is being written in Prolog.
 
 This is some JavaScript code:
 
