@@ -229,7 +229,7 @@ initialize_var_(Data,[Name,Expr,Type]) -->
         (Name,python_ws,"=",python_ws,Expr),
     ['javascript','hack','swift']:
         ("var",ws_,Name,ws,"=",ws,Expr),
-    ['pseudocode','lua']:
+    ['pseudocode','lua','gap']:
         ("local",ws_,Name,ws,"=",ws,Expr),
     ['pseudocode','janus']:
         ("local",ws_,Type,ws_,Name,ws,"=",ws,Expr),
@@ -654,7 +654,7 @@ function_call_(Data,[Name,Args]) -->
 
 minus_minus_(Data,[Name]) -->
         langs_to_output(Data,minus_minus,[
-        ['javascript','java','php']:
+        ["javascript","php","kotlin","haxe","scala","java","c","c++","c#","perl","go"]:
 			(Name,ws,"--"),
 		['ruby']:
 			(Name,ws,"=",ws,Name,ws,"-",ws,"1")
@@ -2767,7 +2767,7 @@ elif(Data,[Indent,A,B]) -->
             ("elseif",ws_,A,ws_,B),
         ['ruby','seed7','vhdl']:
 			("elsif",ws_,A,ws_,"then",ws_,B),
-		['lua']:
+		['lua','picat']:
 			("elseif",ws_,A,ws_,"then",ws_,B),
         ['monkey x','visual basic','visual basic .net']:
             ("ElseIf",ws_,A,ws_,B),
@@ -2858,13 +2858,13 @@ random_from_list(Data,[Arr]) -->
 
 random_number(Data) -->
 	langs_to_output(Data,random_number,[
-		['javascript','java']:
+		['javascript','java','typescript','haxe']:
 			("Math",ws,".",ws,"random",ws,"(",ws,")"),
 		['python']:
 			("random",python_ws,".",python_ws,"random",python_ws,"(",python_ws,")"),
 		['php']:
 			("lcg_value",ws,"(",ws,")"),
-		['perl']:
+		['perl','ruby']:
 			("rand",ws,"(",ws,")")
 		
 	]),!.
@@ -3672,7 +3672,7 @@ rstrip_(Data,[Str]) -->
 
 lowercase_(Data,[Str]) -->
         langs_to_output(Data,lowercase,[
-        ['java','javascript','haxe']:
+        ['java','javascript','haxe','typescript']:
                 (Str,ws,".",ws,"toLowerCase",ws,"(",!,ws,")"),
         ['c#']:
                 (Str,ws,".",ws,"ToLower",ws,"(",ws,")"),

@@ -148,8 +148,7 @@ access_arr: parentheses_expr "!!" access_arr {$$ = [$1].concat($3);} | parenthes
  [$1];};
 exprs: e "," exprs {$$ = [$1].concat($3);} | e {$$ = [$1];};
 args: parentheses_expr args {$$ = [$1].concat($2);} | parentheses_expr {$$ = [$1];};
-elif: "else" "if" e "then" statement elif {$$ = ["elif",$3,$5,$6]} | else_statement;
-else_statement: "else" statement {$$ = ["else",$2];};
+elif: "else" "if" e "then" statement elif {$$ = ["elif",$3,$5,$6]} | "else" statement {$$ = ["else",$2];};
 if_statement:
 "(" "if" e "then" statement elif ")" {$$ = ["if",$3,$5,$6];}
 | "(" "if" e "then" statement ")" {$$ = ["if",$3,$5];};

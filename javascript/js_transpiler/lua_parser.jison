@@ -143,7 +143,7 @@ function_call:
     |IDENTIFIER "(" exprs ")" {$$ = ["function_call",$1,$3];};
 
 parentheses_expr:
-    '(' e ')'} {$$ = ["parentheses",$2];}
+    '(' e ')' {$$ = ["parentheses",$2];}
     | "function" "(" parameters ")" statements "end" {$$ = ["anonymous_function","Object",$3,$5];}
     |access_array
     | function_call

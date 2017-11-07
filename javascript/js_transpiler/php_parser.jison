@@ -49,6 +49,7 @@
 "++"                  return '++'
 "+="                  return '+='
 "+"                   return '+'
+"..."                 return '...'
 "."                   return '.'
 "^"                   return '^'
 "{"                   return '{'
@@ -137,7 +138,8 @@ statement_with_semicolon
    ;
 e
     :
-    e '||' e
+     "..." parentheses_expr {$$ = ["unpack_array",$2]}
+    |e '||' e
         {$$ = [$2,$1,$3];}
     |e '&&' e
         {$$ = [$2,$1,$3];}
@@ -196,16 +198,15 @@ type: IDENTIFIER "[" "]" {$$ = [$1,"[]"];} | IDENTIFIER "<" types ">" {$$ = [$1,
 parameter: var_name {$$ = ["Object", $1];};
 parameters: parameter "," parameters {$$ = [$1].concat($3);} | parameter {$$ =
  [$1];}| {$$ = [];};
-access_arr: parentheses_expr "][" access_arr {$$ = [$1].concat($3);} | parentheses_expr {$$ =
+access_arr: e "][" access_arr {$$ = [$1].concat($3);} | e {$$ =
  [$1];};
 exprs: e "," exprs {$$ = [$1].concat($3);} | e {$$ = [$1];};
 types: type "," types {$$ = [$1].concat($3);} | type {$$ = [$1];};
 else_if: "else" "if" | "elseif";
-elif: else_if "(" e ")" bracket_statements elif {$$ = ["elif",$3,$5,$6]} | else_if "(" e ")" bracket_statements {$$ = ["elif",$3,$5]} | else_statement;
-else_statement: "else" bracket_statements {$$ = ["else",$2];};
+elif: else_if "(" e ")" bracket_statements elif {$$ = ["elif",$3,$5,$6]} | else_if "(" e ")" bracket_statements {$$ = ["elif",$3,$5]} | "else" bracket_statements {$$ = ["else",$2];};
 if_statement:
 "if" "(" e ")" bracket_statements elif {$$ = ["if",$3,$5,$6];}
-|  "if" "(" e ")" bracket_statements {$$ = ["if",$3,$4];};
+|  "if" "(" e ")" bracket_statements {$$ = ["if",$3,$5];};
 var_name: "$" IDENTIFIER {$$ = $2;};
 var_names: var_name "," var_names {$$ = [$1].concat($3);} | var_name {$$ = [$1];};
 

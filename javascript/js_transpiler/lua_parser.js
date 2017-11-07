@@ -157,7 +157,7 @@ case 38:
 this.$ = ["function_call",$$[$0-3],$$[$0-1]];
 break;
 case 39:
-this.$ = $$[$0-1];
+this.$ = ["parentheses",$$[$0-1]];
 break;
 case 40:
 this.$ = ["anonymous_function","Object",$$[$0-3],$$[$0-1]];

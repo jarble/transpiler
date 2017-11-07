@@ -5,6 +5,7 @@
 \s+                   /* skip whitespace */
 [0-9]+("."[0-9]+)?\b  return 'NUMBER'
 \"([^\\\"]|\\.)*\" return 'STRING_LITERAL'
+"predicate"           return 'predicate'
 "function"            return "function"
 "var"                 return "var"
 "if"                  return "if"
@@ -72,6 +73,7 @@ statements_: statement_ statements_ {$$ = [$1].concat($2);} | statement_ {$$ =
 
 statement_:
 	"function" "var" IDENTIFIER ":" IDENTIFIER "(" parameters ")" "=" statement ";" {$$ = ["function","public",$3,$5,$7,$10];}
+	| "predicate" IDENTIFIER "(" parameters ")" "=" statement ";" {$$ = ["predicate",$2,$4,$7];}
 	| IDENTIFIER ":" IDENTIFIER "=" e ";" {$$ = ["semicolon",["initialize_var",$1,$3,$5]];};
 
 statement:

@@ -74,7 +74,6 @@ statements_: statement statements_ {$$ = [$1].concat($2);} | statement {$$ =
 statements: statements_ {$$ = ["statements",$1]};
 
 
-
 access_modifier: "public" | "private";
 
 
@@ -96,6 +95,7 @@ statement_with_semicolon
    "printf" "(" e "," e ")" {$$ = ["println",$5];}
    | "return" e  {$$ = ["return",$2];}
    | type IDENTIFIER "=" e {$$ = ["initialize_var",$1,$2,$4];}
+   | type access_array {return ["set_array_size",$1,$2[1],$2[2]];}
    | "var" identifiers {$$ = ["initialize_empty_vars","Object",$2];}
    | access_array "=" e {$$ = ["set_var",$1,$3];}
    | IDENTIFIER "=" e {$$ = ["set_var",$1,$3];}
@@ -168,11 +168,10 @@ access_arr: parentheses_expr "][" access_arr {$$ = [$1].concat($3);} | parenthes
  [$1];};
 exprs: e "," exprs {$$ = [$1].concat($3);} | e {$$ = [$1];};
 types: type "," types {$$ = [$1].concat($3);} | type {$$ = [$1];};
-elif: "else" "if" "(" e ")" bracket_statements elif {$$ = ["elif",$4,$6,$7]} | "else" "if" "(" e ")" bracket_statements {$$ = ["elif",$4,$6]} | else_statement;
-else_statement: "else" bracket_statements {$$ = ["else",$2];};
+elif: "else" "if" "(" e ")" bracket_statements elif {$$ = ["elif",$4,$6,$7]} | "else" "if" "(" e ")" bracket_statements {$$ = ["elif",$4,$6]} | "else" bracket_statements {$$ = ["else",$2];};
 if_statement:
 "if" "(" e ")" bracket_statements elif {$$ = ["if",$3,$5,$6];}
-|  "if" "(" e ")" bracket_statements {$$ = ["if",$3,$4];};
+|  "if" "(" e ")" bracket_statements {$$ = ["if",$3,$5];};
 identifiers: IDENTIFIER "," identifiers {$$ = [$1].concat($3);} | IDENTIFIER {$$ = [$1];};
 
 bracket_statements: "{" statements "}" {$$= $2;} | statement_with_semicolon ";" {$$ = ["semicolon",$1];};

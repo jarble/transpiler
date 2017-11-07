@@ -21,12 +21,16 @@
 
 
 <p id="outputText"></p>
+<p id="errors"></p>
 
 <script src="java_parser.js"></script>
 <script src="minizinc_parser.js"></script>
 <script src="cpp_parser.js"></script>
 <script src="go_parser.js"></script>
 <script src="javascript_parser.js"></script>
+<script src="erlang_parser.js"></script>
+<script src="maxima_parser.js"></script>
+<script src="english_parser.js"></script>
 <script src="julia_parser.js"></script>
 <script src="perl_parser.js"></script>
 <script src="prolog_parser.js"></script>
@@ -108,6 +112,9 @@ function file_extension(lang){
 	else if(lang === "javascript"){
 		return "js";
 	}
+	else if(lang === "swift"){
+		return "swift";
+	}
 	else if(lang === "common lisp"){
 		return "lisp";
 	}
@@ -144,6 +151,12 @@ function file_extension(lang){
 	else if(member(lang,["jison"])){
 		return "jison";
 	}
+	else if(member(lang,["maxima"])){
+		return "mc";
+	}
+	else if(member(lang,["coffeescript"])){
+		return "coffee";
+	}
 	else{
 		alert("Unknown file extension!");
 	}
@@ -155,6 +168,7 @@ function persistence(){
 			document.getElementById(element).value = localStorage.getItem(element);
 		}
 	});
+	document.getElementById("errors").innerHTML = "<br/>" + test_examples();
 	myFunction();
 }
 

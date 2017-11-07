@@ -4,7 +4,8 @@
 
 \s+                   /* skip whitespace */
 [0-9]+("."[0-9]+)?\b  return 'NUMBER'
-\"([^\\\"]|\\.)*\" return 'STRING_LITERAL'
+\"([^\\\"]|\\.)*\"    return 'STRING_LITERAL'
+\'([^\\\']|\\.)*\'    return 'CHAR_LITERAL'
 "HashMap"             return 'HashMap'
 "default"             return 'default'
 "Object"              return 'Object'
@@ -143,6 +144,7 @@ statement_with_semicolon
    | type IDENTIFIER "=" "{" exprs "}" {$$ = ["initialize_var",$1,$2,["initializer_list",$1,$5]]}
    | type IDENTIFIER "=" e {$$ = ["initialize_var",$1,$2,$4];}
    | type identifiers {$$ = ["initialize_empty_vars",$1,$2];}
+   | type access_array {return ["set_array_size",$1,$2[1],$2[2]];}
    | access_array "=" e {$$ = ["set_var",$1,$3];}
    | IDENTIFIER "=" e {$$ = ["set_var",$1,$3];}
    | IDENTIFIER "++" {$$ = [$2,$1];}
@@ -217,6 +219,8 @@ parentheses_expr:
     | IDENTIFIER
         {$$ = yytext;}
     | STRING_LITERAL
+        {$$ = yytext;}
+    | CHAR_LITERAL
         {$$ = yytext;};
 
 type: IDENTIFIER "[" "]" {$$ = [$1,"[]"];} | type_ "<" types ">" {$$ = [$1,$3]} | type_;
@@ -230,10 +234,9 @@ access_arr: parentheses_expr "][" access_arr {$$ = [$1].concat($3);} | parenthes
  [$1];};
 exprs: e "," exprs {$$ = [$1].concat($3);} | e {$$ = [$1];};
 types: type "," types {$$ = [$1].concat($3);} | type {$$ = [$1];};
-elif: "else" "if" "(" e ")" bracket_statements elif {$$ = ["elif",$4,$6,$7]} | "else" "if" "(" e ")" bracket_statements {$$ = ["elif",$4,$6]} | else_statement;
-else_statement: "else" bracket_statements {$$ = ["else",$2];};
+elif: "else" "if" "(" e ")" bracket_statements elif {$$ = ["elif",$4,$6,$7]} | "else" "if" "(" e ")" bracket_statements {$$ = ["elif",$4,$6]} | "else" bracket_statements {$$ = ["else",$2];};
 if_statement:
 "if" "(" e ")" bracket_statements elif {$$ = ["if",$3,$5,$6];}
-|  "if" "(" e ")" bracket_statements {$$ = ["if",$3,$4];};
+|  "if" "(" e ")" bracket_statements {$$ = ["if",$3,$5];};
 identifiers: IDENTIFIER "," identifiers {$$ = [$1].concat($3);} | IDENTIFIER {$$ = [$1];};
 add: e "+" add {$$ = [$1].concat($3);} | e {$$ = [$1];};

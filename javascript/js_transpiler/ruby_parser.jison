@@ -21,6 +21,8 @@
 "for"                 return 'for'
 "do"                  return 'do'
 ","                   return ','
+"..."                 return '...'
+".."                  return '..'
 "."                   return '.'
 ":"                   return ':'
 ";"                   return ';'
@@ -137,9 +139,11 @@ statement_with_semicolon
    | IDENTIFIER "=" e {$$ = ["set_var",$1,$3];}
    | IDENTIFIER "." dot_expr {$$ = [".",[$1].concat($3)]}
    ;
-e
-    :
-    e '||' e
+e:
+    "*" parentheses_expr {$$ = ["unpack_array",$2]}
+    | parentheses_expr "..." parentheses_expr {$$ = ["exclusive_range",$1,$3]}
+    | parentheses_expr ".." parentheses_expr {$$ = ["inclusive_range",$1,$3]}
+    |e '||' e
         {$$ = [$2,$1,$3];}
     |e '&&' e
         {$$ = [$2,$1,$3];}
@@ -179,10 +183,10 @@ dot_expr: dot_expr "(" ")" {$$ = ["function_call",$1,[]]} | dot_expr "(" exprs "
 access_array: IDENTIFIER "[" access_arr "]" {$$ = ["access_array",$1,$3];};
 
 parentheses_expr:
-    access_array
-    | "[" "]" {$$ = ["initializer_list","Object",[]];} | "[" exprs "]" {$$ = ["initializer_list","Object",$2];}
+    "[" "]" {$$ = ["initializer_list","Object",[]];} | "[" exprs "]" {$$ = ["initializer_list","Object",$2];}
     | "{" "}" {$$ = ["associative_array","Object",[]];} | "{" key_values "}" {$$ = ["associative_array","Object","Object",$2];}
     | '(' e ')'} {$$ = ["parentheses",$2];}
+    | access_array
     | NUMBER
         {$$ = yytext;}
     | IDENTIFIER
@@ -208,8 +212,7 @@ elif:
     | "elsif" e "then" statements {$$ = ["elif",$2,$4]} 
     | "elsif" e statements elif {$$ = ["elif",$2,$3,$4]}
     | "elsif" e statements {$$ = ["elif",$2,$3]} 
-    | else_statement;
-else_statement: "else" statements {$$ = ["else",$2];};
+    | "else" statements {$$ = ["else",$2];};
 if_statement:
 	"if" e "then" statements elif "end" {$$ = ["if",$2,$4,$5];}
     | "if" e "then" statements "end" {$$ = ["if",$2,$4];}

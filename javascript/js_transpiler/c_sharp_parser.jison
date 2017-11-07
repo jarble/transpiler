@@ -18,8 +18,9 @@
 "in"                  return "in"
 "else"                return "else"
 "return"              return "return"
+"throw"               return "throw"
 "while"               return "while"
-"switch"               return "switch"
+"switch"              return "switch"
 "async"               return "async"
 "foreach"             return "foreach"
 "for"                 return "for"
@@ -130,6 +131,7 @@ statement_with_semicolon
    : 
    "yield" "return" e  {$$ = ["yield",$3];}
    | "return" e  {$$ = ["return",$2];}
+   | "throw" e  {$$ = ["throw",$2];}
    | "final" type IDENTIFIER "=" e {$$ = ["initialize_constant",$2,$3,$5];}
    | "final" type identifiers {$$ = ["initialize_empty_constants",$2,$3];}
    | type IDENTIFIER "=" "{" exprs "}" {$$ = ["initialize_var",$1,$2,["initializer_list",$1,$5]]}
@@ -221,11 +223,10 @@ exprs: e "," exprs {$$ = [$1].concat($3);} | e {$$ = [$1];};
 named_parameters: named_parameters "," named_parameter {$$ = $1.concat([$3]);} | named_parameter {$$ = [$1];};
 named_parameter: IDENTIFIER ":" e {$$ = ["named_parameter",$1,$3]};
 types: type "," types {$$ = [$1].concat($3);} | type {$$ = [$1];};
-elif: "else" "if" "(" e ")" bracket_statements elif {$$ = ["elif",$4,$6,$7]} | "else" "if" "(" e ")" bracket_statements {$$ = ["elif",$4,$6]} | else_statement;
-else_statement: "else" bracket_statements {$$ = ["else",$2];};
+elif: "else" "if" "(" e ")" bracket_statements elif {$$ = ["elif",$4,$6,$7]} | "else" "if" "(" e ")" bracket_statements {$$ = ["elif",$4,$6]} | "else" bracket_statements {$$ = ["else",$2];};
 if_statement:
 "if" "(" e ")" bracket_statements elif {$$ = ["if",$3,$5,$6];}
-|  "if" "(" e ")" bracket_statements {$$ = ["if",$3,$4];};
+|  "if" "(" e ")" bracket_statements {$$ = ["if",$3,$5];};
 identifiers: IDENTIFIER "," identifiers {$$ = [$1].concat($3);} | IDENTIFIER {$$ = [$1];};
 add: e "+" add {$$ = [$1].concat($3);} | e {$$ = [$1];};
 bracket_statements: "{" statements "}" {$$= $2;} | statement_with_semicolon ";" {$$ = ["semicolon",$1];};
