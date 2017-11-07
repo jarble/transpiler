@@ -62,5 +62,5 @@ This is a simplified version of one of its translation rules, implementing the s
                 ("math",python_ws,".",python_ws,"sin",python_ws,"(",python_ws,Var1,python_ws,")"),
         ]).
 
-#Similar projects
+# Similar projects
 There are several other source code generators that are similar to this one. This [universal code generator](http://codeworker.free.fr/) is one example.
