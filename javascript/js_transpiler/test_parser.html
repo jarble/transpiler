@@ -21,7 +21,6 @@
 
 
 <p id="outputText"></p>
-<p id="errors"></p>
 
 <script src="java_parser.js"></script>
 <script src="minizinc_parser.js"></script>
@@ -168,7 +167,6 @@ function persistence(){
 			document.getElementById(element).value = localStorage.getItem(element);
 		}
 	});
-	document.getElementById("errors").innerHTML = "<br/>" + test_examples();
 	myFunction();
 }
 
