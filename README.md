@@ -3,9 +3,33 @@
 # Universal-transpiler
 
 *Universal-transpiler* is a source-to-source compiler that translates a subset of several programming languages into several others.
-It is also able to translate [definite clause grammars](https://en.wikipedia.org/wiki/Definite_clause_grammar) into other metasyntax notations, such as EBNF and ABNF.
+It is also able to translate several metasyntax notations, such as EBNF and ABNF.
 
-The [online version of this translator](https://jarble.github.io/transpiler/javascript/js_transpiler/test_parser.html) is written in JavaScript, but [an experimental version](https://github.com/jarble/transpiler/tree/master/prolog) is being written in Prolog.
+The [online version of this translator](https://jarble.github.io/transpiler/javascript/js_transpiler/test_parser.html) is written in JavaScript, but an experimental version is also being written in Prolog.
+
+This is some JavaScript code:
+
+	function add(a,b){
+		var g = [3,4,5];
+		return a+b+(g[0])+(g.length);
+	}
+
+	function divide(a,b){
+		return a/b;
+	}
+
+and this is the Java code that it generates:
+
+	public static int add(int a,int b){
+		int[] g={3,4,5};
+		return a+b+(g[0])+(g.length);
+	} 
+	 
+	public static int divide(int a,int b){
+		return a/b;
+	}
+
+# How to use the online translator
 
 This translator can convert many languages into many others:
 
