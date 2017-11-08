@@ -7,30 +7,6 @@ It is also able to translate [definite clause grammars](https://en.wikipedia.org
 
 The [online version of this translator](https://jarble.github.io/transpiler/javascript/js_transpiler/test_parser.html) is written in JavaScript, but [an experimental version](https://github.com/jarble/transpiler/tree/master/prolog) is being written in Prolog.
 
-This is some JavaScript code:
-
-	function add(a,b){
-		var g = [3,4,5];
-		return a+b+(g[0])+(g.length);
-	}
-
-	function divide(a,b){
-		return a/b;
-	}
-
-and this is the Java code that it generates:
-
-	public static int add(int a,int b){
-		int[] g={3,4,5};
-		return a+b+(g[0])+(g.length);
-	} 
-	 
-	public static int divide(int a,int b){
-		return a/b;
-	}
-
-# How to use the online translator
-
 This translator can convert many languages into many others:
 
 * [JavaScript to Prolog](https://jarble.github.io/transpiler/javascript/js_transpiler/test_parser.html#%7B%22inputText%22%3A%22function%20is_an_animal(thing)%7B%5Cn%20%20%20%20return%20%5B%5C%22dog%5C%22%2C%5C%22horse%5C%22%2C%5C%22cat%5C%22%5D.indexOf(thing)%20!%3D%3D%20-1%3B%5Cn%7D%22%2C%22inputLang%22%3A%22javascript%22%2C%22outputLang%22%3A%22prolog%22%7D)
