@@ -105,7 +105,7 @@ function file_extension(lang){
 	else if(lang === "scala"){
 		return "scala";
 	}
-	else if(lang === "rebol" || lang === "r"){
+	else if(member(lang,["rebol","r"])){
 		return "r";
 	}
 	else if(lang === "javascript"){
@@ -155,6 +155,9 @@ function file_extension(lang){
 	}
 	else if(member(lang,["coffeescript"])){
 		return "coffee";
+	}
+	else if(member(lang,["python"])){
+		return "py";
 	}
 	else{
 		alert("Unknown file extension!");
