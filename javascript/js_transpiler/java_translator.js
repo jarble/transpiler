@@ -97,7 +97,7 @@ function test_examples(){
 			parsed_texts.push(parsers[test_cases[i][1]].parse(test_cases[i][0]));
 		}
 	//for(lang1 of ["java","perl","prolog","haxe","ocaml","common lisp","c++","c#","swift","go","typescript","lua","ruby","python","php","wolfram","minizinc","scala","visual basic .net","haskell","r","typescript","erlang"]){
-	for(lang1 of ["javascript","php","perl","c++","haxe","haskell","erlang","ruby","visual basic .net","python"]){
+	for(lang1 of ["javascript","php","perl","c++","haxe","haskell","erlang","ruby","visual basic .net","python","julia","octave"]){
 		output_array += "These are not defined for "+lang1+":\n"
 		var search_query = [];
 		for(var j = 0; j < test_cases.length;j++){
@@ -4129,7 +4129,7 @@ function generate_code(input_lang,lang,indent,arr){
 		[["javascript","coffeescript","java","haxe"],[".",["$a",["function_call","map",["$b"]]]]],
 		[["c#"],[".",["$a",["function_call","Select",["$b"]]]]],
 		[["php"],["function_call","array_map",["$b","$a"]]],
-		[["haskell","python","perl"],["function_call","map",["$b","$a"]]],
+		[["haskell","python","perl","julia"],["function_call","map",["$b","$a"]]],
 	],matching_symbols)){
 		var arr = generate_code(input_lang,lang,indent,matching_symbols["$a"]);
 		var callback = generate_code(input_lang,lang,indent,matching_symbols["$b"]);
@@ -4227,7 +4227,7 @@ function generate_code(input_lang,lang,indent,arr){
 	else if(matching_patterns(pattern_array,input_lang,lang,arr,[
 		[['java','ruby','javascript','typescript','haxe','clojure'],[".",["Math",["function_call","asin",["$a"]]]]],
 		[["c#",'visual basic .net'],[".",["Math",["function_call","Asin",["$a"]]]]],
-		[["c++","haskell","asin","c","perl","prolog","swift","php"],["function_call","asin",["$a"]]],
+		[["c++","haskell","asin","c","perl","prolog","swift","php",'julia','octave'],["function_call","asin",["$a"]]],
 		[["go"],["function_call","Asin",["$a"]]],
 		[["wolfram"],["function_call","ArcSin",["$a"]]],
 		[["python","lua","erlang"],[".",["math",["function_call","asin",["$a"]]]]]
@@ -4240,7 +4240,7 @@ function generate_code(input_lang,lang,indent,arr){
 	else if(matching_patterns(pattern_array,input_lang,lang,arr,[
 		[['java','ruby','javascript','typescript','haxe','clojure'],[".",["Math",["function_call","acos",["$a"]]]]],
 		[["c#",'visual basic .net'],[".",["Math",["function_call","Acos",["$a"]]]]],
-		[["c++","haskell","c","c++","perl","prolog","swift","php","minizinc"],["function_call","acos",["$a"]]],
+		[["c++","haskell","c","c++","perl","prolog","swift","php","minizinc",'julia','octave'],["function_call","acos",["$a"]]],
 		[["python","lua","erlang"],[".",["math",["function_call","acos",["$a"]]]]],
 		[["wolfram"],["function_call","ArcCos",["$a"]]],
 		[["go"],["function_call","Acos",["$a"]]]
@@ -4253,7 +4253,7 @@ function generate_code(input_lang,lang,indent,arr){
 	else if(matching_patterns(pattern_array,input_lang,lang,arr,[
 		[['java','ruby','javascript','typescript','haxe','clojure'],[".",["Math",["function_call","atan",["$a"]]]]],
 		[["c#",'visual basic .net'],[".",["Math",["function_call","Atan",["$a"]]]]],
-		[["c++","c","c++","haskell","perl","prolog","swift","php","minizinc"],["function_call","atan",["$a"]]],
+		[["c++","c","c++","haskell","perl","prolog","swift","php","minizinc",'julia','octave'],["function_call","atan",["$a"]]],
 		[["python","lua","erlang"],[".",["math",["function_call","atan",["$a"]]]]],
 		[["go"],["function_call","Atan",["$a"]]],
 		[["wolfram"],["function_call","ArcTan",["$a"]]]
