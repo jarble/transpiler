@@ -3001,7 +3001,10 @@ function generate_code(input_lang,lang,indent,arr){
 		var the_list = generate_code(input_lang,lang,indent,arr[3]);
 		if(arr.length === 4){
 			if(member(lang,["haskell"])){
-				to_return = "["+the_list + "|" + variable + "<-" + result + "]";
+				to_return = "["+result + "|" + variable + "<-" + the_list + "]";
+			}
+			else if(member(lang,["minizinc"])){
+				to_return = "["+ result + "|" + variable + " in " + the_list + "]";
 			}
 			else if(member(lang,["python"])){
 				to_return = "[" + result + " for " + variable + " in " + the_list + "]";
@@ -3013,16 +3016,16 @@ function generate_code(input_lang,lang,indent,arr){
 				to_return = "[" + result + " for " + variable + " in " + the_list + "if "+condition+"]";
 			}
 			else if(member(lang,["erlang"])){
-				"[" + variable + "||" + variable + "<-" + the_list + "," + condition + "]";
+				"[" + result + "||" + variable + "<-" + the_list + "," + condition + "]";
 			}
 			else if(member(lang,["haskell"])){
-				"[" + variable + "|" + variable + "<-" + the_list + "," + condition + "]";
+				"[" + result + "|" + variable + "<-" + the_list + "," + condition + "]";
 			}
 			else if(member(lang,["picat"])){
 				"[" + variable + ":" + variable + " in " + the_list + "," + condition + "]";
 			}
 			else if(member(lang,["minizinc"])){
-				"[" + variable + "|" + variable + " in " + the_list + " where " + condition + "]";
+				"[" + result + "|" + variable + " in " + the_list + " where " + condition + "]";
 			}
 		}
 		types[to_return] = [types[output],"[]"];
