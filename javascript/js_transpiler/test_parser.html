@@ -1,27 +1,5 @@
 <html>
-<body onload = "persistence()">
-  Code to translate:
-  <textarea id="inputText" cols="40" rows="5" value="int i = 0+1;">public class Example{
-    private int age;
-    public Example(){
-        this.age = 1;
-        return add(3,4);
-    }
-    public static int add(int a, int b){
-        return a + b;
-    }
-}</textarea>
-  <br/><input type="file" id="file-input" />
-  <br/>Input language:
-  <input type="text" id="inputLang" value="Detect language">
-  <br/>Output language:
-  <input type="text" id="outputLang" value="C">
-  <br/>
-  <button type="button" onclick = "save_file()">Download file</button>
-
-
-<p id="outputText"></p>
-
+<head>
 <script src="java_parser.js"></script>
 <script src="minizinc_parser.js"></script>
 <script src="cpp_parser.js"></script>
@@ -47,23 +25,6 @@
 <script>
 "use strict";
 
-// Get the input box
-var textInput = document.getElementById('inputText');
-var inputLang = document.getElementById('inputLang');
-var outputLang = document.getElementById('outputLang');
-
-
-var timeout = null;
-textInput.onkeyup = function (e) {
-    clearTimeout(timeout);
-    timeout = setTimeout(function () {
-        myFunction();
-    }, 500);
-};
-
-inputLang.onkeyup = textInput.onkeyup;
-outputLang.onkeyup = textInput.onkeyup;
-
 function readSingleFile(e) {
   var file = e.target.files[0];
   if (!file) {
@@ -81,9 +42,6 @@ function displayContents(contents) {
   document.getElementById("inputText").value = contents;
   myFunction();
 }
-
-document.getElementById('file-input')
-  .addEventListener('change', readSingleFile, false);
 
 function save_file(){
 	var output_lang = document.getElementById("outputLang").value.trim();
@@ -165,19 +123,30 @@ function file_extension(lang){
 }
 
 function persistence(){
+	// Get the input box
+var textInput = document.getElementById('inputText');
+var inputLang = document.getElementById('inputLang');
+var outputLang = document.getElementById('outputLang');
+	var timeout = null;
+textInput.onkeyup = function (e) {
+    clearTimeout(timeout);
+    timeout = setTimeout(function () {
+        myFunction();
+    }, 500);
+};
+
+inputLang.onkeyup = textInput.onkeyup;
+outputLang.onkeyup = textInput.onkeyup;
+
 	if(window.location.hash){
 		var parsed_hash = JSON.parse(decodeURIComponent(window.location.hash.substring(1)));
-		localStorage.setItem("inputText",parsed_hash["inputText"]);
-		localStorage.setItem("inputLang",parsed_hash["inputLang"]);
-		localStorage.setItem("outputLang",parsed_hash["outputLang"]);
 		//alert(window.location.hash.substring(1));
+		["inputText","inputLang","outputLang"].forEach(function(element) {
+			document.getElementById(element).value = parsed_hash[element];
+		});
 	}
 	
-	["inputText","inputLang","outputLang"].forEach(function(element) {
-    	if(localStorage.getItem(element) !== undefined){
-			document.getElementById(element).value = localStorage.getItem(element);
-		}
-	});
+	document.getElementById('file-input').addEventListener('change', readSingleFile, false);
 	myFunction();
 }
 
@@ -195,16 +164,11 @@ function myFunction() {
 				.replace(/"/g, "&quot;")
 				.replace(/'/g, "&#039;")+"</pre>";
 				document.getElementById("outputText").innerHTML = outputText;
-				localStorage.setItem("outputText",outputText);
 	//}
 	//catch(e){
 	//	outputText = e;
 	//}
 			document.getElementById("outputText").innerHTML = outputText;
-			localStorage.setItem("outputText",outputText);
-			localStorage.setItem("outputLang",outputLang);
-			localStorage.setItem("inputText",inputText);
-			localStorage.setItem("inputLang",inputLang);
 
 }
 
@@ -217,6 +181,29 @@ function myFunction() {
  * Licensed under the MIT license.
  */
 </script>
+</head>
+<body onload = "persistence()">
+  Code to translate:
+  <textarea id="inputText" cols="40" rows="5" value="int i = 0+1;">public class Example{
+    private int age;
+    public Example(){
+        this.age = 1;
+        return add(3,4);
+    }
+    public static int add(int a, int b){
+        return a + b;
+    }
+}</textarea>
+  <br/><input type="file" id="file-input" />
+  <br/>Input language:
+  <input type="text" id="inputLang" value="Detect language">
+  <br/>Output language:
+  <input type="text" id="outputLang" value="C">
+  <br/>
+  <button type="button" onclick = "save_file()">Download file</button>
+
+
+<p id="outputText"></p>
 
 </body>
 </html>
