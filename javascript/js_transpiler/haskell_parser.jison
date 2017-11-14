@@ -123,6 +123,7 @@ parentheses_expr:
     |"(" access_array ")" {$$ = $2}
     |"[" exprs "]" {$$ = ["initializer_list","Object",$2];}
     |"[" e "|" e "<-" e "]" {$$ = ["list_comprehension",$2,$4,$6];}
+    |"[" e "|" e "<-" e "," e "]" {$$ = ["list_comprehension",$2,$4,$6,$8];}
     | NUMBER
         {$$ = yytext;}
     | IDENTIFIER

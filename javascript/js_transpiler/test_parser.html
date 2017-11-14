@@ -1,5 +1,7 @@
+<!doctype html>
 <html>
 <head>
+	
 <script src="java_parser.js"></script>
 <script src="minizinc_parser.js"></script>
 <script src="cpp_parser.js"></script>
@@ -42,6 +44,8 @@ function displayContents(contents) {
   document.getElementById("inputText").value = contents;
   myFunction();
 }
+
+
 
 function save_file(){
 	var output_lang = document.getElementById("outputLang").value.trim();
@@ -124,29 +128,36 @@ function file_extension(lang){
 
 function persistence(){
 	// Get the input box
-var textInput = document.getElementById('inputText');
-var inputLang = document.getElementById('inputLang');
-var outputLang = document.getElementById('outputLang');
+	var textInput = document.getElementById('inputText');
+	var inputLang = document.getElementById('inputLang');
+	var outputLang = document.getElementById('outputLang');
+
+
 	var timeout = null;
-textInput.onkeyup = function (e) {
-    clearTimeout(timeout);
-    timeout = setTimeout(function () {
-        myFunction();
-    }, 500);
-};
+	textInput.onkeyup = function (e) {
+		clearTimeout(timeout);
+		timeout = setTimeout(function () {
+			myFunction();
+		}, 500);
+	};
 
-inputLang.onkeyup = textInput.onkeyup;
-outputLang.onkeyup = textInput.onkeyup;
-
+	inputLang.onkeyup = textInput.onkeyup;
+	outputLang.onkeyup = textInput.onkeyup;
+	document.getElementById('file-input')
+  .addEventListener('change', readSingleFile, false);
 	if(window.location.hash){
 		var parsed_hash = JSON.parse(decodeURIComponent(window.location.hash.substring(1)));
+		localStorage.setItem("inputText",parsed_hash["inputText"]);
+		localStorage.setItem("inputLang",parsed_hash["inputLang"]);
+		localStorage.setItem("outputLang",parsed_hash["outputLang"]);
 		//alert(window.location.hash.substring(1));
-		["inputText","inputLang","outputLang"].forEach(function(element) {
-			document.getElementById(element).value = parsed_hash[element];
-		});
 	}
 	
-	document.getElementById('file-input').addEventListener('change', readSingleFile, false);
+	["inputText","inputLang","outputLang"].forEach(function(element) {
+    	if(localStorage.getItem(element) !== undefined){
+			document.getElementById(element).value = localStorage.getItem(element);
+		}
+	});
 	myFunction();
 }
 
@@ -164,11 +175,16 @@ function myFunction() {
 				.replace(/"/g, "&quot;")
 				.replace(/'/g, "&#039;")+"</pre>";
 				document.getElementById("outputText").innerHTML = outputText;
+				localStorage.setItem("outputText",outputText);
 	//}
 	//catch(e){
 	//	outputText = e;
 	//}
 			document.getElementById("outputText").innerHTML = outputText;
+			localStorage.setItem("outputText",outputText);
+			localStorage.setItem("outputLang",outputLang);
+			localStorage.setItem("inputText",inputText);
+			localStorage.setItem("inputLang",inputLang);
 
 }
 

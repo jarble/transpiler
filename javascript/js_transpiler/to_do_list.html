@@ -1,7 +1,7 @@
+<!doctype html>
 <html>
-<body onload = "persistence()">
-<p id="errors"></p>
-
+<head>
+	
 <script src="java_parser.js"></script>
 <script src="minizinc_parser.js"></script>
 <script src="cpp_parser.js"></script>
@@ -27,11 +27,201 @@
 <script>
 "use strict";
 
-function persistence(){
-	document.getElementById("errors").innerHTML = "<br/>" + test_examples();
+function readSingleFile(e) {
+  var file = e.target.files[0];
+  if (!file) {
+    return;
+  }
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    var contents = e.target.result;
+    displayContents(contents);
+  };
+  reader.readAsText(file);
 }
 
+function displayContents(contents) {
+  document.getElementById("inputText").value = contents;
+  myFunction();
+}
+
+
+
+function save_file(){
+	var output_lang = document.getElementById("outputLang").value.trim();
+	var input_lang = document.getElementById("inputLang").value.trim();
+	var output_text = parse_lang(input_lang,output_lang, document.getElementById("inputText").value);
+	var extension = file_extension(output_lang);
+	if(extension !== undefined){
+		download_file("output."+extension,output_text);
+	}
+}
+
+function file_extension(lang){
+	if(lang === "c++"){
+		return "cpp";
+	}
+	else if(lang === "clips"){
+		return "clp";
+	}
+	else if(lang === "scala"){
+		return "scala";
+	}
+	else if(member(lang,["rebol","r"])){
+		return "r";
+	}
+	else if(lang === "javascript"){
+		return "js";
+	}
+	else if(lang === "swift"){
+		return "swift";
+	}
+	else if(lang === "common lisp"){
+		return "lisp";
+	}
+	else if(lang === "java"){
+		return "js";
+	}
+	else if(lang === "ruby"){
+		return "rb";
+	}
+	else if(lang === "visual basic .net"){
+		return "vb";
+	}
+	else if(lang === "haxe"){
+		return "hx";
+	}
+	else if(lang === "lua"){
+		return "lua";
+	}
+	else if(lang === "typescript"){
+		return "ts";
+	}
+	else if(lang === "minizinc"){
+		return "mzn";
+	}
+	else if(lang === "haskell"){
+		return "hs";
+	}
+	else if(lang === "c#"){
+		return "cs";
+	}
+	else if(member(lang,["perl","prolog"])){
+		return "pl";
+	}
+	else if(member(lang,["jison"])){
+		return "jison";
+	}
+	else if(member(lang,["maxima"])){
+		return "mc";
+	}
+	else if(member(lang,["coffeescript"])){
+		return "coffee";
+	}
+	else if(member(lang,["python"])){
+		return "py";
+	}
+	else{
+		alert("Unknown file extension!");
+	}
+}
+
+function persistence(){
+	document.getElementById("errors").innerHTML = "<br/>" + test_examples();
+	// Get the input box
+	var textInput = document.getElementById('inputText');
+	var inputLang = document.getElementById('inputLang');
+	var outputLang = document.getElementById('outputLang');
+
+
+	var timeout = null;
+	textInput.onkeyup = function (e) {
+		clearTimeout(timeout);
+		timeout = setTimeout(function () {
+			myFunction();
+		}, 500);
+	};
+
+	inputLang.onkeyup = textInput.onkeyup;
+	outputLang.onkeyup = textInput.onkeyup;
+	document.getElementById('file-input')
+  .addEventListener('change', readSingleFile, false);
+	if(window.location.hash){
+		var parsed_hash = JSON.parse(decodeURIComponent(window.location.hash.substring(1)));
+		localStorage.setItem("inputText",parsed_hash["inputText"]);
+		localStorage.setItem("inputLang",parsed_hash["inputLang"]);
+		localStorage.setItem("outputLang",parsed_hash["outputLang"]);
+		//alert(window.location.hash.substring(1));
+	}
+	
+	["inputText","inputLang","outputLang"].forEach(function(element) {
+    	if(localStorage.getItem(element) !== undefined){
+			document.getElementById(element).value = localStorage.getItem(element);
+		}
+	});
+	myFunction();
+}
+
+function myFunction() {
+    var inputLang = document.getElementById("inputLang").value;
+    var outputLang = document.getElementById("outputLang").value;
+    var inputText = document.getElementById("inputText").value;
+    var outputText;
+    window.location.hash=encodeURIComponent(JSON.stringify({inputText:inputText,inputLang:inputLang,outputLang:outputLang}));
+    //try{
+				outputText = "<br/><pre>" + parse_lang(inputLang,outputLang.trim(), inputText)
+				.replace(/&/g, "&amp;")
+				.replace(/</g, "&lt;")
+				.replace(/>/g, "&gt;")
+				.replace(/"/g, "&quot;")
+				.replace(/'/g, "&#039;")+"</pre>";
+				document.getElementById("outputText").innerHTML = outputText;
+				localStorage.setItem("outputText",outputText);
+	//}
+	//catch(e){
+	//	outputText = e;
+	//}
+			document.getElementById("outputText").innerHTML = outputText;
+			localStorage.setItem("outputText",outputText);
+			localStorage.setItem("outputLang",outputLang);
+			localStorage.setItem("inputText",inputText);
+			localStorage.setItem("inputLang",inputLang);
+
+}
+
+/*
+ * PEG.js 0.9.0
+ *
+ * http://pegjs.org/
+ *
+ * Copyright (c) 2010-2015 David Majda
+ * Licensed under the MIT license.
+ */
 </script>
+</head>
+<body onload = "persistence()">
+  Code to translate:
+  <textarea id="inputText" cols="40" rows="5" value="int i = 0+1;">public class Example{
+    private int age;
+    public Example(){
+        this.age = 1;
+        return add(3,4);
+    }
+    public static int add(int a, int b){
+        return a + b;
+    }
+}</textarea>
+  <br/><input type="file" id="file-input" />
+  <br/>Input language:
+  <input type="text" id="inputLang" value="Detect language">
+  <br/>Output language:
+  <input type="text" id="outputLang" value="C">
+  <br/>
+  <button type="button" onclick = "save_file()">Download file</button>
+
+
+<p id="outputText"></p>
+<p id="errors"></p>
 
 </body>
 </html>

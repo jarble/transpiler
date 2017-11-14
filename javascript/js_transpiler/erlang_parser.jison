@@ -124,7 +124,8 @@ function_call:
     IDENTIFIER "(" ")" {$$ = ["function_call",$1,[]];} | IDENTIFIER "(" exprs ")" {$$ = ["function_call",$1,$3];};
 
 parentheses_expr:
-    "[" e "||" e "<-" e "," e "]" {$$=["list_comprehension",$2,$4,$6,$8];}
+    "[" e "||" e "<-" e "]" {$$=["list_comprehension",$2,$4,$6];}
+    |"[" e "||" e "<-" e "," e "]" {$$=["list_comprehension",$2,$4,$6,$8];}
     |"[" exprs "]" {$$ = ["initializer_list","Object",$2]}
     |function_call
     | '(' e ')' {$$ = $2;}
