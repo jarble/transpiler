@@ -1313,7 +1313,7 @@ function generate_code(input_lang,lang,indent,arr){
 		var if_statement1 = generate_code(input_lang,lang,indent,arr[1]);
 		var if_statement2 = generate_code(input_lang,lang,indent+"    ",arr[2]);
 		if(arr.length === 3){
-			if(member(lang,['d','e','php','perl','mathematical notation','chapel','pawn','ceylon','scala','typescript','autohotkey','awk','r','groovy','gosu','katahdin','java','swift','nemerle','c','dart','vala','javascript','c#','c++','haxe'])){
+			if(member(lang,['d','kotlin','e','php','perl','mathematical notation','chapel','pawn','ceylon','scala','typescript','autohotkey','awk','r','groovy','gosu','katahdin','java','swift','nemerle','c','dart','vala','javascript','c#','c++','haxe'])){
 				to_return = "if(" + if_statement1 + "){" + if_statement2 +indent+ "}";
 			}
 			else if(member(lang,["rust","go"])){
@@ -1364,7 +1364,7 @@ function generate_code(input_lang,lang,indent,arr){
 		}
 		else{
 			var elif_or_else = generate_code(input_lang,lang,indent,arr[3]);
-			if(member(lang,['d','e','php','perl','mathematical notation','chapel','pawn','ceylon','scala','typescript','autohotkey','awk','r','groovy','gosu','katahdin','java','swift','nemerle','c','dart','vala','javascript','c#','c++','haxe'])){
+			if(member(lang,['d','kotlin','e','php','perl','mathematical notation','chapel','pawn','ceylon','scala','typescript','autohotkey','awk','r','groovy','gosu','katahdin','java','swift','nemerle','c','dart','vala','javascript','c#','c++','haxe'])){
 				to_return = "if(" + if_statement1 + "){" + if_statement2 +indent+ "}" + elif_or_else;
 			}
 			else if(member(lang,["rust","go"])){
@@ -1419,7 +1419,7 @@ function generate_code(input_lang,lang,indent,arr){
 	}
 	else if(arr[0] === "else"){
 		var statements1 = generate_code(input_lang,lang,indent+"    ",arr[1]);
-		if(member(lang,['hack','e','ooc','englishscript','mathematical notation','dafny','perl 6','frink','chapel','katahdin','pawn','powershell','puppet','ceylon','d','rust','typescript','scala','autohotkey','gosu','groovy','java','swift','dart','awk','javascript','haxe','php','c#','go','perl','c++','c','tcl','r','vala','bc'])){
+		if(member(lang,['hack','kotlin','e','ooc','englishscript','mathematical notation','dafny','perl 6','frink','chapel','katahdin','pawn','powershell','puppet','ceylon','d','rust','typescript','scala','autohotkey','gosu','groovy','java','swift','dart','awk','javascript','haxe','php','c#','go','perl','c++','c','tcl','r','vala','bc'])){
 			to_return = "else{"+statements1+indent+"}";
 		}
 		else if(member(lang,["prolog","wolfram","smt-lib"])){
@@ -3811,9 +3811,9 @@ function generate_code(input_lang,lang,indent,arr){
 		else if(member(lang,['r','maxima'])){
 			to_return = "return("+a+")";
 		}
-		else if(member(lang,['wolfram'])){
-			to_return = "Return["+a+"]";
-		}
+		//else if(member(lang,['wolfram'])){
+		//	to_return = "Return["+a+"]";
+		//}
 		else if(member(lang,['pseudocode','visual basic','visual basic .net','autoit','monkey x'])){
 			to_return = "Return " + a;
 		}
@@ -3823,7 +3823,7 @@ function generate_code(input_lang,lang,indent,arr){
 		else if(member(lang,['picat'])){
 			to_return = "Return" + " = " + a;
 		}
-		else if(member(lang,['prolog', 'elixir', 'elm', 'sympy', 'haskell','scheme','smt-lib','minizinc','logtalk','pydatalog','polish notation','reverse polish notation','mathematical notation','emacs lisp','smt-lib','erlang','standard ml','icon','oz','clips','newlisp','hy','sibilant','lispyscript','algol 68','clojure','common lisp','f#','ocaml','ml','racket','nemerle'])){
+		else if(member(lang,['prolog', 'wolfram', 'elixir', 'elm', 'sympy', 'haskell','scheme','smt-lib','minizinc','logtalk','pydatalog','polish notation','reverse polish notation','mathematical notation','emacs lisp','smt-lib','erlang','standard ml','icon','oz','clips','newlisp','hy','sibilant','lispyscript','algol 68','clojure','common lisp','f#','ocaml','ml','racket','nemerle'])){
 			to_return = a;
 		}
 		//console.log(to_return);

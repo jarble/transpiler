@@ -31,8 +31,8 @@
 ">"                   return '>'
 "<="                  return '<='
 "<"                   return '<'
-"==="                 return '==='
-"!=="                 return '!=='
+"=="                  return '=='
+"!="                  return '!='
 "!"                   return "!"
 "="                   return '='
 "*="                  return '*='
@@ -53,8 +53,6 @@
 "]"                   return ']'
 "("                   return '('
 ")"                   return ')'
-"instanceof"          return 'instanceof'
-"in"                  return 'in'
 [a-zA-Z_][a-zA-Z0-9_]*_ return 'PARAMETER'
 [a-zA-Z_][a-zA-Z0-9_]* return 'IDENTIFIER'
 <<EOF>>               return 'EOF'
@@ -66,10 +64,11 @@
 
 %left '||'
 %left '&&'
-%left '<' '<=' '>' '>=' '===' '!==' 'in' 'instanceof'
+%left '<' '<=' '>' '>=' '==' '!='
 %left '+' '-'
-%left '*' '/' '%'
+%left '*' '/'
 %left UMINUS
+%left '!'
 
 %start expressions
 
@@ -81,52 +80,51 @@ expressions
     ;
 
 statements
-    : statements__
+    : statements_
         {$$ = ["statements",$1];}
     ;
 
+top_level_statements: function ";" top_level_statements {$$ = [$1].concat($3);} | function ";" {$$ =
+ [$1];} | function {$$ =
+ [$1];};
+
 statements_: statement ";" statements_ {$$ = [$1].concat($3);} | statement ";" {$$ =
  [$1];};
- 
 
-statements__: statement ";" statements__ {$$ = [$1].concat($3);} | statement {$$ =
- [$1];};
 
+function:
+IDENTIFIER "[" parameters "]" ":=" bracket_statements {$$ = ["function","public","Object",$1,$3,$6];};
 
 statement
     :
-    IDENTIFIER "[" parameters "]" ":=" bracket_statements {$$ = ["function","public","Object",$1,$3,$6];}
-    | statement_with_semicolon {$$ = ["semicolon",$1];}
+    "While" "[" e "," statements "]" {$$ = ["while",$3,$5];}
     | if_statement {$$ = $1;}
-    | "While" "[" e "," statements "]" {$$ = ["while",$3,$5];}
+    | statement_with_semicolon {$$ = ["semicolon",$1];}
     ;
 
-bracket_statements: statement {$$ = $1} | "(" statements ")" {$$ = $2};
+bracket_statements: statement {$$ = ["statements",$1]} | "(" statements ")" {$$ = $2};
 
-elif: bracket_statements {$$ = ["else",$1];};
 if_statement:
-"If" "[" e "," bracket_statements "," elif "]" {$$ = ["if",$3,$5,$7];};
+"If" "[" e "," bracket_statements "," bracket_statements "]" {$$ = ["if",$3,$5,["else",$7]];};
 
 
 statement_with_semicolon
    : 
-   "Return" "[" e "]" {$$ = ["return",$3];}
-   | IDENTIFIER "=" e {$$ = ["set_var",$1,$3];}
+   IDENTIFIER "=" e {$$ = ["set_var",$1,$3];}
+   | "Return" "[" e "]" {$$ = ["return",$1];}
+   | e {$$ = ["return",$1];}
    ;
+
 e
     :
     e '||' e
         {$$ = [$2,$1,$3];}
     |e '&&' e
         {$$ = [$2,$1,$3];}
-    |e '!==' e
-        {$$ = ['!=',$1,$3];}
-    |e '===' e
-        {$$ = ['==',$1,$3];}
-    |e 'in' e
-        {$$ = ['in',$1,$3];}
-    |e 'instanceof' e
-        {$$ = ['in',$1,$3];}
+    |e '!=' e
+        {$$ = [$2,$1,$3];}
+    |e '==' e
+        {$$ = [$2,$1,$3];}
     |e '<=' e
         {$$ = [$2,$1,$3];}
     |e '<' e
@@ -140,28 +138,22 @@ e
     | e '-' e
         {$$ = ["-",$1,$3];}
     | e '*' e
-        {$$ = ["*",$1,$3];}
+        {$$ = [$2,$1,$3];}
     | e '/' e
-        {$$ = ["/",$1,$3];}
-    | e '%' e
         {$$ = ["/",$1,$3];}
     | '-' e %prec UMINUS
         {$$ = ["-",$2];}
-    | not_expr
-    ;
+    | "!" e {$$ = ["!", [".",$2]];}
+    | parentheses_expr {$$ = [".", $1];};
 
-not_expr: "!" parentheses_expr {$$ = ["!", [".",$2]];} | "typeof" parentheses_expr {$$ = [$1, [".",$2]];} | "await" parentheses_expr {$$ = ["await", [".",$2]]} | parentheses_expr {$$ = [".", $1];};
-
-
-access_array: parentheses_expr "[[" access_arr "]]" {$$ = ["access_array",$1,$4];};
 
 
 parentheses_expr:
     IDENTIFIER "[" "]" {$$= ["function_call",$1,[]];}
     | IDENTIFIER "[" exprs "]" {$$= ["function_call",$1,$3];}
-    | access_array
+    | IDENTIFIER "[[" access_arr "]]" {$$ = ["access_array",$1,$4];}
     | "{" "}" {$$ = ["initializer_list","Object",[]];} | "{" exprs "}" {$$ = ["initializer_list","Object",$2];}
-    | '(' e ')'} {$$ = ["parentheses",$2];}
+    | '(' e ')' {$$ = ["parentheses",$2];}
     | NUMBER
         {$$ = [yytext];}
     | IDENTIFIER
@@ -172,6 +164,6 @@ parentheses_expr:
 parameter: PARAMETER {$$ = ["Object", $1.substring(0,($1.length)-1)];};
 parameters: parameter "," parameters {$$ = [$1].concat($3);} | parameter {$$ =
  [$1];} | {$$ = []};
-access_arr: parentheses_expr "," access_arr {$$ = [$1].concat($3);} | parentheses_expr {$$ =
+access_arr: e "," access_arr {$$ = [$1].concat($3);} | e {$$ =
  [$1];};
 exprs: e "," exprs {$$ = [$1].concat($3);} | e {$$ = [$1];};
