@@ -75,7 +75,7 @@
 %% /* language grammar */
 
 expressions
-    : statements_ EOF
+    : top_level_statements EOF
         {return ["top_level_statements",$1];}
     ;
 
@@ -84,11 +84,10 @@ statements
         {$$ = ["statements",$1];}
     ;
 
-top_level_statements: function ";" top_level_statements {$$ = [$1].concat($3);} | function ";" {$$ =
- [$1];} | function {$$ =
+top_level_statements: top_level_statements ";" function {$$ = $1.concat([$3]);} | function {$$ =
  [$1];};
 
-statements_: statement ";" statements_ {$$ = [$1].concat($3);} | statement ";" {$$ =
+statements_: statements_ ";" statement {$$ = $1.concat([$3]);} | statement {$$ =
  [$1];};
 
 
@@ -102,7 +101,7 @@ statement
     | statement_with_semicolon {$$ = ["semicolon",$1];}
     ;
 
-bracket_statements: statement {$$ = ["statements",$1]} | "(" statements ")" {$$ = $2};
+bracket_statements: "(" statement ";" statements_ ")" {$$ = ["statements",[$2].concat($4)];} | statement {$$ = ["statements",[$1]]};
 
 if_statement:
 "If" "[" e "," bracket_statements "," bracket_statements "]" {$$ = ["if",$3,$5,["else",$7]];};
@@ -111,7 +110,7 @@ if_statement:
 statement_with_semicolon
    : 
    IDENTIFIER "=" e {$$ = ["set_var",$1,$3];}
-   | "Return" "[" e "]" {$$ = ["return",$1];}
+   | "Return" "[" e "]" {$$ = ["return",$3];}
    | e {$$ = ["return",$1];}
    ;
 
@@ -144,7 +143,7 @@ e
     | '-' e %prec UMINUS
         {$$ = ["-",$2];}
     | "!" e {$$ = ["!", [".",$2]];}
-    | parentheses_expr {$$ = [".", $1];};
+    | parentheses_expr {$$ = $1;};
 
 
 
@@ -161,7 +160,9 @@ parentheses_expr:
     | STRING_LITERAL
         {$$ = yytext;};
 
-parameter: PARAMETER {$$ = ["Object", $1.substring(0,($1.length)-1)];};
+parameter:
+	PARAMETER ":" e {$$ = ["default_parameter", "Object", $1.substring(0,($1.length)-1)],$3;}
+	| PARAMETER {$$ = ["Object", $1.substring(0,($1.length)-1)];};
 parameters: parameter "," parameters {$$ = [$1].concat($3);} | parameter {$$ =
  [$1];} | {$$ = []};
 access_arr: e "," access_arr {$$ = [$1].concat($3);} | e {$$ =
