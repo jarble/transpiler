@@ -7,6 +7,7 @@ var class_name = "";
 var parsers =
 		{
 			"java":java_parser,
+			"kotlin":kotlin_parser,
 			"javascript":javascript_parser,
 			"wolfram":wolfram_parser,
 			"erlang":erlang_parser,
@@ -2564,8 +2565,13 @@ function generate_code(input_lang,lang,indent,arr){
 		else if(member(lang,['swift'])){
 			to_return =  "let "+name+":"+var_type(input_lang,lang,arr[1])+"="+expr;
 		}
-		else if(member(lang,['scala'])){
-			to_return =  "val "+name+":"+var_type(input_lang,lang,arr[1])+"="+expr;
+		else if(member(lang,['scala','kotlin'])){
+			if(var_type(input_lang,"java",arr[1]) === "Object"){
+				to_return = "val "+name+"="+expr;
+			}
+			else{
+				to_return = "val "+name+":"+var_type(input_lang,lang,arr[1])+"="+expr;
+			}
 		}
 	}
 	else if(arr[0] === "initialize_var"){
@@ -2625,8 +2631,16 @@ function generate_code(input_lang,lang,indent,arr){
 		else if(member(lang,['systemverilog','java','scriptol','c','cosmos','c++','d','dart','englishscript','ceylon'])){
 			to_return = name + "=" + expr;
 		}
-		else if(member(lang,['chapel','kotlin'])){
+		else if(member(lang,['chapel'])){
 			to_return =  "var "+name+":"+var_type(input_lang,lang,arr[1])+"="+expr;
+		}
+		else if(member(lang,['kotlin'])){
+			if(var_type(input_lang,"java",arr[1]) === "Object"){
+				to_return = "val "+name+"="+expr;
+			}
+			else{
+				to_return = "val "+name+":"+var_type(input_lang,lang,arr[1])+"="+expr;
+			}
 		}
 		else if(member(lang,['haxe','scala','typescript','swift'])){
 			if(arr[1] === "Object"){

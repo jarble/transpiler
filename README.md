@@ -20,14 +20,14 @@ This is some JavaScript code:
 
 and this is the Java code that it generates:
 
-	public static int add(int a,int b){
-		int[] g={3,4,5};
-		return a+b+(g[0])+(g.length);
-	} 
-	 
-	public static int divide(int a,int b){
+	public static Object add(Object a,Object b){
+		Object g=new ArrayList<>(Arrays.asList(3,4,5));
+		return a+b+(g.get(0))+(g.length);
+	}
+	public static Object divide(Object a,Object b){
 		return a/b;
 	}
+
 
 # How to use the online translator
 
