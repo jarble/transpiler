@@ -23,8 +23,10 @@
 "!="                  return '!='
 '!'                   return '!'
 ">="                  return '>='
+">>"                  return '>>'
 ">"                   return '>'
 "<="                  return '<='
+"<<"                  return '<<'
 "<"                   return '<'
 "=="                  return '=='
 "="                   return '='
@@ -39,6 +41,7 @@
 "+="                  return '+='
 "+"                   return '+'
 "^"                   return '^'
+"?"                   return '?'
 "{"                   return '{'
 "}"                   return '}'
 "]["                  return ']['
@@ -54,6 +57,7 @@
 
 /* operator associations and precedence */
 
+%right '?'
 %left '||'
 %left '&&'
 %left '<' '<=' '>' '>=' '==' '!='
@@ -108,7 +112,8 @@ statement_with_semicolon
    ;
 e
     :
-    e '||' e
+    e "?" e ":" e {$$ = ["ternary_operator",$1,$3,$5]}
+    |e '||' e
         {$$ = [$2,$1,$3];}
     |e '&&' e
         {$$ = [$2,$1,$3];}

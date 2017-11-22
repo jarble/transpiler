@@ -52,6 +52,7 @@
 "..."                 return '...'
 "."                   return '.'
 "^"                   return '^'
+"?"                   return '?'
 "{"                   return '{'
 "}"                   return '}'
 "]["                  return ']['
@@ -67,6 +68,7 @@
 
 /* operator associations and precedence */
 
+%left '?'
 %left '||'
 %left '&&'
 %left '<' '<=' '>' '>=' '===' '!=='
@@ -138,7 +140,8 @@ statement_with_semicolon
    ;
 e
     :
-     "..." parentheses_expr {$$ = ["unpack_array",$2]}
+    e "?" e ":" e {$$ = ["ternary_operator",$1,$3,$5]}
+    |"..." parentheses_expr {$$ = ["unpack_array",$2]}
     |e '||' e
         {$$ = [$2,$1,$3];}
     |e '&&' e

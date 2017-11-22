@@ -56,6 +56,7 @@
 "]["                  return ']['
 "["                   return '['
 "]"                   return ']'
+"?"                   return '?'
 "("                   return '('
 ")"                   return ')'
 "instanceof"          return 'instanceof'
@@ -67,6 +68,8 @@
 /lex
 
 /* operator associations and precedence */
+
+%right '?'
 
 %left '...'
 %left '||' '|'
@@ -141,7 +144,8 @@ statement_with_semicolon
    ;
 e
     :
-    "..." e {$$=["unpack_array",$2]}
+     e "?" e ":" e {$$ = ["ternary_operator",$1,$3,$5]}
+    | "..." e {$$=["unpack_array",$2]}
     |e '||' e
         {$$ = [$2,$1,$3];}
     |e '|' e

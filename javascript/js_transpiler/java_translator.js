@@ -102,7 +102,7 @@ function test_examples(){
 			parsed_texts.push(parsers[test_cases[i][1]].parse(test_cases[i][0]));
 		}
 	//for(lang1 of ["java","perl","prolog","haxe","ocaml","common lisp","c++","c#","swift","go","typescript","lua","ruby","python","php","wolfram","minizinc","scala","visual basic .net","haskell","r","typescript","erlang"]){
-	for(lang1 of ["javascript","php","perl","c++","haxe","haskell","erlang","ruby","visual basic .net","python","julia","octave","minizinc"]){
+	for(lang1 of ["javascript","php","perl","c++","haxe","haskell","erlang","ruby","visual basic .net","python","julia","octave","minizinc","kotlin"]){
 		output_array += "These are not defined for "+lang1+":\n"
 		var search_query = [];
 		for(var j = 0; j < test_cases.length;j++){
@@ -1275,7 +1275,7 @@ function generate_code(input_lang,lang,indent,arr){
 		else if(member(lang,["haskell"])){
 			to_return = "(typeOf "+expr+") =="+var_type(input_lang,lang,type)+"";
 		}
-		else if(member(lang,["c#"])){
+		else if(member(lang,["c#","kotlin"])){
 			to_return = "("+expr+" is "+var_type(input_lang,lang,type)+")";
 		}
 		else if(member(lang,["scala"])){
@@ -1309,6 +1309,33 @@ function generate_code(input_lang,lang,indent,arr){
 			}
 		}
 		types[to_return] = "boolean";
+	}
+	else if(arr[0] === "ternary_operator"){
+		var a = generate_code(input_lang,lang,indent,arr[1]);
+		var b = generate_code(input_lang,lang,indent+"    ",arr[2]);
+		var c = generate_code(input_lang,lang,indent+"    ",arr[2]);
+		if(member(lang,["java","c","c#","haxe","c++","perl","ruby","julia","awk","swift"])){
+			to_return = a+"?"+b+":"+c;
+		}
+		else if(member(lang,["coffeescript","haskell","ada"])){
+			to_return = "(if "+a+" then "+b+" else "+c+")";
+		}
+		else if(member(lang,["python"])){
+			to_return = "("+a+" if "+b+" else "+c+")";
+		}
+		else if(member(lang,["rust"])){
+			to_return = "(if "+a+"{"+b+"} else {"+c+"})";
+		}
+		else if(member(lang,["lua"])){
+			to_return = "(("+a+") and ("+b+") or ("+c+"))";
+		}
+		else if(member(lang,["visual basic .net"])){
+			to_return = "If("+a+","+b+","+c+")";
+		}
+		else if(member(lang,["coffeescript"])){
+			to_return = "(if ("+a+") "+b+" else "+c+")";
+		}
+		types[to_return] = types[b];
 	}
 	else if(arr[0] === "if"){
 		var if_statement1 = generate_code(input_lang,lang,indent,arr[1]);
@@ -4240,8 +4267,9 @@ function generate_code(input_lang,lang,indent,arr){
 		[["wolfram"],["function_call","RandomChoice",["$a"]]],
 		[["r"],["function_call","sample",["$a","1"]]],
 	],matching_symbols)){
-		var output = generate_code(input_lang,lang,indent,matching_symbols["$a"]);
-		lang === 'lua' && (to_return = a + "[math.random(#"+a+")]")
+		var a = generate_code(input_lang,lang,indent,matching_symbols["$a"]);
+		member(lang,['javascript','coffeescript','typescript']) && (to_return = a + "[Math.floor(Math.random() * " + a + ".length)]")
+		|| lang === 'lua' && (to_return = a + "[math.random(#"+a+")]")
 		|| (to_return = unparse(input_lang,lang,indent,pattern_array.value,matching_symbols));
 		types[to_return] = "int";
 	}
@@ -4265,7 +4293,6 @@ function generate_code(input_lang,lang,indent,arr){
 		[['wolfram'],["function_call","Ceiling",["$a"]]],
 		[['ruby'],[".",[["$a"],"ceil"]]]
 	],matching_symbols)){
-		
 		var output = generate_code(input_lang,lang,indent,matching_symbols["$a"]);
 		if(member(lang,["haskell","common lisp"])){
 			to_return = "(ceiling "+output+")";
@@ -4565,6 +4592,15 @@ function type_conversion(input_lang,lang,type1, type2, expr){
 			|| (type1 === "int"
 				&& type2 === "String"
 					&& (to_return ="Integer.toString("+expr+")"));
+		}
+		else if(member(lang,["kotlin"])){
+			(type1 === "String")
+				&& (type2 === "int"
+					&& (to_return = expr + ".toInt()"))
+			||
+			(type1 === "int")
+				&& (type2 === "String"
+					&& (to_return = expr + ".toString()"));
 		}
 		if(to_return === undefined){
 			throw "type_conversion from "+type1+" to "+type2+" is not defined for " + lang;

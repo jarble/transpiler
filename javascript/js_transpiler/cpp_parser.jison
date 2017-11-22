@@ -46,6 +46,7 @@
 "+="                  return '+='
 "+"                   return '+'
 "^"                   return '^'
+"?"                   return '?'
 "{"                   return '{'
 "}"                   return '}'
 "["                   return '['
@@ -60,8 +61,9 @@
 
 /* operator associations and precedence */
 
+%right '?'
 %left '->'
-%left 'is' '&&' '||'
+%left '&&' '||'
 %left '==' '!=' '<' '<=' '>' '>='
 %left '+' '-'
 %left '*' '/' '%'
@@ -139,8 +141,7 @@ key_values: key_values "," key_value {$$ = $1.concat([$3]);} | key_value {$$ = [
 key_value: "{" STRING_LITERAL "," e "}" {$$ = [$2,$4]};
 
 e:
-    e "is" e
-        {$$ = [$2,$1,$3];}
+    e "?" e ":" e {$$ = ["ternary_operator",$1,$3,$5]}
     |e '||' e
         {$$ = [$2,$1,$3];}
     |e '&&' e

@@ -46,6 +46,7 @@
 "+="                  return '+='
 "+"                   return '+'
 "^"                   return '^'
+"?"                   return '?'
 "{"                   return '{'
 "}"                   return '}'
 "]["                  return ']['
@@ -62,6 +63,8 @@
 /lex
 
 /* operator associations and precedence */
+
+%right '?'
 
 %left '||'
 %left '&&'
@@ -140,7 +143,8 @@ statement_with_semicolon
    | IDENTIFIER "." dot_expr {$$ = [".",[$1].concat($3)]}
    ;
 e:
-    "*" parentheses_expr {$$ = ["unpack_array",$2]}
+    e "?" e ":" e {$$ = ["ternary_operator",$1,$3,$5]}
+    | "*" parentheses_expr {$$ = ["unpack_array",$2]}
     | parentheses_expr "..." parentheses_expr {$$ = ["exclusive_range",$1,$3]}
     | parentheses_expr ".." parentheses_expr {$$ = ["inclusive_range",$1,$3]}
     |e '||' e
