@@ -6,6 +6,7 @@
 [0-9]+("."[0-9]+)?\b  return 'NUMBER'
 \"([^\\\"]|\\.)*\" return 'STRING_LITERAL'
 "$"                   return "$"
+"unless"              return "unless"
 "function"            return "function"
 "class"               return "class"
 "public"              return "public"
@@ -156,8 +157,11 @@ e
         {$$ = [$2,$1,$3];}
     | '-' e %prec UMINUS
         {$$ = ["-",$2];}
-    | parentheses_expr {$$ = $1;}
+    | not_expr
     ;
+
+
+not_expr: "!" parentheses_expr {$$ = ["!", [".",$2]];} | parentheses_expr {$$ = [".", $1];};
 
 access_array: var_name "[" access_arr "]" {$$ = ["access_array",$1,$3];};
 
@@ -189,7 +193,7 @@ elif: "else" "if" "(" e ")" "{" statements "}" elif {$$ = ["elif",$4,$7,$9]} | e
 else_statement: "else" "{" statements "}" {$$ = ["else",$3];};
 if_statement:
 "if" "(" e ")" "{" statements "}" elif {$$ = ["if",$3,$6,$8];}
-|  "if" "(" e ")" "{" statements "}" {$$ = ["if",$3,$6];};
+| "if" "(" e ")" "{" statements "}" {$$ = ["if",$3,$6];} | "unless" "(" e ")" "{" statements "}" {$$ = ["unless",$3,$6];};
 
 var_name: "$" IDENTIFIER {$$ = $2;};
 var_names: var_name "," var_names {$$ = [$1].concat($3);} | var_name {$$ = [$1];};

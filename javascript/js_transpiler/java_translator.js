@@ -34,6 +34,7 @@ function test_examples(){
 	var inputText;
 	var output_array = "";
 	var test_cases = [
+			["var a1 = 1; a = ((a1>3) ? 3 : 4);","javascript","\"ternary operator\""],
 			["int parsed_int = Integer.parseInt(\"2\");","java","convert string to integer"],
 			["comprehension -> [X || X <- [1,2,3], X > 3].","erlang","list comprehension"],
 			["comprehension = [x+2*x+x/2 | x <- [1,2,3,4]]","haskell","list comprehension"],
@@ -1314,7 +1315,7 @@ function generate_code(input_lang,lang,indent,arr){
 		var a = generate_code(input_lang,lang,indent,arr[1]);
 		var b = generate_code(input_lang,lang,indent+"    ",arr[2]);
 		var c = generate_code(input_lang,lang,indent+"    ",arr[2]);
-		if(member(lang,["java","c","c#","haxe","c++","perl","ruby","julia","awk","swift"])){
+		if(member(lang,["java","javascript","typescript","c","c#","haxe","c++","perl","ruby","julia","awk","swift"])){
 			to_return = a+"?"+b+":"+c;
 		}
 		else if(member(lang,["coffeescript","haskell","ada"])){
@@ -1336,6 +1337,19 @@ function generate_code(input_lang,lang,indent,arr){
 			to_return = "(if ("+a+") "+b+" else "+c+")";
 		}
 		types[to_return] = types[b];
+	}
+	else if(arr[0] === "unless"){
+		var if_statement1 = generate_code(input_lang,lang,indent,arr[1]);
+		var if_statement2 = generate_code(input_lang,lang,indent+"    ",arr[2]);
+		if(output_lang === "perl"){
+			to_return = "unless("+if_statement1+"){"+if_statement2+"}";
+		}
+		else if(output_lang === "ruby"){
+			to_return = "unless "+if_statement1+if_statement2+indent+"end";
+		}
+		else{
+			to_return = generate_code(input_lang,lang,indent+"    ",["if",arr[1],arr[2]]);
+		}
 	}
 	else if(arr[0] === "if"){
 		var if_statement1 = generate_code(input_lang,lang,indent,arr[1]);
@@ -3060,7 +3074,7 @@ function generate_code(input_lang,lang,indent,arr){
 			else if(member(lang,["minizinc"])){
 				to_return = "["+ result + "|" + variable + " in " + the_list + "]";
 			}
-			else if(member(lang,["python"])){
+			else if(member(lang,["python","julia"])){
 				to_return = "[" + result + " for " + variable + " in " + the_list + "]";
 			}
 			else if(member(lang,["javascript"])){
@@ -3072,7 +3086,7 @@ function generate_code(input_lang,lang,indent,arr){
 		}
 		else{
 			condition = generate_code(input_lang,lang,indent,arr[4]);
-			if(member(lang,["python"])){
+			if(member(lang,["python","julia"])){
 				to_return = "[" + result + " for " + variable + " in " + the_list + "if "+condition+"]";
 			}
 			else if(member(lang,["erlang"])){
@@ -4480,7 +4494,7 @@ function generate_code(input_lang,lang,indent,arr){
 }
 
 function is_a_statement(the_statement){
-	return member(the_statement,["overload_operator","set_array_size","throw","continue","break","default","case","switch","async_function","yield","named_parameter","static_overload_operator","instance_overload_operator","initialize_var","class_extends","initialize_static_instance_var","initialize_static_instance_var_with_value","constructor","initialize_instance_var","initialize_instance_var_with_value","defrule","grammar_macro","predicate","grammar_statement","foreach_with_index","initialize_constant","initialize_empty_constants","println","function","initialize_empty_vars","return","else","else if","elif","if","if_statement","instance_method","static_method","class","return","set_var","while","for","foreach","++","--","+=","-=","*=","/="]);
+	return member(the_statement,["overload_operator","unless","set_array_size","throw","continue","break","default","case","switch","async_function","yield","named_parameter","static_overload_operator","instance_overload_operator","initialize_var","class_extends","initialize_static_instance_var","initialize_static_instance_var_with_value","constructor","initialize_instance_var","initialize_instance_var_with_value","defrule","grammar_macro","predicate","grammar_statement","foreach_with_index","initialize_constant","initialize_empty_constants","println","function","initialize_empty_vars","return","else","else if","elif","if","if_statement","instance_method","static_method","class","return","set_var","while","for","foreach","++","--","+=","-=","*=","/="]);
 }
 
 function parse_lang(input_lang,output_lang,input_text){
