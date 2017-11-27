@@ -4,7 +4,7 @@
 
 \s+                   /* skip whitespace */
 "$"                   return "$"
-"unless"              return "unless"
+"unless"              return 'unless'
 "def"                 return "def"
 "self"                return "self"
 "end"                 return "end"
@@ -219,7 +219,7 @@ elif:
     | "elsif" e statements {$$ = ["elif",$2,$3]} 
     | "else" statements {$$ = ["else",$2];};
 if_statement:
-	"unless" e statements elif "end" {$$ = ["unless",$2,$3,$4];}
+	"unless" e statements"end" {$$ = ["unless",$2,$3];}
 	| "if" e "then" statements elif "end" {$$ = ["if",$2,$4,$5];}
     | "if" e "then" statements "end" {$$ = ["if",$2,$4];}
 	| "if" e statements elif "end" {$$ = ["if",$2,$3,$4];}
