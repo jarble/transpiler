@@ -27,6 +27,7 @@
 ">"                   return '>'
 "<="                  return '<='
 "<"                   return '<'
+"~="                  return '~='
 "=="                  return '=='
 "="                   return '='
 "*="                  return '*='
@@ -57,7 +58,7 @@
 
 %left 'or'
 %left 'and'
-%left '<' '<=' '>' '>='
+%left '<' '<=' '>' '>=' '==' '~='
 %left '..' '+' '-'
 %left '*' '/' '%'
 %left UMINUS
@@ -110,6 +111,10 @@ e
         {$$ = [$2,$1,$3];}
     | e '>=' e
         {$$ = [$2,$1,$3];}
+    | e '==' e
+        {$$ = [$2,$1,$3];}
+    | e '~=' e
+        {$$ = ["!=",$1,$3];}
     |e '>' e
         {$$ = [$2,$1,$3];}
     | e '+' e
@@ -136,18 +141,14 @@ not_expr: "!" dot_expr {$$ = ["!", [".",$2]];} | dot_expr {$$ = [".", $1];};
 dot_expr: parentheses_expr "." dot_expr {$$ = [$1].concat($3);} | parentheses_expr {$$ =
  [$1];};
 
-access_array: IDENTIFIER "[" access_arr "]" {$$ = ["access_array",$1,$3];};
+access_array: parentheses_expr_ "[" access_arr "]" {$$ = ["access_array",$1,$3];};
 
 function_call:
-    IDENTIFIER "(" ")" {$$ = ["function_call",$1,[]];}
-    |IDENTIFIER "(" exprs ")" {$$ = ["function_call",$1,$3];};
+    parentheses_expr_ "(" ")" {$$ = ["function_call",$1,[]];}
+    | parentheses_expr_ "(" exprs ")" {$$ = ["function_call",$1,$3];};
 
-parentheses_expr:
-    '(' e ')' {$$ = ["parentheses",$2];}
-    | "function" "(" parameters ")" statements "end" {$$ = ["anonymous_function","Object",$3,$5];}
-    |access_array
-    | function_call
-    | "{" "}" {$$ = ["initializer_list","Object",[]];} | "{" exprs "}" {$$ = ["initializer_list","Object",$2];}
+parentheses_expr_:
+    "{" "}" {$$ = ["initializer_list","Object",[]];} | "{" exprs "}" {$$ = ["initializer_list","Object",$2];}
     | "{" key_values "}" {$$ = ["associative_array","Object","Object",$2];}
     | NUMBER
         {$$ = yytext;}
@@ -155,6 +156,15 @@ parentheses_expr:
         {$$ = yytext;}
     | STRING_LITERAL
         {$$ = yytext;};
+
+parentheses_expr:
+    "function" "(" parameters ")" statements "end" {$$ = ["anonymous_function","Object",$3,$5];}
+    | '(' e ')' {$$ = ["parentheses",$2];}
+    | access_array
+    | function_call
+    | parentheses_expr_;
+
+
 
 type: IDENTIFIER;
 parameter: IDENTIFIER {$$ = ["Object", $1];};

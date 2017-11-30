@@ -199,9 +199,14 @@ parentheses_expr:
     | IDENTIFIER "(" ")" {$$= ["function_call",$1,[]];}
     | IDENTIFIER "(" exprs ")" {$$= ["function_call",$1,$3];}
     | access_array
-    | "[" "]" {$$ = ["initializer_list","Object",[]];} | "[" exprs "]" {$$ = ["initializer_list","Object",$2];}
-    | "{" "}" {$$ = ["associative_array","Object","Object",[]];} | "{" key_values "}" {$$ = ["associative_array","Object","Object",$2];}
-    | '(' e ')'} {$$ = ["parentheses",$2];}
+    | '(' e ')' {$$ = ["parentheses",$2];}
+    | parentheses_expr_;
+
+parentheses_expr_:
+    "{" "}" {$$ = ["associative_array","Object","Object",[]];}
+    | "{" key_values "}" {$$ = ["associative_array","Object","Object",$2];}
+    | "[" "]" {$$ = ["initializer_list","Object",[]];}
+    | "[" exprs "]" {$$ = ["initializer_list","Object",$2];}
     | NUMBER
         {$$ = yytext;}
     | IDENTIFIER
@@ -209,7 +214,6 @@ parentheses_expr:
     | STRING_LITERAL
         {$$ = yytext;};
 
-type: IDENTIFIER "[" "]" {$$ = [$1,"[]"];} | IDENTIFIER "<" types ">" {$$ = [$1,$3]} | IDENTIFIER;
 parameter: IDENTIFIER {$$ = ["Object", $1];};
 parameters: parameter "," parameters {$$ = [$1].concat($3);} | parameter {$$ =
  [$1];} | {$$ = []};
@@ -220,7 +224,6 @@ exprs: e "," exprs {$$ = [$1].concat($3);} | e {$$ = [$1];};
 key_values: key_values "," key_value {$$ = $1.concat([$3]);} | key_value {$$ = [$1];};
 key_value: STRING_LITERAL ":" e {$$ = [$1,$3]} | IDENTIFIER ":" e {$$ = ["\""+$1+"\"",$3]};
 
-types: type "," types {$$ = [$1].concat($3);} | type {$$ = [$1];};
 elif: "else" "if" "(" e ")" bracket_statements elif {$$ = ["elif",$4,$6,$7]} | "else" bracket_statements {$$ = ["else",$2];};
 if_statement:
 "if" "(" e ")" bracket_statements elif {$$ = ["if",$3,$5,$6];}

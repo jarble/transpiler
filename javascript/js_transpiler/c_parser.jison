@@ -146,7 +146,6 @@ e
 not_expr: "!" dot_expr {$$ = ["!", [".",$2]];} | dot_expr {$$ = [".", $1];};
 
 
-
 dot_expr: parentheses_expr "." dot_expr {$$ = [$1].concat($3);} | parentheses_expr {$$ =
  [$1];};
 
@@ -156,9 +155,13 @@ parentheses_expr:
     access_array
     | parentheses_expr "(" ")" {$$ = ["function_call",$1,[]];}
     | parentheses_expr "(" exprs ")" {$$ = ["function_call",$1,$3];}
-    | "{" "}" {$$ = ["initializer_list","Object",[]];} | "{" exprs "}" {$$ = ["initializer_list","Object",$2];}
-    | '(' e ')'} {$$ = ["parentheses",$2];}
-    | NUMBER
+    | '(' e ')' {$$ = ["parentheses",$2];}
+    | parentheses_expr_;
+
+parentheses_expr_:
+	"{" "}" {$$ = ["initializer_list","Object",[]];}
+	| "{" exprs "}" {$$ = ["initializer_list","Object",$2];}
+	| NUMBER
         {$$ = yytext;}
     | IDENTIFIER
         {$$ = yytext;}
