@@ -145,8 +145,6 @@ e
     | "!" e {$$ = ["!", [".",$2]];}
     | parentheses_expr {$$ = $1;};
 
-
-
 parentheses_expr:
     IDENTIFIER "[" "]" {$$= ["function_call",$1,[]];}
     | IDENTIFIER "[" exprs "]" {$$= ["function_call",$1,$3];}

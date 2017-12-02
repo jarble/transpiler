@@ -76,4 +76,9 @@ This is a simplified version of one of its translation rules, implementing the s
 Here is an [automatically-generated list of features](https://jarble.github.io/transpiler/javascript/js_transpiler/to_do_list.html) that have not yet been implemented in this translator.
 
 # Similar projects
-There are several other source code generators that are similar to this one. This [universal code generator](http://codeworker.free.fr/) is one example.
+There are several other source-to-source compilers and code generators that are similar to this one.
+
+[JTransc](https://github.com/jtransc/jtransc) compiles Java, Kotlin, and Scala into several other programming languages.
+[Pandoc](https://pandoc.org/index.html) is a universal document converter
+
+This [universal code generator](http://codeworker.free.fr/) is one example.
