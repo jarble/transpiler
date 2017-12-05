@@ -214,7 +214,7 @@ parentheses_expr_:
     | STRING_LITERAL
         {$$ = yytext;};
 
-parameter: IDENTIFIER {$$ = ["Object", $1];};
+parameter: IDENTIFIER "=" e {$$ = ["default_parameter","Object",$1,$3];} | IDENTIFIER {$$ = ["Object", $1];};
 parameters: parameter "," parameters {$$ = [$1].concat($3);} | parameter {$$ =
  [$1];} | {$$ = []};
 access_arr: parentheses_expr "][" access_arr {$$ = [$1].concat($3);} | parentheses_expr {$$ =

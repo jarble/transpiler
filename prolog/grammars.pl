@@ -229,7 +229,7 @@ initialize_var_(Data,[Name,Expr,Type]) -->
         (Name,python_ws,"=",python_ws,Expr),
     ['javascript','hack','swift']:
         ("var",ws_,Name,ws,"=",ws,Expr),
-    ['pseudocode','lua','gap']:
+    ['pseudocode','lua','gap','bash']:
         ("local",ws_,Name,ws,"=",ws,Expr),
     ['pseudocode','janus']:
         ("local",ws_,Type,ws_,Name,ws,"=",ws,Expr),
