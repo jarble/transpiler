@@ -799,7 +799,18 @@ function generate_code(input_lang,lang,indent,arr){
 		}
 		types[to_return] = "boolean";
 	}
-		else if(matching_patterns(pattern_array,input_lang,lang,arr,[
+	else if(matching_patterns(pattern_array,input_lang,lang,arr,[
+		[['java','javascript','typescript','coffeescript','haxe','ruby'],[".",["Math",["function_call","sqrt",["$a"]]]]],
+		[['python','lua'],[".",["math",["function_call","sqrt",["$a"]]]]],
+		[["go","wolfram"],["function_call","Sqrt",["$a"]]],
+		[["c#"],[".",["Math",["function_call","Sqrt",["$a"]]]]],
+		[['c',"tcl",'c++','reduce','seed7','julia','perl','php','perl 6','maxima','minizinc','prolog','octave','d','haskell','swift','mathematical notation','dart','picat'],["function_call","sqrt",["$a"]]]
+	],matching_symbols)){
+		var output = generate_code(input_lang,lang,indent,matching_symbols["$a"]);
+		to_return = unparse(input_lang,lang,indent,pattern_array.value,matching_symbols);
+		types[to_return] = "int";
+	}
+	else if(matching_patterns(pattern_array,input_lang,lang,arr,[
 		[['javascript',"coffeescript",'java','typescript','haxe','actionscript','scala'],[".",["Math",["function_call","pow",["$a","$b"]]]]],
 		[['erlang'],[".",["math",["function_call","pow",["$a","$b"]]]]],
 		[["c#","visual basic .net"],[".",["Math",["function_call","Pow",["$a","$b"]]]]],
@@ -4387,17 +4398,6 @@ function generate_code(input_lang,lang,indent,arr){
 		var a = var_type(input_lang,lang,matching_symbols["$a"]);
 		var b = var_type(input_lang,lang,matching_symbols["$b"]);
 		return generate_code(input_lang,lang,indent,["associative_array",a,b,[]]);
-	}
-	else if(matching_patterns(pattern_array,input_lang,lang,arr,[
-		[['java','javascript','typescript','coffeescript','haxe','ruby'],[".",["Math",["function_call","sqrt",["$a"]]]]],
-		[['python','lua'],[".",["math",["function_call","sqrt",["$a"]]]]],
-		[["go","wolfram"],["function_call","Sqrt",["$a"]]],
-		[["c#"],[".",["Math",["function_call","Sqrt",["$a"]]]]],
-		[['c',"tcl",'c++','reduce','seed7','julia','perl','php','perl 6','maxima','minizinc','prolog','octave','d','haskell','swift','mathematical notation','dart','picat'],["function_call","sqrt",["$a"]]]
-	],matching_symbols)){
-		var output = generate_code(input_lang,lang,indent,matching_symbols["$a"]);
-		to_return = unparse(input_lang,lang,indent,pattern_array.value,matching_symbols);
-		types[to_return] = "int";
 	}
 	// see http://rosettacode.org/wiki/Real_constants_and_functions
 	else if(matching_patterns(pattern_array,input_lang,lang,arr,[
