@@ -169,6 +169,9 @@ function myFunction() {
     var outputLang = document.getElementById("outputLang").value;
     var inputText = document.getElementById("inputText").value;
     var outputText;
+    
+    document.getElementById("errors").innerHTML = "<br/>" + test_examples([outputLang]);
+    
     window.location.hash=encodeURIComponent(JSON.stringify({inputText:inputText,inputLang:inputLang,outputLang:outputLang}));
     //try{
 				outputText = "<br/><pre>" + parse_lang(inputLang,outputLang.trim(), inputText)

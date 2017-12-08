@@ -10,6 +10,7 @@
 "continue"            return "continue"
 "typeof"              return "typeof"
 "class"               return "class"
+"const"               return 'const'
 "if"                  return 'if'
 "else"                return 'else'
 "case"                return "case"
@@ -131,6 +132,7 @@ statement_with_semicolon
    | "return" e  {$$ = ["return",$2];}
    | "yield" e  {$$ = ["yield",$2];}
    | "var" IDENTIFIER "=" e {$$ = ["initialize_var","Object",$2,$4];}
+   | "const" IDENTIFIER "=" e {$$ = ["initialize_constant","Object",$3,$5];}
    | "var" identifiers {$$ = ["initialize_empty_vars","Object",$2];}
    | access_array "=" e {$$ = ["set_var",$1,$3];}
    | IDENTIFIER "=" e {$$ = ["set_var",$1,$3];}

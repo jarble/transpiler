@@ -17,6 +17,7 @@
 "."                   return '.'
 ":"                   return ':'
 "==>"                 return '==>'
+"<=>"                 return '<=>'
 "@"                   return '@'
 ">="                  return '>='
 ">"                   return '>'
@@ -115,5 +116,7 @@ parentheses_expr:
 exprs: parentheses_expr "," exprs {$$ = [$1].concat($3);} | parentheses_expr {$$ = [$1];};
 if_statement:
     IDENTIFIER "@" e "==>" e {$$= ["defrule",$1,$3,$5]}
-    | e "==>" e {$$= ["implies",$1,$3]};
+    | e "==>" e {$$= ["implies",$1,$3]}
+    | e "<=>" e {$$= ["simplification_rule",$1,$3]}
+    | IDENTIFIER "@" e "<=>" e {$$= ["named_simplification_rule",$1,$3,$5]};
 

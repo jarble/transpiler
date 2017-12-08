@@ -12,6 +12,7 @@
 "case"                return "case"
 "printf"              return "printf"
 "while"               return "while"
+"const"               return "const"
 "switch"              return "switch"
 "for"                 return "for"
 ","                   return ','
@@ -99,6 +100,7 @@ statement_with_semicolon
    "printf" "(" e "," e ")" {$$ = ["println",$5];}
    | "return" e  {$$ = ["return",$2];}
    | type IDENTIFIER "=" e {$$ = ["initialize_var",$1,$2,$4];}
+   | "const" type IDENTIFIER "=" e {$$ = ["initialize_constant",$2,$3,$5];}
    | type access_array {return ["set_array_size",$1,$2[1],$2[2]];}
    | "var" identifiers {$$ = ["initialize_empty_vars","Object",$2];}
    | access_array "=" e {$$ = ["set_var",$1,$3];}
