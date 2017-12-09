@@ -9,6 +9,7 @@ var parsers =
 			"java":java_parser,
 			"kotlin":kotlin_parser,
 			"javascript":javascript_parser,
+			"typescript":typescript_parser,
 			"wolfram":wolfram_parser,
 			"erlang":erlang_parser,
 			"maxima":maxima_parser,
@@ -2106,7 +2107,7 @@ function generate_code(input_lang,lang,indent,arr){
 			to_return = "static "+access_modifier+" function " + name + "("+params+"){"+body+indent+"}";
 		}
 		else if(member(lang,["typescript"])){
-			to_return = "static " + name +":" +var_type(input_lang,lang,type)+ "("+params+"){"+body+indent+"}";
+			to_return = "static " +  name + "(" + params + ")" +":" +var_type(input_lang,lang,type) + "{"+body+indent+"}";
 		}
 		else if(member(lang,["javascript"])){
 			to_return = "static " + name + "("+params+"){"+body+indent+"}";
@@ -2200,7 +2201,7 @@ function generate_code(input_lang,lang,indent,arr){
 		}
 		else if(member(lang,["typescript"])){
 			type = var_type(input_lang,lang,type);
-			to_return = name +":" +type+ "("+params+"){"+body+indent+"}";
+			to_return = name + "("+params+")"+":" +type+"{"+body+indent+"}";
 		}
 		else if(member(lang,["javascript"])){
 			to_return = name + "("+params+"){"+body+indent+"}";
