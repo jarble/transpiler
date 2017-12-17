@@ -71,10 +71,10 @@ statements_: statement_ statements_ {$$ = [$1].concat($2);} | statement_ {$$ =
  
 
 statement_:
-	IDENTIFIER parameters guard_if_statement {$$ = ["function","public","Object",$1,$2,$3];}
-	| IDENTIFIER parameters "=" statement {$$ = ["function","public","Object",$1,$2,$4];}
-        | IDENTIFIER "=" statement {$$ = ["function","public","Object",$1,[],$3];}
-        | IDENTIFIER guard_if_statement {$$ = ["function","public","Object",$1,[],$2];};
+	IDENTIFIER parameters guard_if_statement {$$ = ["haskell_function","public","Object",$1,$2,$3];}
+	| IDENTIFIER parameters "=" statement {$$ = ["haskell_function","public","Object",$1,$2,$4];}
+        | IDENTIFIER "=" statement {$$ = ["haskell_function","public","Object",$1,[],$3];}
+        | IDENTIFIER guard_if_statement {$$ = ["haskell_function","public","Object",$1,[],$2];};
 
 statement:
     if_statement
@@ -134,7 +134,7 @@ parentheses_expr:
 				$$ = ["!",$3];
 			}
 			else{
-				$$ = ["function_call",$2,$3];
+				$$ = ["haskell_function_call",$2,$3];
 			}
 		}
     | STRING_LITERAL

@@ -32,6 +32,7 @@
 "||"                  return '||'
 ">="                  return '>='
 ">"                   return '>'
+"<>"                  return '<>'
 "<="                  return '<='
 "<"                   return '<'
 "=="                  return '=='
@@ -176,10 +177,7 @@ parentheses_expr:
         {$$ = yytext;}
     | STRING_LITERAL
         {$$ = yytext;}
-    | E
-        {$$ = Math.E;}
-    | PI
-        {$$ = Math.PI;};
+    | "<>";
 
 type: IDENTIFIER "[" "]" {$$ = [$1,"[]"];} | IDENTIFIER "<" types ">" {$$ = [$1,$3]} | IDENTIFIER;
 parameter: var_name {$$ = ["Object", $1];};

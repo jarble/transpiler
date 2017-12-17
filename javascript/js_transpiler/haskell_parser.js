@@ -94,16 +94,16 @@ this.$ =
  [$$[$0]];
 break;
 case 4:
-this.$ = ["function","public","Object",$$[$0-2],$$[$0-1],$$[$0]];
+this.$ = ["haskell_function","public","Object",$$[$0-2],$$[$0-1],$$[$0]];
 break;
 case 5:
-this.$ = ["function","public","Object",$$[$0-3],$$[$0-2],$$[$0]];
+this.$ = ["haskell_function","public","Object",$$[$0-3],$$[$0-2],$$[$0]];
 break;
 case 6:
-this.$ = ["function","public","Object",$$[$0-2],[],$$[$0]];
+this.$ = ["haskell_function","public","Object",$$[$0-2],[],$$[$0]];
 break;
 case 7:
-this.$ = ["function","public","Object",$$[$0-1],[],$$[$0]];
+this.$ = ["haskell_function","public","Object",$$[$0-1],[],$$[$0]];
 break;
 case 9:
 this.$ = ["semicolon",$$[$0]];
@@ -153,7 +153,7 @@ case 34:
 				this.$ = ["!",$$[$0-1]];
 			}
 			else{
-				this.$ = ["function_call",$$[$0-2],$$[$0-1]];
+				this.$ = ["haskell_function_call",$$[$0-2],$$[$0-1]];
 			}
 		
 break;
