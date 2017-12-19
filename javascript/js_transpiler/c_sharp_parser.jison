@@ -10,6 +10,8 @@
 "await"               return "await"
 "public"              return "public"
 "extends"             return "extends"
+"default"             return "default"
+"import"              return "import"
 "implements"          return "implements"
 "Dictionary"          return "Dictionary"
 "private"             return "private"
@@ -102,7 +104,8 @@ class_:
 
 statement
     :
-    statement_with_semicolon ";" {$$ = ["semicolon",$1];}
+    "import" IDENTIFIER  {$$ = ["import",$2];}
+    | statement_with_semicolon ";" {$$ = ["semicolon",$1];}
     | class_
     | "while" "(" e ")" bracket_statements {$$ = ["while",$3,$5];}
     | "switch" "(" e ")" "{" case_statements "}" {$$ = ["switch",$3,$6];}

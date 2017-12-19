@@ -175,7 +175,7 @@ function myFunction() {
     
     window.location.hash=encodeURIComponent(JSON.stringify({inputText:inputText,inputLang:inputLang,outputLang:outputLang}));
     //try{
-				outputText = "<br/><pre>" + parse_lang(inputLang,outputLang.trim(), inputText)
+				outputText = "<br/><pre>" + parse_lang(inputLang,outputLang,inputText)
 				.replace(/&/g, "&amp;")
 				.replace(/</g, "&lt;")
 				.replace(/>/g, "&gt;")

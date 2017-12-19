@@ -59,7 +59,7 @@
 ")"                   return ')'
 "PI"                  return 'PI'
 "E"                   return 'E'
-[a-zA-Z][a-zA-Z0-9]* return 'IDENTIFIER'
+[a-zA-Z_][a-zA-Z0-9_]* return 'IDENTIFIER'
 <<EOF>>               return 'EOF'
 .                     return 'INVALID'
 

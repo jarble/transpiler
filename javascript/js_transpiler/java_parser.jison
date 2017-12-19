@@ -7,6 +7,7 @@
 \"([^\\\"]|\\.)*\"    return 'STRING_LITERAL'
 \'([^\\\']|\\.)*\'    return 'CHAR_LITERAL'
 "HashMap"             return 'HashMap'
+"import"              return 'import'
 "default"             return 'default'
 "Object"              return 'Object'
 "class"               return 'class'
@@ -138,7 +139,8 @@ class_statement:
 
 statement_with_semicolon
    : 
-   "return" e  {$$ = ["return",$2];}
+   "import" IDENTIFIER  {$$ = ["import",$2];}
+   | "return" e  {$$ = ["return",$2];}
    | "final" type IDENTIFIER "=" e {$$ = ["initialize_constant",$2,$3,$5];}
    | "final" type identifiers {$$ = ["initialize_empty_constants",$2,$3];}
    | type IDENTIFIER "=" "{" exprs "}" {$$ = ["initialize_var",$1,$2,["initializer_list",$1,$5]]}

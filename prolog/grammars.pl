@@ -2634,7 +2634,7 @@ import_(Data,[A]) -->
                 ("using",ws_,A),
         ['haskell','purescript','engscript','scala','go','groovy','picat','elm','swift','monkey x']:
                 ("import",ws_,A),
-        ['java','d','haxe','ceylon']:
+        :
                 ("import",ws_,A,ws,";"),
         ['dart']:
                 ("import",ws_,"'",ws,A,ws,".dart'",ws,";"),
