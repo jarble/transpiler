@@ -79,8 +79,8 @@
 %% /* language grammar */
 
 expressions
-    : statements EOF
-        {return $1;}
+    : statements_ EOF
+        {return ["top_level_statements",$1];}
     ;
 
 statements_: statement statements_ {$$ = [$1].concat($2);} | statement {$$ =

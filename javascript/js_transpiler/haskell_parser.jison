@@ -10,7 +10,7 @@
 "else"                return "else"
 "then"                return "then"
 "return"              return "return"
-"mod"                 return "mod"
+"mod"                 return 'mod'
 ","                   return ','
 ";"                   return ';'
 "."                   return '.'
@@ -56,7 +56,7 @@
 
 %left '||'
 %left '&&'
-%left '<' '<=' '>' '>='
+%left '<' '<=' '>' '>=' '=='
 %left '+' '-' '++'
 %left '*' '/' 'mod'
 %left UMINUS
@@ -74,7 +74,6 @@ statements_: statement_ statements_ {$$ = [$1].concat($2);} | statement_ {$$ =
 statement_:
 	IDENTIFIER parameters guard_if_statement {$$ = ["function","public","Object",$1,$2,$3];}
 	| IDENTIFIER "::" types IDENTIFIER parameters "=" statement {
-		assert($1 === $4);
 		var types = $3;
 		var parameter_names = $5;
 		var parameters = [];
@@ -103,6 +102,8 @@ e
     e '||' e
         {$$ = [$2,$1,$3];}
     |e '&&' e
+        {$$ = [$2,$1,$3];}
+    |e '==' e
         {$$ = [$2,$1,$3];}
     |e '<=' e
         {$$ = [$2,$1,$3];}
