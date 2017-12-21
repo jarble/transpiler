@@ -198,7 +198,7 @@ not_expr: "!" dot_expr {$$ = ["!", [".",$2]];} | "await" dot_expr {$$ = ["await"
 dot_expr: initializer_list  "." dot_expr {$$ = [$1].concat($3);} | parentheses_expr  "." dot_expr {$$ = [$1].concat($3);} | parentheses_expr {$$ =
  [$1];};
 
-access_array: IDENTIFIER "[" access_arr "]" {$$ = ["access_array",$1,$3];};
+access_array: IDENTIFIER "[" exprs "]" {$$ = ["access_array",$1,$3];};
 
 initializer_list:
 "new" type "{" "}" {$$ = ["initializer_list",$2,[]];} | "new" type "{" exprs "}" {$$ = ["initializer_list",$2,$4];} | "new" type "(" ")" {$$ = [$1,$2,[]];} | "new" type "(" exprs ")" {$$ = [$1,$2,$4];};
@@ -223,8 +223,7 @@ type: IDENTIFIER "[" "]" {$$ = [$1,"[]"];} | IDENTIFIER "<" types ">" {$$ = [$1,
 parameter: type "..." IDENTIFIER {$$ = ["varargs",$1,$3]} | type IDENTIFIER "=" e {$$ = ["default_parameter",$1,$2,$4];} | type IDENTIFIER {$$ = [$1,$2];};
 parameters: parameter "," parameters {$$ = [$1].concat($3);} | parameter {$$ =
  [$1];} | {$$= []};
-access_arr: parentheses_expr "," access_arr {$$ = [$1].concat($3);} | parentheses_expr {$$ =
- [$1];};
+
 exprs: e "," exprs {$$ = [$1].concat($3);} | e {$$ = [$1];};
 named_parameters: named_parameters "," named_parameter {$$ = $1.concat([$3]);} | named_parameter {$$ = [$1];};
 named_parameter: IDENTIFIER ":" e {$$ = ["named_parameter",$1,$3]};

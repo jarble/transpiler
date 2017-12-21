@@ -39,7 +39,6 @@
 "^"                   return '^'
 "{"                   return '{'
 "}"                   return '}'
-"]["                  return ']['
 "["                   return '['
 "]"                   return ']'
 "("                   return '('
@@ -141,7 +140,7 @@ not_expr: "!" dot_expr {$$ = ["!", [".",$2]];} | dot_expr {$$ = [".", $1];};
 dot_expr: parentheses_expr "." dot_expr {$$ = [$1].concat($3);} | parentheses_expr {$$ =
  [$1];};
 
-access_array: parentheses_expr_ "[" access_arr "]" {$$ = ["access_array",$1,$3];};
+access_array: parentheses_expr_ "[" e "]" {$$ = ["access_array",$1,[$3]];};
 
 function_call:
     parentheses_expr_ "(" ")" {$$ = ["function_call",$1,[]];}
@@ -170,8 +169,7 @@ type: IDENTIFIER;
 parameter: IDENTIFIER {$$ = ["Object", $1];};
 parameters: parameter "," parameters {$$ = [$1].concat($3);} | parameter {$$ =
  [$1];} | {$$ = [];};
-access_arr: parentheses_expr "][" access_arr {$$ = [$1].concat($3);} | parentheses_expr {$$ =
- [$1];};
+
 exprs: e "," exprs {$$ = [$1].concat($3);} | e {$$ = [$1];};
 types: type "," types {$$ = [$1].concat($3);} | type {$$ = [$1];};
 elif: "elseif" e statements elif {$$ = ["elif",$2,$3,$4]} | "elseif" e statements {$$ = ["elif",$2,$3]} | else_statement;

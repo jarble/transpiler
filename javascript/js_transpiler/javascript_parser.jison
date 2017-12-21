@@ -54,7 +54,6 @@
 "^"                   return '^'
 "{"                   return '{'
 "}"                   return '}'
-"]["                  return ']['
 "["                   return '['
 "]"                   return ']'
 "?"                   return '?'
@@ -142,7 +141,7 @@ statement_with_semicolon
    | IDENTIFIER "-=" e {$$ = [$2,$1,$3];}
    | IDENTIFIER "*=" e {$$ = [$2,$1,$3];}
    | IDENTIFIER "/=" e {$$ = [$2,$1,$3];}
-   | IDENTIFIER "." dot_expr {$$ = [".",[$1].concat($3)]}
+   | dot_expr {$$ = [".",$1]}
    ;
 e
     :
@@ -193,7 +192,7 @@ not_expr: "!" dot_expr {$$ = ["!", [".",$2]];} | "typeof" dot_expr {$$ = [$1, ["
 dot_expr: parentheses_expr  "." dot_expr  {$$ = [$1].concat($3);} | parentheses_expr {$$ =
  [$1];};
 
-access_array: parentheses_expr "[" access_arr "]" {$$ = ["access_array",$1,$3];};
+access_array: parentheses_expr "[" e "]" {$$ = ["access_array",$1,[$3]];};
 
 
 parentheses_expr:
@@ -219,8 +218,6 @@ parentheses_expr_:
 parameter: IDENTIFIER "=" e {$$ = ["default_parameter","Object",$1,$3];} | IDENTIFIER {$$ = ["Object", $1];};
 parameters: parameter "," parameters {$$ = [$1].concat($3);} | parameter {$$ =
  [$1];} | {$$ = []};
-access_arr: parentheses_expr "][" access_arr {$$ = [$1].concat($3);} | parentheses_expr {$$ =
- [$1];};
 exprs: e "," exprs {$$ = [$1].concat($3);} | e {$$ = [$1];};
 
 key_values: key_values "," key_value {$$ = $1.concat([$3]);} | key_value {$$ = [$1];};

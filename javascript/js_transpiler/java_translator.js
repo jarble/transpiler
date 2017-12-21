@@ -36,10 +36,12 @@ function test_examples(){
 	var output_array = "";
 	var test_cases = [
 			["$a1 = range(1,5);","php","generate range of numbers"],
+			["raise \"message\"","ruby","throw error"],
+			["assert(1 === 1+2);","javascript","assert"],
 			["int a1 = 1;","java","initialize variable"],
 			["int a1 = Math.abs(1.1);","java","absolute value"],
 			["final int a1 = 1;","java","declare constant"],
-			["var a1 = 1; a = ((a1>3) ? 3 : 4);","javascript","ternary operator"],
+			["var a1:number = 1; a = ((a1>3) ? 3 : 4);","typescript","ternary operator"],
 			["int parsed_int = Integer.parseInt(\"2\");","java","convert string to integer"],
 			["comprehension -> [X || X <- [1,2,3], X > 3].","erlang","list comprehension"],
 			["comprehension = [x+2*x+x/2 | x <- [1,2,3,4]]","haskell","list comprehension"],
@@ -503,10 +505,14 @@ function var_type(input_lang,lang,type){
 function same_var_type(a,b){
 	//console.log("Same var type: "+a+","+b);
 	if((types[b] === undefined) && (types[a] !== undefined)){
-		types[b] = types[a];
+		types[b] = get_type(a);
 	}
-	if((types[a] === undefined) && (types[b] !== undefined)){
-		types[a] = types[b];
+	else if((types[a] === undefined) && (types[b] !== undefined)){
+		types[a] = get_type(b);
+	}
+	
+	if(types[a] !== types[b]){
+		throw "Type of "+a+":"+JSON.stringify(types[a])+" does not match type of "+b+":"+JSON.stringify(types[b]);
 	}
 }
 
@@ -805,6 +811,24 @@ function generate_code(input_lang,lang,indent,arr){
 		types[to_return] = "boolean";
 	}
 	else if(matching_patterns(pattern_array,input_lang,lang,arr,[
+		[['javascript','scala','c','c++','lua','swift','php','ceylon','clojure'],
+			["function_call","assert",["$a"]]],
+		[['r'],
+			["function_call","stopifnot",["$a"]]],
+		[["visual basic .net","c#"],
+			[".",["Debug",["function_call","Assert",["$a"]]]]],
+		]
+	,matching_symbols)){
+		var a = generate_code(input_lang,lang,indent,matching_symbols["$a"]);
+		if(member(lang, ["python",'cython',"haskell","java"])){
+			to_return = "assert " + a;
+		}
+		else{
+			to_return = unparse(input_lang,lang,indent,pattern_array.value,matching_symbols);
+		}
+		types[to_return] = "void";
+	}
+	else if(matching_patterns(pattern_array,input_lang,lang,arr,[
 		/*
 			Get user input without text prompt:
 			https://rosettacode.org/wiki/User_input/Text
@@ -924,7 +948,7 @@ function generate_code(input_lang,lang,indent,arr){
 	],matching_symbols)){
 		var a = generate_code(input_lang,lang,indent,matching_symbols["$a"]);
 		to_return = unparse(input_lang,lang,indent,pattern_array.value,matching_symbols);
-		same_var_type(to_return,a);
+		//same_var_type(to_return,a);
 	}
 	else if(input_lang === "php" && matches_pattern(arr,["function_call","array","$a"],matching_symbols)){
 		return generate_code(input_lang,lang,indent,["initializer_list","Object",matching_symbols["$a"]]);
@@ -954,7 +978,6 @@ function generate_code(input_lang,lang,indent,arr){
 		}
 		else{
 			to_return = unparse(input_lang,lang,indent,pattern_array.value,matching_symbols);
-			types[to_return] = "String";
 		}
 		types[to_return] = "String";
 	}
@@ -1389,6 +1412,9 @@ function generate_code(input_lang,lang,indent,arr){
 	],matching_symbols)){
 		if(member(lang,['c'])){
 			to_return = "((double)rand() / (double)RAND_MAX)";
+		}
+		else if(member(lang,['php'])){
+			to_return = "(float)mt_rand()/(float)mt_getrandmax()";
 		}
 		else{
 			to_return = unparse(input_lang,lang,indent,pattern_array.value,matching_symbols);
@@ -2974,6 +3000,7 @@ function generate_code(input_lang,lang,indent,arr){
 		}
 		else if(member(lang, ["perl"])){
 			to_return = "my " + name + "=" + expr;
+			console.log(JSON.stringify(["types",name,types[name],expr,types[expr]]));
 		}
 		else if(member(lang, ["smt-lib","smt-lib"])){
 			to_return = "(define-fun " + name + " () " + var_type(input_lang,lang,arr[1]) + " " + expr + ")";
@@ -3666,7 +3693,6 @@ function generate_code(input_lang,lang,indent,arr){
 			else if(!member(get_type(b),["String","Object"])){
 				b = type_conversion(input_lang,lang,get_type(a),"String",b);
 			}
-
 			//console.log(JSON.stringify(types));
 			if(member(lang,["php","autohotkey","hack","perl"])){
 				to_return = a + " . " + b;
@@ -4051,6 +4077,7 @@ function generate_code(input_lang,lang,indent,arr){
 	else if(arr[0] === "+="){
 		var a = generate_code(input_lang,lang,indent,arr[1]);
 		var b = generate_code(input_lang,lang,indent,arr[2]);
+		console.log(JSON.stringify(["types",a,types[a],b,types[b]]));
 		if(member(lang,["javascript","bash",'python','coconut','haxe','awk',"kotlin",'visual basic .net',"java","c++","c#","c","ruby","typescript"])){
 			//this is for languages that use the same operator to concatenate strings and numbers
 			to_return = a + "+=" + b;
@@ -4249,8 +4276,11 @@ function generate_code(input_lang,lang,indent,arr){
 		else if(member(lang,['julia','r'])){
 			to_return = "throw("+a+")";
 		}
-		else if(member(lang,['python'])){
+		else if(member(lang,['python','ruby'])){
 			to_return = "raise "+a;
+		}
+		else if(member(lang,['perl'])){
+			to_return = "die "+a;
 		}
 		//console.log(to_return);
 	}
@@ -4457,7 +4487,7 @@ function generate_code(input_lang,lang,indent,arr){
 		else{
 			to_return = unparse(input_lang,lang,indent,pattern_array.value,matching_symbols);
 		}
-		types[to_return] = types[a];
+		types[to_return] = get_type(a);
 	}
 	else if(arr[0] === "initialize_empty_constants"){
 		if(lang === "prolog"){
@@ -5040,17 +5070,24 @@ function is_a_statement(the_statement){
 function parse_lang(input_lang,output_lang,input_text){
 	input_lang = input_lang.trim().toLowerCase();
 	output_lang = output_lang.trim().toLowerCase();
+	var to_return;
 	if(member(input_lang,["detect language",""])){
 		for(var lang of Object.keys(parsers)){
 			try{
-				return parse_lang_(lang,output_lang,input_text)
+				to_return = parse_lang_(lang,output_lang,input_text)
 			}
 			catch(e){console.log(e);console.log("The language isn't "+lang);}
 		}
 	}
 	else{
-		return parse_lang_(input_lang,output_lang,input_text);
+		to_return = parse_lang_(input_lang,output_lang,input_text);
 	}
+	
+	//clear var types after generating code
+	Object.keys(types).forEach(function (prop) {
+		delete types[prop];
+	});
+	return to_return;
 }
 
 function parse_lang_(input_lang,output_lang,input_text){

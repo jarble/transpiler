@@ -102,9 +102,9 @@ case 5:
 		var parameter_names = $$[$0-2];
 		var parameters = [];
 		for(var i = 0; i < parameter_names.length; i++){
-			parameters.push([types[i+1],parameter_names[i][1]]);
+			parameters.push([types[i],parameter_names[i][1]]);
 		}
-		this.$ = ["function","public",types[0],$$[$0-6],parameters,$$[$0]];
+		this.$ = ["function","public",types[types.length-1],$$[$0-6],parameters,$$[$0]];
 	
 break;
 case 6:
@@ -141,7 +141,7 @@ case 28:
 this.$ = $$[$0];
 break;
 case 29:
-this.$ = ["access_array",$$[$0-2],$$[$0]];
+this.$ = ["access_array",$$[$0-2],[$$[$0]]];
 break;
 case 30:
 this.$ = ["anonymous_function","Object",$$[$0-3],["statements",[["semicolon",["return",$$[$0-1]]]]]];

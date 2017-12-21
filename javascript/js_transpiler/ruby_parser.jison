@@ -9,6 +9,7 @@
 "self"                return "self"
 "end"                 return "end"
 "each"                return "each"
+"raise"               return 'raise'
 "elsif"               return 'elsif'
 "if"                  return 'if'
 "else"                return 'else'
@@ -50,7 +51,6 @@
 "?"                   return '?'
 "{"                   return '{'
 "}"                   return '}'
-"]["                  return ']['
 "["                   return '['
 "]"                   return ']'
 "("                   return '('
@@ -129,6 +129,7 @@ statement_with_semicolon
    function_call
    |"yield" e  {$$ = ["yield",$2];}
    |"return" e  {$$ = ["return",$2];}
+   |"raise" e  {$$ = ["throw",$2];}
    | "local" IDENTIFIER "=" e {$$ = ["initialize_var","Object",$2,$4];}
    | "local" identifiers {$$ = ["initialize_empty_vars","Object",$2];}
    | access_array "+=" e {$$ = ["+=",$1,$3];}
@@ -182,14 +183,15 @@ not_expr: "!" dot_expr {$$ = ["!", [".",$2]];} | dot_expr {$$ = [".", $1];};
 
 
 function_call: IDENTIFIER "(" ")" {$$ = ["function_call",$1,[]]} | IDENTIFIER "(" exprs ")" {$$ = ["function_call",$1,$3]};
-dot_expr: dot_expr "(" ")" {$$ = ["function_call",$1,[]]} | dot_expr "(" exprs ")" {$$ = ["function_call",$1,$3]} | dot_expr "." parentheses_expr {$$ = [$1].concat($3);} | parentheses_expr {$$ =
+dot_expr: dot_expr "." parentheses_expr {$$ = $1.concat([$3]);} | parentheses_expr {$$ =
  [$1];};
 
-access_array: IDENTIFIER "[" access_arr "]" {$$ = ["access_array",$1,$3];};
+access_array: IDENTIFIER "[" e "]" {$$ = ["access_array",$1,[$3]];};
 
 parentheses_expr:
     "[" "]" {$$ = ["initializer_list","Object",[]];} | "[" exprs "]" {$$ = ["initializer_list","Object",$2];}
     | "{" "}" {$$ = ["associative_array","Object",[]];} | "{" key_values "}" {$$ = ["associative_array","Object","Object",$2];}
+    | IDENTIFIER "(" ")" {$$ = ["function_call",$1,[]]} | IDENTIFIER "(" exprs ")" {$$ = ["function_call",$1,$3]}
     | '(' e ')'} {$$ = ["parentheses",$2];}
     | access_array
     | NUMBER
@@ -208,8 +210,6 @@ parameters: parameter "," parameters {$$ = [$1].concat($3);} | parameter {$$ =
  [$1];}
 | {$$ = [];};
 
-access_arr: parentheses_expr "][" access_arr {$$ = [$1].concat($3);} | parentheses_expr {$$ =
- [$1];};
 exprs: e "," exprs {$$ = [$1].concat($3);} | e {$$ = [$1];};
 types: type "," types {$$ = [$1].concat($3);} | type {$$ = [$1];};
 elif:
@@ -219,7 +219,7 @@ elif:
     | "elsif" e statements {$$ = ["elif",$2,$3]} 
     | "else" statements {$$ = ["else",$2];};
 if_statement:
-	"unless" e statements"end" {$$ = ["unless",$2,$3];}
+	"unless" e statements "end" {$$ = ["unless",$2,$3];}
 	| "if" e "then" statements elif "end" {$$ = ["if",$2,$4,$5];}
     | "if" e "then" statements "end" {$$ = ["if",$2,$4];}
 	| "if" e statements elif "end" {$$ = ["if",$2,$3,$4];}

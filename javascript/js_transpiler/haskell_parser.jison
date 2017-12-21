@@ -78,9 +78,9 @@ statement_:
 		var parameter_names = $5;
 		var parameters = [];
 		for(var i = 0; i < parameter_names.length; i++){
-			parameters.push([types[i+1],parameter_names[i][1]]);
+			parameters.push([types[i],parameter_names[i][1]]);
 		}
-		$$ = ["function","public",types[0],$1,parameters,$7];
+		$$ = ["function","public",types[types.length-1],$1,parameters,$7];
 	}
 	| IDENTIFIER parameters "=" statement {$$ = ["function","public","Object",$1,$2,$4];}
         | IDENTIFIER "=" statement {$$ = ["function","public","Object",$1,[],$3];}
@@ -131,7 +131,7 @@ e
     ;
 
 
-access_array: IDENTIFIER "!!" access_arr {$$ = ["access_array",$1,$3];};
+access_array: IDENTIFIER "!!" access_arr {$$ = ["access_array",$1,[$3]];};
 
 parentheses_expr:
     "(" "\\" parameters "->" e ")" {$$ = ["anonymous_function","Object",$3,["statements",[["semicolon",["return",$5]]]]];}

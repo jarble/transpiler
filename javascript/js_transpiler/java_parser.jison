@@ -61,7 +61,6 @@
 "^"                   return '^'
 "{"                   return '{'
 "}"                   return '}'
-"]["                  return ']['
 "["                   return '['
 "]"                   return ']'
 "("                   return '('
@@ -206,7 +205,7 @@ not_expr: "!" dot_expr {$$ = ["!", [".",$2]];} | dot_expr {$$ = [".", $1];};
 dot_expr: initializer_list  "." dot_expr {$$ = [$1].concat($3);} | parentheses_expr  "." dot_expr {$$ = [$1].concat($3);} | parentheses_expr {$$ =
  [$1];};
 
-access_array: IDENTIFIER "[" access_arr "]" {$$ = ["access_array",$1,$3];};
+access_array: IDENTIFIER "[" e "]" {$$ = ["access_array",$1,[$3]];};
 
 initializer_list:
 "new" type "{" "}" {$$ = ["initializer_list",$2,[]];} | "new" type "{" exprs "}" {$$ = ["initializer_list",$2,$4];} | "new" type "(" ")" {$$ = [$1,$2,[]];} | "new" type "(" exprs ")" {$$ = [$1,$2,$4];};
@@ -232,8 +231,6 @@ type_: "Object" | "HashMap" | IDENTIFIER;
 parameter: type "..." IDENTIFIER {$$ = ["varargs",$1,$3]} | type IDENTIFIER {$$ = [$1,$2];};
 parameters: parameter "," parameters {$$ = [$1].concat($3);} | parameter {$$ =
  [$1];} | {$$= []};
-access_arr: parentheses_expr "][" access_arr {$$ = [$1].concat($3);} | parentheses_expr {$$ =
- [$1];};
 exprs: e "," exprs {$$ = [$1].concat($3);} | e {$$ = [$1];};
 types: type "," types {$$ = [$1].concat($3);} | type {$$ = [$1];};
 elif: "else" "if" "(" e ")" bracket_statements elif {$$ = ["elif",$4,$6,$7]} | "else" "if" "(" e ")" bracket_statements {$$ = ["elif",$4,$6]} | "else" bracket_statements {$$ = ["else",$2];};
