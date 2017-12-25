@@ -21,10 +21,12 @@
 "&&"                  return '&&'
 "||"                  return '||'
 "|"                   return '|'
+"<->"                 return '<->'
+"<-"                  return '<-'
+"->"                  return '->'
 ">="                  return '>='
 ">"                   return '>'
 "<="                  return '<='
-"<-"                  return '<-'
 "<"                   return '<'
 "=="                  return '=='
 "="                   return '='
@@ -54,9 +56,10 @@
 
 /* operator associations and precedence */
 
+%left '->' '<->' '<-'
 %left '||'
 %left '&&'
-%left '<' '<=' '>' '>='
+%left '==' '<' '<=' '>' '>='
 %left '+' '-'
 %left '*' '/'
 %left UMINUS
@@ -86,17 +89,25 @@ statement_with_semicolon
    ;
 e
     :
-    e '||' e
+    e '<->' e
+        {$$ = ['iff',$1,$3];}
+    |e '<-' e
+        {$$ = ['implies',$3,$1];}
+    |e '->' e
+        {$$ = ['implies',$1,$3];}
+    |e '||' e
         {$$ = ['||',$1,$3];}
     |e '&&' e
         {$$ = ['&&',$1,$3];}
+    |e '==' e
+        {$$ = ['>=',$1,$3];}
     |e '<=' e
         {$$ = ['>=',$1,$3];}
     |e '<' e
         {$$ = ['>',$1,$3];}
     | e '>=' e
         {$$ = ['>=',$1,$3];}
-    |e '>' e
+    | e '>' e
         {$$ = ['>',$1,$3];}
     | e '+' e
         {$$ = [$2,$1,$3];}

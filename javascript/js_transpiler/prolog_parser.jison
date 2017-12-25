@@ -58,19 +58,26 @@
 
 %% /* language grammar */
 
-expressions: statements_ EOF {return ["top_level_statements",$1]};
+expressions: top_level_statements_ EOF {return ["top_level_statements",$1]};
 
-statements_: statement "." statements_ {$$ = [$1].concat($3);} | statement "." {$$ =
+top_level_statements_: top_level_statement "." top_level_statements_ {$$ = [$1].concat($3);} | top_level_statement "." {$$ =
  [$1];};
- 
-statements: statements_ {$$ = ["top_level_statements",$1]};
 
-statement
+statements: statements_ {return ["statements",$1]};
+
+statements_: statement "," statements_ {$$ = [$1].concat($3);} | statement {$$ =
+ [$1];};
+
+statement: parentheses_expr | if_statement;
+ 
+top_level_statements: top_level_statements_ {$$ = ["top_level_statements",$1]};
+
+top_level_statement
     : predicate | grammar_statement | function_call;
 
 predicate:
-    IDENTIFIER "(" exprs ")" ":-" e {$$ = ["predicate",$1,$3,$6]}
-    | IDENTIFIER ":-" e {$$ = ["predicate",$1,[],$3]};
+    IDENTIFIER "(" exprs ")" ":-" e {$$ = ["function","Object",$1,$3,$6]}
+    | IDENTIFIER ":-" e {$$ = ["function","Object",$1,[],$3]};
 
 grammar_statement:
     IDENTIFIER "-->" e {[$$ = ["grammar_statement",$1,$3]]}
@@ -131,3 +138,11 @@ parentheses_expr:
 exprs: parentheses_expr "," exprs {$$ = [$1].concat($3);} | parentheses_expr {$$ = [$1];};
 if_statement:
 e "==>" e {$$= ["implies",$1,$3]};
+
+block_statements: "(" statements ")" {$$ = $2};
+
+elif: e "->" block_statements ";" elif {$$ = ["elif",$1,$3,$5]} | else_statement;
+else_statement: block_statements {$$ = ["else",$2];};
+if_statement:
+"(" e "->" statements ";" elif {$$ = ["if",$2,$4,$6];}
+| "(" e "->" block_statements ")" {$$ = ["if",$2,$4];};
