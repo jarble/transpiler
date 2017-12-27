@@ -22,13 +22,14 @@ var parsers =
 			"minizinc":minizinc_parser,
 			"haskell":haskell_parser,
 			"prolog":prolog_parser,
+			"clips":clips_parser,
 			"julia":julia_parser,
 			"php":php_parser,
 			"jison":jison_parser,
 			"c":c_parser,
 			"haxe":haxe_parser,
 			"perl":perl_parser,
-			"constraint handling rules":chr_parser
+			"constraint handling rules":prolog_parser
 		}; 
 
 function test_examples(){
@@ -1902,7 +1903,7 @@ function generate_code(input_lang,lang,indent,arr){
 		var condition = generate_code(input_lang,lang,indent,arr[2]);
 		var body = generate_code(input_lang,lang,indent,arr[3]);
 		
-		member(lang,["constraint handling rules"])
+		member(lang,["constraint handling rules","prolog"])
 			&& (to_return = name + " @ " + condition + " ==> " + body)
 		|| member(lang,["clips"])
 			&& (to_return = "(defrule " + name + " " + condition + " => (assert " + body + "))");
@@ -2567,7 +2568,7 @@ function generate_code(input_lang,lang,indent,arr){
 			&& (to_return = a+" and "+b)
 		|| member(lang,['javascript'])
 			&& (to_return = "logic.and("+a+","+b+")")
-		|| member(lang,['smt-lib'])
+		|| member(lang,['smt-lib','clips'])
 			&& (to_return = "(and "+a+" "+b+")");
 		
 		types[to_return] = "boolean";

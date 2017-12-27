@@ -10,7 +10,9 @@
 ","                   return ','
 ";"                   return ';'
 "==>"                 return '==>'
-"-->"                  return '-->'
+"<=>"                 return '<=>'
+"@"                   return '@'
+"-->"                 return '-->'
 "->"                  return '->'
 ":-"                  return ':-'
 "."                   return '.'
@@ -58,26 +60,19 @@
 
 %% /* language grammar */
 
-expressions: top_level_statements_ EOF {return ["top_level_statements",$1]};
+expressions: statements_ EOF {return ["top_level_statements",$1]};
 
-top_level_statements_: top_level_statement "." top_level_statements_ {$$ = [$1].concat($3);} | top_level_statement "." {$$ =
+statements_: statement "." statements_ {$$ = [$1].concat($3);} | statement "." {$$ =
  [$1];};
-
-statements: statements_ {return ["statements",$1]};
-
-statements_: statement "," statements_ {$$ = [$1].concat($3);} | statement {$$ =
- [$1];};
-
-statement: parentheses_expr | if_statement;
  
-top_level_statements: top_level_statements_ {$$ = ["top_level_statements",$1]};
+statements: statements_ {$$ = ["top_level_statements",$1]};
 
-top_level_statement
-    : predicate | grammar_statement | function_call;
+statement
+    : predicate | grammar_statement | if_statement | function_call;
 
 predicate:
-    IDENTIFIER "(" exprs ")" ":-" e {$$ = ["function","Object",$1,$3,$6]}
-    | IDENTIFIER ":-" e {$$ = ["function","Object",$1,[],$3]};
+    IDENTIFIER "(" exprs ")" ":-" e {$$ = ["predicate",$1,$3,$6]}
+    | IDENTIFIER ":-" e {$$ = ["predicate",$1,[],$3]};
 
 grammar_statement:
     IDENTIFIER "-->" e {[$$ = ["grammar_statement",$1,$3]]}
@@ -104,15 +99,15 @@ e
     | e '>=' e
         {$$ = ['>=',$1,$3];}
     |e '>' e
-        {$$ = ['>',$1,$3];}
+        {$$ = [$2,$1,$3];}
     | e '+' e
         {$$ = [$2,$1,$3];}
     | e '-' e
-        {$$ = ["-",$1,$3];}
+        {$$ = [$2,$1,$3];}
     | e '*' e
-        {$$ = ["*",$1,$3];}
+        {$$ = [$2,$1,$3];}
     | e '/' e
-        {$$ = ["/",$1,$3];}
+        {$$ = [$2,$1,$3];}
     | '-' e %prec UMINUS
         {$$ = ["-",$2];}
     | parentheses_expr
@@ -135,14 +130,16 @@ parentheses_expr:
     | STRING_LITERAL
         {$$ = yytext;};
 
-exprs: parentheses_expr "," exprs {$$ = [$1].concat($3);} | parentheses_expr {$$ = [$1];};
-if_statement:
-e "==>" e {$$= ["implies",$1,$3]};
+exprs: exprs "," parentheses_expr {$$ = $1.concat([$3]);} | parentheses_expr {$$ = [$1];};
 
-block_statements: "(" statements ")" {$$ = $2};
+chr_head: chr_head "," function_call {$$ = ["logic_and",$1,$3];} | function_call {$$ = [$1];};
 
-elif: e "->" block_statements ";" elif {$$ = ["elif",$1,$3,$5]} | else_statement;
-else_statement: block_statements {$$ = ["else",$2];};
 if_statement:
-"(" e "->" statements ";" elif {$$ = ["if",$2,$4,$6];}
-| "(" e "->" block_statements ")" {$$ = ["if",$2,$4];};
+	function_call "," chr_head "==>" e {$$= ["implies",["&&",$1,$3],$5]}
+	| function_call "==>" e {$$= ["implies",$1,$3]}
+	| IDENTIFIER "@" function_call "," chr_head "==>" function_call {$$= ["defrule",$1,["&&",$3,$5],$7]}
+	| IDENTIFIER "@" function_call "==>" function_call {$$= ["defrule",$1,$3,$5]}
+	| function_call "," chr_head "<=>" e {$$= ["simplification_rule",["&&",$1,$3],$5]}
+	| function_call "<=>" e {$$= ["simplification_rule",$1,$3]}
+    | IDENTIFIER "@" function_call "," chr_head "<=>" e {$$= ["named_simplification_rule",$1,["&&",$3,$5],$7]}
+    | IDENTIFIER "@" function_call "<=>" e {$$= ["named_simplification_rule",$1,$3,$5]};
