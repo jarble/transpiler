@@ -106,7 +106,7 @@ case 11:
 this.$ = ["abstract_class",$$[$0-6],$$[$0-3],$$[$0-1]];
 break;
 case 13:
-this.$ = ["enum",$$[$0-4],$$[$0-5],$$[$0-3],$$[$0-1]];
+this.$ = ["enum",$$[$0-5],$$[$0-3],$$[$0-1]];
 break;
 case 14:
 this.$ = ["class_extends",$$[$0-7],$$[$0-5],$$[$0-3],$$[$0-1]];
@@ -238,7 +238,7 @@ case 83: case 84: case 107: case 110: case 112: case 119: case 121:
 this.$ = [$$[$0-2]].concat($$[$0]);
 break;
 case 86:
-this.$ = ["access_array",$$[$0-3],$$[$0-1]];
+this.$ = ["access_array",$$[$0-3],[$$[$0-1]]];
 break;
 case 87:
 this.$ = ["initializer_list",$$[$0-2],[]];

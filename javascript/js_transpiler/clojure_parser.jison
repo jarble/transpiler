@@ -5,9 +5,7 @@
 \s+                   /* skip whitespace */
 [0-9]+("."[0-9]+)?\b  return 'NUMBER'
 \"([^\\\"]|\\.)*\" return 'STRING_LITERAL'
-"defrule"             return 'defrule'
-"deffunction"         return 'deffunction'
-"assert"              return 'assert'
+"defn"                return 'defn'
 "not"                 return 'not'
 "and"                 return 'and'
 "?"                   return '?'
@@ -62,9 +60,9 @@ statements_: statement statements_ {$$ = [$1].concat($2);} | statement {$$ =
  
 statements: statements_ {$$ = ["top_level_statements",$1]};
 
-statement
-    : defrule
-    | "(" "deffunction" IDENTIFIER "(" parameters ")" e ")";
+statement:
+	"(" "defn" IDENTIFIER "[" parameters "]" statement ")" {$$ = ["function","public","Object",$3,$5,$7]}
+    | e {$$=["statements",[["semicolon",["return",$1]]]];};
 
 
 
@@ -112,9 +110,6 @@ parameters: parameters parameter {$$ = $1.concat([$2]);} | parameter {$$ =
 function_call:
     "(" IDENTIFIER ")" {$$ = ["function_call",$2,[]];} | "(" IDENTIFIER exprs ")" {$$ = ["function_call",$2,$3];};
 
-var_name: "?" IDENTIFIER {$$ = $2};
+var_name: IDENTIFIER;
 
 exprs: exprs e {$$ = $1.concat([$2]);} | e {$$ = [$1];};
-
-defrule:
-	"(" "defrule" IDENTIFIER e "=>" "(" "assert" e ")" ")" {$$= ["defrule",$3,$4,$8]};

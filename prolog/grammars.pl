@@ -2985,7 +2985,7 @@ type(Data, bool) -->
 
 type(Data,void) -->
     langs_to_output(Data,void,[
-    ['engscript','seed7','php','hy','cython','go','pike','objective-c','java','c','c++','c#','vala','typescript','d','javascript','dart']:
+    ['engscript','thrift','seed7','php','hy','cython','go','pike','objective-c','java','c','c++','c#','vala','typescript','d','javascript','dart']:
             "void",
     ['haxe','swift']:
             "Void",

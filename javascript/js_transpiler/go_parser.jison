@@ -9,6 +9,7 @@
 ":="                  return ':='
 "func"                return "func"
 "range"               return "range"
+"struct"              return "struct"
 "public"              return "public"
 "extends"             return "extends"
 "implements"          return "implements"
@@ -158,7 +159,8 @@ function_call: IDENTIFIER "(" ")" {$$ = ["function_call",$1,[]];}
     | IDENTIFIER "(" exprs ")" {$$ = ["function_call",$1,$3];};
 
 parentheses_expr:
-    "function" "(" parameters ")" "{" statements "}" {$$ = ["anonymous_function","Object",$3,$6]}
+    "type" IDENTIFIER "struct" "{" statements "}" {$$ = ["struct",$1,$5]}
+    | "function" "(" parameters ")" "{" statements "}" {$$ = ["anonymous_function","Object",$3,$6]}
     | access_array
     | function_call
     | "[" "]" {$$ = ["initializer_list","Object",[]];} | "[" exprs "]" {$$ = ["initializer_list","Object",$2];}

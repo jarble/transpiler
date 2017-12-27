@@ -13,6 +13,7 @@
 "printf"              return "printf"
 "while"               return "while"
 "const"               return "const"
+"struct"              return "struct"
 "switch"              return "switch"
 "for"                 return "for"
 ","                   return ','
@@ -84,7 +85,8 @@ access_modifier: "public" | "private";
 
 statement
     :
-	type IDENTIFIER "(" parameters ")" "{" statements "}" {$$ = ["function","public",$1,$2,$4,$7];}
+	"struct" IDENTIFIER "{" statements "}" {$$ = ["struct",$2,$4]}
+	| type IDENTIFIER "(" parameters ")" "{" statements "}" {$$ = ["function","public",$1,$2,$4,$7];}
     | statement_with_semicolon ";" {$$ = ["semicolon",$1];}
     | "while" "(" e ")" bracket_statements {$$ = ["while",$3,$5];}
     | "switch" "(" e ")" "{" case_statements "}" {$$ = ["switch",$3,$6];}
@@ -102,7 +104,7 @@ statement_with_semicolon
    | type IDENTIFIER "=" e {$$ = ["initialize_var",$1,$2,$4];}
    | "const" type IDENTIFIER "=" e {$$ = ["initialize_constant",$2,$3,$5];}
    | type access_array {return ["set_array_size",$1,$2[1],$2[2]];}
-   | "var" identifiers {$$ = ["initialize_empty_vars","Object",$2];}
+   | type identifiers {$$ = ["initialize_empty_vars",$1,$2];}
    | access_array "=" e {$$ = ["set_var",$1,$3];}
    | IDENTIFIER "=" e {$$ = ["set_var",$1,$3];}
    | IDENTIFIER "++" {$$ = [$2,$1];}
