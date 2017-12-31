@@ -821,7 +821,7 @@ function generate_code(input_lang,lang,indent,arr){
 	console.log("Generating code: " + JSON.stringify(arr));
 	
 	if(arr === "true" || matches_pattern(arr,[".",["true"]],{})){
-		if(member(lang,	['java','mercury','coq','tcl','clojure','ruby','lua','constraint handling rules','livecode','gap','dafny','smt-lib','perl 6','chapel','c','frink','elixir','pseudocode','pascal','minizinc','engscript','picat','rust','clojure','nim','hack','ceylon','d','groovy','coffeescript','typescript','octave','prolog','julia','f#','swift','nemerle','vala','c++','dart','javascript','erlang','c#','haxe','go','ocaml','scala','php','rebol'])){
+		if(member(lang,	['java','sidef','mercury','coq','tcl','clojure','ruby','lua','constraint handling rules','livecode','gap','dafny','smt-lib','perl 6','chapel','c','frink','elixir','pseudocode','pascal','minizinc','engscript','picat','rust','clojure','nim','hack','ceylon','d','groovy','coffeescript','typescript','octave','prolog','julia','f#','swift','nemerle','vala','c++','dart','javascript','erlang','c#','haxe','go','ocaml','scala','php','rebol'])){
 			to_return = "true";
 		}
 		else if(member(lang,['python','coconut','idris','yacas','visual basic .net','pydatalog','hy','cython','autoit','haskell','vbscript','visual basic','monkey x','wolfram','delphi'])){
@@ -840,7 +840,7 @@ function generate_code(input_lang,lang,indent,arr){
 		}
 	}
 	else if(arr === "false" || matches_pattern(arr,[".",["false"]],{})){
-		if(member(lang,	['java','mercury','coq','tcl','clojure','ruby','lua','constraint handling rules','livecode','gap','dafny','smt-lib','perl 6','chapel','c','frink','elixir','pseudocode','pascal','minizinc','engscript','picat','rust','clojure','nim','hack','ceylon','d','groovy','coffeescript','typescript','octave','prolog','julia','f#','swift','nemerle','vala','c++','dart','javascript','erlang','c#','haxe','go','ocaml','scala','php','rebol'])){
+		if(member(lang,	['java','sidef','mercury','coq','tcl','clojure','ruby','lua','constraint handling rules','livecode','gap','dafny','smt-lib','perl 6','chapel','c','frink','elixir','pseudocode','pascal','minizinc','engscript','picat','rust','clojure','nim','hack','ceylon','d','groovy','coffeescript','typescript','octave','prolog','julia','f#','swift','nemerle','vala','c++','dart','javascript','erlang','c#','haxe','go','ocaml','scala','php','rebol'])){
 			to_return = "false";
 		}
 		else if(member(lang,['python','coconut','idris','yacas','visual basic .net','pydatalog','hy','cython','autoit','haskell','vbscript','visual basic','monkey x','wolfram','delphi'])){
@@ -4122,7 +4122,7 @@ function generate_code(input_lang,lang,indent,arr){
 	else if(arr[0] === "||"){
 		var a = generate_code(input_lang,lang,indent,arr[1]);
 		var b = generate_code(input_lang,lang,indent,arr[2]);
-		if(member(lang,['javascript','coq','lc++','tcl','autohotkey','katahdin','perl 6','ruby','wolfram','chapel','elixir','frink','ooc','picat','janus','processing','pike','nools','pawn','matlab','hack','gosu','rust','autoit','autohotkey','typescript','ceylon','groovy','d','octave','awk','julia','scala','f#','swift','nemerle','vala','go','perl','java','haskell','haxe','c','c++','c#','dart','r'])){
+		if(member(lang,['javascript',"sidef",'coq','lc++','tcl','autohotkey','katahdin','perl 6','ruby','wolfram','chapel','elixir','frink','ooc','picat','janus','processing','pike','nools','pawn','matlab','hack','gosu','rust','autoit','autohotkey','typescript','ceylon','groovy','d','octave','awk','julia','scala','f#','swift','nemerle','vala','go','perl','java','haskell','haxe','c','c++','c#','dart','r'])){
 			to_return = a + "||" + b;
 		}
 		else if(member(lang,['reasoned-php'])){
@@ -4415,7 +4415,7 @@ function generate_code(input_lang,lang,indent,arr){
 		else if(member(lang,['python','cython','coconut','ruby'])){
 			to_return = "raise "+a;
 		}
-		else if(member(lang,['perl'])){
+		else if(member(lang,['perl','sidef'])){
 			to_return = "die "+a;
 		}
 		//console.log(to_return);
