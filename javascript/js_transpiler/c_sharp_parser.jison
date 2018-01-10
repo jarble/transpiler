@@ -2,7 +2,7 @@
 %lex
 %%
 
-\s+                   /* skip whitespace */
+(\s+|\/\/+.*\n)        /* skip whitespace and line comments */
 [0-9]+("."[0-9]+)?\b  return 'NUMBER'
 \"([^\\\"]|\\.)*\" return 'STRING_LITERAL'
 "class"               return "class"
@@ -18,6 +18,8 @@
 "static"              return "static"
 "if"                  return "if"
 "in"                  return "in"
+"ref"                 return "ref"
+"out"                 return "out"
 "else"                return "else"
 "return"              return "return"
 "throw"               return "throw"
@@ -220,11 +222,13 @@ parentheses_expr:
 
 
 type: IDENTIFIER "[" "]" {$$ = [$1,"[]"];} | IDENTIFIER "<" types ">" {$$ = [$1,$3]} | "Object" | "Dictionary" | IDENTIFIER;
-parameter: type "..." IDENTIFIER {$$ = ["varargs",$1,$3]} | type IDENTIFIER "=" e {$$ = ["default_parameter",$1,$2,$4];} | type IDENTIFIER {$$ = [$1,$2];};
+parameter: "ref" type IDENTIFIER {$$ = ["ref_parameter",$2,$3]} | "out" type IDENTIFIER {$$ = ["out_parameter",$2,$3]} | type "..." IDENTIFIER {$$ = ["varargs",$1,$3]} | type IDENTIFIER "=" e {$$ = ["default_parameter",$1,$2,$4];} | type IDENTIFIER {$$ = [$1,$2];};
 parameters: parameter "," parameters {$$ = [$1].concat($3);} | parameter {$$ =
  [$1];} | {$$= []};
 
-exprs: e "," exprs {$$ = [$1].concat($3);} | e {$$ = [$1];};
+exprs: expr "," exprs {$$ = [$1].concat($3);} | expr {$$ = [$1];};
+expr: "ref" e {$$ = ["function_call_ref",$2];} | e {$$ = [$1];};
+
 named_parameters: named_parameters "," named_parameter {$$ = $1.concat([$3]);} | named_parameter {$$ = [$1];};
 named_parameter: IDENTIFIER ":" e {$$ = ["named_parameter",$1,$3]};
 types: type "," types {$$ = [$1].concat($3);} | type {$$ = [$1];};

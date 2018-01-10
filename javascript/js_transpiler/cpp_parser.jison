@@ -2,7 +2,7 @@
 %lex
 %%
 
-\s+                   /* skip whitespace */
+(\s+|\/\/+.*\n)        /* skip whitespace and line comments */
 [0-9]+("."[0-9]+)?\b  return 'NUMBER'
 \"([^\\\"]|\\.)*\" return 'STRING_LITERAL'
 "class"               return "class"
@@ -27,6 +27,7 @@
 "."                   return '.'
 ":"                   return ':'
 "&&"                  return '&&'
+"&"                   return '&'
 "||"                  return '||'
 ">="                  return '>='
 ">"                   return '>'
@@ -198,12 +199,13 @@ parentheses_expr:
         {$$ = yytext;};
 
 type: IDENTIFIER "[" "]" {$$ = [$1,"[]"];} | IDENTIFIER "<" types ">" {$$ = [$1,$3]} | "Object" | "Dictionary" | IDENTIFIER;
-parameter: type "..." IDENTIFIER {$$ = ["varargs",$1,$3]} | type IDENTIFIER "=" e {$$ = ["optional_arg",$1,$2,$4];} | type IDENTIFIER {$$ = [$1,$2];};
+parameter: type "&" IDENTIFIER {$$ = ["ref_parameter",$1,$3]} | type "..." IDENTIFIER {$$ = ["varargs",$1,$3]} | type IDENTIFIER "=" e {$$ = ["optional_arg",$1,$2,$4];} | type IDENTIFIER {$$ = [$1,$2];};
 parameters: parameter "," parameters {$$ = [$1].concat($3);} | parameter {$$ =
  [$1];} | {$$= []};
 access_arr: parentheses_expr "," access_arr {$$ = [$1].concat($3);} | parentheses_expr {$$ =
  [$1];};
-exprs: e "," exprs {$$ = [$1].concat($3);} | e {$$ = [$1];};
+exprs: expr "," exprs {$$ = [$1].concat($3);} | expr {$$ = [$1];};
+expr: "&" e {$$ = ["function_call_ref",$2];} | e {$$ = [$1];};
 types: type "," types {$$ = [$1].concat($3);} | type {$$ = [$1];};
 elif: "else" "if" "(" e ")" bracket_statements elif {$$ = ["elif",$4,$6,$7]} | "else" "if" "(" e ")" bracket_statements {$$ = ["elif",$4,$6]} | else_statement;
 else_statement: "else" bracket_statements {$$ = ["else",$2];};

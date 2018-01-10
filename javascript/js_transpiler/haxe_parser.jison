@@ -2,9 +2,9 @@
 %lex
 %%
 
-\s+                   /* skip whitespace */
+(\s+|\/\/+.*\n)       /* skip whitespace and line comments */
 [0-9]+("."[0-9]+)?\b  return 'NUMBER'
-\"([^\\\"]|\\.)*\" return 'STRING_LITERAL'
+\"([^\\\"]|\\.)*\"    return 'STRING_LITERAL'
 "class"               return 'class'
 "enum"                return 'enum'
 "public"              return 'public'
@@ -132,6 +132,8 @@ statement_with_semicolon
    | "final" type IDENTIFIER "=" e {$$ = ["initialize_constant",$2,$3,$5];}
    | "final" type identifiers {$$ = ["initialize_empty_constants",$2,$3];}
    | "var" IDENTIFIER  ":" type "=" e  {$$ = ["initialize_var",$4,$2,$6];}
+   | "var" IDENTIFIER "=" e  {$$ = ["initialize_var","Object",$2,$4];}
+   | "var" identifiers {$$ = ["initialize_empty_vars","Object",$2];}
    | type identifiers {$$ = ["initialize_empty_vars",$1,$2];}
    | access_array "=" e {$$ = ["set_var",$1,$3];}
    | IDENTIFIER "=" e {$$ = ["set_var",$1,$3];}

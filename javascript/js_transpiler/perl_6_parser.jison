@@ -2,14 +2,14 @@
 %lex
 %%
 
-(\s+|\#+.*\n)       /* skip whitespace and line comments */
+\s+                   /* skip whitespace */
 [0-9]+("."[0-9]+)?\b  return 'NUMBER'
-\"([^\\\"]|\\.)*\"    return 'STRING_LITERAL'
+\"([^\\\"]|\\.)*\" return 'STRING_LITERAL'
 "$"                   return "$"
 "@"                   return "@"
 "foreach"             return 'foreach'
 "unless"              return "unless"
-"sub"                 return "sub"
+"function"            return "function"
 "class"               return "class"
 "public"              return "public"
 "extends"             return "extends"
@@ -103,7 +103,7 @@ statement
     | "foreach" var_name "(" var_name ")" "{" statements "}" {$$ = ["foreach","Object",$2,$4,$7];}
     | "for" "(" statement_with_semicolon ";" e ";" statement_with_semicolon ")" "{" statements "}" {$$ = ["for",$3,$5,$7,$10];}
     | if_statement
-    | "sub" IDENTIFIER "(" parameters ")" "{" statements "}" {$$ = ["function","Object",$2,$4,$7];}
+    | "function" IDENTIFIER "(" parameters ")" "{" statements "}" {$$ = ["function","Object",$2,$4,$7];}
     ;
 
 class_statement:

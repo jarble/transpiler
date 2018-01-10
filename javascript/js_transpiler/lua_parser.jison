@@ -2,7 +2,7 @@
 %lex
 %%
 
-\s+                   /* skip whitespace */
+(\s+|\-\-+.*\n)        /* skip whitespace and line comments */
 [0-9]+("."[0-9]+)?\b  return 'NUMBER'
 \"([^\\\"]|\\.)*\" return 'STRING_LITERAL'
 "$"                   return "$"
