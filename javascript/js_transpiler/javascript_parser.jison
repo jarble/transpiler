@@ -2,10 +2,12 @@
 %lex
 %%
 
-(\s+|\/\/+.*\n|)        /* skip whitespace and line comments */
+(\s+|\/\/+.*\n)        /* skip whitespace and line comments */
 [0-9]+("."[0-9]+)?\b  return 'NUMBER'
-\"([^\\\"]|\\.)*\" return 'STRING_LITERAL'
+\"([^\\\"]|\\.)*\"    return 'STRING_LITERAL'
 "$"                   return "$"
+"import"              return "import"
+"from"                return "from"
 "function"            return "function"
 "continue"            return "continue"
 "typeof"              return "typeof"
@@ -127,7 +129,8 @@ class_statement:
 
 statement_with_semicolon
    : 
-   "continue" {$$ = [$1];}
+   "import" IDENTIFIER "from" STRING_LITERAL {$$ = ["import_from",$2,$4];}
+   | "continue" {$$ = [$1];}
    | "return" e  {$$ = ["return",$2];}
    | "yield" e  {$$ = ["yield",$2];}
    | "var" IDENTIFIER "=" e {$$ = ["initialize_var","Object",$2,$4];}
@@ -174,13 +177,13 @@ e
     | e '+' e
         {$$ = [$2,$1,$3];}
     | e '-' e
-        {$$ = ["-",$1,$3];}
+        {$$ = [$2,$1,$3];}
     | e '*' e
-        {$$ = ["*",$1,$3];}
+        {$$ = [$2,$1,$3];}
     | e '/' e
-        {$$ = ["/",$1,$3];}
+        {$$ = [$2,$1,$3];}
     | e '%' e
-        {$$ = ["/",$1,$3];}
+        {$$ = [$2,$1,$3];}
     | '-' e %prec UMINUS
         {$$ = ["-",$2];}
     | not_expr

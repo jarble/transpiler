@@ -146,7 +146,7 @@ e
     | e '.' e
         {$$ = [$2,$1,$3];}
     | e '-' e
-        {$$ = ["-",$1,$3];}
+        {$$ = [$2,$1,$3];}
     | e '*' e
         {$$ = [$2,$1,$3];}
     | e '/' e
@@ -182,8 +182,9 @@ parameters: parameter "," parameters {$$ = [$1].concat($3);} | parameter {$$ =
  [$1];};
 exprs: e "," exprs {$$ = [$1].concat($3);} | e {$$ = [$1];};
 types: type "," types {$$ = [$1].concat($3);} | type {$$ = [$1];};
-elif: "else" "if" "(" e ")" "{" statements "}" elif {$$ = ["elif",$4,$7,$9]} | else_statement;
-else_statement: "else" "{" statements "}" {$$ = ["else",$3];};
+elif:
+	"else" "if" "(" e ")" "{" statements "}" elif {$$ = ["elif",$4,$7,$9]}
+	| "else" "{" statements "}" {$$ = ["else",$3];};
 if_statement:
 "if" "(" e ")" "{" statements "}" elif {$$ = ["if",$3,$6,$8];}
 | "if" "(" e ")" "{" statements "}" {$$ = ["if",$3,$6];} | "unless" "(" e ")" "{" statements "}" {$$ = ["unless",$3,$6];};

@@ -4,7 +4,7 @@
 
 (\s+|\/\/+.*\n)        /* skip whitespace and line comments */
 [0-9]+("."[0-9]+)?\b  return 'NUMBER'
-\"([^\\\"]|\\.)*\" return 'STRING_LITERAL'
+\"([^\\\"]|\\.)*\"    return 'STRING_LITERAL'
 "class"               return "class"
 "yield"               return "yield"
 "await"               return "await"
@@ -43,6 +43,7 @@
 "<"                   return '<'
 "=="                  return '=='
 "="                   return '='
+"%="                  return '%='
 "%"                   return '%'
 "*="                  return '*='
 "*"                   return '*'
@@ -152,6 +153,7 @@ statement_with_semicolon
    | IDENTIFIER "-=" e {$$ = [$2,$1,$3];}
    | IDENTIFIER "*=" e {$$ = [$2,$1,$3];}
    | IDENTIFIER "/=" e {$$ = [$2,$1,$3];}
+   | IDENTIFIER "%=" e {$$ = [$2,$1,$3];}
    | IDENTIFIER "." dot_expr {$$ = [".",[$1].concat($3)]}
    ;
 
@@ -232,10 +234,12 @@ expr: "ref" e {$$ = ["function_call_ref",$2];} | e {$$ = [$1];};
 named_parameters: named_parameters "," named_parameter {$$ = $1.concat([$3]);} | named_parameter {$$ = [$1];};
 named_parameter: IDENTIFIER ":" e {$$ = ["named_parameter",$1,$3]};
 types: type "," types {$$ = [$1].concat($3);} | type {$$ = [$1];};
-elif: "else" "if" "(" e ")" bracket_statements elif {$$ = ["elif",$4,$6,$7]} | "else" "if" "(" e ")" bracket_statements {$$ = ["elif",$4,$6]} | "else" bracket_statements {$$ = ["else",$2];};
+elif:
+	"else" "if" "(" e ")" "{" statements "}" elif {$$ = ["elif",$4,$7,$9]}
+	| "else" "{" statements "}" {$$ = ["else",$3];};
 if_statement:
-"if" "(" e ")" bracket_statements elif {$$ = ["if",$3,$5,$6];}
-|  "if" "(" e ")" bracket_statements {$$ = ["if",$3,$5];};
+	"if" "(" e ")" bracket_statements elif {$$ = ["if",$3,$6,$8];}
+	| "if" "(" e ")" bracket_statements {$$ = ["if",$3,$5];};
 identifiers: IDENTIFIER "," identifiers {$$ = [$1].concat($3);} | IDENTIFIER {$$ = [$1];};
 add: e "+" add {$$ = [$1].concat($3);} | e {$$ = [$1];};
 bracket_statements: "{" statements "}" {$$= $2;} | statement_with_semicolon ";" {$$ = ["semicolon",$1];};

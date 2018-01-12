@@ -60,6 +60,7 @@
 %left '<' '<=' '>' '>=' '==' '~='
 %left '..' '+' '-'
 %left '*' '/' '%'
+%left '^'
 %left UMINUS
 
 %start expressions
@@ -128,6 +129,8 @@ e
         {$$ = [$2,$1,$3];}
     | e '%' e
         {$$ = [$2,$1,$3];}
+    | e '^' e
+        {$$ = [$2,$1,$3];}
     | '-' e %prec UMINUS
         {$$ = ["-",$2];}
     | not_expr
@@ -172,8 +175,9 @@ parameters: parameter "," parameters {$$ = [$1].concat($3);} | parameter {$$ =
 
 exprs: e "," exprs {$$ = [$1].concat($3);} | e {$$ = [$1];};
 types: type "," types {$$ = [$1].concat($3);} | type {$$ = [$1];};
-elif: "elseif" e statements elif {$$ = ["elif",$2,$3,$4]} | "elseif" e statements {$$ = ["elif",$2,$3]} | else_statement;
-else_statement: "else" statements {$$ = ["else",$2];};
+elif:
+	"elseif" e statements elif {$$ = ["elif",$2,$3,$4]} | "elseif" e statements {$$ = ["elif",$2,$3]}
+	| "else" statements {$$ = ["else",$2];};
 if_statement:
 "if" e statements elif "end" {$$ = ["if",$2,$3,$4];}
 |  "if" e statements "end" {$$ = ["if",$2,$3];};

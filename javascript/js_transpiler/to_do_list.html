@@ -5,9 +5,13 @@
 <script src="java_parser.js"></script>
 <script src="kotlin_parser.js"></script>
 <script src="minizinc_parser.js"></script>
+<script src="rust_parser.js"></script>
+<script src="scala_parser.js"></script>
 <script src="cpp_parser.js"></script>
+<script src="ada_parser.js"></script>
 <script src="go_parser.js"></script>
 <script src="javascript_parser.js"></script>
+<script src="smt_lib_parser.js"></script>
 <script src="typescript_parser.js"></script>
 <script src="wolfram_parser.js"></script>
 <script src="erlang_parser.js"></script>
@@ -17,6 +21,8 @@
 <script src="julia_parser.js"></script>
 <script src="perl_parser.js"></script>
 <script src="prolog_parser.js"></script>
+<script src="coq_parser.js"></script>
+<script src="pddl_parser.js"></script>
 <script src="common_lisp_parser.js"></script>
 <script src="clojure_parser.js"></script>
 <script src="clips_parser.js"></script>
@@ -178,15 +184,13 @@ function myFunction() {
     
     window.location.hash=encodeURIComponent(JSON.stringify({inputText:inputText,inputLang:inputLang,outputLang:outputLang}));
     //try{
-				outputText = "<br/><pre>" + parse_lang(inputLang,outputLang,inputText)+"</pre>";
-				document.getElementById("outputText").innerHTML = outputText;
-				localStorage.setItem("outputText",outputText);
+			outputText = "<br/><pre>" + parse_lang(inputLang,outputLang,inputText).replace("<","&lt;").replace("<","&gt;")+"</pre>";
+			document.getElementById("outputText").innerHTML = outputText;
+			localStorage.setItem("outputText",outputText);
 	//}
 	//catch(e){
 	//	outputText = e;
 	//}
-			document.getElementById("outputText").innerHTML = outputText;
-			localStorage.setItem("outputText",outputText);
 			localStorage.setItem("outputLang",outputLang);
 			localStorage.setItem("inputText",inputText);
 			localStorage.setItem("inputLang",inputLang);

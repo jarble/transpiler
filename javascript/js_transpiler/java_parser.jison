@@ -9,6 +9,7 @@
 "HashMap"             return 'HashMap'
 "import"              return 'import'
 "default"             return 'default'
+"assert"             return 'assert'
 "Object"              return 'Object'
 "class"               return 'class'
 "enum"                return 'enum'
@@ -37,7 +38,9 @@
 "."                   return '.'
 ":"                   return ':'
 "&&"                  return '&&'
+"&"                   return '&'
 "||"                  return '||'
+"|"                   return '|'
 "->"                  return '->'
 ">="                  return '>='
 ">"                   return '>'
@@ -47,6 +50,7 @@
 "!="                  return '!='
 '!'                   return '!'
 "="                   return '='
+"%="                  return '%='
 "%"                   return '%'
 "*="                  return '*='
 "*"                   return '*'
@@ -74,7 +78,8 @@
 /* operator associations and precedence */
 
 %left '->'
-%left 'instanceof' '&&' '||'
+%left 'instanceof' '||' '|'
+%left '&&' '&'
 %left '==' '!=' '<' '<=' '>' '>='
 %left '+' '-'
 %left '*' '/' '%'
@@ -140,6 +145,7 @@ statement_with_semicolon
    : 
    "import" IDENTIFIER  {$$ = ["import",$2];}
    | "return" e  {$$ = ["return",$2];}
+   | "assert" e  {$$ = ["function_call","assert",[$2]];}
    | "final" type IDENTIFIER "=" e {$$ = ["initialize_constant",$2,$3,$5];}
    | "final" type identifiers {$$ = ["initialize_empty_constants",$2,$3];}
    | type IDENTIFIER "=" "{" exprs "}" {$$ = ["initialize_var",$1,$2,["initializer_list",$1,$5]]}
@@ -154,6 +160,7 @@ statement_with_semicolon
    | IDENTIFIER "-=" e {$$ = [$2,$1,$3];}
    | IDENTIFIER "*=" e {$$ = [$2,$1,$3];}
    | IDENTIFIER "/=" e {$$ = [$2,$1,$3];}
+   | IDENTIFIER "%=" e {$$ = [$2,$1,$3];}
    | IDENTIFIER "." dot_expr {$$ = [".",[$1].concat($3)]}
    ;
 
@@ -169,8 +176,12 @@ e:
         {$$ = [$2,$1,$3];}
     |e '||' e
         {$$ = [$2,$1,$3];}
+    |e '|' e
+        {$$ = ["eager_or",$1,$3];}
     |e '&&' e
         {$$ = [$2,$1,$3];}
+    |e '&' e
+        {$$ = ["eager_and",$1,$3];}
     |e '==' e
         {$$ = [$2,$1,$3];}
     |e '!=' e
@@ -233,9 +244,11 @@ parameters: parameter "," parameters {$$ = [$1].concat($3);} | parameter {$$ =
  [$1];} | {$$= []};
 exprs: e "," exprs {$$ = [$1].concat($3);} | e {$$ = [$1];};
 types: type "," types {$$ = [$1].concat($3);} | type {$$ = [$1];};
-elif: "else" "if" "(" e ")" bracket_statements elif {$$ = ["elif",$4,$6,$7]} | "else" "if" "(" e ")" bracket_statements {$$ = ["elif",$4,$6]} | "else" bracket_statements {$$ = ["else",$2];};
+elif:
+	"else" "if" "(" e ")" "{" statements "}" elif {$$ = ["elif",$4,$7,$9]}
+	| "else" "{" statements "}" {$$ = ["else",$3];};
 if_statement:
-"if" "(" e ")" bracket_statements elif {$$ = ["if",$3,$5,$6];}
-|  "if" "(" e ")" bracket_statements {$$ = ["if",$3,$5];};
+	"if" "(" e ")" bracket_statements elif {$$ = ["if",$3,$6,$8];}
+	| "if" "(" e ")" bracket_statements {$$ = ["if",$3,$5];};
 identifiers: IDENTIFIER "," identifiers {$$ = [$1].concat($3);} | IDENTIFIER {$$ = [$1];};
 add: e "+" add {$$ = [$1].concat($3);} | e {$$ = [$1];};

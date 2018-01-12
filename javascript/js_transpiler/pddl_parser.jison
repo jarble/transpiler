@@ -2,11 +2,13 @@
 %lex
 %%
 
-(\s+|\;+.*\n)        /* skip whitespace and line comments */
+\s+                   /* skip whitespace */
 [0-9]+("."[0-9]+)?\b  return 'NUMBER'
-\"([^\\\"]|\\.)*\"    return 'STRING_LITERAL'
-"defrule"             return 'defrule'
-"deffunction"         return 'deffunction'
+\"([^\\\"]|\\.)*\" return 'STRING_LITERAL'
+":action"             return ':action'
+":parameters"         return ':parameters'
+":precondition"       return ':precondition'
+":effect"             return ':effect'
 "assert"              return 'assert'
 "not"                 return 'not'
 "and"                 return 'and'
@@ -117,4 +119,4 @@ var_name: "?" IDENTIFIER {$$ = $2};
 exprs: exprs e {$$ = $1.concat([$2]);} | e {$$ = [$1];};
 
 defrule:
-	"(" "defrule" IDENTIFIER e "=>" "(" "assert" e ")" ")" {$$= ["defrule",$3,$4,$8]};
+	"(" ":action" IDENTIFIER ":parameters" e ":precondition" e ":effect" e ")" {$$= ["defrule",$3,$7,$9]};

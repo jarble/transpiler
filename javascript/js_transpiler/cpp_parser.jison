@@ -207,11 +207,11 @@ access_arr: parentheses_expr "," access_arr {$$ = [$1].concat($3);} | parenthese
 exprs: expr "," exprs {$$ = [$1].concat($3);} | expr {$$ = [$1];};
 expr: "&" e {$$ = ["function_call_ref",$2];} | e {$$ = [$1];};
 types: type "," types {$$ = [$1].concat($3);} | type {$$ = [$1];};
-elif: "else" "if" "(" e ")" bracket_statements elif {$$ = ["elif",$4,$6,$7]} | "else" "if" "(" e ")" bracket_statements {$$ = ["elif",$4,$6]} | else_statement;
-else_statement: "else" bracket_statements {$$ = ["else",$2];};
+elif:
+	"else" "if" "(" e ")" "{" statements "}" elif {$$ = ["elif",$4,$7,$9]}
+	| "else" "{" statements "}" {$$ = ["else",$3];};
 if_statement:
-"if" "(" e ")" bracket_statements elif {$$ = ["if",$3,$5,$6];}
-|  "if" "(" e ")" bracket_statements {$$ = ["if",$3,$4];};
+	"if" "(" e ")" "{" statements "}" elif {$$ = ["if",$3,$6,$8];};
 identifiers: IDENTIFIER "," identifiers {$$ = [$1].concat($3);} | IDENTIFIER {$$ = [$1];};
 add: e "+" add {$$ = [$1].concat($3);} | e {$$ = [$1];};
 bracket_statements: "{" statements "}" {$$= $2;} | statement_with_semicolon ";" {$$ = ["semicolon",$1];};
