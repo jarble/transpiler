@@ -75,7 +75,7 @@ This is a simplified version of one of its translation rules, implementing the s
 # To-do list
 Here is an [automatically-generated list of features](https://jarble.github.io/transpiler/javascript/js_transpiler/to_do_list.html) that have not yet been implemented in this translator.
 
-Other planned features:
+## Other planned features:
 * Try to translate markup languages, similar to [Pandoc](https://pandoc.org/index.html).
 * Try to convert SVG into other vector graphics formats
 * Try to convert X3D into other vector graphics formats
