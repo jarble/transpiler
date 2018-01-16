@@ -100,7 +100,8 @@ statement
     | "while" e "loop" statements "end" "loop" ";" {$$ = ["while",$2,$4];}
     | "case" e "is" case_statements "end" "case" ";" {$$ = ["switch",$2,$4];}
     | "for" "(" statement_with_semicolon ";" e ";" statement_with_semicolon ")" bracket_statements {$$ = ["for",$3,$5,$7,$9];}
-    | if_statement    ;
+    | "if" "(" e ")" bracket_statements elif {$$ = ["if",$3,$6,$8];}
+	| "if" "(" e ")" bracket_statements {$$ = ["if",$3,$5];};
 
 case_statement: "when" e "=>" statements {$$ = ["case",$2,$4]};
 case_statements: case_statement case_statements {$$ = [$1].concat($2);} | case_statement {$$ =
@@ -198,9 +199,7 @@ types: type "," types {$$ = [$1].concat($3);} | type {$$ = [$1];};
 elif:
 	"else" "if" "(" e ")" "{" statements "}" elif {$$ = ["elif",$4,$7,$9]}
 	| "else" "{" statements "}" {$$ = ["else",$3];};
-if_statement:
-	"if" "(" e ")" bracket_statements elif {$$ = ["if",$3,$6,$8];}
-	| "if" "(" e ")" bracket_statements {$$ = ["if",$3,$5];};
+
 identifiers: IDENTIFIER "," identifiers {$$ = [$1].concat($3);} | IDENTIFIER {$$ = [$1];};
 
 bracket_statements: "{" statements "}" {$$= $2;} | statement_with_semicolon ";" {$$ = ["semicolon",$1];};

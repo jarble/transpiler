@@ -92,7 +92,8 @@ types: IDENTIFIER "->" types {$$ = [$1].concat($3);} | IDENTIFIER {$$ =
  [$1];};
 
 statement:
-    if_statement
+    "(" "if" e "then" statement elif ")" {$$ = ["if",$3,$5,$6];}
+	| "(" "if" e "then" statement ")" {$$ = ["if",$3,$5];}
     |statement_with_semicolon {$$ = ["semicolon",$1];};
 
 statement_with_semicolon
@@ -169,12 +170,10 @@ access_arr: parentheses_expr "!!" access_arr {$$ = [$1].concat($3);} | parenthes
 exprs: e "," exprs {$$ = [$1].concat($3);} | e {$$ = [$1];};
 args: parentheses_expr args {$$ = [$1].concat($2);} | parentheses_expr {$$ = [$1];};
 elif: "else" "if" e "then" statement elif {$$ = ["elif",$3,$5,$6]} | "else" statement {$$ = ["else",$2];};
-if_statement:
-"(" "if" e "then" statement elif ")" {$$ = ["if",$3,$5,$6];}
-| "(" "if" e "then" statement ")" {$$ = ["if",$3,$5];};
 identifiers: IDENTIFIER "," identifiers {$$ = [$1].concat($3);} | IDENTIFIER {$$ = [$1];};
 
 guard_if_statement:
-"|" e "=" statement guard_elif {$$ = ["if",$2,$4,$5];};
-guard_elif: "|" e "=" statement guard_elif {$$ = ["elif",$2,$4,$5];} | guard_otherwise;
-guard_otherwise: "|" "otherwise" "=" statement {$$ = ["else",$4];};
+	"|" e "=" statement guard_elif {$$ = ["if",$2,$4,$5];};
+guard_elif:
+	"|" e "=" statement guard_elif {$$ = ["elif",$2,$4,$5];}
+	| "|" "otherwise" "=" statement {$$ = ["else",$4];};

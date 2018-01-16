@@ -85,7 +85,8 @@ statement
     | "while" e "do" statements "end" {$$ = ["while",$2,$4];}
     | "for" IDENTIFIER "in" dot_expr statements "end" {$$ = ["foreach","Object",$2,$4,$5];}
     | "for" IDENTIFIER "," IDENTIFIER "in" "pairs" "(" dot_expr ")" "do" statements "end" {$$ = ["foreach_with_index","Object",$2,$4,$8,$11];}
-    | if_statement
+    | "if" e statements elif "end" {$$ = ["if",$2,$3,$4];}
+	|  "if" e statements "end" {$$ = ["if",$2,$3];}
     | "function" IDENTIFIER "(" parameters ")" statements "end" {$$ = ["function","public","Object",$2,$4,$6];}
     ;
 
@@ -168,9 +169,7 @@ types: type "," types {$$ = [$1].concat($3);} | type {$$ = [$1];};
 elif:
 	"elseif" e statements elif {$$ = ["elif",$2,$3,$4]} | "elseif" e statements {$$ = ["elif",$2,$3]}
 	| "else" statements {$$ = ["else",$2];};
-if_statement:
-"if" e statements elif "end" {$$ = ["if",$2,$3,$4];}
-|  "if" e statements "end" {$$ = ["if",$2,$3];};
+
 identifiers: IDENTIFIER "," identifiers {$$ = [$1].concat($3);} | IDENTIFIER {$$ = [$1];};
 
 key_values: key_values "," key_value {$$ = $1.concat([$3]);} | key_value {$$ = [$1];};

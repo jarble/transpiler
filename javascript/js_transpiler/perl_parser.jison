@@ -102,7 +102,9 @@ statement
     | "while" "(" e ")" "{" statements "}" {$$ = ["while",$3,$6];}
     | "foreach" var_name "(" var_name ")" "{" statements "}" {$$ = ["foreach","Object",$2,$4,$7];}
     | "for" "(" statement_with_semicolon ";" e ";" statement_with_semicolon ")" "{" statements "}" {$$ = ["for",$3,$5,$7,$10];}
-    | if_statement
+    | "if" "(" e ")" "{" statements "}" elif {$$ = ["if",$3,$6,$8];}
+	| "if" "(" e ")" "{" statements "}" {$$ = ["if",$3,$6];}
+	| "unless" "(" e ")" "{" statements "}" {$$ = ["unless",$3,$6];}
     | "sub" IDENTIFIER "(" parameters ")" "{" statements "}" {$$ = ["function","Object",$2,$4,$7];}
     ;
 
@@ -185,9 +187,7 @@ types: type "," types {$$ = [$1].concat($3);} | type {$$ = [$1];};
 elif:
 	"else" "if" "(" e ")" "{" statements "}" elif {$$ = ["elif",$4,$7,$9]}
 	| "else" "{" statements "}" {$$ = ["else",$3];};
-if_statement:
-"if" "(" e ")" "{" statements "}" elif {$$ = ["if",$3,$6,$8];}
-| "if" "(" e ")" "{" statements "}" {$$ = ["if",$3,$6];} | "unless" "(" e ")" "{" statements "}" {$$ = ["unless",$3,$6];};
+
 
 var_name: "$" IDENTIFIER {$$ = $2;} | "@" IDENTIFIER {$$ = $2;};
 var_names: var_name "," var_names {$$ = [$1].concat($3);} | var_name {$$ = [$1];};

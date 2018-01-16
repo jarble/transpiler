@@ -122,7 +122,11 @@ statement
     | "while" e statements "end" {$$ = ["while",$2,$3];}
     | "case" e case_statements "end" {$$ = ["switch",$2,$3];}
     | IDENTIFIER "." "each" "do" "|" IDENTIFIER "|" statements "end" {$$ = ["foreach","Object",$6,$1,$8];}
-    | if_statement
+    | "unless" e statements "end" {$$ = ["unless",$2,$3];}
+	| "if" e "then" statements elif "end" {$$ = ["if",$2,$4,$5];}
+    | "if" e "then" statements "end" {$$ = ["if",$2,$4];}
+	| "if" e statements elif "end" {$$ = ["if",$2,$3,$4];}
+	| "if" e statements "end" {$$ = ["if",$2,$3];}
     | "def" IDENTIFIER "(" parameters ")" statements "end" {$$ = ["function","public","Object",$2,$4,$6];}
     ;
 
@@ -198,8 +202,14 @@ parentheses_expr:
     | IDENTIFIER "(" ")" {$$ = ["function_call",$1,[]]} | IDENTIFIER "(" exprs ")" {$$ = ["function_call",$1,$3]}
     | '(' e ')'} {$$ = ["parentheses",$2];}
     | access_array
-    | NUMBER
+    | parentheses_expr_;
+
+parentheses_expr_:
+	NUMBER
         {$$ = yytext;}
+    | "$" IDENTIFIER {$$ = ["global_variable",$2]}
+    | "@@" IDENTIFIER {$$ = ["clas_variable",$2]}
+    | "@" IDENTIFIER {$$ = ["instance_variable",$2]}
     | IDENTIFIER
         {$$ = yytext;}
     | STRING_LITERAL
@@ -222,10 +232,4 @@ elif:
     | "elsif" e statements elif {$$ = ["elif",$2,$3,$4]}
     | "elsif" e statements {$$ = ["elif",$2,$3]} 
     | "else" statements {$$ = ["else",$2];};
-if_statement:
-	"unless" e statements "end" {$$ = ["unless",$2,$3];}
-	| "if" e "then" statements elif "end" {$$ = ["if",$2,$4,$5];}
-    | "if" e "then" statements "end" {$$ = ["if",$2,$4];}
-	| "if" e statements elif "end" {$$ = ["if",$2,$3,$4];}
-	| "if" e statements "end" {$$ = ["if",$2,$3];};
 identifiers: IDENTIFIER "," identifiers {$$ = [$1].concat($3);} | IDENTIFIER {$$ = [$1];};

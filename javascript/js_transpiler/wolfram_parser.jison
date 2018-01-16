@@ -98,14 +98,12 @@ IDENTIFIER "[" parameters "]" ":=" bracket_statements {$$ = ["function","public"
 statement
     :
     "While" "[" e "," statements "]" {$$ = ["while",$3,$5];}
-    | if_statement {$$ = $1;}
     | statement_with_semicolon {$$ = ["semicolon",$1];}
+    | "If" "[" e "," bracket_statements "," bracket_statements "]" {$$ = ["if",$3,$5,["else",$7]];}
     ;
 
 bracket_statements: "(" statement ";" statements_ ")" {$$ = ["statements",[$2].concat($4)];} | statement {$$ = ["statements",[$1]]};
 
-if_statement:
-"If" "[" e "," bracket_statements "," bracket_statements "]" {$$ = ["if",$3,$5,["else",$7]];};
 
 
 statement_with_semicolon

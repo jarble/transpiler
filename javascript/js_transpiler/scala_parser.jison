@@ -90,7 +90,8 @@ statement
     | "while" "(" e ")" bracket_statements {$$ = ["while",$3,$5];}
     | "for" "_" "," IDENTIFIER "in" "pairs" "(" dot_expr ")" "do" statements "end" {$$ = ["foreach","Object",$4,$8,$11];}
     | "for" IDENTIFIER "," IDENTIFIER "in" "pairs" "(" dot_expr ")" "do" statements "end" {$$ = ["foreach_with_index","Object",$2,$4,$8,$11];}
-    | if_statement
+    | "if" "(" e ")" bracket_statements elif {$$ = ["if",$3,$6,$8];}
+	| "if" "(" e ")" bracket_statements {$$ = ["if",$3,$5];}
     | "def" IDENTIFIER "(" parameters ")" ":" IDENTIFIER "=" "{" statements "}" {$$ = ["function","public",$7,$2,$4,$10];}
     ;
 
@@ -187,9 +188,7 @@ types: type "," types {$$ = [$1].concat($3);} | type {$$ = [$1];};
 elif:
 	"else" "if" "(" e ")" "{" statements "}" elif {$$ = ["elif",$4,$7,$9]}
 	| "else" "{" statements "}" {$$ = ["else",$3];};
-if_statement:
-	"if" "(" e ")" bracket_statements elif {$$ = ["if",$3,$6,$8];}
-	| "if" "(" e ")" bracket_statements {$$ = ["if",$3,$5];};
+
 identifiers: IDENTIFIER "," identifiers {$$ = [$1].concat($3);} | IDENTIFIER {$$ = [$1];};
 
 key_values: key_values "," key_value {$$ = $1.concat([$3]);} | key_value {$$ = [$1];};
