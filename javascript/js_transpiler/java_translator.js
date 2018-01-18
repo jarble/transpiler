@@ -254,7 +254,6 @@ function is_uppercase(word){
 }
 
 var rewrite_rules = [];
-
 function understand_text(input){
 	rewrite_rules = [];
 	var output = english_parser.parse(input);
