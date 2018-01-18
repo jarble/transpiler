@@ -90,7 +90,7 @@ access_modifier: "public" | "private";
 statement
     :
 	"#define" IDENTIFIER "(" exprs ")" "(" expr ")" {$$ = ["macro",$2,$4,$7];}
-	| "struct" IDENTIFIER "{" statements "}" {$$ = ["struct",$2,$4]}
+	| "struct" IDENTIFIER "{" statements "}" ";" {$$ = ["struct",$2,$4]}
 	| type IDENTIFIER "(" parameters ")" "{" statements "}" {$$ = ["function","public",$1,$2,$4,$7];}
 	| type IDENTIFIER "(" "void" ")" "{" statements "}" {$$ = ["function","public",$1,$2,[],$7];}
     | statement_with_semicolon ";" {$$ = ["semicolon",$1];}
@@ -186,8 +186,8 @@ parentheses_expr_:
 function_call: parentheses_expr "(" ")" {$$ = ["function_call",$1,[]];}
     | parentheses_expr "(" exprs ")" {$$ = ["function_call",$1,$3];};
 
-type: IDENTIFIER "[" "]" {$$ = [$1,"[]"];} | "void" | IDENTIFIER;
-parameter: type "*" IDENTIFIER {$$ = ["ref_parameter",$1,$3]} | type IDENTIFIER {$$ = [$1,$2];};
+type: "void" | IDENTIFIER;
+parameter: type "*" IDENTIFIER {$$ = ["ref_parameter",$1,$3]} | type IDENTIFIER {$$ = [$1,$2];} | type IDENTIFIER "[" "]" {$$ = [[$1,"[]"],$2];};
 parameters: parameter "," parameters {$$ = [$1].concat($3);} | parameter {$$ =
  [$1];} | {$$ = [];};
 exprs: expr "," exprs {$$ = [$1].concat($3);} | expr {$$ = [$1];};

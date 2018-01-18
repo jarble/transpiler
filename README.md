@@ -76,10 +76,11 @@ This is a simplified version of one of its translation rules, implementing the s
 Here is an [automatically-generated list of features](https://jarble.github.io/transpiler/javascript/js_transpiler/to_do_list.html) that have not yet been implemented in this translator.
 
 ## Other planned features:
+* Simultaneous editing of two programming languages in two text areas
+* [Translate list comprehensions](https://stackoverflow.com/questions/23035186/translate-list-comprehension-to-prolog) from other languages into Prolog.
 * Try to translate markup languages, similar to [Pandoc](https://pandoc.org/index.html).
 * Try to convert SVG into other vector graphics formats
 * Try to convert X3D into other vector graphics formats
-* Simultaneous editing of two programming languages in two text areas
 
 # Similar projects
 There are several other source-to-source compilers and code generators that are similar to this one.

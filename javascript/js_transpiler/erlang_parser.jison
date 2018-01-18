@@ -75,21 +75,18 @@ top_level_statements: top_level_statement "." top_level_statements {$$ = [$1].co
  [$1];};
 
 top_level_statement
-    : predicate | function_call;
+    : IDENTIFIER "(" exprs ")" "->" statements {$$ = ["function","public","Object",$1,$3,$6]}
+    | IDENTIFIER "->" statements {$$ = ["function","public","Object",$1,[],$3]}
+    | function_call
+    ;
 statement:
 	statement_with_semicolon {$$ = ["semicolon",$1];}
 	| if_statement
 	| "case" e "of" case_statements "end" {$$ = ["switch",$2,$4];};
 
 statement_with_semicolon:
-	IDENTIFIER "=" e {$$ = ["set_var",$1,$2];}
+	IDENTIFIER "=" e {$$ = ["set_var",$1,$3];}
 	| e {$$= ["return",$1];};
-
-
-
-predicate:
-    IDENTIFIER "(" exprs ")" "->" statements {$$ = ["function","public","Object",$1,$3,$6]}
-    | IDENTIFIER "->" statements {$$ = ["function","public","Object",$1,[],$3]};
 
 e
     :
@@ -126,7 +123,9 @@ function_call:
 parentheses_expr:
     "[" e "||" e "<-" e "]" {$$=["list_comprehension",$2,$4,$6];}
     |"[" e "||" e "<-" e "," e "]" {$$=["list_comprehension",$2,$4,$6,$8];}
-    |"[" exprs "]" {$$ = ["initializer_list","Object",$2]}
+    | "[" "]" {$$ = ["initializer_list","Object",[]];}
+    | "[" exprs "]" {$$ = ["initializer_list","Object",$2];}
+    | "[" expr "|" exprs "]" {$$ = ["list_head_tail","Object",$2,["initializer_list","Object",$4]];}
     |function_call
     | '(' e ')' {$$ = $2;}
     | NUMBER

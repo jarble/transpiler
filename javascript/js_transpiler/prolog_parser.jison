@@ -37,6 +37,7 @@
 "^"                   return '^'
 "{"                   return '{'
 "}"                   return '}'
+"|"                   return '|'
 "["                   return '['
 "]"                   return ']'
 "("                   return '('
@@ -125,6 +126,9 @@ function_call:
 parentheses_expr:
     function_call
     | '(' e ')' {$$ = $2;}
+    | "[" "]" {$$ = ["initializer_list","Object",[]];}
+    | "[" exprs "]" {$$ = ["initializer_list","Object",$2];}
+    | "[" dot_expr "|" exprs "]" {$$ = ["list_head_tail","Object",$2,["initializer_list","Object",$4]];}
     | NUMBER
         {$$ = yytext;}
     | IDENTIFIER

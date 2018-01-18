@@ -47,6 +47,16 @@ function test_examples(){
 	var inputText;
 	var output_array = "";
 	var test_cases = [
+			//["function_example(A,B) :- [A|B] = C.","prolog","list head tail"],
+			["struct point {int x; int y;};","c","struct"],
+			["function_example(A) :- var(A).","prolog","check if variable is defined"],
+			["function_example(A) :- nonvar(A).","prolog","check if variable is defined"],
+			["function_example(A) :- integer(A).","prolog","check if variable is integer"],
+			["function_example(A) :- number(A).","prolog","check if variable is number"],
+			["function_example(A,B) :- number_codes(A,B).","prolog","convert string to integer"],
+			["function_example(A,B,C) :- append(A,B,C).","prolog","concatenate string or array"],
+			["function_example(A,B) :- findall(A,B,C).","prolog","list comprehension"],
+			["function_example(A,B,C) :- nth0(A,B,C).","prolog","list comprehension"],
 			["$a = array_search([1,2,4,3],4);","php","get first occurrence in array"],
 			["public class Example{public double set_num(int a){return a;}}","java","class instance method"],
 			["public class Example{public static double set_num(int a){return a;}}","java","class static method"],
@@ -260,6 +270,7 @@ function understand_text(input){
 		}
 	}
 	//alert(JSON.stringify(output_stuff));
+	console.log(JSON.stringify(rewrite_rules));
 	return ["top_level_statements",output_stuff];
 }
 
@@ -302,7 +313,7 @@ function matches_pattern_(arr,pattern,symbols){
 			return false;
 		}
 		for(var i = 0; i < arr.length; i++){
-			if(!(matches_pattern(arr[i],pattern[i],symbols) || matches_symbol(arr[i],pattern[i],symbols))){
+			if(!(matches_pattern_(arr[i],pattern[i],symbols) || matches_symbol(arr[i],pattern[i],symbols))){
 				return false;
 			}
 		}
@@ -630,6 +641,10 @@ function set_var_type(input_lang,lang,a,b){
 }
 
 function parameter(input_lang,lang,x){
+	if(input_lang === "erlang"){
+		x[0] = "Object";
+		x[1] = x[1][0];
+	}
 	if(typeof(x) === "string"){
 		return parameter(input_lang,lang,["Object",x]);
 	}
@@ -695,10 +710,16 @@ function parameter(input_lang,lang,x){
 		else if(member(lang,["tcl"])){
 			return x[1];
 		}
-		else if(member(lang,['haskell','agda','mercury','idris','lc++','emacs lisp','chr.js','reasoned-php','logicjs','yacas','elixir','erlang','elm','z3py','php','prolog','pddl','picat','definite clause grammars','nearley','sympy','pydatalog','python','autoit','coconut','applescript','english','ruby','lua','gap','hy','perl 6','cosmos','polish notation','reverse polish notation','scheme','mathematical notation','lispyscript','clips','clojure','f#','ml','racket','ocaml','common lisp','newlisp','frink','picat','idp','powershell','maxima','icon','coffeescript','octave','autohotkey','constraint handling rules','logtalk','awk','kotlin','dart','javascript','sidef','nemerle','erlang','php','autoit','r','bc'])){
+		else if(member(lang,['haskell','agda','mercury','idris','lc++','emacs lisp','chr.js','reasoned-php','logicjs','yacas','elixir','erlang','elm','z3py','prolog','pddl','picat','definite clause grammars','nearley','sympy','pydatalog','python','autoit','coconut','applescript','english','ruby','lua','gap','hy','perl 6','cosmos','polish notation','reverse polish notation','scheme','mathematical notation','lispyscript','clips','clojure','f#','ml','racket','ocaml','common lisp','newlisp','frink','picat','idp','powershell','maxima','icon','coffeescript','octave','autohotkey','constraint handling rules','logtalk','awk','kotlin','dart','javascript','sidef','nemerle','erlang','php','autoit','r','bc'])){
 			var to_return = var_name(lang,x[1]);
 			types[x[1]] = x[0];
 			return to_return;
+		}
+		else if(lang === "php"){
+			if(input_lang === "prolog")
+				return "&" + var_name(lang,x[1]);
+			else
+				return var_name(lang,x[1]);
 		}
 		else if(member(lang,['openoffice basic','gambas','visual basic .net'])){
 			return name+" As "+var_type(input_lang,lang,x[0]);
@@ -1210,26 +1231,29 @@ function generate_code(input_lang,lang,indent,arr){
 		[['julia'],["function_call","isdefined",["$a"]]],
 		[['javascript'],
 			["!=","$a",[".",["undefined"]]]],
+		[['lua'],
+			["!=","$a",[".",["nil"]]]],
 		[['python','coconut'],
 			["!=","$a",[".",["None"]]]]
 	],matching_symbols)){
 		var a = generate_code(input_lang,lang,indent,matching_symbols["$a"]);
-		if(member(lang,["prolog","php","javascript"])){
-			to_return = unparse(input_lang,lang,indent,pattern_array.value,matching_symbols);
-		}
-		else if(lang === "ruby"){
+		if(lang === "ruby"){
 			to_return = "(defined?" + a + ")";
 		}
 		else{
-			to_return = "";
+			to_return = unparse(input_lang,lang,indent,pattern_array.value,matching_symbols);
 		}
 		types[to_return] = "boolean";
 	}
 	else if(matching_patterns(pattern_array,input_lang,lang,arr,[
 		[['javascript'],
 			["==","$a",[".",["undefined"]]]],
+		[['lua'],
+			["==","$a",[".",["nil"]]]],
 		[['prolog'],
 			["function_call","var",["$a"]]],
+		[['python','coconut'],
+			["==","$a",[".",["None"]]]]
 	],matching_symbols)){
 		var a = generate_code(input_lang,lang,indent,matching_symbols["$a"]);
 		if(lang === "php"){
@@ -1240,6 +1264,27 @@ function generate_code(input_lang,lang,indent,arr){
 		}
 		else if(lang === "julia"){
 			to_return = "!isdefined("+a+")";
+		}
+		else{
+			to_return = unparse(input_lang,lang,indent,pattern_array.value,matching_symbols);
+		}
+		types[to_return] = "boolean";
+	}
+	else if(matching_patterns(pattern_array,input_lang,lang,arr,[
+		[['prolog'],
+			["function_call","integer",["$a"]]],
+		[['php'],
+			["function_call","is_int",["$a"]]],
+		[['python'],
+			["function_call","isinstance",["$a","\"int\""]]]
+	]
+	,matching_symbols)){
+		var a = generate_code(input_lang,lang,indent,matching_symbols["$a"]);
+		if(lang==="javascript"){
+			to_return = "Number.isInteger("+a+")";
+		}
+		if(lang==="javascript"){
+			to_return = "Number.isInteger("+a+")";
 		}
 		else{
 			to_return = unparse(input_lang,lang,indent,pattern_array.value,matching_symbols);
@@ -1264,6 +1309,142 @@ function generate_code(input_lang,lang,indent,arr){
 		var output = generate_code(input_lang,lang,indent,matching_symbols["$a"]);
 		to_return = unparse(input_lang,lang,indent,pattern_array.value,matching_symbols);
 		types[to_return] = "int";
+	}
+	else if(matching_patterns(pattern_array,input_lang,lang,arr,[
+		[['prolog'],
+			["function_call","append",["$a","$b","$c"]]],
+		[['reasoned-php'],
+			["function_call","appendo",["$a","$b","$c"]]]
+	],matching_symbols)){
+		var a = generate_code(input_lang,lang,indent,matching_symbols["$a"]);
+		var b = generate_code(input_lang,lang,indent,matching_symbols["$b"]);
+		var c = generate_code(input_lang,lang,indent,matching_symbols["$c"]);
+		if(lang === "haskell"){
+			to_return = "("+a+"++"+b+" == "+c+")";
+		}
+		else if(lang === "lua"){
+			//only works for strings
+			to_return = "("+a+".."+b+" == "+c+")";
+		}
+		else if(lang === "java"){
+			//only works for strings
+			to_return = "("+a+" + "+b+").equals("+c+")";
+		}
+		else if(member(lang,["ruby"])){
+			to_return = "("+a+" + "+b+" == "+c+")";
+		}
+		else if(member(lang,["javascript"])){
+			//only works for strings
+			to_return = "("+a+" + "+b+" === "+c+")";
+		}
+		else if(member(lang,["php","perl"])){
+			//only works for strings
+			to_return = "("+a+"."+b+" == "+c+")";
+		}
+		else{
+			to_return = unparse(input_lang,lang,indent,pattern_array.value,matching_symbols);
+		}
+	}
+	else if(matching_patterns(pattern_array,input_lang,lang,arr,[
+		[['prolog'],
+			["function_call","number_codes",["$a","$b"]]]
+		]
+	,matching_symbols)){
+		var a = generate_code(input_lang,lang,indent,matching_symbols["$a"]);
+		var b = generate_code(input_lang,lang,indent,matching_symbols["$b"]);
+		if(lang === "python"){
+			to_return = "("+a+" == int("+b+"))";
+		}
+		else if(lang === "javascript"){
+			to_return = "("+a+" === Number("+b+"))";
+		}
+		else if(lang === "c"){
+			to_return =  "(" + a + " == ((int) strtol("+b+", (char **)NULL, 10)))";
+		}
+		else if(lang === "ruby"){
+			to_return = "("+a+" == ("+b+").to_i)";
+		}
+		else if(lang === "java"){
+			to_return = "("+a+" == Double.parseDouble("+b+"))";
+		}
+		else if(lang === "php"){
+			to_return = "("+a+" === floatval("+b+"))";
+		}
+		else{
+			to_return = unparse(input_lang,lang,indent,pattern_array.value,matching_symbols);
+		}
+		types[to_return] = "boolean";
+	}
+	else if(matching_patterns(pattern_array,input_lang,lang,arr,[
+		[['ruby','python'],["parentheses",["==",[".",[["access_array","$b",["$a"]]]],"$c"]]],
+		[['prolog'],
+			["function_call","nth0",["$a","$b","$c"]]]
+	]
+	,matching_symbols)){
+		to_return = unparse(input_lang,lang,indent,pattern_array.value,matching_symbols);
+		types[to_return] = "boolean";
+	}
+	else if(matching_patterns(pattern_array,input_lang,lang,arr,[
+		[['lua'],["parentheses",["==",[".",[["access_array","$b",["$a"]]]],"$c"]]],
+		[['prolog'],
+			["function_call","nth1",["$a","$b","$c"]]]
+	]
+	,matching_symbols)){
+		to_return = unparse(input_lang,lang,indent,pattern_array.value,matching_symbols);
+		types[to_return] = "boolean";
+	}
+	else if(matching_patterns(pattern_array,input_lang,lang,arr,[
+		[['prolog'],
+			["function_call","findall",["$a",["function_call","member",["$a","$b"]],"$c"]]]
+	]
+	,matching_symbols)){
+		var the_var = generate_code(input_lang,lang,indent,matching_symbols["$a"]);
+		var result = generate_code(input_lang,lang,indent,matching_symbols["$b"]);
+		var c = generate_code(input_lang,lang,indent,matching_symbols["$c"]);
+
+		if(member(lang,["haskell"])){
+			to_return = "("+c+" == ["+the_var+" | "+the_var+"->"+result+"])";
+		}
+		else{
+			to_return = unparse(input_lang,lang,indent,pattern_array.value,matching_symbols);
+		}
+		types[to_return] = "boolean";
+	}
+	else if(matching_patterns(pattern_array,input_lang,lang,arr,[
+		[['prolog'],
+			["list_head_tail","Object","$a","$b"]]
+	]
+	,matching_symbols)){
+		//alert(JSON.stringify(matching_symbols["$a"]));
+		//alert(JSON.stringify(matching_symbols["$b"]));
+		var a = generate_code(input_lang,lang,indent,matching_symbols["$a"]);
+		var b = generate_code(input_lang,lang,indent,matching_symbols["$b"]);
+		if(lang==="prolog"){
+			to_return = "["+a+"|"+b+"]";
+		}
+		else{
+			to_return = unparse(input_lang,lang,indent,pattern_array.value,matching_symbols);
+		}
+		types[to_return] = "Object";
+	}
+	else if(matching_patterns(pattern_array,input_lang,lang,arr,[
+		[['prolog'],
+			["function_call","number",["$a"]]],
+		[['php'],
+			["function_call","is_numeric",["$a"]]]
+	]
+	,matching_symbols)){
+		var a = generate_code(input_lang,lang,indent,matching_symbols["$a"]);
+		if(lang==="javascript"){
+			to_return = "(typeof "+a+" === \"number\")";
+		}
+		else if(lang==="lua"){
+			to_return = "(type("+a+") === \"number\")";
+		}
+		else{
+			to_return = unparse(input_lang,lang,indent,pattern_array.value,matching_symbols);
+		}
+		types[to_return] = "boolean";
 	}
 	else if(matching_patterns(pattern_array,input_lang,lang,arr,[
 		[['javascript','java','scala','c','c++','lua','swift','php','ceylon','clojure','d'],
@@ -1989,6 +2170,9 @@ function generate_code(input_lang,lang,indent,arr){
 			else if(member(lang,["php"])){
 				to_return = "is_int("+expr+")";
 			}
+			else if(member(lang,["javascript"])){
+				to_return = "Number.isInteger("+expr+")";
+			}
 		}
 		else if(type === "boolean"){
 			if(member(lang,["php"])){
@@ -2608,6 +2792,14 @@ function generate_code(input_lang,lang,indent,arr){
 	else if(Array.isArray(arr[0])){
 		return generate_code(input_lang,lang,indent,arr[0]);
 	}
+	else if(arr[0] === "struct"){
+		//return arr.toString();
+		var name = arr[1];
+		var body = generate_code(input_lang,lang,indent+"    ",arr[2]);
+		if(member(lang,["java"])){
+			to_return = "class "+name+"{"+body+"}";
+		}
+	}
 	else if(arr[0] === "class"){
 		//return arr.toString();
 		var access_modifier = arr[1];
@@ -2923,7 +3115,7 @@ function generate_code(input_lang,lang,indent,arr){
 		//if(input_lang === "javascript")
 		//alert(types[name]);
 		
-		if(types[name][0] === "dict"){
+		if((types[name] !== undefined) && (types[name][0] === "dict")){
 			//alert("dict");
 			return generate_code(input_lang,lang,indent,["access_dict",arr[1],arr[2]]);
 		}
@@ -3147,7 +3339,7 @@ function generate_code(input_lang,lang,indent,arr){
 		
 		var name = arr[1];
 		var params = parameters(input_lang,lang,arr[2]);
-		var body = generate_code(input_lang,lang,"",arr[3]);
+		var body = indent+"    return "+generate_code(input_lang,lang,"",arr[3]);
 		
 		member(lang,["pddl"])
 			&& (to_return = "(:action " +name + " :parameters ("+params+") :precondition " + body + " :effect (" +name+" " + params + "))")
@@ -3155,10 +3347,20 @@ function generate_code(input_lang,lang,indent,arr){
 			&& (to_return = name+"("+params+") :- "+body)
 		|| member(lang,["constraint handling rules"])
 			&& (to_return = name+"("+params+") :- "+body)
+		|| member(lang,["wolfram"])
+			&& (to_return = name+"["+params+"] := "+body)
 		|| member(lang,["sympy"])
 			&& (to_return = "def("+params+"):"+"\n    return "+body)
-		|| member(lang,["javascript"])
-			&& (to_return = "function("+params+"){"+body+"}")
+		|| member(lang,["javascript","php"])
+			&& (to_return = "function "+name+"("+params+"){"+body+";}")
+		|| member(lang,["python"])
+			&& (to_return = "def "+name+"("+params+"):"+body)
+		|| member(lang,["python"])
+			&& (to_return = "def "+name+"("+params+")"+body+"end")
+		|| member(lang,["haskell"])
+			&& (to_return = name+" "+params+" = "+body)
+		|| member(lang,["lua"])
+			&& (to_return = "function "+name+"("+params+") return "+body+" end")
 		|| member(lang,["pydatalog"])
 			&& (to_return = name + "[" + params + "]" + "<=" + body);
 	}
@@ -5636,14 +5838,6 @@ function generate_code(input_lang,lang,indent,arr){
 		same_var_type(to_return,a);
 	}
 	else if(matching_patterns(pattern_array,input_lang,lang,arr,[
-		[['prolog'],
-			["function_call","append",["$a","$b","$c"]]],
-		[['reasoned-php'],
-			["function_call","appendo",["$a","$b","$c"]]]
-	],matching_symbols)){
-		to_return = unparse(input_lang,lang,indent,pattern_array.value,matching_symbols);
-	}
-	else if(matching_patterns(pattern_array,input_lang,lang,arr,[
 		[['wolfram'],
 			["function_call","Variance",["$a"]]],
 		[['r'],
@@ -5707,7 +5901,7 @@ function generate_code(input_lang,lang,indent,arr){
 		return to_return;
 	}
 	else if(to_return !== undefined){
-		if(!member(input_lang,["php","prolog","pddl","mathematical notation","reverse polish notation","wolfram","english","ruby","haskell","constraint handling rules","clips","prolog","lua","javascript","jison"]) && types[to_return] == undefined && !is_a_statement(arr[0])){
+		if(!member(input_lang,["php","erlang","prolog","pddl","mathematical notation","reverse polish notation","wolfram","english","ruby","haskell","constraint handling rules","clips","prolog","lua","javascript","jison"]) && types[to_return] == undefined && !is_a_statement(arr[0])){
 				throw arr[0] + ", The type of " + to_return + " is not yet defined"; 
 		}
 		else{
@@ -6047,8 +6241,9 @@ function matching_patterns(pattern_array,input_lang,lang,arr,patterns,matching_s
 function unparse(input_lang,lang,indent,pattern_array,matching_symbols){
 	//console.log("unparse " + JSON.stringify(pattern_array));
 	//console.log("unparse " + JSON.stringify(matching_symbols));
+	var to_return = "";
 	if(pattern_array.length === 1 && typeof(pattern_array[0]) === "string"){
-		return pattern_array[0];
+		to_return = pattern_array[0];
 	}
 	else if(pattern_array[0] === "." && pattern_array.length === 2){
 		var dot_separator;
@@ -6061,7 +6256,7 @@ function unparse(input_lang,lang,indent,pattern_array,matching_symbols){
 		else{
 			dot_separator = ".";
 		}
-		return pattern_array[1].map(function(x){
+		to_return = pattern_array[1].map(function(x){
 			return unparse(input_lang,lang,indent,x,matching_symbols);
 		}).join(dot_separator);
 	}
@@ -6070,13 +6265,36 @@ function unparse(input_lang,lang,indent,pattern_array,matching_symbols){
 		var params = function_call_parameters(input_lang,lang,pattern_array[2].map(function(x){
 			return unparse(input_lang,lang,indent,x,matching_symbols)
 		}));
-		return function_call(lang,name,params);
+		to_return = function_call(lang,name,params);
+	}
+	else if(pattern_array[0] === "=="){
+		var a = unparse(input_lang,lang,indent,pattern_array[1],matching_symbols)
+		var b = unparse(input_lang,lang,indent,pattern_array[2],matching_symbols)
+		if(member(lang,["c","c++","lua","python","ruby","coffeescript"])){
+			to_return = "("+a+" == "+b+")";
+		}
+		else if(member(lang,["javascript","typescript","php"])){
+			to_return = "("+a+" == "+b+")";
+		}
+	}
+	else if(pattern_array[0] === "!="){
+		var a = unparse(input_lang,lang,indent,pattern_array[1],matching_symbols)
+		var b = unparse(input_lang,lang,indent,pattern_array[2],matching_symbols)
+		if(member(lang,["lua"])){
+			to_return = "("+a+" ~= "+b+")";
+		}
+		else if(member(lang,["javascript","typescript","php"])){
+			to_return = "("+a+" !== "+b+")";
+		}
 	}
 	else if(pattern_array in matching_symbols){
-		return generate_code(input_lang,lang,indent,matching_symbols[pattern_array]);
+		to_return = generate_code(input_lang,lang,indent,matching_symbols[pattern_array]);
 	}
 	else if(typeof pattern_array === 'string'){
-		return pattern_array;
+		to_return = pattern_array;
+	}
+	if(to_return !== undefined){
+		return to_return;
 	}
 	else{
 		throw("unparse is not defined for "+JSON.stringify(pattern_array) +" in "+lang);
