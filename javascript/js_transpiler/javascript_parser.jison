@@ -14,6 +14,8 @@
 "class"               return "class"
 "const"               return 'const'
 "if"                  return 'if'
+"do"                  return 'do'
+"new"                 return 'new'
 "else"                return 'else'
 "case"                return "case"
 "default"             return 'default'
@@ -115,6 +117,7 @@ statement
     | class_
     | "switch" "(" e ")" "{" case_statements "}" {$$ = ["switch",$3,$6];}
     | "while" "(" e ")" bracket_statements {$$ = ["while",$3,$5];}
+    | "do" bracket_statements "while" "(" e ")" ";" {$$ = ["do_while",$2,$5];}
     | "for" "(" IDENTIFIER "of" dot_expr ")" bracket_statements {$$ = ["foreach","Object",$3,$5,$7];}
     | "for" "(" "var" IDENTIFIER "in" dot_expr ")" bracket_statements {$$ = ["foreach","Object",$4,$6,$8];}
     | "for" "(" statement_with_semicolon ";" e ";" statement_with_semicolon ")" bracket_statements {$$ = ["for",$3,$5,$7,$9];}
@@ -192,7 +195,6 @@ e
 
 not_expr: "!" dot_expr {$$ = ["!", [".",$2]];} | "typeof" dot_expr {$$ = [$1, [".",$2]];} | "await" dot_expr {$$ = ["await", [".",$2]]} | dot_expr {$$ = [".", $1];};
 
-
 dot_expr: parentheses_expr  "." dot_expr  {$$ = [$1].concat($3);} | parentheses_expr {$$ =
  [$1];};
 
@@ -203,6 +205,8 @@ parentheses_expr:
     "function" "(" parameters ")" "{" statements "}" {$$ = ["anonymous_function","Object",$3,$6]}
     | IDENTIFIER "(" ")" {$$= ["function_call",$1,[]];}
     | IDENTIFIER "(" exprs ")" {$$= ["function_call",$1,$3];}
+    | "new" IDENTIFIER "(" ")" {$$= ["new",$2,[]];}
+    | "new" IDENTIFIER "(" exprs ")" {$$= ["new",$2,$4];}
     | access_array
     | '(' e ')' {$$ = ["parentheses",$2];}
     | parentheses_expr_;

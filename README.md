@@ -77,6 +77,7 @@ This is a simplified version of one of its translation rules, implementing the s
 Here is an [automatically-generated list of features](https://jarble.github.io/transpiler/javascript/js_transpiler/to_do_list.html) that have not yet been implemented in this translator.
 
 ## Other planned features:
+* Converting [SQL to Linq](https://stackoverflow.com/questions/296972/sql-to-linq-tool) and vice-versa
 * Simultaneous editing of two programming languages in two text areas
 * [Translate list comprehensions](https://stackoverflow.com/questions/23035186/translate-list-comprehension-to-prolog) from other languages into Prolog.
 * Try to translate markup languages, similar to [Pandoc](https://pandoc.org/index.html).

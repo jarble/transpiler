@@ -100,7 +100,7 @@ statement
     | "while" e "loop" statements "end" "loop" ";" {$$ = ["while",$2,$4];}
     | "case" e "is" case_statements "end" "case" ";" {$$ = ["switch",$2,$4];}
     | "for" "(" statement_with_semicolon ";" e ";" statement_with_semicolon ")" bracket_statements {$$ = ["for",$3,$5,$7,$9];}
-    | "if" "(" e ")" bracket_statements elif {$$ = ["if",$3,$6,$8];}
+    | "if" "(" e ")" bracket_statements elif {$$ = ["if",$3,$5,$6];}
 	| "if" "(" e ")" bracket_statements {$$ = ["if",$3,$5];};
 
 case_statement: "when" e "=>" statements {$$ = ["case",$2,$4]};

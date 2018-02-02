@@ -11,6 +11,7 @@
 <script src="ada_parser.js"></script>
 <script src="go_parser.js"></script>
 <script src="javascript_parser.js"></script>
+<script src="swift_parser.js"></script>
 <script src="octave_parser.js"></script>
 <script src="smt_lib_parser.js"></script>
 <script src="typescript_parser.js"></script>
@@ -28,9 +29,14 @@
 <script src="clojure_parser.js"></script>
 <script src="clips_parser.js"></script>
 <script src="jison_parser.js"></script>
+<script src="picat_parser.js"></script>
+<script src="regex_parser.js"></script>
+<script src="antlr_parser.js"></script>
+<script src="txl_parser.js"></script>
 <script src="haskell_parser.js"></script>
 <script src="haxe_parser.js"></script>
 <script src="php_parser.js"></script>
+<script src="hack_parser.js"></script>
 <script src="lua_parser.js"></script>
 <script src="ruby_parser.js"></script>
 <script src="c_parser.js"></script>
@@ -185,8 +191,8 @@ function myFunction() {
     
     window.location.hash=encodeURIComponent(JSON.stringify({inputText:inputText,inputLang:inputLang,outputLang:outputLang}));
     //try{
-			outputText = "<br/><pre>" + parse_lang(inputLang,outputLang,inputText).replace("<","&lt;").replace("<","&gt;")+"</pre>";
-			document.getElementById("outputText").innerHTML = outputText;
+			outputText = parse_lang(inputLang,outputLang,inputText);
+			document.getElementById("outputText").value = outputText;
 			localStorage.setItem("outputText",outputText);
 	//}
 	//catch(e){
@@ -229,8 +235,7 @@ function myFunction() {
   <br/>
   <button type="button" onclick = "save_file()">Download file</button>
 
-
-<p id="outputText"></p>
+<textarea id="outputText" cols="40" rows="5"></textarea>
 <p id="errors"></p>
 
 </body>

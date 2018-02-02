@@ -8,13 +8,13 @@
 "$"                   return "$"
 "block"               return "block"
 "typeof"              return "typeof"
-"do"                  return "do"
 "If"                  return 'If'
 "case"                return "case"
 "default"             return 'default'
 "Return"              return 'Return'
 "yield"               return 'yield'
 "While"               return 'While'
+"Do"                  return 'Do'
 "switch"              return 'switch'
 "break"               return 'break'
 "for"                 return 'for'
@@ -98,11 +98,12 @@ IDENTIFIER "[" parameters "]" ":=" bracket_statements {$$ = ["function","public"
 statement
     :
     "While" "[" e "," statements "]" {$$ = ["while",$3,$5];}
+    | "Do" "[" bracket_statements "," "{" e "," e "}" "]" {$$ = ["foreach","Object",$6,$8,$3];}
     | statement_with_semicolon {$$ = ["semicolon",$1];}
     | "If" "[" e "," bracket_statements "," bracket_statements "]" {$$ = ["if",$3,$5,["else",$7]];}
     ;
 
-bracket_statements: "(" statement ";" statements_ ")" {$$ = ["statements",[$2].concat($4)];} | statement {$$ = ["statements",[$1]]};
+bracket_statements: "(" statement ";" statements_ ")" {$$ = ["statements",[$2].concat($4)];} | statement {$$ = ["statements",[$1]]} | "(" IDENTIFIER "=" e ")" {$$ = ["semicolon",["set_var",$2,$4]];};
 
 
 

@@ -8,6 +8,8 @@
 "class"               return "class"
 "yield"               return "yield"
 "await"               return "await"
+"case"                return 'case'
+"break"               return 'break'
 "public"              return "public"
 "extends"             return "extends"
 "default"             return "default"
@@ -17,6 +19,7 @@
 "private"             return "private"
 "static"              return "static"
 "if"                  return "if"
+"do"                  return "do"
 "in"                  return "in"
 "ref"                 return "ref"
 "out"                 return "out"
@@ -75,6 +78,7 @@
 %left '->'
 %left 'is' '&&' '||'
 %left '==' '!=' '<' '<=' '>' '>='
+%left ('>' '>') ( '<' '<' )
 %left '+' '-'
 %left '*' '/' '%'
 %left UMINUS
@@ -111,10 +115,11 @@ statement
     | statement_with_semicolon ";" {$$ = ["semicolon",$1];}
     | class_
     | "while" "(" e ")" bracket_statements {$$ = ["while",$3,$5];}
+    | "do" bracket_statements "while" "(" e ")" ";" {$$ = ["do_while",$2,$5];}
     | "switch" "(" e ")" "{" case_statements "}" {$$ = ["switch",$3,$6];}
     | "for" "(" statement_with_semicolon ";" e ";" statement_with_semicolon ")" bracket_statements {$$ = ["for",$3,$5,$7,$9];}
     | "foreach" "(" type IDENTIFIER "in" IDENTIFIER ")" bracket_statements {$$ = ["foreach",$3,$4,$6,$8];}
-    | "if" "(" e ")" bracket_statements elif {$$ = ["if",$3,$6,$8];}
+    | "if" "(" e ")" bracket_statements elif {$$ = ["if",$3,$5,$6];}
 	| "if" "(" e ")" bracket_statements {$$ = ["if",$3,$5];}
     | "public" "static" type IDENTIFIER "(" parameters ")" "{" statements "}" {$$ = ["function",$1,$3,$4,$6,$9];}
     | "public" "static" "async" type IDENTIFIER "(" parameters ")" "{" statements "}" {$$ = ["async_function",$1,$4,$5,$7,$10];}
@@ -150,6 +155,8 @@ statement_with_semicolon
    | IDENTIFIER "=" e {$$ = ["set_var",$1,$3];}
    | IDENTIFIER "++" {$$ = [$2,$1];}
    | IDENTIFIER "--" {$$ = [$2,$1];}
+   | "++" IDENTIFIER {$$ = [$1,$2];}
+   | "--" IDENTIFIER {$$ = [$1,$2];}
    | IDENTIFIER "+=" e {$$ = [$2,$1,$3];}
    | IDENTIFIER "-=" e {$$ = [$2,$1,$3];}
    | IDENTIFIER "*=" e {$$ = [$2,$1,$3];}
@@ -181,6 +188,10 @@ e:
         {$$ = [$2,$1,$3];}
     |e '>' e
         {$$ = [$2,$1,$3];}
+    | e ('>' '>') e
+        {$$ = [">>",$1,$3];}
+    | e ('<' '<') e
+        {$$ = ["<<",$1,$3];}
     | e '+' e
         {$$ = [$2,$1,$3];}
     | e '-' e
@@ -206,7 +217,7 @@ dot_expr: initializer_list  "." dot_expr {$$ = [$1].concat($3);} | parentheses_e
 access_array: IDENTIFIER "[" exprs "]" {$$ = ["access_array",$1,$3];};
 
 initializer_list:
-"new" type "{" "}" {$$ = ["initializer_list",$2,[]];} | "new" type "{" exprs "}" {$$ = ["initializer_list",$2,$4];} | "new" type "(" ")" {$$ = [$1,$2,[]];} | "new" type "(" exprs ")" {$$ = [$1,$2,$4];};
+"new" type "{" "}" {$$ = ["initializer_list",$2,[]];} | "new" type "{" exprs "}" {$$ = ["initializer_list",$2,$4];};
 
 parentheses_expr:
     "(" e ")" {$$= ["parentheses",$2];}
@@ -215,6 +226,8 @@ parentheses_expr:
     | parentheses_expr "(" ")" {$$ = ["function_call",$1,[]];}
     | parentheses_expr "(" named_parameters ")" {$$ = ["function_call",$1,$3];}
     | parentheses_expr "(" exprs ")" {$$ = ["function_call",$1,$3];}
+    | "new" IDENTIFIER "(" ")" {$$= ["new",$2,[]];}
+    | "new" IDENTIFIER "(" exprs ")" {$$= ["new",$2,$4];}
     | NUMBER
         {$$ = yytext;}
     | IDENTIFIER
@@ -236,8 +249,8 @@ named_parameters: named_parameters "," named_parameter {$$ = $1.concat([$3]);} |
 named_parameter: IDENTIFIER ":" e {$$ = ["named_parameter",$1,$3]};
 types: type "," types {$$ = [$1].concat($3);} | type {$$ = [$1];};
 elif:
-	"else" "if" "(" e ")" "{" statements "}" elif {$$ = ["elif",$4,$7,$9]}
-	| "else" "{" statements "}" {$$ = ["else",$3];};
+	"else" "if" "(" e ")" bracket_statements elif {$$ = ["elif",$4,$6,$7]}
+	| "else" bracket_statements {$$ = ["else",$2];};
 identifiers: IDENTIFIER "," identifiers {$$ = [$1].concat($3);} | IDENTIFIER {$$ = [$1];};
 add: e "+" add {$$ = [$1].concat($3);} | e {$$ = [$1];};
 bracket_statements: "{" statements "}" {$$= $2;} | statement_with_semicolon ";" {$$ = ["semicolon",$1];};

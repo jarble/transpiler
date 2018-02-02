@@ -6,6 +6,7 @@
 [0-9]+("."[0-9]+)?\b  return 'NUMBER'
 \"([^\\\"]|\\.)*\"    return 'STRING_LITERAL'
 "$"                   return "$"
+"@_"                  return "@_"
 "@"                   return "@"
 "foreach"             return 'foreach'
 "unless"              return "unless"
@@ -70,7 +71,7 @@
 
 %right '?'
 %left '&&' '||'
-%left '<' '<=' '>' '>='
+%left '<' '<=' '>' '>=' '=='
 %left '+' '-' '.'
 %left '*' '/' '%'
 %left UMINUS
@@ -99,13 +100,14 @@ statement
     statement_with_semicolon "if" e ";" {$$ = ["if",$3,["statements",["semicolon",$1]]];}
     | statement_with_semicolon "unless" e ";" {$$ = ["unless",$3,["statements",[["semicolon",$1]]]];}
     | statement_with_semicolon ";" {$$ = ["semicolon",$1];}
-    | "while" "(" e ")" "{" statements "}" {$$ = ["while",$3,$6];}
+    | "while" "(" e ")" bracket_statements {$$ = ["while",$3,$5];}
+    | "do" bracket_statements "while" "(" e ")" ";" {$$ = ["do_while",$2,$5];}
     | "foreach" var_name "(" var_name ")" "{" statements "}" {$$ = ["foreach","Object",$2,$4,$7];}
     | "for" "(" statement_with_semicolon ";" e ";" statement_with_semicolon ")" "{" statements "}" {$$ = ["for",$3,$5,$7,$10];}
-    | "if" "(" e ")" "{" statements "}" elif {$$ = ["if",$3,$6,$8];}
-	| "if" "(" e ")" "{" statements "}" {$$ = ["if",$3,$6];}
+    | "if" "(" e ")" bracket_statements elif {$$ = ["if",$3,$5,$6];}
+	| "if" "(" e ")" bracket_statements {$$ = ["if",$3,$5];}
 	| "unless" "(" e ")" "{" statements "}" {$$ = ["unless",$3,$6];}
-    | "sub" IDENTIFIER "(" parameters ")" "{" statements "}" {$$ = ["function","Object",$2,$4,$7];}
+    | "sub" IDENTIFIER "{" my "(" parameters ")" "=" "@_" ";" statements "}" {$$ = ["function","public","Object",$2,$6,$11];}
     ;
 
 class_statement:
@@ -142,6 +144,8 @@ e
     | e '>=' e
         {$$ = [$2,$1,$3];}
     |e '>' e
+        {$$ = [$2,$1,$3];}
+    | e '==' e
         {$$ = [$2,$1,$3];}
     | e '+' e
         {$$ = [$2,$1,$3];}
@@ -185,8 +189,8 @@ parameters: parameter "," parameters {$$ = [$1].concat($3);} | parameter {$$ =
 exprs: e "," exprs {$$ = [$1].concat($3);} | e {$$ = [$1];};
 types: type "," types {$$ = [$1].concat($3);} | type {$$ = [$1];};
 elif:
-	"else" "if" "(" e ")" "{" statements "}" elif {$$ = ["elif",$4,$7,$9]}
-	| "else" "{" statements "}" {$$ = ["else",$3];};
+	"else" "if" "(" e ")" bracket_statements elif {$$ = ["elif",$4,$6,$7]}
+	| "else" bracket_statements {$$ = ["else",$2];};
 
 
 var_name: "$" IDENTIFIER {$$ = $2;} | "@" IDENTIFIER {$$ = $2;};
@@ -194,3 +198,5 @@ var_names: var_name "," var_names {$$ = [$1].concat($3);} | var_name {$$ = [$1];
 
 key_values: key_values "," key_value {$$ = $1.concat([$3]);} | key_value {$$ = [$1];};
 key_value: STRING_LITERAL "=>" e {$$ = [$1,$3]} | IDENTIFIER ":" e {$$ = ["\""+$1+"\"",$3]};
+
+bracket_statements: "{" statements "}" {$$= $2;} | statement_with_semicolon ";" {$$ = ["semicolon",$1];};

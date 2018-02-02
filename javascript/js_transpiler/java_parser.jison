@@ -27,11 +27,13 @@
 "else"                return 'else'
 "return"              return 'return'
 "while"               return 'while'
+"until"               return 'until'
 "break"               return 'break'
 "switch"              return 'switch'
 "for"                 return 'for'
 "new"                 return 'new'
 "put"                 return 'put'
+"do"                  return 'do'
 ","                   return ','
 ";"                   return ';'
 "..."                 return '...'
@@ -42,9 +44,7 @@
 "||"                  return '||'
 "|"                   return '|'
 "->"                  return '->'
-">="                  return '>='
 ">"                   return '>'
-"<="                  return '<='
 "<"                   return '<'
 "=="                  return '=='
 "!="                  return '!='
@@ -80,7 +80,8 @@
 %left '->'
 %left 'instanceof' '||' '|'
 %left '&&' '&'
-%left '==' '!=' '<' '<=' '>' '>='
+%left '==' '!=' '<' ('<' '=') '>' ('>' '=')
+%left ('>' '>') ( '<' '<' )
 %left '+' '-'
 %left '*' '/' '%'
 %left UMINUS
@@ -116,10 +117,11 @@ bracket_statements: "{" statements "}" {$$= $2;} | statement_with_semicolon ";" 
 statement
     :
     statement_with_semicolon ";" {$$ = ["semicolon",$1];}
-    | "if" "(" e ")" bracket_statements elif {$$ = ["if",$3,$6,$8];}
+    | "if" "(" e ")" bracket_statements elif {$$ = ["if",$3,$5,$6];}
 	| "if" "(" e ")" bracket_statements {$$ = ["if",$3,$5];}
     | class_
     | "while" "(" e ")" bracket_statements {$$ = ["while",$3,$5];}
+    | "do" bracket_statements "while" "(" e ")" ";" {$$ = ["do_while",$2,$5];}
     | "switch" "(" e ")" "{" case_statements "}" {$$ = ["switch",$3,$6];}
     | "for" "(" statement_with_semicolon ";" e ";" statement_with_semicolon ")" bracket_statements {$$ = ["for",$3,$5,$7,$9];}
     | "for" "(" type IDENTIFIER ":" IDENTIFIER ")" "{" statements "}" {$$ = ["foreach",$3,$4,$6,$9];}
@@ -157,6 +159,8 @@ statement_with_semicolon
    | IDENTIFIER "=" e {$$ = ["set_var",$1,$3];}
    | IDENTIFIER "++" {$$ = [$2,$1];}
    | IDENTIFIER "--" {$$ = [$2,$1];}
+   | "++" IDENTIFIER {$$ = [$1,$2];}
+   | "--" IDENTIFIER {$$ = [$1,$2];}
    | IDENTIFIER "+=" e {$$ = [$2,$1,$3];}
    | IDENTIFIER "-=" e {$$ = [$2,$1,$3];}
    | IDENTIFIER "*=" e {$$ = [$2,$1,$3];}
@@ -187,14 +191,18 @@ e:
         {$$ = [$2,$1,$3];}
     |e '!=' e
         {$$ = [$2,$1,$3];}
-    |e '<=' e
+    |e ('<' '=') e
         {$$ = [$2,$1,$3];}
     |e '<' e
         {$$ = [$2,$1,$3];}
-    | e '>=' e
+    | e '>' '=' e
         {$$ = [$2,$1,$3];}
     |e '>' e
         {$$ = [$2,$1,$3];}
+    | e ('>' '>') e
+        {$$ = [">>",$1,$3];}
+    | e ('<' '<') e
+        {$$ = ["<<",$1,$3];}
     | e '+' e
         {$$ = [$2,$1,$3];}
     | e '-' e
@@ -246,7 +254,7 @@ parameters: parameter "," parameters {$$ = [$1].concat($3);} | parameter {$$ =
 exprs: e "," exprs {$$ = [$1].concat($3);} | e {$$ = [$1];};
 types: type "," types {$$ = [$1].concat($3);} | type {$$ = [$1];};
 elif:
-	"else" "if" "(" e ")" "{" statements "}" elif {$$ = ["elif",$4,$7,$9]}
-	| "else" "{" statements "}" {$$ = ["else",$3];};
+	"else" "if" "(" e ")" bracket_statements elif {$$ = ["elif",$4,$6,$7]}
+	| "else" bracket_statements {$$ = ["else",$2];};
 identifiers: IDENTIFIER "," identifiers {$$ = [$1].concat($3);} | IDENTIFIER {$$ = [$1];};
 add: e "+" add {$$ = [$1].concat($3);} | e {$$ = [$1];};

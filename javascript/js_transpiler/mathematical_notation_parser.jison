@@ -17,6 +17,9 @@
 "switch"              return "switch"
 "for"                 return "for"
 ","                   return ','
+"⊃"                   return '⊃'
+"⊂"                   return '⊂'
+"∀"                   return '∀'
 ";"                   return ';'
 "."                   return '.'
 ":"                   return ':'
@@ -58,10 +61,9 @@
 
 /* operator associations and precedence */
 
-%right '?'
 %left '||'
 %left '&&'
-%left '<' '<=' '>' '>=' '=' '!='
+%left '<' '<=' '>' '>=' '=' '!=' '⊃' '⊂'
 %left '+' '-'
 %left '*' '/' '%'
 %left '^'
@@ -81,7 +83,7 @@ statements: statements_ {$$ = ["statements",$1]};
 statement
     :
 	IDENTIFIER "(" parameters ")" "=" "{" e "}" {$$ = ["function","public","Object",$1,$3,["statements",[["semicolon",["return",$7]]]]];}
-	| IDENTIFIER "(" parameters ")" "=" arithmetic_expr {$$ = ["function","public","Object",$1,$3,["statements",[["semicolon",["return",$6]]]]];};
+	| IDENTIFIER "(" parameters ")" "=" e {$$ = ["function","public","Object",$1,$3,["statements",[["semicolon",["return",$6]]]]];};
 
 e
     :
@@ -89,6 +91,10 @@ e
         {$$ = [$2,$1,$3];}
     |e '&&' e
         {$$ = [$2,$1,$3];}
+    |e '⊃' e
+        {$$ = ['⊃',$1,$3];}
+    |e '⊂' e
+        {$$ = ['⊂',$1,$3];}
     |e '<=' e
         {$$ = [$2,$1,$3];}
     |e '<' e
@@ -122,18 +128,13 @@ arithmetic_expr:
     ;
 
 
-not_expr: "!" dot_expr {$$ = ["!", [".",$2]];} | dot_expr {$$ = [".", $1];};
+not_expr: '∀' IDENTIFIER parentheses_expr
+		{$$ = ['∀',$2,$4];} | "¬" parentheses_expr {$$ = ["!", [".",$2]];} | parentheses_expr;
 
-
-dot_expr: parentheses_expr "." dot_expr {$$ = [$1].concat($3);} | parentheses_expr {$$ =
- [$1];};
-
-access_array: IDENTIFIER "[" e "]" {$$ = ["access_array",$1,[$3]];};
 
 parentheses_expr:
-    access_array
-    | parentheses_expr "(" ")" {$$ = ["function_call",$1,[]];}
-    | parentheses_expr "(" exprs ")" {$$ = ["function_call",$1,$3];}
+    =IDENTIFIER "(" ")" {$$ = ["function_call",$1,[]];}
+    | IDENTIFIER "(" exprs ")" {$$ = ["function_call",$1,$3];}
     | '(' e ')' {$$ = ["parentheses",$2];}
     | parentheses_expr_;
 

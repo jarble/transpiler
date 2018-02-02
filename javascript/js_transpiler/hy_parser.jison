@@ -5,15 +5,7 @@
 (\s+|\;+.*\n)        /* skip whitespace and line comments */
 [0-9]+("."[0-9]+)?\b  return 'NUMBER'
 \"([^\\\"]|\\.)*\" return 'STRING_LITERAL'
-"defun"               return 'defun'
-"while"               return 'while'
-"cond"                return 'cond'
-"loop"                return 'loop'
-"setf"                return 'setf'
-"setq"                return 'setq'
-"if"                  return 'if'
-"do"                  return 'do'
-"t"                   return 't'
+"defn"                return 'defn'
 "not"                 return 'not'
 "and"                 return 'and'
 "?"                   return '?'
@@ -66,46 +58,24 @@ expressions: statements_ EOF {return ["top_level_statements",$1]};
 statements_: statement statements_ {$$ = [$1].concat($2);} | statement {$$ =
  [$1];};
  
-statements: statements_ {$$ = ["statements",$1]};
+statements: statements_ {$$ = ["top_level_statements",$1]};
 
 statement:
-	"(" "defun" IDENTIFIER "(" parameters ")" statement ")" {$$ = ["function","public","Object",$3,$5,$7]}
-    | statement_with_semicolon {$$=["semicolon",$1];}
-    | "(" "cond" "(" e bracket_statements ")" elif ")" {$$ = ["if",$4,$5,$7];}
-	| "(" "if" e bracket_statements ")" {$$ = ["if",$3,$4];}
-	| "(" "if" e bracket_statements bracket_statements ")" {$$ = ["if",$3,$4];}
-	| "(" "loop" "while" e "do" statements ")" {$$ = ["while",$4,$6];}
-	| "(" "loop" "do" statements "while" e ")" {$$ = ["do_while",$4,$6];}
-	;
-
-statement_with_semicolon:
-	e {$$ = ["return",$1]}
-	| "(" "setf" e e ")" {$$ = ["set_var",$3,$4];}
-	| "(" "setq" e e ")" {$$ = ["set_var",$3,$4];};
-	
-
-bracket_statements: statement {$$= ["statements",[$1]];};
-
-
-elif:
-	"(" e bracket_statements ")" elif {$$ = ["elif",$2,$3,$5]}
-	| "(" "t" bracket_statements ")" {$$ = ["else",$3];};
+	"(" "defn" IDENTIFIER "[" parameters "]" statement ")" {$$ = ["function","public","Object",$3,$5,$7]}
+    | e {$$=["statements",[["semicolon",["return",$1]]]];};
 
 operator:
 	| "not" {$$ = "!"}
 	| "or" {$$ = "logic_or";}
 	| "and" {$$ = "logic_and";}
+	| ">="
+	| ">"
+	| "<="
+	| "<"
 	| "*"
 	| "/"
 	| "+"
-	| "-"
-	| comparison_operator;
-
-comparison_operator:
-	">="
-	| ">"
-	| "<="
-	| "<";
+	| "-";
 
 equal_exprs: equal_exprs e {$$ = ["logic_equals",$1,$2]} | e;
 times_exprs: times_exprs e {$$ = ["*",$1,$2]}  | e;
@@ -121,9 +91,8 @@ e:
     | '(' '+' e plus_exprs ')' {$$ = [$2,$3,$4];}
 	| '(' '-' e minus_exprs ')' {$$ = [$2,$3,$4];}
     | '(' '/' e divide_exprs ')' {$$ = [$2,$3,$4];}
-    | '(' 'or' e or_exprs ')' {$$ = ["||",$3,$4];}
-    | '(' 'and' e and_exprs ')' {$$ = ["&&",$3,$4];}
-    | '(' comparison_operator e e ')' {$$ = [$2,$3,$4];}
+    | '(' 'or' e or_exprs ')' {$$ = ["logic_or",$3,$4];}
+    | '(' 'and' e and_exprs ')' {$$ = ["logic_and",$3,$4];}
     | function_call
     | NUMBER
         {$$ = yytext;}

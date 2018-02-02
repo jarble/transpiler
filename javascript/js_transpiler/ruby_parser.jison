@@ -9,7 +9,9 @@
 "self"                return "self"
 "end"                 return "end"
 "each"                return "each"
+"loop"                return 'loop'
 "raise"               return 'raise'
+"break"               return 'break'
 "elsif"               return 'elsif'
 "if"                  return 'if'
 "else"                return 'else'
@@ -58,7 +60,7 @@
 ")"                   return ')'
 [a-zA-Z_][a-zA-Z0-9_]* return 'IDENTIFIER'
 [0-9]+("."[0-9]+)?\b  return 'NUMBER'
-\"([^\\\"]|\\.)*\" return 'STRING_LITERAL'
+\"([^\\\"]|\\.)*\"    return 'STRING_LITERAL'
 <<EOF>>               return 'EOF'
 .                     return 'INVALID'
 
@@ -119,6 +121,7 @@ statement
     | statement_with_semicolon {$$ = ["semicolon",$1];}
     | class_
     | "while" e "do" statements "end" {$$ = ["while",$2,$4];}
+    | "loop" "do" statements "break" "if" e "end" {$$ = ["do_while",$3,$6];}
     | "while" e statements "end" {$$ = ["while",$2,$3];}
     | "case" e case_statements "end" {$$ = ["switch",$2,$3];}
     | IDENTIFIER "." "each" "do" "|" IDENTIFIER "|" statements "end" {$$ = ["foreach","Object",$6,$1,$8];}
@@ -214,7 +217,6 @@ parentheses_expr_:
         {$$ = yytext;}
     | STRING_LITERAL
         {$$ = yytext;};
-
 key_values: key_values "," key_value {$$ = $1.concat([$3]);} | key_value {$$ = [$1];};
 key_value: STRING_LITERAL "=>" e {$$ = [$1,$3]};
 

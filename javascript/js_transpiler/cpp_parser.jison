@@ -6,6 +6,11 @@
 [0-9]+("."[0-9]+)?\b  return 'NUMBER'
 \"([^\\\"]|\\.)*\" return 'STRING_LITERAL'
 "class"               return "class"
+"cout"                return "cout"
+"switch"              return "switch"
+"case"                return 'case'
+"break"               return "break"
+"default"             return 'default'
 "public"              return "public"
 "extends"             return "extends"
 "operator"            return "operator"
@@ -14,6 +19,7 @@
 "private"             return "private"
 "static"              return "static"
 "if"                  return "if"
+"do"                  return 'do'
 "in"                  return "in"
 "else"                return "else"
 "return"              return "return"
@@ -26,9 +32,12 @@
 ";"                   return ';'
 "."                   return '.'
 ":"                   return ':'
+"!="                  return '!='
+"!"                   return '!'
 "&&"                  return '&&'
 "&"                   return '&'
 "||"                  return '||'
+">>"                  return '>>'
 ">="                  return '>='
 ">"                   return '>'
 "<="                  return '<='
@@ -66,6 +75,7 @@
 %left '->'
 %left '&&' '||'
 %left '==' '!=' '<' '<=' '>' '>='
+%left ('>' '>') ( '<' '<' )
 %left '+' '-'
 %left '*' '/' '%'
 %left UMINUS
@@ -101,12 +111,21 @@ statement
     statement_with_semicolon ";" {$$ = ["semicolon",$1];}
     | class_
     | "while" "(" e ")" bracket_statements {$$ = ["while",$3,$5];}
+    | "do" bracket_statements "while" "(" e ")" ";" {$$ = ["do_while",$2,$5];}
+    | "switch" "(" e ")" "{" case_statements "}" {$$ = ["switch",$3,$6];}
     | "for" "(" statement_with_semicolon ";" e ";" statement_with_semicolon ")" bracket_statements {$$ = ["for",$3,$5,$7,$9];}
     | "foreach" "(" type IDENTIFIER "in" IDENTIFIER ")" bracket_statements {$$ = ["foreach",$3,$4,$6,$8];}
     | "if" "(" e ")" bracket_statements elif {$$ = ["if",$3,$5,$6];}
 	| "if" "(" e ")" bracket_statements {$$ = ["if",$3,$5];}
     | type IDENTIFIER "(" parameters ")" "{" statements "}" {$$ = ["function","public",$1,$2,$4,$7];}
     ;
+
+case_statement: "case" e ":" statements "break" ";" {$$ = ["case",$2,$4]};
+case_statements_: case_statement case_statements_ {$$ = [$1].concat($2);} | case_statement {$$ =
+ [$1];};
+
+case_statements: case_statements_ "default" ":" statements {$$ = $1.concat([["default",$4]])} | case_statements_;
+
 
 class_statement:
 	access_modifier type IDENTIFIER "=" e ";" {$$ = ["initialize_instance_var_with_value",$1,$2,$3,$5];}
@@ -137,6 +156,9 @@ statement_with_semicolon
    | IDENTIFIER "*=" e {$$ = [$2,$1,$3];}
    | IDENTIFIER "/=" e {$$ = [$2,$1,$3];}
    | IDENTIFIER "." dot_expr {$$ = [".",[$1].concat($3)]}
+   | function_call
+   | "cout" "<" "<" parentheses_expr {$$ = ["<<",$1,$4];}
+   | "cout" "<" "<" e "<" "<" parentheses_expr {$$ = ["<<",["<<",$1,$4],$7];}
    ;
 
 key_values: key_values "," key_value {$$ = $1.concat([$3]);} | key_value {$$ = [$1];};
@@ -160,6 +182,10 @@ e:
         {$$ = [$2,$1,$3];}
     |e '>' e
         {$$ = [$2,$1,$3];}
+    | e ('>' '>') e
+        {$$ = [">>",$1,$4];}
+    | e ('<' '<') e
+        {$$ = ["<<",$1,$4];}
     | e '+' e
         {$$ = [$2,$1,$3];}
     | e '-' e
@@ -209,8 +235,8 @@ exprs: expr "," exprs {$$ = [$1].concat($3);} | expr {$$ = [$1];};
 expr: "&" e {$$ = ["function_call_ref",$2];} | e {$$ = [$1];};
 types: type "," types {$$ = [$1].concat($3);} | type {$$ = [$1];};
 elif:
-	"else" "if" "(" e ")" "{" statements "}" elif {$$ = ["elif",$4,$7,$9]}
-	| "else" "{" statements "}" {$$ = ["else",$3];};
+	"else" "if" "(" e ")" bracket_statements elif {$$ = ["elif",$4,$6,$7]}
+	| "else" bracket_statements {$$ = ["else",$2];};
 identifiers: IDENTIFIER "," identifiers {$$ = [$1].concat($3);} | IDENTIFIER {$$ = [$1];};
 add: e "+" add {$$ = [$1].concat($3);} | e {$$ = [$1];};
 bracket_statements: "{" statements "}" {$$= $2;} | statement_with_semicolon ";" {$$ = ["semicolon",$1];};

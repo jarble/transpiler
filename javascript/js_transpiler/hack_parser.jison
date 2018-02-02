@@ -14,7 +14,6 @@
 "private"             return "private"
 "static"              return "static"
 "if"                  return "if"
-"do"                  return "do"
 "elseif"              return "elseif"
 "else"                return "else"
 "return"              return "return"
@@ -32,9 +31,7 @@
 ";"                   return ';'
 ":"                   return ':'
 "&&"                  return '&&'
-"&"                   return '&'
 "||"                  return '||'
-"|"                   return '|'
 ">="                  return '>='
 ">"                   return '>'
 "<="                  return '<='
@@ -112,9 +109,9 @@ statement
     | "for" "(" statement_with_semicolon ";" e ";" statement_with_semicolon ")" bracket_statements {$$ = ["for",$3,$5,$7,$9];}
     | "foreach" "(" var_name "as" var_name "=>" var_name ")" bracket_statements {$$ = ["foreach_with_index","Object",$5,$7,$3,$9];}
     | "foreach" "(" var_name "as" var_name ")" bracket_statements {$$ = ["foreach","Object",$5,$3,$7];}
-    | "if" "(" e ")" bracket_statements elif {$$ = ["if",$3,$5,$6];}
-	| "if" "(" e ")" bracket_statements {$$ = ["if",$3,$5];}
+    | if_statement
     | "function" IDENTIFIER "(" parameters ")" "{" statements "}" {$$ = ["function","public","Object",$2,$4,$7];}
+    | "function" IDENTIFIER "(" parameters ")" ":" IDENTIFIER "{" statements "}" {$$ = ["function","public",$7,$2,$4,$9];}
     ;
 
 case_statement: "case" e ":" statements "break" ";" {$$ = ["case",$2,$4]};
@@ -178,6 +175,8 @@ e
     | dot_expr {$$ = [".", $1];}
     ;
 
+
+
 dot_expr: parentheses_expr "->" dot_expr {$$ = [$1].concat($3);} | parentheses_expr {$$ =
  [$1];};
 
@@ -201,7 +200,7 @@ parentheses_expr:
         {$$ = yytext;};
 
 type: IDENTIFIER "[" "]" {$$ = [$1,"[]"];} | IDENTIFIER "<" types ">" {$$ = [$1,$3]} | IDENTIFIER;
-parameter: var_name {$$ = ["Object", $1];} |"&" var_name {$$ = ["ref_parameter","Object", $2];} | var_name "=" e {$$ = ["default_parameter","Object", $1,$3];};
+parameter: var_name {$$ = ["Object", $1];} | var_name ":" IDENTIFIER {$$ = [$3,$1]};
 parameters: parameter "," parameters {$$ = [$1].concat($3);} | parameter {$$ =
  [$1];}| {$$ = [];};
 access_arr: e "][" access_arr {$$ = [$1].concat($3);} | e {$$ =
@@ -210,6 +209,9 @@ exprs: e "," exprs {$$ = [$1].concat($3);} | e {$$ = [$1];};
 types: type "," types {$$ = [$1].concat($3);} | type {$$ = [$1];};
 else_if: "else" "if" | "elseif";
 elif: else_if "(" e ")" bracket_statements elif {$$ = ["elif",$3,$5,$6]} | else_if "(" e ")" bracket_statements {$$ = ["elif",$3,$5]} | "else" bracket_statements {$$ = ["else",$2];};
+if_statement:
+"if" "(" e ")" bracket_statements elif {$$ = ["if",$3,$5,$6];}
+|  "if" "(" e ")" bracket_statements {$$ = ["if",$3,$5];};
 var_name: "$" IDENTIFIER {$$ = $2;};
 var_names: var_name "," var_names {$$ = [$1].concat($3);} | var_name {$$ = [$1];};
 

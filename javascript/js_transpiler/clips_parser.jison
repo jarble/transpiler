@@ -8,8 +8,14 @@
 "defrule"             return 'defrule'
 "deffunction"         return 'deffunction'
 "assert"              return 'assert'
+"default"             return 'default'
+"switch"              return 'switch'
 "not"                 return 'not'
 "and"                 return 'and'
+"if"                  return 'if'
+"then"                return 'then'
+"else"                return 'else'
+"case"                return 'case'
 "?"                   return '?'
 ">="                  return '>='
 ">"                   return '>'
@@ -55,31 +61,56 @@
 
 %% /* language grammar */
 
-expressions: statements_ EOF {return ["top_level_statements",$1]};
+expressions: top_level_statements_ EOF {return ["top_level_statements",$1]};
+
+top_level_statements_: top_level_statement top_level_statements_ {$$ = [$1].concat($2);} | top_level_statement {$$ =
+ [$1];};
+ 
+top_level_statements: top_level_statements_ {$$ = ["top_level_top_level_statements",$1]};
+
+top_level_statement
+    : defrule
+    | "(" "deffunction" IDENTIFIER "(" parameters ")" statements ")" {$$ = ["function","public","Object",$3,$5,$7]};
 
 statements_: statement statements_ {$$ = [$1].concat($2);} | statement {$$ =
  [$1];};
  
-statements: statements_ {$$ = ["top_level_statements",$1]};
+statements:
+	statements_ {$$ = ["statements",$1]}
+	;
 
-statement
-    : defrule
-    | "(" "deffunction" IDENTIFIER "(" parameters ")" e ")";
+statement:
+	statement_with_semicolon {$$ = ["semicolon",$1]}
+	| "(" "if" e "then" bracket_statements "else" bracket_statements ")" {$$ = ["if",$3,$5,["else",$7]];}
+	| "(" "switch" e case_statements ")" {$$ = ["switch",$3,$4];}
+	;
 
+bracket_statements: statement {$$= ["statements",[$1]];};
 
+case_statement: "(" "case" e "then" bracket_statements ")" {$$ = ["case",$3,$5]};
+case_statements_: case_statements_ case_statement {$$ = $1.concat([$2]);} | case_statement {$$ =
+ [$1];};
+case_statements: case_statements_ "(" "default" bracket_statements ")" {$$ = $1.concat([["default",$4]])} | case_statements_;
+
+statement_with_semicolon:
+	e {$$ = ["return",$1];}
+	;
 
 operator:
 	| "not" {$$ = "!"}
 	| "or" {$$ = "logic_or";}
 	| "and" {$$ = "logic_and";}
-	| ">="
-	| ">"
-	| "<="
-	| "<"
 	| "*"
 	| "/"
 	| "+"
-	| "-";
+	| "-"
+	| comparison_operator;
+
+comparison_operator:
+	">="
+	| ">"
+	| "<="
+	| "<";
 
 equal_exprs: equal_exprs e {$$ = ["logic_equals",$1,$2]} | e;
 times_exprs: times_exprs e {$$ = ["*",$1,$2]}  | e;
@@ -95,6 +126,7 @@ e:
     | '(' '+' e plus_exprs ')' {$$ = [$2,$3,$4];}
 	| '(' '-' e minus_exprs ')' {$$ = [$2,$3,$4];}
     | '(' '/' e divide_exprs ')' {$$ = [$2,$3,$4];}
+    | '(' comparison_operator e e ')' {$$ = [$2,$3,$4];}
     | '(' 'or' e or_exprs ')' {$$ = ["logic_or",$3,$4];}
     | '(' 'and' e and_exprs ')' {$$ = ["logic_and",$3,$4];}
     | function_call

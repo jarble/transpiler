@@ -14,6 +14,7 @@
 "else"                return "else"
 "then"                return "then"
 "return"              return "return"
+"constraint"          return "constraint"
 ","                   return ','
 ";"                   return ';'
 "."                   return '.'
@@ -28,6 +29,7 @@
 ">"                   return '>'
 "<="                  return '<='
 "<"                   return '<'
+"!="                  return '!='
 "=="                  return '=='
 "="                   return '='
 "*="                  return '*='
@@ -59,7 +61,7 @@
 %left '->' '<->' '<-'
 %left '||'
 %left '&&'
-%left '==' '<' '<=' '>' '>='
+%left '==' '<' '<=' '>' '>=' '!='
 %left '+' '-'
 %left '*' '/'
 %left UMINUS
@@ -77,7 +79,8 @@ statements_: statement_ statements_ {$$ = [$1].concat($2);} | statement_ {$$ =
 statement_:
 	"function" "var" IDENTIFIER ":" IDENTIFIER "(" parameters ")" "=" statement ";" {$$ = ["function","public",$3,$5,$7,$10];}
 	| "predicate" IDENTIFIER "(" parameters ")" "=" statement ";" {$$ = ["predicate",$2,$4,$7];}
-	| IDENTIFIER ":" IDENTIFIER "=" e ";" {$$ = ["semicolon",["initialize_var",$1,$3,$5]];};
+	| IDENTIFIER ":" IDENTIFIER "=" e ";" {$$ = ["semicolon",["initialize_var",$1,$3,$5]];}
+	| "constraint" e ";" {$$ = ["semicolon",["function_call","constraint",[$2]]];};
 
 statement:
     if_statement
@@ -96,27 +99,29 @@ e
     |e '->' e
         {$$ = ['implies',$1,$3];}
     |e '||' e
-        {$$ = ['||',$1,$3];}
+        {$$ = [$2,$1,$3];}
     |e '&&' e
-        {$$ = ['&&',$1,$3];}
+        {$$ = [$2,$1,$3];}
     |e '==' e
-        {$$ = ['>=',$1,$3];}
+        {$$ = [$2,$1,$3];}
+    |e '!=' e
+        {$$ = [$2,$1,$3];}
     |e '<=' e
-        {$$ = ['>=',$1,$3];}
+        {$$ = [$2,$1,$3];}
     |e '<' e
-        {$$ = ['>',$1,$3];}
+        {$$ = [$2,$1,$3];}
     | e '>=' e
-        {$$ = ['>=',$1,$3];}
+        {$$ = [$2,$1,$3];}
     | e '>' e
-        {$$ = ['>',$1,$3];}
+        {$$ = [$2,$1,$3];}
     | e '+' e
         {$$ = [$2,$1,$3];}
     | e '-' e
-        {$$ = ["-",$1,$3];}
+        {$$ = [$2,$1,$3];}
     | e '*' e
-        {$$ = ["*",$1,$3];}
+        {$$ = [$2,$1,$3];}
     | e '/' e
-        {$$ = ["/",$1,$3];}
+        {$$ = [$2,$1,$3];}
     | '-' e %prec UMINUS
         {$$ = ["-",$2];}
     | IDENTIFIER "(" args ")"

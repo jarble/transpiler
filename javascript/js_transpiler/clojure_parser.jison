@@ -8,6 +8,8 @@
 "defn"                return 'defn'
 "not"                 return 'not'
 "and"                 return 'and'
+"cond"                return 'cond'
+":else"               return ':else'
 "?"                   return '?'
 ">="                  return '>='
 ">"                   return '>'
@@ -57,27 +59,37 @@ expressions: statements_ EOF {return ["top_level_statements",$1]};
 
 statements_: statement statements_ {$$ = [$1].concat($2);} | statement {$$ =
  [$1];};
- 
+
 statements: statements_ {$$ = ["top_level_statements",$1]};
 
 statement:
 	"(" "defn" IDENTIFIER "[" parameters "]" statement ")" {$$ = ["function","public","Object",$3,$5,$7]}
-    | e {$$=["statements",[["semicolon",["return",$1]]]];};
+    | e {$$=["statements",[["semicolon",["return",$1]]]];}
+    | "(" "if" e bracket_statements bracket_statements ")" {$$ = ["if",$3,$4];}
+    | "(" "cond" e bracket_statements elif ")" {$$ = ["if",$3,$4,$5];};
 
+elif:
+	e bracket_statements elif {$$ = ["elif",$1,$2,$3]}
+	| ":else" bracket_statements {$$ = ["else",$2];};
+
+bracket_statements: statement {$$= ["statements",[$1]];};
 
 
 operator:
 	| "not" {$$ = "!"}
 	| "or" {$$ = "logic_or";}
 	| "and" {$$ = "logic_and";}
-	| ">="
-	| ">"
-	| "<="
-	| "<"
 	| "*"
 	| "/"
 	| "+"
-	| "-";
+	| "-"
+	| comparison_operator;
+
+comparison_operator:
+	">="
+	| ">"
+	| "<="
+	| "<";
 
 equal_exprs: equal_exprs e {$$ = ["logic_equals",$1,$2]} | e;
 times_exprs: times_exprs e {$$ = ["*",$1,$2]}  | e;
@@ -93,8 +105,9 @@ e:
     | '(' '+' e plus_exprs ')' {$$ = [$2,$3,$4];}
 	| '(' '-' e minus_exprs ')' {$$ = [$2,$3,$4];}
     | '(' '/' e divide_exprs ')' {$$ = [$2,$3,$4];}
-    | '(' 'or' e or_exprs ')' {$$ = ["logic_or",$3,$4];}
-    | '(' 'and' e and_exprs ')' {$$ = ["logic_and",$3,$4];}
+    | '(' 'or' e or_exprs ')' {$$ = ["||",$3,$4];}
+    | '(' 'and' e and_exprs ')' {$$ = ["&&",$3,$4];}
+    | '(' comparison_operator e e ')' {$$ = [$2,$3,$4];}
     | function_call
     | NUMBER
         {$$ = yytext;}

@@ -8,13 +8,14 @@
 "$"                   return "$"
 "def"                 return "def"
 "end"                 return "end"
-"elseif"              return 'elseif'
+"Array"               return 'Array'
 "if"                  return 'if'
 "else"                return 'else'
 "return"              return 'return'
 "while"               return 'while'
+"match"               return 'match'
 "for"                 return 'for'
-"var"               return 'var'
+"var"                 return 'var'
 "of"                  return 'of'
 "not"                 return 'not'
 ","                   return ','
@@ -26,9 +27,11 @@
 "or"                  return 'or'
 ">="                  return '>='
 ">"                   return '>'
+"<-"                  return '<-'
 "<="                  return '<='
 "<"                   return '<'
-"~="                  return '~='
+"!="                  return '!='
+"=>"                  return '=>'
 "=="                  return '=='
 "="                   return '='
 "*="                  return '*='
@@ -61,7 +64,7 @@
 
 %left 'or'
 %left 'and'
-%left '<' '<=' '>' '>=' '==' '~='
+%left '<' '<=' '>' '>=' '==' '!='
 %left '..' '+' '-'
 %left '*' '/' '%'
 %left '^'
@@ -87,13 +90,18 @@ statement
     :
     statement_with_semicolon {$$ = ["semicolon",$1];}
     | statement_with_semicolon ";" {$$ = ["semicolon",$1];}
+	// | parentheses_expr "match" "{" case_statements "}" {$$ = ["switch",$1,$4];}
     | "while" "(" e ")" bracket_statements {$$ = ["while",$3,$5];}
-    | "for" "_" "," IDENTIFIER "in" "pairs" "(" dot_expr ")" "do" statements "end" {$$ = ["foreach","Object",$4,$8,$11];}
-    | "for" IDENTIFIER "," IDENTIFIER "in" "pairs" "(" dot_expr ")" "do" statements "end" {$$ = ["foreach_with_index","Object",$2,$4,$8,$11];}
-    | "if" "(" e ")" bracket_statements elif {$$ = ["if",$3,$6,$8];}
+    | "for" "(" dot_expr "<-" dot_expr ")" "{" statements "}" {$$ = ["foreach","Object",$3,$5,$8];}
+    | "if" "(" e ")" bracket_statements elif {$$ = ["if",$3,$5,$6];}
 	| "if" "(" e ")" bracket_statements {$$ = ["if",$3,$5];}
     | "def" IDENTIFIER "(" parameters ")" ":" IDENTIFIER "=" "{" statements "}" {$$ = ["function","public",$7,$2,$4,$10];}
     ;
+
+case_statement: parentheses_expr "=>" statement {$$ = ["case",$1,["statements",[$3]]]};
+case_statements_: case_statement case_statements_ {$$ = [$1].concat($2);} | case_statement {$$ =
+ [$1];};
+case_statements: case_statements_ "_" "=>" statement {$$ = $1.concat([["default",$4]])} | case_statements_;
 
 statement_with_semicolon
    : 
@@ -123,7 +131,7 @@ e
         {$$ = [$2,$1,$3];}
     | e '==' e
         {$$ = [$2,$1,$3];}
-    | e '~=' e
+    | e '!=' e
         {$$ = ["!=",$1,$3];}
     |e '>' e
         {$$ = [$2,$1,$3];}
@@ -160,7 +168,7 @@ function_call:
     | parentheses_expr_ "(" exprs ")" {$$ = ["function_call",$1,$3];};
 
 parentheses_expr_:
-    "{" "}" {$$ = ["initializer_list","Object",[]];} | "{" exprs "}" {$$ = ["initializer_list","Object",$2];}
+    "Array" "(" ")" {$$ = ["initializer_list","Object",[]];} | "Array" "(" exprs ")" {$$ = ["initializer_list","Object",$3];}
     | "{" key_values "}" {$$ = ["associative_array","Object","Object",$2];}
     | NUMBER
         {$$ = yytext;}
@@ -178,7 +186,7 @@ parentheses_expr:
 
 
 
-type: IDENTIFIER;
+type: IDENTIFIER | "Array" "[" IDENTIFIER "]" {$$ = [$3,"[]"]};
 parameter: IDENTIFIER ":" IDENTIFIER {$$ = [$3,$1];};
 parameters: parameter "," parameters {$$ = [$1].concat($3);} | parameter {$$ =
  [$1];} | {$$ = [];};
