@@ -109,7 +109,7 @@ statement_with_semicolon
    |"return" e  {$$ = ["return",$2];}
    | "let" "mut" IDENTIFIER "=" e {$$ = ["initialize_var","Object",$3,$5];}
    | "let" IDENTIFIER "=" e {$$ = ["initialize_constant","Object",$2,$4];}
-   | type access_array {return ["set_array_size",$1,$2[1],$2[2]];}
+   | type access_array {$$ = ["set_array_size",$1,$2[1],$2[2]];}
    | type identifiers {$$ = ["initialize_empty_vars",$1,$2];}
    | access_array "=" e {$$ = ["set_var",$1,$3];}
    | IDENTIFIER "=" e {$$ = ["set_var",$1,$3];}

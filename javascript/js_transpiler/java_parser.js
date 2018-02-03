@@ -202,7 +202,7 @@ case 49:
 this.$ = ["initialize_empty_vars",$$[$0-1],$$[$0]];
 break;
 case 50:
-return ["set_array_size",$$[$0-1],$$[$0][1],$$[$0][2]];
+this.$ = ["set_array_size",$$[$0-1],$$[$0][1],$$[$0][2]];
 break;
 case 51: case 52:
 this.$ = ["set_var",$$[$0-2],$$[$0]];
