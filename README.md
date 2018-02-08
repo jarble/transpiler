@@ -77,6 +77,7 @@ This is a simplified version of one of its translation rules, implementing the s
 Here is an [automatically-generated list of features](https://jarble.github.io/transpiler/javascript/js_transpiler/to_do_list.html) that have not yet been implemented in this translator.
 
 ## Other planned features:
+* Add a translator for [lens languages](https://www.google.com/search?q=%22lens+language%22+programming) such as Augeas and Boomerang
 * Simplify and refactor the code generator using [string interpolation](https://stackoverflow.com/questions/1408289/how-can-i-do-string-interpolation-in-javascript)
 * Converting [SQL to Linq](https://stackoverflow.com/questions/296972/sql-to-linq-tool) and vice-versa
 * Simultaneous editing of two programming languages in two text areas
