@@ -475,6 +475,15 @@ function var_name(lang,var1){
 			return "$"+var1;
 		}
 	}
+	if(member(lang,["ruby-prolog"])){
+		if(var1.startsWith(":")){
+			return var1;
+		}
+		else{
+			same_var_type(":"+var1, var1);
+			return ":"+var1;
+		}
+	}
 	else if(member(lang,['nearley'])){
 		if(var1 === var1.toUpperCase()){
 			return "$"+var1;
@@ -774,8 +783,11 @@ function parameter(input_lang,lang,x){
 		var type = types[x[1]];
 		var name = x[1];
 		//console.log("types: "+JSON.stringify(types));
-		if(member(lang,["java","c#",'fortran'])){
+		if(member(lang,["java","c#"])){
 			return var_type(input_lang,lang,x[0])+" "+x[1];
+		}
+		else if(member(lang,['fortran'])){
+			return var_type(input_lang,lang,x[0])+" :: "+x[1];
 		}
 		if(member(lang,["cython"])){
 			if(x[0] === "Object"){
@@ -834,7 +846,7 @@ function parameter(input_lang,lang,x){
 		else if(member(lang,["tcl"])){
 			return x[1];
 		}
-		else if(member(lang,['haskell','agda','mercury','idris','lc++','emacs lisp','chr.js','reasoned-php','logicjs','yacas','elixir','erlang','elm','z3py','prolog','pddl','picat','definite clause grammars','nearley','sympy','pydatalog','python','picolisp','autoit','coconut','applescript','english','ruby','lua','gap','hy','perl 6','cosmos','polish notation','reverse polish notation','scheme','mathematical notation','lispyscript','clips','clojure','f#','ml','racket','ocaml','common lisp','newlisp','frink','picat','idp','powershell','maxima','icon','coffeescript','octave','autohotkey','constraint handling rules','logtalk','awk','kotlin','dart','javascript','sidef','nemerle','erlang','php','autoit','r','bc'])){
+		else if(member(lang,['haskell','ruby-prolog','agda','mercury','idris','lc++','emacs lisp','chr.js','reasoned-php','logicjs','yacas','elixir','erlang','elm','z3py','prolog','pddl','picat','definite clause grammars','nearley','sympy','pydatalog','python','picolisp','autoit','coconut','applescript','english','ruby','lua','gap','hy','perl 6','cosmos','polish notation','reverse polish notation','scheme','mathematical notation','lispyscript','clips','clojure','f#','ml','racket','ocaml','common lisp','newlisp','frink','picat','idp','powershell','maxima','icon','coffeescript','octave','autohotkey','constraint handling rules','logtalk','awk','kotlin','dart','javascript','sidef','nemerle','erlang','php','autoit','r','bc'])){
 			var to_return = var_name(lang,x[1]);
 			types[x[1]] = x[0];
 			return to_return;
@@ -946,7 +958,7 @@ function function_call_parameters(input_lang,lang,params){
 		return params;
 	}
 	params = params.map(function(x){return generate_code(input_lang,lang,"",x)});
-	if(member(lang,['pseudocode','yacas','gosu','gap','awk','z3py','peg.js','english','ruby','definite clause grammars','nearley','sympy','systemverilog','vhdl','visual basic .net','perl','constraint handling rules','lua','ruby','python','coconut','javascript','logtalk','nim','seed7','pydatalog','e','vbscript','monkey x','livecode','ceylon','delphi','englishscript','cython','vala','dafny','wolfram','gambas','d','frink','chapel','swift','perl 6','janus','mathematical notation','pascal','rust','picat','autohotkey','maxima','octave','julia','r','prolog','fortran','go','minizinc','erlang','coffeescript','php','hack','java','c#','c','c++','typescript','dart','haxe','scala','visual basic'])){
+	if(member(lang,['pseudocode','ruby-prolog','yacas','gosu','gap','awk','z3py','peg.js','english','ruby','definite clause grammars','nearley','sympy','systemverilog','vhdl','visual basic .net','perl','constraint handling rules','lua','ruby','python','coconut','javascript','logtalk','nim','seed7','pydatalog','e','vbscript','monkey x','livecode','ceylon','delphi','englishscript','cython','vala','dafny','wolfram','gambas','d','frink','chapel','swift','perl 6','janus','mathematical notation','pascal','rust','picat','autohotkey','maxima','octave','julia','r','prolog','fortran','go','minizinc','erlang','coffeescript','php','hack','java','c#','c','c++','typescript','dart','haxe','scala','visual basic'])){
 		return params.join(",");
 	}
 	else if(member(lang,['hy','pddl','newlisp','ocaml','f#','polish notation','reverse polish notation','smt-lib','scheme','racket','common lisp','clips','rebol','haskell','racket','clojure'])){
@@ -981,7 +993,7 @@ function parameters(input_lang,lang,params){
 		return "";
 	}
 	params = params.map(function(x){return parameter(input_lang,lang,x)});
-	if(member(lang,['pseudocode','mysql','transact-sql','standard ml',"glsl",'bc','autoit','applescript','algol 68','ada','sidef','gosu','mercury','lc++','chr.js','reasoned-php','logicjs','yacas','gap','elixir','awk','ats','z3py','kotlin','english','ruby','definite clause grammars','nearley','sympy','systemverilog','vhdl','visual basic .net','perl','constraint handling rules','lua','ruby','python','coconut','javascript','logtalk','nim','seed7','pydatalog','e','vbscript','monkey x','livecode','ceylon','delphi','englishscript','cython','vala','dafny','wolfram','gambas','d','frink','chapel','swift','perl 6','janus','mathematical notation','pascal','rust','picat','autohotkey','maxima','octave','julia','r','prolog','go','minizinc','erlang','coffeescript','php','hack','java','c#','c','c++','typescript','dart','haxe','scala','visual basic'])){
+	if(member(lang,['pseudocode','ruby-prolog','mysql','transact-sql','standard ml',"glsl",'bc','autoit','applescript','algol 68','ada','sidef','gosu','mercury','lc++','chr.js','reasoned-php','logicjs','yacas','gap','elixir','awk','ats','z3py','kotlin','english','ruby','definite clause grammars','nearley','sympy','systemverilog','vhdl','visual basic .net','perl','constraint handling rules','lua','ruby','python','coconut','javascript','logtalk','nim','seed7','pydatalog','e','vbscript','monkey x','livecode','ceylon','delphi','englishscript','cython','vala','dafny','wolfram','gambas','d','frink','chapel','swift','perl 6','janus','mathematical notation','pascal','rust','picat','autohotkey','maxima','octave','julia','r','prolog','go','minizinc','erlang','coffeescript','php','hack','java','c#','c','c++','typescript','dart','haxe','scala','visual basic'])){
 		return params.join(",");
 	}
 	else if(member(lang,['fortran','smalltalk','newlisp','picolisp','pddl','agda','idris','coq','emacs lisp','tcl','elm','hy','ocaml','f#','polish notation','reverse polish notation','smt-lib','scheme','racket','common lisp','clips','rebol','haskell','racket','clojure'])){
@@ -997,7 +1009,7 @@ function statements(input_lang,lang,indent,arr){
 			return generate_code(input_lang,lang,indent,a);
 		});
 		//console.log(JSON.stringify(arr[1]));
-		if(member(lang,['java','mysql','smalltalk','picolisp','newlisp','regex','txl','english','glsl','applescript','sidef','tex','protobuf','chapel','idris','coq','lc++','chr.js','reasoned-php','logicjs','tcl','yacas','coconut','gap','lark',"pypeg",'canopy','ats','z3py',"peg.js","antlr","nearley",'jison','vhdl','c','pseudocode','perl 6','haxe','javascript','c++','c#','php','dart','actionscript','typescript','processing','vala','bc','ceylon','hack','perl'])){
+		if(member(lang,['java','ruby-prolog','mysql','smalltalk','picolisp','newlisp','regex','txl','english','glsl','applescript','sidef','tex','protobuf','chapel','idris','coq','lc++','chr.js','reasoned-php','logicjs','tcl','yacas','coconut','gap','lark',"pypeg",'canopy','ats','z3py',"peg.js","antlr","nearley",'jison','vhdl','c','pseudocode','perl 6','haxe','javascript','c++','c#','php','dart','actionscript','typescript','processing','vala','bc','ceylon','hack','perl'])){
 			return a.join("");
 		}
 		else if(member(lang,['picat','transact-sql','maxima','lpeg','prolog','constraint handling rules','logtalk','erlang','lpeg'])){
@@ -1934,7 +1946,7 @@ function generate_code(input_lang,lang,indent,arr){
 		if(member(lang,['c#'])){
 			to_return = "ref "+a;
 		}
-		else if(member(lang,['php'])){
+		else if(member(lang,['php','prolog','pydatalog','minizinc'])){
 			to_return = a;
 		}
 		else if(member(lang,['c','c++'])){
@@ -3521,6 +3533,8 @@ function generate_code(input_lang,lang,indent,arr){
 			&& (to_return = a+","+b)
 		|| member(lang,['sympy'])
 			&& (to_return = a+" and "+b)
+		|| member(lang,['pydatalog'])
+			&& (to_return = a+" & "+b)
 		|| member(lang,['javascript'])
 			&& (to_return = "logic.and("+a+","+b+")")
 		|| member(lang,['smt-lib','clips'])
@@ -3585,7 +3599,7 @@ function generate_code(input_lang,lang,indent,arr){
 		}
 		var name = arr[1];
 		var params = parameters(input_lang,lang,arr[2]);
-		var body = indent+"    return "+generate_code(input_lang,lang,"",arr[3]);
+		var body = generate_code(input_lang,lang,"",arr[3]);
 		
 		member(lang,["pddl"])
 			&& (to_return = "(:action " +name + " :parameters ("+params+") :precondition " + body + " :effect (" +name+" " + params + "))")
@@ -3595,20 +3609,22 @@ function generate_code(input_lang,lang,indent,arr){
 			&& (to_return = name+"("+params+") :- "+body)
 		|| member(lang,["wolfram"])
 			&& (to_return = name+"["+params+"] := "+body)
+		|| member(lang,["ruby-prolog"])
+			&& (to_return = name+"["+params+"] << "+body)
 		|| member(lang,["sympy"])
 			&& (to_return = "def("+params+"):"+"\n    return "+body)
 		|| member(lang,["javascript","php",'hack'])
-			&& (to_return = "function "+name+"("+params+"){"+body+";}")
+			&& (to_return = "function "+name+"("+params+"){"+indent+"return "+body+";}")
 		|| member(lang,["python"])
-			&& (to_return = "def "+name+"("+params+"):"+body)
-		|| member(lang,["python"])
-			&& (to_return = "def "+name+"("+params+")"+body+"end")
+			&& (to_return = "def "+name+"("+params+"):"+indent+"return "+body)
+		|| member(lang,["ruby"])
+			&& (to_return = "def "+name+"("+params+")"+indent+"return "+body+"end")
 		|| member(lang,["haskell"])
 			&& (to_return = name+" "+params+" = "+body)
 		|| member(lang,["lua"])
-			&& (to_return = "function "+name+"("+params+") return "+body+" end")
+			&& (to_return = "function "+name+"("+params+") return "+indent+"return "+body+" end")
 		|| member(lang,["pydatalog"])
-			&& (to_return = name + "[" + params + "]" + "<=" + body);
+			&& (to_return = name + "(" + params + ")" + "<=" + body);
 	}
 	else if(arr[0] === "async_function"){
 		//return arr.toString();
@@ -6002,6 +6018,9 @@ function generate_code(input_lang,lang,indent,arr){
 		else if(member(lang, ["delphi"])){
 			to_return = arr[2]+":"+var_type(input_lang,lang,arr[1]);
 		}
+		else if(member(lang, ["fortran"])){
+			to_return = arr[2]+" :: "+var_type(input_lang,lang,arr[1]);
+		}
 		else if(member(lang, ["go"])){
 			to_return = "var "+arr[2]+" "+var_type(input_lang,lang,arr[1]);
 		}
@@ -6848,13 +6867,13 @@ function unparse(input_lang,lang,indent,pattern_array,matching_symbols){
 }
 
 function function_call(lang, name, params){
-	if(member(lang,['c','tex','sidef','z3py','constraint handling rules','prolog','visual basic .net','english_temp','sympy','lua','cython','definite clause grammars','python','coconut','ruby','logtalk','nim','seed7','gap','mathematical notation','chapel','elixir','janus','perl 6','pascal','rust','hack','katahdin','minizinc','pawn','aldor','picat','d','genie','ooc','pl/i','delphi','standard ml','rexx','falcon','idp','processing','maxima','swift','boo','r','matlab','autoit','pike','gosu','awk','autohotkey','gambas','kotlin','nemerle','engscript','groovy','scala','coffeescript','julia','typescript','fortran','octave','c++','go','cobra','vala','f#','java','ceylon','erlang','c#','haxe','javascript','dart','bc','visual basic','php','perl'])){
+	if(member(lang,['c','pydatalog','tex','sidef','z3py','constraint handling rules','prolog','visual basic .net','english_temp','sympy','lua','cython','definite clause grammars','python','coconut','ruby','logtalk','nim','seed7','gap','mathematical notation','chapel','elixir','janus','perl 6','pascal','rust','hack','katahdin','minizinc','pawn','aldor','picat','d','genie','ooc','pl/i','delphi','standard ml','rexx','falcon','idp','processing','maxima','swift','boo','r','matlab','autoit','pike','gosu','awk','autohotkey','gambas','kotlin','nemerle','engscript','groovy','scala','coffeescript','julia','typescript','fortran','octave','c++','go','cobra','vala','f#','java','ceylon','erlang','c#','haxe','javascript','dart','bc','visual basic','php','perl'])){
 		return name + "("+params+")";
 	}
 	else if(member(lang,["peg.js"])){
 		return params+":"+name;
 	}
-	else if(member(lang,["wolfram"])){
+	else if(member(lang,["wolfram","ruby-prolog"])){
 		return name+"["+params+"]";
 	}
 	else if(member(lang,['haskell','hy','clips','pddl','ocaml','smt-lib','smt-lib','clips','clojure','common lisp','clips','racket','scheme'])){
