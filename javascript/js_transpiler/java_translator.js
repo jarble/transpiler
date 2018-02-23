@@ -6156,7 +6156,7 @@ function generate_code(input_lang,lang,indent,arr){
 		var b = var_type(input_lang,lang,matching_symbols["$b"]);
 		return generate_code(input_lang,lang,indent,["associative_array",a,b,[]]);
 	}
-		else if(matching_patterns(pattern_array,input_lang,lang,arr,[
+	else if(matching_patterns(pattern_array,input_lang,lang,arr,[
 		[['wolfram'],["function_call","Det",["$a"]]],
 		[['maxima'],["function_call","determinant",["$a"]]],
 		[['sympy'],[".",["$a",["function_call","det",[]]]]],
@@ -6164,6 +6164,56 @@ function generate_code(input_lang,lang,indent,arr){
 		var output = generate_code(input_lang,lang,indent,matching_symbols["$a"]);
 		to_return = unparse(input_lang,lang,indent,pattern_array.value,matching_symbols);
 		types[to_return] = "double";
+	}
+	else if(matching_patterns(pattern_array,input_lang,lang,arr,[
+		//inverse of a matrix
+		[['maxima'],["function_call","invert",["$a"]]],
+	],matching_symbols)){
+		var a = generate_code(input_lang,lang,indent,matching_symbols["$a"]);
+		to_return = unparse(input_lang,lang,indent,pattern_array.value,matching_symbols);
+		types[to_return] = types[a];
+	}
+	else if(matching_patterns(pattern_array,input_lang,lang,arr,[
+		//inverse of a matrix
+		[['maxima'],["function_call","innnerproduct",["$a"]]],
+		[['maxima'],["function_call","inprod",["$a"]]],
+		[['wolfram'],["function_call","Inner",["$a"]]],
+	],matching_symbols)){
+		var a = generate_code(input_lang,lang,indent,matching_symbols["$a"]);
+		to_return = unparse(input_lang,lang,indent,pattern_array.value,matching_symbols);
+		types[to_return] = types[a];
+	}
+	else if(matching_patterns(pattern_array,input_lang,lang,arr,[
+		[['maxima'], ["function_call","transpose",["$a"]]],
+		[['wolfram'], ["function_call","Transpose",["$a"]]]
+	],matching_symbols)){
+		var a = generate_code(input_lang,lang,indent,matching_symbols["$a"]);
+		to_return = unparse(input_lang,lang,indent,pattern_array.value,matching_symbols);
+		types[to_return] = types[a];
+	}
+	else if(matching_patterns(pattern_array,input_lang,lang,arr,[
+		[['sympy','maxima'], ["function_call","limit",["$a","$b","$c"]]]
+	],matching_symbols)){
+		var a = generate_code(input_lang,lang,indent,matching_symbols["$a"]);
+		var b = generate_code(input_lang,lang,indent,matching_symbols["$b"]);
+		var c = generate_code(input_lang,lang,indent,matching_symbols["$c"]);
+		if(lang === "wolfram"){
+			to_return = "Limit["+a+","+b+"->"+c+"]"
+		}
+		else if(lang === "yacas"){
+			to_return = "(limit("+b+","+c+") "+a+")"
+		}
+		else{
+			to_return = unparse(input_lang,lang,indent,pattern_array.value,matching_symbols);
+		}
+		types[to_return] = types[a];
+	}
+	else if(matching_patterns(pattern_array,input_lang,lang,arr,[
+		[['maxima'], ["function_call","Eigenvalues",["$a"]]]
+	],matching_symbols)){
+		var a = generate_code(input_lang,lang,indent,matching_symbols["$a"]);
+		to_return = unparse(input_lang,lang,indent,pattern_array.value,matching_symbols);
+		types[to_return] = types[a];
 	}
 	// see http://rosettacode.org/wiki/Real_constants_and_functions
 	else if(matching_patterns(pattern_array,input_lang,lang,arr,[
@@ -6402,7 +6452,9 @@ function generate_code(input_lang,lang,indent,arr){
 	}
 	else if(matching_patterns(pattern_array,input_lang,lang,arr,[
 		[['maple'],
-			["function_call","CrossProduct",["$a","$b"]]]
+			["function_call","CrossProduct",["$a","$b"]]],
+		[['wolfram'],
+			["function_call","Cross",["$a","$b"]]]
 	],matching_symbols)){
 		var a = generate_code(input_lang,lang,indent,matching_symbols["$a"]);
 		to_return = unparse(input_lang,lang,indent,pattern_array.value,matching_symbols);
