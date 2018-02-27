@@ -99,7 +99,8 @@ class_statements_: class_statement class_statements_ {$$ = [$1].concat($2);} | c
 access_modifier: "public" | "private";
 
 class_:
-	"class" IDENTIFIER "{" class_statements "}" ";" {$$ = [$1,"public",$2,$4];}
+	access_modifier "namespace" IDENTIFIER "{" class_statements "}" {$$ = [$1,"public",$2,$4];}
+	| "class" IDENTIFIER "{" class_statements "}" ";" {$$ = [$1,"public",$2,$4];}
 	| access_modifier "abstract" "class" IDENTIFIER "{" class_statements "}" {$$ = ["abstract_class",$1,$4,$6];}
 	| access_modifier "interface" IDENTIFIER "{" class_statements "}" {$$ = [$2,$1,$3,$5];}
 	| access_modifier "enum" IDENTIFIER "{" identifiers "}" {$$ = ["enum",$2,$1,$3,$5];}

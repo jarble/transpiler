@@ -13,6 +13,7 @@
 "implements"          return "implements"
 "private"             return "private"
 "static"              return "static"
+"new"                 return 'new'
 "if"                  return "if"
 "do"                  return "do"
 "elseif"              return "elseif"
@@ -188,7 +189,8 @@ function_call:
     | IDENTIFIER "(" exprs ")" {$$ = ["function_call",$1,$3];};
 
 parentheses_expr:
-    "function" "(" parameters ")" "{" statements "}" {$$ = ["anonymous_function","Object",$3,$6]}
+    "new" "class" "{" statements "}" {$$= ["anonymous_class",$4]}
+    | "function" "(" parameters ")" "{" statements "}" {$$ = ["anonymous_function","Object",$3,$6]}
     | access_array
     | function_call
     | "[" "]" {$$ = ["initializer_list","Object",[]];} | "[" exprs "]" {$$ = ["initializer_list","Object",$2];}
