@@ -20,6 +20,7 @@
 "return"              return 'return'
 "while"               return 'while'
 "for"                 return 'for'
+"var"                 return 'var'
 "local"               return 'local'
 "repeat"              return 'repeat'
 "until"               return 'until'
@@ -124,11 +125,13 @@ case_statements: case_statements_ "default" ":" statements {$$ = $1.concat([["de
 type: IDENTIFIER;
 
 
+local_or_var: "local"|"var";
+
 statement_with_semicolon
    : 
    "return" e  {$$ = ["return",$2];}
-   | "local" IDENTIFIER "=" e {$$ = ["initialize_var","Object",$2,$4];}
-   | "local" identifiers {$$ = ["initialize_empty_vars","Object",$2];}
+   | local_or_var IDENTIFIER "=" e {$$ = ["initialize_var","Object",$2,$4];}
+   | local_or_var identifiers {$$ = ["initialize_empty_vars","Object",$2];}
    | access_array "=" e {$$ = ["set_var",$1,$3];}
    | IDENTIFIER "=" e {$$ = ["set_var",$1,$3];}
    | IDENTIFIER "++" {$$ = [$2,$1];}
