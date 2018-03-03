@@ -41,9 +41,14 @@
 "="                   return '='
 "*="                  return '*='
 "*"                   return '*'
+"/="                  return '/='
 "/"                   return '/'
 "%"                   return '%'
+"-="                  return '-='
+"--"                  return '--'
 "-"                   return '-'
+"+="                  return '+='
+"++"                  return '++'
 "+"                   return '+'
 "^"                   return '^'
 "{"                   return '{'
@@ -126,6 +131,12 @@ statement_with_semicolon
    | "local" identifiers {$$ = ["initialize_empty_vars","Object",$2];}
    | access_array "=" e {$$ = ["set_var",$1,$3];}
    | IDENTIFIER "=" e {$$ = ["set_var",$1,$3];}
+   | IDENTIFIER "++" {$$ = [$2,$1];}
+   | IDENTIFIER "--" {$$ = [$2,$1];}
+   | IDENTIFIER "+=" e {$$ = [$2,$1,$3];}
+   | IDENTIFIER "-=" e {$$ = [$2,$1,$3];}
+   | IDENTIFIER "*=" e {$$ = [$2,$1,$3];}
+   | IDENTIFIER "/=" e {$$ = [$2,$1,$3];}
    | IDENTIFIER "." dot_expr {$$ = [".",[$1].concat($3)]}
    | function_call
    ;

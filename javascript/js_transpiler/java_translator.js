@@ -1750,6 +1750,7 @@ function generate_code(input_lang,lang,indent,arr){
 		[['python','coconut','cython','lua'],[".",["math",["function_call","sqrt",["$a"]]]]],
 		[["go","wolfram"],["function_call","Sqrt",["$a"]]],
 		[["c#"],[".",["Math",["function_call","Sqrt",["$a"]]]]],
+		[['sympy'],[".",["sympy",["function_call","sqrt",["$a"]]]]],
 		[['c',"tcl",'c++','reduce','sidef','seed7','julia','perl','php','perl 6','maxima','minizinc','prolog','octave','matlab','d','haskell','swift','mathematical notation','dart','picat','reverse polish notation','rebol'],["function_call","sqrt",["$a"]]]
 	],matching_symbols)){
 		var output = generate_code(input_lang,lang,indent,matching_symbols["$a"]);
@@ -1764,7 +1765,7 @@ function generate_code(input_lang,lang,indent,arr){
 		[['c','perl','tcl','c++','php','hack','swift','minizinc','dart','d','sidef'],["function_call","pow",["$a","$b"]]],
 		[['hy','common lisp','racket','clojure'],["function_call","expt",["$a","$b"]]],
 		[['clips',"mathematical notation"],["function_call","**",["$a","$b"]]],
-		[["lua",'julia','english'],["^","$a","$b"]],
+		[["lua",'julia','wolfram','english'],["^","$a","$b"]],
 		[["ruby","haskell","ada"],["**","$a","$b"]]
 	],matching_symbols)){
 		var arr1 = generate_code(input_lang,lang,indent,matching_symbols["$a"]);
