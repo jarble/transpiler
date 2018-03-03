@@ -9,18 +9,22 @@
 "function"            return "function"
 "public"              return 'public'
 "static"              return 'static'
+"class"               return 'class'
 "func"                return "func"
 "def"                 return "def"
 "end"                 return "end"
 "then"                return "then"
 "elseif"              return 'elseif'
 "foreach"             return 'foreach'
+"interface"           return 'interface'
 "if"                  return 'if'
 "else"                return 'else'
 "return"              return 'return'
 "while"               return 'while'
+"let"                 return 'let'
 "for"                 return 'for'
 "var"                 return 'var'
+"my"                  return 'my'
 "local"               return 'local'
 "repeat"              return 'repeat'
 "until"               return 'until'
@@ -94,9 +98,12 @@ statements_: statement statements_ {$$ = [$1].concat($2);} | statement {$$ =
 statements: statements_ {$$ = ["statements",$1]};
 
 
+access_modifier: "public" | "private";
+
 statement
     :
-    statement_with_semicolon ";" {$$ = ["semicolon",$1];}
+    class_
+    | statement_with_semicolon ";" {$$ = ["semicolon",$1];}
     | statement_with_semicolon {$$ = ["semicolon",$1];}
     | "while" e "do" statements "end" {$$ = ["while",$2,$4];}
     | "do" bracket_statements "while" "(" e ")" ";" {$$ = ["do_while",$2,$5];}
@@ -125,7 +132,38 @@ case_statements: case_statements_ "default" ":" statements {$$ = $1.concat([["de
 type: IDENTIFIER;
 
 
-local_or_var: "local"|"var";
+local_or_var: "let"|"local"|"my"|"var";
+
+class_:
+    access_modifier "class" IDENTIFIER "{" class_statements "}" {$$ = [$2,"public",$3,$5];}
+	| access_modifier "namespace" IDENTIFIER "{" class_statements "}" {$$ = [$2,$1,$3,$5];}
+	| access_modifier "abstract" "class" IDENTIFIER "{" class_statements "}" {$$ = ["abstract_class",$1,$4,$6];}
+	| access_modifier "interface" IDENTIFIER "{" class_statements "}" {$$ = [$2,$1,$3,$5];}
+	| access_modifier "enum" IDENTIFIER "{" identifiers "}" {$$ = ["enum",$2,$1,$3,$5];}
+	| access_modifier "class" IDENTIFIER "extends" IDENTIFIER "{" class_statements "}" {$$ = ["class_extends",$1,$3,$5,$7];}
+	| access_modifier "class" IDENTIFIER "implements" IDENTIFIER "{" class_statements "}" {$$ = ["class_implements",$1,$3,$5,$7];}
+	| "class" IDENTIFIER "{" class_statements "}" {$$ = [$1,"public",$2,$4];}
+	| "class" IDENTIFIER class_statements "end" {$$ = [$1,"public",$2,$3];};
+
+
+class_statements:
+	class_statements_ {$$ = ["class_statements",$1]};
+class_statements_:
+    class_statement class_statements_ {$$ = [$1].concat($2);} | class_statement {$$ =
+ [$1];};
+
+class_statement:
+	"static" IDENTIFIER "(" parameters ")" "{" statements "}" {$$ = ["static_method","public","Object",$2,$4,$7];}
+	| IDENTIFIER "(" parameters ")" "{" statements "}" {$$ = ["instance_method","public","Object",$1,$3,$6];}
+	| access_modifier type IDENTIFIER "=" e ";" {$$ = ["initialize_instance_var_with_value",$1,$2,$3,$5];}
+	| access_modifier type IDENTIFIER ";" {$$ = ["initialize_instance_var",$1,$2,$3];}
+	| access_modifier "static" type IDENTIFIER "=" e ";" {$$ = ["initialize_static_instance_var",$1,$3,$4,$6];}
+	| access_modifier "static" type IDENTIFIER "(" parameters ")" ";" {$$ = ["interface_static_method",$1,$3,$4,$6];}
+	| access_modifier type IDENTIFIER "(" parameters ")" ";" {$$ = ["interface_instance_method",$1,$2,$3,$5];}
+	| access_modifier "static" type IDENTIFIER "(" parameters ")" "{" statements "}" {$$ = ["static_method",$1,$3,$4,$6,$9];}
+	| access_modifier type IDENTIFIER "(" parameters ")" "{" statements "}" {$$ = ["instance_method",$1,$2,$3,$5,$8];}
+	;
+
 
 statement_with_semicolon
    : 
