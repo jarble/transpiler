@@ -11,6 +11,8 @@
 <script src="ada_parser.js"></script>
 <script src="go_parser.js"></script>
 <script src="javascript_parser.js"></script>
+<script src="glsl_parser.js"></script>
+<script src="r_parser.js"></script>
 <script src="pseudocode_parser.js"></script>
 <script src="swift_parser.js"></script>
 <script src="octave_parser.js"></script>
@@ -85,15 +87,19 @@ function persistence(){
 
 
 	var timeout = null;
-	textInput.onkeyup = function (e) {
+	textInput.oninput = function (e) {
 		clearTimeout(timeout);
+		textInput.style.height = ""; /* Reset the height*/
+		textInput.style.height = Math.min(textInput.scrollHeight, 500) + "px";
+		textInput.style.width = ""; /* Reset the height*/
+		textInput.style.width = Math.min(textInput.scrollWidth, 500) + "px";
 		timeout = setTimeout(function () {
 			myFunction();
 		}, 500);
 	};
 
-	inputLang.onkeyup = textInput.onkeyup;
-	outputLang.onkeyup = textInput.onkeyup;
+	inputLang.oninput = textInput.oninput;
+	outputLang.oninput = textInput.oninput;
 	document.getElementById('file-input')
   .addEventListener('change', readSingleFile, false);
 	if(window.location.hash){
@@ -119,14 +125,15 @@ function myFunction() {
     var outputText;
     window.location.hash=encodeURIComponent(JSON.stringify({inputText:inputText,inputLang:inputLang,outputLang:outputLang}));
     //try{
-				outputText = "<br/><pre>" + parse_lang(inputLang,outputLang.trim(), inputText)+"</pre>";
-				document.getElementById("outputText").innerHTML = outputText;
+   
+				outputText = parse_lang(inputLang,outputLang.trim(), inputText);
+				document.getElementById("outputText").value = outputText;
 				localStorage.setItem("outputText",outputText);
 	//}
 	//catch(e){
 	//	outputText = e;
 	//}
-			document.getElementById("outputText").innerHTML = outputText;
+			document.getElementById("outputText").value = outputText;
 			localStorage.setItem("outputText",outputText);
 			localStorage.setItem("outputLang",outputLang);
 			localStorage.setItem("inputText",inputText);
@@ -147,7 +154,7 @@ function myFunction() {
 <body onload = "persistence()">
   <h1><a href = "https://jarble.github.io/transpiler/">Universal Transpiler</a></h1>
   Code to translate:<br/>
-  <textarea id="inputText" cols="40" rows="5" value="int i = 0+1;">public class Example{
+  <textarea id="inputText" wrap="off" cols="40" rows="5" value="int i = 0+1;">public class Example{
     private int age;
     public Example(){
         this.age = 1;
@@ -166,7 +173,7 @@ function myFunction() {
   <button type="button" onclick = "save_file()">Download file</button>
 
 
-<p id="outputText"></p>
+<textarea id="outputText" cols="40" rows="5"></textarea>
 
 </body>
 </html>

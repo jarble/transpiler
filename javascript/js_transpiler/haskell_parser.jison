@@ -9,6 +9,7 @@
 "if"                  return "if"
 "else"                return "else"
 "then"                return "then"
+"data"                return "data"
 "return"              return "return"
 "mod"                 return 'mod'
 ","                   return ','
@@ -72,9 +73,11 @@ expressions: statements_ EOF {return ["top_level_statements",$1]};
 statements_: statement_ statements_ {$$ = [$1].concat($2);} | statement_ {$$ =
  [$1];};
  
+data_type_or: data_type_or "|" IDENTIFIER {$$ = ["data_type_or",$1,$3];} | IDENTIFIER;
 
 statement_:
-	IDENTIFIER parameters guard_if_statement {$$ = ["function","public","Object",$1,$2,$3];}
+	"data" IDENTIFIER "=" data_type_or {$$ = ["algebraic_data_type",$2,$4];}
+	| IDENTIFIER parameters guard_if_statement {$$ = ["function","public","Object",$1,$2,$3];}
 	| IDENTIFIER "::" types IDENTIFIER parameters "=" statement {
 		var types = $3;
 		var parameter_names = $5;

@@ -12,9 +12,11 @@
 "class"               return 'class'
 "func"                return "func"
 "def"                 return "def"
+"sub"                 return 'sub'
 "end"                 return "end"
 "then"                return "then"
 "elseif"              return 'elseif'
+"unless"              return 'unless'
 "foreach"             return 'foreach'
 "interface"           return 'interface'
 "if"                  return 'if'
@@ -31,6 +33,8 @@
 "of"                  return 'of'
 "not"                 return 'not'
 ","                   return ','
+"||"                  return '||'
+"&&"                  return '&&'
 ".."                  return '..'
 "."                   return '.'
 ":"                   return ':'
@@ -42,6 +46,10 @@
 "<="                  return '<='
 "<"                   return '<'
 "~="                  return '~='
+"!"                   return '!'
+"!=="                 return '!=='
+"!="                  return '!='
+"==="                 return '==='
 "=="                  return '=='
 "="                   return '='
 "*="                  return '*='
@@ -74,9 +82,9 @@
 
 /* operator associations and precedence */
 
-%left 'or'
-%left 'and'
-%left '<' '<=' '>' '>=' '==' '~='
+%left 'or' '||'
+%left 'and' '&&'
+%left '<' '<=' '>' '>=' '==' '===' '~=' '!=' '!=='
 %left '..' '+' '-'
 %left '*' '/' '%'
 %left '^'
@@ -111,15 +119,22 @@ statement
     | "repeat" bracket_statements "until" e {$$ = ["do_while",$4,$2];}
     | "for" "_" "," IDENTIFIER "in" "pairs" "(" dot_expr ")" "do" statements "end" {$$ = ["foreach","Object",$4,$8,$11];}
     | "for" IDENTIFIER "," IDENTIFIER "in" "pairs" "(" dot_expr ")" "do" statements "end" {$$ = ["foreach_with_index","Object",$2,$4,$8,$11];}
+    | "unless" "(" e ")" "{" statements "}" {$$ = ["unless",$3,$6];}
     | "if" e "then" statements elif "end" {$$ = ["if",$2,$4,$5];}
     | "if" e "{" statements "}" {$$ = ["if",$2,$4];}
     | function_or_def IDENTIFIER "(" parameters ")" statements "end" {$$ = ["function","public","Object",$2,$4,$6];}
     | function_or_def IDENTIFIER "(" parameters ")" "{" statements "}" {$$ = ["function","public","Object",$2,$4,$7];}
+    | "sub" IDENTIFIER "{" my "(" parameters ")" "=" "@_" ";" statements "}" {$$ = ["function","public","Object",$2,$6,$11];}
     | "for" "(" statement_with_semicolon ";" e ";" statement_with_semicolon ")" bracket_statements {$$ = ["for",$3,$5,$7,$9];}
     | "foreach" "(" type IDENTIFIER "in" IDENTIFIER ")" bracket_statements {$$ = ["foreach",$3,$4,$6,$8];}
     | "public" "static" type IDENTIFIER "(" parameters ")" "{" statements "}" {$$ = ["function",$1,$3,$4,$6,$9];}
     | "switch" "(" e ")" "{" case_statements "}" {$$ = ["switch",$3,$6];}
     ;
+
+named_parameters: named_parameters "," named_parameter {$$ = $1.concat([$3]);} | named_parameter {$$ = [$1];};
+named_parameter:
+	IDENTIFIER "=" e {$$ = ["named_parameter",$1,$3]}
+	| IDENTIFIER ":" e {$$ = ["named_parameter",$1,$3]};
 
 bracket_statements: "{" statements "}" {$$= $2;} | statement_with_semicolon ";" {$$ = ["semicolon",$1];};
 
@@ -185,7 +200,11 @@ e
     :
     e 'or' e
         {$$ = ['||',$1,$3];}
+    |e '||' e
+        {$$ = ['&&',$1,$3];}
     |e 'and' e
+        {$$ = ['&&',$1,$3];}
+    |e '&&' e
         {$$ = ['&&',$1,$3];}
     |e '<=' e
         {$$ = [$2,$1,$3];}
@@ -195,7 +214,13 @@ e
         {$$ = [$2,$1,$3];}
     | e '==' e
         {$$ = [$2,$1,$3];}
+    | e '===' e
+        {$$ = [$2,$1,$3];}
     | e '~=' e
+        {$$ = ["!=",$1,$3];}
+    | e '!=' e
+        {$$ = ["!=",$1,$3];}
+    | e '!==' e
         {$$ = ["!=",$1,$3];}
     |e '>' e
         {$$ = [$2,$1,$3];}
@@ -219,7 +244,7 @@ e
     ;
 
 
-not_expr: "!" dot_expr {$$ = ["!", [".",$2]];} | dot_expr {$$ = [".", $1];};
+not_expr: "not" dot_expr {$$ = ["!", [".",$2]];} | "!" dot_expr {$$ = ["!", [".",$2]];} | dot_expr {$$ = [".", $1];};
 
 
 dot_expr: parentheses_expr "." dot_expr {$$ = [$1].concat($3);} | parentheses_expr {$$ =
@@ -229,7 +254,8 @@ access_array: parentheses_expr_ "[" e "]" {$$ = ["access_array",$1,[$3]];};
 
 function_call:
     parentheses_expr_ "(" ")" {$$ = ["function_call",$1,[]];}
-    | parentheses_expr_ "(" exprs ")" {$$ = ["function_call",$1,$3];};
+    | parentheses_expr_ "(" exprs ")" {$$ = ["function_call",$1,$3];}
+    | parentheses_expr_ "(" named_parameters ")" {$$ = ["function_call",$1,$3];};
 
 parentheses_expr_:
     NUMBER
@@ -259,7 +285,10 @@ parameters: parameter "," parameters {$$ = [$1].concat($3);} | parameter {$$ =
 exprs: e "," exprs {$$ = [$1].concat($3);} | e {$$ = [$1];};
 types: type "," types {$$ = [$1].concat($3);} | type {$$ = [$1];};
 elif:
-	"elseif" e "then" statements elif {$$ = ["elif",$2,$4,$5]} | "elseif" e "then" statements {$$ = ["elif",$2,$4]}
+	"elseif" e "then" statements elif {$$ = ["elif",$2,$4,$5]}
+	| "elseif" e "then" statements {$$ = ["elif",$2,$4]}
+	| "elseif" "(" e ")" "{" statements "}" {$$ = ["elif",$3,$6]}
+	| "else" "{" statements "}" {$$ = ["else",$3];}
 	| "else" statements {$$ = ["else",$2];};
 identifiers: IDENTIFIER "," identifiers {$$ = [$1].concat($3);} | IDENTIFIER {$$ = [$1];};
 

@@ -5,6 +5,8 @@
 (\s+|\/\/+.*\n)        /* skip whitespace and line comments */
 [0-9]+("."[0-9]+)?\b  return 'NUMBER'
 \"([^\\\"]|\\.)*\" return 'STRING_LITERAL'
+"typename"            return "typename"
+"template"            return "template"
 "class"               return "class"
 "cout"                return "cout"
 "switch"              return "switch"
@@ -99,23 +101,23 @@ class_statements_: class_statement class_statements_ {$$ = [$1].concat($2);} | c
 access_modifier: "public" | "private";
 
 class_:
-	access_modifier "namespace" IDENTIFIER "{" class_statements "}" {$$ = [$1,"public",$2,$4];}
+	"namespace" IDENTIFIER "{" class_statements "}" {$$ = [$1,"public",$2,$4];}
 	| "class" IDENTIFIER "{" class_statements "}" ";" {$$ = [$1,"public",$2,$4];}
-	| access_modifier "abstract" "class" IDENTIFIER "{" class_statements "}" {$$ = ["abstract_class",$1,$4,$6];}
-	| access_modifier "interface" IDENTIFIER "{" class_statements "}" {$$ = [$2,$1,$3,$5];}
-	| access_modifier "enum" IDENTIFIER "{" identifiers "}" {$$ = ["enum",$2,$1,$3,$5];}
-	| access_modifier "class" IDENTIFIER ":" "public" IDENTIFIER "{" class_statements "}" {$$ = ["class_extends",$1,$3,$6,$8];}
-	| access_modifier "class" IDENTIFIER "implements" IDENTIFIER "{" class_statements "}" {$$ = ["class_implements",$1,$3,$5,$7];};
+	| "template" "<" type_params ">" IDENTIFIER "{" class_statements "}" {$$ = ["generic_class","public",$5,$7,$3];}
+	| "enum" IDENTIFIER "{" identifiers "}" {$$ = ["enum",$1,"public",$2,$4];}
+	| "class" IDENTIFIER ":" "public" IDENTIFIER "{" class_statements "}" {$$ = ["class_extends","public",$2,$5,$7];}
+	| "class" IDENTIFIER "implements" IDENTIFIER "{" class_statements "}" {$$ = ["class_implements","public",$2,$4,$6];};
 
 statement
     :
-    statement_with_semicolon ";" {$$ = ["semicolon",$1];}
+    "template" "<" type_params ">" type IDENTIFIER "(" parameters ")" "{" statements "}" {$$ = ["generic_function","public",$5,$6,$8,$11,$3];}
+    | statement_with_semicolon ";" {$$ = ["semicolon",$1];}
     | class_
     | "while" "(" e ")" bracket_statements {$$ = ["while",$3,$5];}
     | "do" bracket_statements "while" "(" e ")" ";" {$$ = ["do_while",$2,$5];}
     | "switch" "(" e ")" "{" case_statements "}" {$$ = ["switch",$3,$6];}
     | "for" "(" statement_with_semicolon ";" e ";" statement_with_semicolon ")" bracket_statements {$$ = ["for",$3,$5,$7,$9];}
-    | "foreach" "(" type IDENTIFIER "in" IDENTIFIER ")" bracket_statements {$$ = ["foreach",$3,$4,$6,$8];}
+    | "for" "(" type IDENTIFIER ":" IDENTIFIER ")" bracket_statements {$$ = ["foreach",$3,$4,$6,$8];}
     | "if" "(" e ")" bracket_statements elif {$$ = ["if",$3,$5,$6];}
 	| "if" "(" e ")" bracket_statements {$$ = ["if",$3,$5];}
     | type IDENTIFIER "(" parameters ")" "{" statements "}" {$$ = ["function","public",$1,$2,$4,$7];}
@@ -227,7 +229,7 @@ parentheses_expr:
         {$$ = yytext;};
 
 type: IDENTIFIER "[" "]" {$$ = [$1,"[]"];} | IDENTIFIER "<" types ">" {$$ = [$1,$3]} | "Object" | "Dictionary" | IDENTIFIER;
-parameter: type "&" IDENTIFIER {$$ = ["ref_parameter",$1,$3]} | type "..." IDENTIFIER {$$ = ["varargs",$1,$3]} | type IDENTIFIER "=" e {$$ = ["optional_arg",$1,$2,$4];} | type IDENTIFIER {$$ = [$1,$2];};
+parameter: type "&" IDENTIFIER {$$ = ["ref_parameter",$1,$3]} | type "..." IDENTIFIER {$$ = ["varargs",$1,$3]} | type IDENTIFIER "=" e {$$ = ["optional_arg",$1,$2,$4];} | type IDENTIFIER {$$ = [$1,$2];} | "const" type IDENTIFIER {$$=["final_parameter",$2,$3]};
 parameters: parameter "," parameters {$$ = [$1].concat($3);} | parameter {$$ =
  [$1];} | {$$= []};
 access_arr: parentheses_expr "," access_arr {$$ = [$1].concat($3);} | parentheses_expr {$$ =
@@ -235,6 +237,11 @@ access_arr: parentheses_expr "," access_arr {$$ = [$1].concat($3);} | parenthese
 exprs: expr "," exprs {$$ = [$1].concat($3);} | expr {$$ = [$1];};
 expr: "&" e {$$ = ["function_call_ref",$2];} | e {$$ = [$1];};
 types: type "," types {$$ = [$1].concat($3);} | type {$$ = [$1];};
+
+type_params: type_param "," type_params {$$ = [$1].concat($3);} | type_param {$$ = [$1];};
+
+type_param: "class" type {$$ = $2;} | "typename" type {$$ = $2;};
+
 elif:
 	"else" "if" "(" e ")" bracket_statements elif {$$ = ["elif",$4,$6,$7]}
 	| "else" bracket_statements {$$ = ["else",$2];};

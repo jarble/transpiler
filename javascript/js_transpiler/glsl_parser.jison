@@ -10,6 +10,7 @@
 "do"                  return 'do'
 "else"                return "else"
 "return"              return "return"
+"inout"               return "inout"
 "void"                return "void"
 "case"                return "case"
 "printf"              return "printf"
@@ -198,7 +199,7 @@ function_call: parentheses_expr "(" ")" {$$ = ["function_call",$1,[]];}
     | parentheses_expr "(" exprs ")" {$$ = ["function_call",$1,$3];};
 
 type: "void" | IDENTIFIER;
-parameter: type "*" IDENTIFIER {$$ = ["ref_parameter",$1,$3]} | type IDENTIFIER {$$ = [$1,$2];} | type IDENTIFIER "[" "]" {$$ = [[$1,"[]"],$2];} | "const" type IDENTIFIER {$$ = ["final_parameter",$2,$3]};
+parameter: "inout" type IDENTIFIER {$$ = ["ref_parameter",$2,$3]} | type IDENTIFIER {$$ = [$1,$2];} | type IDENTIFIER "[" "]" {$$ = [[$1,"[]"],$2];} | "const" type IDENTIFIER {$$ = ["final_parameter",$2,$3]};
 parameters: parameter "," parameters {$$ = [$1].concat($3);} | parameter {$$ =
  [$1];} | {$$ = [];};
 exprs: expr "," exprs {$$ = [$1].concat($3);} | expr {$$ = [$1];};

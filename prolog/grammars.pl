@@ -4306,8 +4306,8 @@ sha1_(Data,[Str]) -->
 			("Digest::SHA1.hexdigest",ws,"(",ws,Str,ws,")")
 	]),!.
 
-type_is_string(Data,[Object]) -->
-	langs_to_output(Data,type_is_string,[
+ing(Data,[Object]) -->
+	langs_to_output(Data,ing,[
 		['python']:
 			("type",python_ws,"(",python_ws,Object,python_ws,")",(ws_,"is",ws_;ws,"==",ws),"\"str\"";
 			"\"str\"",(ws_,"is",ws_;ws,"==",ws),"type",python_ws,"(",python_ws,Object,python_ws,")"),

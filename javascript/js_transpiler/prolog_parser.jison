@@ -10,6 +10,7 @@
 "is"                  return "is"
 ","                   return ','
 ";"                   return ';'
+"--->"                return '--->'
 "==>"                 return '==>'
 "<=>"                 return '<=>'
 "@"                   return '@'
@@ -77,7 +78,7 @@ predicate:
     | IDENTIFIER ":-" e {$$ = ["predicate",$1,[],$3]};
 
 grammar_statement:
-    IDENTIFIER "-->" e {[$$ = ["grammar_statement",$1,$3]]}
+    IDENTIFIER "-->" e {$$ = ["grammar_statement",$1,$3]}
     | IDENTIFIER "(" exprs ")" "-->" e {$$ = ["grammar_macro",$1,$3,$6]};
 
 e

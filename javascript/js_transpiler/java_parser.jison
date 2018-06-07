@@ -106,7 +106,10 @@ access_modifier: "public" | "private";
 
 class_:
 	access_modifier "class" IDENTIFIER "{" class_statements "}" {$$ = [$2,$1,$3,$5];}
+	| access_modifier "class" IDENTIFIER "<" types ">" "{" class_statements "}" {$$ = ["generic_class",$1,$3,$8,$5];}
 	| access_modifier "abstract" "class" IDENTIFIER "{" class_statements "}" {$$ = ["abstract_class",$1,$4,$6];}
+	| access_modifier "interface" IDENTIFIER "<" types ">" "{" class_statements "}" {$$ = ["generic_interface",$1,$3,$8,$5];}	
+	| access_modifier "interface" IDENTIFIER "extends" IDENTIFIER "{" class_statements "}" {$$ = ["interface_extends",$1,$3,$5,$7];}
 	| access_modifier "interface" IDENTIFIER "{" class_statements "}" {$$ = [$2,$1,$3,$5];}
 	| access_modifier "enum" IDENTIFIER "{" identifiers "}" {$$ = ["enum",$1,$3,$5];}
 	| access_modifier "class" IDENTIFIER "extends" IDENTIFIER "{" class_statements "}" {$$ = ["class_extends",$1,$3,$5,$7];}
@@ -142,6 +145,8 @@ class_statement:
 	| access_modifier "static" type IDENTIFIER "(" parameters ")" ";" {$$ = ["interface_static_method",$1,$3,$4,$6];}
 	| access_modifier type IDENTIFIER "(" parameters ")" ";" {$$ = ["interface_instance_method",$1,$2,$3,$5];}
 	| access_modifier "static" type IDENTIFIER "(" parameters ")" "{" statements "}" {$$ = ["static_method",$1,$3,$4,$6,$9];}
+	| access_modifier "static" "<" types ">" type IDENTIFIER "(" parameters ")" "{" statements "}" {$$ = ["generic_static_method",$1,$6,$7,$9,$12,$4];}
+	| access_modifier "<" types ">" type IDENTIFIER "(" parameters ")" "{" statements "}" {$$ = ["generic_instance_method",$1,$5,$6,$8,$11,$3];}
 	| access_modifier type IDENTIFIER "(" parameters ")" "{" statements "}" {$$ = ["instance_method",$1,$2,$3,$5,$8];};
 
 statement_with_semicolon
@@ -155,6 +160,7 @@ statement_with_semicolon
    | type IDENTIFIER "=" e {$$ = ["initialize_var",$1,$2,$4];}
    | type identifiers {$$ = ["initialize_empty_vars",$1,$2];}
    | type access_array {$$ = ["set_array_size",$1,$2[1],$2[2]];}
+   | type IDENTIFIER "=" "new" access_array {$$ = ["set_array_size",$1,$2,$5[2]];}
    | access_array "=" e {$$ = ["set_var",$1,$3];}
    | IDENTIFIER "=" e {$$ = ["set_var",$1,$3];}
    | IDENTIFIER "++" {$$ = [$2,$1];}
@@ -225,7 +231,7 @@ not_expr: "!" dot_expr {$$ = ["!", [".",$2]];} | dot_expr {$$ = [".", $1];};
 dot_expr: initializer_list  "." dot_expr {$$ = [$1].concat($3);} | parentheses_expr  "." dot_expr {$$ = [$1].concat($3);} | parentheses_expr {$$ =
  [$1];};
 
-access_array: IDENTIFIER "[" e "]" {$$ = ["access_array",$1,[$3]];};
+access_array: access_array "[" e "]" {$$ = ["access_array",$1,[$3]];} | IDENTIFIER "[" e "]" {$$ = ["access_array",$1,[$3]];};
 
 initializer_list:
 "new" type "{" "}" {$$ = ["initializer_list",$2,[]];} | "new" type "{" exprs "}" {$$ = ["initializer_list",$2,$4];} | "new" type "(" ")" {$$ = [$1,$2,[]];} | "new" type "(" exprs ")" {$$ = [$1,$2,$4];};
@@ -244,11 +250,13 @@ parentheses_expr:
     | CHAR_LITERAL
         {$$ = yytext;};
 
-type: IDENTIFIER "[" "]" {$$ = [$1,"[]"];} | type_ "<" types ">" {$$ = [$1,$3]} | type_;
+type: IDENTIFIER square_brackets {var the_output = $1; for(var i = 0; i < $2.length; i++){the_output = [the_output,"[]"];} $$ = the_output;} | type_ "<" types ">" {$$ = [$1,$3]} | type_;
+
+square_brackets: square_brackets "[" "]" {$$ = $1.concat(["[]"]);} | "[" "]" {$$ = ["[]"]};
 
 type_: "Object" | "HashMap" | IDENTIFIER;
 
-parameter: type "..." IDENTIFIER {$$ = ["varargs",$1,$3]} | type IDENTIFIER {$$ = [$1,$2];};
+parameter: type "..." IDENTIFIER {$$ = ["varargs",$1,$3]} | type IDENTIFIER {$$ = [$1,$2];} | "final" type IDENTIFIER {$$ = ["final_parameter",$2,$3];};
 parameters: parameter "," parameters {$$ = [$1].concat($3);} | parameter {$$ =
  [$1];} | {$$= []};
 exprs: e "," exprs {$$ = [$1].concat($3);} | e {$$ = [$1];};

@@ -72,12 +72,12 @@
   }
 */
 var jison_parser = (function(){
-var o=function(k,v,o,l){for(o=o||{},l=k.length;l--;o[k[l]]=v);return o},$V0=[1,5],$V1=[1,15],$V2=[1,12],$V3=[1,14],$V4=[11,16],$V5=[11,13,16],$V6=[8,11,13,15,16,18];
+var o=function(k,v,o,l){for(o=o||{},l=k.length;l--;o[k[l]]=v);return o},$V0=[1,5],$V1=[1,16],$V2=[1,15],$V3=[1,13],$V4=[11,29],$V5=[11,13,29],$V6=[11,13,16,29],$V7=[8,11,13,16,26,28,29],$V8=[1,30],$V9=[1,31],$Va=[21,24];
 var parser = {trace: function trace() { },
 yy: {},
-symbols_: {"error":2,"expressions":3,"statements":4,"EOF":5,"statements_":6,"statement":7,"IDENTIFIER":8,":":9,"grammar_or":10,";":11,"grammar_and":12,"|":13,"e":14,"(":15,")":16,"grammar_var":17,"STRING_LITERAL":18,"$accept":0,"$end":1},
-terminals_: {2:"error",5:"EOF",8:"IDENTIFIER",9:":",11:";",13:"|",15:"(",16:")",18:"STRING_LITERAL"},
-productions_: [0,[3,2],[6,2],[6,1],[4,1],[7,4],[10,3],[10,1],[12,2],[12,1],[14,3],[14,1],[14,1],[17,1]],
+symbols_: {"error":2,"expressions":3,"statements":4,"EOF":5,"statements_":6,"statement":7,"IDENTIFIER":8,":":9,"grammar_or":10,";":11,"grammar_and_":12,"|":13,"grammar_and":14,"output_array":15,"{":16,"$$":17,"=":18,"[":19,"grammar_indices":20,"]":21,"}":22,"grammar_index_":23,",":24,"GRAMMAR_INDEX":25,"STRING_LITERAL":26,"e":27,"(":28,")":29,"grammar_var":30,"$accept":0,"$end":1},
+terminals_: {2:"error",5:"EOF",8:"IDENTIFIER",9:":",11:";",13:"|",16:"{",17:"$$",18:"=",19:"[",21:"]",22:"}",24:",",25:"GRAMMAR_INDEX",26:"STRING_LITERAL",28:"(",29:")"},
+productions_: [0,[3,2],[6,2],[6,1],[4,1],[7,4],[10,3],[10,1],[12,1],[12,2],[15,8],[20,3],[20,1],[23,1],[23,1],[14,2],[14,1],[27,3],[27,1],[27,1],[30,1]],
 performAction: function anonymous(yytext, yyleng, yylineno, yy, yystate /* action[1] */, $$ /* vstack */, _$ /* lstack */) {
 /* this == yyval */
 
@@ -97,27 +97,42 @@ case 4:
 this.$ = ["top_level_statements",$$[$0]]
 break;
 case 5:
-[this.$ = ["grammar_statement",$$[$0-3],$$[$0-1]]]
+this.$ = ["grammar_statement",$$[$0-3],$$[$0-1]]
 break;
 case 6:
 this.$= ["grammar_or",$$[$0-2],$$[$0]]
 break;
-case 8:
-this.$= ["grammar_and",$$[$0-1],$$[$0]]
+case 9:
+this.$ = ["grammar_output",$$[$0-1],$$[$0]]
 break;
 case 10:
-this.$= ["parentheses", $$[$0-1]];
+this.$ = $$[$0-3];
+break;
+case 11:
+this.$ = [$$[$0-2]].concat($$[$0]);
 break;
 case 12:
-this.$ = yytext;
+this.$ = [$$[$0]];
 break;
 case 13:
+this.$ = ["grammar_index", $$[$0].substring(1)];
+break;
+case 15:
+this.$= ["grammar_and",$$[$0-1],$$[$0]]
+break;
+case 17:
+this.$= ["parentheses", $$[$0-1]];
+break;
+case 19:
+this.$ = yytext;
+break;
+case 20:
 this.$= ["grammar_var",$$[$0]];
 break;
 }
 },
-table: [{3:1,4:2,6:3,7:4,8:$V0},{1:[3]},{5:[1,6]},{5:[2,4]},{5:[2,3],6:7,7:4,8:$V0},{9:[1,8]},{1:[2,1]},{5:[2,2]},{8:$V1,10:9,12:10,14:11,15:$V2,17:13,18:$V3},{11:[1,16]},o($V4,[2,7],{13:[1,17]}),o($V5,[2,9],{14:11,17:13,12:18,8:$V1,15:$V2,18:$V3}),{8:$V1,10:19,12:10,14:11,15:$V2,17:13,18:$V3},o($V6,[2,11]),o($V6,[2,12]),o($V6,[2,13]),o([5,8],[2,5]),{8:$V1,10:20,12:10,14:11,15:$V2,17:13,18:$V3},o($V5,[2,8]),{16:[1,21]},o($V4,[2,6]),o($V6,[2,10])],
-defaultActions: {3:[2,4],6:[2,1],7:[2,2]},
+table: [{3:1,4:2,6:3,7:4,8:$V0},{1:[3]},{5:[1,6]},{5:[2,4]},{5:[2,3],6:7,7:4,8:$V0},{9:[1,8]},{1:[2,1]},{5:[2,2]},{8:$V1,10:9,12:10,14:11,26:$V2,27:12,28:$V3,30:14},{11:[1,17]},o($V4,[2,7],{13:[1,18]}),o($V5,[2,8],{15:19,16:[1,20]}),o($V6,[2,16],{27:12,30:14,14:21,8:$V1,26:$V2,28:$V3}),{8:$V1,10:22,12:10,14:11,26:$V2,27:12,28:$V3,30:14},o($V7,[2,18]),o($V7,[2,19]),o($V7,[2,20]),o([5,8],[2,5]),{8:$V1,10:23,12:10,14:11,26:$V2,27:12,28:$V3,30:14},o($V5,[2,9]),{17:[1,24]},o($V6,[2,15]),{29:[1,25]},o($V4,[2,6]),{18:[1,26]},o($V7,[2,17]),{19:[1,27]},{20:28,23:29,25:$V8,26:$V9},{21:[1,32]},{21:[2,12],24:[1,33]},o($Va,[2,13]),o($Va,[2,14]),{11:[1,34]},{20:35,23:29,25:$V8,26:$V9},{22:[1,36]},{21:[2,11]},o($V5,[2,10])],
+defaultActions: {3:[2,4],6:[2,1],7:[2,2],35:[2,11]},
 parseError: function parseError(str, hash) {
     if (hash.recoverable) {
         this.trace(str);
@@ -596,28 +611,44 @@ case 0:/* skip whitespace */
 break;
 case 1:return 'NUMBER'
 break;
-case 2:return 18
+case 2:return 25
 break;
-case 3:return 9
+case 3:return 26
 break;
-case 4:return 11
+case 4:return 17
 break;
-case 5:return 13
+case 5:return 9
 break;
-case 6:return 15
+case 6:return 11
 break;
-case 7:return 16
+case 7:return 24
 break;
-case 8:return 8
+case 8:return 13
 break;
-case 9:return 5
+case 9:return 18
 break;
-case 10:return 'INVALID'
+case 10:return 28
+break;
+case 11:return 29
+break;
+case 12:return 16
+break;
+case 13:return 22
+break;
+case 14:return 19
+break;
+case 15:return 21
+break;
+case 16:return 8
+break;
+case 17:return 5
+break;
+case 18:return 'INVALID'
 break;
 }
 },
-rules: [/^(?:\s+)/,/^(?:[0-9]+(\.[0-9]+)?\b)/,/^(?:"([^\\\"]|\\.)*")/,/^(?::)/,/^(?:;)/,/^(?:\|)/,/^(?:\()/,/^(?:\))/,/^(?:[a-zA-Z_][a-zA-Z0-9_]*)/,/^(?:$)/,/^(?:.)/],
-conditions: {"INITIAL":{"rules":[0,1,2,3,4,5,6,7,8,9,10],"inclusive":true}}
+rules: [/^(?:\s+)/,/^(?:[0-9]+(\.[0-9]+)?\b)/,/^(?:\$[0-9]+(\.[0-9]+)?\b)/,/^(?:"([^\\\"]|\\.)*")/,/^(?:\$\$)/,/^(?::)/,/^(?:;)/,/^(?:,)/,/^(?:\|)/,/^(?:=)/,/^(?:\()/,/^(?:\))/,/^(?:\{)/,/^(?:\})/,/^(?:\[)/,/^(?:\])/,/^(?:[a-zA-Z_][a-zA-Z0-9_]*)/,/^(?:$)/,/^(?:.)/],
+conditions: {"INITIAL":{"rules":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],"inclusive":true}}
 });
 return lexer;
 })();

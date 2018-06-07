@@ -118,7 +118,9 @@ statement
     | "for" "(" statement_with_semicolon ";" e ";" statement_with_semicolon ")" bracket_statements {$$ = ["for",$3,$5,$7,$9];}
     | if_statement
     | "function" IDENTIFIER "(" parameters ")" "{" statements "}" {$$ = ["function","public","Object",$2,$4,$7];}
+    | "function" IDENTIFIER "<" types ">" "(" parameters ")" "{" statements "}" {$$ = ["generic_function","public","Object",$2,$7,$10,$3];}
     | "function" IDENTIFIER "(" parameters ")" ":" IDENTIFIER "{" statements "}" {$$ = ["function","public",$7,$2,$4,$9];}
+    | "function" IDENTIFIER "<" types ">" "(" parameters ")" ":" IDENTIFIER "{" statements "}" {$$ = ["generic_function","public",$10,$2,$7,$12,$4];}
     ;
 
 class_statement:
@@ -239,3 +241,6 @@ if_statement:
 identifiers: IDENTIFIER "," identifiers {$$ = [$1].concat($3);} | IDENTIFIER {$$ = [$1];};
 bracket_statements: "{" statements "}" {$$= $2;} | statement_with_semicolon ";" {$$ = ["semicolon",$1];};
 
+type:IDENTIFIER;
+
+types: type "," types {$$ = [$1].concat($3);} | type {$$ = [$1];};

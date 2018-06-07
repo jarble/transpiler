@@ -15,6 +15,7 @@
 "default"             return "default"
 "import"              return "import"
 "implements"          return "implements"
+"interface"           return "interface"
 "Dictionary"          return "Dictionary"
 "private"             return "private"
 "static"              return "static"
@@ -103,9 +104,11 @@ access_modifier: "public" | "private";
 
 class_:
 	access_modifier "namespace" IDENTIFIER "{" class_statements "}" {$$ = [$2,$1,$3,$5];}
+	| access_modifier "class" IDENTIFIER "<" types ">" "{" class_statements "}" {$$ = ["generic_class",$1,$3,$8,$5];}
 	| access_modifier "class" IDENTIFIER "{" class_statements "}" {$$ = [$2,$1,$3,$5];}
 	| access_modifier "abstract" "class" IDENTIFIER "{" class_statements "}" {$$ = ["abstract_class",$1,$4,$6];}
 	| access_modifier "interface" IDENTIFIER "{" class_statements "}" {$$ = [$2,$1,$3,$5];}
+	| access_modifier "interface" IDENTIFIER "<" types ">" "{" class_statements "}" {$$ = ["generic_interface",$1,$3,$8,$5];}	
 	| access_modifier "enum" IDENTIFIER "{" identifiers "}" {$$ = ["enum",$2,$1,$3,$5];}
 	| access_modifier "class" IDENTIFIER "extends" IDENTIFIER "{" class_statements "}" {$$ = ["class_extends",$1,$3,$5,$7];}
 	| access_modifier "class" IDENTIFIER "implements" IDENTIFIER "{" class_statements "}" {$$ = ["class_implements",$1,$3,$5,$7];};
@@ -140,7 +143,9 @@ class_statement:
 	| access_modifier "static" type IDENTIFIER "(" parameters ")" ";" {$$ = ["interface_static_method",$1,$3,$4,$6];}
 	| access_modifier type IDENTIFIER "(" parameters ")" ";" {$$ = ["interface_instance_method",$1,$2,$3,$5];}
 	| access_modifier "static" type IDENTIFIER "(" parameters ")" "{" statements "}" {$$ = ["static_method",$1,$3,$4,$6,$9];}
-	| access_modifier type IDENTIFIER "(" parameters ")" "{" statements "}" {$$ = ["instance_method",$1,$2,$3,$5,$8];};
+	| access_modifier "static" type IDENTIFIER "<" types ">" "(" parameters ")" "{" statements "}" {$$ = ["generic_static_method",$1,$3,$4,$9,$12,$6];}
+	| access_modifier type IDENTIFIER "(" parameters ")" "{" statements "}" {$$ = ["instance_method",$1,$2,$3,$5,$8];}
+	| access_modifier type IDENTIFIER "<" types ">" "(" parameters ")" "{" statements "}" {$$ = ["generic_instance_method",$1,$2,$3,$8,$11,$5];};
 
 statement_with_semicolon
    : 
@@ -238,7 +243,10 @@ parentheses_expr:
 
 
 
-type: IDENTIFIER "[" "]" {$$ = [$1,"[]"];} | IDENTIFIER "<" types ">" {$$ = [$1,$3]} | "Object" | "Dictionary" | IDENTIFIER;
+type: IDENTIFIER square_brackets {var the_output = $1; for(var i = 0; i < $2.length; i++){the_output = [the_output,"[]"];} $$ = the_output;} | IDENTIFIER "<" types ">" {$$ = [$1,$3]} | "Object" | "Dictionary" | IDENTIFIER;
+
+square_brackets: square_brackets "[" "]" {$$ = $1.concat(["[]"]);} | "[" "]" {$$ = ["[]"]};
+
 parameter: "ref" type IDENTIFIER {$$ = ["ref_parameter",$2,$3]} | "out" type IDENTIFIER {$$ = ["out_parameter",$2,$3]} | type "..." IDENTIFIER {$$ = ["varargs",$1,$3]} | type IDENTIFIER "=" e {$$ = ["default_parameter",$1,$2,$4];} | type IDENTIFIER {$$ = [$1,$2];};
 parameters: parameter "," parameters {$$ = [$1].concat($3);} | parameter {$$ =
  [$1];} | {$$= []};

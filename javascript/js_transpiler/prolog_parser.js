@@ -103,7 +103,7 @@ case 10:
 this.$ = ["predicate",$$[$0-2],[],$$[$0]]
 break;
 case 11:
-[this.$ = ["grammar_statement",$$[$0-2],$$[$0]]]
+this.$ = ["grammar_statement",$$[$0-2],$$[$0]]
 break;
 case 12:
 this.$ = ["grammar_macro",$$[$0-5],$$[$0-3],$$[$0]]
@@ -696,80 +696,82 @@ case 6:return 22
 break;
 case 7:return 24
 break;
-case 8:return 46
+case 8:return '--->'
 break;
-case 9:return 48
+case 9:return 46
 break;
-case 10:return 47
+case 10:return 48
 break;
-case 11:return 19
+case 11:return 47
 break;
-case 12:return 23
+case 12:return 19
 break;
-case 13:return 17
+case 13:return 23
 break;
-case 14:return 7
+case 14:return 17
 break;
-case 15:return ':'
+case 15:return 7
 break;
-case 16:return 30
+case 16:return ':'
 break;
-case 17:return 31
+case 17:return 30
 break;
-case 18:return 28
+case 18:return 31
 break;
-case 19:return 29
+case 19:return 28
 break;
-case 20:return 27
+case 20:return 29
 break;
-case 21:return 25
+case 21:return 27
 break;
-case 22:return '*='
+case 22:return 25
 break;
-case 23:return 34
+case 23:return '*='
 break;
-case 24:return '/='
+case 24:return 34
 break;
-case 25:return 35
+case 25:return '/='
 break;
-case 26:return '-='
+case 26:return 35
 break;
-case 27:return '--'
+case 27:return '-='
 break;
-case 28:return 33
+case 28:return '--'
 break;
-case 29:return '++'
+case 29:return 33
 break;
-case 30:return '+='
+case 30:return '++'
 break;
-case 31:return 32
+case 31:return '+='
 break;
-case 32:return '^'
+case 32:return 32
 break;
-case 33:return '{'
+case 33:return '^'
 break;
-case 34:return '}'
+case 34:return '{'
 break;
-case 35:return 42
+case 35:return '}'
 break;
-case 36:return 39
+case 36:return 42
 break;
-case 37:return 40
+case 37:return 39
 break;
-case 38:return 14
+case 38:return 40
 break;
-case 39:return 16
+case 39:return 14
 break;
-case 40:return 13
+case 40:return 16
 break;
-case 41:return 5
+case 41:return 13
 break;
-case 42:return 'INVALID'
+case 42:return 5
+break;
+case 43:return 'INVALID'
 break;
 }
 },
-rules: [/^(?:\s+)/,/^(?:[0-9]+(\.[0-9]+)?\b)/,/^(?:"([^\\\"]|\\.)*")/,/^(?:forall\b)/,/^(?:if\b)/,/^(?:is\b)/,/^(?:,)/,/^(?:;)/,/^(?:==>)/,/^(?:<=>)/,/^(?:@)/,/^(?:-->)/,/^(?:->)/,/^(?::-)/,/^(?:\.)/,/^(?::)/,/^(?:>=)/,/^(?:>)/,/^(?:=<)/,/^(?:<)/,/^(?:==)/,/^(?:=)/,/^(?:\*=)/,/^(?:\*)/,/^(?:\/=)/,/^(?:\/)/,/^(?:-=)/,/^(?:--)/,/^(?:-)/,/^(?:\+\+)/,/^(?:\+=)/,/^(?:\+)/,/^(?:\^)/,/^(?:\{)/,/^(?:\})/,/^(?:\|)/,/^(?:\[)/,/^(?:\])/,/^(?:\()/,/^(?:\))/,/^(?:[a-zA-Z_][a-zA-Z0-9_]*)/,/^(?:$)/,/^(?:.)/],
-conditions: {"INITIAL":{"rules":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42],"inclusive":true}}
+rules: [/^(?:\s+)/,/^(?:[0-9]+(\.[0-9]+)?\b)/,/^(?:"([^\\\"]|\\.)*")/,/^(?:forall\b)/,/^(?:if\b)/,/^(?:is\b)/,/^(?:,)/,/^(?:;)/,/^(?:--->)/,/^(?:==>)/,/^(?:<=>)/,/^(?:@)/,/^(?:-->)/,/^(?:->)/,/^(?::-)/,/^(?:\.)/,/^(?::)/,/^(?:>=)/,/^(?:>)/,/^(?:=<)/,/^(?:<)/,/^(?:==)/,/^(?:=)/,/^(?:\*=)/,/^(?:\*)/,/^(?:\/=)/,/^(?:\/)/,/^(?:-=)/,/^(?:--)/,/^(?:-)/,/^(?:\+\+)/,/^(?:\+=)/,/^(?:\+)/,/^(?:\^)/,/^(?:\{)/,/^(?:\})/,/^(?:\|)/,/^(?:\[)/,/^(?:\])/,/^(?:\()/,/^(?:\))/,/^(?:[a-zA-Z_][a-zA-Z0-9_]*)/,/^(?:$)/,/^(?:.)/],
+conditions: {"INITIAL":{"rules":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43],"inclusive":true}}
 });
 return lexer;
 })();

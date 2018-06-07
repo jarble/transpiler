@@ -6,42 +6,38 @@
 [0-9]+("."[0-9]+)?\b  return 'NUMBER'
 \"([^\\\"]|\\.)*\" return 'STRING_LITERAL'
 "$"                   return "$"
-"def"                 return "def"
+"function"            return "function"
 "end"                 return "end"
-"Array"               return 'Array'
+"then"                return "then"
+"elseif"              return 'elseif'
 "if"                  return 'if'
 "else"                return 'else'
 "return"              return 'return'
 "while"               return 'while'
-"match"               return 'match'
 "for"                 return 'for'
-"var"                 return 'var'
+"local"               return 'local'
+"repeat"              return 'repeat'
+"until"               return 'until'
 "of"                  return 'of'
 "not"                 return 'not'
 ","                   return ','
 ".."                  return '..'
 "."                   return '.'
 ":"                   return ':'
-";"                   return ';'
-"and"                 return 'and'
-"or"                  return 'or'
+"&&"                  return '&&'
+"||"                  return '||'
 ">="                  return '>='
 ">"                   return '>'
-"<-"                  return '<-'
 "<="                  return '<='
+"<-"                  return '<-'
 "<"                   return '<'
-"!="                  return '!='
-"=>"                  return '=>'
+"~="                  return '~='
 "=="                  return '=='
-"="                   return '='
 "*="                  return '*='
 "*"                   return '*'
-"/="                  return '/='
 "/"                   return '/'
 "%"                   return '%'
-"-="                  return '-='
 "-"                   return '-'
-"+="                  return '+='
 "+"                   return '+'
 "^"                   return '^'
 "{"                   return '{'
@@ -62,9 +58,9 @@
 
 /* operator associations and precedence */
 
-%left 'or'
-%left 'and'
-%left '<' '<=' '>' '>=' '==' '!='
+%left '||'
+%left '&&'
+%left '<' '<=' '>' '>=' '==' '~='
 %left '..' '+' '-'
 %left '*' '/' '%'
 %left '^'
@@ -89,39 +85,25 @@ statements: statements_ {$$ = ["statements",$1]};
 statement
     :
     statement_with_semicolon {$$ = ["semicolon",$1];}
-    | statement_with_semicolon ";" {$$ = ["semicolon",$1];}
-	// | parentheses_expr "match" "{" case_statements "}" {$$ = ["switch",$1,$4];}
     | "while" "(" e ")" bracket_statements {$$ = ["while",$3,$5];}
-    | "for" "(" dot_expr "<-" dot_expr ")" "{" statements "}" {$$ = ["foreach","Object",$3,$5,$8];}
+    | "for" "(" IDENTIFIER "in" dot_expr ")" bracket_statements {$$ = ["foreach","Object",$3,$5,$7];}
     | "if" "(" e ")" bracket_statements elif {$$ = ["if",$3,$5,$6];}
 	| "if" "(" e ")" bracket_statements {$$ = ["if",$3,$5];}
-    | "def" IDENTIFIER "(" parameters ")" ":" IDENTIFIER "=" "{" statements "}" {$$ = ["function","public",$7,$2,$4,$10];}
     ;
-
-case_statement: parentheses_expr "=>" statement {$$ = ["case",$1,["statements",[$3]]]};
-case_statements_: case_statement case_statements_ {$$ = [$1].concat($2);} | case_statement {$$ =
- [$1];};
-case_statements: case_statements_ "_" "=>" statement {$$ = $1.concat([["default",$4]])} | case_statements_;
 
 statement_with_semicolon
    : 
-   "return" e  {$$ = ["return",$2];}
-   | "var" IDENTIFIER  ":" type "=" e  {$$ = ["initialize_var",$4,$2,$6];}
-   | "var" IDENTIFIER "=" e  {$$ = ["initialize_var","Object",$2,$4];}
-   | access_array "=" e {$$ = ["set_var",$1,$3];}
-   | IDENTIFIER "=" e {$$ = ["set_var",$1,$3];}
-   | IDENTIFIER "+=" e {$$ = [$2,$1,$3];}
-   | IDENTIFIER "-=" e {$$ = [$2,$1,$3];}
-   | IDENTIFIER "*=" e {$$ = [$2,$1,$3];}
-   | IDENTIFIER "/=" e {$$ = [$2,$1,$3];}
+   "return" "(" e ")"  {$$ = ["return",$3];}
+   | access_array "<-" e {$$ = ["set_var",$1,$3];}
+   | IDENTIFIER "<-" e {$$ = ["set_var",$1,$3];}
    | IDENTIFIER "." dot_expr {$$ = [".",[$1].concat($3)]}
    | function_call
    ;
 e
     :
-    e 'or' e
+    e '||' e
         {$$ = ['||',$1,$3];}
-    |e 'and' e
+    |e '&&' e
         {$$ = ['&&',$1,$3];}
     |e '<=' e
         {$$ = [$2,$1,$3];}
@@ -131,7 +113,7 @@ e
         {$$ = [$2,$1,$3];}
     | e '==' e
         {$$ = [$2,$1,$3];}
-    | e '!=' e
+    | e '~=' e
         {$$ = ["!=",$1,$3];}
     |e '>' e
         {$$ = [$2,$1,$3];}
@@ -168,7 +150,7 @@ function_call:
     | parentheses_expr_ "(" exprs ")" {$$ = ["function_call",$1,$3];};
 
 parentheses_expr_:
-    "Array" "(" ")" {$$ = ["initializer_list","Object",[]];} | "Array" "(" exprs ")" {$$ = ["initializer_list","Object",$3];}
+    "{" "}" {$$ = ["initializer_list","Object",[]];} | "{" exprs "}" {$$ = ["initializer_list","Object",$2];}
     | "{" key_values "}" {$$ = ["associative_array","Object","Object",$2];}
     | NUMBER
         {$$ = yytext;}
@@ -178,7 +160,7 @@ parentheses_expr_:
         {$$ = yytext;};
 
 parentheses_expr:
-    "function" "(" parameters ")" statements "end" {$$ = ["anonymous_function","Object",$3,$5];}
+    "function" "(" parameters ")" "{" statements "}" {$$ = ["anonymous_function","Object",$3,$6];}
     | '(' e ')' {$$ = ["parentheses",$2];}
     | access_array
     | function_call
@@ -186,19 +168,19 @@ parentheses_expr:
 
 
 
-type: IDENTIFIER | "Array" "[" IDENTIFIER "]" {$$ = [$3,"[]"]} | "(" types ")" "->" type {$$ = ["function_type",$2,$5]};
-parameter: IDENTIFIER ":" IDENTIFIER {$$ = [$3,$1];};
+type: IDENTIFIER;
+parameter: IDENTIFIER {$$ = ["Object", $1];};
 parameters: parameter "," parameters {$$ = [$1].concat($3);} | parameter {$$ =
  [$1];} | {$$ = [];};
 
 exprs: e "," exprs {$$ = [$1].concat($3);} | e {$$ = [$1];};
 types: type "," types {$$ = [$1].concat($3);} | type {$$ = [$1];};
 elif:
-	"else" "if" "(" e ")" "{" statements "}" elif {$$ = ["elif",$4,$7,$9]}
-	| "else" "{" statements "}" {$$ = ["else",$3];};
-
+	"else" "if" "(" e ")" bracket_statements elif {$$ = ["elif",$4,$6,$7]}
+	| "else" bracket_statements {$$ = ["else",$2];};
 identifiers: IDENTIFIER "," identifiers {$$ = [$1].concat($3);} | IDENTIFIER {$$ = [$1];};
 
 key_values: key_values "," key_value {$$ = $1.concat([$3]);} | key_value {$$ = [$1];};
 key_value: STRING_LITERAL "=" e {$$ = [$1,$3]};
+
 bracket_statements: "{" statements "}" {$$= $2;};

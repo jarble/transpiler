@@ -31,17 +31,23 @@
 "/"                   return '/'
 "%"                   return '%'
 
+"as"                  return 'as'
 "large"               return 'large'
+"largest"             return 'largest'
 "small"               return 'small'
+"smallest"            return 'smallest'
 "big"                 return 'big'
+"old"                 return 'old'
+"using"               return 'using'
 "prime"               return 'prime'
+"square"              return 'square'
 "composite"           return 'composite'
 "male"                return 'male'
 "female"              return 'female'
 "carnivorous"         return 'carnivorous'
 "herbivorous"         return 'herbivorous'
 "same"                return 'same'
-
+"different"           return 'different'
 "function"            return 'function'
 "between"             return 'between'
 "into"                return 'into'
@@ -51,16 +57,23 @@
 "from"                return 'from'
 "onto"                return 'onto'
 "who"                 return 'who'
+"which"               return 'which'
 "was"                 return 'was'
 "up"                  return 'up'
 "that"                return 'that'
 "down"                return 'down'
 "implies"             return 'implies'
+"unless"              return 'unless'
+"until"               return 'until'
+"whenever"            return 'whenever'
 "while"               return 'while'
 "there"               return 'there'
 "those"               return 'those'
 "plus"                return 'plus'
+"for"                 return 'for'
 "times"               return 'times'
+"even"                return 'even'
+"odd"                 return 'odd'
 "minus"               return 'minus'
 "than"                return 'than'
 "then"                return 'then'
@@ -72,7 +85,22 @@
 "why"                 return 'why'
 "means"               return 'means'
 "return"              return 'return'
+"add"                 return 'add'
+"put"                 return 'put'
+"let"                 return 'let'
+"set"                 return 'set'
+"sort"                return 'sort'
+"append"              return 'append'
+"prepend"             return 'prepend'
+"swap"                return 'swap'
+"print"               return 'print'
+"shuffle"             return "shuffle"
+"multiply"            return 'multiply'
+"divide"              return 'divide'
+"subtract"            return "subtract"
+"replace"             return "replace"
 "every"               return 'every'
+"percent"             return 'percent'
 "contains"            return 'contains'
 "equals"              return 'equals'
 "each"                return 'each'
@@ -84,7 +112,9 @@
 "and"                 return 'and'
 "but"                 return 'but'
 "although"            return 'although'
+"absolute"            return 'absolute'
 "by"                  return 'by'
+"yet"                 return 'yet'
 "the"                 return 'the'
 "this"                return 'this'
 "will"                return 'will'
@@ -109,6 +139,8 @@
 "below"               return 'below'
 "above"               return 'above'
 "does"                return 'does'
+"else"                return 'else'
+"otherwise"           return 'otherwise'
 "did"                 return 'did'
 "do"                  return 'do'
 "shall"               return 'shall'
@@ -147,41 +179,58 @@ statements_: statement statements_ {$$ = [$1].concat($2);} | statement {$$ =
  
 statements: statements_ {$$ = ["statements",$1]};
 
-statements_conjunction: statements_conjunction and_synonym if_then_expr {$$=["&&",$1,$3];} | if_then_expr;
 
-interrogative_pronoun: "who" | "what" | "where" | "when" | "why";
+interrogative_pronoun: "who" | "what" | "where" | "when" | "why" | "that" | "which";
+
+dot_or_semicolon: "."|";";
 
 statement:
 	"what" to_be or_expr '?' {$$ = [$1,$2,$3];}
-    | means_expr "." {$$ = $1;}
-    | statement_with_semicolon "." {$$ = ["semicolon",$1];};
+    | means_expr dot_or_semicolon {$$ = $1;}
+    | "if" parentheses_expr_ then_or_comma statement_with_semicolon dot_or_semicolon {$$ = [$1,$2,["statements",[["semicolon",$4]]]];}
+    | "unless" or_expr "," statement_with_semicolon dot_or_semicolon {$$ = [$1,$2,["statements",[["semicolon",$4]]]];}
+    | "if" parentheses_expr_ then_or_comma parentheses_expr dot_or_semicolon {$$ = ["if",$2,["statements",[["semicolon",$4]]]];}
+    | "if" parentheses_expr_ then_or_comma bracket_statements elif {$$ = ["if",$2,$4,$5];}
+    | "if" parentheses_expr_ bracket_statements elif {$$ = ["if",$2,$3,$4];}
+    | "if" parentheses_expr_ bracket_statements {$$ = ["if",$2,$3];}
+    | statement_with_semicolon dot_or_semicolon {$$ = ["semicolon",$1];}
+    | "function" grammar_var "(" parameters ")" "{" statements "}" {$$ = ["function","public","Object",$2,$4,$7]}
+	| if_then_expr dot_or_semicolon {$$ = $1;};
+
+then_or_comma: "then"|";";
+if_or_unless:"if";
+
+bracket_statements:
+	 "{" statements "}" {$$ = $2;} | while_loop {$$ = ["statements",[$1]];} | parentheses_expr dot_or_semicolon {$$ = ["statements",[["semicolon",$1]]];} | statement_with_semicolon dot_or_semicolon {$$ = ["statements",[["semicolon",$1]]];};
 
 means_expr:
-	statement_with_semicolon "means" statement_with_semicolon {$$ = [$1,$2,$3]}
-	| statement_with_semicolon "means" if_then_expr {$$ = [$1,$2,$3]}
-	| if_then_expr "means" if_then_expr {$$ = [$1,$2,$3]}
-	| if_then_expr "means" statement_with_semicolon {$$ = [$1,$2,["semicolon",$3]]}
+	statement_with_semicolon "means" the_add_expr {$$ = [$1,$2,$3]}
+	| statement_with_semicolon "means" statement_with_semicolon {$$ = [$1,$2,$3]}
 	| preposition "means" preposition {$$ = [$1,$2,$3]}
-	| prepositional_phrase "means" prepositional_phrase {$$ = [$1,$2,$3]}
-	| if_then_expr
+	| and_synonym "means" and_synonym {$$ = [$1,$2,$3]}
+	| or_expr "means" or_expr {$$ = [$1,$2,$3]}
 	;
 
+conditional_conjunction: "unless" | "when" | "whenever" | "until" | "if";
 
 if_then_expr:
 	or_expr {$$ = $1;}
-	| "function" grammar_var "(" parameters ")" "{" statements "}" {$$ = ["function","public","Object",$2,$4,$7]}
-	| "while" "(" or_expr ")" "{" statements "}" {$$ = ["while",$3,$6]} 
-	| or_expr "if" or_expr {$$ = [$1,$2,$3];}
-	| "if" or_expr "then" or_expr {$$ = [$1,$2,$3,$4]}
-	| or_expr "implies" or_expr {$$ = [$1,$2,$3];};
+	| while_loop
+	| "(" "if" or_expr then_or_comma or_expr ")" {$$ = [$2,$3,$4,$5]}
+	| statement_with_semicolon conditional_conjunction or_expr {$$ = [$2,$3,["statements",[["semicolon",$1]]]];}
+	| parentheses_expr_ conditional_conjunction or_expr {$$ = [$2,$3,["statements",[["semicolon",$1]]]];}
+	| or_expr "implies" or_expr {$$ = [$2,$1,$3];};
 
-or_expr: and_expr "or" or_expr {$$ = [$1,$2,$3];} | and_expr "||" or_expr {$$ = [$2,$1,$3];} | and_expr;
+or_operator: "or" | "where";
+
+while_loop: "while" "(" or_expr ")" "{" statements "}" {$$ = ["while",$3,$6]} ;
+or_expr: and_expr or_operator or_expr {$$ = [$1,$2,$3];} | and_expr "||" or_expr {$$ = [$2,$1,$3];} | and_expr;
 and_expr: bool_expr and_synonym and_expr {$$ = [$1,$2,$3];} | bool_expr "&&" and_expr {$$ = [$2,$1,$3];} | bool_expr;
 
 increment_operator: "+="|"-="|"*="|"/=";
 
 statement_with_semicolon:
-	"return" or_expr {$$ = [$1,$2];}
+	verb or_expr {$$ = [$1,$2];}
 	| grammar_var "=" or_expr {$$ = ["set_var",$1,$3];}
 	| grammar_var increment_operator or_expr {$$ = [$2,$1,$3];}
 	| IDENTIFIER article and_expr {$$ = [$1,$2,$3];};
@@ -192,16 +241,16 @@ parameters: parameter "," parameters {$$ = [$1].concat($3);} | parameter {$$ =
 
 to_be: "is"|"are"|"does"|"did"|"do"|"should"|"must"|"shall"|"will"|"can"|"were"|"had"|"has"|"have"|"am";
 to_be_: "is"|"are"|"was"|"were";
+verb: "sort" | "shuffle" | "add" | "subtract" | "return" | "replace" | "divide" | "multiply" | "swap" | "print" | "append" | "prepend" | "put" | "let" | "set";
+
+adjective_or_identifier: adjective|IDENTIFIER;
 
 bool_expr:
 the_add_expr verb_phrase {$$= [$1,$2];}
 | "there" to_be_ the_add_expr {$$ = [$1,$2,$3];}
-| "there" to_be_ the_add_expr prepositional_phrase {$$ = [$1,$2,$3,$4];}
-| IDENTIFIER IDENTIFIER the_add_expr prepositional_phrase {$$ = [$1,$2,$3,$4];}
-| IDENTIFIER parentheses_expr prepositional_phrase {$$ = [$1,$2,$3];}
+| the_add_expr "is" "as" adjective_or_identifier "as" the_add_expr {$$ = [$1,$2,$3,$4,$5,$6];}
 | IDENTIFIER IDENTIFIER the_add_expr {$$ = [$1,$2,$3];}
 | article IDENTIFIER IDENTIFIER article add_expr {$$ = [$1,$2,$3,$4,$5];}
-| article IDENTIFIER IDENTIFIER prepositional_phrase {$$ = [$1,$2,$3,$4];}
 | the_add_expr ">" the_add_expr {$$= [$2,$1,$3];} 
 | the_add_expr "<" the_add_expr {$$=[$2,$1,$3];} 
 | the_add_expr "<=" the_add_expr {$$=[$2,$1,$3];} 
@@ -211,28 +260,18 @@ the_add_expr verb_phrase {$$= [$1,$2];}
 | the_add_expr "contains" the_add_expr {$$=[$2,$1,$3];}
 | the_add_expr "!=" the_add_expr {$$=[$2,$1,$3];} | the_add_expr;
 
-preposition: "between" | "than" | "into" | "with" | "under" | "over" | "below" | "above" | "beneath" | "on" | "in" | "onto" | "to" | "by" | "inside" | "from" | "like" | "up" | "down" | "off";
+preposition: "plus" | "minus" | "between" | "of" | "than" | "into" | "with" | "under" | "over" | "below" | "above" | "beneath" | "on" | "in" | "onto" | "to" | "by" | "inside" | "from" | "like" | "up" | "down" | "off" | "as" | "for" | "using";
 
-and_synonym: "and"|"although"|"but";
-
-verb_phrases:
-	verb_phrases and_synonym verb_phrase | verb_phrase;
+and_synonym: "and"|"although"|"but"|"yet";
 
 verb_phrase:
 	"cannot" the_add_expr {$$ = [$1,$2];}
 	| to_be IDENTIFIER the_add_expr {$$ = [$1,$2,$3];}
 	| to_be "not" IDENTIFIER the_add_expr {$$ = [$1,$2,$3,$4];}
-	| to_be "not" the_add_expr prepositional_phrase {$$ = [$1,$2,$3];} 
 	| to_be "not" the_add_expr {$$ = [$1,$2,$3];} 
 	| to_be "no" IDENTIFIER "than" the_add_expr {$$ = [$1,$2,$3];} 
 	| "cannot" IDENTIFIER the_add_expr {$$ = [$1,$2,$3];} 
-	| to_be prepositional_phrase {$$ = [$1,$2];}
-	| to_be grammar_var prepositional_phrase {$$ = [$1,$2,$3];}
-	| to_be the_add_expr {$$ = [$1,$2]}
-	| to_be IDENTIFIER the_add_expr prepositional_phrase {$$ = [$1,$2,$3,$4,$5];};
-
-prepositional_phrase:
-	preposition the_add_expr {$$ = [$1,$2];} | preposition the_add_expr prepositional_phrase {$$ = [$1,$2,$3];};
+	| to_be the_add_expr {$$ = [$1,$2]};
 
 comparison_operator: (">" | "<" | ">=" | ">=") {$$ = $1};
 
@@ -240,19 +279,21 @@ the_add_expr: article add_expr {$$ = [$1,$2];} | add_expr;
 the_mul_expr: article mul_expr {$$ = [$1,$2];} | mul_expr;
 
 article: "each" | "every" | "an" | "a" | "this" | "his" | "her" | "its" | "their"|"the"|"those";
-interrogative_pronoun: ("who"|"that");
 
 mul_operator: "*" | "/" | "%";
 
 pow_expr: parentheses_expr "^" parentheses_expr {$$= [$2,$1,$3]} | parentheses_expr;
 mul_expr: pow_expr "times" the_mul_expr {$$= [$1,$2,$3]} | pow_expr mul_operator the_mul_expr {$$= [$2,$1,$3]} | pow_expr;
 add_expr:
-	pow_expr "who" to_be add_expr {$$= [$1,$2,$3,$4];}
-	| mul_expr "minus" the_add_expr {$$= [$1,$2,$3];}
-	| mul_expr "plus" the_add_expr {$$= [$1,$2,$3]}
+	mul_expr "who" to_be add_expr {$$= [$1,$2,$3,$4];}
+	| mul_expr "that" to_be add_expr {$$= [$1,$2,$3,$4];}
+	| mul_expr "which" to_be add_expr {$$= [$1,$2,$3,$4];}
 	| mul_expr "+" the_add_expr {$$= [$2,$1,$3]}
 	| mul_expr "-" the_add_expr {$$= [$2,$1,$3]}
-	| mul_expr "of" the_add_expr {$$=[$1,$2,$3]}
+	| mul_expr "percent" "of" the_add_expr {$$=[$1,$2,$3,$4]}
+	| mul_expr preposition the_add_expr {$$=[$1,$2,$3]}
+	| mul_expr "that" "is" preposition the_add_expr {$$=[$1,$2,$3,$4,$5]}
+	| mul_expr "that" "are" preposition the_add_expr {$$=[$1,$2,$3,$4,$5]}
 	| mul_expr;
 
 parentheses_expr:
@@ -260,27 +301,24 @@ parentheses_expr:
 	| (IDENTIFIER) "'s" IDENTIFIER {$$=[$3,"of",$1];}
 	| array
 	| function_call
-	| "(" inside_parentheses_expr ")" {$$ = $2;}
-	| "(" if_then_expr ")" {$$ = ["parentheses",$2];}
 	| parentheses_expr_;
 
 parentheses_expr_:
-	grammar_var | NUMBER | STRING_LITERAL {$$ = yytext;};
+	"(" if_then_expr ")" {$$ = ["parentheses",$2];} | grammar_var | NUMBER | STRING_LITERAL {$$ = yytext;};
 
-adjective: "large" | "small" | "big" | "little" | "prime" | "composite" | "male" | "female" | "carnivorous" | "herbivorous" | "same";
+adjective: "large" | "largest" | "smallest" | "even" | "odd" | "absolute" | "small" | "big" | "little" | "prime" | "composite" | "male" | "female" | "carnivorous" | "herbivorous" | "same" | "different" | "square" | "old";
 adjective_expr:
-	adjective IDENTIFIER {$$ = [$1,$2];}
-	| adjective adjective_expr {$$ = [$1,$2];}
+	adjective parentheses_expr {$$ = [$1,$2];}
 	| adjective
 	;
 
-inside_parentheses_expr:
-	the_add_expr prepositional_phrase {$$ = [$1,$2];}
-	;
-
-grammar_var: (article | IDENTIFIER) {$$=$1;};
+grammar_var: (article | verb | IDENTIFIER) {$$=$1;};
 
 array: "[" or_exprs "]" {$$ = ["initializer_list","Object",$2];};
 or_exprs: or_exprs "," or_expr {$$ = $1.concat([$3]);} | or_expr {$$ = [$1];};
 
 function_call: grammar_var "{" or_exprs "}" {$$ = ["function_call",$1,$3]};
+
+elif: else_or_otherwise "if" parentheses_expr_ bracket_statements elif {$$ = ["elif",$3,$4,$5]} | else_or_otherwise "if" parentheses_expr_ bracket_statements {$$ = ["elif",$3,$4]} | else_or_otherwise bracket_statements {$$ = ["else",$2];};
+
+else_or_otherwise: "else"|"otherwise";

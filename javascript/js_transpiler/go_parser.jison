@@ -8,6 +8,7 @@
 "$"                   return "$"
 ":="                  return ':='
 "func"                return "func"
+"type"                return 'type'
 "range"               return "range"
 "struct"              return "struct"
 "public"              return "public"
@@ -92,6 +93,7 @@ access_modifier: "public" | "private";
 statement
     :
     statement_with_semicolon {$$ = ["semicolon",$1];}
+    | "type" IDENTIFIER "struct" "{" statements "}" {$$ = ["struct",$1,$5]}
     | "for" e "{" statements "}" {$$ = ["while",$2,$4];}
     | "for" "_" "," IDENTIFIER ":=" "range" dot_expr "{" statements "}" {$$ = ["foreach","Object",$4,$7,$9];}
     | "for" IDENTIFIER "," IDENTIFIER ":=" "range" dot_expr "{" statements "}" {$$ = ["foreach_with_index","Object",$2,$4,$7,$9];}
@@ -159,8 +161,7 @@ function_call: IDENTIFIER "(" ")" {$$ = ["function_call",$1,[]];}
     | IDENTIFIER "(" exprs ")" {$$ = ["function_call",$1,$3];};
 
 parentheses_expr:
-    "type" IDENTIFIER "struct" "{" statements "}" {$$ = ["struct",$1,$5]}
-    | "function" "(" parameters ")" "{" statements "}" {$$ = ["anonymous_function","Object",$3,$6]}
+    "function" "(" parameters ")" "{" statements "}" {$$ = ["anonymous_function","Object",$3,$6]}
     | access_array
     | function_call
     | "[" "]" {$$ = ["initializer_list","Object",[]];} | "[" exprs "]" {$$ = ["initializer_list","Object",$2];}

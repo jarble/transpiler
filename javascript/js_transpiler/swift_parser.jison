@@ -7,6 +7,7 @@
 \"([^\\\"]|\\.)*\" return 'STRING_LITERAL'
 "$"                   return "$"
 "func"                return "func"
+"inout"               return "inout"
 "end"                 return "end"
 "then"                return "then"
 "var"                 return 'var'
@@ -19,6 +20,10 @@
 "until"               return 'until'
 "of"                  return 'of'
 "not"                 return 'not'
+"+="                  return '+='
+"*="                  return '*='
+"-="                  return '-='
+"/="                  return '/='
 ","                   return ','
 ".."                  return '..'
 "."                   return '.'
@@ -96,6 +101,10 @@ statement_with_semicolon
    | "var" IDENTIFIER "=" e {$$ = ["initialize_var","Object",$2,$4];}
    | "var" IDENTIFIER  ":" type "=" e  {$$ = ["initialize_var",$4,$2,$6];}
    | "var" identifiers {$$ = ["initialize_empty_vars","Object",$2];}
+   | IDENTIFIER "+=" e {$$ = [$2,$1,$3];}
+   | IDENTIFIER "-=" e {$$ = [$2,$1,$3];}
+   | IDENTIFIER "*=" e {$$ = [$2,$1,$3];}
+   | IDENTIFIER "/=" e {$$ = [$2,$1,$3];}
    | access_array "=" e {$$ = ["set_var",$1,$3];}
    | IDENTIFIER "=" e {$$ = ["set_var",$1,$3];}
    | IDENTIFIER "." dot_expr {$$ = [".",[$1].concat($3)]}
@@ -172,7 +181,7 @@ parentheses_expr:
 
 
 type: "[" type "]" {$$ = [$2,"[]"];} | IDENTIFIER "<" type ">" {$$ = [$1,$3]} | IDENTIFIER;
-parameter: IDENTIFIER ":" type {$$ = [$3, $1];};
+parameter: IDENTIFIER ":" "inout" type {$$ = ["ref_parameter",$4,$1];} | IDENTIFIER ":" type {$$ = [$3, $1];};
 parameters: parameter "," parameters {$$ = [$1].concat($3);} | parameter {$$ =
  [$1];} | {$$ = [];};
 
