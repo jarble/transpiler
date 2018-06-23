@@ -151,6 +151,8 @@
 "have"                return 'have'
 "can"                 return 'can'
 "am"                  return 'am'
+"your"                return 'your'
+"my"                  return 'my'
 "("                   return '('
 ")"                   return ')'
 "["                   return '['
@@ -245,8 +247,12 @@ verb: "sort" | "shuffle" | "add" | "subtract" | "return" | "replace" | "divide" 
 
 adjective_or_identifier: adjective|IDENTIFIER;
 
+article_or_number: article | NUMBER;
+
 bool_expr:
-the_add_expr verb_phrase {$$= [$1,$2];}
+NUMBER IDENTIFIER verb_phrase {$$ = [$1,$2,$3];}
+| IDENTIFIER IDENTIFIER preposition the_add_expr {$$= [$1,$2,$3,$4];} //"Bob walks up the stairs"
+| the_add_expr verb_phrase {$$= [$1,$2];}
 | "there" to_be_ the_add_expr {$$ = [$1,$2,$3];}
 | the_add_expr "is" "as" adjective_or_identifier "as" the_add_expr {$$ = [$1,$2,$3,$4,$5,$6];}
 | IDENTIFIER IDENTIFIER the_add_expr {$$ = [$1,$2,$3];}
@@ -260,7 +266,9 @@ the_add_expr verb_phrase {$$= [$1,$2];}
 | the_add_expr "contains" the_add_expr {$$=[$2,$1,$3];}
 | the_add_expr "!=" the_add_expr {$$=[$2,$1,$3];} | the_add_expr;
 
-preposition: "plus" | "minus" | "between" | "of" | "than" | "into" | "with" | "under" | "over" | "below" | "above" | "beneath" | "on" | "in" | "onto" | "to" | "by" | "inside" | "from" | "like" | "up" | "down" | "off" | "as" | "for" | "using";
+preposition: "than" preposition_ {$$ = [$1,$2];} | preposition_;
+
+preposition_: "plus" | "minus" | "between" | "of" | "than" | "into" | "with" | "under" | "over" | "below" | "above" | "beneath" | "on" | "in" | "onto" | "to" | "by" | "inside" | "from" | "like" | "up" | "down" | "off" | "as" | "for" | "using" | "toward";
 
 and_synonym: "and"|"although"|"but"|"yet";
 
@@ -269,7 +277,7 @@ verb_phrase:
 	| to_be IDENTIFIER the_add_expr {$$ = [$1,$2,$3];}
 	| to_be "not" IDENTIFIER the_add_expr {$$ = [$1,$2,$3,$4];}
 	| to_be "not" the_add_expr {$$ = [$1,$2,$3];} 
-	| to_be "no" IDENTIFIER "than" the_add_expr {$$ = [$1,$2,$3];} 
+	| to_be "no" IDENTIFIER preposition the_add_expr {$$ = [$1,$2,$3];} 
 	| "cannot" IDENTIFIER the_add_expr {$$ = [$1,$2,$3];} 
 	| to_be the_add_expr {$$ = [$1,$2]};
 
@@ -278,12 +286,12 @@ comparison_operator: (">" | "<" | ">=" | ">=") {$$ = $1};
 the_add_expr: article add_expr {$$ = [$1,$2];} | add_expr;
 the_mul_expr: article mul_expr {$$ = [$1,$2];} | mul_expr;
 
-article: "each" | "every" | "an" | "a" | "this" | "his" | "her" | "its" | "their"|"the"|"those";
+article: "each" | "every" | "an" | "a" | "this" | "his" | "her" | "its" | "their" | "the" | "those" | "your" | "my";
 
 mul_operator: "*" | "/" | "%";
 
 pow_expr: parentheses_expr "^" parentheses_expr {$$= [$2,$1,$3]} | parentheses_expr;
-mul_expr: pow_expr "times" the_mul_expr {$$= [$1,$2,$3]} | pow_expr mul_operator the_mul_expr {$$= [$2,$1,$3]} | pow_expr;
+mul_expr: pow_expr "times" the_mul_expr {$$= [$1,$2,$3]} | pow_expr mul_operator the_mul_expr {$$= [$2,$1,$3]} | number pow_expr {$$ = [$1,$2];} | pow_expr;
 add_expr:
 	mul_expr "who" to_be add_expr {$$= [$1,$2,$3,$4];}
 	| mul_expr "that" to_be add_expr {$$= [$1,$2,$3,$4];}

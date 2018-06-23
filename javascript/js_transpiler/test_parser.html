@@ -11,6 +11,7 @@
 <script src="ada_parser.js"></script>
 <script src="go_parser.js"></script>
 <script src="javascript_parser.js"></script>
+<script src="mysql_parser.js"></script>
 <script src="glsl_parser.js"></script>
 <script src="r_parser.js"></script>
 <script src="pseudocode_parser.js"></script>
@@ -118,6 +119,16 @@ function persistence(){
 	myFunction();
 }
 
+function switch_langs(){
+	var temp = document.getElementById("outputLang").value;
+	document.getElementById("outputLang").value = document.getElementById("inputLang").value;
+	document.getElementById("inputLang").value = temp;
+	temp = document.getElementById("outputText").value;
+	document.getElementById("outputText").value = document.getElementById("inputText").value;
+	document.getElementById("inputText").value = temp;
+	
+}
+
 function myFunction() {
     var inputLang = document.getElementById("inputLang").value;
     var outputLang = document.getElementById("outputLang").value;
@@ -171,6 +182,7 @@ function myFunction() {
   <input type="text" id="outputLang" value="C">
   <br/>
   <button type="button" onclick = "save_file()">Download file</button>
+  <button type="button" onclick = "switch_langs()">Switch languages</button>
 
 
 <textarea id="outputText" cols="40" rows="5"></textarea>

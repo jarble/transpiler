@@ -83,7 +83,7 @@ statements_: statement statements_ {$$ = [$1].concat($2);} | statement {$$ =
 struct_statements: struct_statement struct_statements {$$ = [$1].concat($2);} | struct_statement {$$ =
  [$1];};
  
-struct_statement: type identifiers ";" {$$ = ["struct_statement",$1,$2];};
+struct_statement: type identifiers ";" {$$ = ["struct_statement",$1,$2];} | set_array_size ";" {$$ = ["semicolon", $1];};
 
 statements: statements_ {$$ = ["statements",$1]};
 
@@ -94,7 +94,7 @@ access_modifier: "public" | "private";
 statement
     :
 	"#define" IDENTIFIER "(" exprs ")" "(" expr ")" {$$ = ["macro",$2,$4,$7];}
-	| "struct" IDENTIFIER "{" struct_statements "}" ";" {$$ = ["struct",$2,["statements",$4]]}
+	| "struct" IDENTIFIER "{" struct_statements "}" ";" {$$ = ["struct",$2,["struct_statements",$4]]}
 	| type IDENTIFIER "(" parameters ")" "{" statements "}" {$$ = ["function","public",$1,$2,$4,$7];}
 	| type IDENTIFIER "(" "void" ")" "{" statements "}" {$$ = ["function","public",$1,$2,[],$7];}
     | statement_with_semicolon ";" {$$ = ["semicolon",$1];}
@@ -120,7 +120,7 @@ statement_with_semicolon
    | type IDENTIFIER "[" "]" "=" e {$$ = ["initialize_var",[$1,"[]"],$2,$6];}
    | "const" type IDENTIFIER "=" e {$$ = ["initialize_constant",$2,$3,$5];}
    | "const" type IDENTIFIER "[" "]" "=" e {$$ = ["initialize_constant",[$2,"[]"],$3,$7];}
-   | type access_array {$$ = ["set_array_size",$1,$2[1],$2[2]];}
+   | set_array_size
    | type identifiers {$$ = ["initialize_empty_vars",$1,$2];}
    | access_array "=" e {$$ = ["set_var",$1,$3];}
    | IDENTIFIER "=" e {$$ = ["set_var",$1,$3];}
@@ -131,6 +131,10 @@ statement_with_semicolon
    | IDENTIFIER "*=" e {$$ = [$2,$1,$3];}
    | IDENTIFIER "/=" e {$$ = [$2,$1,$3];}
    ;
+
+set_array_size:
+	type access_array {$$ = ["set_array_size",$1,$2[1],$2[2]];};
+
 e
     :
     e "?" e ":" e {$$ = ["ternary_operator",$1,$3,$5]}

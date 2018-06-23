@@ -8,6 +8,7 @@
 "$"                   return "$"
 "func"                return "func"
 "inout"               return "inout"
+"out"                 return 'out'
 "end"                 return "end"
 "then"                return "then"
 "var"                 return 'var'
@@ -181,7 +182,7 @@ parentheses_expr:
 
 
 type: "[" type "]" {$$ = [$2,"[]"];} | IDENTIFIER "<" type ">" {$$ = [$1,$3]} | IDENTIFIER;
-parameter: IDENTIFIER ":" "inout" type {$$ = ["ref_parameter",$4,$1];} | IDENTIFIER ":" type {$$ = [$3, $1];};
+parameter: IDENTIFIER ":" "out" type {$$ = ["out_parameter",$4,$1];} | IDENTIFIER ":" "inout" type {$$ = ["ref_parameter",$4,$1];} | IDENTIFIER ":" type {$$ = [$3, $1];};
 parameters: parameter "," parameters {$$ = [$1].concat($3);} | parameter {$$ =
  [$1];} | {$$ = [];};
 

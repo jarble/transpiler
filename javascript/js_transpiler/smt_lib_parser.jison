@@ -5,7 +5,10 @@
 \s+                   /* skip whitespace */
 [0-9]+("."[0-9]+)?\b  return 'NUMBER'
 \"([^\\\"]|\\.)*\" return 'STRING_LITERAL'
+"Array"               return 'Array'
+"implies"             return 'implies'
 "define-fun"          return 'define-fun'
+"declare-const"       return 'declare-const'
 "not"                 return 'not'
 "and"                 return 'and'
 "?"                   return '?'
@@ -61,21 +64,14 @@ statements_: statement statements_ {$$ = [$1].concat($2);} | statement {$$ =
 statements: statements_ {$$ = ["top_level_statements",$1]};
 
 statement:
-	"(" "define-fun" IDENTIFIER "(" parameters ")" type statement ")" {$$ = ["function","public",$7,$3,$5,$8]}
+	"(" "declare-const" IDENTIFIER type ")" {$$ = ["semicolon",["initialize_empty_vars",$4,[$3]]];}
+	| "(" "define-fun" IDENTIFIER "(" parameters ")" type statement ")" {$$ = ["function","public",$7,$3,$5,$8]}
     | e {$$=["statements",[["semicolon",["return",$1]]]];};
 
-operator:
-	| "not" {$$ = "!"}
-	| "or" {$$ = "logic_or";}
-	| "and" {$$ = "logic_and";}
-	| ">="
-	| ">"
-	| "<="
-	| "<"
-	| "*"
-	| "/"
-	| "+"
-	| "-";
+type:
+	"(" "Array" type type ")" {$$ = ["Array",[$3,$4]];}
+	| IDENTIFIER;
+
 
 equal_exprs: equal_exprs e {$$ = ["logic_equals",$1,$2]} | e;
 times_exprs: times_exprs e {$$ = ["*",$1,$2]}  | e;
@@ -85,8 +81,14 @@ minus_exprs: minus_exprs e {$$ = ["-",$1,$2]} | e;
 and_exprs: and_exprs e {$$ = ["logic_and",$1,$2]} | e;
 or_exprs: or_exprs e {$$ = ["logic_or",$1,$2]} | e;
 
+logic_operator: ">" | "<" | ">=" | "<=";
+
+implication: "=>"|"implies";
+
 e:
-    '(' '=' e equal_exprs ')' {$$ = [$2,$3,$4];}
+    '(' implication e e ')' {$$ = ["implies",$3,$4];}
+    | '(' logic_operator e e ')' {$$ = [$2,$3,$4];}
+    | '(' '=' e equal_exprs ')' {$$ = ["logic_equals",$3,$4];}
     | '(' '*' e times_exprs ')' {$$ = [$2,$3,$4];}
     | '(' '+' e plus_exprs ')' {$$ = [$2,$3,$4];}
 	| '(' '-' e minus_exprs ')' {$$ = [$2,$3,$4];}

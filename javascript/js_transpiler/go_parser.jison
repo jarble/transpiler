@@ -84,6 +84,7 @@ statements_: statement statements_ {$$ = [$1].concat($2);} | statement {$$ =
  
 
 statements: statements_ {$$ = ["statements",$1]};
+struct_statements: statements_ {$$ = ["struct_statements",$1]};
 
 
 
@@ -93,7 +94,7 @@ access_modifier: "public" | "private";
 statement
     :
     statement_with_semicolon {$$ = ["semicolon",$1];}
-    | "type" IDENTIFIER "struct" "{" statements "}" {$$ = ["struct",$1,$5]}
+    | "type" IDENTIFIER "struct" "{" struct_statements "}" {$$ = ["struct",$1,$5]}
     | "for" e "{" statements "}" {$$ = ["while",$2,$4];}
     | "for" "_" "," IDENTIFIER ":=" "range" dot_expr "{" statements "}" {$$ = ["foreach","Object",$4,$7,$9];}
     | "for" IDENTIFIER "," IDENTIFIER ":=" "range" dot_expr "{" statements "}" {$$ = ["foreach_with_index","Object",$2,$4,$7,$9];}

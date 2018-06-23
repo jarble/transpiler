@@ -83,7 +83,7 @@ grammar_statement:
 
 e
     :
-    "forall" "(" "member" "(" IDENTIFIER "," IDENTIFIER ")" "," e ")" {$$ = ["foreach","Object",$5,$7,$10];}
+    "forall" "(" e "," e ")" {$$ = ["forall",$3,$5];}
     |e '->' e
         {$$ = ["implies",$1,$3]}
     |e ';' e
