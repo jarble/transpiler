@@ -6,6 +6,7 @@
 [0-9]+("."[0-9]+)?\b  return 'NUMBER'
 \"([^\\\"]|\\.)*\" return 'STRING_LITERAL'
 "Fixpoint"            return 'Fixpoint'
+"forall"              return 'forall'
 "if"                  return "if"
 "is"                  return "is"
 ","                   return ','
@@ -116,6 +117,8 @@ e
         {$$ = [$2,$1,$3];}
     | '-' e %prec UMINUS
         {$$ = ["-",$2];}
+    | "(" "forall" IDENTIFIER ":" IDENTIFIER "," e ")" {$$ = ["forall",["instanceof",$5,$3],$7];}
+    | "(" "forall" "(" IDENTIFIER ":" IDENTIFIER ")" "," e ")" {$$ = ["forall",["instanceof",$4,$6],$9];}
     | parentheses_expr
     ;
 

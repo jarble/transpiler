@@ -9,6 +9,7 @@
 "if"                  return "if"
 "do"                  return 'do'
 "else"                return "else"
+"enum"                return 'enum'
 "return"              return "return"
 "void"                return "void"
 "case"                return "case"
@@ -95,6 +96,7 @@ statement
     :
 	"#define" IDENTIFIER "(" exprs ")" "(" expr ")" {$$ = ["macro",$2,$4,$7];}
 	| "struct" IDENTIFIER "{" struct_statements "}" ";" {$$ = ["struct",$2,["struct_statements",$4]]}
+	| "enum" IDENTIFIER "{" enum_statements "}" ";" {$$ = ["enum","public",$2,$4];}
 	| type IDENTIFIER "(" parameters ")" "{" statements "}" {$$ = ["function","public",$1,$2,$4,$7];}
 	| type IDENTIFIER "(" "void" ")" "{" statements "}" {$$ = ["function","public",$1,$2,[],$7];}
     | statement_with_semicolon ";" {$$ = ["semicolon",$1];}
@@ -212,5 +214,7 @@ elif:
 	"else" "if" "(" e ")" bracket_statements elif {$$ = ["elif",$4,$6,$7]}
 	| "else" bracket_statements {$$ = ["else",$2];};
 identifiers: IDENTIFIER "," identifiers {$$ = [$1].concat($3);} | IDENTIFIER {$$ = [$1];};
+enum_statements: enum_statement "," enum_statements {$$ = [$1].concat($3);} | enum_statement {$$ = [$1];};
+enum_statement: IDENTIFIER "=" NUMBER {$$ = ["enum_statement",$1,$3]};
 
 bracket_statements: "{" statements "}" {$$= $2;} | statement_with_semicolon ";" {$$ = ["semicolon",$1];};

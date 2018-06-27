@@ -15,6 +15,7 @@
 "then"                return "then"
 "return"              return "return"
 "constraint"          return "constraint"
+"forall"              return "forall"
 ","                   return ','
 ";"                   return ';'
 "."                   return '.'
@@ -94,6 +95,8 @@ e
     :
     e '<->' e
         {$$ = ['iff',$1,$3];}
+    |"forall" "(" e ")" "(" e ")"
+		{$$ = ["forall",$3,$6];}
     |e '<-' e
         {$$ = ['implies',$3,$1];}
     |e '->' e
