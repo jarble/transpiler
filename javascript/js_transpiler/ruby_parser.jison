@@ -87,7 +87,7 @@ expressions
         {return ["top_level_statements",$1];}
     ;
 
-statements_: statement statements_ {$$ = [$1].concat($2);} | statement {$$ =
+statements_: statements_ statement {$$ = $1.concat([$2]);} | statement {$$ =
  [$1];};
 
 
@@ -139,8 +139,6 @@ statement_with_semicolon
    |"yield" e  {$$ = ["yield",$2];}
    |"return" e  {$$ = ["return",$2];}
    |"raise" e  {$$ = ["throw",$2];}
-   | "local" IDENTIFIER "=" e {$$ = ["initialize_var","Object",$2,$4];}
-   | "local" identifiers {$$ = ["initialize_empty_vars","Object",$2];}
    | access_array "+=" e {$$ = ["+=",$1,$3];}
    | IDENTIFIER "+=" e {$$ = ["+=",$1,$3];}
    | access_array "/=" e {$$ = ["/=",$1,$3];}
@@ -150,9 +148,17 @@ statement_with_semicolon
    | access_array "-=" e {$$ = ["-=",$1,$3];}
    | IDENTIFIER "-=" e {$$ = ["-=",$1,$3];}
    | access_array "=" e {$$ = ["set_var",$1,$3];}
+   | parallel_assignment
    | IDENTIFIER "=" e {$$ = ["set_var",$1,$3];}
    | IDENTIFIER "." dot_expr {$$ = [".",[$1].concat($3)]}
    ;
+
+parallel_assignment:
+	parallel_lhs,"=",parallel_rhs {$$ = ["parallel_assignment",["parallel_lhs",$1],["parallel_rhs",$3]]};
+
+parallel_lhs: parallel_lhs "," IDENTIFIER {$$ = [$1.concat([$3])];} | IDENTIFIER "," IDENTIFIER {$$ = [$1,$3]};
+parallel_rhs: parallel_rhs "," e {$$ = [$1.concat([$3])];} | e "," e {$$ = [$1,$3]};
+
 e:
     e "?" e ":" e {$$ = ["ternary_operator",$1,$3,$5]}
     | "*" parentheses_expr {$$ = ["unpack_array",$2]}

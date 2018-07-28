@@ -74,12 +74,18 @@
 
 %% /* language grammar */
 
-expressions
-    : statements_ EOF
-        {return ["top_level_statements",$1];}
-    ;
+expressions: top_level_statements EOF {return ["top_level_statements",$1]};
+top_level_statements: top_level_statements top_level_statement {$$ = $1.concat([$2]);} | top_level_statement {$$ =
+ [$1];};
+top_level_statement:
+	statement | initialize_var1 {$$ = ["semicolon",$1]};
+initialize_var1: initialize_var_ {$$ = ["initialize_var"].concat($1);};
+initialize_var: initialize_var_ {$$ = ["lexically_scoped_var"].concat($1);};
 
-statements_: statement statements_ {$$ = [$1].concat($2);} | statement {$$ =
+statements_: statements_without_vars | initialize_vars statements_without_vars {$$ = [["lexically_scoped_vars",$1,$2]]};
+statements_without_vars: statement statements_without_vars {$$ = [$1].concat($2);} | statement {$$ =
+ [$1];};
+initialize_vars: initialize_vars initialize_var {$$ = $1.concat([$2]);} | initialize_var {$$ =
  [$1];};
 
 
@@ -106,8 +112,6 @@ case_statements: case_statements_ "_" "=>" statement {$$ = $1.concat([["default"
 statement_with_semicolon
    : 
    "return" e  {$$ = ["return",$2];}
-   | "var" IDENTIFIER  ":" type "=" e  {$$ = ["initialize_var",$4,$2,$6];}
-   | "var" IDENTIFIER "=" e  {$$ = ["initialize_var","Object",$2,$4];}
    | access_array "=" e {$$ = ["set_var",$1,$3];}
    | IDENTIFIER "=" e {$$ = ["set_var",$1,$3];}
    | IDENTIFIER "+=" e {$$ = [$2,$1,$3];}
@@ -117,6 +121,11 @@ statement_with_semicolon
    | IDENTIFIER "." dot_expr {$$ = [".",[$1].concat($3)]}
    | function_call
    ;
+   
+initialize_var_:
+	"var" IDENTIFIER  ":" type "=" e  {$$ = [$4,$2,$6];}
+   | "var" IDENTIFIER "=" e  {$$ = ["Object",$2,$4];};
+
 e
     :
     e 'or' e

@@ -11,6 +11,7 @@
 "else"                return "else"
 "return"              return "return"
 "inout"               return "inout"
+"in"                  return 'in'
 "out"                 return 'out'
 "void"                return "void"
 "case"                return "case"
@@ -77,7 +78,9 @@
 
 %% /* language grammar */
 
-expressions: statements_ EOF {return ["top_level_statements",$1]};
+expressions: top_level_statements EOF {return ["top_level_statements",$1]};
+top_level_statements: top_level_statements top_level_statement {$$ = $1.concat([$2]);} | top_level_statement {$$ =
+ [$1];};
 
 statements_: statement statements_ {$$ = [$1].concat($2);} | statement {$$ =
  [$1];};
@@ -92,7 +95,13 @@ statements: statements_ {$$ = ["statements",$1]};
 
 access_modifier: "public" | "private";
 
-
+top_level_statement:
+	statement | initialize_var1 ";" {$$ = ["semicolon",$1]};
+initialize_var1: initialize_var_ {$$ = ["initialize_var"].concat($1);};
+initialize_var: initialize_var_ {$$ = ["lexically_scoped_var"].concat($1);};
+initialize_var_:
+      type IDENTIFIER "=" e {$$ = ["initialize_var",$1,$2,$4];}
+      | type IDENTIFIER "[" "]" "=" e {$$ = ["initialize_var",[$1,"[]"],$2,$6];};
 statement
     :
 	"#define" IDENTIFIER "(" exprs ")" "(" expr ")" {$$ = ["macro",$2,$4,$7];}
@@ -103,10 +112,12 @@ statement
     | "while" "(" e ")" bracket_statements {$$ = ["while",$3,$5];}
     | "do" bracket_statements "while" "(" e ")" ";" {$$ = ["do_while",$2,$5];}
     | "switch" "(" e ")" "{" case_statements "}" {$$ = ["switch",$3,$6];}
-    | "for" "(" statement_with_semicolon ";" e ";" statement_with_semicolon ")" bracket_statements {$$ = ["for",$3,$5,$7,$9];}
+    | "for" "(" statement_with_semicolon_ ";" e ";" statement_with_semicolon_ ")" bracket_statements {$$ = ["for",$3,$5,$7,$9];}
     | "if" "(" e ")" bracket_statements elif {$$ = ["if",$3,$5,$6];}
 	| "if" "(" e ")" bracket_statements {$$ = ["if",$3,$5];}
     ;
+
+statement_with_semicolon_: initialize_var1 | statement_with_semicolon;
 
 case_statement: "case" e ":" statements "break" ";" {$$ = ["case",$2,$4]};
 case_statements_: case_statement case_statements_ {$$ = [$1].concat($2);} | case_statement {$$ =
@@ -118,8 +129,6 @@ statement_with_semicolon
    IDENTIFIER "(" ")" {$$ = ["function_call",$1,[]];}
    | IDENTIFIER "(" exprs ")" {$$ = ["function_call",$1,$3];}
    |"return" e  {$$ = ["return",$2];}
-   | type IDENTIFIER "=" e {$$ = ["initialize_var",$1,$2,$4];}
-   | type IDENTIFIER "[" "]" "=" e {$$ = ["initialize_var",[$1,"[]"],$2,$6];}
    | "const" type IDENTIFIER "=" e {$$ = ["initialize_constant",$2,$3,$5];}
    | "const" type IDENTIFIER "[" "]" "=" e {$$ = ["initialize_constant",[$2,"[]"],$3,$7];}
    | type access_array {$$ = ["set_array_size",$1,$2[1],$2[2]];}
@@ -200,7 +209,7 @@ function_call: parentheses_expr "(" ")" {$$ = ["function_call",$1,[]];}
     | parentheses_expr "(" exprs ")" {$$ = ["function_call",$1,$3];};
 
 type: "void" | IDENTIFIER;
-parameter: "out" type IDENTIFIER {$$ = ["out_parameter",$2,$3]} | "inout" type IDENTIFIER {$$ = ["ref_parameter",$2,$3]} | type IDENTIFIER {$$ = [$1,$2];} | type IDENTIFIER "[" "]" {$$ = [[$1,"[]"],$2];} | "const" type IDENTIFIER {$$ = ["final_parameter",$2,$3]};
+parameter: "out" type IDENTIFIER {$$ = ["out_parameter",$2,$3]} | "inout" type IDENTIFIER {$$ = ["ref_parameter",$2,$3]} | "in" type IDENTIFIER {$$ = ["in_parameter",$2,$3]} | type IDENTIFIER {$$ = [$1,$2];} | type IDENTIFIER "[" "]" {$$ = [[$1,"[]"],$2];} | "const" type IDENTIFIER {$$ = ["final_parameter",$2,$3]};
 parameters: parameter "," parameters {$$ = [$1].concat($3);} | parameter {$$ =
  [$1];} | {$$ = [];};
 exprs: expr "," exprs {$$ = [$1].concat($3);} | expr {$$ = [$1];};

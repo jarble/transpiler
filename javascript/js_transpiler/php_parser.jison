@@ -88,7 +88,7 @@ expressions: statements_ EOF {return ["top_level_statements",$1]};
 
 statements_: statement statements_ {$$ = [$1].concat($2);} | statement {$$ =
  [$1];};
- 
+
 class_statements: class_statements_ {$$ = ["class_statements",$1]};
 statements: statements_ {$$ = ["statements",$1]};
 
@@ -110,13 +110,15 @@ statement
     | "while" "(" e ")" bracket_statements {$$ = ["while",$3,$5];}
     | "do" bracket_statements "while" "(" e ")" ";" {$$ = ["do_while",$2,$5];}
     | "switch" "(" e ")" "{" case_statements "}" {$$ = ["switch",$3,$6];}
-    | "for" "(" statement_with_semicolon ";" e ";" statement_with_semicolon ")" bracket_statements {$$ = ["for",$3,$5,$7,$9];}
+    | "for" "(" statement_with_semicolon_ ";" e ";" statement_with_semicolon_ ")" bracket_statements {$$ = ["for",$3,$5,$7,$9];}
     | "foreach" "(" var_name "as" var_name "=>" var_name ")" bracket_statements {$$ = ["foreach_with_index","Object",$5,$7,$3,$9];}
     | "foreach" "(" var_name "as" var_name ")" bracket_statements {$$ = ["foreach","Object",$5,$3,$7];}
     | "if" "(" e ")" bracket_statements elif {$$ = ["if",$3,$5,$6];}
 	| "if" "(" e ")" bracket_statements {$$ = ["if",$3,$5];}
     | "function" IDENTIFIER "(" parameters ")" "{" statements "}" {$$ = ["function","public","Object",$2,$4,$7];}
     ;
+
+statement_with_semicolon_: initialize_var1 | statement_with_semicolon;
 
 case_statement: "case" e ":" statements "break" ";" {$$ = ["case",$2,$4]};
 case_statements_: case_statement case_statements_ {$$ = [$1].concat($2);} | case_statement {$$ =
@@ -132,6 +134,7 @@ statement_with_semicolon
    "System.out.println" "(" e ")" {$$ = ["println",$3];}
    | "return" e  {$$ = ["return",$2];}
    | type var_name "=" e {$$ = ["initialize_var",$1,$2,$4];}
+   | parallel_assignment
    | var_name "[" "]" "=" e {$$ = ["function_call","array_push",[$1,$5]];}
    | access_array "=" e {$$ = ["set_var",$1,$3];}
    | var_name "=" e {$$ = ["set_var",$1,$3];}
@@ -144,6 +147,13 @@ statement_with_semicolon
    | function_call
    | var_name "." dot_expr
    ;
+   
+parallel_assignment:
+	"list","(",parallel_lhs,")","=","list","(",parallel_rhs,")" {$$ = ["parallel_assignment",["parallel_lhs",$3],["parallel_rhs",$8]]};
+
+parallel_lhs: parallel_lhs "," var_name {$$ = [$1.concat([$3])];} | var_name "," var_name {$$ = [$1,$3]};
+parallel_rhs: parallel_rhs "," e {$$ = [$1.concat([$3])];} | e "," e {$$ = [$1,$3]};
+
 e
     :
     e "?" e ":" e {$$ = ["ternary_operator",$1,$3,$5]}
@@ -185,8 +195,8 @@ dot_expr: parentheses_expr "->" dot_expr {$$ = [$1].concat($3);} | parentheses_e
 access_array: var_name "[" access_arr "]" {$$ = ["access_array",$1,$3];};
 
 function_call:
-    IDENTIFIER "(" ")" {$$ = ["function_call",$1,[]];}
-    | IDENTIFIER "(" exprs ")" {$$ = ["function_call",$1,$3];};
+	IDENTIFIER "(" exprs ")" {$$ = ["function_call",$1,$3];}
+    | IDENTIFIER "(" ")" {$$ = ["function_call",$1,[]];};
 
 parentheses_expr:
     "new" "class" "{" statements "}" {$$= ["anonymous_class",$4]}

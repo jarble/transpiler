@@ -75,13 +75,20 @@ expressions
         {return ["top_level_statements",$1];}
     ;
 
-statements_: statement statements_ {$$ = [$1].concat($2);} | statement {$$ =
+statements_: statements_with_vars | initialize_var_ {$$ = [["semicolon",["initialize_var"].concat($1)]]} | initialize_var_ statements_with_vars {$$ = [["lexically_scoped_vars",[$1],$2]]};
+statements_without_vars: statements_without_vars statement {$$ = $1.concat([$2]);} | statement {$$ =
+ [$1];};
+statements_with_vars: statements_without_vars initialize_var1 {$$ = $1.concat([["semicolon",$2]]);} | statements_without_vars;
+initialize_vars: initialize_vars initialize_var {$$ = $1.concat([$2]);} | initialize_var {$$ =
  [$1];};
 
 
 statements: statements_ {$$ = ["statements",$1]};
 
-
+top_level_statement:
+	statement | initialize_var1 {$$ = ["semicolon",$1]};
+top_level_statements: top_level_statements top_level_statement {$$ = $1.concat([$2]);} | top_level_statement {$$ =
+ [$1];};
 statement
     :
     statement_with_semicolon {$$ = ["semicolon",$1];}
@@ -89,6 +96,7 @@ statement
     | "repeat" bracket_statements "until" e {$$ = ["do_while",$4,$2];}
     | "for" "_" "," IDENTIFIER "in" "pairs" "(" dot_expr ")" "do" statements "end" {$$ = ["foreach","Object",$4,$8,$11];}
     | "for" IDENTIFIER "," IDENTIFIER "in" "pairs" "(" dot_expr ")" "do" statements "end" {$$ = ["foreach_with_index","Object",$2,$4,$8,$11];}
+    | "for" IDENTIFIER "," e "," e "do" statements "end" {$$ = ["for",$2,["<",$2,$4],["+=",$2,$6],$8];}
     | "if" e "then" statements elif "end" {$$ = ["if",$2,$4,$5];}
 	| "if" e "then" statements "end" {$$ = ["if",$2,$4];}
     | "function" IDENTIFIER "(" parameters ")" statements "end" {$$ = ["function","public","Object",$2,$4,$6];}
@@ -97,13 +105,25 @@ statement
 statement_with_semicolon
    : 
    "return" e  {$$ = ["return",$2];}
-   | "local" IDENTIFIER "=" e {$$ = ["initialize_var","Object",$2,$4];}
    | "local" identifiers {$$ = ["initialize_empty_vars","Object",$2];}
+   | parallel_assignment
    | access_array "=" e {$$ = ["set_var",$1,$3];}
    | IDENTIFIER "=" e {$$ = ["set_var",$1,$3];}
    | IDENTIFIER "." dot_expr {$$ = [".",[$1].concat($3)]}
    | function_call
    ;
+
+parallel_assignment:
+	parallel_lhs,"=",parallel_rhs {$$ = ["parallel_assignment",["parallel_lhs",$1],["parallel_rhs",$3]]};
+
+parallel_lhs: parallel_lhs "," IDENTIFIER {$$ = [$1.concat([$3])];} | IDENTIFIER "," IDENTIFIER {$$ = [$1,$3]};
+parallel_rhs: parallel_rhs "," e {$$ = [$1.concat([$3])];} | e "," e {$$ = [$1,$3]};
+
+initialize_var1: initialize_var_ {$$ = ["initialize_var"].concat($1);};
+initialize_var: initialize_var_ {$$ = ["lexically_scoped_var"].concat($1);};
+initialize_var_:
+	"local" IDENTIFIER "=" e {$$ = ["Object",$2,$4];};
+
 e
     :
     e 'or' e

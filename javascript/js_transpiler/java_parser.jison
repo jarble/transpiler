@@ -90,14 +90,29 @@
 
 %% /* language grammar */
 
-expressions: statements_ EOF {return ["top_level_statements",$1]};
-
-statements_: statement statements_ {$$ = [$1].concat($2);} | statement {$$ =
+statements: statements_ {$$ = ["statements",$1]};
+statements_: statements_with_vars | initialize_var_ ";" {$$ = [["semicolon",["initialize_var"].concat($1)]]} | initialize_var_ ";" statements_with_vars {$$ = [["lexically_scoped_vars",[$1],$3]]};
+statements_without_vars: statements_without_vars statement {$$ = $1.concat([$2]);} | statement {$$ =
+ [$1];};
+statements_with_vars: statements_without_vars initialize_var1 ";" {$$ = $1.concat([["semicolon",$2]]);} | statements_without_vars;
+initialize_vars: initialize_vars ";" initialize_var {$$ = $1.concat([$3]);} | initialize_var {$$ =
  [$1];};
 
-class_statements: class_statements_ {$$ = ["class_statements",$1]};
-statements: statements_ {$$ = ["statements",$1]};
 
+expressions: top_level_statements EOF {return ["top_level_statements",$1]};
+top_level_statements: top_level_statements top_level_statement {$$ = $1.concat([$2]);} | top_level_statement {$$ =
+ [$1];};
+top_level_statement:
+	statement | initialize_var1 ";" {$$ = ["semicolon",$1]};
+
+initialize_var1: initialize_var_ {$$ = ["initialize_var"].concat($1);};
+initialize_var: initialize_var_ {$$ = ["lexically_scoped_var"].concat($1);};
+initialize_var_: 
+   type IDENTIFIER "=" e {$$ = [$1,$2,$4];}
+   | type IDENTIFIER "=" "{" exprs "}" {$$ = ["initialize_var",$1,$2,[".",[["initializer_list","Object",$5]]]];}
+   ;
+
+class_statements: class_statements_ {$$ = ["class_statements",$1]};
 
 class_statements_: class_statement class_statements_ {$$ = [$1].concat($2);} | class_statement {$$ =
  [$1];};
@@ -126,10 +141,12 @@ statement
     | "while" "(" e ")" bracket_statements {$$ = ["while",$3,$5];}
     | "do" bracket_statements "while" "(" e ")" ";" {$$ = ["do_while",$2,$5];}
     | "switch" "(" e ")" "{" case_statements "}" {$$ = ["switch",$3,$6];}
-    | "for" "(" statement_with_semicolon ";" e ";" statement_with_semicolon ")" bracket_statements {$$ = ["for",$3,$5,$7,$9];}
+    | "for" "(" statement_with_semicolon_ ";" e ";" statement_with_semicolon_ ")" bracket_statements {$$ = ["for",$3,$5,$7,$9];}
     | "for" "(" type IDENTIFIER ":" IDENTIFIER ")" "{" statements "}" {$$ = ["foreach",$3,$4,$6,$9];}
     | "public" "static" type IDENTIFIER "(" parameters ")" "{" statements "}" {$$ = ["function",$1,$3,$4,$6,$9];}
     ;
+
+statement_with_semicolon_: initialize_var1 | statement_with_semicolon;
 
 case_statement: "case" e ":" statements "break" ";" {$$ = ["case",$2,$4]};
 case_statements_: case_statement case_statements_ {$$ = [$1].concat($2);} | case_statement {$$ =
@@ -156,8 +173,6 @@ statement_with_semicolon
    | "assert" e  {$$ = ["function_call","assert",[$2]];}
    | "final" type IDENTIFIER "=" e {$$ = ["initialize_constant",$2,$3,$5];}
    | "final" type identifiers {$$ = ["initialize_empty_constants",$2,$3];}
-   | type IDENTIFIER "=" "{" exprs "}" {$$ = ["initialize_var",$1,$2,["initializer_list",$1,$5]]}
-   | type IDENTIFIER "=" e {$$ = ["initialize_var",$1,$2,$4];}
    | type identifiers {$$ = ["initialize_empty_vars",$1,$2];}
    | type access_array {$$ = ["set_array_size",$1,$2[1],$2[2]];}
    | type IDENTIFIER "=" "new" access_array {$$ = ["set_array_size",$1,$2,$5[2]];}

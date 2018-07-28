@@ -109,7 +109,7 @@ case 11:
 this.$ = ["while",$$[$0-3],$$[$0-1]];
 break;
 case 12:
-this.$ = ["function","public","Object",$$[$0-5],$$[$0-3],$$[$0-1]];
+this.$ = ["function","public","void",$$[$0-5],$$[$0-3],$$[$0-1]];
 break;
 case 13:
 this.$ = ["semicolon",$$[$0-1]];

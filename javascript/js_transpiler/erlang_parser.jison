@@ -68,7 +68,10 @@ expressions: top_level_statements EOF {return ["top_level_statements",$1]};
 
 statements: statements_ {$$ = ["statements",$1]};
 
-statements_: statements_ "," statement {$$ = $1.concat([$3]);} | statement {$$ =
+statements_: statements_without_vars | initialize_vars "," statements_without_vars {$$ = [["lexically_scoped_vars",$1,$3]]};
+statements_without_vars: statements_without_vars "," statement {$$ = $1.concat([$3]);} | statement {$$ =
+ [$1];};
+initialize_vars: initialize_vars "," initialize_var {$$ = $1.concat([$3]);} | initialize_var {$$ =
  [$1];};
 
 top_level_statements: top_level_statement "." top_level_statements {$$ = [$1].concat($3);} | top_level_statement "." {$$ =
@@ -85,8 +88,10 @@ statement:
 	| "case" e "of" case_statements "end" {$$ = ["switch",$2,$4];};
 
 statement_with_semicolon:
-	IDENTIFIER "=" e {$$ = ["set_var",$1,$3];}
-	| e {$$= ["return",$1];};
+	e {$$= ["return",$1];};
+
+initialize_var:
+	IDENTIFIER "=" e {$$ = ["lexically_scoped_var","Object",$1,$3];};
 
 e
     :

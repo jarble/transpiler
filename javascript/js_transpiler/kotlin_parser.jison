@@ -125,7 +125,9 @@ class_statement:
 	| access_modifier type IDENTIFIER "(" parameters ")" ";" {$$ = ["interface_instance_method",$1,$2,$3,$5];}
 	| access_modifier "static" type IDENTIFIER "(" parameters ")" "{" statements "}" {$$ = ["static_method",$1,$3,$4,$6,$9];}
 	| "public" "function" IDENTIFIER "(" parameters ")" "{" statements "}" {$$ = ["instance_method",$1,"Object",$3,$5,$7];}
-	| "static" "public" "function" IDENTIFIER "(" parameters ")" "{" statements "}" {$$ = ["static_method",$2,"Object",$4,$6,$8];};
+	| "static" "public" "function" IDENTIFIER "(" parameters ")" "{" statements "}" {$$ = ["static_method",$2,"Object",$4,$6,$8];}
+	| "operator" "fun" IDENTIFIER "(" parameters ")" ":" type "{" statements "}" {$$ = ["instance_overload_operator","public",$8,$3,$5,$10];}
+;
 
 statement_with_semicolon
    : 

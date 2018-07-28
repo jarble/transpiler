@@ -74,12 +74,13 @@
 
 %% /* language grammar */
 
-expressions
-    : statements EOF
-        {return $1;}
-    ;
+expressions: top_level_statements EOF {return ["top_level_statements",$1]};
 
-statements_: statement statements_ {$$ = [$1].concat($2);} | statement {$$ =
+statements_: statements_with_vars | initialize_vars statements_with_vars {$$ = [["lexically_scoped_vars",$1,$2]]};
+statements_without_vars: statements_without_vars statement {$$ = $1.concat($3);} | statement {$$ =
+ [$1];};
+statements_with_vars: statements_without_vars initialize_var1 {$$ = $1.concat([["semicolon",$2]]);} | statements_without_vars;
+initialize_vars: initialize_vars initialize_var {$$ = $1.concat([$2]);} | initialize_var {$$ =
  [$1];};
  
 
@@ -90,7 +91,10 @@ struct_statements: statements_ {$$ = ["struct_statements",$1]};
 
 access_modifier: "public" | "private";
 
-
+top_level_statement:
+	statement | initialize_var1 {$$ = ["semicolon",$1]};
+top_level_statements: top_level_statements top_level_statement {$$ = $1.concat([$2]);} | top_level_statement {$$ =
+ [$1];};
 statement
     :
     statement_with_semicolon {$$ = ["semicolon",$1];}
@@ -107,9 +111,9 @@ statement
 statement_with_semicolon
    : 
    "return" e  {$$ = ["return",$2];}
-   | "var" IDENTIFIER "=" e {$$ = ["initialize_var","Object",$2,$4];}
    | IDENTIFIER ":=" e {$$ = ["initialize_var","Object",$1,$3];}
    | "var" identifiers {$$ = ["initialize_empty_vars","Object",$2];}
+   | parallel_assignment
    | access_array "=" e {$$ = ["set_var",$1,$3];}
    | IDENTIFIER "=" e {$$ = ["set_var",$1,$3];}
    | IDENTIFIER "++" {$$ = [$2,$1];}
@@ -122,6 +126,17 @@ statement_with_semicolon
    | IDENTIFIER "." dot_expr {$$ = [".",[$1].concat($3)]}
    | function_call
    ;
+
+parallel_assignment:
+	parallel_lhs,":=",parallel_rhs {$$ = ["parallel_assignment",["parallel_lhs",$1],["parallel_rhs",$3]]};
+
+parallel_lhs: parallel_lhs "," IDENTIFIER {$$ = [$1.concat([$3])];} | IDENTIFIER "," IDENTIFIER {$$ = [$1,$3]};
+parallel_rhs: parallel_rhs "," e {$$ = [$1.concat([$3])];} | e "," e {$$ = [$1,$3]};
+
+initialize_var1: initialize_var_ {$$ = ["initialize_var"].concat($1);};
+initialize_var: initialize_var_ {$$ = ["lexically_scoped_var"].concat($1);};
+initialize_var_:
+	"var" IDENTIFIER "=" e {$$ = ["Object",$2,$4];};
 e
     :
     e '||' e

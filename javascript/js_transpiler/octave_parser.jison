@@ -112,7 +112,7 @@ statement
     :
     "switch" "(" e ")" case_statements "endswitch" {$$ = ["switch",$3,$5];}
     | "while" "(" e ")" statements "endwhile" {$$ = ["while",$3,$5];}
-    | "function" IDENTIFIER "(" parameters ")" statements "endfunction" {$$ = ["function","public","Object",$2,$4,$6];}
+    | "function" IDENTIFIER "(" parameters ")" statements "endfunction" {$$ = ["function","public","void",$2,$4,$6];}
     | statement_with_semicolon ";" {$$ = ["semicolon",$1];}
     | "if" "(" e ")" statements elif "endif" {$$ = ["if",$3,$5,$6];}
 	| "if" "(" e ")" statements "endif" {$$ = ["if",$3,$5];}

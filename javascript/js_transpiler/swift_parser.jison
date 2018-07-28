@@ -10,9 +10,13 @@
 "inout"               return "inout"
 "out"                 return 'out'
 "end"                 return "end"
-"then"                return "then"
+"then"                return 'then'
+"case"                return 'case'
+"let"                 return 'let'
 "var"                 return 'var'
 "if"                  return 'if'
+"class"               return 'class'
+"struct"              return 'struct'
 "else"                return 'else'
 "return"              return 'return'
 "while"               return 'while'
@@ -74,17 +78,27 @@
 
 %% /* language grammar */
 
-expressions
-    : statements_ EOF
-        {return ["top_level_statements",$1];}
-    ;
-
-statements_: statement statements_ {$$ = [$1].concat($2);} | statement {$$ =
+expressions: top_level_statements EOF {return ["top_level_statements",$1]};
+top_level_statements: top_level_statements top_level_statement {$$ = $1.concat([$2]);} | top_level_statement {$$ =
  [$1];};
+top_level_statement:
+	statement | initialize_var1 {$$ = ["semicolon",$1]};
+initialize_var1: initialize_var_ {$$ = ["initialize_var"].concat($1);};
+initialize_var: initialize_var_ {$$ = ["lexically_scoped_var"].concat($1);};
 
+statements_: statements_with_vars | initialize_vars statements_with_vars {$$ = [["lexically_scoped_vars",$1,$2]]};
+statements_with_vars: statements_without_vars initialize_var1 {$$ = $1.concat([["semicolon",$2]]);} | statements_without_vars;
+statements_without_vars: statements_without_vars statement {$$ = $1.concat([$2]);} | statement {$$ =
+ [$1];};
 
 statements: statements_ {$$ = ["statements",$1]};
 
+class_statements: class_statements_ {$$ = ["class_statements",$1]};
+class_statements_: class_statement class_statements_ {$$ = [$1].concat($2);} | class_statement {$$ =
+ [$1];};
+
+initialize_vars: initialize_vars initialize_var {$$ = $1.concat([$2]);} | initialize_var {$$ =
+ [$1];};
 
 statement
     :
@@ -94,13 +108,31 @@ statement
     | "func" IDENTIFIER "(" parameters ")" "->" IDENTIFIER "{" statements "}" {$$ = ["function","public",$7,$2,$4,$9];}
     | "if" "(" e ")" bracket_statements elif {$$ = ["if",$3,$5,$6];}
 	| "if" "(" e ")" bracket_statements {$$ = ["if",$3,$5];}
+	| class_
     ;
+
+class_:
+	"class" IDENTIFIER "{" class_statements "}" {$$ = [$1,"public",$2,$4];}
+	| "enum" IDENTIFIER "{" "case" identifiers "}" {$$ = ["enum",$2,$5];}
+	| "struct" IDENTIFIER "{" struct_statements "}" {$$ = ["struct",$2,["struct_statements",$4]];};
+
+struct_statements: struct_statement struct_statements {$$ = [$1].concat($2);} | struct_statement {$$ =
+ [$1];}; 
+struct_statement:
+	"var" identifiers {$$ = ["struct_statement","Object",$2];}
+	| "var" identifiers ":" type {$$ = ["struct_statement",$4,$2];}
+	;
+
+class_statement:
+	initialize_var_ ";" {$$ = ["initialize_instance_var_with_value","public"].concat($1);}
+	| "var" IDENTIFIER ";" {$$ = ["initialize_instance_var","public","Object",$2];}
+	| "func" IDENTIFIER "(" parameters ")" "->" IDENTIFIER "{" statements "}" {$$ = ["instance_method","public",$7,$2,$4,$9];}
+	| "class" "func" IDENTIFIER "(" parameters ")" "->" IDENTIFIER "{" statements "}" {$$ = ["instance_method","public",$8,$3,$5,$10];};
+
 
 statement_with_semicolon
    : 
    "return" e  {$$ = ["return",$2];}
-   | "var" IDENTIFIER "=" e {$$ = ["initialize_var","Object",$2,$4];}
-   | "var" IDENTIFIER  ":" type "=" e  {$$ = ["initialize_var",$4,$2,$6];}
    | "var" identifiers {$$ = ["initialize_empty_vars","Object",$2];}
    | IDENTIFIER "+=" e {$$ = [$2,$1,$3];}
    | IDENTIFIER "-=" e {$$ = [$2,$1,$3];}
@@ -109,7 +141,14 @@ statement_with_semicolon
    | access_array "=" e {$$ = ["set_var",$1,$3];}
    | IDENTIFIER "=" e {$$ = ["set_var",$1,$3];}
    | IDENTIFIER "." dot_expr {$$ = [".",[$1].concat($3)]}
+   | "let" IDENTIFIER "=" e {$$ = ["initialize_constant","Object",$2,$4];}
+   | "let" IDENTIFIER  ":" type "=" e  {$$ = ["initialize_constant",$4,$2,$6];}
    ;
+
+initialize_var_:
+	"var" IDENTIFIER "=" e {$$ = ["Object",$2,$4];}
+	| "var" IDENTIFIER  ":" type "=" e  {$$ = [$4,$2,$6];};
+
 e
     :
     e 'or' e
@@ -182,7 +221,7 @@ parentheses_expr:
 
 
 type: "[" type "]" {$$ = [$2,"[]"];} | IDENTIFIER "<" type ">" {$$ = [$1,$3]} | IDENTIFIER;
-parameter: IDENTIFIER ":" "out" type {$$ = ["out_parameter",$4,$1];} | IDENTIFIER ":" "inout" type {$$ = ["ref_parameter",$4,$1];} | IDENTIFIER ":" type {$$ = [$3, $1];};
+parameter: IDENTIFIER ":" "out" type {$$ = ["out_parameter",$4,$1];} | IDENTIFIER ":" "in" type {$$ = ["in_parameter",$4,$1];} | IDENTIFIER ":" "inout" type {$$ = ["ref_parameter",$4,$1];} | IDENTIFIER ":" type {$$ = [$3, $1];};
 parameters: parameter "," parameters {$$ = [$1].concat($3);} | parameter {$$ =
  [$1];} | {$$ = [];};
 

@@ -80,12 +80,18 @@
 
 %% /* language grammar */
 
-expressions
-    : statements_ EOF
-        {return ["top_level_statements",$1];}
-    ;
+expressions: top_level_statements EOF {return ["top_level_statements",$1]};
+top_level_statements: top_level_statements top_level_statement {$$ = $1.concat([$2]);} | top_level_statement {$$ =
+ [$1];};
+top_level_statement:
+	statement | initialize_var1 ";" {$$ = ["semicolon",$1]};
+initialize_var1: initialize_var_ {$$ = ["initialize_var"].concat($1);};
+initialize_var: initialize_var_ {$$ = ["lexically_scoped_var"].concat($1);};
 
-statements_: statement statements_ {$$ = [$1].concat($2);} | statement {$$ =
+statements_: statements_without_vars | initialize_vars ";" statements_without_vars {$$ = [["lexically_scoped_vars",$1,$3]]};
+statements_without_vars: statement statements_without_vars {$$ = [$1].concat($2);} | statement {$$ =
+ [$1];};
+initialize_vars: initialize_vars ";" initialize_var {$$ = $1.concat([$3]);} | initialize_var {$$ =
  [$1];};
  
 class_statements: class_statements_ {$$ = ["class_statements",$1]};
@@ -103,12 +109,14 @@ statement
     | "while" "(" e ")" bracket_statements {$$ = ["while",$3,$5];}
     | "do" bracket_statements "while" "(" e ")" ";" {$$ = ["do_while",$2,$5];}
     | "foreach" var_name "(" var_name ")" "{" statements "}" {$$ = ["foreach","Object",$2,$4,$7];}
-    | "for" "(" statement_with_semicolon ";" e ";" statement_with_semicolon ")" "{" statements "}" {$$ = ["for",$3,$5,$7,$10];}
+    | "for" "(" statement_with_semicolon_ ";" e ";" statement_with_semicolon_ ")" "{" statements "}" {$$ = ["for",$3,$5,$7,$10];}
     | "if" "(" e ")" bracket_statements elif {$$ = ["if",$3,$5,$6];}
 	| "if" "(" e ")" bracket_statements {$$ = ["if",$3,$5];}
 	| "unless" "(" e ")" "{" statements "}" {$$ = ["unless",$3,$6];}
     | "sub" IDENTIFIER "{" my "(" parameters ")" "=" "@_" ";" statements "}" {$$ = ["function","public","Object",$2,$6,$11];}
     ;
+
+statement_with_semicolon_: initialize_var1 | statement_with_semicolon;
 
 class_statement:
 	"static" IDENTIFIER "(" parameters ")" "{" statements "}" {$$ = ["static_method","public","Object",$2,$4,$7];}
@@ -119,7 +127,6 @@ statement_with_semicolon
    : 
    parentheses_expr
    | "return" e  {$$ = ["return",$2];}
-   | "my" var_name "=" e {$$ = ["initialize_var","Object",$2,$4];}
    | "my" var_names {$$ = ["initialize_empty_vars","Object",$2];}
    | access_array "=" e {$$ = ["set_var",$1,$3];}
    | var_name "=" e {$$ = ["set_var",$1,$3];}
@@ -130,6 +137,10 @@ statement_with_semicolon
    | var_name "*=" e {$$ = [$2,$1,$3];}
    | var_name "/=" e {$$ = [$2,$1,$3];}
    ;
+
+initialize_var_:
+	"my" var_name "=" e {$$ = ["Object",$2,$4];};
+
 e
     :
     e "?" e ":" e {$$ = ["ternary_operator",$1,$3,$5]}

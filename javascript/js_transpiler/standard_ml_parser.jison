@@ -6,12 +6,15 @@
 [0-9]+("."[0-9]+)?\b  return 'NUMBER'
 \"([^\\\"]|\\.)*\" return 'STRING_LITERAL'
 "otherwise"           return "otherwise"
-"if"                  return "if"
+"if"                  return 'if'
 "of"                  return 'of'
 "in"                  return "in"
-"let"                  return "let"
-"else"                return "else"
-"case"                return "case"
+"let"                 return "let"
+"end"                 return "end"
+"val"                 return 'val'
+"fun"                 return 'fun'
+"else"                return 'else'
+"case"                return 'case'
 "then"                return "then"
 "data"                return "data"
 "return"              return "return"
@@ -27,11 +30,12 @@
 "\\"                  return '\\'
 ">="                  return '>='
 ">"                   return '>'
+"<>"                  return '<>'
 "<="                  return '<='
 "<-"                  return '<-'
 "->"                  return '->'
+"=>"                  return '=>'
 "<"                   return '<'
-"=="                  return '=='
 "="                   return '='
 "*="                  return '*='
 "**"                  return '**'
@@ -52,6 +56,7 @@
 "]"                   return ']'
 "("                   return '('
 ")"                   return ')'
+"~"                   return '~'
 "_"                   return '_'
 [a-zA-Z_][a-zA-Z0-9_]* return 'IDENTIFIER'
 <<EOF>>               return 'EOF'
@@ -63,7 +68,7 @@
 
 %left '||'
 %left '&&'
-%left '<' '<=' '>' '>=' '==' '/='
+%left '<' '<=' '>' '>=' '<>' '='
 %left '+' '-' '++'
 %left '*' '/' 'mod'
 %left '**'
@@ -81,54 +86,48 @@ statements_: statement_ statements_ {$$ = [$1].concat($2);} | statement_ {$$ =
 data_type_or: data_type_or "|" IDENTIFIER {$$ = ["data_type_or",$1,$3];} | IDENTIFIER;
 
 statement_:
-	"data" IDENTIFIER "=" data_type_or {$$ = ["algebraic_data_type",$2,$4];}
-	| IDENTIFIER parameters guard_if_statement {$$ = ["function","public","Object",$1,$2,$3];}
-	| IDENTIFIER "::" types IDENTIFIER parameters "=" statements {
-		var types = $3;
-		var parameter_names = $5;
-		var parameters = [];
-		for(var i = 0; i < parameter_names.length; i++){
-			parameters.push([types[i],parameter_names[i][1]]);
-		}
-		$$ = ["function","public",types[types.length-1],$1,parameters,$7];
-	}
-	| IDENTIFIER parameters "=" statements {$$ = ["function","public","Object",$1,$2,$4];}
-        | IDENTIFIER "=" statements {$$ = ["function","public","Object",$1,[],$3];}
-        | IDENTIFIER guard_if_statement {$$ = ["function","public","Object",$1,[],$2];};
+	"fun" IDENTIFIER "(" parameters ")" ":" type "=" statement {$$ = ["function","public",$7,$2,$4,$9];}
+	| "fun" IDENTIFIER "(" parameters ")" "=" statement {$$ = ["function","public","Object",$2,$4,$7];}
+	| initialize_var;
 
 types: IDENTIFIER "->" types {$$ = [$1].concat($3);} | IDENTIFIER {$$ =
  [$1];};
 
+statements: statement {$$ = ["statements",[$1]];};
+
 statement:
-    "if" e "then" statements elif {$$ = ["if",$2,$4,$5];}
-	| "case" parentheses_expr "of" case_statements {$$ = ["switch",$2,$4];}
-	| "let" declare_vars "in" statements {$$ = ["lexically_scoped_vars",$2,$4];}
+    "case" e "of" case_statements {$$ = ["switch",$2,$4];}
+    | "if" e "then" statements elif {$$ = ["if",$2,$4,$5];}
+	| "let" declare_vars "in" statements "end" {$$ = ["lexically_scoped_vars",$2,$4];}
     | statement_with_semicolon {$$ = ["semicolon",$1];};
 
-case_statement: parentheses_expr "->" statements {$$ = ["case",$1,$3]};
-case_statements_: case_statement case_statements_ {$$ = [$1].concat($2);} | case_statement {$$ =
- [$1];};
-
-case_statements: case_statements_ "_" "->" statements {$$ = $1.concat([["default",$4]])};
-
-
-declare_var: IDENTIFIER "=" e {$$ = ["lexically_scoped_var","Object",$1,$3]};
-declare_vars: declare_var declare_vars {$$ = [$1].concat($2);} | declare_var {$$ =
- [$1];};
-
+initialize_var: "val" IDENTIFIER "=" e ":" type {$$ = ["lexically_scoped_var",$6,$2,$4]}
+| "val" IDENTIFIER "=" e {$$ = ["lexically_scoped_var","Object",$2,$4]};
 statement_with_semicolon
    :
    e  {$$ = ["return",$1];}
+   | initialize_var
    ;
+
+case_statement: e "=>" statements "|" {$$ = ["case",$1,$3]};
+case_statements_: case_statement case_statements_ {$$ = [$1].concat($2);} | case_statement {$$ =
+ [$1];};
+
+case_statements: case_statements_ "_" "=>" statements {$$ = $1.concat([["default",$4]])};
+
+declare_var: "val" IDENTIFIER "=" e ":" type {$$ = ["lexically_scoped_var",$6,$2,$4]} | "val" IDENTIFIER "=" e {$$ = ["lexically_scoped_var","Object",$2,$4]};
+declare_vars: declare_var declare_vars {$$ = [$1].concat($2);} | declare_var {$$ =
+ [$1];};
+
 e
     :
     e '||' e
         {$$ = [$2,$1,$3];}
     |e '&&' e
         {$$ = [$2,$1,$3];}
-    |e '==' e
-        {$$ = [$2,$1,$3];}
-    |e '/=' e
+    |e '=' e
+        {$$ = ['==',$1,$3];}
+    |e '<>' e
         {$$ = ['!=',$1,$3];}
     |e '<=' e
         {$$ = [$2,$1,$3];}
@@ -152,7 +151,7 @@ e
         {$$ = ["%",$1,$3];}
 	| e '**' e
         {$$ = [$2,$1,$3];}
-    | '-' e %prec UMINUS
+    | '~' e %prec UMINUS
         {$$ = ["-",$2];}
     | parentheses_expr {$$ = $1;}
     ;
@@ -184,20 +183,15 @@ parentheses_expr:
     ;
 
 type: IDENTIFIER;
-parameter: IDENTIFIER {$$ = ["Object",$1];};
+parameter: IDENTIFIER ":" IDENTIFIER {$$ = [$3, $1];} | IDENTIFIER {$$ = ["Object",$1];};
 parameters: parameter  parameters {$$ = [$1].concat($2);} | parameter {$$ =
  [$1];};
 access_arr: parentheses_expr "!!" access_arr {$$ = [$1].concat($3);} | parentheses_expr {$$ =
  [$1];};
 exprs: e "," exprs {$$ = [$1].concat($3);} | e {$$ = [$1];};
 args: parentheses_expr args {$$ = [$1].concat($2);} | parentheses_expr {$$ = [$1];};
-elif: "else" statements {$$ = ["else",$2];};
+elif: else_statement;
+
+else_statement: "else" statement {$$ = ["else",$2];};
 identifiers: IDENTIFIER "," identifiers {$$ = [$1].concat($3);} | IDENTIFIER {$$ = [$1];};
 
-guard_if_statement:
-	"|" e "=" statements guard_elif {$$ = ["if",$2,$4,$5];};
-guard_elif:
-	"|" e "=" statements guard_elif {$$ = ["elif",$2,$4,$5];}
-	| "|" "otherwise" "=" statements {$$ = ["else",$4];};
-
-statements: statement {$$ = ["statements",[$1]]};

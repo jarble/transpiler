@@ -6,7 +6,7 @@
 [0-9]+("."[0-9]+)?\b  return 'NUMBER'
 \"([^\\\"]|\\.)*\" return 'STRING_LITERAL'
 "defmacro"            return 'defmacro'
-"defun"               return 'defun'
+"define"              return 'define'
 "while"               return 'while'
 "cond"                return 'cond'
 "loop"                return 'loop'
@@ -15,7 +15,6 @@
 "if"                  return 'if'
 "do"                  return 'do'
 "t"                   return 't'
-"let"                 return 'let'
 "not"                 return 'not'
 "and"                 return 'and'
 "?"                   return '?'
@@ -71,7 +70,7 @@ statements_: statement statements_ {$$ = [$1].concat($2);} | statement {$$ =
 statements: statements_ {$$ = ["statements",$1]};
 
 statement:
-	"(" "defun" IDENTIFIER "(" parameters ")" statement ")" {$$ = ["function","public","Object",$3,$5,$7]}
+	"(" "define" IDENTIFIER "(" parameters ")" statement ")" {$$ = ["function","public","Object",$3,$5,$7]}
     | "(" "defmacro" IDENTIFIER "(" exprs ")" statement_with_semicolon ")" {$$ = ["macro",$3,$5,$7];}
     | statement_with_semicolon {$$=["semicolon",$1];}
     | "(" "cond" "(" e bracket_statements ")" elif ")" {$$ = ["if",$4,$5,$7];}

@@ -88,9 +88,13 @@
 
 expressions: statements_ EOF {return ["top_level_statements",$1]};
 
-statements_: statement statements_ {$$ = [$1].concat($2);} | statement {$$ =
+statements_: statements_without_vars | initialize_vars ";" statements_without_vars {$$ = [["lexically_scoped_vars",$1,$3]]};
+statements_without_vars: statement statements_without_vars {$$ = [$1].concat($2);} | statement {$$ =
+ [$1];};
+initialize_vars: initialize_vars ";" initialize_var {$$ = $1.concat([$3]);} | initialize_var {$$ =
  [$1];};
  
+
 class_statements: class_statements_ {$$ = ["class_statements",$1]};
 statements: statements_ {$$ = ["statements",$1]};
 
@@ -108,6 +112,10 @@ class_:
 	| "class" IDENTIFIER ":" "public" IDENTIFIER "{" class_statements "}" {$$ = ["class_extends","public",$2,$5,$7];}
 	| "class" IDENTIFIER "implements" IDENTIFIER "{" class_statements "}" {$$ = ["class_implements","public",$2,$4,$6];};
 
+top_level_statement:
+	statement | initialize_var1 ";" {$$ = ["semicolon",$1]};
+top_level_statements: top_level_statements top_level_statement {$$ = $1.concat([$2]);} | top_level_statement {$$ =
+ [$1];};
 statement
     :
     "template" "<" type_params ">" type IDENTIFIER "(" parameters ")" "{" statements "}" {$$ = ["generic_function","public",$5,$6,$8,$11,$3];}
@@ -116,12 +124,14 @@ statement
     | "while" "(" e ")" bracket_statements {$$ = ["while",$3,$5];}
     | "do" bracket_statements "while" "(" e ")" ";" {$$ = ["do_while",$2,$5];}
     | "switch" "(" e ")" "{" case_statements "}" {$$ = ["switch",$3,$6];}
-    | "for" "(" statement_with_semicolon ";" e ";" statement_with_semicolon ")" bracket_statements {$$ = ["for",$3,$5,$7,$9];}
+    | "for" "(" statement_with_semicolon_ ";" e ";" statement_with_semicolon_ ")" bracket_statements {$$ = ["for",$3,$5,$7,$9];}
     | "for" "(" type IDENTIFIER ":" IDENTIFIER ")" bracket_statements {$$ = ["foreach",$3,$4,$6,$8];}
     | "if" "(" e ")" bracket_statements elif {$$ = ["if",$3,$5,$6];}
 	| "if" "(" e ")" bracket_statements {$$ = ["if",$3,$5];}
     | type IDENTIFIER "(" parameters ")" "{" statements "}" {$$ = ["function","public",$1,$2,$4,$7];}
     ;
+
+statement_with_semicolon_: initialize_var1 | statement_with_semicolon;
 
 case_statement: "case" e ":" statements "break" ";" {$$ = ["case",$2,$4]};
 case_statements_: case_statement case_statements_ {$$ = [$1].concat($2);} | case_statement {$$ =
@@ -131,14 +141,14 @@ case_statements: case_statements_ "default" ":" statements {$$ = $1.concat([["de
 
 
 class_statement:
-	access_modifier type IDENTIFIER "=" e ";" {$$ = ["initialize_instance_var_with_value",$1,$2,$3,$5];}
-	| access_modifier type IDENTIFIER ";" {$$ = ["initialize_instance_var",$1,$2,$3];}
-	| access_modifier "static" type IDENTIFIER "=" e ";" {$$ = ["initialize_static_instance_var",$1,$3,$4,$6];}
+	type IDENTIFIER "=" e ";" {$$ = ["initialize_instance_var_with_value","public",$1,$2,$4];}
+	| type IDENTIFIER ";" {$$ = ["initialize_instance_var","public",$1,$2];}
+	| "static" type IDENTIFIER "=" e ";" {$$ = ["initialize_static_instance_var","public",$2,$3,$5];}
 	| access_modifier "static" type IDENTIFIER "(" parameters ")" ";" {$$ = ["interface_static_method",$1,$3,$4,$6];}
 	| access_modifier type IDENTIFIER "(" parameters ")" ";" {$$ = ["interface_instance_method",$1,$2,$3,$5];}
 	| "static" type IDENTIFIER "(" parameters ")" "{" statements "}" {$$ = ["static_method","public",$2,$3,$5,$8];}
 	| type IDENTIFIER "(" parameters ")" "{" statements "}" {$$ = ["instance_method","public",$1,$2,$4,$7];}
-	| type "operator" OPERATOR "(" parameters ")" "{" statements "}" {$$ = ["instance_overload_operator","public",$1,$3,$5,$8];};
+	| type "operator" OPERATOR "(" parameters ")" "{" statements "}" {$$ = ["static_overload_operator","public",$1,$3,$5,$8];};
 
 OPERATOR: "+="|"-="|"*="|"/="|"++"|"--"|"<="|">="|"<"|">"|"&&"|"||"|"=="|"+"|"-"|"*"|"/";
 
@@ -147,8 +157,6 @@ statement_with_semicolon
    "return" e  {$$ = ["return",$2];}
    | "const" type IDENTIFIER "=" e {$$ = ["initialize_constant",$2,$3,$5];}
    | "const" type identifiers {$$ = ["initialize_empty_constants",$2,$3];}
-   | type IDENTIFIER "=" "{" exprs "}" {$$ = ["initialize_var",$1,$2,["initializer_list",$1,$5]]}
-   | type IDENTIFIER "=" e {$$ = ["initialize_var",$1,$2,$4];}
    | type identifiers {$$ = ["initialize_empty_vars",$1,$2];}
    | access_array "=" e {$$ = ["set_var",$1,$3];}
    | IDENTIFIER "=" e {$$ = ["set_var",$1,$3];}
@@ -163,6 +171,12 @@ statement_with_semicolon
    | "cout" "<" "<" parentheses_expr {$$ = ["<<",$1,$4];}
    | "cout" "<" "<" e "<" "<" parentheses_expr {$$ = ["<<",["<<",$1,$4],$7];}
    ;
+
+initialize_var1: initialize_var_ {$$ = ["initialize_var"].concat($1);};
+initialize_var: initialize_var_ {$$ = ["lexically_scoped_var"].concat($1);};
+initialize_var_:
+   type IDENTIFIER "=" "{" exprs "}" {$$ = [$1,$2,["initializer_list",$1,$5]]}
+   | type IDENTIFIER "=" e {$$ = [$1,$2,$4];};
 
 key_values: key_values "," key_value {$$ = $1.concat([$3]);} | key_value {$$ = [$1];};
 key_value: "{" STRING_LITERAL "," e "}" {$$ = [$2,$4]};
