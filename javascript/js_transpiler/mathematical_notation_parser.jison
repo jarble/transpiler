@@ -82,8 +82,8 @@ statements: statements_ {$$ = ["statements",$1]};
 
 statement
     :
-	IDENTIFIER "(" parameters ")" "=" "{" e "}" {$$ = ["function","public","Object",$1,$3,["statements",[["semicolon",["return",$7]]]]];}
-	| IDENTIFIER "(" parameters ")" "=" e {$$ = ["function","public","Object",$1,$3,["statements",[["semicolon",["return",$6]]]]];};
+	IDENTIFIER "(" parameters ")" "=" "{" e "}" {$$ = ["function","public","double",$1,$3,["statements",[["semicolon",["return",$7]]]]];}
+	| IDENTIFIER "(" parameters ")" "=" e {$$ = ["function","public","double",$1,$3,["statements",[["semicolon",["return",$6]]]]];};
 
 e
     :
@@ -147,7 +147,7 @@ parentheses_expr_:
         {$$ = yytext;};
 
 
-parameter: IDENTIFIER {$$ = ["Object",$1];};
+parameter: IDENTIFIER {$$ = ["double",$1];};
 parameters: parameter "," parameters {$$ = [$1].concat($3);} | parameter {$$ =
  [$1];} | "void" {$$ = [];} | {$$ = [];};
 exprs: e "," exprs {$$ = [$1].concat($3);} | e {$$ = [$1];};

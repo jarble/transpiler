@@ -97,10 +97,10 @@ case 4:
 this.$ = ["statements",$$[$0]]
 break;
 case 5:
-this.$ = ["function","public","Object",$$[$0-7],$$[$0-5],["statements",[["semicolon",["return",$$[$0-1]]]]]];
+this.$ = ["function","public","double",$$[$0-7],$$[$0-5],["statements",[["semicolon",["return",$$[$0-1]]]]]];
 break;
 case 6:
-this.$ = ["function","public","Object",$$[$0-5],$$[$0-3],["statements",[["semicolon",["return",$$[$0]]]]]];
+this.$ = ["function","public","double",$$[$0-5],$$[$0-3],["statements",[["semicolon",["return",$$[$0]]]]]];
 break;
 case 7: case 8: case 11: case 12: case 13: case 14: case 15: case 16: case 18: case 19: case 20: case 21: case 22:
 this.$ = [$$[$0-1],$$[$0-2],$$[$0]];
@@ -136,7 +136,7 @@ case 33: case 34: case 35:
 this.$ = yytext;
 break;
 case 36:
-this.$ = ["Object",$$[$0]];
+this.$ = ["double",$$[$0]];
 break;
 case 37: case 41:
 this.$ = [$$[$0-2]].concat($$[$0]);

@@ -86,7 +86,7 @@ top_level_statement:
 initialize_var1: initialize_var_ {$$ = ["initialize_var"].concat($1);};
 initialize_var: initialize_var_ {$$ = ["lexically_scoped_var"].concat($1);};
 
-statements_: statements_with_vars | initialize_vars statements_with_vars {$$ = [["lexically_scoped_vars",$1,$2]]};
+statements_: statements_with_vars | initialize_var_ {$$ = [["semicolon",["initialize_var"].concat($1)]]} | initialize_var_ statements_with_vars {$$ = [["lexically_scoped_vars",[["lexically_scoped_var"].concat($1)],$2]]};
 statements_with_vars: statements_without_vars initialize_var1 {$$ = $1.concat([["semicolon",$2]]);} | statements_without_vars;
 statements_without_vars: statements_without_vars statement {$$ = $1.concat([$2]);} | statement {$$ =
  [$1];};
@@ -124,8 +124,8 @@ struct_statement:
 	;
 
 class_statement:
-	initialize_var_ ";" {$$ = ["initialize_instance_var_with_value","public"].concat($1);}
-	| "var" IDENTIFIER ";" {$$ = ["initialize_instance_var","public","Object",$2];}
+	initialize_var_ {$$ = ["initialize_instance_var_with_value","public"].concat($1);}
+	| "var" IDENTIFIER {$$ = ["initialize_instance_var","public","Object",$2];}
 	| "func" IDENTIFIER "(" parameters ")" "->" IDENTIFIER "{" statements "}" {$$ = ["instance_method","public",$7,$2,$4,$9];}
 	| "class" "func" IDENTIFIER "(" parameters ")" "->" IDENTIFIER "{" statements "}" {$$ = ["instance_method","public",$8,$3,$5,$10];};
 
