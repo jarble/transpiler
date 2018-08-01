@@ -1235,7 +1235,7 @@ function statements(input_lang,lang,indent,arr){
 			return generate_code(input_lang,lang,indent,a);
 		});
 		//console.log(JSON.stringify(arr[1]));
-		if(member(lang,['java','coffeequate','alt-ergo','gdscript','sage','thrift','pythological','sentient','scriptol','chrg','instaparse','parboiled','javacc','treetop','setl','ruby-prolog','mysql','smalltalk','picolisp','newlisp','regex','txl','english','glsl','applescript','sidef','tex','protobuf','chapel','idris','coq','lc++','chr.js','reasoned-php','logicjs','tcl','yacas','coconut','gap','lark',"pypeg",'canopy','ats','z3py',"peg.js","antlr","nearley",'jison','vhdl','c','pseudocode','perl 6','haxe','javascript','c++','c#','php','dart','actionscript','typescript','processing','vala','bc','ceylon','hack','perl'])){
+		if(member(lang,['java','lemon','coffeequate','alt-ergo','gdscript','sage','thrift','pythological','sentient','scriptol','chrg','instaparse','parboiled','javacc','treetop','setl','ruby-prolog','mysql','smalltalk','picolisp','newlisp','regex','txl','english','glsl','applescript','sidef','tex','protobuf','chapel','idris','coq','lc++','chr.js','reasoned-php','logicjs','tcl','yacas','coconut','gap','lark',"pypeg",'canopy','ats','z3py',"peg.js","antlr","nearley",'jison','vhdl','c','pseudocode','perl 6','haxe','javascript','c++','c#','php','dart','actionscript','typescript','processing','vala','bc','ceylon','hack','perl'])){
 			return a.join("");
 		}
 		else if(member(lang,['picat','transact-sql','maxima','lpeg','prolog','constraint handling rules','logtalk','erlang','lpeg'])){
@@ -4567,6 +4567,8 @@ function generate_code(input_lang,lang,indent,arr){
 			&& (to_return = name+": ["+body+"]")
 		|| member(lang,['chrg'])
 			&& (to_return = body+" ::> "+name+".")
+		|| member(lang,['lemon'])
+			&& (to_return = name+" ::= "+body+".")
 		|| member(lang,['txl'])
 			&& (to_return = "define expression " + name+" "+body+" end define")
 		|| member(lang,['perl 6'])
@@ -4583,7 +4585,7 @@ function generate_code(input_lang,lang,indent,arr){
 			&& (to_return = name+"<-"+body)
 		|| member(lang,['marpa'])
 			&& (to_return = name+"::="+body)
-		|| member(lang,['nearley','javacc'])
+		|| member(lang,['nearley','javacc','yecc'])
 			&& (to_return = name+"->"+body)
 		|| member(lang,['perl 6'])
 			&& (to_return = "rule " + name+"{"+body+"}");
@@ -4595,8 +4597,10 @@ function generate_code(input_lang,lang,indent,arr){
 		
 		member(lang,['prolog'])
 			&& (to_return = name+"("+params+") -->"+body)
-		member(lang,['chrg'])
+		|| member(lang,['chrg'])
 			&& (to_return = body + " ::> " + name+"("+params+").")
+		|| member(lang,['lemon'])
+			&& (to_return = name+"("+params+") ::= "+body+".")
 		|| member(lang,['nearley'])
 			&& (to_return = name+"["+params+"] ->"+body)
 		|| member(lang,['peg.js'])
@@ -4612,7 +4616,8 @@ function generate_code(input_lang,lang,indent,arr){
 		|| (to_return = arr[1]);
 	}
 	else if(arr[0] === "logic_or"){
-		if(member(lang,['nearley','chrg','instaparse','parboiled','javacc','rebol','lpeg','waxeye','txl','treetop','abnf','peg.js','antlr','marpa','wirth syntax notation','jison'])){
+		if(member(lang,['nearley','lemon','parsec','peggy','happy','chrg','instaparse','parboiled','javacc','rebol','lpeg','waxeye','txl','treetop','abnf','peg.js','antlr','marpa','wirth syntax notation','jison'])){
+			//for all metalanguages
 			to_return = generate_code(input_lang,lang,indent,["grammar_or",arr[1],arr[2]]);
 		}
 		
@@ -4632,7 +4637,7 @@ function generate_code(input_lang,lang,indent,arr){
 		types[to_return] = "grammar";
 	}
 	else if(arr[0] === "logic_and"){
-		if(member(lang,['nearley','chrg','instaparse','parboiled','javacc','waxeye','rebol','lpeg','txl','treetop','abnf','peg.js','antlr','marpa','wirth syntax notation','jison'])){
+		if(member(lang,['nearley','pyparsing','lemon','chrg','instaparse','parboiled','javacc','waxeye','rebol','lpeg','txl','treetop','abnf','peg.js','antlr','marpa','wirth syntax notation','jison'])){
 			to_return = generate_code(input_lang,lang,indent,["grammar_and",arr[1],arr[2]]);
 		}
 		var a = generate_code(input_lang,lang,indent+"    ",arr[1]);
@@ -4673,7 +4678,7 @@ function generate_code(input_lang,lang,indent,arr){
 		var a = generate_code(input_lang,lang,indent+"    ",arr[1]);
 		var b = generate_code(input_lang,lang,indent+"    ",arr[2]);
 		
-		member(lang,['marpa','instaparse','javacc','regex','txl','lark','coco/r','pest','wirth syntax notation','rebol','yapps','antlr','jison','waxeye','ometa','ebnf','nearley','parslet','yacc','perl 6','rebol','hampi','earley-parser-js'])
+		member(lang,['marpa','instaparse','happy','javacc','regex','txl','lark','coco/r','pest','wirth syntax notation','rebol','yapps','antlr','jison','waxeye','ometa','ebnf','nearley','parslet','yacc','perl 6','rebol','hampi','earley-parser-js'])
 			&& (to_return = a+"|"+b)
 		|| member(lang,['prolog','chrg'])
 			&& (to_return = a+";"+b)
@@ -4681,7 +4686,7 @@ function generate_code(input_lang,lang,indent,arr){
 			&& (to_return = "["+a+","+b+"]")
 		|| member(lang,['parboiled'])
 			&& (to_return = "AnyOf("+a+","+b+")")
-		|| member(lang,['peg.js','abnf','treetop','canopy'])
+		|| member(lang,['peg.js','abnf','treetop','canopy','peggy'])
 			&& (to_return = a+"/"+b)
 		|| member(lang,['lpeg'])
 			&& (to_return = a+" + "+b);
@@ -4691,7 +4696,7 @@ function generate_code(input_lang,lang,indent,arr){
 		var a = generate_code(input_lang,lang,indent+"    ",arr[1]);
 		var b = generate_code(input_lang,lang,indent+"    ",arr[2]);
 		
-		member(lang,['nearley','instaparse','javacc','treetop','txl','perl 6','canopy','coco/r','abnf','peg.js','antlr','marpa','wirth syntax notation','jison'])
+		member(lang,['nearley','lemon','yecc','peggy','instaparse','javacc','treetop','txl','perl 6','canopy','coco/r','abnf','peg.js','antlr','marpa','wirth syntax notation','jison'])
 			&& (to_return = a+" "+b)
 		|| member(lang,['prolog','chrg'])
 			&& (to_return = a+","+b)
@@ -8344,7 +8349,7 @@ function function_call(lang, name, params){
 			"name{params}"],
 		[['peg.js'],
 			"params:name"],
-		[['wolfram','ruby-prolog'],
+		[['wolfram','ruby-prolog','nearley'],
 			"name[params]"],
 		[['haskell','common prolog','hy','clips','pddl','ocaml','smt-lib','smt-lib','clips','clojure','common lisp','clips','racket','scheme'],
 			"(name params)"]
