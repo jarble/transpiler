@@ -109,7 +109,7 @@ initialize_var1: initialize_var_ {$$ = ["initialize_var"].concat($1);};
 initialize_var: initialize_var_ {$$ = ["lexically_scoped_var"].concat($1);};
 initialize_var_: 
    type IDENTIFIER "=" e {$$ = [$1,$2,$4];}
-   | type IDENTIFIER "=" "{" exprs "}" {$$ = ["initialize_var",$1,$2,[".",[["initializer_list","Object",$5]]]];}
+   | type IDENTIFIER "=" "{" exprs "}" {$$ = [$1,$2,[".",[["initializer_list","Object",$5]]]];}
    ;
 
 class_statements: class_statements_ {$$ = ["class_statements",$1]};

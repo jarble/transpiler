@@ -121,7 +121,7 @@ case 18:
 this.$ = [$$[$0-3],$$[$0-2],$$[$0]];
 break;
 case 19:
-this.$ = ["initialize_var",$$[$0-5],$$[$0-4],[".",[["initializer_list","Object",$$[$0-1]]]]];
+this.$ = [$$[$0-5],$$[$0-4],[".",[["initializer_list","Object",$$[$0-1]]]]];
 break;
 case 20:
 this.$ = ["class_statements",$$[$0]]
