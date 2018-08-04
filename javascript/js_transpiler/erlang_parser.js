@@ -90,7 +90,7 @@ case 2:
 this.$ = ["statements",$$[$0]]
 break;
 case 4:
-this.$ = [["lexically_scoped_vars",$$[$0-2],$$[$0]]]
+this.$ = [["lexically_scoped_vars",$$[$0-2],["statements",$$[$0]]]]
 break;
 case 5: case 7: case 46:
 this.$ = $$[$0-2].concat([$$[$0]]);

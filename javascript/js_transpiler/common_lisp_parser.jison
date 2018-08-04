@@ -77,7 +77,7 @@ statement:
     | "(" "cond" "(" e bracket_statements ")" elif ")" {$$ = ["if",$4,$5,$7];}
 	| "(" "if" e bracket_statements ")" {$$ = ["if",$3,$4];}
 	| "(" "if" e bracket_statements bracket_statements ")" {$$ = ["if",$3,$4];}
-	| "(" "let" "(" declare_vars ")" bracket_statements ")" {$$ = ["lexically_scoped_vars",$4,$6];}
+	| "(" "let" "(" declare_vars ")" bracket_statements ")" {$$ = ["lexically_scoped_vars",$4,["statements",$6]];}
 	| "(" "loop" "while" e "do" statements ")" {$$ = ["while",$4,$6];}
 	| "(" "loop" "do" statements "while" e ")" {$$ = ["do_while",$4,$6];}
 	;

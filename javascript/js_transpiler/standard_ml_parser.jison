@@ -98,7 +98,7 @@ statements: statement {$$ = ["statements",[$1]];};
 statement:
     "case" e "of" case_statements {$$ = ["switch",$2,$4];}
     | "if" e "then" statements elif {$$ = ["if",$2,$4,$5];}
-	| "let" declare_vars "in" statements "end" {$$ = ["lexically_scoped_vars",$2,$4];}
+	| "let" declare_vars "in" statements "end" {$$ = ["lexically_scoped_vars",$2,["statements",$4]];}
     | statement_with_semicolon {$$ = ["semicolon",$1];};
 
 initialize_var: "val" IDENTIFIER "=" e ":" type {$$ = ["lexically_scoped_var",$6,$2,$4]}

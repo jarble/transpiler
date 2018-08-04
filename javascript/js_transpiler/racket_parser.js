@@ -115,7 +115,7 @@ case 10:
 this.$ = ["if",$$[$0-3],$$[$0-2]];
 break;
 case 11:
-this.$ = ["lexically_scoped_vars",$$[$0-3],$$[$0-1]];
+this.$ = ["lexically_scoped_vars",$$[$0-3],["statements",$$[$0-1]]];
 break;
 case 12:
 this.$ = ["while",$$[$0-3],$$[$0-1]];
@@ -124,7 +124,7 @@ case 13:
 this.$ = ["do_while",$$[$0-3],$$[$0-1]];
 break;
 case 14:
-this.$ = ["lexically_scoped_var",$$[$0-2],$$[$0-1]]
+this.$ = ["lexically_scoped_var","Object",$$[$0-2],$$[$0-1]]
 break;
 case 17:
 this.$ = ["return",$$[$0]]

@@ -87,7 +87,7 @@ case 1:
 return ["top_level_statements",$$[$0-1]]
 break;
 case 3:
-this.$ = [["lexically_scoped_vars",$$[$0-1],$$[$0]]]
+this.$ = [["lexically_scoped_vars",$$[$0-1],["statements",$$[$0]]]]
 break;
 case 4:
 this.$ = $$[$0-1].concat($$[$01]);

@@ -93,7 +93,7 @@ expressions
         {return ["top_level_statements",$1];}
     ;
 
-statements_: statements_without_vars | initialize_vars statements_without_vars {$$ = [["lexically_scoped_vars",$1,$2]]};
+statements_: statements_without_vars | initialize_vars statements_without_vars {$$ = [["lexically_scoped_vars",$1,["statements",$2]]]};
 statements_without_vars: statement statements_without_vars {$$ = [$1].concat($2);} | statement {$$ =
  [$1];};
 initialize_vars: initialize_vars initialize_var {$$ = $1.concat([$2]);} | initialize_var {$$ =

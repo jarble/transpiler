@@ -90,7 +90,7 @@ case 3:
 this.$ = [["semicolon",["initialize_var"].concat($$[$0-1])]]
 break;
 case 4:
-this.$ = [["lexically_scoped_vars",[["lexically_scoped_var",$$[$0-2]]],$$[$0]]]
+this.$ = [["lexically_scoped_vars",[["lexically_scoped_var"].concat($$[$0-2])],["statements",$$[$0]]]]
 break;
 case 5: case 28:
 this.$ = $$[$0-1].concat([$$[$0]]);

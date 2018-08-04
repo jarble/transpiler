@@ -7,6 +7,10 @@ var ws_ = " ";
 var class_name = "";
 var type_parameters = [];
 
+function is_declarative_language(lang){
+	return member(lang,['erlang','smt-lib','mathematical notation','haskell','prolog','logtalk','minizinc','reverse polish notation']);
+}
+
 function file_extension(lang){
 	if(lang === "c++"){
 		return "cpp";
@@ -1037,6 +1041,10 @@ function parameter(input_lang,lang,x){
 		else if(member(lang,["java"])){
 			return "final "+type+" "+name;
 		}
+		else if(is_declarative_language(lang)){
+			//for all declarative languages
+			return parameter(input_lang,lang,x);
+		}
 		throw "final_parameter is not defined for "+lang;
 	}
 	else if(x[0] === "varargs"){
@@ -1097,6 +1105,10 @@ function parameter(input_lang,lang,x){
 		else if(member(lang,["swift","ada","vhdl"])){
 			return name + ": in " + var_type(input_lang,lang,type);
 		}
+		else if(is_declarative_language(lang)){
+			//for all declarative languages
+			return parameter(input_lang,lang,x);
+		}
 	}
 	else if(x[0] === "ref_parameter"){
 		var type = x[1];
@@ -1136,6 +1148,10 @@ function parameter(input_lang,lang,x){
 			//in perl, the arguments in a function call should be preceded by
 			return name;
 		}
+		else if(is_declarative_language(lang)){
+			//for all declarative languages
+			return parameter(input_lang,lang,x);
+		}
 		throw "ref_parameter is not defined for "+lang;
 	}
 	else if(x[0] === "out_parameter"){
@@ -1158,6 +1174,10 @@ function parameter(input_lang,lang,x){
 			//in perl, the arguments in a function call should be preceded by \
 			return name;
 		}
+		else if(is_declarative_language(lang)){
+			//for all declarative languages
+			return parameter(input_lang,lang,x);
+		}
 		throw "out_parameter is not defined for "+lang;
 	}
 	else if(x[0] === "out_parameter"){
@@ -1167,8 +1187,9 @@ function parameter(input_lang,lang,x){
 		if(member(lang,["c#"])){
 			return "out " + var_type(input_lang,lang,type) + " "+name;
 		}
-		else if(member(lang,["prolog"])){
-			return name;
+		else if(is_declarative_language(lang)){
+			//for all declarative languages
+			return parameter(input_lang,lang,x);
 		}
 		throw "out_parameter is not defined for "+lang;
 	}
@@ -5289,8 +5310,7 @@ function generate_code(input_lang,lang,indent,arr){
 		//console.log("initialize_var: "+ name + " "+arr[1]);
 		types[name] = arr[1];
 		
-		if(member(lang, ['erlang','smt-lib','mathematical notation','haskell','prolog','logtalk','minizinc','reverse polish notation'])){
-			// for all declarative programming languages
+		if(is_declarative_language(lang)){			// for all declarative programming languages
 			return generate_code(input_lang,lang,indent,["initialize_var",arr[1],arr[2],arr[3]]);
 		}
 		else if(member(lang, ["java"])){

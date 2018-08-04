@@ -109,7 +109,7 @@ case_statement: parentheses_expr "->" statements {$$ = ["case",$1,$3]};
 case_statements_: case_statement case_statements_ {$$ = [$1].concat($2);} | case_statement {$$ =
  [$1];};
 
-case_statements: case_statements_ "_" "->" statements {$$ = $1.concat([["default",$4]])};
+case_statements: case_statements_ "_" "->" statements {$$ = $1.concat([["default",["statements",$4]]])};
 
 
 declare_var: IDENTIFIER "=" e {$$ = ["lexically_scoped_var","Object",$1,$3]};

@@ -81,7 +81,7 @@ top_level_statements: top_level_statements top_level_statement {$$ = $1.concat([
  [$1];};
 
 
-statements_: statements_with_vars | initialize_var_ ";" {$$ = [["semicolon",["initialize_var"].concat($1)]]} | initialize_var_ ";" statements_with_vars {$$ = [["lexically_scoped_vars",[["lexically_scoped_var"].concat($1)],$3]]};
+statements_: statements_with_vars | initialize_var_ ";" {$$ = [["semicolon",["initialize_var"].concat($1)]]} | initialize_var_ ";" statements_with_vars {$$ = [["lexically_scoped_vars",[["lexically_scoped_var"].concat($1)],["statements",$3]]]};
 statements_without_vars: statements_without_vars statement {$$ = $1.concat([$2]);} | statement {$$ =
  [$1];};
 statements_with_vars: statements_without_vars initialize_var1 ";" {$$ = $1.concat([["semicolon",$2]]);} | statements_without_vars;

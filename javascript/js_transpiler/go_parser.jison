@@ -76,7 +76,7 @@
 
 expressions: top_level_statements EOF {return ["top_level_statements",$1]};
 
-statements_: statements_with_vars | initialize_vars statements_with_vars {$$ = [["lexically_scoped_vars",$1,$2]]};
+statements_: statements_with_vars | initialize_vars statements_with_vars {$$ = [["lexically_scoped_vars",$1,["statements",$2]]]};
 statements_without_vars: statements_without_vars statement {$$ = $1.concat($3);} | statement {$$ =
  [$1];};
 statements_with_vars: statements_without_vars initialize_var1 {$$ = $1.concat([["semicolon",$2]]);} | statements_without_vars;
