@@ -6287,9 +6287,15 @@ function generate_code(input_lang,lang,indent,arr){
 		//add or concatenate strings
 		var a = generate_code(input_lang,lang,indent,arr[1]);
 		var b = generate_code(input_lang,lang,indent,arr[2]);
-		if(input_lang === "lua" && arr[0] === ".." || member(input_lang,["php",'hack',"perl"]) && arr[0] ==="."){
-			types[a] = "String";
-			types[b] = "String";
+		if(input_lang === "lua" && arr[0] === ".." || member(input_lang,["php",'hack',"perl"])){
+			if(arr[0] ==="."){
+				types[a] = "String";
+				types[b] = "String";
+			}
+			else if(arr[0] ==="+"){
+				types[a] = "double";
+				types[b] = "double";
+			}
 		}
 		
 		if(prefix_arithmetic_lang(lang) && (types[a] !== "String") && (types[b] !== "String")){
