@@ -19,6 +19,7 @@
 ".and."               return '.and.'
 ".or."                return '.or.'
 ".eq."                return '.eq.'
+".neq."               return '.neq.'
 ".ne."                return '.ne.'
 ".gt."                return '.gt.'
 ".lt."                return '.lt.'
@@ -78,7 +79,7 @@
 
 %left '.or.'
 %left '.and.'
-%left '<' '<=' '>' '>=' '==' '/=' '.ge.' '.le.' '.gt.' '.lt.' '.eq.' '.ne.'
+%left '<' '<=' '>' '>=' '==' '/=' '.neq.' '.ge.' '.le.' '.gt.' '.lt.' '.eq.' '.ne.'
 %left '..' '+' '-'
 %left '*' '/' '%'
 %left '**'
