@@ -6371,7 +6371,7 @@ function generate_code(input_lang,lang,indent,arr){
 			}
 			types[to_return] = "String";
 		}
-		else if((infix_arithmetic_lang(lang) || lang === "tex") && (types[a] === "String") && (types[b] !== "String")){
+		else if((infix_arithmetic_lang(lang) || lang === "tex") && (types[a] !== "String") && (types[b] !== "String")){
 			to_return = a + "+" + b;
 			same_var_type(to_return,a);
 		}
