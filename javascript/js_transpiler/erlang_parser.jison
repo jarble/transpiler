@@ -90,8 +90,9 @@ statement:
 statement_with_semicolon:
 	e {$$= ["return",$1];};
 
-initialize_var:
-	IDENTIFIER "=" e {$$ = ["lexically_scoped_var","Object",$1,$3];};
+initialize_var1: initialize_var_ {$$ = ["initialize_var"].concat($1);};
+initialize_var: initialize_var_ {$$ = ["lexically_scoped_var"].concat($1);};   
+initialize_var_: IDENTIFIER "=" e {$$ = ["Object",$1,$3];};
 
 e
     :

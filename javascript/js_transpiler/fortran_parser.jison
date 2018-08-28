@@ -33,6 +33,7 @@
 "if"                  return 'if'
 "else"                return 'else'
 "case"                return 'case'
+"call"                return 'call'
 "return"              return 'return'
 "while"               return 'while'
 "for"                 return 'for'
@@ -116,9 +117,9 @@ statement
     | "if" e "then" statements elif "end" "if" {$$ = ["if",$2,$4,$5];}
 	| "if" e "then" statements "end" "if" {$$ = ["if",$2,$4];}
 	| "select" "case" e case_statements "end" "select" {$$ = ["switch",$3,$4];}
-    | "subroutine" IDENTIFIER "(" identifiers ")" statements "end" "subroutine" IDENTIFIER {$$ = ["function","public","void",$2,[],$6];}
+    | "subroutine" IDENTIFIER "(" ")" statements "end" "subroutine" IDENTIFIER {$$ = ["function","public","void",$2,[],$5];}
     | "subroutine" IDENTIFIER "(" identifiers ")" parameters statements "end" "subroutine" IDENTIFIER {$$ = ["function","public","void",$2,$6,$7];}
-    | IDENTIFIER "function" IDENTIFIER "(" identifiers ")" statements "return" "end" {$$ = ["function","public",$1,$3,[],$7];}
+    | IDENTIFIER "function" IDENTIFIER "(" ")" statements "return" "end" {$$ = ["function","public",$1,$3,[],$6];}
     | IDENTIFIER "function" IDENTIFIER "(" identifiers ")" parameters statements "return" "end" {$$ = ["function","public",$1,$3,$7,$8];}
     ;
 
@@ -140,7 +141,7 @@ statement_with_semicolon
    var_type "::" identifiers {$$ = ["initialize_empty_vars",$1,$3];}
    | var_type identifier {$$ = ["initialize_empty_vars",$1,[$2]];}
    | IDENTIFIER "=" e {$$ = ["set_var",$1,$3];}
-   | "call" function_call {$$ = $1;}
+   | "call" function_call {$$ = $2;}
    ;
 
 initialize_var1: initialize_var_ {$$ = ["initialize_var"].concat($1);};
@@ -154,9 +155,11 @@ e
         {$$ = ['||',$1,$3];}
     |e '.and.' e
         {$$ = ['&&',$1,$3];}
-    |e ('<='|'.le.') e
+    |e ('>') e
         {$$ = [$2,$1,$3];}
-    |e ('<'|'.lt.') e
+    |e ('<') e
+        {$$ = [$2,$1,$3];}
+    |e ('<='|'.le.') e
         {$$ = [$2,$1,$3];}
     | e ('>='|'.ge.') e
         {$$ = [$2,$1,$3];}
@@ -164,8 +167,6 @@ e
         {$$ = [$2,$1,$3];}
     | e ('/='|'.neq.') e
         {$$ = ["!=",$1,$3];}
-    |e ('>'|'.gt.') e
-        {$$ = [$2,$1,$3];}
     | e '+' e
         {$$ = [$2,$1,$3];}
     | e '-' e
@@ -196,11 +197,11 @@ access_array: parentheses_expr_ "[" e "]" {$$ = ["access_array",$1,[$3]];};
 
 function_call:
     parentheses_expr_ "(" ")" {$$ = ["function_call",$1,[]];}
-    | parentheses_expr_ "(" exprs ")" {$$ = ["function_call",$1,$3];}
+    | parentheses_expr_ "(" function_call_exprs ")" {$$ = ["function_call",$1,$3];}
     | parentheses_expr_ "(" named_parameters ")" {$$ = ["function_call",$1,$3];};
 
 named_parameters: named_parameters "," named_parameter {$$ = $1.concat([$3]);} | named_parameter {$$ = [$1];};
-named_parameter: IDENTIFIER "=" e {$$ = ["named_parameter",$1,$3]};
+named_parameter: IDENTIFIER "=" function_call_expr {$$ = ["named_parameter",$1,$3]};
 
 parentheses_expr_:
     "(/" "/)" {$$ = ["initializer_list","Object",[]];} | "(/" exprs "/)" {$$ = ["initializer_list","Object",$2];}
@@ -227,6 +228,9 @@ parameters: parameters parameter {$$ = $1.concat([$2]);} | parameter {$$ =
  [$1];};
 
 exprs: e "," exprs {$$ = [$1].concat($3);} | e {$$ = [$1];};
+function_call_exprs: function_call_expr "," function_call_exprs {$$ = [$1].concat($3);} | function_call_expr {$$ = [$1];};
+function_call_expr: e {$$ = ["function_call_ref",$1];};
+
 types: var_type "," types {$$ = [$1].concat($3);} | var_type {$$ = [$1];};
 elif:
 	"elseif" e "then" statements elif {$$ = ["elif",$2,$4,$5]} | "elseif" e "then" statements {$$ = ["elif",$2,$4]}

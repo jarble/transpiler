@@ -774,7 +774,7 @@ function var_type(input_lang,lang,type){
 	throw "var_type " + JSON.stringify(type) + " is not defined for " + lang;
 }
 
-function var_name(lang,var1){
+function var_name(lang,input_lang,var1){
 	if(defined_vars.indexOf(var1) === -1){
 		defined_vars.push(var1);
 	}
@@ -993,15 +993,15 @@ function parameter(input_lang,lang,x){
 			return x[1];
 		}
 		else if(member(lang,['haskell','logpy','common prolog','ruby-prolog','agda','mercury','idris','lc++','emacs lisp','chr.js','reasoned-php','logicjs','yacas','elixir','erlang','elm','z3py','prolog','pddl','picat','definite clause grammars','nearley','sympy','sage','pydatalog','python','coffeequate','pari/gp','gdscript','picolisp','autoit','coconut','applescript','english','ruby','lua','inform 6','gap','hy','perl 6','cosmos','polish notation','reverse polish notation','scheme','mathematical notation','lispyscript','clips','clojure','f#','ml','racket','ocaml','common lisp','newlisp','frink','picat','idp','powershell','maxima','icon','coffeescript','octave','matlab','autohotkey','constraint handling rules','logtalk','awk','kotlin','dart','sentient','javascript','pythological','simula','setl','sidef','nemerle','erlang','php','autoit','r','bc'])){
-			var to_return = var_name(lang,x[1]);
+			var to_return = var_name(lang,input_lang,x[1]);
 			types[x[1]] = x[0];
 			return to_return;
 		}
 		else if(lang === "php"){
 			if(input_lang === "prolog")
-				return "&" + var_name(lang,x[1]);
+				return "&" + var_name(lang,input_lang,x[1]);
 			else
-				return var_name(lang,x[1]);
+				return var_name(lang,input_lang,x[1]);
 		}
 		else if(member(lang,['openoffice basic','gambas','visual basic .net'])){
 			return name+" As "+var_type(input_lang,lang,x[0]);
@@ -1009,7 +1009,7 @@ function parameter(input_lang,lang,x){
 	}
 	//optional parameters
 	else if(x[0] === "default_parameter"){
-		types[x[2]] = x[1];
+		set_var_type(input_lang,lang,x[2],x[1]);
 		var type = x[1];
 		var name = x[2];
 		var body = generate_code(input_lang,lang,"",x[3]);
@@ -1034,7 +1034,7 @@ function parameter(input_lang,lang,x){
 		throw "default_parameter is not defined for "+lang;
 	}
 	else if(x[0] === "final_parameter"){
-		types[x[2]] = x[1];
+		set_var_type(input_lang,lang,x[2],x[1]);
 		var type = x[1];
 		var name = x[2];
 		if(member(lang,["c++","c"])){
@@ -1045,7 +1045,7 @@ function parameter(input_lang,lang,x){
 		}
 		else if(is_declarative_language(lang)){
 			//for all declarative languages
-			return parameter(input_lang,lang,x);
+			return parameter(input_lang,lang,[x[1],x[2]]);
 		}
 		throw "final_parameter is not defined for "+lang;
 	}
@@ -1066,7 +1066,7 @@ function parameter(input_lang,lang,x){
 			return name + ":" + var_type(input_lang,lang,type)+"*";
 		}
 		else if(member(lang,["javascript",'coffeescript','typescript',"php"])){
-			return "..." + var_name(lang,name);
+			return "..." + var_name(lang,input_lang,name);
 		}
 		else if(member(lang,["python",'coconut',"ruby"])){
 			return "*" + name;
@@ -1082,7 +1082,7 @@ function parameter(input_lang,lang,x){
 	else if(x[0] === "protobuf_parameter"){
 		var num = x[1];
 		var type = x[2];
-		var name = var_name(lang,x[3]);
+		var name = var_name(lang,input_lang,x[3]);
 		types[name] = type;
 		if(member(lang,["thrift"])){
 			return num+":" + var_type(input_lang,lang,type) + " "+name;
@@ -1093,8 +1093,8 @@ function parameter(input_lang,lang,x){
 	}
 	else if(x[0] === "in_parameter"){
 		var type = x[1];
-		var name = var_name(lang,x[2]);
-		types[name] = type;
+		var name = var_name(lang,input_lang,x[2]);
+		set_var_type(input_lang,lang,name,type);
 		if(member(lang,["fortran"])){
 			return var_type(input_lang,lang,type)+",intent(in) :: " + name;
 		}
@@ -1106,17 +1106,17 @@ function parameter(input_lang,lang,x){
 		}
 		else if(is_declarative_language(lang)){
 			//for all declarative languages
-			return parameter(input_lang,lang,x);
+			return parameter(input_lang,lang,[x[1],x[2]]);
 		}
-		else if(member(lang,["php","perl"])){
+		else if(member(lang,["php","perl",'c','c++'])){
 			//for other languages that don't distinguish input from output parameters
 			return parameter(input_lang,lang,["ref_parameter",x[1],x[2]]);
 		}
 	}
 	else if(x[0] === "ref_parameter"){
 		var type = x[1];
-		var name = var_name(lang,x[2]);
-		types[name] = type;
+		var name = var_name(lang,input_lang,x[2]);
+		set_var_type(input_lang,lang,name,type);
 		if(member(lang,["fortran"])){
 			return name;
 		}
@@ -1145,7 +1145,12 @@ function parameter(input_lang,lang,x){
 			return var_type(input_lang,lang,type) + " &"+name;
 		}
 		else if(member(lang,["c"])){
-			return var_type(input_lang,lang,type) + " *"+name;
+			if(input_lang === "fortran"){
+				return "restrict " + var_type(input_lang,lang,type) + " *"+name;
+			}
+			else{
+				return var_type(input_lang,lang,type) + " *"+name;
+			}
 		}
 		else if(member(lang,["prolog","perl","fortran"])){
 			//in perl, the arguments in a function call should be preceded by
@@ -1153,14 +1158,14 @@ function parameter(input_lang,lang,x){
 		}
 		else if(is_declarative_language(lang)){
 			//for all declarative languages
-			return parameter(input_lang,lang,x);
+			return parameter(input_lang,lang,[x[1],x[2]]);
 		}
 		throw "ref_parameter is not defined for "+lang;
 	}
 	else if(x[0] === "out_parameter"){
 		var type = x[1];
-		var name = var_name(lang,x[2]);
-		types[name] = type;
+		var name = var_name(lang,input_lang,x[2]);
+		set_var_type(input_lang,lang,name,type);
 		if(member(lang,["c#"])){
 			return "out " + var_type(input_lang,lang,type) + " "+name;
 		}
@@ -1179,20 +1184,20 @@ function parameter(input_lang,lang,x){
 		}
 		else if(is_declarative_language(lang)){
 			//for all declarative languages
-			return parameter(input_lang,lang,x);
+			return parameter(input_lang,lang,[x[1],x[2]]);
 		}
 		throw "out_parameter is not defined for "+lang;
 	}
 	else if(x[0] === "out_parameter"){
 		var type = x[1];
-		var name = var_name(lang,x[2]);
-		types[name] = type;
+		var name = var_name(lang,input_lang,x[2]);
+		set_var_type(input_lang,lang,name,type);
 		if(member(lang,["c#"])){
 			return "out " + var_type(input_lang,lang,type) + " "+name;
 		}
 		else if(is_declarative_language(lang)){
 			//for all declarative languages
-			return parameter(input_lang,lang,x);
+			return parameter(input_lang,lang,[x[1],x[2]]);
 		}
 		throw "out_parameter is not defined for "+lang;
 	}
@@ -2099,7 +2104,7 @@ function generate_code(input_lang,lang,indent,arr){
 		matches_pattern(arr,["for",["initialize_var","int","$a","$c"],["<",[".",["$a"]],"$d"],["++","$a"],"$b"],matching_symbols)
 	){
 		types[matching_symbols["$a"]] = "int";
-		types[var_name(lang,matching_symbols["$a"])] = "int";
+		types[var_name(lang,input_lang,matching_symbols["$a"])] = "int";
 		var a = generate_code(input_lang,lang,indent,matching_symbols["$a"]);
 		//alert(a);
 		var b = generate_code(input_lang,lang,indent,matching_symbols["$b"]);
@@ -2650,7 +2655,7 @@ function generate_code(input_lang,lang,indent,arr){
 		if(member(lang,['c#'])){
 			to_return = "ref "+a;
 		}
-		else if(member(lang,['php','prolog','pydatalog','minizinc','fortran'])){
+		else if(member(lang,['php','prolog','pydatalog','minizinc','fortran','glsl'])){
 			//for all declarative programming languages
 			to_return = a;
 		}
@@ -3620,10 +3625,10 @@ function generate_code(input_lang,lang,indent,arr){
 		}
 		else if(member(lang,["pddl"])){
 			if(member(input_lang,["prolog"])){
-				to_return = "(:action " +name + " :parameters ("+defined_vars.map(function(x){return var_name(lang,x)}).join(" ")+") :precondition " + condition + " :effect (and "+ condition + " " + body + "))";
+				to_return = "(:action " +name + " :parameters ("+defined_vars.map(function(x){return var_name(lang,input_lang,x)}).join(" ")+") :precondition " + condition + " :effect (and "+ condition + " " + body + "))";
 			}
 			else{
-				to_return = "(:action " +name + " :parameters ("+defined_vars.map(function(x){return var_name(lang,x)}).join(" ")+") :precondition " + condition + " :effect " + body + ")";
+				to_return = "(:action " +name + " :parameters ("+defined_vars.map(function(x){return var_name(lang,input_lang,x)}).join(" ")+") :precondition " + condition + " :effect " + body + ")";
 			}
 		}
 		defined_vars = [];
@@ -3668,6 +3673,9 @@ function generate_code(input_lang,lang,indent,arr){
 		}
 		else if(member(lang,["smt-lib"])){
 			to_return = "(=> " + condition + " " + body+")";
+		}
+		else if(member(lang,["lua"])){
+			to_return = "("+condition + " and " + body+" or not ("+condition+"))";
 		}
 		types[to_return] = "boolean";
 	}
@@ -4542,6 +4550,8 @@ function generate_code(input_lang,lang,indent,arr){
 		
 		member(lang,['javascript','typescript','haxe','r','php'])
 			&& (to_return = "function("+params+"){"+body+indent+"}")
+		|| member(lang,['go'])
+			&& (to_return = "func("+params+"){"+body+indent+"}")
 		|| member(lang,['python','coconut'])
 			&& (to_return = "lambda "+params+":"+body)
 		|| member(lang,['smalltalk'])
@@ -4552,6 +4562,8 @@ function generate_code(input_lang,lang,indent,arr){
 			&& (to_return = "function("+params+")"+body+indent+"end")
 		|| member(lang,["erlang"])
 			&& (to_return = "fun("+params+")"+body+indent+"end")
+		|| member(lang,["f#"])
+			&& (to_return = "(fun "+params+" -> "+body+indent+")")
 		|| member(lang,["octave"])
 			&& (to_return = "(@("+params+") "+body+indent+")")
 		|| member(lang,["perl"])
@@ -4570,6 +4582,8 @@ function generate_code(input_lang,lang,indent,arr){
 			&& (to_return = "func["+params+"]["+body+indent+"]")
 		|| member(lang,["emacs lisp","scheme","clojure"])
 			&& (to_return = "(lambda ("+params+") "+body+")")
+		|| member(lang,["maxima"])
+			&& (to_return = "lambda(["+params+"],"+body+")")
 		|| member(lang,["java"])
 			&& (to_return = "("+params+") -> {"+body+indent+"}")
 		|| member(lang,["scala"])
@@ -4585,6 +4599,8 @@ function generate_code(input_lang,lang,indent,arr){
 			&& (to_return = name+":"+body+";")
 		|| member(lang,['pypeg'])
 			&& (to_return = "def "+name+"():"+indent+"    return "+body)
+		|| member(lang,['clips'])
+			&& (to_return = "(defrule " + name + " " + body + " => (assert (" + name + " A0 A" + grammar_num + ")))")
 		|| member(lang,['parboiled'])
 			&& (to_return = "public Rule "+name+"(){"+indent+"    return "+body+";}")
 		|| member(lang,['treetop'])
@@ -4592,6 +4608,8 @@ function generate_code(input_lang,lang,indent,arr){
 		|| member(lang,['rebol'])
 			&& (to_return = name+": ["+body+"]")
 		|| member(lang,['chrg'])
+			&& (to_return = body+" ::> "+name+".")
+		|| member(lang,['constraint'])
 			&& (to_return = body+" ::> "+name+".")
 		|| member(lang,['lemon'])
 			&& (to_return = name+" ::= "+body+".")
@@ -4627,6 +4645,8 @@ function generate_code(input_lang,lang,indent,arr){
 			&& (to_return = body + " ::> " + name+"("+params+").")
 		|| member(lang,['lemon'])
 			&& (to_return = name+"("+params+") ::= "+body+".")
+		|| member(lang,["clips"])
+			&& (to_return = "(defrule " + name + " " + body + " => (assert " + "("+name + " " + params+")" + "))")
 		|| member(lang,['nearley'])
 			&& (to_return = name+"["+params+"] ->"+body)
 		|| member(lang,['peg.js'])
@@ -4646,6 +4666,8 @@ function generate_code(input_lang,lang,indent,arr){
 			&& (to_return = arr[1]+"()")
 		|| member(lang,["prolog"])
 			&& (to_return = arr[1]+"(A"+grammar_num+")")
+		|| member(lang,["clips"])
+			&& (to_return = "("+arr[1]+" A"+grammar_num+" A"+ (grammar_num+1) + ")")
 		|| (to_return = arr[1]);
 	}
 	else if(arr[0] === "logic_or"){
@@ -4658,8 +4680,8 @@ function generate_code(input_lang,lang,indent,arr){
 		var b = generate_code(input_lang,lang,indent+"    ",arr[2]);
 		
 		member(lang,['prolog'])
-			&& (to_return = a+"|"+b)
-		|| member(lang,['sympy'])
+			&& (to_return = a+";"+b)
+		|| member(lang,['sympy','lua'])
 			&& (to_return = a+" or "+b)
 		|| member(lang,['minizinc','abella'])
 			&& (to_return = a+" \\/ "+b)
@@ -4678,7 +4700,7 @@ function generate_code(input_lang,lang,indent,arr){
 		
 		member(lang,['prolog'])
 			&& (to_return = a+","+b)
-		|| member(lang,['sympy'])
+		|| member(lang,['sympy','python'])
 			&& (to_return = a+" and "+b)
 		|| member(lang,['pydatalog'])
 			&& (to_return = a+" & "+b)
@@ -4731,8 +4753,10 @@ function generate_code(input_lang,lang,indent,arr){
 		
 		member(lang,['nearley','lemon','yecc','peggy','instaparse','javacc','treetop','txl','perl 6','canopy','coco/r','abnf','peg.js','antlr','marpa','wirth syntax notation','jison'])
 			&& (to_return = a+" "+b)
-		|| member(lang,['prolog','chrg'])
+		|| member(lang,['prolog','chrg','constraint handling rules'])
 			&& (to_return = a+","+b)
+		|| member(lang,['clips'])
+			&& (to_return = "(and " + a+" "+b+")")
 		|| member(lang,['regex'])
 			&& (to_return = a+b)
 		|| member(lang,['pypeg'])
@@ -4754,6 +4778,8 @@ function generate_code(input_lang,lang,indent,arr){
 		
 		member(lang,["pddl"])
 			&& (to_return = "(:action " +name + " :parameters ("+params+") :precondition " + body + " :effect (" +name+" " + params + "))")
+		|| member(lang,["fortran"])
+			&& (to_return = "LOGICAL function " + name + "("+params+") "+body+indent+"end function "+name)
 		|| member(lang,["prolog","logtalk","flix"])
 			&& (to_return = name+"("+params+") :- "+body)
 		|| member(lang,["constraint handling rules"])
@@ -5004,7 +5030,7 @@ function generate_code(input_lang,lang,indent,arr){
 			if(type === "void"){
 				to_return = "subroutine " + name + "("+words_list+") "+params+" "+body+indent+"return end";
 			}
-			to_return = var_type(input_lang,lang,type) + " function " + name + "("+words_list+") "+params+" "+body+indent+"return end";
+			to_return = var_type(input_lang,lang,type) + " function " + name + "("+words_list+") "+params+" "+body+indent+"end function "+name;
 		}
 		else if(member(lang,['visual basic','visual basic .net'])){
 			to_return = "Function " + name + "("+params+") As "+var_type(input_lang,lang,type)+" "+body+indent+"End Function";
@@ -5113,7 +5139,7 @@ function generate_code(input_lang,lang,indent,arr){
 				return var_type(input_lang,lang,x[0]);
 			});
 			var function_to_call = name + "(" + arr[4].map(function(x) {
-				return var_name(lang,x[1]);
+				return var_name(lang,input_lang,x[1]);
 			}).join(",")+")";
 			to_return = "logic " + name + ":" + types_list.join(",") + " -> " + var_type(input_lang,lang,type) + indent +"axiom "+ name + ": " + params + " " + function_to_call + " = ("+body+")";
 		}
@@ -5273,7 +5299,7 @@ function generate_code(input_lang,lang,indent,arr){
 	else if(arr[0] === "set_array_size"){
 		//console.log(JSON.stringify(arr));
 		var type = var_type(input_lang,lang,arr[1]);
-		var name = var_name(lang,arr[2]);
+		var name = var_name(lang,input_lang,arr[2]);
 		var size = generate_code(input_lang,lang,indent,arr[3]);
 		if(member(lang,["java","c#"])){
 			to_return = type + " " +name+"["+size+"]";
@@ -5317,7 +5343,7 @@ function generate_code(input_lang,lang,indent,arr){
 	}
 	else if(arr[0] === "initialize_constant"){
 		//console.log(JSON.stringify(arr));
-		var name = var_name(lang,arr[2]);
+		var name = var_name(lang,input_lang,arr[2]);
 		var expr = generate_code(input_lang,lang,indent,arr[3]);
 		//console.log("initialize_var: "+ name + " "+arr[1]);
 		types[name] = arr[1];
@@ -5366,7 +5392,7 @@ function generate_code(input_lang,lang,indent,arr){
 	else if(arr[0] === "protobuf_parameter"){
 		var num = arr[1];
 		var type = arr[2];
-		var name = var_name(lang,arr[3]);
+		var name = var_name(lang,input_lang,arr[3]);
 		if(arr.length === 5){
 			
 		}
@@ -5382,7 +5408,7 @@ function generate_code(input_lang,lang,indent,arr){
 		var num = arr[1];
 		var required_or_optional = arr[2];
 		var type = arr[3];
-		var name = var_name(lang,arr[4]);
+		var name = var_name(lang,input_lang,arr[4]);
 		types[name] = type;
 		if(member(lang,["thrift"])){
 			return num+":"+ required_or_optional + " " + var_type(input_lang,lang,type) + " "+name;
@@ -5426,7 +5452,7 @@ function generate_code(input_lang,lang,indent,arr){
 		}
 	}
 	else if(arr[0] === "lexically_scoped_var"){
-		var name = var_name(lang,arr[2]);
+		var name = var_name(lang,input_lang,arr[2]);
 		var expr = generate_code(input_lang,lang,indent,arr[3]);
 		if(member(lang,["common lisp","racket"])){
 			to_return = "("+name+" "+expr+")";
@@ -5443,7 +5469,7 @@ function generate_code(input_lang,lang,indent,arr){
 	}
 	else if(arr[0] === "initialize_var"){
 		//console.log(JSON.stringify(arr));
-		var name = var_name(lang,arr[2]);
+		var name = var_name(lang,input_lang,arr[2]);
 		if(defined_vars.indexOf(arr[2]) === -1){
 			defined_vars.push(arr[2]);
 		}
@@ -5590,7 +5616,7 @@ function generate_code(input_lang,lang,indent,arr){
 
 		
 		//console.log(JSON.stringify(arr));
-		var name = var_name(lang,arr[3]);
+		var name = var_name(lang,input_lang,arr[3]);
 		var expr = generate_code(input_lang,lang,indent,arr[4]);
 		//console.log("initialize_var: "+ name + " "+arr[1]);
 		types[name] = arr[2];
@@ -5620,7 +5646,7 @@ function generate_code(input_lang,lang,indent,arr){
 		}
 		
 		//console.log(JSON.stringify(arr));
-		var name = var_name(lang,arr[3]);
+		var name = var_name(lang,input_lang,arr[3]);
 		var expr = generate_code(input_lang,lang,indent,arr[4]);
 		//console.log("initialize_var: "+ name + " "+arr[1]);
 		types[name] = arr[2];
@@ -5645,7 +5671,7 @@ function generate_code(input_lang,lang,indent,arr){
 		}
 		
 		//console.log(JSON.stringify(arr));
-		var name = var_name(lang,arr[3]);
+		var name = var_name(lang,input_lang,arr[3]);
 		//console.log("initialize_var: "+ name + " "+arr[1]);
 		types[name] = arr[2];
 		types[arr[3]] = arr[2];
@@ -5669,7 +5695,7 @@ function generate_code(input_lang,lang,indent,arr){
 		}
 		
 		//console.log(JSON.stringify(arr));
-		var name = var_name(lang,arr[3]);
+		var name = var_name(lang,input_lang,arr[3]);
 		//console.log("initialize_var: "+ name + " "+arr[1]);
 		types[name] = arr[2];
 		types[arr[3]] = arr[2];
@@ -6269,7 +6295,7 @@ function generate_code(input_lang,lang,indent,arr){
 	}
 	//do this if it's an identifier
 	else if(typeof arr === 'string' && /^[$A-Z_][0-9A-Z_$]*$/i.test(arr)){
-		to_return = var_name(lang,arr);
+		to_return = var_name(lang,input_lang,arr);
 	}
 	else if(arr.length === 2 && arr[0] === "." && (arr[1].length === 1)){
 		if(!isNaN(arr[1])){
@@ -6277,7 +6303,7 @@ function generate_code(input_lang,lang,indent,arr){
 			types[to_return] = "int"
 		}
 		else if(typeof arr[1][0] === 'string' && /^[$A-Z_][0-9A-Z_$]*$/i.test(arr[1][0])){
-			return var_name(lang,arr[1][0]);
+			return var_name(lang,input_lang,arr[1][0]);
 		}
 		else{
 			return generate_code(input_lang,lang,indent,arr[1]);
@@ -6469,12 +6495,7 @@ function generate_code(input_lang,lang,indent,arr){
 			}
 		}
 		else if(member(lang,["prolog","constraint handling rules"])){
-			if(member(types[a], ["int","double","float"])){
-				to_return = a + " is " + b;
-			}
-			else{
-				to_return = a + " = " + b;
-			}
+			to_return = a + " == " + b;
 		}
 		else if(member(lang,["ruby"])){
 			to_return = a + " == " + b;
@@ -7382,10 +7403,10 @@ function generate_code(input_lang,lang,indent,arr){
 	}
 	else if(arr[0] === "initialize_empty_constants"){
 		if(lang === "prolog"){
-			return arr[2].map(function(x){types[x] = arr[1]; return var_type(input_lang,lang,arr[1])+"("+var_name(lang,x)}).join(",")+")";
+			return arr[2].map(function(x){types[x] = arr[1]; return var_type(input_lang,lang,arr[1])+"("+var_name(lang,input_lang,x)}).join(",")+")";
 		}
 		else{
-			arr[2] = arr[2].map(function(x){types[x] = arr[1]; return var_name(lang,x)}).join(",");
+			arr[2] = arr[2].map(function(x){types[x] = arr[1]; return var_name(lang,input_lang,x)}).join(",");
 		}
 		if(member(lang, ["java"])){
 			to_return = "final " + var_type(input_lang,lang,arr[1]) + " " + arr[2];
@@ -7425,27 +7446,27 @@ function generate_code(input_lang,lang,indent,arr){
 	}
 	else if(arr[0] === "initialize_empty_vars"){
 		if(lang === "prolog"){
-			return arr[2].map(function(x){types[x] = arr[1]; return var_type(input_lang,lang,arr[1])+"("+var_name(lang,x)+")"}).join(",");
+			return arr[2].map(function(x){types[x] = arr[1]; return var_type(input_lang,lang,arr[1])+"("+var_name(lang,input_lang,x)+")"}).join(",");
 		}
 		else if(lang === "smt-lib"){
-			return arr[2].map(function(x){types[x] = arr[1]; return "(declare-const " + var_name(lang,x) + " " + var_type(input_lang,lang,arr[1]) + ")"}).join("\n");
+			return arr[2].map(function(x){types[x] = arr[1]; return "(declare-const " + var_name(lang,input_lang,x) + " " + var_type(input_lang,lang,arr[1]) + ")"}).join("\n");
 		}
 		else if(lang === "haskell"){
-			return arr[2].map(function(x){types[x] = arr[1]; return var_name(lang,x) + "::" + var_type(input_lang,lang,arr[1])}).join("\n");
+			return arr[2].map(function(x){types[x] = arr[1]; return var_name(lang,input_lang,x) + "::" + var_type(input_lang,lang,arr[1])}).join("\n");
 		}
 		else if(lang === "php"){
-			return arr[2].map(function(x){types[x] = arr[1]; return var_name(lang,x)}).join(" = null;"+indent)+"= null;";
+			return arr[2].map(function(x){types[x] = arr[1]; return var_name(lang,input_lang,x)}).join(" = null;"+indent)+"= null;";
 		}
 		else if(member(lang,["smalltalk","gnu smalltalk"])){
 			arr[2] = arr[2].map(function(x){
 				types[x] = arr[1];
-				return var_name(lang,x)
+				return var_name(lang,input_lang,x)
 			}).join(" ");
 		}
 		else{
 			arr[2] = arr[2].map(function(x){
 				set_var_type(input_lang,lang,x,arr[1]);
-				return var_name(lang,x);
+				return var_name(lang,input_lang,x);
 			}).join(",");
 		}
 		

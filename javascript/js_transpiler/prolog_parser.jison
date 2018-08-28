@@ -6,6 +6,7 @@
 [0-9]+("."[0-9]+)?\b  return 'NUMBER'
 \"([^\\\"]|\\.)*\" return 'STRING_LITERAL'
 "forall"              return 'forall'
+"copy_term"           return 'copy_term'
 "if"                  return "if"
 "is"                  return "is"
 ","                   return ','
@@ -27,7 +28,7 @@
 "="                   return '='
 "*="                  return '*='
 "*"                   return '*'
-"/="                  return '/='
+"\\="                 return '\\='
 "/"                   return '/'
 "-="                  return '-='
 "--"                  return '--'
@@ -54,7 +55,7 @@
 %left '->'
 %left ';'
 %left ','
-%left '<' '=<' '>' '>=' '=' '==' 'is'
+%left '<' '=<' '>' '>=' '=' '==' '\\=' 'is'
 %left '+' '-'
 %left '*' '/'
 %left UMINUS
@@ -63,19 +64,19 @@
 
 %% /* language grammar */
 
-expressions: statements_ EOF {return ["top_level_statements",$1]};
+expressions: top_level_statements_ EOF {return ["top_level_statements",$1]};
 
-statements_: statement "." statements_ {$$ = [$1].concat($3);} | statement "." {$$ =
+top_level_statements_: top_level_statement "." top_level_statements_ {$$ = [$1].concat($3);} | top_level_statement "." {$$ =
  [$1];};
  
-statements: statements_ {$$ = ["top_level_statements",$1]};
+top_level_statements: top_level_statements_ {$$ = ["top_level_statements",$1]};
 
-statement
-    : predicate | grammar_statement | if_statement | function_call;
+top_level_statement
+    : predicate | grammar_statement | chr_statement | function_call;
 
 predicate:
-    IDENTIFIER "(" exprs ")" ":-" e {$$ = ["predicate",$1,$3,$6]}
-    | IDENTIFIER ":-" e {$$ = ["predicate",$1,[],$3]};
+    IDENTIFIER "(" exprs ")" ":-" e {$$ = ["function","public","boolean",$1,$3,["statements",[["semicolon",["return",$6]]]]]}
+    | IDENTIFIER ":-" e {$$ = ["function","public","boolean",$1,[],["statements",[["semicolon",["return",$6]]]]]};
 
 grammar_statement:
     IDENTIFIER "-->" e {$$ = ["grammar_statement",$1,$3]}
@@ -93,9 +94,11 @@ e
     |e '=' e
         {$$ = ['logic_equals',$1,$3];}
     |e 'is' e
-        {$$ = ['logic_equals',$1,$3];}
+        {$$ = ['set_var',$1,$3];}
+    |e '\\=' e
+        {$$ = ['!=',$1,$3];}
     |e '==' e
-        {$$ = ['logic_equals',$1,$3];}
+        {$$ = ['==',$1,$3];}
     |e '=<' e
         {$$ = ['<=',$1,$3];}
     |e '<' e
@@ -141,7 +144,7 @@ exprs: exprs "," parentheses_expr {$$ = $1.concat([$3]);} | parentheses_expr {$$
 
 chr_head: chr_head "," function_call {$$ = ["logic_and",$1,$3];} | function_call {$$ = [$1];};
 
-if_statement:
+chr_statement:
 	function_call "," chr_head "==>" e {$$= ["propagation_rule",["&&",$1,$3],$5]}
 	| function_call "==>" e {$$= ["propagation_rule",$1,$3]}
 	| IDENTIFIER "@" function_call "," chr_head "==>" function_call {$$= ["defrule",$1,["&&",$3,$5],$7]}
