@@ -9,6 +9,7 @@
 "double precision"    return 'double precision'
 "subroutine"          return "subroutine"
 "function"            return "function"
+"parameter"           return 'parameter'
 "inout"               return 'inout'
 "enddo"               return "enddo"
 "intent"              return 'intent'
@@ -70,7 +71,7 @@
 "pairs"               return 'pairs'
 "in"                  return 'in'
 "do"                  return 'do'
-[a-zA-Z_][a-zA-Z0-9_]* return 'IDENTIFIER'
+[a-zA-Z_][a-zA-Z0-9_]* return 'identifier'
 <<EOF>>               return 'EOF'
 .                     return 'INVALID'
 
@@ -91,7 +92,7 @@
 %% /* language grammar */
 
 expressions
-    : statements_ EOF
+    : top_level_statements EOF
         {return ["top_level_statements",$1];}
     ;
 
@@ -105,7 +106,7 @@ initialize_vars: initialize_vars initialize_var {$$ = $1.concat([$2]);} | initia
 statements: statements_ {$$ = ["statements",$1]};
 
 top_level_statement:
-	statement | initialize_var1 {$$ = ["semicolon",$1]};
+	 var_type "," "parameter" "::" IDENTIFIER "=" e {$$ = ["semicolon",["initialize_constant",$1,$5,$7]];} | statement | initialize_var1 {$$ = ["semicolon",$1]};
 top_level_statements: top_level_statements top_level_statement {$$ = $1.concat([$2]);} | top_level_statement {$$ =
  [$1];};
 statement
@@ -139,7 +140,7 @@ case_statements: case_statements_ "default" statements {$$ = $1.concat([["defaul
 statement_with_semicolon
    : 
    var_type "::" identifiers {$$ = ["initialize_empty_vars",$1,$3];}
-   | var_type identifier {$$ = ["initialize_empty_vars",$1,[$2]];}
+   | var_type identifiers {$$ = ["initialize_empty_vars",$1,[$2]];}
    | IDENTIFIER "=" e {$$ = ["set_var",$1,$3];}
    | "call" function_call {$$ = $2;}
    ;
@@ -208,9 +209,16 @@ parentheses_expr_:
     | NUMBER
         {$$ = yytext;}
     | IDENTIFIER
-        {$$ = yytext;}
+        {$$ = yytext.toLowerCase();}
+    | '.true.'
+        {$$ = ['.',['true']];}
+    | '.false.'
+        {$$ = ['.',['false']];}
     | STRING_LITERAL
         {$$ = yytext;};
+
+IDENTIFIER: identifier
+        {$$ = yytext.toLowerCase();};
 
 parentheses_expr:
     '(' e ')' {$$ = ["parentheses",$2];}

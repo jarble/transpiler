@@ -72,7 +72,7 @@
 "]"                   return ']'
 "("                   return '('
 ")"                   return ')'
-[a-zA-Z_][a-zA-Z0-9_]* return 'IDENTIFIER'
+[a-zA-Z_][a-zA-Z0-9_]* return 'identifier'
 <<EOF>>               return 'EOF'
 .                     return 'INVALID'
 
@@ -92,6 +92,8 @@
 %start expressions
 
 %% /* language grammar */
+
+IDENTIFIER: identifier {$$ = yytext.toLowerCase()};
 
 expressions: statements_ EOF {return ["top_level_statements",$1]};
 
