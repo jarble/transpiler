@@ -6,6 +6,7 @@
 [0-9]+("."[0-9]+)?\b  return 'NUMBER'
 \"([^\\\"]|\\.)*\" return 'STRING_LITERAL'
 "$"                   return "$"
+"%="                  return '%='
 "function"            return "function"
 "class"               return "class"
 "public"              return "public"
@@ -141,6 +142,7 @@ statement_with_semicolon
    | var_name "++" {$$ = [$2,$1];}
    | var_name "--" {$$ = [$2,$1];}
    | var_name "+=" e {$$ = [$2,$1,$3];}
+   | var_name "%=" e {$$ = [$2,$1,$3];}
    | var_name "-=" e {$$ = [$2,$1,$3];}
    | var_name "*=" e {$$ = [$2,$1,$3];}
    | var_name "/=" e {$$ = [$2,$1,$3];}

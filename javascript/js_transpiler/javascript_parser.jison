@@ -44,6 +44,7 @@
 "!=="                 return '!=='
 "!"                   return "!"
 "="                   return '='
+"%="                  return '%='
 "%"                   return '%'
 "*="                  return '*='
 "*"                   return '*'
@@ -151,6 +152,7 @@ statement_with_semicolon
    | IDENTIFIER "=" e {$$ = ["set_var",$1,$3];}
    | IDENTIFIER "++" {$$ = [$2,$1];}
    | IDENTIFIER "--" {$$ = [$2,$1];}
+   | IDENTIFIER "%=" e {$$ = [$2,$1,$3];}
    | IDENTIFIER "+=" e {$$ = [$2,$1,$3];}
    | IDENTIFIER "-=" e {$$ = [$2,$1,$3];}
    | IDENTIFIER "*=" e {$$ = [$2,$1,$3];}

@@ -40,7 +40,9 @@
 ";"                   return ';'
 "."                   return '.'
 ":"                   return ':'
+"&="                  return '&='
 "&&"                  return '&&'
+"|="                  return '|='
 "||"                  return '||'
 ">="                  return '>='
 ">"                   return '>'
@@ -162,7 +164,7 @@ class_statement:
 	| access_modifier "static" type "operator" OPERATOR "(" parameters ")" "{" statements "}" {$$ = ["static_overload_operator","public",$3,$5,$7,$10];}
 ;
 
-OPERATOR: "+="|"-="|"*="|"/="|"++"|"--"|"<="|">="|"<"|">"|"&&"|"||"|"=="|"+"|"-"|"*"|"/";
+OPERATOR: "+="|"-="|"*="|"/="|"++"|"--"|"<="|">="|"<"|">"|"&&"|"||"|"=="|"+"|"-"|"*"|"/"|"|="|"&=";
 
 
 statement_with_semicolon
@@ -180,6 +182,7 @@ statement_with_semicolon
    | "++" IDENTIFIER {$$ = [$1,$2];}
    | "--" IDENTIFIER {$$ = [$1,$2];}
    | IDENTIFIER "+=" e {$$ = [$2,$1,$3];}
+   | IDENTIFIER "|=" e {$$ = [$2,$1,$3];}
    | IDENTIFIER "-=" e {$$ = [$2,$1,$3];}
    | IDENTIFIER "*=" e {$$ = [$2,$1,$3];}
    | IDENTIFIER "/=" e {$$ = [$2,$1,$3];}

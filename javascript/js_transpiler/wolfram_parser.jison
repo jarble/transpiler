@@ -6,6 +6,8 @@
 [0-9]+("."[0-9]+)?\b  return 'NUMBER'
 \"([^\\\"]|\\.)*\" return 'STRING_LITERAL'
 "$"                   return "$"
+"And"                 return 'And'
+"Or"                  return 'Or'
 "block"               return "block"
 "typeof"              return "typeof"
 "If"                  return 'If'
@@ -62,8 +64,8 @@
 
 /* operator associations and precedence */
 
-%left '||'
-%left '&&'
+%left '||' 'Or'
+%left '&&' 'And'
 %left '<' '<=' '>' '>=' '==' '!='
 %left '+' '-'
 %left '*' '/'
@@ -118,8 +120,12 @@ e
     :
     e '||' e
         {$$ = [$2,$1,$3];}
+    |e 'Or' e
+        {$$ = ["||",$1,$3];}
     |e '&&' e
         {$$ = [$2,$1,$3];}
+    |e 'And' e
+        {$$ = ["&&",$1,$3];}
     |e '!=' e
         {$$ = [$2,$1,$3];}
     |e '==' e

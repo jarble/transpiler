@@ -39,8 +39,10 @@
 "..."                 return '...'
 "."                   return '.'
 ":"                   return ':'
+"&="                  return '&='
 "&&"                  return '&&'
 "&"                   return '&'
+"|="                  return '|='
 "||"                  return '||'
 "|"                   return '|'
 "->"                  return '->'
@@ -183,6 +185,8 @@ statement_with_semicolon
    | "++" IDENTIFIER {$$ = [$1,$2];}
    | "--" IDENTIFIER {$$ = [$1,$2];}
    | IDENTIFIER "+=" e {$$ = [$2,$1,$3];}
+   | IDENTIFIER "|=" e {$$ = [$2,$1,$3];}
+   | IDENTIFIER "&=" e {$$ = [$2,$1,$3];}
    | IDENTIFIER "-=" e {$$ = [$2,$1,$3];}
    | IDENTIFIER "*=" e {$$ = [$2,$1,$3];}
    | IDENTIFIER "/=" e {$$ = [$2,$1,$3];}

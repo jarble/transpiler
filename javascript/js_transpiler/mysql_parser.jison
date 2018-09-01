@@ -14,6 +14,7 @@
 "BEGIN"               return 'BEGIN'
 "THEN"                return 'THEN'
 "then"                return 'then'
+"when"                return 'when'
 "END"                 return 'END'
 "SET"                 return 'SET'
 "set"                 return 'set'
@@ -129,10 +130,10 @@ if_:"IF"|"if";
 set_:"set"|"SET";
 repeat_:"REPEAT"|"repeat";
 
-case_statement: "case" e ":" statements "break" ";" {$$ = ["case",$2,$4]};
+case_statement: "when" e "then" statements {$$ = ["case",$2,$4]};
 case_statements_: case_statement case_statements_ {$$ = [$1].concat($2);} | case_statement {$$ =
  [$1];};
-case_statements: case_statements_ "default" ":" statements {$$ = $1.concat([["default",$4]])} | case_statements_;
+case_statements: case_statements_ "else" statements {$$ = $1.concat([["default",$4]])} | case_statements_;
 
 statement_with_semicolon
    : 
