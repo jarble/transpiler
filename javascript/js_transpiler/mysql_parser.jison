@@ -15,6 +15,8 @@
 "THEN"                return 'THEN'
 "then"                return 'then'
 "when"                return 'when'
+"AND"                 return 'AND'
+"OR"                  return 'OR'
 "END"                 return 'END'
 "SET"                 return 'SET'
 "set"                 return 'set'
@@ -48,6 +50,7 @@
 "&"                   return '&'
 "||"                  return '||'
 "<>"                  return '<>'
+"!="                  return '!='
 '!'                   return '!'
 ">="                  return '>='
 ">"                   return '>'
@@ -82,9 +85,9 @@
 /* operator associations and precedence */
 
 %right '?'
-%left '||'
-%left '&&'
-%left '<' '<=' '>' '>=' '=' '<>'
+%left '||' 'OR'
+%left '&&' 'AND'
+%left '<' '<=' '>' '>=' '=' '<>' '!='
 %left ('<' '<') ('>' '>')
 %left '+' '-'
 %left '*' '/' '%'
@@ -150,8 +153,12 @@ e
     e "?" e ":" e {$$ = ["ternary_operator",$1,$3,$5]}
     |e '||' e
         {$$ = [$2,$1,$3];}
+    |e 'OR' e
+        {$$ = ["||",$1,$3];}
     |e '&&' e
         {$$ = [$2,$1,$3];}
+    |e 'AND' e
+        {$$ = ["&&",$1,$3];}
     |e '<=' e
         {$$ = [$2,$1,$3];}
     |e '<' e
@@ -162,6 +169,8 @@ e
         {$$ = [$2,$1,$3];}
     | e '=' e
         {$$ = ["==",$1,$3];}
+    | e '!=' e
+        {$$ = ["!=",$1,$3];}
     | e '<>' e
         {$$ = ["!=",$1,$3];}
     | e '+' e

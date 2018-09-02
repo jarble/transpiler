@@ -721,7 +721,7 @@ function var_type(input_lang,lang,type){
 			return "Unit";
 		}
 	}
-	else if(member(type,["boolean","bool","Bool","Boolean","BIT","LOGICAL",'logical'])){
+	else if(member(type,["boolean","bool","Bool","Boolean","BIT","LOGICAL",'logical']) || member(lang,["mysql"]) || type === "bit"){
 		if(member(lang,['typescript','vhdl','seed7','hy','python','coconut','java','javascript','coffeescript','perl','postgresql'])){
             return "boolean";
         }
