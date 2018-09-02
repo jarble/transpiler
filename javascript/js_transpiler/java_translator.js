@@ -941,9 +941,15 @@ function parameter(input_lang,lang,x){
 		var type = types[x[1]];
 		var name = x[1];
 		//console.log("types: "+JSON.stringify(types));
-		if(input_lang === "prolog" && lang !== 'mysql'){
+		if(input_lang === "prolog" && !member(lang,['mysql','c','fortran'])){
 			//alert(JSON.stringify(function_params));
-			return parameter(input_lang,lang,["in_parameter"].concat(x));
+			alert(JSON.stringify(x));
+			return parameter(input_lang,lang,["ref_parameter"].concat(x));
+		}
+		else if(input_lang === "prolog" && member(lang,['fortran','c'])){
+			//alert(JSON.stringify(function_params));
+			alert(JSON.stringify(x));
+			return parameter(input_lang,lang,["ref_parameter"].concat(x));
 		}
 		if(member(lang,["java","thrift","c#",'scriptol'])){
 			return var_type(input_lang,lang,x[0])+" "+x[1];
@@ -1096,10 +1102,19 @@ function parameter(input_lang,lang,x){
 	}
 	//optional parameters
 	else if(x[0] === "default_parameter"){
-		set_var_type(input_lang,lang,x[2],x[1]);
 		var type = x[1];
 		var name = x[2];
+		if(!(is_statically_typed(lang) && is_dynamically_typed(input_lang))){
+			//
+			set_var_type(input_lang,lang,name,type);
+		}
 		var body = generate_code(input_lang,lang,"",x[3]);
+		if(is_dynamically_typed(input_lang) && is_statically_typed(lang)){
+			type = var_type(input_lang,lang,types[x[2]]);
+		}
+		else{
+			type = var_type(input_lang,lang,x[1]);
+		}
 		if(member(lang,["c#","c++","vala"])){
 			return var_type(input_lang,lang,type) + " "+name+"="+body;
 		}
@@ -1121,9 +1136,11 @@ function parameter(input_lang,lang,x){
 		throw "default_parameter is not defined for "+lang;
 	}
 	else if(x[0] === "final_parameter"){
-		set_var_type(input_lang,lang,x[2],x[1]);
 		var type = x[1];
 		var name = x[2];
+		if(!(is_statically_typed(lang) && is_dynamically_typed(input_lang))){
+			set_var_type(input_lang,lang,name,type);
+		}
 		if(member(lang,["c++","c"])){
 			return "const "+type+" "+name;
 		}
@@ -1181,7 +1198,9 @@ function parameter(input_lang,lang,x){
 	else if(x[0] === "in_parameter"){
 		var type = x[1];
 		var name = var_name(lang,input_lang,x[2]);
-		set_var_type(input_lang,lang,name,type);
+		if(!(is_statically_typed(lang) && is_dynamically_typed(input_lang))){
+			set_var_type(input_lang,lang,name,type);
+		}
 		if(member(lang,["fortran"])){
 			return var_type(input_lang,lang,type)+",intent(in) :: " + name;
 		}
@@ -1190,14 +1209,19 @@ function parameter(input_lang,lang,x){
 		}
 		else if(member(lang,["mysql"])){
 			return name + " " + var_type(input_lang,lang,type);
-			return name + " " + var_type(input_lang,lang,type);
 		}
 		else if(member(lang,["swift","ada","vhdl"])){
 			return name + ": in " + var_type(input_lang,lang,type);
 		}
 		else if(member(lang,["php","perl",'c','c++'])){
 			//for other languages that don't distinguish input from output parameters
-			return parameter(input_lang,lang,["ref_parameter",x[1],x[2]]);
+			if(is_dynamically_typed(input_lang) && is_statically_typed(lang)){
+				type = var_type(input_lang,lang,types[x[2]]);
+			}
+			else{
+				type = var_type(input_lang,lang,x[1]);
+			}
+			return parameter(input_lang,lang,["ref_parameter",type,x[2]]);
 		}
 		else if(is_declarative_language(lang) || member(input_lang,["fortran"])){
 			//for all declarative languages
@@ -1207,9 +1231,17 @@ function parameter(input_lang,lang,x){
 	else if(x[0] === "ref_parameter"){
 		var type = x[1];
 		var name = var_name(lang,input_lang,x[2]);
-		set_var_type(input_lang,lang,name,type);
+		if(!(is_statically_typed(lang) && is_dynamically_typed(input_lang))){
+			set_var_type(input_lang,lang,name,type);
+		}
 		if(member(lang,["fortran"])){
-			return name;
+			if(is_dynamically_typed(input_lang) && is_statically_typed(lang)){
+				type = var_type(input_lang,lang,types[x[2]]);
+			}
+			else{
+				type = var_type(input_lang,lang,x[1]);
+			}
+			return var_type(input_lang,lang,type)+",intent(inout) :: "+name;
 		}
 		else if(member(lang,["c#"])){
 			return "ref " + var_type(input_lang,lang,type) + " "+name;
@@ -1236,6 +1268,13 @@ function parameter(input_lang,lang,x){
 			return var_type(input_lang,lang,type) + " &"+name;
 		}
 		else if(member(lang,["c"])){
+			if(is_dynamically_typed(input_lang) && is_statically_typed(lang)){
+				type = var_type(input_lang,lang,types[x[2]]);
+			}
+			else{
+				type = var_type(input_lang,lang,x[1]);
+			}
+			
 			if(input_lang === "fortran"){
 				return "restrict " + var_type(input_lang,lang,type) + " *"+name;
 			}
@@ -1256,7 +1295,9 @@ function parameter(input_lang,lang,x){
 	else if(x[0] === "out_parameter"){
 		var type = x[1];
 		var name = var_name(lang,input_lang,x[2]);
-		set_var_type(input_lang,lang,name,type);
+		if(!(is_statically_typed(lang) && is_dynamically_typed(input_lang))){
+			set_var_type(input_lang,lang,type,name);
+		}
 		if(member(lang,["c#"])){
 			return "out " + var_type(input_lang,lang,type) + " "+name;
 		}
@@ -1282,7 +1323,9 @@ function parameter(input_lang,lang,x){
 	else if(x[0] === "out_parameter"){
 		var type = x[1];
 		var name = var_name(lang,input_lang,x[2]);
-		set_var_type(input_lang,lang,name,type);
+		if(!(is_statically_typed(lang) && is_dynamically_typed(input_lang))){
+			set_var_type(input_lang,lang,name,type);
+		}
 		if(member(lang,["c#"])){
 			return "out " + var_type(input_lang,lang,type) + " "+name;
 		}
@@ -4815,9 +4858,9 @@ function generate_code(input_lang,lang,indent,arr){
 			&& (to_return = "logic.or("+a+","+b+")")
 		|| member(lang,['smt-lib'])
 			&& (to_return = "(or "+a+" "+b+")")
-		|| member(lang,['java','c#','lua','php','perl','mysql'])
+		|| member(lang,['java','c#','lua','php','perl','mysql','fortran','c'])
 			&& (to_return = generate_code(input_lang,lang,indent,["||",arr[1],arr[2]]));
-		types[to_return] = "grammar";
+		types[to_return] = "boolean";
 	}
 	else if(arr[0] === "logic_and"){
 		if(member(lang,['nearley','pyparsing','lemon','chrg','instaparse','parboiled','javacc','waxeye','rebol','lpeg','txl','treetop','abnf','peg.js','antlr','marpa','wirth syntax notation','jison'])){
@@ -4836,7 +4879,7 @@ function generate_code(input_lang,lang,indent,arr){
 			&& (to_return = "logic.and("+a+","+b+")")
 		|| member(lang,['smt-lib','clips'])
 			&& (to_return = "(and "+a+" "+b+")")
-		|| member(lang,['java','c#','lua','php','perl','mysql','minizinc'])
+		|| member(lang,['java','fortran','c','c#','lua','php','perl','mysql','minizinc'])
 			&& (to_return = generate_code(input_lang,lang,indent,["&&",arr[1],arr[2]]));
 		
 		types[to_return] = "boolean";
