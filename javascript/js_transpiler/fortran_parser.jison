@@ -120,8 +120,8 @@ statement
 	| "select" "case" e case_statements "end" "select" {$$ = ["switch",$3,$4];}
     | "subroutine" IDENTIFIER "(" ")" statements "end" "subroutine" IDENTIFIER {$$ = ["function","public","void",$2,[],$5];}
     | "subroutine" IDENTIFIER "(" identifiers ")" parameters statements "end" "subroutine" IDENTIFIER {$$ = ["function","public","void",$2,$6,$7];}
-    | IDENTIFIER "function" IDENTIFIER "(" ")" statements "return" "end" {$$ = ["function","public",$1,$3,[],$6];}
-    | IDENTIFIER "function" IDENTIFIER "(" identifiers ")" parameters statements "return" "end" {$$ = ["function","public",$1,$3,$7,$8];}
+    | IDENTIFIER "function" IDENTIFIER "(" ")" statements "end" "function" IDENTIFIER {$$ = ["function","public",$1,$3,[],$6];}
+    | IDENTIFIER "function" IDENTIFIER "(" identifiers ")" parameters statements "end" "function" IDENTIFIER {$$ = ["function","public",$1,$3,$7,$8];}
     ;
 
 
@@ -229,9 +229,9 @@ parentheses_expr:
 
 var_type: "double precision" | IDENTIFIER;
 parameter:
-	IDENTIFIER "," "intent" "(" "in" ")" "::" IDENTIFIER {$$ = ["in_parameter",$1, $8];}
-	| IDENTIFIER "," "intent" "(" "out" ")" "::" IDENTIFIER {$$ = ["in_parameter",$1, $8];}
-	| IDENTIFIER "," "intent" "(" "inout" ")" "::" IDENTIFIER {$$ = ["ref_parameter",$1, $8];};
+	var_type "," "intent" "(" "in" ")" "::" IDENTIFIER {$$ = ["in_parameter",$1, $8];}
+	| var_type "," "intent" "(" "out" ")" "::" IDENTIFIER {$$ = ["out_parameter",$1, $8];}
+	| var_type "," "intent" "(" "inout" ")" "::" IDENTIFIER {$$ = ["ref_parameter",$1, $8];};
 parameters: parameters parameter {$$ = $1.concat([$2]);} | parameter {$$ =
  [$1];};
 

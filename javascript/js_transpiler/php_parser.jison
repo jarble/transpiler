@@ -15,6 +15,8 @@
 "private"             return "private"
 "static"              return "static"
 "new"                 return 'new'
+"and"                 return 'and'
+"or"                  return 'or'
 "if"                  return "if"
 "do"                  return "do"
 "elseif"              return "elseif"
@@ -74,8 +76,8 @@
 /* operator associations and precedence */
 
 %left '?'
-%left '||'
-%left '&&'
+%left '||' 'or'
+%left '&&' 'and'
 %left '<' '<=' '>' '>=' '===' '!=='
 %left '+' '-' '.'
 %left '*' '/'
@@ -162,8 +164,12 @@ e
     |"..." parentheses_expr {$$ = ["unpack_array",$2]}
     |e '||' e
         {$$ = [$2,$1,$3];}
+    |e 'or' e
+        {$$ = ["||",$1,$3];}
     |e '&&' e
         {$$ = [$2,$1,$3];}
+    |e 'and' e
+        {$$ = ['&&',$1,$3];}
     |e '!==' e
         {$$ = ['!=',$1,$3];}
     |e '===' e

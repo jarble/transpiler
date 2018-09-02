@@ -684,6 +684,11 @@ function var_type(input_lang,lang,type){
 			return "Real";
 		}
 	}
+	else if(member(type,["real"])){
+		if(member(lang,['java','c','c++'])){
+			return "double";
+		}
+	}
 	else if(member(type,["String","string","\"string\"","str","character(len=*)"])){
 		if(member(lang,['vala','standard ml','thrift','protobuf','lua','systemverilog','seed7','octave','picat','mathematical notation','polish notation','reverse polish notation','prolog','constraint handling rules','d','chapel','minizinc','genie','hack','nim','algol 68','typescript','coffeescript','octave','tcl','awk','julia','c#','f#','perl','javascript','go','php','nemerle','erlang'])){
 			return "string";
