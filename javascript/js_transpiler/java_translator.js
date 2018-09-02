@@ -2747,7 +2747,7 @@ function generate_code(input_lang,lang,indent,arr){
 	else if(arr[0] === "!"){
 		var a = generate_code(input_lang,lang,indent,arr[1]);
 		if(is_dynamically_typed(input_lang) && is_statically_typed(lang)){
-			set_var_type(input_lang,lang,a,"int");
+			set_var_type(input_lang,lang,a,"boolean");
 		}
 		if(member(lang,['java','chapel','tcl','autohotkey','ruby','perl 6','katahdin','coffeescript','frink','d','ooc','ceylon','processing','janus','pawn','autohotkey','groovy','scala','hack','rust','octave','typescript','julia','awk','swift','scala','vala','nemerle','pike','perl','c','c++','objective-c','tcl','javascript','r','dart','java','go','php','haxe','c#','wolfram'])){
 			to_return = "!"+a;
@@ -6908,7 +6908,7 @@ function generate_code(input_lang,lang,indent,arr){
 		var a = generate_code(input_lang,lang,indent,arr[1]);
 		var b = generate_code(input_lang,lang,indent,arr[2]);
 		if(is_dynamically_typed(input_lang) && is_statically_typed(lang)){
-			set_var_type(input_lang,lang,a,"int");
+			set_var_type(input_lang,lang,a,"double");
 		}
 		same_var_type(a,b);
 		if(infix_arithmetic_lang(lang)){
@@ -7371,7 +7371,7 @@ function generate_code(input_lang,lang,indent,arr){
 		var a = generate_code(input_lang,lang,indent,arr[1]);
 		var b = generate_code(input_lang,lang,indent,arr[2]);
 		if(is_dynamically_typed(input_lang) && is_statically_typed(lang)){
-			set_var_type(input_lang,lang,a,"int");
+			set_var_type(input_lang,lang,a,"double");
 			same_var_type(a,b);
 		}
 		if(member(lang,["javascript",'pari/gp',"glsl",'sentient',"english","glsl",'vala',"chapel",'nim',"coffeescript",'dart','cython','awk',"go",'julia',"kotlins","haxe","typescript","swift","picat","php","ruby","java","c","c++","c#","perl","python",'coconut',"scala","visual basic .net"])){
@@ -7385,7 +7385,7 @@ function generate_code(input_lang,lang,indent,arr){
 		var a = generate_code(input_lang,lang,indent,arr[1]);
 		var b = generate_code(input_lang,lang,indent,arr[2]);
 		if(is_dynamically_typed(input_lang) && is_statically_typed(lang)){
-			set_var_type(input_lang,lang,a,"int");
+			set_var_type(input_lang,lang,a,"double");
 			same_var_type(a,b);
 		}
 		if(member(lang,["java","c","php",'hack',"perl",'c++','javascript','c#'])){
@@ -7445,7 +7445,7 @@ function generate_code(input_lang,lang,indent,arr){
 	else if(arr[0] === "++" && arr.length === 2){
 		var a = generate_code(input_lang,lang,indent,arr[1]);
 		if(is_dynamically_typed(input_lang) && is_statically_typed(lang)){
-			set_var_type(input_lang,lang,a,"int");
+			set_var_type(input_lang,lang,a,"double");
 		}
 		if(member(lang,["javascript","inform 6","octave","glsl","gosu",'yacas',"typescript","php","kotlin","dart","java","c","c++","c#","perl","perl 6","haxe","go","wolfram"])){
 			to_return = a + "++";
@@ -7470,7 +7470,7 @@ function generate_code(input_lang,lang,indent,arr){
 	else if(arr[0] === "--"){
 		var a = generate_code(input_lang,lang,indent,arr[1]);
 		if(is_dynamically_typed(input_lang) && is_statically_typed(lang)){
-			set_var_type(input_lang,lang,a,"int");
+			set_var_type(input_lang,lang,a,"double");
 		}
 		
 		if(member(lang,["javascript","glsl","perl 6","vala","gosu","octave","coffeescript",'yacas',"typescript","php","kotlin","haxe","scala","java","c","c++","c#","perl","go"])){
