@@ -943,12 +943,10 @@ function parameter(input_lang,lang,x){
 		//console.log("types: "+JSON.stringify(types));
 		if(input_lang === "prolog" && !member(lang,['mysql','c','fortran'])){
 			//alert(JSON.stringify(function_params));
-			alert(JSON.stringify(x));
 			return parameter(input_lang,lang,["ref_parameter"].concat(x));
 		}
 		else if(input_lang === "prolog" && member(lang,['fortran','c'])){
 			//alert(JSON.stringify(function_params));
-			alert(JSON.stringify(x));
 			return parameter(input_lang,lang,["ref_parameter"].concat(x));
 		}
 		if(member(lang,["java","thrift","c#",'scriptol'])){
