@@ -8540,7 +8540,7 @@ function generate_code(input_lang,lang,indent,arr){
 			});
 			return a.join(" \\newline ");
 		}
-		if(member(lang,["minizinc","maxima","ocaml"])){
+		if(member(lang,["minizinc","maxima","ocaml","mysql"])){
 			var a = arr[1].map(function(a1){
 				return generate_code(input_lang,lang,indent,a1);
 			});
