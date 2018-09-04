@@ -143,6 +143,7 @@ statement_with_semicolon
    | var_type identifiers {$$ = ["initialize_empty_vars",$1,[$2]];}
    | IDENTIFIER "=" e {$$ = ["set_var",$1,$3];}
    | "call" function_call {$$ = $2;}
+   | "return" {$$ = "return";}
    ;
 
 initialize_var1: initialize_var_ {$$ = ["initialize_var"].concat($1);};

@@ -136,6 +136,7 @@ statement_with_semicolon
    : 
    "System.out.println" "(" e ")" {$$ = ["println",$3];}
    | "return" e  {$$ = ["return",$2];}
+   | "return"  {$$ = ["return"];}
    | type var_name "=" e {$$ = ["initialize_var",$1,$2,$4];}
    | parallel_assignment
    | var_name "[" "]" "=" e {$$ = ["function_call","array_push",[$1,$5]];}

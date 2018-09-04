@@ -145,6 +145,7 @@ statement_with_semicolon
    "import" IDENTIFIER "from" STRING_LITERAL {$$ = ["import_from",$2,$4];}
    | "continue" {$$ = [$1];}
    | "return" e  {$$ = ["return",$2];}
+   | "return"  {$$ = ["return"];}
    | "yield" e  {$$ = ["yield",$2];}
    | "const" IDENTIFIER "=" e {$$ = ["initialize_constant","Object",$3,$5];}
    | "var" identifiers {$$ = ["initialize_empty_vars","Object",$2];}

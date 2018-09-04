@@ -125,6 +125,7 @@ statement_with_semicolon
    IDENTIFIER "(" ")" {$$ = ["function_call",$1,[]];}
    | IDENTIFIER "(" exprs ")" {$$ = ["function_call",$1,$3];}
    |"return" e  {$$ = ["return",$2];}
+   |"return" {$$ = ["return"];}
    | "const" type IDENTIFIER "=" e {$$ = ["initialize_constant",$2,$3,$5];}
    | "const" type IDENTIFIER "[" "]" "=" e {$$ = ["initialize_constant",[$2,"[]"],$3,$7];}
    | set_array_size

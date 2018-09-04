@@ -88,7 +88,7 @@
 
 expressions: statements_ EOF {return ["top_level_statements",$1]};
 
-statements_: statements_with_vars | initialize_var_ ";" {$$ = [["semicolon",["initialize_var"].concat($1)]]} | initialize_var_ ";" statements_with_vars {$$ = [["lexically_scoped_vars",[["lexically_scoped_var"].concat($1)],["statements",$3]]]};
+statements_: statements_without_vars | initialize_var_ ";" {$$ = [["semicolon",["initialize_var"].concat($1)]]} | initialize_var_ ";" statements_with_vars {$$ = [["lexically_scoped_vars",[["lexically_scoped_var"].concat($1)],["statements",$3]]]};
 statements_without_vars: statement statements_without_vars {$$ = [$1].concat($2);} | statement {$$ =
  [$1];};
 initialize_vars: initialize_vars ";" initialize_var {$$ = $1.concat([$3]);} | initialize_var {$$ =
@@ -155,6 +155,7 @@ OPERATOR: "+="|"-="|"*="|"/="|"++"|"--"|"<="|">="|"<"|">"|"&&"|"||"|"=="|"+"|"-"
 statement_with_semicolon
    : 
    "return" e  {$$ = ["return",$2];}
+   | "return"  {$$ = ["return"];}
    | "const" type IDENTIFIER "=" e {$$ = ["initialize_constant",$2,$3,$5];}
    | "const" type identifiers {$$ = ["initialize_empty_constants",$2,$3];}
    | type identifiers {$$ = ["initialize_empty_vars",$1,$2];}

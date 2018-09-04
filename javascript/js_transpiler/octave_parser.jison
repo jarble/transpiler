@@ -112,6 +112,7 @@ statement
     :
     "switch" "(" e ")" case_statements "endswitch" {$$ = ["switch",$3,$5];}
     | "while" "(" e ")" statements "endwhile" {$$ = ["while",$3,$5];}
+    | "function" IDENTIFIER "=" IDENTIFIER "(" parameters ")" statements "endfunction" {$$ = ["function_with_retval",$2,"public","void",$4,$6,$8];}
     | "function" IDENTIFIER "(" parameters ")" statements "endfunction" {$$ = ["function","public","void",$2,$4,$6];}
     | statement_with_semicolon ";" {$$ = ["semicolon",$1];}
     | "if" "(" e ")" statements elif "endif" {$$ = ["if",$3,$5,$6];}
@@ -123,6 +124,7 @@ statement_with_semicolon
    "import" IDENTIFIER "from" STRING_LITERAL {$$ = ["import_from",$2,$4];}
    | "continue" {$$ = [$1];}
    | "return" e  {$$ = ["return",$2];}
+   | "return" {$$ = ["return"];}
    | access_array "=" e {$$ = ["set_var",$1,$3];}
    | IDENTIFIER "=" e {$$ = ["set_var",$1,$3];}
    | IDENTIFIER "++" {$$ = [$2,$1];}
