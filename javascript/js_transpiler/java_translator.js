@@ -4987,7 +4987,7 @@ function generate_code(input_lang,lang,indent,arr){
 			return generate_code(input_lang,lang,indent,["access_dict",arr[1],arr[2]]);
 		}
 		
-		var params = access_array_parameters(input_lang,lang,arr[2]);
+		var params = access_array_parameters(input_lang,lang,indent,arr[2]);
 		if(member(lang,["ruby","alt-ergo","glsl","yacas","python","coconut","c#","julia",'d',"swift","julia","janus","minizinc","picat","nim","autoit",'python_temp',"cython","coffeescript","dart","typescript","awk","vala","perl","javascript","go","c++","php","haxe",'c'])){
 			to_return = name + "["+params+"]";
 		}
