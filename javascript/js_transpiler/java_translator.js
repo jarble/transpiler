@@ -1,7 +1,10 @@
 "use strict";
 var types = {};
 var defined_vars = [];
+var global_vars = [];
 var function_name;
+var is_recursive;
+var retval;
 var function_params = {};
 var param_index = 0;
 var grammar_num=0;
@@ -929,10 +932,10 @@ function set_var_type(input_lang,lang,a,b){
 }
 
 function is_statically_typed(lang){
-	return member(lang,["c","ada","mysql","transact-sql","fortran","minizinc","go","swift","ada","seed7",'gnu pascal',"pascal","chapel","rust","algol 68","coq","glsl"]);
+	return member(lang,["c","d","ada","mysql","transact-sql","fortran","minizinc","go","swift","ada","seed7",'gnu pascal',"pascal","chapel","rust","algol 68","coq","glsl"]);
 }
 function is_dynamically_typed(lang){
-	return member(lang,["javascript",'english',"php","ruby","lua","perl","common lisp","racket","scheme","rebol","mathematica","r","prolog","tcl","clojure","erlang","julia","elixir"]);
+	return member(lang,["javascript",'english',"php","ruby","lua","perl","common lisp","racket","scheme","rebol","mathematica","r","prolog","tcl","clojure","erlang","julia","elixir",'octave']);
 }
 
 function parameter(input_lang,lang,x){
@@ -1511,7 +1514,7 @@ function unparse(input_lang,lang,indent,pattern_array,matching_symbols){
 			to_return = unparse(input_lang,lang,indent,pattern_array[1],matching_symbols);
 		}
 	}
-	else if(member(pattern_array[0],["-","*","/"])){
+	else if(member(pattern_array[0],["-","*","/","+"])){
 		var a = unparse(input_lang,lang,indent,pattern_array[1],matching_symbols);
 		var b = unparse(input_lang,lang,indent,pattern_array[2],matching_symbols);
 		if(infix_arithmetic_lang(lang)){
@@ -5356,6 +5359,11 @@ function generate_code(input_lang,lang,indent,arr){
 			to_return = "macro " + name + " ("+params+")"+body+indent+"end";
 		}
 	}
+	else if(arr[0] === "function_with_retval"){
+		retval = arr[1];
+		return generate_code(input_lang,lang,indent,["function",arr[2],arr[3],arr[4],arr[5],arr[6]]);
+		
+	}
 	else if(arr[0] === "function"){
 		//see https://rosettacode.org/wiki/Function_definition
 		//return arr.toString();		
@@ -5364,6 +5372,14 @@ function generate_code(input_lang,lang,indent,arr){
 		var name = arr[3];
 		set_var_type(input_lang,lang,name,type);
 		function_name = name;
+		global_vars.push(name);
+		
+		for (var key in types) {
+			//clear types of objects that are not global vars
+			if (types.hasOwnProperty(key) && global_vars.indexOf(key) === -1) {
+				types[key] = undefined;
+			}
+		}
 		
 		function_params[name] = arr[4];
 		if(input_lang === "prolog"){
@@ -5566,6 +5582,9 @@ function generate_code(input_lang,lang,indent,arr){
 			}
 			else{
 				to_return = var_type(input_lang,lang,type) + " function " + name + "("+words_list+") "+params+" "+body+indent+"end function "+name;
+				if(is_recursive){
+					to_return = "recursive " + to_return;
+				}
 			}
 		}
 		else if(member(lang,["visual basic","visual basic .net"])){
@@ -5730,8 +5749,13 @@ function generate_code(input_lang,lang,indent,arr){
 			});
 			to_return = name + ":" + types_list.join(" -> ") + " -> " + var_type(input_lang,lang,type) + indent + name + " " + params+" = "+body;
 		}
-		else if(member(lang,["ocaml"])){
-			to_return = "let "  + name + " " + params+" = "+body;
+		else if(member(lang,["ocaml",'f#'])){
+			if(is_recursive){
+				to_return = "let rec "  + name + " " + params+" = "+body;
+			}
+			else{
+				to_return = "let "  + name + " " + params+" = "+body;
+			}
 		}
 		else if(member(lang,["lua","julia"])){
 			to_return = "function " + name + "("+params+") "+body+indent+"end";
@@ -5757,6 +5781,7 @@ function generate_code(input_lang,lang,indent,arr){
 		else if(member(lang,["ruby"])){
 			to_return = "def " + name + "("+params+") "+body+indent+"end";
 		}
+		retval = undefined;
 	}
 	else if(arr[0] === "member_variable"){
 		var access_modifier = arr[1];
@@ -6883,6 +6908,10 @@ function generate_code(input_lang,lang,indent,arr){
 		var b = generate_code(input_lang,lang,indent,arr[2]);
 		//console.log("initialize_var: "+ arr[2] + " "+arr[1]);
 		same_var_type(a,b);
+		if(retval === a){
+			same_var_type(retval,a);
+			types[function_name] = types[retval];
+		}
 		if(member(lang,["tcl"])){
 			to_return = "set "+a.substring(1)+" [expr {"+b+"}]";
 		}
@@ -7621,6 +7650,9 @@ function generate_code(input_lang,lang,indent,arr){
 	}
 	else if(arr[0] === "function_call"){
 		var name = arr[1];
+		if(name === function_name){
+			is_recursive = true;
+		}
 		var params = function_call_parameters(input_lang,lang,name,arr[2]);
 		to_return = function_call(lang,name,params);
 		same_var_type(to_return,name);
@@ -7828,7 +7860,12 @@ function generate_code(input_lang,lang,indent,arr){
 			to_return = "Return " + a;
 		}
 		else if(member(lang,["octave"])){
-			to_return = "retval = " + a;
+			if(retval === "undefined"){
+				to_return = "retval = " + a;
+			}
+			else{
+				to_return = retval + " = " + a;
+			}
 		}
 		else if(member(lang,["fortran"])){
 			to_return = function_name + " = " + a;
@@ -8178,7 +8215,7 @@ function generate_code(input_lang,lang,indent,arr){
 	else if(matching_patterns(pattern_array,input_lang,lang,arr,[
 		//inverse of a matrix
 		[["maxima"],["function_call","invert",["$a"]]],
-		[["symja","glsl"],["function_call","inverse",["$a"]]],
+		[["symja","glsl",'octave'],["function_call","inverse",["$a"]]],
 		[["algebrite"],["function_call","inv",["$a"]]],
 		[["sympy"],["**","$a","-1"]],
 		[["symbolicc++"],[".",["$a",["function_call","inverse",[]]]]]

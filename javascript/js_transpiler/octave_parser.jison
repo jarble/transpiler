@@ -198,6 +198,7 @@ parentheses_expr_:
     | "{" key_values "}" {$$ = ["associative_array","Object","Object",$2];}
     | "[" "]" {$$ = ["initializer_list","Object",[]];}
     | "[" exprs "]" {$$ = ["initializer_list","Object",$2];}
+    | "[" matrix_exprs "]" {$$ = ["initializer_list","Object",$2];}
     | NUMBER
         {$$ = yytext;}
     | IDENTIFIER
@@ -209,6 +210,8 @@ parameter: IDENTIFIER "=" e {$$ = ["default_parameter","Object",$1,$3];} | IDENT
 parameters: parameter "," parameters {$$ = [$1].concat($3);} | parameter {$$ =
  [$1];} | {$$ = []};
 exprs: e "," exprs {$$ = [$1].concat($3);} | e {$$ = [$1];};
+matrix_exprs: exprs ";" matrix_exprs {$$ = [["initializer_list","Object",$1]].concat($3);} | exprs ";" exprs {$$ = [["initializer_list","Object",$1],["initializer_list","Object",$3]]};
+
 
 key_values: key_values "," key_value {$$ = $1.concat([$3]);} | key_value {$$ = [$1];};
 key_value: STRING_LITERAL ":" e {$$ = [$1,$3]} | IDENTIFIER ":" e {$$ = ["\""+$1+"\"",$3]};
