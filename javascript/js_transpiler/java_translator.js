@@ -1073,7 +1073,7 @@ function parameter(input_lang,lang,x){
 			else{
 				type = var_type(input_lang,lang,x[0]);
 			}
-			return name+": var " +type;
+			return "var " +type+":"+name;
 		}
 		else if(member(lang,["c","glsl","c++","d","algol 68","vala"])){
 			if(is_dynamically_typed(input_lang) && is_statically_typed(lang)){
@@ -5592,7 +5592,7 @@ function generate_code(input_lang,lang,indent,arr){
 		}
 		else if(member(lang,["minizinc"])){
 			if(type !== undefined || type === "Object"){
-				type = types[function_name];
+				type = var_type(input_lang,lang,types[function_name]);
 			}
 			else{
 				type = var_type(input_lang,lang,type);
@@ -6017,6 +6017,11 @@ function generate_code(input_lang,lang,indent,arr){
 			the_statements = generate_code(input_lang,lang,indent+"    ",arr[2]);
 			to_return = "(let ("+the_variables.join(" ")+") "+the_statements+")";
 		}
+		else if(member(lang,["minizinc"])){
+			the_variables = arr[1].map(function(x){return generate_code(input_lang,lang,indent,x)});
+			the_statements = generate_code(input_lang,lang,indent+"    ",arr[2]);
+			to_return = "let {"+the_variables.join(" ")+"} in "+the_statements;
+		}
 		else if(member(lang,["haskell"])){
 			the_variables = arr[1].map(function(x){return generate_code(input_lang,lang,indent,x)});
 			the_statements = generate_code(input_lang,lang,indent+"    ",arr[2]);
@@ -6121,7 +6126,7 @@ function generate_code(input_lang,lang,indent,arr){
 		    else{
 				type = arr[1];
 			}
-			to_return = var_type(input_lang,lang,type) + ":" + name + "=" + expr;
+			to_return = "var " + var_type(input_lang,lang,type) + ":" + name + "=" + expr;
 		}
 		else if(member(lang, ["reverse polish notation"])){
 			to_return = name +" "+ expr + " =";
@@ -8420,7 +8425,7 @@ function generate_code(input_lang,lang,indent,arr){
 	else if(matching_patterns(pattern_array,input_lang,lang,arr,[
 		//solve an algebraic equation
 		//$a is the equation, $b is the list of variables
-		[["wolfram","maxima","sympy","sage"],
+		[["wolfram","maxima","sympy","sage","maple"],
 			["function_call","solve",["$a","$b"]]]
 	],matching_symbols)){
 		to_return = unparse(input_lang,lang,indent,pattern_array.value,matching_symbols);
