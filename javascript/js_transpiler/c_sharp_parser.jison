@@ -164,7 +164,7 @@ class_statement:
 	| access_modifier "static" type "operator" OPERATOR "(" parameters ")" "{" statements "}" {$$ = ["static_overload_operator","public",$3,$5,$7,$10];}
 ;
 
-OPERATOR: "+="|"-="|"*="|"/="|"++"|"--"|"<="|">="|"<"|">"|"&&"|"||"|"=="|"+"|"-"|"*"|"/"|"|="|"&=";
+OPERATOR: "+="|"-="|"*="|"/="|"++"|"--"|"<="|">="|"<"|">"|"&&"|"||"|"=="|"+"|"-"|"*"|"/"|"|="|"&="|"!";
 
 
 statement_with_semicolon

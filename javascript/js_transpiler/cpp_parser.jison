@@ -150,7 +150,7 @@ class_statement:
 	| type IDENTIFIER "(" parameters ")" "{" statements "}" {$$ = ["instance_method","public",$1,$2,$4,$7];}
 	| type "operator" OPERATOR "(" parameters ")" "{" statements "}" {$$ = ["static_overload_operator","public",$1,$3,$5,$8];};
 
-OPERATOR: "+="|"-="|"*="|"/="|"++"|"--"|"<="|">="|"<"|">"|"&&"|"||"|"=="|"+"|"-"|"*"|"/";
+OPERATOR: "+="|"-="|"*="|"/="|"++"|"--"|"<="|">="|"<"|">"|"&&"|"||"|"=="|"+"|"-"|"*"|"/"|"!";
 
 statement_with_semicolon
    : 

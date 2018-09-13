@@ -17,7 +17,7 @@ var class_name = "";
 var type_parameters = [];
 
 function is_declarative_language(lang){
-	return member(lang,["erlang","smt-lib","mathematical notation","haskell","prolog","logtalk","minizinc","reverse polish notation"]);
+	return member(lang,["erlang","smt-lib","mathematical notation","haskell","prolog","logtalk","minizinc","reverse polish notation",'z3py']);
 }
 
 function file_extension(lang){
@@ -932,7 +932,7 @@ function set_var_type(input_lang,lang,a,b){
 }
 
 function is_statically_typed(lang){
-	return member(lang,["c","d","ada","mysql","transact-sql","fortran","minizinc","go","swift","ada","seed7",'gnu pascal',"pascal","chapel","rust","algol 68","coq","glsl"]);
+	return member(lang,["c","d","ada","mysql","transact-sql","fortran","minizinc","go","swift","ada","seed7",'gnu pascal',"pascal","chapel","rust","algol 68","coq","glsl","smt-lib"]);
 }
 function is_dynamically_typed(lang){
 	return member(lang,["javascript",'english',"php","ruby","lua","perl","common lisp","racket","scheme","rebol","mathematica","r","prolog","tcl","clojure","erlang","julia","elixir",'octave']);
@@ -1024,12 +1024,16 @@ function parameter(input_lang,lang,x){
 		}
 		else if(member(lang,["smt-lib"])){
 			if(is_dynamically_typed(input_lang) && is_statically_typed(lang)){
-				type = var_type(input_lang,lang,types[x[1]]);
+				type = types[x[1]];
+				//alert(name);
+				//alert(JSON.stringify(function_params[name]));
+				function_params[function_name][param_index][0] = type;
+				param_index += 1;
 			}
 			else{
-				type = var_type(input_lang,lang,x[0]);
+				type = x[0];
 			}
-			return "("+name+" "+type+")";
+			return "("+name+" "+var_type(input_lang,lang,type)+")";
 		}
 		else if(member(lang,["typescript","haxe","standard ml"]) && member(x[0],["Object","object"])){
 			return name;
@@ -5624,6 +5628,10 @@ function generate_code(input_lang,lang,indent,arr){
 			var types_list = arr[4].map(function(x) {
 				return var_type(input_lang,lang,x[0]);
 			}).join(" ");
+			
+			if(type !== undefined || type === "Object"){
+				type = types[function_name];
+			}
 			to_return = "(declare-fun " + name + "("+types_list+") "+var_type(input_lang,lang,type)+")"+" (assert (forall ("+params+") "+body+"))";
 		}
 		else if(member(lang,["rust"])){
@@ -6087,6 +6095,15 @@ function generate_code(input_lang,lang,indent,arr){
 		}
 		
 		if(member(lang, ["java","glsl","c","c++","c#","vala"])){
+			if(is_dynamically_typed(input_lang) && is_statically_typed(lang)){
+			    type = types[expr];
+		    }
+		    else{
+				type = arr[1];
+			}
+			to_return = var_type(input_lang,lang,type) + " " + name + "=" + expr;
+		}
+		else if(member(lang, ["pyz3"])){
 			if(is_dynamically_typed(input_lang) && is_statically_typed(lang)){
 			    type = types[expr];
 		    }
@@ -7895,6 +7912,7 @@ function generate_code(input_lang,lang,indent,arr){
 		}
 		if(is_dynamically_typed(input_lang) && is_statically_typed(lang)){
 			types[function_name] = types[a];
+			console.log("Return type "+types[a]);
 		}
 		//console.log(to_return);
 	}
