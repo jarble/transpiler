@@ -5851,7 +5851,7 @@ function generate_code(input_lang,lang,indent,arr){
 		}
 		
 		//for languages that have while-loops but not for-loops
-		else if(member(lang,["haxe","mysql","r","rebol","picat","julia","python","coconut","kotlin","lua","ruby","scala","swift","visual basic .net"])){
+		else if(member(lang,["haxe",'fortran',"mysql","r","rebol","picat","julia","python","coconut","kotlin","lua","ruby","scala","swift","visual basic .net"])){
 			to_return = indent+semicolon(lang,initial) +indent+ while_loop(lang,condition, indent+"    "+semicolon(lang,update)+body,indent);
 		}
 		else if(member(lang,["picat"])){
@@ -7795,12 +7795,9 @@ function generate_code(input_lang,lang,indent,arr){
 		else if(member(lang,["common lisp"])){
 			to_return = "(incf " + a+")";
 		}
-		else if(member(lang,["python","coconut","julia","ruby","swift","lua","visual basic .net","ruby","scala"])){
-			to_return = a + " += 1";
-		}
-		else if(member(lang,["lua","mysql","r","maxima","wolfram","rebol","ocaml","picat"])){
+		else if(member(lang,["lua","mysql","r","maxima","wolfram","rebol","ocaml","picat","fortran","python","coconut","julia","ruby","swift","lua","visual basic .net","ruby","scala"])){
 			//for languages that don't have the incrmement operator
-			to_return = generate_code(input_lang,lang,indent,["set_var",a,["+",a,"1"]]);
+			to_return = generate_code(input_lang,lang,indent,["+=",a,"1"]);
 		}
 	}
 	else if(arr[0] === "--"){
