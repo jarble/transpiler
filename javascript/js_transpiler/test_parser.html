@@ -3,6 +3,7 @@
 <head>
 	
 <script src="java_parser.js"></script>
+<script src="tex_parser.js"></script>
 <script src="kotlin_parser.js"></script>
 <script src="minizinc_parser.js"></script>
 <script src="rust_parser.js"></script>
@@ -11,6 +12,7 @@
 <script src="ada_parser.js"></script>
 <script src="go_parser.js"></script>
 <script src="javascript_parser.js"></script>
+<script src="python_parser.js"></script>
 <script src="delphi_parser.js"></script>
 <script src="fortran_parser.js"></script>
 <script src="standard_ml_parser.js"></script>
@@ -38,6 +40,7 @@
 <script src="common_lisp_parser.js"></script>
 <script src="racket_parser.js"></script>
 <script src="clips_parser.js"></script>
+<script src="kif_parser.js"></script>
 <script src="jison_parser.js"></script>
 <script src="picat_parser.js"></script>
 <script src="regex_parser.js"></script>
@@ -81,8 +84,9 @@ function save_file(){
 	var input_lang = document.getElementById("inputLang").value.trim();
 	var output_text = parse_lang(input_lang,output_lang, document.getElementById("inputText").value);
 	var extension = file_extension(output_lang);
+	var file_name = window.prompt("Choose a name for the file","output");
 	if(extension !== undefined){
-		download_file("output."+extension,output_text);
+		download_file(file_name+"."+extension,output_text);
 	}
 }
 

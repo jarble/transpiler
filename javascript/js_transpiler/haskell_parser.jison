@@ -33,6 +33,7 @@
 "<"                   return '<'
 "=="                  return '=='
 "="                   return '='
+"^"                   return '^'
 "*="                  return '*='
 "**"                  return '**'
 "*"                   return '*'
@@ -44,7 +45,6 @@
 "++"                  return '++'
 "+="                  return '+='
 "+"                   return '+'
-"^"                   return '^'
 "{"                   return '{'
 "}"                   return '}'
 "!!"                  return '!!'
@@ -66,7 +66,7 @@
 %left '<' '<=' '>' '>=' '==' '/='
 %left '+' '-' '++'
 %left '*' '/' 'mod'
-%left '**'
+%left '**' '^'
 %left UMINUS
 
 %start expressions
@@ -152,6 +152,8 @@ e
         {$$ = ["%",$1,$3];}
 	| e '**' e
         {$$ = [$2,$1,$3];}
+    | e '^' e
+        {$$ = ["**",$1,$3];}
     | '-' e %prec UMINUS
         {$$ = ["-",$2];}
     | parentheses_expr {$$ = $1;}

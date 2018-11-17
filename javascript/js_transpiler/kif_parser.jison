@@ -5,7 +5,6 @@
 (\s+|\;+.*\n)        /* skip whitespace and line comments */
 [0-9]+("."[0-9]+)?\b  return 'NUMBER'
 \"([^\\\"]|\\.)*\"    return 'STRING_LITERAL'
-"defrule"             return 'defrule'
 "deffunction"         return 'deffunction'
 "assert"              return 'assert'
 "default"             return 'default'
@@ -16,8 +15,6 @@
 "then"                return 'then'
 "else"                return 'else'
 "case"                return 'case'
-"TRUE"                return 'TRUE'
-"FALSE"               return 'FALSE'
 "?"                   return '?'
 ">="                  return '>='
 ">"                   return '>'
@@ -25,6 +22,7 @@
 "<"                   return '<'
 "=>"                  return '=>'
 "=="                  return '=='
+":="                  return ':='
 "="                   return '='
 "*="                  return '*='
 "*"                   return '*'
@@ -71,8 +69,7 @@ top_level_statements_: top_level_statement top_level_statements_ {$$ = [$1].conc
 top_level_statements: top_level_statements_ {$$ = ["top_level_top_level_statements",$1]};
 
 top_level_statement
-    : defrule
-    | "(" "deffunction" IDENTIFIER "(" parameters ")" statements ")" {$$ = ["function","public","Object",$3,$5,$7]};
+    : "(" "deffunction" IDENTIFIER "(" parameters ")" ":=" statements ")" {$$ = ["function","public","Object",$3,$5,$7]};
 
 statements_: statement statements_ {$$ = [$1].concat($2);} | statement {$$ =
  [$1];};
@@ -83,16 +80,14 @@ statements:
 
 statement:
 	statement_with_semicolon {$$ = ["semicolon",$1]}
-	| "(" "if" e "then" bracket_statements "else" bracket_statements ")" {$$ = ["if",$3,$5,["else",$7]];}
-	| "(" "switch" e case_statements ")" {$$ = ["switch",$3,$4];}
+    | "(" "cond" "(" e bracket_statements ")" elif ")" {$$ = ["if",$4,$5,$7];}
 	;
 
-bracket_statements: statement {$$= ["statements",[$1]];};
+elif:
+	"(" e bracket_statements ")" elif {$$ = ["elif",$2,$3,$5]}
+	| "(" "t" bracket_statements ")" {$$ = ["else",$3];};
 
-case_statement: "(" "case" e "then" bracket_statements ")" {$$ = ["case",$3,$5]};
-case_statements_: case_statements_ case_statement {$$ = $1.concat([$2]);} | case_statement {$$ =
- [$1];};
-case_statements: case_statements_ "(" "default" bracket_statements ")" {$$ = $1.concat([["default",$4]])} | case_statements_;
+bracket_statements: statement {$$= ["statements",[$1]];};
 
 statement_with_semicolon:
 	e {$$ = ["return",$1];}
@@ -136,10 +131,6 @@ e:
         {$$ = yytext;}
     | var_name
         {$$ = yytext;}
-    | "TRUE"
-        {$$ = [".",["true"]];}
-    | "FALSE"
-        {$$ = [".",["false"]];}
     | STRING_LITERAL
         {$$ = yytext;};
 
@@ -153,6 +144,3 @@ function_call:
 var_name: "?" IDENTIFIER {$$ = $2};
 
 exprs: exprs e {$$ = $1.concat([$2]);} | e {$$ = [$1];};
-
-defrule:
-	"(" "defrule" IDENTIFIER e "=>" "(" "assert" e ")" ")" {$$= ["defrule",$3,$4,$8]};

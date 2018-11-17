@@ -103,6 +103,7 @@ statement
     | "for" "_" "," IDENTIFIER ":=" "range" dot_expr "{" statements "}" {$$ = ["foreach","Object",$4,$7,$9];}
     | "for" IDENTIFIER "," IDENTIFIER ":=" "range" dot_expr "{" statements "}" {$$ = ["foreach_with_index","Object",$2,$4,$7,$9];}
     | if_statement
+    | "func" IDENTIFIER "(" parameters ")" "(" IDENTIFIER type ")" "{" statements "}" {$$ = ["function_with_retval",$7,"public",$8,$2,$4,$11];}
     | "func" IDENTIFIER "(" parameters ")" type "{" statements "}" {$$ = ["function","public",$6,$2,$4,$8];}
     ;
 

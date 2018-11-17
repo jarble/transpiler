@@ -76,7 +76,7 @@ top_level_statement
 
 predicate:
     IDENTIFIER "(" exprs ")" ":-" e {$$ = ["function","public","boolean",$1,$3,["statements",[["semicolon",["return",$6]]]]]}
-    | IDENTIFIER ":-" e {$$ = ["function","public","boolean",$1,[],["statements",[["semicolon",["return",$6]]]]]};
+    | IDENTIFIER ":-" e {$$ = ["function","public","boolean",$1,[],["statements",[["semicolon",["return",$3]]]]]};
 
 grammar_statement:
     IDENTIFIER "-->" e {$$ = ["grammar_statement",$1,$3]}
@@ -84,8 +84,7 @@ grammar_statement:
 
 e
     :
-    "forall" "(" e "," e ")" {$$ = ["forall",$3,$5];}
-    |e '->' e
+    e '->' e
         {$$ = ["implies",$1,$3]}
     |e ';' e
         {$$ = ['logic_or',$1,$3];}
@@ -127,8 +126,11 @@ parameters: parameter "," parameters {$$ = [$1].concat($3);} | parameter {$$ =
 function_call:
     IDENTIFIER "(" ")" {$$ = ["function_call",$1,[]];} | IDENTIFIER "(" exprs ")" {$$ = ["function_call",$1,$3];};
 
+forall_statement: "forall" "(" e "," e ")" {$$ = ["forall",$3,$5];};
+
 parentheses_expr:
-    function_call
+    forall_statement
+    | function_call
     | '(' e ')' {$$ = $2;}
     | "[" "]" {$$ = ["initializer_list","Object",[]];}
     | "[" exprs "]" {$$ = ["initializer_list","Object",$2];}
@@ -147,8 +149,8 @@ chr_head: chr_head "," function_call {$$ = ["logic_and",$1,$3];} | function_call
 chr_statement:
 	function_call "," chr_head "==>" e {$$= ["propagation_rule",["&&",$1,$3],$5]}
 	| function_call "==>" e {$$= ["propagation_rule",$1,$3]}
-	| IDENTIFIER "@" function_call "," chr_head "==>" function_call {$$= ["defrule",$1,["&&",$3,$5],$7]}
-	| IDENTIFIER "@" function_call "==>" function_call {$$= ["defrule",$1,$3,$5]}
+	| IDENTIFIER "@" function_call "," chr_head "==>" e {$$= ["defrule",$1,["&&",$3,$5],$7]}
+	| IDENTIFIER "@" function_call "==>" e {$$= ["defrule",$1,$3,$5]}
 	| function_call "," chr_head "<=>" e {$$= ["simplification_rule",["&&",$1,$3],$5]}
 	| function_call "<=>" e {$$= ["simplification_rule",$1,$3]}
     | IDENTIFIER "@" function_call "," chr_head "<=>" e {$$= ["named_simplification_rule",$1,["&&",$3,$5],$7]}
