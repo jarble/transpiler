@@ -17,19 +17,25 @@
 "switch"              return "switch"
 "for"                 return "for"
 ","                   return ','
-"⊃"                   return '⊃'
-"⊂"                   return '⊂'
-"∀"                   return '∀'
+"\u00ac"              return '\u00ac'
+"\u2200"              return '\u2200'
+"\u221e"              return '\u221e'
+"forall"              return 'forall'
 ";"                   return ';'
 "."                   return '.'
 ":"                   return ':'
 "&&"                  return '&&'
+"\u2227"              return '\u2227'
 "||"                  return '||'
+"\u2228"              return '\u2228'
+"\u2260"              return '\u2260'
 "!="                  return '!='
 '!'                   return '!'
 ">="                  return '>='
 ">>"                  return '>>'
 ">"                   return '>'
+"<->"                 return '<->'
+"\u2194"              return '\u2194'
 "<="                  return '<='
 "<"                   return '<'
 "="                   return '='
@@ -61,9 +67,10 @@
 
 /* operator associations and precedence */
 
-%left '||'
-%left '&&'
-%left '<' '<=' '>' '>=' '=' '!=' '⊃' '⊂'
+%left '<->' '\u2194'
+%left '||' "\u2228"
+%left '&&' "\u2227"
+%left '<' '<=' '>' '>=' '=' '!=' '\u2260'
 %left '+' '-'
 %left '*' '/' '%'
 %left '^'
@@ -77,7 +84,7 @@ expressions: statements_ EOF {return ["top_level_statements",$1]};
 
 statements_: statement statements_ {$$ = [$1].concat($2);} | statement {$$ =
  [$1];};
- 
+
 statements: statements_ {$$ = ["statements",$1]};
 
 statement
@@ -87,14 +94,18 @@ statement
 
 e
     :
-    e '||' e
-        {$$ = [$2,$1,$3];}
+    e "\u2194" e
+        {$$ = ["iff",$1,$3];}
+    |e "<->" e
+        {$$ = ["iff",$1,$3];}
+    | e '\u2228' e
+        {$$ = ["||",$1,$3];}
+    | e "||" e
+        {$$ = ["||",$1,$3];}
+    |e '\u2227' e
+        {$$ = ["&&",$1,$3];}
     |e '&&' e
-        {$$ = [$2,$1,$3];}
-    |e '⊃' e
-        {$$ = ['⊃',$1,$3];}
-    |e '⊂' e
-        {$$ = ['⊂',$1,$3];}
+        {$$ = ["&&",$1,$3];}
     |e '<=' e
         {$$ = [$2,$1,$3];}
     |e '<' e
@@ -107,6 +118,8 @@ e
         {$$ = [$2,$1,$3];}
     | e '!=' e
         {$$ = [$2,$1,$3];}
+    | e '\u2260' e
+        {$$ = ['!=',$1,$3];}
     | arithmetic_expr;
 
 arithmetic_expr:
@@ -128,12 +141,13 @@ arithmetic_expr:
     ;
 
 
-not_expr: '∀' IDENTIFIER parentheses_expr
-		{$$ = ['∀',$2,$4];} | "¬" parentheses_expr {$$ = ["!", [".",$2]];} | parentheses_expr;
+not_expr: "!" parentheses_expr {$$ = ["!", [".",$2]];} | "\u00ac" parentheses_expr {$$ = ["!", [".",$2]];} | parentheses_expr;
 
+forall_: "forall" | "\u2200";
 
 parentheses_expr:
-    =IDENTIFIER "(" ")" {$$ = ["function_call",$1,[]];}
+    forall_ IDENTIFIER parentheses_expr {$$ = ['forall',$2,$3];}
+    | IDENTIFIER "(" ")" {$$ = ["function_call",$1,[]];}
     | IDENTIFIER "(" exprs ")" {$$ = ["function_call",$1,$3];}
     | '(' e ')' {$$ = ["parentheses",$2];}
     | parentheses_expr_;
@@ -142,6 +156,8 @@ parentheses_expr_:
 	NUMBER
         {$$ = yytext;}
     | IDENTIFIER
+        {$$ = yytext;}
+    | '\u221e'
         {$$ = yytext;}
     | STRING_LITERAL
         {$$ = yytext;};

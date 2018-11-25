@@ -6,8 +6,11 @@
 [0-9]+("."[0-9]+)?\b  return 'NUMBER'
 \"([^\\\"]|\\.)*\"    return 'STRING_LITERAL'
 "deffunction"         return 'deffunction'
+"defrelation"         return 'defrelation'
+"forall"              return 'forall'
 "assert"              return 'assert'
 "default"             return 'default'
+"implies"             return 'implies'
 "switch"              return 'switch'
 "not"                 return 'not'
 "and"                 return 'and'
@@ -18,7 +21,7 @@
 "?"                   return '?'
 ">="                  return '>='
 ">"                   return '>'
-"<="                  return '<='
+"=<"                  return '=<'
 "<"                   return '<'
 "=>"                  return '=>'
 "=="                  return '=='
@@ -69,7 +72,8 @@ top_level_statements_: top_level_statement top_level_statements_ {$$ = [$1].conc
 top_level_statements: top_level_statements_ {$$ = ["top_level_top_level_statements",$1]};
 
 top_level_statement
-    : "(" "deffunction" IDENTIFIER "(" parameters ")" ":=" statements ")" {$$ = ["function","public","Object",$3,$5,$7]};
+    : "(" "deffunction" IDENTIFIER "(" parameters ")" ":=" statements ")" {$$ = ["function","public","Object",$3,$5,$8]}
+    | "(" "defrelation" IDENTIFIER "(" parameters ")" ":=" statements ")" {$$ = ["predicate","Object",$3,$5,$8]};
 
 statements_: statement statements_ {$$ = [$1].concat($2);} | statement {$$ =
  [$1];};
@@ -106,7 +110,6 @@ operator:
 comparison_operator:
 	">="
 	| ">"
-	| "<="
 	| "<";
 
 equal_exprs: equal_exprs e {$$ = ["logic_equals",$1,$2]} | e;
@@ -123,9 +126,12 @@ e:
     | '(' '+' e plus_exprs ')' {$$ = [$2,$3,$4];}
 	| '(' '-' e minus_exprs ')' {$$ = [$2,$3,$4];}
     | '(' '/' e divide_exprs ')' {$$ = [$2,$3,$4];}
+    | '(' "=<" e e ')' {$$ = ["<=",$3,$4];}
     | '(' comparison_operator e e ')' {$$ = [$2,$3,$4];}
+    | '(' "implies" e e ')' {$$ = ["implies",$3,$4];}
     | '(' 'or' e or_exprs ')' {$$ = ["logic_or",$3,$4];}
     | '(' 'and' e and_exprs ')' {$$ = ["logic_and",$3,$4];}
+    | "(" "forall" "(" e ")" e ")" {$$ = ["forall",$4,$6];}
     | function_call
     | NUMBER
         {$$ = yytext;}
