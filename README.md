@@ -5,7 +5,7 @@
 *Universal-transpiler* is a source-to-source compiler that translates a subset of several programming languages into several others.
 It is also able to translate several metasyntax notations, such as EBNF and ABNF.
 
-The [online version of this translator](https://jarble.github.io/transpiler/javascript/js_transpiler/test_parser.html#%7B%22inputText%22%3A%22%5Cnpublic%20static%20int%20add(int%20a%2Cint%20b)%7B%5Cn%20%20%20%20int%20result%20%3D%20a-b%3B%5Cn%20%20%20%20return%20result%3B%5Cn%7D%22%2C%22inputLang%22%3A%22java%22%2C%22outputLang%22%3A%22perl%22%7D) is written in JavaScript, but an experimental version is also being written in Prolog.
+The [online version of this translator](https://jarble.github.io/transpiler/javascript/js_transpiler/test_parser.html#%7B%22inputText%22%3A%22function%20add(a%2Cb)%7B%5Cn%5Ctvar%20g%20%3D%20%5B3%2C4%2C5%5D%3B%5Cn%5Ctreturn%20a%2Bb%2B(g%5B0%5D)%2B(g.length)%3B%5Cn%7D%5Cn%5Cnfunction%20divide(a%2Cb)%7B%5Cn%5Ctreturn%20a%2Fb%3B%5Cn%7D%22%2C%22inputLang%22%3A%22javascript%22%2C%22outputLang%22%3A%22python%22%7D) is written in JavaScript, but an experimental version is also being written in Prolog.
 
 This is some JavaScript code:
 
