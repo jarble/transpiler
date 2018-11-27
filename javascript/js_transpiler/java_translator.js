@@ -1886,7 +1886,8 @@ function generate_code(input_lang,lang,indent,arr){
 		types[to_return] = "boolean";
 	}
 	else if(matching_patterns(pattern_array,input_lang,lang,arr,[
-		[['c',"php"],[".",["M_PI"]]],
+		[['c','c++',"php"],[".",["M_PI"]]],
+		[["mathematical notation"],"\u03c0"],
 		[["yacas"],[".",["Pi"]]],
 		[["java","pseudocode","javascript","typescript","c#"],[".",["Math","PI"]]],
 		[["lua","python"],[".",["math","pi"]]],
@@ -2339,7 +2340,14 @@ function generate_code(input_lang,lang,indent,arr){
 		[["wolfram"],
 			["function_call","Integrate",["$a","$b"]]]
 	],matching_symbols)){
-		to_return = unparse(input_lang,lang,indent,pattern_array.value,matching_symbols);
+		var a = generate_code(input_lang,lang,indent,matching_symbols["$a"]);
+		var b = generate_code(input_lang,lang,indent,matching_symbols["$b"]);
+		if(lang === "mathematical notation"){
+			to_return = "\u222b("+a+") d"+b;
+		}
+		else{
+			to_return = unparse(input_lang,lang,indent,pattern_array.value,matching_symbols);
+		}
 		same_var_type(to_return,a);
 	}
 	else if(matching_patterns(pattern_array,input_lang,lang,arr,[

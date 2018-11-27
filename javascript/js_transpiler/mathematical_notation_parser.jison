@@ -20,6 +20,7 @@
 "\u00ac"              return '\u00ac'
 "\u2200"              return '\u2200'
 "\u221e"              return '\u221e'
+"\u03c0"              return '\u03c0'
 "forall"              return 'forall'
 ";"                   return ';'
 "."                   return '.'
@@ -35,6 +36,7 @@
 ">>"                  return '>>'
 ">"                   return '>'
 "<->"                 return '<->'
+"->"                  return '->'
 "\u2194"              return '\u2194'
 "<="                  return '<='
 "<"                   return '<'
@@ -67,7 +69,7 @@
 
 /* operator associations and precedence */
 
-%left '<->' '\u2194'
+%left '<->' '->' '\u2194'
 %left '||' "\u2228"
 %left '&&' "\u2227"
 %left '<' '<=' '>' '>=' '=' '!=' '\u2260'
@@ -89,8 +91,7 @@ statements: statements_ {$$ = ["statements",$1]};
 
 statement
     :
-	IDENTIFIER "(" parameters ")" "=" "{" e "}" {$$ = ["function","public","double",$1,$3,["statements",[["semicolon",["return",$7]]]]];}
-	| IDENTIFIER "(" parameters ")" "=" e {$$ = ["function","public","double",$1,$3,["statements",[["semicolon",["return",$6]]]]];};
+	IDENTIFIER "(" parameters ")" "=" "{" e "}" {$$ = ["function","public","double",$1,$3,["statements",[["semicolon",["return",$7]]]]];};
 
 e
     :
@@ -98,6 +99,8 @@ e
         {$$ = ["iff",$1,$3];}
     |e "<->" e
         {$$ = ["iff",$1,$3];}
+    |e "->" e
+        {$$ = ["implies",$1,$3];}
     | e '\u2228' e
         {$$ = ["||",$1,$3];}
     | e "||" e
@@ -146,18 +149,21 @@ not_expr: "!" parentheses_expr {$$ = ["!", [".",$2]];} | "\u00ac" parentheses_ex
 forall_: "forall" | "\u2200";
 
 parentheses_expr:
-    forall_ IDENTIFIER parentheses_expr {$$ = ['forall',$2,$3];}
+    NUMBER parentheses_expr_ {$$ = ["*",$1,$2];}
+    | forall_ IDENTIFIER parentheses_expr {$$ = ['forall',$2,$3];}
     | IDENTIFIER "(" ")" {$$ = ["function_call",$1,[]];}
     | IDENTIFIER "(" exprs ")" {$$ = ["function_call",$1,$3];}
-    | '(' e ')' {$$ = ["parentheses",$2];}
     | parentheses_expr_;
 
 parentheses_expr_:
-	NUMBER
+	'(' e ')' {$$ = ["parentheses",$2];}
+	| NUMBER
         {$$ = yytext;}
     | IDENTIFIER
         {$$ = yytext;}
     | '\u221e'
+        {$$ = yytext;}
+    | '\u03c0'
         {$$ = yytext;}
     | STRING_LITERAL
         {$$ = yytext;};
