@@ -217,6 +217,10 @@ var parsers =
 			"julia":julia_parser,
 			"php":php_parser,
 			"jison":jison_parser,
+			"ometa":ometa_parser,
+			"marpa":marpa_parser,
+			"nearley":nearley_parser,
+			"peg.js":pegjs_parser,
 			"picat":picat_parser,
 			"regex":regex_parser,
 			"antlr":antlr_parser,
@@ -1470,7 +1474,7 @@ function statements(input_lang,lang,indent,arr){
 			return generate_code(input_lang,lang,indent,a);
 		});
 		//console.log(JSON.stringify(arr[1]));
-		if(member(lang,["java","parslet","mediawiki","xquery","kif",'asciimath',"modelica",'pymathprog',"lemon","marpa","coffeequate","alt-ergo","gdscript","sage","thrift","pythological","sentient","scriptol","chrg","instaparse","parboiled","javacc","treetop","setl","ruby-prolog","mysql","smalltalk","picolisp","newlisp","regex","txl","english","glsl","applescript","sidef","tex","protobuf","chapel","idris","coq","lc++","chr.js","reasoned-php","logicjs","tcl","yacas","coconut","gap","lark","pypeg","canopy","ats","z3py","peg.js","antlr","nearley","jison","vhdl",'c',"pseudocode","perl 6","haxe","javascript","c++","c#","php","dart","actionscript","typescript","processing","vala","bc","ceylon","hack","perl"])){
+		if(member(lang,["java","ohm","gold","parslet","mediawiki","xquery","kif",'asciimath',"modelica",'pymathprog',"lemon","marpa","coffeequate","alt-ergo","gdscript","sage","thrift","pythological","sentient","scriptol","chrg","instaparse","parboiled","javacc","treetop","setl","ruby-prolog","mysql","smalltalk","picolisp","newlisp","regex","txl","english","glsl","applescript","sidef","tex","protobuf","chapel","idris","coq","lc++","chr.js","reasoned-php","logicjs","tcl","yacas","coconut","gap","lark","pypeg","canopy","ats","z3py","peg.js","antlr","nearley","jison","vhdl",'c',"pseudocode","perl 6","haxe","javascript","c++","c#","php","dart","actionscript","typescript","processing","vala","bc","ceylon","hack","perl"])){
 			return a.join("");
 		}
 		else if(member(lang,["picat","ometa","transact-sql","maxima","lpeg","prolog","constraint handling rules","logtalk","erlang","lpeg"])){
@@ -4507,6 +4511,8 @@ function generate_code(input_lang,lang,indent,arr){
 			&& (to_return = "object("+name+", extends("+name1+"))."+indent+body+indent+":- end_object")
 		|| member(lang,["kif"])
 			&& (to_return = "(subclass "+name+" "+name1+") (=> "+body+indent+")")
+		|| member(lang,["ometa"])
+			&& (to_return = "ometa "+name+" <: "+name1+"{"+body+indent+"}")
 		|| member(lang,["haxe","php","javascript","dart","typescript"])
 			&& (to_return = "class "+name+" extends "+name1+"{"+body+indent+"}")
 		|| member(lang,['stone'])
@@ -5343,7 +5349,7 @@ function generate_code(input_lang,lang,indent,arr){
 			&& (to_return = "define expression " + name+" "+body+" end define")
 		|| member(lang,["perl 6"])
 			&& (to_return = "rule "+name+"{"+body+"}")
-		|| member(lang,["peg.js","lpeg","abnf","instaparse","ometa"])
+		|| member(lang,["peg.js","lpeg","abnf","instaparse","ometa","ohm"])
 			&& (to_return = name+" = "+body)
 		|| member(lang,["sablecc"])
 			&& (to_return = name+" = "+body+";")
@@ -5357,6 +5363,8 @@ function generate_code(input_lang,lang,indent,arr){
 			&& (to_return = name+"<-"+body)
 		|| member(lang,["marpa"])
 			&& (to_return = name+"::="+body)
+		|| member(lang,["gold"])
+			&& (to_return = "<"+name+"> ::="+body)
 		|| member(lang,["nearley","javacc","yecc"])
 			&& (to_return = name+"->"+body)
 		|| member(lang,["perl 6"])
@@ -5382,6 +5390,17 @@ function generate_code(input_lang,lang,indent,arr){
 		|| member(lang,["jison","antlr"])
 			&& (to_return = name+":"+body+";");
 	}
+	else if(arr[0] === "grammar_statements"){
+		var name = arr[1];
+		var body = generate_code(input_lang,lang,indent+"    ",arr[2]);
+		
+		member(lang,["ometa"])
+			&& (to_return = "ometa " + name+"{"+body+"}")
+		|| member(lang,["ohm"])
+			&& (to_return = name + "{" + body + "}")
+		|| member(lang,["parslet"])
+			&& (to_return = "class "+name+" < Parslet::Parser"+body+indent+"end");
+	}
 	else if(arr[0] === "grammar_var"){
 		grammar_num += 1;
 		if(grammar_num > 1){
@@ -5392,6 +5411,8 @@ function generate_code(input_lang,lang,indent,arr){
 			&& (to_return = "<"+arr[1]+">")
 		|| member(lang,["lpeg"])
 			&& (to_return = "lpeg.V\""+arr[1]+"\"")
+		|| member(lang,["gold"])
+			&& (to_return = "<"+arr[1]+">")
 		|| member(lang,["parboiled"])
 			&& (to_return = arr[1]+"()")
 		|| member(lang,["prolog"])
@@ -5424,7 +5445,8 @@ function generate_code(input_lang,lang,indent,arr){
 		types[to_return] = "boolean";
 	}
 	else if(arr[0] === "logic_and"){
-		if(member(lang,["nearley","pyparsing","lemon","chrg","instaparse","parboiled","javacc","waxeye","rebol","lpeg","txl","treetop","abnf","peg.js","antlr","marpa","wirth syntax notation","jison"])){
+		if(member(lang,["nearley","ometa","ohm","pyparsing","lemon","chrg","instaparse","parboiled","javacc","waxeye","rebol","lpeg","txl","treetop","abnf","peg.js","antlr","marpa","wirth syntax notation","jison"])){
+			//if the language is a metasyntax
 			to_return = generate_code(input_lang,lang,indent,["grammar_and",arr[1],arr[2]]);
 		}
 		var a = generate_code(input_lang,lang,indent+"    ",arr[1]);
@@ -5474,7 +5496,7 @@ function generate_code(input_lang,lang,indent,arr){
 		var a = generate_code(input_lang,lang,indent+"    ",arr[1]);
 		var b = generate_code(input_lang,lang,indent+"    ",arr[2]);
 		
-		member(lang,["marpa","instaparse",'happy',"javacc","regex","txl","lark","coco/r","pest","wirth syntax notation","rebol","yapps","antlr","jison","sablecc","waxeye","ometa","ebnf","nearley","parslet","yacc","perl 6","rebol","hampi",'earley-parser-js'])
+		member(lang,["marpa","ohm","gold","instaparse",'happy',"javacc","regex","txl","lark","coco/r","pest","wirth syntax notation","rebol","yapps","antlr","jison","sablecc","waxeye","ometa","ebnf","nearley","parslet","yacc","perl 6","rebol","hampi",'earley-parser-js'])
 			&& (to_return = a+"|"+b)
 		|| member(lang,["prolog","chrg"])
 			&& (to_return = a+";"+b)
@@ -5492,7 +5514,7 @@ function generate_code(input_lang,lang,indent,arr){
 		var a = generate_code(input_lang,lang,indent+"    ",arr[1]);
 		var b = generate_code(input_lang,lang,indent+"    ",arr[2]);
 		
-		member(lang,["nearley","sablecc","lemon","yecc","peggy","instaparse","javacc","treetop","txl","perl 6","canopy","coco/r","abnf","peg.js","antlr","marpa","wirth syntax notation","jison"])
+		member(lang,["nearley","ohm","gold","sablecc","lemon","yecc","peggy","instaparse","javacc","treetop","txl","perl 6","canopy","coco/r","abnf","peg.js","antlr","marpa","wirth syntax notation","jison"])
 			&& (to_return = a+" "+b)
 		|| member(lang,["prolog","chrg","constraint handling rules","ometa"])
 			&& (to_return = a+","+b)
@@ -7954,6 +7976,9 @@ function generate_code(input_lang,lang,indent,arr){
 		else if(member(lang,["peg.js"])){
 			to_return = arr[1]+"{return ["+arr[2]+"];}";
 		}
+		else if(member(lang,["ometa"])){
+			to_return = arr[1]+"-> ("+arr[2]+")";
+		}
 		else if(member(lang,["nearley"])){
 			to_return = arr[1]+"{%function(d){return ["+arr[2]+"];}%}";
 		}
@@ -8912,7 +8937,7 @@ function generate_code(input_lang,lang,indent,arr){
 }
 
 function is_a_statement(the_statement){
-	return is_semicolon_statement(the_statement) || member(the_statement,["overload_operator","lexically_scoped_vars","lexically_scoped_var","protobuf_service","enum",'initialize_constant',"interface_static_method","generic_function","generic_instance_method","generic_static_method","do_while","struct","interface","unless","default","case","switch","async_function","named_parameter","static_overload_operator","instance_overload_operator","class_extends","interface_extends","constructor","defrule","grammar_macro","predicate","grammar_statement","foreach_with_index","function","else","else if","elif","if","if_statement","instance_method","static_method","class","while","for","foreach"]);
+	return is_semicolon_statement(the_statement) || member(the_statement,["overload_operator","grammar_statements","lexically_scoped_vars","lexically_scoped_var","protobuf_service","enum",'initialize_constant',"interface_static_method","generic_function","generic_instance_method","generic_static_method","do_while","struct","interface","unless","default","case","switch","async_function","named_parameter","static_overload_operator","instance_overload_operator","class_extends","interface_extends","constructor","defrule","grammar_macro","predicate","grammar_statement","foreach_with_index","function","else","else if","elif","if","if_statement","instance_method","static_method","class","while","for","foreach"]);
 }
 
 function is_semicolon_statement(the_statement){
@@ -8924,7 +8949,7 @@ function is_statically_typed(lang){
 }
 function is_dynamically_typed(lang){
 	//this is for languages with types that are either dynamic or inferred
-	return ["cyc","lpeg","tptp","peg.js","parslet","ometa","marpa","yacc","antlr","chrg","vb.net","regex","txl","picolisp","pawn","transpose","oz","pythological","logtalk","cobra","groovy","f#","reasoned-php","sidef","actionscript","newlisp","awk","symja","emacs lisp","matlab","mediawiki","frink","nim","asciimath","regular expression","regular expressions","syntax definition formalism","visual basic .net","cython","maple","coconut","sage","algebrite","pari/gp","reverse polish notation","reduce","dart","autohotkey","sage","pseudocode","typescript","coffeescript","vb .net","hack","yacas","nearley","jison","abnf","xquery","haxe","kif","pyke","drools","javascript","haskell","tex","mathematical notation","sympy","clips","picat","pddl","python","perl 6","maxima","hy","standard ml","ocaml","gap","scala","java","c#",'english',"php","ruby","lua","perl","common lisp","racket","scheme","rebol","wolfram","r","prolog","tcl","clojure","erlang","julia","elixir",'octave','wolfram'].indexOf(lang) !== -1;
+	return ["cyc","grammatica","ohm","gold","lpeg","tptp","peg.js","parslet","ometa","marpa","yacc","antlr","chrg","vb.net","regex","txl","picolisp","pawn","transpose","oz","pythological","logtalk","cobra","groovy","f#","reasoned-php","sidef","actionscript","newlisp","awk","symja","emacs lisp","matlab","mediawiki","frink","nim","asciimath","regular expression","regular expressions","syntax definition formalism","visual basic .net","cython","maple","coconut","sage","algebrite","pari/gp","reverse polish notation","reduce","dart","autohotkey","sage","pseudocode","typescript","coffeescript","vb .net","hack","yacas","nearley","jison","abnf","xquery","haxe","kif","pyke","drools","javascript","haskell","tex","mathematical notation","sympy","clips","picat","pddl","python","perl 6","maxima","hy","standard ml","ocaml","gap","scala","java","c#",'english',"php","ruby","lua","perl","common lisp","racket","scheme","rebol","wolfram","r","prolog","tcl","clojure","erlang","julia","elixir",'octave','wolfram'].indexOf(lang) !== -1;
 }
 
 function parse_lang(input_lang,output_lang,input_text){
