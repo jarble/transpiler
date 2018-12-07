@@ -40,6 +40,10 @@ This translator can convert many languages into many others:
 * [Lua to Perl](https://jarble.github.io/transpiler/javascript/js_transpiler/test_parser.html#%7B%22inputText%22%3A%22function%20add(a%2Cb)%20%5Cn%20%20%20%20return%20a%2Bb%5Cnend%22%2C%22inputLang%22%3A%22lua%22%2C%22outputLang%22%3A%22perl%22%7D)
 * [C to Haskell](https://jarble.github.io/transpiler/javascript/js_transpiler/test_parser.html#%7B%22inputText%22%3A%22int%20add(int%20a%2C%20int%20b)%7B%5Cn%20%20%20%20return%20a%20%2B%20b%3B%5Cn%7D%22%2C%22inputLang%22%3A%22c%22%2C%22outputLang%22%3A%22haskell%22%7D)
 
+#Generating parsers with universal-transpiler
+
+Universal-transpiler can also translate various grammar notations, such as [jison](https://jarble.github.io/transpiler/javascript/js_transpiler/test_parser.html#%7B%22inputText%22%3A%22add_or_subtract%3A%20symbol%20%5C%22%2B%5C%22%20symbol%20%7C%20symbol%20%5C%22-%5C%22%20symbol%3B%22%2C%22inputLang%22%3A%22jison%22%2C%22outputLang%22%3A%22lpeg%22%7D), [marpa](https://jarble.github.io/transpiler/javascript/js_transpiler/test_parser.html#%7B%22inputText%22%3A%22add_or_subtract%3A%20symbol%20%5C%22%2B%5C%22%20symbol%20%7C%20symbol%20%5C%22-%5C%22%20symbol%3B%22%2C%22inputLang%22%3A%22jison%22%2C%22outputLang%22%3A%22marpa%22%7D), [peg.js](https://jarble.github.io/transpiler/javascript/js_transpiler/test_parser.html#%7B%22inputText%22%3A%22add_or_subtract%3A%20symbol%20%5C%22%2B%5C%22%20symbol%20%7C%20symbol%20%5C%22-%5C%22%20symbol%3B%22%2C%22inputLang%22%3A%22jison%22%2C%22outputLang%22%3A%22peg.js%22%7D), and [nearley](file:///C:/Users/jarbl/Dropbox/All%20source%20code%20goes%20here%20-%20don't%20put%20this%20folder%20inside%20any%20other%20folder/Prolog%20projects/universal-transpiler/javascript/js_transpiler/test_parser.html#%7B%22inputText%22%3A%22add_or_subtract%3A%20symbol%20%5C%22%2B%5C%22%20symbol%20%7C%20symbol%20%5C%22-%5C%22%20symbol%3B%22%2C%22inputLang%22%3A%22jison%22%2C%22outputLang%22%3A%22nearley%22%7D).
+
 # How to use the Prolog translator
 
 The Prolog translator is still unfinished and experimental. You can install the package by typing `pack_install(transpiler)` in the SWI-Prolog console.
@@ -72,9 +76,6 @@ This is a simplified version of one of its translation rules, implementing the s
         ['lua','python']:
                 ("math",python_ws,".",python_ws,"sin",python_ws,"(",python_ws,Var1,python_ws,")"),
         ]).
-
-# To-do list
-Here is an [automatically-generated list of features](https://jarble.github.io/transpiler/javascript/js_transpiler/to_do_list.html) that have not yet been implemented in this translator.
 
 ## Other planned features:
 * Add a translator for [lens languages](https://www.google.com/search?q=%22lens+language%22+programming) such as Augeas and Boomerang
