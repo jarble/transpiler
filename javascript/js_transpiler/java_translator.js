@@ -4320,10 +4320,10 @@ function generate_code(input_lang,lang,indent,arr){
 		}
 		else if(member(lang,["pddl"])){
 			if(member(input_lang,["prolog"])){
-				to_return = "(:action " +name + " :parameters ("+defined_vars.map(function(x){return var_name(lang,input_lang,x)}).join(" ")+") :precondition " + condition + " :effect (and "+ condition + " " + body + "))";
+				to_return = "(:action " +name + " :parameters ("+defined_vars.map(function(x){return var_name(lang,input_lang,x)}).join(" ")+") :precondition (" + condition + " :effect "+ condition + " " + body + "))";
 			}
 			else{
-				to_return = "(:action " +name + " :parameters ("+defined_vars.map(function(x){return var_name(lang,input_lang,x)}).join(" ")+") :precondition " + condition + " :effect " + body + ")";
+				to_return = "(:action " +name + " :parameters ("+defined_vars.map(function(x){return var_name(lang,input_lang,x)}).join(" ")+") :precondition (" + condition + " :effect " + body + "))";
 			}
 		}
 		defined_vars = [];
@@ -5438,7 +5438,7 @@ function generate_code(input_lang,lang,indent,arr){
 			&& (to_return = a+" \\/ "+b)
 		|| member(lang,["javascript"])
 			&& (to_return = "logic.or("+a+","+b+")")
-		|| member(lang,["smt-lib"])
+		|| member(lang,["smt-lib","clips","pddl"])
 			&& (to_return = "(or "+a+" "+b+")")
 		|| member(lang,["java","c#","lua","php","perl","mysql","fortran",'c'])
 			&& (to_return = generate_code(input_lang,lang,indent,["||",arr[1],arr[2]]));
@@ -5465,7 +5465,7 @@ function generate_code(input_lang,lang,indent,arr){
 			&& (to_return = a+" & "+b)
 		|| member(lang,["javascript"])
 			&& (to_return = "logic.and("+a+","+b+")")
-		|| member(lang,["smt-lib","clips"])
+		|| member(lang,["smt-lib","clips","pddl"])
 			&& (to_return = "(and "+a+" "+b+")")
 		|| member(lang,["java","fortran",'c',"c#","lua","php","perl","mysql","minizinc"])
 			&& (to_return = generate_code(input_lang,lang,indent,["&&",arr[1],arr[2]]));
@@ -5542,7 +5542,7 @@ function generate_code(input_lang,lang,indent,arr){
 		var body = generate_code(input_lang,lang,"",arr[3]);
 		
 		member(lang,["pddl"])
-			&& (to_return = "(:action " +name + " :parameters ("+params+") :precondition " + body + " :effect (" +name+" " + params + "))")
+			&& (to_return = "(:action " +name + " :parameters ("+params+") :precondition (" + body + " :effect (" +name+" " + params + ")))")
 		|| member(lang,["fortran"])
 			&& (to_return = "LOGICAL function " + name + "("+params+") "+body+indent+"end function "+name)
 		|| member(lang,["prolog","logtalk","flix"])
@@ -5705,7 +5705,7 @@ function generate_code(input_lang,lang,indent,arr){
 			to_return = "CREATE FUNCTION " + name + "("+params+") RETURN " + var_type(input_lang,lang,type) + " BEGIN " +body+indent+"END";
 		}
 		else if(member(lang,["pddl"])){
-			to_return = "(:action " +name + " :parameters ("+params+") :precondition " + body + " :effect (" +name+" " + params + "))";
+			to_return = "(:action " +name + " :parameters ("+params+") :precondition (" + body + " :effect (" +name+" " + params + ")))";
 		}
 		else if(member(lang,["algol 68"])){
 			to_return = "PROC "+name+" = (" + params + ") " +var_type(input_lang,lang,type)+ ": (" + body +indent+ ")";
