@@ -936,7 +936,7 @@ function semicolon(lang,statement){
 }
 
 function prefix_arithmetic_lang(lang){
-	return member(lang,["racket","kif","common prolog","picolisp","scheme","smt-lib","smt-lib","clips","gnu smalltalk","newlisp","hy","common lisp","emacs lisp","clojure","sibilant","lispyscript"]);
+	return member(lang,["racket","acl2","kif","common prolog","picolisp","scheme","smt-lib","smt-lib","clips","gnu smalltalk","newlisp","hy","common lisp","emacs lisp","clojure","sibilant","lispyscript"]);
 }
 function infix_arithmetic_lang(lang){
 	return member(lang,["pascal","pari/gp","tptp","mediawiki","nearley","xquery","mizar",'modelica','pymathprog','coq',"icon","coffeequate","asciimath","pari/gp","dafny","alt-ergo","gdscript",'bash',"flix","sentient","sage","symja","algebrite","symbolicc++","setl","inform 6","transact-sql","mysql","smalltalk","ring","glsl","agda","applescript","sidef","idris","lc++","chr.js","mercury","constraint handling rules","yacas","english","jison","prolog","elm","z3py","logtalk","picat","prolog","sympy","vhdl","elixir","python","coconut","visual basic .net","ruby","lua","scriptol", 'smt-libpy',"ats","pydatalog",'e',"vbscript","livecode","monkey x","perl 6","englishscript","cython","gap","mathematical notation","wolfram","chapel","katahdin","frink","minizinc","picat","java",'eclipse','d',"ooc","genie","janus","ooc","idp","processing","maxima","seed7",'self',"gnu smalltalk","drools","standard ml","oz","cobra","pike","prolog","engscript","kotlin","pawn","freebasic","matlab","ada","freebasic","gosu","gambas","nim","autoit","algol 68","ceylon","groovy","rust","coffeescript","typescript","fortran","octave","ml","hack","autohotkey","scala","delphi","tcl","swift","vala",'c',"f#","c++","dart","javascript","rebol","julia","erlang","ocaml","c#","nemerle","awk","java","perl","haxe","php","haskell","go","r","bc","visual basic"]);
@@ -3191,6 +3191,9 @@ function generate_code(input_lang,lang,indent,arr){
 		else if(member(lang,["asciimath","tptp"])){
 			to_return = a+" <=> "+b;
 		}
+		else if(member(lang,["acl2"])){
+			to_return = "(iff "+a+" "+b+")";
+		}
 		else if(member(lang,["mathematical notation"])){
 			to_return = a+"\u2194"+b;
 		}
@@ -4381,6 +4384,9 @@ function generate_code(input_lang,lang,indent,arr){
 		else if(member(lang,["smt-lib"])){
 			to_return = "(=> " + condition + " " + body+")";
 		}
+		else if(member(lang,["acl2"])){
+			to_return = "(implies " + condition + " " + body+")";
+		}
 		else if(member(lang,["lua","php","c#"])){
 			//for imperative languages without logic-programming features
 			to_return = generate_code(input_lang,lang,indent,["||",arr[1],arr[2]]);
@@ -5438,7 +5444,7 @@ function generate_code(input_lang,lang,indent,arr){
 			&& (to_return = a+" \\/ "+b)
 		|| member(lang,["javascript"])
 			&& (to_return = "logic.or("+a+","+b+")")
-		|| member(lang,["smt-lib","clips","pddl"])
+		|| member(lang,["smt-lib","clips","pddl","acl2"])
 			&& (to_return = "(or "+a+" "+b+")")
 		|| member(lang,["java","c#","lua","php","perl","mysql","fortran",'c'])
 			&& (to_return = generate_code(input_lang,lang,indent,["||",arr[1],arr[2]]));
@@ -5465,7 +5471,7 @@ function generate_code(input_lang,lang,indent,arr){
 			&& (to_return = a+" & "+b)
 		|| member(lang,["javascript"])
 			&& (to_return = "logic.and("+a+","+b+")")
-		|| member(lang,["smt-lib","clips","pddl"])
+		|| member(lang,["smt-lib","clips","pddl","acl2"])
 			&& (to_return = "(and "+a+" "+b+")")
 		|| member(lang,["java","fortran",'c',"c#","lua","php","perl","mysql","minizinc"])
 			&& (to_return = generate_code(input_lang,lang,indent,["&&",arr[1],arr[2]]));
@@ -7044,6 +7050,9 @@ function generate_code(input_lang,lang,indent,arr){
 		else if(member(lang, ["cyc"])){
 			to_return = "(forAll "+item+" "+body+")";
 		}
+		else if(member(lang, ["acl2"])){
+			to_return = "(forall "+item+" "+body+")";
+		}
 		else if(member(lang, ["kif"])){
 			to_return = "(forall ("+item+") "+body+")";
 		}
@@ -7610,7 +7619,7 @@ function generate_code(input_lang,lang,indent,arr){
 		else if(member(lang,["cosmos","mediawiki",'mizar','modelica',"gams","alt-ergo",'pl/sql',"mysql","cython","vhdl","python","coconut","lua","seed7","livecode","englishscript","cython","gap","mathematical notation","genie","idp","maxima","engscript","ada","newlisp","ocaml","nim","coffeescript","pascal","delphi","erlang","rebol","php"])){
 			to_return = a + " or " + b;
 		}
-		else if(member(lang,["smt-lib","common lisp","clips","pddl","clojure","common lisp","emacs lisp","clojure","racket"])){
+		else if(member(lang,["smt-lib","acl2","common lisp","clips","pddl","clojure","common lisp","emacs lisp","clojure","racket"])){
 			to_return = "(or "+a+" "+b+")";
 		}
 		else if(member(lang,["z3py"])){
@@ -7677,7 +7686,7 @@ function generate_code(input_lang,lang,indent,arr){
 		else if(member(lang,["cosmos","gams","alt-ergo","cython",'pl/sql',"vhdl","python",'modelica',"mysql","coconut","lua","seed7","livecode","englishscript","cython","gap","mathematical notation","genie","idp","maxima","engscript","ada","newlisp","ocaml","nim","coffeescript","pascal","delphi","erlang","rebol","php"])){
 			to_return = a + " and " + b;
 		}
-		else if(member(lang,["common lisp","common prolog","smt-lib","clips","pddl","clojure","common lisp","emacs lisp","clojure","racket"])){
+		else if(member(lang,["common lisp","acl2","common prolog","smt-lib","clips","pddl","clojure","common lisp","emacs lisp","clojure","racket"])){
 			return "(and "+a+" "+b+")";
 		}
 		else if(member(lang,["z3py"])){
@@ -8953,12 +8962,12 @@ function is_dynamically_typed(lang){
 }
 
 function parse_lang(input_lang,output_lang,input_text){
+	input_lang = input_lang.trim().toLowerCase();
+	output_lang = output_lang.trim().toLowerCase();
 	if (!(is_statically_typed(get_lang(output_lang)) || is_dynamically_typed(get_lang(output_lang)))){
 		alert("Is "+output_lang+" statically or dynamically typed?");
 	}
 	//translate code from one language to another
-	input_lang = input_lang.trim().toLowerCase();
-	output_lang = output_lang.trim().toLowerCase();
 	var to_return;
 	if(member(input_lang,["detect language",""])){
 		for(var lang of Object.keys(parsers)){
