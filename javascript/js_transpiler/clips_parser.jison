@@ -12,6 +12,7 @@
 "switch"              return 'switch'
 "not"                 return 'not'
 "and"                 return 'and'
+"or"                  return 'or'
 "if"                  return 'if'
 "then"                return 'then'
 "else"                return 'else'
@@ -70,8 +71,8 @@ top_level_statements_: top_level_statement top_level_statements_ {$$ = [$1].conc
  
 top_level_statements: top_level_statements_ {$$ = ["top_level_top_level_statements",$1]};
 
-top_level_statement
-    : defrule
+top_level_statement:
+	"(" "defrule" IDENTIFIER e "=>" "(" "assert" e ")" ")" {$$= ["defrule",$3,$4,$8]}
     | "(" "deffunction" IDENTIFIER "(" parameters ")" statements ")" {$$ = ["function","public","Object",$3,$5,$7]};
 
 statements_: statement statements_ {$$ = [$1].concat($2);} | statement {$$ =
@@ -153,6 +154,3 @@ function_call:
 var_name: "?" IDENTIFIER {$$ = $2};
 
 exprs: exprs e {$$ = $1.concat([$2]);} | e {$$ = [$1];};
-
-defrule:
-	"(" "defrule" IDENTIFIER e "=>" "(" "assert" e ")" ")" {$$= ["defrule",$3,$4,$8]};
