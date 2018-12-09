@@ -5915,8 +5915,7 @@ function generate_code(input_lang,lang,indent,arr){
 			var types_list = arr[4].map(function(x) {
 				return var_type(input_lang,lang,x[0]);
 			}).join(" ");
-			
-			if(type !== undefined || type === "Object"){
+			if(type === undefined || type === "Object"){
 				type = types[function_name];
 			}
 			to_return = "(declare-fun " + name + "("+types_list+") "+var_type(input_lang,lang,type)+")"+" (assert (forall ("+params+") "+body+"))";
