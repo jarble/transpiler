@@ -72,12 +72,12 @@
   }
 */
 var pegjs_parser = (function(){
-var o=function(k,v,o,l){for(o=o||{},l=k.length;l--;o[k[l]]=v);return o},$V0=[1,7],$V1=[1,11],$V2=[5,7,15],$V3=[2,13];
+var o=function(k,v,o,l){for(o=o||{},l=k.length;l--;o[k[l]]=v);return o},$V0=[1,7],$V1=[1,13],$V2=[1,10],$V3=[1,12],$V4=[5,7,15,16,17,19],$V5=[2,16];
 var parser = {trace: function trace() { },
 yy: {},
-symbols_: {"error":2,"expressions":3,"statements":4,"EOF":5,"statements_":6,"IDENTIFIER":7,"=":8,"grammar_and":9,"statement":10,"parameters":11,",":12,"e":13,"grammar_var":14,"STRING_LITERAL":15,"$accept":0,"$end":1},
-terminals_: {2:"error",5:"EOF",7:"IDENTIFIER",8:"=",12:",",15:"STRING_LITERAL"},
-productions_: [0,[3,2],[6,4],[6,1],[4,1],[10,3],[11,3],[11,1],[11,0],[9,2],[9,1],[13,1],[13,1],[14,1]],
+symbols_: {"error":2,"expressions":3,"statements":4,"EOF":5,"statements_":6,"IDENTIFIER":7,"=":8,"grammar_and":9,"statement":10,"parameters":11,",":12,"e":13,"grammar_or":14,"/":15,"(":16,")":17,"grammar_var":18,"STRING_LITERAL":19,"$accept":0,"$end":1},
+terminals_: {2:"error",5:"EOF",7:"IDENTIFIER",8:"=",12:",",15:"/",16:"(",17:")",19:"STRING_LITERAL"},
+productions_: [0,[3,2],[6,4],[6,1],[4,1],[10,3],[11,3],[11,1],[11,0],[9,2],[9,1],[14,3],[14,1],[13,3],[13,1],[13,1],[18,1]],
 performAction: function anonymous(yytext, yyleng, yylineno, yy, yystate /* action[1] */, $$ /* vstack */, _$ /* lstack */) {
 /* this == yyval */
 
@@ -108,16 +108,22 @@ break;
 case 9:
 this.$= ["grammar_and",$$[$0-1],$$[$0]]
 break;
-case 12:
-this.$ = yytext;
+case 11:
+this.$= ["grammar_or",$$[$0-2],$$[$0]]
 break;
 case 13:
+this.$= ["parentheses", $$[$0-1]];
+break;
+case 15:
+this.$ = yytext;
+break;
+case 16:
 this.$= ["grammar_var",$$[$0]];
 break;
 }
 },
-table: [{3:1,4:2,6:3,7:[1,4],10:5},{1:[3]},{5:[1,6]},{5:[2,4]},{8:$V0},{5:[2,3]},{1:[2,1]},{7:[1,12],9:8,13:9,14:10,15:$V1},{5:[2,5],6:13,7:[1,15],10:5,13:14,14:10,15:$V1},o($V2,[2,10]),o($V2,[2,11]),o($V2,[2,12]),o($V2,$V3),{5:[2,2]},o($V2,[2,9]),o($V2,$V3,{8:$V0})],
-defaultActions: {3:[2,4],5:[2,3],6:[2,1],13:[2,2]},
+table: [{3:1,4:2,6:3,7:[1,4],10:5},{1:[3]},{5:[1,6]},{5:[2,4]},{8:$V0},{5:[2,3]},{1:[2,1]},{7:$V1,9:8,13:9,16:$V2,18:11,19:$V3},{5:[2,5],6:14,7:[1,16],10:5,13:15,16:$V2,18:11,19:$V3},o($V4,[2,10]),{7:$V1,9:18,13:9,14:17,16:$V2,18:11,19:$V3},o($V4,[2,14]),o($V4,[2,15]),o($V4,$V5),{5:[2,2]},o($V4,[2,9]),o([5,7,16,19],$V5,{8:$V0}),{17:[1,19]},{7:$V1,13:15,15:[1,20],16:$V2,17:[2,12],18:11,19:$V3},o($V4,[2,13]),{7:$V1,9:18,13:9,14:21,16:$V2,18:11,19:$V3},{17:[2,11]}],
+defaultActions: {3:[2,4],5:[2,3],6:[2,1],14:[2,2],21:[2,11]},
 parseError: function parseError(str, hash) {
     if (hash.recoverable) {
         this.trace(str);
@@ -598,7 +604,7 @@ case 1:return 'NUMBER'
 break;
 case 2:return 'GRAMMAR_INDEX'
 break;
-case 3:return 15
+case 3:return 19
 break;
 case 4:return '$$'
 break;
@@ -606,13 +612,13 @@ case 5:return ';'
 break;
 case 6:return 12
 break;
-case 7:return '|'
+case 7:return 15
 break;
 case 8:return 8
 break;
-case 9:return '('
+case 9:return 16
 break;
-case 10:return ')'
+case 10:return 17
 break;
 case 11:return '{'
 break;
@@ -630,7 +636,7 @@ case 17:return 'INVALID'
 break;
 }
 },
-rules: [/^(?:\s+)/,/^(?:[0-9]+(\.[0-9]+)?\b)/,/^(?:\$[0-9]+(\.[0-9]+)?\b)/,/^(?:"([^\\\"]|\\.)*")/,/^(?:\$\$)/,/^(?:;)/,/^(?:,)/,/^(?:\|)/,/^(?:=)/,/^(?:\()/,/^(?:\))/,/^(?:\{)/,/^(?:\})/,/^(?:\[)/,/^(?:\])/,/^(?:[a-zA-Z_][a-zA-Z0-9_]*)/,/^(?:$)/,/^(?:.)/],
+rules: [/^(?:\s+)/,/^(?:[0-9]+(\.[0-9]+)?\b)/,/^(?:\$[0-9]+(\.[0-9]+)?\b)/,/^(?:"([^\\\"]|\\.)*")/,/^(?:\$\$)/,/^(?:;)/,/^(?:,)/,/^(?:\/)/,/^(?:=)/,/^(?:\()/,/^(?:\))/,/^(?:\{)/,/^(?:\})/,/^(?:\[)/,/^(?:\])/,/^(?:[a-zA-Z_][a-zA-Z0-9_]*)/,/^(?:$)/,/^(?:.)/],
 conditions: {"INITIAL":{"rules":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17],"inclusive":true}}
 });
 return lexer;

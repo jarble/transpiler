@@ -72,12 +72,12 @@
   }
 */
 var nearley_parser = (function(){
-var o=function(k,v,o,l){for(o=o||{},l=k.length;l--;o[k[l]]=v);return o},$V0=[1,7],$V1=[1,8],$V2=[1,13],$V3=[1,12],$V4=[1,15],$V5=[2,10],$V6=[1,18],$V7=[5,7,17],$V8=[2,15];
+var o=function(k,v,o,l){for(o=o||{},l=k.length;l--;o[k[l]]=v);return o},$V0=[1,7],$V1=[1,8],$V2=[1,14],$V3=[1,11],$V4=[1,13],$V5=[1,16],$V6=[2,10],$V7=[1,19],$V8=[5,7,17,18,19,21],$V9=[2,18];
 var parser = {trace: function trace() { },
 yy: {},
-symbols_: {"error":2,"expressions":3,"statements":4,"EOF":5,"statements_":6,"IDENTIFIER":7,"->":8,"grammar_and":9,"[":10,"parameters":11,"]":12,"statement":13,",":14,"e":15,"grammar_var":16,"STRING_LITERAL":17,"$accept":0,"$end":1},
-terminals_: {2:"error",5:"EOF",7:"IDENTIFIER",8:"->",10:"[",12:"]",14:",",17:"STRING_LITERAL"},
-productions_: [0,[3,2],[6,4],[6,7],[6,1],[4,1],[13,3],[13,6],[11,3],[11,1],[11,0],[9,2],[9,1],[15,1],[15,1],[16,1]],
+symbols_: {"error":2,"expressions":3,"statements":4,"EOF":5,"statements_":6,"IDENTIFIER":7,"->":8,"grammar_and":9,"[":10,"parameters":11,"]":12,"statement":13,",":14,"e":15,"grammar_or":16,"|":17,"(":18,")":19,"grammar_var":20,"STRING_LITERAL":21,"$accept":0,"$end":1},
+terminals_: {2:"error",5:"EOF",7:"IDENTIFIER",8:"->",10:"[",12:"]",14:",",17:"|",18:"(",19:")",21:"STRING_LITERAL"},
+productions_: [0,[3,2],[6,4],[6,7],[6,1],[4,1],[13,3],[13,6],[11,3],[11,1],[11,0],[9,2],[9,1],[16,3],[16,1],[15,3],[15,1],[15,1],[20,1]],
 performAction: function anonymous(yytext, yyleng, yylineno, yy, yystate /* action[1] */, $$ /* vstack */, _$ /* lstack */) {
 /* this == yyval */
 
@@ -114,16 +114,22 @@ break;
 case 11:
 this.$= ["grammar_and",$$[$0-1],$$[$0]]
 break;
-case 14:
-this.$ = yytext;
+case 13:
+this.$= ["grammar_or",$$[$0-2],$$[$0]]
 break;
 case 15:
+this.$= ["parentheses", $$[$0-1]];
+break;
+case 17:
+this.$ = yytext;
+break;
+case 18:
 this.$= ["grammar_var",$$[$0]];
 break;
 }
 },
-table: [{3:1,4:2,6:3,7:[1,4],13:5},{1:[3]},{5:[1,6]},{5:[2,5]},{8:$V0,10:$V1},{5:[2,4]},{1:[2,1]},{7:$V2,9:9,15:10,16:11,17:$V3},{7:$V4,11:14,12:$V5},{5:[2,6],6:16,7:$V6,13:5,15:17,16:11,17:$V3},o($V7,[2,12]),o($V7,[2,13]),o($V7,[2,14]),o($V7,$V8),{12:[1,19]},{12:[2,9],14:[1,20]},{5:[2,2]},o($V7,[2,11]),o($V7,$V8,{8:$V0,10:$V1}),{8:[1,21]},{7:$V4,11:22,12:$V5},{7:$V2,9:23,15:10,16:11,17:$V3},{12:[2,8]},{5:[2,7],6:24,7:$V6,13:5,15:17,16:11,17:$V3},{5:[2,3]}],
-defaultActions: {3:[2,5],5:[2,4],6:[2,1],16:[2,2],22:[2,8],24:[2,3]},
+table: [{3:1,4:2,6:3,7:[1,4],13:5},{1:[3]},{5:[1,6]},{5:[2,5]},{8:$V0,10:$V1},{5:[2,4]},{1:[2,1]},{7:$V2,9:9,15:10,18:$V3,20:12,21:$V4},{7:$V5,11:15,12:$V6},{5:[2,6],6:17,7:$V7,13:5,15:18,18:$V3,20:12,21:$V4},o($V8,[2,12]),{7:$V2,9:21,15:10,16:20,18:$V3,20:12,21:$V4},o($V8,[2,16]),o($V8,[2,17]),o($V8,$V9),{12:[1,22]},{12:[2,9],14:[1,23]},{5:[2,2]},o($V8,[2,11]),o([5,7,18,21],$V9,{8:$V0,10:$V1}),{19:[1,24]},{7:$V2,15:18,17:[1,25],18:$V3,19:[2,14],20:12,21:$V4},{8:[1,26]},{7:$V5,11:27,12:$V6},o($V8,[2,15]),{7:$V2,9:21,15:10,16:28,18:$V3,20:12,21:$V4},{7:$V2,9:29,15:10,18:$V3,20:12,21:$V4},{12:[2,8]},{19:[2,13]},{5:[2,7],6:30,7:$V7,13:5,15:18,18:$V3,20:12,21:$V4},{5:[2,3]}],
+defaultActions: {3:[2,5],5:[2,4],6:[2,1],17:[2,2],27:[2,8],28:[2,13],30:[2,3]},
 parseError: function parseError(str, hash) {
     if (hash.recoverable) {
         this.trace(str);
@@ -604,7 +610,7 @@ case 1:return 'NUMBER'
 break;
 case 2:return 'GRAMMAR_INDEX'
 break;
-case 3:return 17
+case 3:return 21
 break;
 case 4:return '$$'
 break;
@@ -612,13 +618,13 @@ case 5:return ';'
 break;
 case 6:return 14
 break;
-case 7:return '|'
+case 7:return 17
 break;
 case 8:return 8
 break;
-case 9:return '('
+case 9:return 18
 break;
-case 10:return ')'
+case 10:return 19
 break;
 case 11:return '{'
 break;

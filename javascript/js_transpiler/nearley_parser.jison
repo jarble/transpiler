@@ -48,7 +48,10 @@ parameters: IDENTIFIER "," parameters {$$ = [$1].concat($3);} | IDENTIFIER {$$ =
 grammar_and:
     grammar_and e {$$= ["grammar_and",$1,$2]} | e;
 
-e: grammar_var | STRING_LITERAL
+grammar_or:
+    grammar_and "|" grammar_or {$$= ["grammar_or",$1,$3]} | grammar_and;
+
+e: "(" grammar_or ")" {$$= ["parentheses", $2];} | grammar_var | STRING_LITERAL
         {$$ = yytext;};
 
 grammar_var: IDENTIFIER {$$= ["grammar_var",$1];};
