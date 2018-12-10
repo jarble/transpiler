@@ -666,7 +666,7 @@ function var_type(input_lang,lang,type){
         else if(member(lang,["rebol"])){
 			return "integer!";
 		}
-		else if(member(lang,["haxe","flix","idris","smt-lib","kotlin","ooc","swift","scala","perl 6","smt-lib","monkey x"])){
+		else if(member(lang,["haxe","flix","idris","smt-lib","kotlin","ooc","swift","scala","perl 6","smt-lib","monkey x","coq"])){
 			return "Int";
 		}
 	}
@@ -4373,10 +4373,10 @@ function generate_code(input_lang,lang,indent,arr){
 	else if(arr[0] === "exists"){
 		var item = generate_code(input_lang,lang,indent,arr[1]);
 		var condition = generate_code(input_lang,lang,indent,arr[2]);
-		if(member(lang,["pddl"])){
+		if(member(lang,["pddl","kif"])){
 			to_return = "(exists " + item + " " + condition + ")";
 		}
-		else if(member(lang,["cos"])){
+		else if(member(lang,["coq"])){
 			to_return = "(exists " + item + "," + condition + ")";
 		}
 		else if(member(lang,["hol"])){
