@@ -9,6 +9,7 @@
 "def"                 return "def"
 "end"                 return "end"
 "Array"               return 'Array'
+"class"               return 'class'
 "if"                  return 'if'
 "else"                return 'else'
 "return"              return 'return'
@@ -78,7 +79,16 @@ expressions: top_level_statements EOF {return ["top_level_statements",$1]};
 top_level_statements: top_level_statements top_level_statement {$$ = $1.concat([$2]);} | top_level_statement {$$ =
  [$1];};
 top_level_statement:
-	statement | initialize_var1 {$$ = ["semicolon",$1]};
+	statement | "class" IDENTIFIER "{" class_statements "}" {$$ = [$1,"public",$2,$4];} | | "class" IDENTIFIER "extends" IDENTIFIER "{" class_statements "}" {$$ = ["class_extends","public",$2,$4,$6];} | "class" IDENTIFIER "(" parameters ")" "{" class_statements "}" {$$ = ["scala_class","public",$2,$4,$7];}  | initialize_var1 {$$ = ["semicolon",$1]};
+	
+class_statements: class_statements_ {$$ = ["class_statements",$1]};
+class_statements_: class_statement class_statements_ {$$ = [$1].concat($2);} | class_statement {$$ =
+ [$1];};
+class_statement:
+	"def" IDENTIFIER "(" parameters ")" "=" "{" statements "}" {$$ = ["instance_method","public","Object",$2,$4,$8];}
+	| "def" IDENTIFIER "(" parameters ")" "=" statement {$$ = ["instance_method","public","Object",$2,$4,["statements",[$7]]];}
+	;
+
 initialize_var1: initialize_var_ {$$ = ["initialize_var"].concat($1);};
 initialize_var: initialize_var_ {$$ = ["lexically_scoped_var"].concat($1);};
 

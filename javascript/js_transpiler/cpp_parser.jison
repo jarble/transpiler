@@ -93,7 +93,7 @@ statements_without_vars: statement statements_without_vars {$$ = [$1].concat($2)
  [$1];};
 initialize_vars: initialize_vars ";" initialize_var {$$ = $1.concat([$3]);} | initialize_var {$$ =
  [$1];};
- 
+
 
 class_statements: class_statements_ {$$ = ["class_statements",$1]};
 statements: statements_ {$$ = ["statements",$1]};
@@ -177,6 +177,7 @@ initialize_var1: initialize_var_ {$$ = ["initialize_var"].concat($1);};
 initialize_var: initialize_var_ {$$ = ["lexically_scoped_var"].concat($1);};
 initialize_var_:
    type IDENTIFIER "=" "{" exprs "}" {$$ = [$1,$2,["initializer_list",$1,$5]]}
+   | type IDENTIFIER "[" "]" "=" "{" exprs "}" {$$ = [[$1,"[]"],$2,["initializer_list",$1,$7]];}
    | type IDENTIFIER "=" e {$$ = [$1,$2,$4];};
 
 key_values: key_values "," key_value {$$ = $1.concat([$3]);} | key_value {$$ = [$1];};

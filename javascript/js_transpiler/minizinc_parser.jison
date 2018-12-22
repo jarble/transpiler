@@ -18,6 +18,7 @@
 "forall"              return "forall"
 ","                   return ','
 ";"                   return ';'
+".."                  return '..'
 "."                   return '.'
 ":"                   return ':'
 "&&"                  return '&&'
@@ -132,9 +133,9 @@ e
     | parentheses_expr {$$ = $1;}
     ;
 
-
 parentheses_expr:
     "(" e ")" {$$ = $2}
+    | "(" parentheses_expr ".." parentheses_expr ")" {$$ = ["inclusive_range",$2,$4]}
     | "[" exprs "]" {$$ = ["initializer_list","Object",$2];}
     | NUMBER
         {$$ = yytext;}

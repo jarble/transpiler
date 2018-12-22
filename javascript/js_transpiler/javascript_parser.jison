@@ -102,7 +102,6 @@ statements_with_vars: statements_without_vars initialize_var1 ";" {$$ = $1.conca
 initialize_vars: initialize_vars ";" initialize_var {$$ = $1.concat([$3]);} | initialize_var {$$ =
  [$1];};
  
-class_statements: class_statements_ {$$ = ["class_statements",$1]};
 statements: statements_ {$$ = ["statements",$1]};
 
 case_statement: "case" e ":" statements "break" ";" {$$ = ["case",$2,$4]};
@@ -110,13 +109,11 @@ case_statements_: case_statement case_statements_ {$$ = [$1].concat($2);} | case
  [$1];};
 case_statements: case_statements_ "default" ":" statements {$$ = $1.concat([["default",$4]])} | case_statements_;
 
-class_statements_: class_statement class_statements_ {$$ = [$1].concat($2);} | class_statement {$$ =
- [$1];};
 
 access_modifier: "public" | "private";
 
 class_:
-	"class" IDENTIFIER "{" class_statements "}" {$$ = [$1,"public",$2,$4];};
+	"class" IDENTIFIER "{" class_statements "}" {$$ = [$1,"public",$2,$4];} | "class" IDENTIFIER "extends" IDENTIFIER "{" class_statements "}" {$$ = ["class_extends","public",$2,$4,$6];};
 
 statement
     :
@@ -135,6 +132,10 @@ statement
 
 statement_with_semicolon_: initialize_var1 | statement_with_semicolon;
 
+
+class_statements: class_statements_ {$$ = ["class_statements",$1]};
+class_statements_: class_statement class_statements_ {$$ = [$1].concat($2);} | class_statement {$$ =
+ [$1];};
 class_statement:
 	"static" IDENTIFIER "(" parameters ")" "{" statements "}" {$$ = ["static_method","public","Object",$2,$4,$7];}
 	| IDENTIFIER "(" parameters ")" "{" statements "}" {$$ = ["instance_method","public","Object",$1,$3,$6];}
