@@ -36,6 +36,7 @@
 ">"                   return '>'
 "<="                  return '<='
 "<"                   return '<'
+"=>"                  return '=>'
 "==="                 return '==='
 "!=="                 return '!=='
 "!"                   return "!"
@@ -215,6 +216,7 @@ access_array: parentheses_expr "[" e "]" {$$ = ["access_array",$1,[$3]];};
 
 parentheses_expr:
     "function" "(" parameters ")" "{" statements "}" {$$ = ["anonymous_function","Object",$3,$6]}
+    | "(" IDENTIFIER "=>" e ")" {$$ = ["anonymous_function","Object",[["Object",$2]],["statements",[["semicolon",["return",$4]]]]]}
     | IDENTIFIER "(" ")" {$$= ["function_call",$1,[]];}
     | IDENTIFIER "(" exprs ")" {$$= ["function_call",$1,$3];}
     | access_array

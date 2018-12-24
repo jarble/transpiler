@@ -73,7 +73,8 @@ top_level_statements: top_level_statements_ {$$ = ["top_level_top_level_statemen
 
 top_level_statement
     : "(" "deffunction" IDENTIFIER "(" parameters ")" ":=" statements ")" {$$ = ["function","public","Object",$3,$5,$8]}
-    | "(" "defrelation" IDENTIFIER "(" parameters ")" ":=" statements ")" {$$ = ["predicate","Object",$3,$5,$8]};
+    | "(" "defrelation" IDENTIFIER "(" parameters ")" ":=" statements ")" {$$ = ["predicate","Object",$3,$5,$8]}
+    | e;
 
 statements_: statement statements_ {$$ = [$1].concat($2);} | statement {$$ =
  [$1];};
@@ -129,6 +130,8 @@ e:
     | '(' "=<" e e ')' {$$ = ["<=",$3,$4];}
     | '(' comparison_operator e e ')' {$$ = [$2,$3,$4];}
     | '(' "implies" e e ')' {$$ = ["implies",$3,$4];}
+    | '(' "=>" e e ')' {$$ = ["implies",$3,$4];}
+    | '(' "exists" e ')' {$$ = ["exists",$3];}
     | '(' 'or' e or_exprs ')' {$$ = ["logic_or",$3,$4];}
     | '(' 'and' e and_exprs ')' {$$ = ["logic_and",$3,$4];}
     | "(" "forall" "(" e ")" e ")" {$$ = ["forall",$4,$6];}

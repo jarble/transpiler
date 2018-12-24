@@ -7,6 +7,7 @@
 \"([^\\\"]|\\.)*\" return 'STRING_LITERAL'
 "predicate"           return 'predicate'
 "function"            return "function"
+"include"             return 'include'
 "var"                 return "var"
 "if"                  return "if"
 "endif"               return "endif"
@@ -77,9 +78,9 @@ expressions: statements_ EOF {return ["top_level_statements",$1]};
 statements_: statement_ statements_ {$$ = [$1].concat($2);} | statement_ {$$ =
  [$1];};
 
-
 statement_:
-	"function" "var" IDENTIFIER ":" IDENTIFIER "(" parameters ")" "=" statement ";" {$$ = ["function","public",$3,$5,$7,$10];}
+	"include" STRING_LITERAL ";" {$$ = ["semicolon",["import",$2.substring(1,$2.length-5)]];}
+	|"function" "var" IDENTIFIER ":" IDENTIFIER "(" parameters ")" "=" statement ";" {$$ = ["function","public",$3,$5,$7,$10];}
 	| "predicate" IDENTIFIER "(" parameters ")" "=" statement ";" {$$ = ["predicate",$2,$4,$7];}
 	| IDENTIFIER ":" IDENTIFIER "=" e ";" {$$ = ["semicolon",["initialize_var",$1,$3,$5]];}
 	| "constraint" e ";" {$$ = ["semicolon",["function_call","constraint",[$2]]];};

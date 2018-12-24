@@ -40,6 +40,7 @@
 ">"                   return '>'
 "<="                  return '<='
 "<"                   return '<'
+"=>"                  return '=>'
 "==="                 return '==='
 "!=="                 return '!=='
 "!"                   return "!"
@@ -148,7 +149,7 @@ statement_with_semicolon
    | "return" e  {$$ = ["return",$2];}
    | "return"  {$$ = ["return"];}
    | "yield" e  {$$ = ["yield",$2];}
-   | "const" IDENTIFIER "=" e {$$ = ["initialize_constant","Object",$3,$5];}
+   | "const" IDENTIFIER "=" e {$$ = ["initialize_constant","Object",$2,$4];}
    | "var" identifiers {$$ = ["initialize_empty_vars","Object",$2];}
    | access_array "=" e {$$ = ["set_var",$1,$3];}
    | IDENTIFIER "=" e {$$ = ["set_var",$1,$3];}
@@ -219,6 +220,7 @@ access_array: parentheses_expr "[" e "]" {$$ = ["access_array",$1,[$3]];};
 
 parentheses_expr:
     "function" "(" parameters ")" "{" statements "}" {$$ = ["anonymous_function","Object",$3,$6]}
+    | "(" IDENTIFIER "=>" e ")" {$$ = ["anonymous_function","Object",[["Object",$2]],["statements",[["semicolon",["return",$4]]]]]}
     | IDENTIFIER "(" ")" {$$= ["function_call",$1,[]];}
     | IDENTIFIER "(" exprs ")" {$$= ["function_call",$1,$3];}
     | "new" IDENTIFIER "(" ")" {$$= ["new",$2,[]];}
