@@ -5,6 +5,7 @@
 (\s+|\;+.*\n)        /* skip whitespace and line comments */
 [0-9]+("."[0-9]+)?\b  return 'NUMBER'
 \"([^\\\"]|\\.)*\" return 'STRING_LITERAL'
+"'("                  return "'("
 "defmacro"            return 'defmacro'
 "defun"               return 'defun'
 "while"               return 'while'
@@ -125,7 +126,7 @@ and_exprs: and_exprs e {$$ = ["logic_and",$1,$2]} | e;
 or_exprs: or_exprs e {$$ = ["logic_or",$1,$2]} | e;
 
 e:
-    '(' '=' e equal_exprs ')' {$$ = [$2,$3,$4];}
+    '(' '=' e equal_exprs ')' {$$ = ["==",$3,$4];}
     | '(' '*' e times_exprs ')' {$$ = [$2,$3,$4];}
     | '(' '+' e plus_exprs ')' {$$ = [$2,$3,$4];}
 	| '(' '-' e minus_exprs ')' {$$ = [$2,$3,$4];}
@@ -134,6 +135,7 @@ e:
     | '(' 'and' e and_exprs ')' {$$ = ["&&",$3,$4];}
     | '(' comparison_operator e e ')' {$$ = [$2,$3,$4];}
     | function_call
+    | "'(" exprs ")" {$$ = ["initializer_list","Object",$2]}
     | NUMBER
         {$$ = yytext;}
     | var_name

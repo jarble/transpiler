@@ -19,6 +19,7 @@
 "case"                return 'case'
 "TRUE"                return 'TRUE'
 "FALSE"               return 'FALSE'
+"forall"              return 'forall'
 "?"                   return '?'
 ">="                  return '>='
 ">"                   return '>'
@@ -73,6 +74,7 @@ top_level_statements: top_level_statements_ {$$ = ["top_level_top_level_statemen
 
 top_level_statement:
 	"(" "defrule" IDENTIFIER e "=>" "(" "assert" e ")" ")" {$$= ["defrule",$3,$4,$8]}
+	"(" "defrule" IDENTIFIER "(" "forall" exprs ")" "=>" "(" "assert" e ")" ")" {$$= ["forall_multiple",$6,$11]}
     | "(" "deffunction" IDENTIFIER "(" parameters ")" statements ")" {$$ = ["function","public","Object",$3,$5,$7]};
 
 statements_: statement statements_ {$$ = [$1].concat($2);} | statement {$$ =

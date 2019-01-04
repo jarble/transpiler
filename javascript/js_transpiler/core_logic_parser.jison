@@ -101,7 +101,7 @@ and_exprs: and_exprs e {$$ = ["logic_and",$1,$2]} | e;
 or_exprs: or_exprs e {$$ = ["logic_or",$1,$2]} | e;
 
 e:
-    '(' '=' e equal_exprs ')' {$$ = [$2,$3,$4];}
+    '(' '==' e equal_exprs ')' {$$ = ["==",$3,$4];}
     | '(' '*' e times_exprs ')' {$$ = [$2,$3,$4];}
     | '(' '+' e plus_exprs ')' {$$ = [$2,$3,$4];}
 	| '(' '-' e minus_exprs ')' {$$ = [$2,$3,$4];}

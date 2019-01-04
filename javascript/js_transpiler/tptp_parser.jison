@@ -10,13 +10,12 @@
 "if"                  return "if"
 "is"                  return "is"
 ","                   return ','
-";"                   return ';'
-"--->"                return '--->'
+"&"                   return '&'
+"|"                   return '|'
 "==>"                 return '==>'
 "<=>"                 return '<=>'
 "@"                   return '@'
-"-->"                 return '-->'
-"->"                  return '->'
+"=>"                  return '=>'
 ":-"                  return ':-'
 "."                   return '.'
 ":"                   return ':'
@@ -28,6 +27,7 @@
 "="                   return '='
 "*="                  return '*='
 "*"                   return '*'
+"~"                   return '~'
 "\\="                 return '\\='
 "/"                   return '/'
 "-="                  return '-='
@@ -52,9 +52,9 @@
 
 /* operator associations and precedence */
 
-%left '->'
-%left ';'
-%left ','
+%left '=>' '<=>'
+%left '|'
+%left '&'
 %left '<' '=<' '>' '>=' '=' '==' '\\=' 'is'
 %left '+' '-'
 %left '*' '/'
@@ -72,28 +72,21 @@ top_level_statements_: top_level_statement "." top_level_statements_ {$$ = [$1].
 top_level_statements: top_level_statements_ {$$ = ["top_level_statements",$1]};
 
 top_level_statement
-    : predicate | function_call;
-
-predicate:
-    IDENTIFIER "(" exprs ")" ":-" e {$$ = ["function","public","boolean",$1,$3,["statements",[["semicolon",["return",$6]]]]]}
-    | IDENTIFIER ":-" e {$$ = ["function","public","boolean",$1,[],["statements",[["semicolon",["return",$3]]]]]};
-
+    : forall_statement | function_call;
 e
     :
-    e '->' e
+    e '<=>' e
+        {$$ = ['iff',$1,$3];}
+    |e '=>' e
         {$$ = ["implies",$1,$3]}
-    |e ';' e
+    |e '|' e
         {$$ = ['logic_or',$1,$3];}
-    |e ',' e
+    |e '&' e
         {$$ = ['logic_and',$1,$3];}
     |e '=' e
         {$$ = ['logic_equals',$1,$3];}
-    |e 'is' e
-        {$$ = ['set_var',$1,$3];}
     |e '\\=' e
         {$$ = ['!=',$1,$3];}
-    |e '==' e
-        {$$ = ['==',$1,$3];}
     |e '=<' e
         {$$ = ['<=',$1,$3];}
     |e '<' e
@@ -112,8 +105,10 @@ e
         {$$ = [$2,$1,$3];}
     | '-' e %prec UMINUS
         {$$ = ["-",$2];}
-    | parentheses_expr
+    | not_expr
     ;
+
+not_expr: "~" parentheses_expr {$$ = ["!",$2];} | parentheses_expr {$$ = $1;};
 
 parameter: IDENTIFIER {$$ = ["Object", $1];};
 parameters: parameter "," parameters {$$ = [$1].concat($3);} | parameter {$$ =
@@ -122,7 +117,7 @@ parameters: parameter "," parameters {$$ = [$1].concat($3);} | parameter {$$ =
 function_call:
     IDENTIFIER "(" ")" {$$ = ["function_call",$1,[]];} | IDENTIFIER "(" exprs ")" {$$ = ["function_call",$1,$3];};
 
-forall_statement: "forall" "(" e "," e ")" {$$ = ["forall",$3,$5];};
+forall_statement: "(" "!" "[" e "]" ":" e ")" {$$ = ["forall",$4,$7];};
 
 parentheses_expr:
     forall_statement

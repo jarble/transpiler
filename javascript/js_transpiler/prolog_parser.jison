@@ -116,8 +116,10 @@ e
         {$$ = [$2,$1,$3];}
     | '-' e %prec UMINUS
         {$$ = ["-",$2];}
-    | parentheses_expr
+    | not_expr
     ;
+
+not_expr: "\+" parentheses_expr {$$ = ["!",$2];} | parentheses_expr {$$ = $1;};
 
 parameter: IDENTIFIER {$$ = ["Object", $1];};
 parameters: parameter "," parameters {$$ = [$1].concat($3);} | parameter {$$ =
@@ -134,7 +136,7 @@ parentheses_expr:
     | '(' e ')' {$$ = $2;}
     | "[" "]" {$$ = ["initializer_list","Object",[]];}
     | "[" exprs "]" {$$ = ["initializer_list","Object",$2];}
-    | "[" dot_expr "|" exprs "]" {$$ = ["list_head_tail","Object",$2,["initializer_list","Object",$4]];}
+    | "[" parentheses_expr "|" exprs "]" {$$ = ["list_head_tail","Object",$2,["initializer_list","Object",$4]];}
     | NUMBER
         {$$ = yytext;}
     | IDENTIFIER
