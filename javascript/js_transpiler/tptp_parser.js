@@ -117,14 +117,11 @@ break;
 case 13:
 this.$ = ['<=',$$[$0-2],$$[$0]];
 break;
-case 14:
-this.$ = ['>',$$[$0-2],$$[$0]];
+case 14: case 16: case 17: case 18: case 19: case 20:
+this.$ = [$$[$0-1],$$[$0-2],$$[$0]];
 break;
 case 15:
 this.$ = ['>=',$$[$0-2],$$[$0]];
-break;
-case 16: case 17: case 18: case 19: case 20:
-this.$ = [$$[$0-1],$$[$0-2],$$[$0]];
 break;
 case 21:
 this.$ = ["-",$$[$0]];

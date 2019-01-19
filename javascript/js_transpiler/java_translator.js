@@ -27,8 +27,14 @@ function file_extension(lang){
 	else if(lang === "clips"){
 		return "clp";
 	}
+	else if(lang === "yecc"){
+		return "yrl";
+	}
 	else if(lang === "nez"){
 		return "nez";
+	}
+	else if(lang === "isabelle/hol"){
+		return "thy";
 	}
 	else if(lang === "modelica"){
 		return "mo";
@@ -190,6 +196,7 @@ var parsers =
 			"kotlin":kotlin_parser,
 			"javascript":javascript_parser,
 			"python":python_parser,
+			"core.logic":core_logic_parser,
 			"sympy":python_parser,
 			"sage":python_parser,
 			"delphi":delphi_parser,
@@ -232,6 +239,7 @@ var parsers =
 			"php":php_parser,
 			"jison":jison_parser,
 			"ometa":ometa_parser,
+			"ohm":ohm_parser,
 			"marpa":marpa_parser,
 			"nearley":nearley_parser,
 			"peg.js":pegjs_parser,
@@ -648,9 +656,12 @@ function var_type(input_lang,lang,type){
 			return "Object";
 		}
 	}
-	else if(member(type, ["char"])){
+	else if(member(type, ["char","character"])){
 		if(member(lang,["java","c","standard ml","mysql"])){
 			return "char";
+		}
+		else if(member(lang,["fortran"])){
+			return "character";
 		}
 	}
 	else if(member(type, ["function"])){
@@ -659,7 +670,7 @@ function var_type(input_lang,lang,type){
 		}
 	}
 	else if(member(type, ["int","Int","Integer","integer","integer!","i32","int32"])){
-		if(member(lang,["hack","alt-ergo","whyml","sentient","sql","mysql",'pl/sql',"scriptol","transact-sql","standard ml","glsl","mercury","nim","elm","ats","python","coconut","systemverilog","transact-sql","dafny","janus","chapel","minizinc","engscript","cython","algol 68",'d',"octave","tcl","ml","awk","julia","gosu","ocaml","f#","pike","objective-c","go","cobra","dart","groovy","hy","java","c#",'c',"c++","vala","nemerle"])){
+		if(member(lang,["hack","isabelle/hol","alt-ergo","whyml","sentient","sql","mysql",'pl/sql',"scriptol","transact-sql","standard ml","glsl","mercury","nim","elm","ats","python","coconut","systemverilog","transact-sql","dafny","janus","chapel","minizinc","engscript","cython","algol 68",'d',"octave","tcl","ml","awk","julia","gosu","ocaml","f#","pike","objective-c","go","cobra","dart","groovy","hy","java","c#",'c',"c++","vala","nemerle"])){
 			return "int";
 		}
 		else if(member(lang,["castor"])){
@@ -677,7 +688,7 @@ function var_type(input_lang,lang,type){
 		else if(member(lang,["protobuf"])){
 			return "int32";
 		}
-		else if(member(lang,["ceylon","modelica","haskell","ada","ruby","cosmos","gambas","openoffice basic","pascal","erlang","delphi","visual basic","visual basic .net"])){
+		else if(member(lang,["ceylon","agda","modelica","haskell","ada","ruby","cosmos","gambas","openoffice basic","pascal","erlang","delphi","visual basic","visual basic .net"])){
 			return "Integer";
 		}
 		else if(member(lang,["php","fortran","vhdl","prolog","constraint handling rules","common lisp","picat","seed7"])){
@@ -900,6 +911,11 @@ function var_name(lang,input_lang,var1){
 		same_var_type(to_return,var1);
 		return to_return;
 	}
+	else if(member(lang,["haskell"])){
+		var to_return = var1.charAt(0).toLowerCase() + var1.slice(1);
+		same_var_type(to_return,var1);
+		return to_return;
+	}
 	else{
 		return var1;
 	}
@@ -975,7 +991,7 @@ function prefix_arithmetic_lang(lang){
 	return member(lang,["racket","core.logic","minikanren","pddl","acl2","kif","common prolog","picolisp","scheme","smt-lib","smt-lib","clips","gnu smalltalk","newlisp","hy","common lisp","emacs lisp","clojure","sibilant","lispyscript"]);
 }
 function infix_arithmetic_lang(lang){
-	return member(lang,["pascal","parser-gen","nez","parsimmon","treetop","canopy","marpa","abnf","xbnf","clean","minikanren.lua","clp(b)","logpy","isabelle/hol","hol","whyml","aimms","axiom","pari/gp","maple","tptp","mediawiki","nearley","xquery","mizar",'modelica','pymathprog','coq',"icon","coffeequate","asciimath","pari/gp","dafny","alt-ergo","gdscript",'bash',"flix","sentient","sage","symja","algebrite","symbolicc++","setl","inform 6","transact-sql","mysql","smalltalk","ring","glsl","agda","applescript","sidef","idris","lc++","chr.js","mercury","constraint handling rules","yacas","english","jison","prolog","elm","z3py","logtalk","picat","prolog","sympy","vhdl","elixir","python","coconut","visual basic .net","ruby","lua","scriptol", 'smt-libpy',"ats","pydatalog",'e',"vbscript","livecode","monkey x","perl 6","englishscript","cython","gap","mathematical notation","wolfram","chapel","katahdin","frink","minizinc","picat","java",'eclipse','d',"ooc","genie","janus","ooc","idp","processing","maxima","seed7",'self',"gnu smalltalk","drools","standard ml","oz","cobra","pike","prolog","engscript","kotlin","pawn","freebasic","matlab","ada","freebasic","gosu","gambas","nim","autoit","algol 68","ceylon","groovy","rust","coffeescript","typescript","fortran","octave","ml","hack","autohotkey","scala","delphi","tcl","swift","vala",'c',"f#","c++","dart","javascript","rebol","julia","erlang","ocaml","c#","nemerle","awk","java","perl","haxe","php","haskell","go","r","bc","visual basic"]);
+	return member(lang,["pascal","parse::recdescent","mouse","yecc","parser-gen","nez","parsimmon","treetop","canopy","marpa","abnf","xbnf","clean","minikanren.lua","clp(b)","logpy","isabelle/hol","hol","whyml","aimms","axiom","pari/gp","maple","tptp","mediawiki","nearley","xquery","mizar",'modelica','pymathprog','coq',"icon","coffeequate","asciimath","pari/gp","dafny","alt-ergo","gdscript",'bash',"flix","sentient","sage","symja","algebrite","symbolicc++","setl","inform 6","transact-sql","mysql","smalltalk","ring","glsl","agda","applescript","sidef","idris","lc++","chr.js","mercury","constraint handling rules","yacas","english","jison","prolog","elm","z3py","logtalk","picat","prolog","sympy","vhdl","elixir","python","coconut","visual basic .net","ruby","lua","scriptol", 'smt-libpy',"ats","pydatalog",'e',"vbscript","livecode","monkey x","perl 6","englishscript","cython","gap","mathematical notation","wolfram","chapel","katahdin","frink","minizinc","picat","java",'eclipse','d',"ooc","genie","janus","ooc","idp","processing","maxima","seed7",'self',"gnu smalltalk","drools","standard ml","oz","cobra","pike","prolog","engscript","kotlin","pawn","freebasic","matlab","ada","freebasic","gosu","gambas","nim","autoit","algol 68","ceylon","groovy","rust","coffeescript","typescript","fortran","octave","ml","hack","autohotkey","scala","delphi","tcl","swift","vala",'c',"f#","c++","dart","javascript","rebol","julia","erlang","ocaml","c#","nemerle","awk","java","perl","haxe","php","haskell","go","r","bc","visual basic"]);
 }
 
 function set_var_type(input_lang,lang,a,b){
@@ -993,12 +1009,12 @@ function set_var_type(input_lang,lang,a,b){
 
 
 function is_statically_typed(lang){
-	return ["c","castor","java","choco","z3py","isabelle/hol","c++","c#","scala","opencl","mercury","vala","processing","pl/sql","symbolicc++","kotlin","ooc","hlsl",'ceylon',"d","modelica","object pascal","sql","ada","mysql","transact-sql","fortran","minizinc","go","swift","ada","seed7",'gnu pascal',"pascal","chapel","rust","algol 68","coq","glsl","smt-lib"].indexOf(lang) !== -1;
+	return ["c","idris","ats","castor","java","choco","z3py","isabelle/hol","c++","c#","scala","opencl","mercury","vala","processing","pl/sql","symbolicc++","kotlin","ooc","hlsl",'ceylon',"d","modelica","object pascal","sql","ada","mysql","transact-sql","fortran","minizinc","go","swift","ada","seed7",'gnu pascal',"pascal","chapel","rust","algol 68","coq","glsl","smt-lib"].indexOf(lang) !== -1;
 }
 
 function is_dynamically_typed(lang){
 	//this is for languages with types that are either dynamic or inferred
-	return ["cyc","nez","parsec.el","neotoma","parser-gen","parsimmon","lemon","treetop","canopy","xbnf","clp(r)","clp(b)","clp(fd)","logpy","reazon","core.logic","minikanren","minikanren.lua","whyml","waxeye","java cup","oak","chevrotain","ileansep","coffeequate","acl2","axiom","alt-ergo","lark","pari/gp","grammatica","ohm","gold","lpeg","tptp","peg.js","parslet","ometa","marpa","yacc","antlr","chrg","vb.net","regex","txl","picolisp","pawn","transpose","oz","pythological","logtalk","cobra","groovy","f#","reasoned-php","sidef","actionscript","newlisp","awk","symja","emacs lisp","matlab","mediawiki","frink","nim","asciimath","regular expression","regular expressions","syntax definition formalism","visual basic .net","cython","maple","coconut","sage","algebrite","pari/gp","reverse polish notation","reduce","dart","autohotkey","sage","pseudocode","typescript","coffeescript","vb .net","hack","yacas","nearley","jison","abnf","xquery","haxe","kif","pyke","drools","javascript","haskell","tex","mathematical notation","sympy","clips","picat","pddl","python","perl 6","maxima","hy","standard ml","ocaml","gap",'english',"php","ruby","lua","perl","common lisp","racket","scheme","rebol","wolfram","r","prolog","tcl","clojure","erlang","julia","elixir",'octave','wolfram'].indexOf(lang) !== -1;
+	return ["cyc","dms","angstrom","agda","parse::recdescent","tatsu","pypeg","parsimonious","yapps","pyparsing","mouse","yecc","nez","parsec.el","neotoma","parser-gen","parsimmon","lemon","treetop","canopy","xbnf","clp(r)","clp(b)","clp(fd)","logpy","reazon","core.logic","minikanren","minikanren.lua","whyml","waxeye","java cup","oak","chevrotain","ileansep","coffeequate","acl2","axiom","alt-ergo","lark","pari/gp","grammatica","ohm","gold","lpeg","tptp","peg.js","parslet","ometa","marpa","yacc","antlr","chrg","vb.net","regex","txl","picolisp","pawn","transpose","oz","pythological","logtalk","cobra","groovy","f#","reasoned-php","sidef","actionscript","newlisp","awk","symja","emacs lisp","matlab","mediawiki","frink","nim","asciimath","regular expression","regular expressions","syntax definition formalism","visual basic .net","cython","maple","coconut","sage","algebrite","pari/gp","reverse polish notation","reduce","dart","autohotkey","sage","pseudocode","typescript","coffeescript","vb .net","hack","yacas","nearley","jison","abnf","xquery","haxe","kif","pyke","drools","javascript","haskell","tex","mathematical notation","sympy","clips","picat","pddl","python","perl 6","maxima","hy","standard ml","ocaml","gap",'english',"php","ruby","lua","perl","common lisp","racket","scheme","rebol","wolfram","r","prolog","tcl","clojure","erlang","julia","elixir",'octave','wolfram'].indexOf(lang) !== -1;
 }
 
 function parameter(input_lang,lang,x){
@@ -1469,7 +1485,7 @@ function function_call_parameters(input_lang,lang,name,params){
 	if(member(lang,["pseudocode","coffeequate","pari/gp","algebrite","tptp","drools","alt-ergo","mysql","glsl","sage","kotlin","sentient","chrg","ruby-prolog","yacas","gosu","gap","awk","z3py","peg.js","jison","antlr","english","ruby","definite clause grammars","nearley","sympy","systemverilog","vhdl","visual basic .net","perl","constraint handling rules","lua","ruby","python","tex",'asciimath',"coconut","javascript","logtalk","nim","seed7","pydatalog",'e',"vbscript","monkey x","livecode","ceylon","delphi","englishscript","cython","vala","dafny","wolfram","gambas",'d',"frink","chapel","swift","perl 6","janus","mathematical notation","pascal","rust","picat","autohotkey","maxima","octave","matlab","julia","r","prolog","fortran","go","minizinc","erlang","coffeescript","php","hack","java","c#",'c',"c++","typescript","dart","haxe","scala","visual basic"])){
 		return params.join(",");
 	}
-	else if(member(lang,["hy","core.logic","minikanren","kif","common prolog","emacs lisp","pythological","pddl","newlisp","ocaml","f#","polish notation","reverse polish notation","smt-lib","scheme","racket","common lisp","clips","rebol","haskell","racket","clojure"])){
+	else if(member(lang,["hy","core.logic","minikanren","kif","common prolog","emacs lisp","pythological","pddl","newlisp","ocaml","f#","polish notation","reverse polish notation","smt-lib","scheme","racket","common lisp","clips","rebol","haskell","agda","racket","clojure"])){
 		return params.join(" ");
 	}
 	else if(member(lang,["mediawiki"])){
@@ -1530,7 +1546,7 @@ function statements(input_lang,lang,indent,arr){
 			return generate_code(input_lang,lang,indent,a);
 		});
 		//console.log(JSON.stringify(arr[1]));
-		if(member(lang,["java","parsec.el","nez","neotoma","parser-gen","xbnf","abnf","castor","clp(fd)","reazon","minikanren.lua","minikanren","core.logic","logpy","oak","waxeye","java cup","acl2","whyml","isabelle/hol","algebrite","pari/gp","ohm","gold","parslet","mediawiki","xquery","kif",'asciimath',"modelica",'pymathprog',"lemon","marpa","coffeequate","alt-ergo","gdscript","sage","thrift","pythological","sentient","scriptol","chrg","instaparse","parboiled","javacc","treetop","setl","ruby-prolog","mysql","smalltalk","picolisp","newlisp","regex","txl","english","glsl","applescript","sidef","tex","protobuf","chapel","idris","coq","lc++","chr.js","reasoned-php","logicjs","tcl","yacas","coconut","gap","lark","pypeg","canopy","ats","z3py","peg.js","antlr","nearley","jison","vhdl",'c',"pseudocode","perl 6","haxe","javascript","c++","c#","php","dart","actionscript","typescript","processing","vala","bc","ceylon","hack","perl"])){
+		if(member(lang,["java","dms","angstrom","tatsu","parsimonious","mouse","yecc","parsec.el","nez","neotoma","parser-gen","xbnf","abnf","castor","clp(fd)","reazon","minikanren.lua","minikanren","core.logic","logpy","oak","waxeye","java cup","acl2","whyml","isabelle/hol","algebrite","pari/gp","ohm","gold","parslet","mediawiki","xquery","kif",'asciimath',"modelica",'pymathprog',"lemon","marpa","coffeequate","alt-ergo","gdscript","sage","thrift","pythological","sentient","scriptol","chrg","instaparse","parboiled","javacc","treetop","setl","ruby-prolog","mysql","smalltalk","picolisp","newlisp","regex","txl","english","glsl","applescript","sidef","tex","protobuf","chapel","idris","coq","lc++","chr.js","reasoned-php","logicjs","tcl","yacas","coconut","gap","lark","pypeg","canopy","ats","z3py","peg.js","antlr","nearley","jison","vhdl",'c',"pseudocode","perl 6","haxe","javascript","c++","c#","php","dart","actionscript","typescript","processing","vala","bc","ceylon","hack","perl"])){
 			return a.join("");
 		}
 		else if(member(lang,["picat","parsimmon","ometa","transact-sql","maxima","lpeg","prolog","clp(b)","constraint handling rules","logtalk","erlang","lpeg"])){
@@ -1556,6 +1572,9 @@ function get_lang(lang){
 	}
 	else if(lang === "mathematica"){
 		return "wolfram";
+	}
+	else if(lang === "isabelle"){
+		return "isabelle/hol";
 	}
 	else if(lang === "cycl"){
 		return "cyc";
@@ -1765,13 +1784,6 @@ function unparse(input_lang,lang,indent,pattern_array,matching_symbols){
 			to_return = "(!= "+a+" "+b+")";
 		}
 	}
-	else if(pattern_array[0] === "in"){
-		var a = unparse(input_lang,lang,indent,pattern_array[1],matching_symbols)
-		var b = unparse(input_lang,lang,indent,pattern_array[2],matching_symbols)
-		if(member(lang,["javascript","typescript","python"])){
-			to_return = "("+a+" in "+b+")";
-		}
-	}
 	else if(pattern_array[0] === "^"){
 		var a = unparse(input_lang,lang,indent,pattern_array[1],matching_symbols)
 		var b = unparse(input_lang,lang,indent,pattern_array[2],matching_symbols)
@@ -1960,6 +1972,9 @@ function generate_code(input_lang,lang,indent,arr){
 		}
 		else if(member(lang,["whyml"])){
 			return "Nil";
+		}
+		else if(member(lang,["wolfram"])){
+			return "Undefined";
 		}
 	}
 	else if(arr === "false" || matches_pattern(arr,[".",["false"]],{}) || (lang === "common lisp" && (arr === "f" || matches_pattern(arr,[".",["f"]],{})))){
@@ -2307,6 +2322,9 @@ function generate_code(input_lang,lang,indent,arr){
 		if(lang === "ruby"){
 			to_return = "(defined?" + a + ")";
 		}
+		else if(lang === "ocaml"){
+			to_return = "(Some " + a + ")";
+		}
 		else{
 			to_return = unparse(input_lang,lang,indent,pattern_array.value,matching_symbols);
 		}
@@ -2319,6 +2337,8 @@ function generate_code(input_lang,lang,indent,arr){
 			["==","$a",[".",["nil"]]]],
 		[["prolog","pseudocode"],
 			["function_call","var",["$a"]]],
+		[["Oz"],
+			["function_call","IsFree",["$a"]]],
 		[["python","coconut","pseudocode"],
 			["==","$a",[".",["None"]]]]
 	],matching_symbols)){
@@ -2328,6 +2348,9 @@ function generate_code(input_lang,lang,indent,arr){
 		}
 		else if(lang === "perl"){
 			to_return = "!defined("+a+")";
+		}
+		else if(lang === "julia"){
+			to_return = "!isdefined("+a+")";
 		}
 		else if(lang === "julia"){
 			to_return = "!isdefined("+a+")";
@@ -3250,8 +3273,14 @@ function generate_code(input_lang,lang,indent,arr){
 			[["javascript","typescript","coffeescript","pseudocode"],["!=",[".",["$a",["function_call","indexOf",["$b"]]]],["-",[".",["1"]]]]],
 			[["php","hack","pseudocode"],["function_call","in_array",["$b","$a"]]],
 			[["wolfram","pseudocode"],["function_call","MemberQ",["$a","$b"]]],
- 			[["prolog"],["function_call","member",["$a","$b"]]]
-		],matching_symbols)
+ 			[["prolog"],["function_call","member",["$b","$a"]]],
+ 			[["haskell"],["function_call","elem",["$b","$a"]]],
+ 			[["python"],["in","$b","$a"]],
+ 			[["ruby"],[".",["$a",["function_call","include?",["$b"]]]]],
+ 			[["java","swift"],[".",["$a",["function_call","contains",["$b"]]]]],
+ 			[["haxe"],[".",["Lambda",["function_call","has",["$a","$b"]]]]],
+ 			[["erlang"],[".",["lists",["function_call","member",["$b","$a"]]]]],
+ 		],matching_symbols)
 	){
 		var a2 = generate_code(input_lang,lang,indent,matching_symbols["$b"]);
 		if(matching_symbols["$a"][0] === "initializer_list" && member(lang,["smt-lib","clips"])){
@@ -3264,6 +3293,173 @@ function generate_code(input_lang,lang,indent,arr){
 			to_return = array_contains(lang,a1,a2);
 		}
 		types[to_return] = "boolean";
+	}
+	else if(
+		//add element to a set (not in-place)
+		matching_patterns(pattern_array,input_lang,lang,arr,[
+			[["erlang"],[".",["sets",["function_call","add_element",["$a","$b"]]]]],
+			[["ruby"],[".",["$a",["function_call","add",["$b"]]]]],
+			[["f#"],[".",["$a",["function_call","Add",["$b"]]]]],
+			[["haskell"],["function_call","insert",["$b","$a"]]]
+		],matching_symbols)
+	){
+		to_return = unparse(input_lang,lang,indent,pattern_array.value,matching_symbols);
+	}
+	else if(
+		//add element to a set (in-place)
+		matching_patterns(pattern_array,input_lang,lang,arr,[
+			[["javascript","python"],[".",["$a",["function_call","add",["$b"]]]]]
+		],matching_symbols)
+	){
+		to_return = unparse(input_lang,lang,indent,pattern_array.value,matching_symbols);
+		types[to_return] = "boolean";
+	}
+	else if(
+		//remove element from a set (not in-place)
+		matching_patterns(pattern_array,input_lang,lang,arr,[
+			[["erlang"],[".",["sets",["function_call","del_element",["$a","$b"]]]]],
+			[["f#"],[".",["$a",["function_call","Remove",["$b"]]]]],
+			[["haskell"],["function_call","delete",["$b","$a"]]]
+		],matching_symbols)
+	){
+		to_return = unparse(input_lang,lang,indent,pattern_array.value,matching_symbols);
+	}
+	else if(
+		//remove element from a set (in-place)
+		matching_patterns(pattern_array,input_lang,lang,arr,[
+			[["javascript"],[".",["$a",["function_call","delete",["$b"]]]]],
+			[["python"],[".",["$a",["function_call","discard",["$b"]]]]]
+		],matching_symbols)
+	){
+		to_return = unparse(input_lang,lang,indent,pattern_array.value,matching_symbols);
+	}
+	else if(
+		//is element of a set
+		//check if set contains
+		//check if item is in set
+		matching_patterns(pattern_array,input_lang,lang,arr,[
+			[["erlang"],[".",["sets",["function_call","is_element",["$a","$b"]]]]],
+			[["f#"],[".",["$a",["function_call","Contains",["$b"]]]]],
+			[["ruby"],[".",["$a",["function_call","include?",["$b"]]]]]
+		],matching_symbols)
+	){
+		to_return = unparse(input_lang,lang,indent,pattern_array.value,matching_symbols);
+		types[to_return] = "boolean";
+	}
+	else if(
+		//check if set is empty
+		matching_patterns(pattern_array,input_lang,lang,arr,[
+			[["erlang"],[".",["sets",["function_call","is_empty?",["$a"]]]]],
+			[["ruby"],[".",["$a",["function_call","empty?",[]]]]]
+		],matching_symbols)
+	){
+		to_return = unparse(input_lang,lang,indent,pattern_array.value,matching_symbols);
+	}
+	else if(
+		//convert set to list
+		matching_patterns(pattern_array,input_lang,lang,arr,[
+			[["erlang"],[".",["sets",["function_call","to_list",["$a"]]]]]
+		],matching_symbols)
+	){
+		to_return = unparse(input_lang,lang,indent,pattern_array.value,matching_symbols);
+	}
+	else if(
+		//convert list to set
+		matching_patterns(pattern_array,input_lang,lang,arr,[
+			[["python"],["function_call","set",["$a"]]]
+		],matching_symbols)
+	){
+		to_return = unparse(input_lang,lang,indent,pattern_array.value,matching_symbols);
+	}
+	else if(
+		//is subset of a set
+		matching_patterns(pattern_array,input_lang,lang,arr,[
+			[["erlang"],[".",["sets",["function_call","is_subset",["$a","$b"]]]]],
+			[["ruby"],[".",["$a",["function_call","subset?",["$b"]]]]],
+			[["racket"],["function_call","subset?",["$a","$b"]]],
+			[["common lisp"],["function_call","subsetp",["$a","$b"]]]
+		],matching_symbols)
+	){
+		var a = generate_code(input_lang,lang,indent,matching_symbols["$a"]);
+		var b = generate_code(input_lang,lang,indent,matching_symbols["$b"]);
+		if(member(lang,["r"])){
+			to_return = "all("+a+" %in% "+b+")";
+		}
+		else if(member(lang,["python"])){
+			to_return = "("+a+" <= "+b+")";
+		}
+		else if(member(lang,["haskell"])){
+			to_return = "("+a+" `isSubsetOf` "+b+")";
+		}
+		else if(member(lang,["scala"])){
+			to_return = "("+a+" `isSubsetOf` "+b+")";
+		}
+		else{
+			to_return = unparse(input_lang,lang,indent,pattern_array.value,matching_symbols);
+		}
+		types[to_return] = "boolean";
+	}
+	else if(
+		//intersection of two sets
+		matching_patterns(pattern_array,input_lang,lang,arr,[
+			[["matlab","octave"],["function_call","intersect",["$a","$b"]]],
+			[["maxima","haskell","common lisp"],["function_call","intersection",["$a","$b"]]],
+			[["mathematica"],["function_call","Intersection",["$a","$b"]]],
+			[["racket"],["function_call","set-intersect",["$a","$b"]]],
+			[["erlang"],[".",["sets",["function_call","intersection",["$a","$b"]]]]]
+		],matching_symbols)
+	){
+		var a = generate_code(input_lang,lang,indent,matching_symbols["$a"]);
+		var b = generate_code(input_lang,lang,indent,matching_symbols["$b"]);
+		if(member(lang,["python","ruby","scala"])){
+			to_return = "("+a+" & "+b+")";
+		}
+		else{
+			to_return = unparse(input_lang,lang,indent,pattern_array.value,matching_symbols);
+		}
+		types[to_return] = types[a1];
+	}
+	else if(
+		//union of two sets
+		matching_patterns(pattern_array,input_lang,lang,arr,[
+			[["matlab","octave","maxima","haskell","common lisp"],["function_call","union",["$a","$b"]]],
+			[["mathematica"],["function_call","Union",["$a","$b"]]],
+			[["racket"],["function_call","set-union",["$a","$b"]]],
+			[["erlang"],[".",["sets",["function_call","union",["$a","$b"]]]]]
+		],matching_symbols)
+	){
+		var a = generate_code(input_lang,lang,indent,matching_symbols["$a"]);
+		var b = generate_code(input_lang,lang,indent,matching_symbols["$b"]);
+		if(member(lang,["python","ruby","scala"])){
+			to_return = "("+a+" | "+b+")";
+		}
+		else{
+			to_return = unparse(input_lang,lang,indent,pattern_array.value,matching_symbols);
+		}
+		types[to_return] = types[a1];
+	}
+	else if(
+		//set difference
+		matching_patterns(pattern_array,input_lang,lang,arr,[
+			[["matlab","octave"],["function_call","setdiff",["$a","$b"]]],
+			[["maxima"],["function_call","setdifference",["$a","$b"]]],
+			[["mathematica"],["function_call","Complement",["$a","$b"]]],
+			[["racket"],["function_call","set-subtract",["$a","$b"]]],
+			[["erlang"],[".",["sets",["function_call","subtract",["$a","$b"]]]]]
+		],matching_symbols)
+	){
+		var a = generate_code(input_lang,lang,indent,matching_symbols["$a"]);
+		var b = generate_code(input_lang,lang,indent,matching_symbols["$b"]);
+		if(member(lang,["python","ruby"])){
+			to_return = "("+a+" - "+b+")";
+		}
+		if(member(lang,["scala"])){
+			to_return = "("+a+" diff "+b+")";
+		}
+		else{
+			to_return = unparse(input_lang,lang,indent,pattern_array.value,matching_symbols);
+		}
+		types[to_return] = types[a1];
 	}
 	else if(
 		//get last index of a substring
@@ -4565,7 +4761,7 @@ function generate_code(input_lang,lang,indent,arr){
 		else if(member(lang,["prolog","asciimath","alt-ergo","minizinc","gams","abella","whyml"])){
 			to_return = condition + " -> " + body;
 		}
-		else if(member(lang,["tptp","ileansep"])){
+		else if(member(lang,["tptp","ileansep","python"])){
 			to_return = "("+condition + " => " + body+")";
 		}
 		else if(member(lang,["hol"])){
@@ -4604,9 +4800,9 @@ function generate_code(input_lang,lang,indent,arr){
 		else if(member(lang,["acl2"])){
 			to_return = "(implies " + condition + " " + body+")";
 		}
-		else if(member(lang,["lua","php","c#"])){
+		else if(member(lang,["lua","php","c#","ruby","erlang"])){
 			//for imperative languages without logic-programming features
-			to_return = generate_code(input_lang,lang,indent,["||",arr[1],arr[2]]);
+			to_return = generate_code(input_lang,lang,indent,["||",["!",arr[1]],arr[2]]);
 		}
 		types[to_return] = "boolean";
 	}
@@ -5587,11 +5783,13 @@ function generate_code(input_lang,lang,indent,arr){
 		
 		member(lang,["jison","antlr","lark","gocc"])
 			&& (to_return = name+":"+body+";")
+		|| member(lang,["parse::recdescent"])
+			&& (to_return = name+": "+body)
 		|| member(lang,["parslet"])
 			&& (to_return = "rule(:"+name+"){"+body+"}")
 		|| member(lang,["parsimmon"])
 			&& (to_return = name+":function(){return "+body+";}")
-		|| member(lang,["pypeg"])
+		|| member(lang,["pypeg","arpeggio"])
 			&& (to_return = "def "+name+"():"+indent+"    return "+body)
 		|| member(lang,["parsec.el"])
 			&& (to_return = "(defun "+name+" () "+indent+" "+body+")")
@@ -5605,17 +5803,15 @@ function generate_code(input_lang,lang,indent,arr){
 			&& (to_return = name+": ["+body+"]")
 		|| member(lang,["chrg"])
 			&& (to_return = body+" ::> "+name+".")
-		|| member(lang,['constraint'])
-			&& (to_return = body+" ::> "+name+".")
 		|| member(lang,["lemon","xbnf"])
 			&& (to_return = name+" ::= "+body+".")
 		|| member(lang,["txl"])
 			&& (to_return = "define expression " + name+" "+body+" end define")
 		|| member(lang,["perl 6"])
 			&& (to_return = "rule "+name+"{"+body+"}")
-		|| member(lang,["peg.js","nez","lpeg","abnf","instaparse","ometa","ohm","oak"])
+		|| member(lang,["peg.js","parsec","nez","lpeg","abnf","instaparse","ometa","parsimonious","ohm","oak"])
 			&& (to_return = name+" = "+body)
-		|| member(lang,["sablecc"])
+		|| member(lang,["sablecc","mouse","tatsu","dms"])
 			&& (to_return = name+" = "+body+";")
 		|| member(lang,["regex"])
 			&& (to_return = name+" = \""+body+"\"")
@@ -5637,6 +5833,10 @@ function generate_code(input_lang,lang,indent,arr){
 			&& (to_return = "<"+name+"> ::="+body)
 		|| member(lang,["nearley","javacc","yecc"])
 			&& (to_return = name+"->"+body)
+		|| member(lang,["pegex"])
+			&& (to_return = name+"=>"+body)
+		|| member(lang,["angstrom"])
+			&& (to_return = "let " + name+" = "+body)
 		|| member(lang,["perl 6"])
 			&& (to_return = "rule " + name+"{"+body+"}");
 	}
@@ -5665,17 +5865,23 @@ function generate_code(input_lang,lang,indent,arr){
 		var body = generate_code(input_lang,lang,indent+"    ",arr[2]);
 		
 		member(lang,["ometa"])
-			&& (to_return = "ometa " + name+"{"+body+"}")
+			&& (to_return = "ometa " + name+"{"+body+indent+"}")
+		|| member(lang,["pegex"])
+			&& (to_return = "my $"+name+" = Pegex::Grammar->new("+body+indent+")")
 		|| member(lang,["ohm"])
-			&& (to_return = name + "{" + body + "}")
+			&& (to_return = name + "{" + body +indent+ "}")
 		|| member(lang,["oak"])
-			&& (to_return = "grammar! " + name + "{" + body + "}")
+			&& (to_return = "grammar! " + name + "{" + body +indent+ "}")
 		|| member(lang,["parsimmon"])
-			&& (to_return = "let " + name + "= Parsimmon.createLanguage({"+body+"});")
+			&& (to_return = "let " + name + "= Parsimmon.createLanguage({"+body+indent+"});")
 		|| member(lang,["parsimmon"])
 			&& (to_return = name+" = pg.compile [["+body+"]]")
 		|| member(lang,["parslet"])
-			&& (to_return = "class "+name+" < Parslet::Parser"+body+indent+"end");
+			&& (to_return = "class "+name+" < Parslet::Parser"+body+indent+"end")
+		|| member(lang,["parsimonious"])
+			&& (to_return = name+" = Grammar(r\"\"\"+body+\"\"\""+body+indent+"\"\"\")")
+		|| member(lang,["jison","tatsu"])
+			&& (to_return = body);
 	}
 	else if(arr[0] === "grammar_var"){
 		grammar_num += 1;
@@ -5716,7 +5922,7 @@ function generate_code(input_lang,lang,indent,arr){
 			&& (to_return = "logic.or("+a+","+b+")")
 		|| member(lang,["smt-lib","clips","pddl","acl2"])
 			&& (to_return = "(or "+a+" "+b+")")
-		|| member(lang,["java","c#","lua","php","perl","mysql","fortran",'c','tptp','logpy','minikanren'])
+		|| member(lang,["java","c#","lua","php","perl","mysql","fortran",'c','tptp','logpy','minikanren','core.logic'])
 			&& (to_return = generate_code(input_lang,lang,indent,["||",arr[1],arr[2]]));
 		types[to_return] = "boolean";
 	}
@@ -5743,7 +5949,7 @@ function generate_code(input_lang,lang,indent,arr){
 			&& (to_return = "logic.and("+a+","+b+")")
 		|| member(lang,["smt-lib","kif","clips","pddl","acl2","snark"])
 			&& (to_return = "(and "+a+" "+b+")")
-		|| member(lang,["java","fortran",'c',"c#","lua","php","perl","mysql","minizinc","tptp","minikanren"])
+		|| member(lang,["java","fortran",'c',"c#","lua","php","perl","mysql","minizinc","tptp","minikanren","core.logic"])
 			&& (to_return = generate_code(input_lang,lang,indent,["&&",arr[1],arr[2]]));
 		
 		types[to_return] = "boolean";
@@ -5773,10 +5979,14 @@ function generate_code(input_lang,lang,indent,arr){
 		var a = generate_code(input_lang,lang,indent+"    ",arr[1]);
 		var b = generate_code(input_lang,lang,indent+"    ",arr[2]);
 		
-		member(lang,["marpa","xbnf","java cup","ohm","gocc","gold","instaparse",'happy',"javacc","regex","txl","lark","coco/r","pest","wirth syntax notation","rebol","yapps","antlr","jison","sablecc","waxeye","ometa","ebnf","nearley","parslet","yacc","perl 6","rebol","hampi",'earley-parser-js'])
+		member(lang,["marpa","parse::recdescent","xbnf","java cup","ohm","gocc","gold","instaparse",'happy',"javacc","regex","txl","lark","coco/r","pest","wirth syntax notation","rebol","yapps","antlr","jison","tatsu","sablecc","waxeye","ometa","ebnf","nearley","parslet","yacc","perl 6","rebol","hampi",'earley-parser-js'])
 			&& (to_return = a+"|"+b)
 		|| member(lang,["prolog","chrg"])
 			&& (to_return = a+";"+b)
+		|| member(lang,["angstrom"])
+			&& (to_return = a+" <|> "+b)
+		|| member(lang,["arpeggio"])
+			&& (to_return = "["+a+","+b+"]")
 		|| member(lang,["parsimmon"])
 			&& (to_return = "Parsimmon.alt("+a+","+b+")")
 		|| member(lang,["parsec.el"])
@@ -5785,7 +5995,7 @@ function generate_code(input_lang,lang,indent,arr){
 			&& (to_return = "["+a+","+b+"]")
 		|| member(lang,["parboiled"])
 			&& (to_return = "AnyOf("+a+","+b+")")
-		|| member(lang,["peg.js","neotoma","abnf","treetop","canopy","peggy","parser-gen","oak","nez"])
+		|| member(lang,["peg.js","mouse","neotoma","abnf","treetop","canopy","parsimonious","peggy","parser-gen","oak","nez"])
 			&& (to_return = a+"/"+b)
 		|| member(lang,["lpeg"])
 			&& (to_return = a+" + "+b);
@@ -5795,9 +6005,9 @@ function generate_code(input_lang,lang,indent,arr){
 		var a = generate_code(input_lang,lang,indent+"    ",arr[1]);
 		var b = generate_code(input_lang,lang,indent+"    ",arr[2]);
 		
-		member(lang,["nearley","neotoma","parser-gen","nez","rebol","xbnf","lemon","java cup","gocc","oak","lark","ohm","gold","sablecc","lemon","yecc","peggy","instaparse","javacc","treetop","txl","perl 6","canopy","coco/r","abnf","peg.js","antlr","marpa","wirth syntax notation","jison"])
+		member(lang,["nearley","dms","angstrom","tatsu","mouse","neotoma","parser-gen","nez","rebol","xbnf","lemon","java cup","gocc","oak","lark","ohm","gold","sablecc","lemon","yecc","peggy","instaparse","javacc","treetop","txl","perl 6","canopy","coco/r","abnf","peg.js","antlr","marpa","wirth syntax notation","jison"])
 			&& (to_return = a+" "+b)
-		|| member(lang,["prolog","chrg","constraint handling rules","ometa"])
+		|| member(lang,["prolog","chrg","constraint handling rules","ometa","arpeggio"])
 			&& (to_return = a+","+b)
 		|| member(lang,["clips"])
 			&& (to_return = "(and " + a+" "+b+")")
@@ -7309,6 +7519,19 @@ function generate_code(input_lang,lang,indent,arr){
 			to_return = "for "+index+","+item+" in pairs("+the_list+") do "+body+indent+"end";
 		}
 	}
+	else if(arr[0] === "list_comprehensions"){
+		//list comprehension without condition
+		//see https://rosettacode.org/wiki/List_comprehensions
+		var result = generate_code(input_lang,lang,indent,arr[1]);
+		var variable = generate_code(input_lang,lang,indent,arr[2]);
+		var the_list = generate_code(input_lang,lang,indent,arr[3]);
+		if(member(lang,["python","coffeescript"])){
+			to_return = result + " for " + variable + " in " + the_list;
+		}
+		else if(member(lang,["erlang","elixir","haskell"])){
+			to_return = result + "," + variable + "<-" + the_list;
+		}
+	}
 	else if(arr[0] === "list_comprehension"){
 		//list comprehension without condition
 		//see https://rosettacode.org/wiki/List_comprehensions
@@ -7317,8 +7540,11 @@ function generate_code(input_lang,lang,indent,arr){
 		var the_list = generate_code(input_lang,lang,indent,arr[3]);
 		var condition;
 		if(arr.length === 4){
-			if(member(lang,["haskell"])){
+			if(member(lang,["haskell","coq","idris"])){
 				to_return = "["+result + "|" + variable + "<-" + the_list + "]";
+			}
+			else if(member(lang,["isabelle/hol"])){
+				to_return = "[" + result + ". " + variable + " ← " + the_list + "]";
 			}
 			else if(member(lang,["tex"])){
 				to_return = "\\{"+result+"\\ |\\ "+variable+" \\in "+the_list+"\\}";
@@ -7613,8 +7839,11 @@ function generate_code(input_lang,lang,indent,arr){
 		if(lang === "regex"){
 			arr = arr.substring(1,arr.length-1);
 		}
-		if(member(lang,["parsec.el"])){
+		else if(member(lang,["parsec.el"])){
 			to_return = "(parsec-str "+arr+")";
+		}
+		else if(member(lang,["megaparsack"])){
+			to_return = "(string/p "+arr+")";
 		}
 		else if(member(lang,["parsimmon"])){
 			to_return = "Parsimmon.string("+arr+")";
@@ -9707,9 +9936,10 @@ function array_contains(lang,a1,a2){
 		else{
 			return inputs_to_outputs(lang,{a1:a1,a2:a2},
 				//a1 is in a2
-				["php"],"in_array(a1,a2)",
+				["php"],"in_array(a2,a1)",
 				["ruby"],"a1.include?(a2)",
 				["java","swift"],"a1.contains(a2)",
+				["fortran"],"(ANY(a1==a2))",
 				["scala"],"(a1 contains a2)",
 				["ocaml"],"(List.mem a2 a1)",
 				["haxe"],"Lambda.has(a1,a2)",
@@ -9725,7 +9955,7 @@ function array_contains(lang,a1,a2){
 				["erlang"],"lists:member(a2,a1)",
 				["javascript","typescript"],"(a1.indexOf(a2) !== -1)",
 				["coffeescript"],"(a1.indexOf(a2) != -1)",
-				["prolog","minizinc"],"member(a2,a1)",
+				["prolog","minizinc"],"member(a1,a2)",
 				["tex"],"a1 \\in a2"
 			);
 		}
@@ -9765,7 +9995,7 @@ function function_call(lang, name, params){
 			"name",
 		["wolfram","ruby-prolog","nearley"],
 			"name[params]",
-		["haskell","kif","isabelle/hol","cyc","common prolog","hy","clips","pddl","smt-lib","clips","clojure","minikanren","common lisp","clips","racket","scheme"],
+		["haskell","agda","kif","isabelle/hol","cyc","common prolog","hy","clips","pddl","smt-lib","clips","clojure","minikanren","common lisp","clips","racket","scheme"],
 			"(name params)"
 	);
 }
@@ -9800,7 +10030,7 @@ function replaceAll(str,mapObj){
 
 function initializer_list(input_lang,lang,list_inner){
 	var to_return;
-	if(member(lang,["ruby","icon","asciimath","standard ml","coq","erlang","maxima","elm","cosmos", "python","sage","coconut", "cython", "nim",'d',"frink","octave","julia","prolog","constraint handling rules","minizinc","engscript","cython","groovy","dart","typescript","coffeescript","nemerle","javascript","haxe","haskell","rebol","polish notation","swift"])){
+	if(member(lang,["ruby","agda","icon","asciimath","standard ml","coq","erlang","maxima","elm","cosmos", "python","sage","coconut", "cython", "nim",'d',"frink","octave","julia","prolog","constraint handling rules","minizinc","engscript","cython","groovy","dart","typescript","coffeescript","nemerle","javascript","haxe","haskell","rebol","polish notation","swift"])){
 		to_return = "["+list_inner.join(",")+"]";
 	}
 	else if(member(lang,["rebol","core.logic"])){

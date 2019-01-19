@@ -126,20 +126,11 @@ break;
 case 18:
 this.$ = ['!=',$$[$0-2],$$[$0]];
 break;
-case 19:
-this.$ = ['==',$$[$0-2],$$[$0]];
+case 19: case 21: case 22: case 23: case 24: case 25: case 26: case 27:
+this.$ = [$$[$0-1],$$[$0-2],$$[$0]];
 break;
 case 20:
 this.$ = ['<=',$$[$0-2],$$[$0]];
-break;
-case 21:
-this.$ = ['>',$$[$0-2],$$[$0]];
-break;
-case 22:
-this.$ = ['>=',$$[$0-2],$$[$0]];
-break;
-case 23: case 24: case 25: case 26: case 27:
-this.$ = [$$[$0-1],$$[$0-2],$$[$0]];
 break;
 case 28:
 this.$ = ["-",$$[$0]];

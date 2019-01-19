@@ -37,6 +37,7 @@
 ">"                   return '>'
 "<->"                 return '<->'
 "->"                  return '->'
+"\u2192"              return '\u2192'
 "\u2194"              return '\u2194'
 "<="                  return '<='
 "<"                   return '<'
@@ -69,7 +70,7 @@
 
 /* operator associations and precedence */
 
-%left '<->' '->' '\u2194'
+%left '<->' '->' '\u2194' '\u2192'
 %left '||' "\u2228"
 %left '&&' "\u2227"
 %left '<' '<=' '>' '>=' '=' '!=' '\u2260'
@@ -99,6 +100,8 @@ e
         {$$ = ["iff",$1,$3];}
     |e "<->" e
         {$$ = ["iff",$1,$3];}
+    |e "\u2192" e
+        {$$ = ["implies",$1,$3];}
     |e "->" e
         {$$ = ["implies",$1,$3];}
     | e '\u2228' e

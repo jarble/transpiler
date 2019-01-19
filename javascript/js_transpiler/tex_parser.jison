@@ -27,7 +27,7 @@
 "\\land"              return '\\land'
 "\\lor"               return '\\lor'
 "\\neq"               return '\\neq'
-'\\lnot'              return '\\lnot'
+"\\neg"               return '\\neg'
 "\\geq"               return '\\geq'
 ">>"                  return '>>'
 ">"                   return '>'
@@ -130,7 +130,7 @@ arithmetic_expr:
 
 
 not_expr: '\\forall' IDENTIFIER parentheses_expr
-		{$$ = ['forall',$2,$3];} | "\\lnot" parentheses_expr {$$ = ["!", [".",$2]];} | parentheses_expr;
+		{$$ = ['forall',$2,$3];} | "\\lnot" parentheses_expr {$$ = ["!", [".",$2]];} | "\\lneg" parentheses_expr {$$ = ["!", [".",$2]];} | parentheses_expr;
 
 
 parentheses_expr:

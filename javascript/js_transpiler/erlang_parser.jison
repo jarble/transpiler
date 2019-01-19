@@ -105,11 +105,11 @@ e
     |e '=<' e
         {$$ = ['<=',$1,$3];}
     |e '<' e
-        {$$ = ['>',$1,$3];}
+        {$$ = [$2,$1,$3];}
     | e '>=' e
-        {$$ = ['>=',$1,$3];}
+        {$$ = [$2,$1,$3];}
     |e '>' e
-        {$$ = ['>',$1,$3];}
+        {$$ = [$2,$1,$3];}
     | e '+' e
         {$$ = [$2,$1,$3];}
     | e '-' e
@@ -127,8 +127,8 @@ function_call:
     IDENTIFIER "(" ")" {$$ = ["function_call",$1,[]];} | IDENTIFIER "(" exprs ")" {$$ = ["function_call",$1,$3];};
 
 parentheses_expr:
-    "[" e "||" e "<-" e "]" {$$=["list_comprehension",$2,$4,$6];}
-    |"[" e "||" e "<-" e "," e "]" {$$=["list_comprehension",$2,$4,$6,$8];}
+	"[" e "||" e "<-" list_comprehensions "," e "]" {$$=["list_comprehension",$2,$4,$6,$8];}
+    |"[" e "||" e "<-" list_comprehensions "]" {$$=["list_comprehension",$2,$4,$6];}
     | "[" "]" {$$ = ["initializer_list","Object",[]];}
     | "[" exprs "]" {$$ = ["initializer_list","Object",$2];}
     | "[" expr "|" exprs "]" {$$ = ["list_head_tail","Object",$2,["initializer_list","Object",$4]];}
@@ -140,6 +140,8 @@ parentheses_expr:
         {$$ = yytext;}  
     | STRING_LITERAL
         {$$ = yytext;};
+
+list_comprehensions: list_comprehensions "," e "<-" e {$$ = ["list_comprehensions",$1,$3,$5];} | e;
 
 dot_expr: parentheses_expr ":" dot_expr  {$$ = [$1].concat($3);} | parentheses_expr {$$ =
  [$1];};

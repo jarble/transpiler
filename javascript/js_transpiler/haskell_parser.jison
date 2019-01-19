@@ -100,10 +100,14 @@ types: IDENTIFIER "->" types {$$ = [$1].concat($3);} | IDENTIFIER {$$ =
  [$1];};
 
 statement:
+	statement_with_parentheses {$$ = $1;}
+    | statement_with_semicolon {$$ = ["semicolon",$1];};
+
+statement_with_parentheses:
     "if" e "then" statements elif {$$ = ["if",$2,$4,$5];}
 	| "case" parentheses_expr "of" case_statements {$$ = ["switch",$2,$4];}
 	| "let" declare_vars "in" statements {$$ = ["lexically_scoped_vars",$2,$4];}
-    | statement_with_semicolon {$$ = ["semicolon",$1];};
+	| "(" statement_with_parentheses ")" {$$ = $2};
 
 case_statement: parentheses_expr "->" statements {$$ = ["case",$1,$3]};
 case_statements_: case_statement case_statements_ {$$ = [$1].concat($2);} | case_statement {$$ =
@@ -166,8 +170,8 @@ parentheses_expr:
     "(" "\\" parameters "->" e ")" {$$ = ["anonymous_function","Object",$3,["statements",[["semicolon",["return",$5]]]]];}
     |"(" access_array ")" {$$ = $2}
     |"[" exprs "]" {$$ = ["initializer_list","Object",$2];}
-    |"[" e "|" e "<-" e "]" {$$ = ["list_comprehension",$2,$4,$6];}
-    |"[" e "|" e "<-" e "," e "]" {$$ = ["list_comprehension",$2,$4,$6,$8];}
+    |"[" e "|" e "<-" list_comprehensions "]" {$$ = ["list_comprehension",$2,$4,$6];}
+    |"[" e "|" e "<-" list_comprehensions "," e "]" {$$ = ["list_comprehension",$2,$4,$6,$8];}
     | NUMBER
         {$$ = yytext;}
     | IDENTIFIER
@@ -184,6 +188,8 @@ parentheses_expr:
     | STRING_LITERAL
         {$$ = yytext;}
     ;
+
+list_comprehensions: list_comprehensions "," e "<-" e {$$ = ["list_comprehensions",$1,$3,$5];} | e;
 
 type: IDENTIFIER;
 parameter: IDENTIFIER {$$ = ["Object",$1];};

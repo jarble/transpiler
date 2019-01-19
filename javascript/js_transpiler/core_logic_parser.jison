@@ -6,10 +6,10 @@
 [0-9]+("."[0-9]+)?\b  return 'NUMBER'
 \"([^\\\"]|\\.)*\" return 'STRING_LITERAL'
 "'("                  return "'("
-"defn"                return 'defn'
+"defne"               return 'defne'
 "not"                 return 'not'
 "and"                 return 'and'
-"cond"                return 'cond'
+"conde"               return 'conde'
 ":else"               return ':else'
 "?"                   return '?'
 ">="                  return '>='
@@ -64,7 +64,7 @@ statements_: statement statements_ {$$ = [$1].concat($2);} | statement {$$ =
 statements: statements_ {$$ = ["top_level_statements",$1]};
 
 statement:
-	"(" "defn" IDENTIFIER "[" parameters "]" statement ")" {$$ = ["function","public","Object",$3,$5,$7]}
+	"(" "defne" IDENTIFIER "[" parameters "]" statement ")" {$$ = ["function","public","Object",$3,$5,$7]}
     | e {$$=["statements",[["semicolon",["return",$1]]]];}
     | "(" "if" e bracket_statements bracket_statements ")" {$$ = ["if",$3,$4];}
     | "(" "cond" e bracket_statements elif ")" {$$ = ["if",$3,$4,$5];};
@@ -98,16 +98,17 @@ divide_exprs: divide_exprs e {$$ = ["/",$1,$2]}  | e;
 plus_exprs: plus_exprs e {$$ = ["+",$1,$2]} | e;
 minus_exprs: minus_exprs e {$$ = ["-",$1,$2]} | e;
 and_exprs: and_exprs e {$$ = ["logic_and",$1,$2]} | e;
-or_exprs: or_exprs e {$$ = ["logic_or",$1,$2]} | e;
+or_exprs: or_exprs or_expr {$$ = ["logic_or",$1,$2]} | or_expr;
+or_expr: "[" and_exprs "]" {$$ = $2};
 
 e:
-    '(' '==' e equal_exprs ')' {$$ = ["==",$3,$4];}
+    '(' '==' e equal_exprs ')' {$$ = ["logic_equals",$3,$4];}
     | '(' '*' e times_exprs ')' {$$ = [$2,$3,$4];}
     | '(' '+' e plus_exprs ')' {$$ = [$2,$3,$4];}
 	| '(' '-' e minus_exprs ')' {$$ = [$2,$3,$4];}
     | '(' '/' e divide_exprs ')' {$$ = [$2,$3,$4];}
-    | '(' 'or' e or_exprs ')' {$$ = ["||",$3,$4];}
-    | '(' 'and' e and_exprs ')' {$$ = ["&&",$3,$4];}
+    | '(' 'conde' or_exprs ')' {$$ = $3;}
+    | '(' 'and' e and_exprs ')' {$$ = ["logic_and",$3,$4];}
     | '(' comparison_operator e e ')' {$$ = [$2,$3,$4];}
     | function_call
     | "'(" exprs ")" {$$ = ["initializer_list","Object",$2]}
