@@ -72,12 +72,12 @@
   }
 */
 var ometa_parser = (function(){
-var o=function(k,v,o,l){for(o=o||{},l=k.length;l--;o[k[l]]=v);return o},$V0=[1,12],$V1=[1,16],$V2=[10,15],$V3=[2,14];
+var o=function(k,v,o,l){for(o=o||{},l=k.length;l--;o[k[l]]=v);return o},$V0=[1,11],$V1=[1,15],$V2=[1,14],$V3=[1,16],$V4=[1,18],$V5=[11,14,15,18],$V6=[2,10];
 var parser = {trace: function trace() { },
 yy: {},
-symbols_: {"error":2,"expressions":3,"statements":4,"EOF":5,"statements_":6,"IDENTIFIER":7,"=":8,"grammar_and":9,",":10,"statement":11,"grammar_statements":12,"ometa":13,"{":14,"}":15,"parameters":16,"e":17,"grammar_var":18,"STRING_LITERAL":19,"$accept":0,"$end":1},
-terminals_: {2:"error",5:"EOF",7:"IDENTIFIER",8:"=",10:",",13:"ometa",14:"{",15:"}",19:"STRING_LITERAL"},
-productions_: [0,[3,2],[6,5],[6,1],[4,1],[12,5],[11,3],[16,3],[16,1],[16,0],[9,3],[9,1],[17,1],[17,1],[18,1]],
+symbols_: {"error":2,"expressions":3,"statements":4,"EOF":5,"grammar_statements":6,"ometa":7,"IDENTIFIER":8,"{":9,"statements_":10,"}":11,"=":12,"grammar_and_":13,",":14,"|":15,"e":16,"(":17,")":18,"STRING_LITERAL":19,"$accept":0,"$end":1},
+terminals_: {2:"error",5:"EOF",7:"ometa",8:"IDENTIFIER",9:"{",11:"}",12:"=",14:",",15:"|",17:"(",18:")",19:"STRING_LITERAL"},
+productions_: [0,[3,2],[4,1],[6,5],[10,3],[10,5],[13,3],[13,3],[13,1],[16,3],[16,1],[16,1]],
 performAction: function anonymous(yytext, yyleng, yylineno, yy, yystate /* action[1] */, $$ /* vstack */, _$ /* lstack */) {
 /* this == yyval */
 
@@ -87,40 +87,43 @@ case 1:
 return $$[$0-1];
 break;
 case 2:
-this.$ = [["grammar_statement",$$[$0-4],$$[$0-2]]].concat($$[$0]);
-break;
-case 3: case 8:
-this.$ =
- [$$[$0]];
-break;
-case 4:
 this.$ = ["top_level_statements",[$$[$0]]]
 break;
-case 5:
+case 3:
 this.$=["grammar_statements",$$[$0-3],["statements",$$[$0-1]]];
 break;
+case 4:
+this.$= [["grammar_statement",$$[$0-2],$$[$0]]]
+break;
+case 5:
+this.$= [["grammar_statement",$$[$0-4],$$[$0-2]]].concat($$[$0])
+break;
 case 6:
-this.$ = ["grammar_statement",$$[$0-2],$$[$0]]
+this.$= ["grammar_or",$$[$0-2],$$[$0]]
 break;
 case 7:
-this.$ = [$$[$0-2]].concat($$[$0]);
+
+	if(Array.isArray($$[$0-2]) && $$[$0-2][0] == "grammar_or"){
+		this.$ = ["grammar_or",$$[$0-2][1],["grammar_and",$$[$0-2][2],$$[$0]]];
+	}
+	else{
+		this.$ = ["grammar_and",$$[$0-2],$$[$0]];
+	}
+
 break;
 case 9:
-this.$ = [];
+this.$= ["parentheses", $$[$0-1]];
 break;
 case 10:
-this.$= ["grammar_and",$$[$0-2],$$[$0]]
-break;
-case 13:
-this.$ = yytext;
-break;
-case 14:
 this.$= ["grammar_var",$$[$0]];
+break;
+case 11:
+this.$ = yytext;
 break;
 }
 },
-table: [{3:1,4:2,12:3,13:[1,4]},{1:[3]},{5:[1,5]},{5:[2,4]},{7:[1,6]},{1:[2,1]},{14:[1,7]},{6:8,7:[1,9],11:10},{15:[1,11]},{8:$V0},{15:[2,3]},{5:[2,5]},{7:[1,17],9:13,17:14,18:15,19:$V1},{10:[1,18],15:[2,6]},o($V2,[2,11]),o($V2,[2,12]),o($V2,[2,13]),o($V2,$V3),{6:19,7:[1,21],11:10,17:20,18:15,19:$V1},{15:[2,2]},o($V2,[2,10]),o($V2,$V3,{8:$V0})],
-defaultActions: {3:[2,4],5:[2,1],10:[2,3],11:[2,5],19:[2,2]},
+table: [{3:1,4:2,6:3,7:[1,4]},{1:[3]},{5:[1,5]},{5:[2,2]},{8:[1,6]},{1:[2,1]},{9:[1,7]},{8:[1,9],10:8},{11:[1,10]},{12:$V0},{5:[2,3]},{8:$V1,13:12,16:13,17:$V2,19:$V3},{11:[2,4],14:[1,17],15:$V4},o($V5,[2,8]),{8:$V1,13:19,16:13,17:$V2,19:$V3},o($V5,$V6),o($V5,[2,11]),{8:[1,22],10:20,16:21,17:$V2,19:$V3},{8:$V1,16:23,17:$V2,19:$V3},{14:[1,25],15:$V4,18:[1,24]},{11:[2,5]},o($V5,[2,7]),o([11,14,15],$V6,{12:$V0}),o($V5,[2,6]),o($V5,[2,9]),{8:$V1,16:21,17:$V2,19:$V3}],
+defaultActions: {3:[2,2],5:[2,1],10:[2,3],20:[2,5]},
 parseError: function parseError(str, hash) {
     if (hash.recoverable) {
         this.trace(str);
@@ -605,29 +608,29 @@ case 3:return 19
 break;
 case 4:return '$$'
 break;
-case 5:return 13
+case 5:return 7
 break;
 case 6:return ';'
 break;
-case 7:return 10
+case 7:return 14
 break;
-case 8:return '|'
+case 8:return 15
 break;
-case 9:return 8
+case 9:return 12
 break;
-case 10:return '('
+case 10:return 17
 break;
-case 11:return ')'
+case 11:return 18
 break;
-case 12:return 14
+case 12:return 9
 break;
-case 13:return 15
+case 13:return 11
 break;
 case 14:return '['
 break;
 case 15:return ']'
 break;
-case 16:return 7
+case 16:return 8
 break;
 case 17:return 5
 break;

@@ -35,25 +35,21 @@ expressions
         {return $1;}
     ;
 
-
-statements_: IDENTIFIER "=" grammar_and "," statements_ {$$ = [["grammar_statement",$1,$3]].concat($5);} | statement {$$ =
- [$1];};
- 
 statements: grammar_statements {$$ = ["top_level_statements",[$1]]};
 
 grammar_statements: "ometa" IDENTIFIER "{" statements_ "}" {$$=["grammar_statements",$2,["statements",$4]];};
 
+statements_:
+    IDENTIFIER "=" grammar_and_ {$$= [["grammar_statement",$1,$3]]} | IDENTIFIER "=" grammar_and_ "," statements_ {$$= [["grammar_statement",$1,$3]].concat($5)};
 
-statement:
-    IDENTIFIER "=" grammar_and {$$ = ["grammar_statement",$1,$3]};
+grammar_and_: grammar_and_ "|" e {$$= ["grammar_or",$1,$3]} | grammar_and_ "," e {
+	if(Array.isArray($1) && $1[0] == "grammar_or"){
+		$$ = ["grammar_or",$1[1],["grammar_and",$1[2],$3]];
+	}
+	else{
+		$$ = ["grammar_and",$1,$3];
+	}
+} | e;
 
-parameters: IDENTIFIER "," parameters {$$ = [$1].concat($3);} | IDENTIFIER {$$ =
- [$1];} | {$$ = [];};
-
-grammar_and:
-    grammar_and "," e {$$= ["grammar_and",$1,$3]} | e;
-
-e: grammar_var | STRING_LITERAL
+e: "(" grammar_and_ ")" {$$= ["parentheses", $2];} | IDENTIFIER {$$= ["grammar_var",$1];} | STRING_LITERAL
         {$$ = yytext;};
-
-grammar_var: IDENTIFIER {$$= ["grammar_var",$1];};

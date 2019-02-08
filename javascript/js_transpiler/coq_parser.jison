@@ -6,6 +6,7 @@
 [0-9]+("."[0-9]+)?\b  return 'NUMBER'
 \"([^\\\"]|\\.)*\" return 'STRING_LITERAL'
 "Fixpoint"            return 'Fixpoint'
+"Lemma"               return 'lemma'
 "forall"              return 'forall'
 "if"                  return "if"
 "is"                  return "is"
@@ -72,7 +73,9 @@ top_level_statements_: top_level_statement "." top_level_statements_ {$$ = [$1].
 top_level_statements: top_level_statements_ {$$ = ["top_level_statements",$1]};
 
 top_level_statement
-    : predicate;
+    : predicate
+    | "Lemma" IDENTIFIER ":" e {$$ = ["lemma",$2,$4]}
+    | "Class" IDENTIFIER ID;
 
 statement:
 	statement_with_semicolon {$$ = ["semicolon",$1];};
@@ -84,6 +87,7 @@ statements: statement {$$ = ["statements",[$1]];};
 
 predicate:
     "Fixpoint" IDENTIFIER parameters ":" IDENTIFIER ":=" statements {$$ = ["function","public",$5,$2,$3,$7]};
+
 
 e
     :

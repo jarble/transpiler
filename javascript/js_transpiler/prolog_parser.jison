@@ -75,8 +75,8 @@ top_level_statement
     : predicate | grammar_statement | chr_statement | function_call;
 
 predicate:
-    IDENTIFIER "(" exprs ")" ":-" e {$$ = ["function","public","boolean",$1,$3,["statements",[["semicolon",["return",$6]]]]]}
-    | IDENTIFIER ":-" e {$$ = ["function","public","boolean",$1,[],["statements",[["semicolon",["return",$3]]]]]};
+    IDENTIFIER "(" exprs ")" ":-" e {$$ = ["predicate",$1,$3,$6]}
+    | IDENTIFIER ":-" e {$$ = ["predicate",$1,[],$3]};
 
 grammar_statement:
     IDENTIFIER "-->" e {$$ = ["grammar_statement",$1,$3]}

@@ -71,13 +71,13 @@
     recoverable: (boolean: TRUE when the parser has a error recovery rule available for this particular error)
   }
 */
-var nearley_parser = (function(){
-var o=function(k,v,o,l){for(o=o||{},l=k.length;l--;o[k[l]]=v);return o},$V0=[1,6],$V1=[1,12],$V2=[1,9],$V3=[1,11],$V4=[1,14],$V5=[5,7,10,12,13,15],$V6=[2,11];
+var racc_parser = (function(){
+var o=function(k,v,o,l){for(o=o||{},l=k.length;l--;o[k[l]]=v);return o},$V0=[1,11],$V1=[1,15],$V2=[1,14],$V3=[1,16],$V4=[1,18],$V5=[8,11,14,16,17,18],$V6=[2,10];
 var parser = {trace: function trace() { },
 yy: {},
-symbols_: {"error":2,"expressions":3,"statements":4,"EOF":5,"grammar_statements":6,"IDENTIFIER":7,"->":8,"grammar_and_":9,"|":10,"e":11,"(":12,")":13,"grammar_var":14,"STRING_LITERAL":15,"$accept":0,"$end":1},
-terminals_: {2:"error",5:"EOF",7:"IDENTIFIER",8:"->",10:"|",12:"(",13:")",15:"STRING_LITERAL"},
-productions_: [0,[3,2],[4,1],[6,3],[6,4],[9,3],[9,2],[9,1],[11,3],[11,1],[11,1],[14,1]],
+symbols_: {"error":2,"expressions":3,"statements":4,"EOF":5,"grammar_statements":6,"class":7,"IDENTIFIER":8,"rule":9,"statements_":10,"end":11,":":12,"grammar_and_":13,"|":14,"e":15,"(":16,")":17,"STRING_LITERAL":18,"$accept":0,"$end":1},
+terminals_: {2:"error",5:"EOF",7:"class",8:"IDENTIFIER",9:"rule",11:"end",12:":",14:"|",16:"(",17:")",18:"STRING_LITERAL"},
+productions_: [0,[3,2],[4,1],[6,5],[10,3],[10,4],[13,3],[13,2],[13,1],[15,3],[15,1],[15,1]],
 performAction: function anonymous(yytext, yyleng, yylineno, yy, yystate /* action[1] */, $$ /* vstack */, _$ /* lstack */) {
 /* this == yyval */
 
@@ -87,18 +87,21 @@ case 1:
 return $$[$0-1];
 break;
 case 2:
-this.$ = ["top_level_statements",$$[$0]]
+this.$ = ["top_level_statements",[$$[$0]]]
 break;
 case 3:
-this.$= ["grammar_statement",$$[$0-2],$$[$0]]
+this.$=["grammar_statements",$$[$0-3],["statements",$$[$0-1]]];
 break;
 case 4:
-this.$= [["grammar_statement",$$[$0-3],$$[$0-1]]].concat([$$[$0]])
+this.$= [["grammar_statement",$$[$0-2],$$[$0]]]
 break;
 case 5:
-this.$= ["grammar_or",$$[$0-2],$$[$0]]
+this.$= [["grammar_statement",$$[$0-3],$$[$0-1]]].concat($$[$0])
 break;
 case 6:
+this.$= ["grammar_or",$$[$0-2],$$[$0]]
+break;
+case 7:
 
 	if(Array.isArray($$[$0-1]) && $$[$0-1][0] == "grammar_or"){
 		this.$ = ["grammar_or",$$[$0-1][1],["grammar_and",$$[$0-1][2],$$[$0]]];
@@ -108,19 +111,19 @@ case 6:
 	}
 
 break;
-case 8:
+case 9:
 this.$= ["parentheses", $$[$0-1]];
 break;
 case 10:
-this.$ = yytext;
+this.$= ["grammar_var",$$[$0]];
 break;
 case 11:
-this.$= ["grammar_var",$$[$0]];
+this.$ = yytext;
 break;
 }
 },
-table: [{3:1,4:2,6:3,7:[1,4]},{1:[3]},{5:[1,5]},{5:[2,2]},{8:$V0},{1:[2,1]},{7:$V1,9:7,11:8,12:$V2,14:10,15:$V3},{5:[2,3],6:13,7:[1,16],10:$V4,11:15,12:$V2,14:10,15:$V3},o($V5,[2,7]),{7:$V1,9:17,11:8,12:$V2,14:10,15:$V3},o($V5,[2,9]),o($V5,[2,10]),o($V5,$V6),{5:[2,4]},{7:$V1,11:18,12:$V2,14:10,15:$V3},o($V5,[2,6]),o([5,7,10,12,15],$V6,{8:$V0}),{7:$V1,10:$V4,11:15,12:$V2,13:[1,19],14:10,15:$V3},o($V5,[2,5]),o($V5,[2,8])],
-defaultActions: {3:[2,2],5:[2,1],13:[2,4]},
+table: [{3:1,4:2,6:3,7:[1,4]},{1:[3]},{5:[1,5]},{5:[2,2]},{8:[1,6]},{1:[2,1]},{9:[1,7]},{8:[1,9],10:8},{11:[1,10]},{12:$V0},{5:[2,3]},{8:$V1,13:12,15:13,16:$V2,18:$V3},{8:[1,20],10:17,11:[2,4],14:$V4,15:19,16:$V2,18:$V3},o($V5,[2,8]),{8:$V1,13:21,15:13,16:$V2,18:$V3},o($V5,$V6),o($V5,[2,11]),{11:[2,5]},{8:$V1,15:22,16:$V2,18:$V3},o($V5,[2,7]),o([8,11,14,16,18],$V6,{12:$V0}),{8:$V1,14:$V4,15:19,16:$V2,17:[1,23],18:$V3},o($V5,[2,6]),o($V5,[2,9])],
+defaultActions: {3:[2,2],5:[2,1],10:[2,3],17:[2,5]},
 parseError: function parseError(str, hash) {
     if (hash.recoverable) {
         this.trace(str);
@@ -601,23 +604,23 @@ case 1:return 'NUMBER'
 break;
 case 2:return 'GRAMMAR_INDEX'
 break;
-case 3:return 15
+case 3:return 18
 break;
 case 4:return '$$'
 break;
-case 5:return 8
+case 5:return 7
 break;
-case 6:return ';'
+case 6:return 9
 break;
-case 7:return ','
+case 7:return 11
 break;
-case 8:return 10
+case 8:return 14
 break;
-case 9:return '='
+case 9:return 12
 break;
-case 10:return 12
+case 10:return 16
 break;
-case 11:return 13
+case 11:return 17
 break;
 case 12:return '{'
 break;
@@ -627,7 +630,7 @@ case 14:return '['
 break;
 case 15:return ']'
 break;
-case 16:return 7
+case 16:return 8
 break;
 case 17:return 5
 break;
@@ -635,7 +638,7 @@ case 18:return 'INVALID'
 break;
 }
 },
-rules: [/^(?:\s+)/,/^(?:[0-9]+(\.[0-9]+)?\b)/,/^(?:\$[0-9]+(\.[0-9]+)?\b)/,/^(?:"([^\\\"]|\\.)*")/,/^(?:\$\$)/,/^(?:->)/,/^(?:;)/,/^(?:,)/,/^(?:\|)/,/^(?:=)/,/^(?:\()/,/^(?:\))/,/^(?:\{)/,/^(?:\})/,/^(?:\[)/,/^(?:\])/,/^(?:[a-zA-Z_][a-zA-Z0-9_]*)/,/^(?:$)/,/^(?:.)/],
+rules: [/^(?:\s+)/,/^(?:[0-9]+(\.[0-9]+)?\b)/,/^(?:\$[0-9]+(\.[0-9]+)?\b)/,/^(?:"([^\\\"]|\\.)*")/,/^(?:\$\$)/,/^(?:class\b)/,/^(?:rule\b)/,/^(?:end\b)/,/^(?:\|)/,/^(?::)/,/^(?:\()/,/^(?:\))/,/^(?:\{)/,/^(?:\})/,/^(?:\[)/,/^(?:\])/,/^(?:[a-zA-Z_][a-zA-Z0-9_]*)/,/^(?:$)/,/^(?:.)/],
 conditions: {"INITIAL":{"rules":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],"inclusive":true}}
 });
 return lexer;
@@ -650,9 +653,9 @@ return new Parser;
 
 
 if (typeof require !== 'undefined' && typeof exports !== 'undefined') {
-exports.parser = nearley_parser;
-exports.Parser = nearley_parser.Parser;
-exports.parse = function () { return nearley_parser.parse.apply(nearley_parser, arguments); };
+exports.parser = racc_parser;
+exports.Parser = racc_parser.Parser;
+exports.parse = function () { return racc_parser.parse.apply(racc_parser, arguments); };
 exports.main = function commonjsMain(args) {
     if (!args[1]) {
         console.log('Usage: '+args[0]+' FILE');

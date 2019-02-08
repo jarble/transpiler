@@ -5,6 +5,8 @@
 \s+                   /* skip whitespace */
 [0-9]+("."[0-9]+)?\b  return 'NUMBER'
 \"([^\\\"]|\\.)*\" return 'STRING_LITERAL'
+"@staticmethod"       return '@staticmethod'
+"class"               return 'class'
 "def"                 return "def"
 "if"                  return "if"
 "of"                  return 'of'
@@ -68,10 +70,16 @@ expressions: statements_ EOF {return ["top_level_statements",$1]};
 
 statements_: statement_ statements_ {$$ = [$1].concat($2);} | statement_ {$$ =
  [$1];};
- 
+
+class_statements: class_statement class_statements {$$ = [$1].concat($2);} | class_statement {$$ =
+ [$1];};
+class_statement:
+	"@staticmethod" "def" IDENTIFIER "(" parameters ")" ":" statements {$$ = ["instance_method","public","Object",$3,$5,$8];};
+
 statement_:
 	"def" IDENTIFIER "(" ")" ":" statements {$$ = ["function","public","Object",$2,[],$6];}
-	|"def" IDENTIFIER "(" parameters ")" ":" statements {$$ = ["function","public","Object",$2,$4,$7];};
+	|"def" IDENTIFIER "(" parameters ")" ":" statements {$$ = ["function","public","Object",$2,$4,$7];}
+	|"class" IDENTIFIER ":" class_statements {$$ = [$1,"public",$2,$4];};
     
 types: IDENTIFIER "->" types {$$ = [$1].concat($3);} | IDENTIFIER {$$ =
  [$1];};

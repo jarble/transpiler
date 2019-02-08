@@ -7,11 +7,11 @@
 "$"[0-9]+("."[0-9]+)?\b  return 'GRAMMAR_INDEX'
 \"([^\\\"]|\\.)*\" return 'STRING_LITERAL'
 "$$"                  return '$$'
-"->"                  return '->'
-";"                   return ';'
-","                   return ','
+"class"               return 'class'
+"rule"                return 'rule'
+"end"                 return 'end'
 "|"                   return '|'
-"="                   return '='
+":"                   return ':'
 "("                   return '('
 ")"                   return ')'
 "{"                   return '{'
@@ -35,10 +35,12 @@ expressions
         {return $1;}
     ;
 
-statements: grammar_statements {$$ = ["top_level_statements",$1]};
+statements: grammar_statements {$$ = ["top_level_statements",[$1]]};
 
-grammar_statements:
-    IDENTIFIER "->" grammar_and_ {$$= ["grammar_statement",$1,$3]} | IDENTIFIER "->" grammar_and_ grammar_statements {$$= [["grammar_statement",$1,$3]].concat([$4])};
+grammar_statements: "class" IDENTIFIER "rule" statements_ "end" {$$=["grammar_statements",$2,["statements",$4]];};
+
+statements_:
+    IDENTIFIER ":" grammar_and_ {$$= [["grammar_statement",$1,$3]]} | IDENTIFIER ":" grammar_and_ statements_ {$$= [["grammar_statement",$1,$3]].concat($4)};
 
 grammar_and_: grammar_and_ "|" e {$$= ["grammar_or",$1,$3]} | grammar_and_ e {
 	if(Array.isArray($1) && $1[0] == "grammar_or"){
@@ -49,7 +51,5 @@ grammar_and_: grammar_and_ "|" e {$$= ["grammar_or",$1,$3]} | grammar_and_ e {
 	}
 } | e;
 
-e: "(" grammar_and_ ")" {$$= ["parentheses", $2];} | grammar_var | STRING_LITERAL
+e: "(" grammar_and_ ")" {$$= ["parentheses", $2];} | IDENTIFIER {$$= ["grammar_var",$1];} | STRING_LITERAL
         {$$ = yytext;};
-
-grammar_var: IDENTIFIER {$$= ["grammar_var",$1];};

@@ -9,6 +9,7 @@
 "function"            return "function"
 "include"             return 'include'
 "var"                 return "var"
+"div"                 return 'div'
 "if"                  return "if"
 "endif"               return "endif"
 "elseif"              return "elseif"
@@ -17,6 +18,10 @@
 "return"              return "return"
 "constraint"          return "constraint"
 "forall"              return "forall"
+"union"               return "union"
+"intersect"           return "intersect"
+"superset"            return "superset"
+"subset"              return "subset"
 ","                   return ','
 ";"                   return ';'
 ".."                  return '..'
@@ -66,7 +71,7 @@
 %left '&&'
 %left '==' '<' '<=' '>' '>=' '!='
 %left '+' '-'
-%left '*' '/'
+%left '*' '/' 'div'
 %left UMINUS
 
 %start expressions
@@ -79,23 +84,25 @@ statements_: statement_ statements_ {$$ = [$1].concat($2);} | statement_ {$$ =
  [$1];};
 
 statement_:
-	"include" STRING_LITERAL ";" {$$ = ["semicolon",["import",$2.substring(1,$2.length-5)]];}
-	|"function" "var" IDENTIFIER ":" IDENTIFIER "(" parameters ")" "=" statement ";" {$$ = ["function","public",$3,$5,$7,$10];}
-	| "predicate" IDENTIFIER "(" parameters ")" "=" statement ";" {$$ = ["predicate",$2,$4,$7];}
-	| IDENTIFIER ":" IDENTIFIER "=" e ";" {$$ = ["semicolon",["initialize_var",$1,$3,$5]];}
-	| "constraint" e ";" {$$ = ["semicolon",["function_call","constraint",[$2]]];};
+	"function" "var" IDENTIFIER ":" IDENTIFIER "(" parameters ")" "=" e ";" {$$ = ["function","public",$3,$5,$7,$10];}
+	| "function" IDENTIFIER ":" IDENTIFIER "(" parameters ")" "=" e ";" {$$ = ["function","public",$2,$4,$6,$9];}
+	| "predicate" IDENTIFIER "(" parameters ")" "=" e ";" {$$ = ["predicate",$2,$4,$7];}
+	| statement_with_semicolon ";" {$$ = ["semicolon",$1]}
+	;
 
-statement:
-    if_statement
-    |statement_with_semicolon {$$ = ["semicolon",$1];};
+statement_with_semicolon:
+	"include" STRING_LITERAL {$$ = ["import",$2.substring(1,$2.length-5)];}
+	| "var" IDENTIFIER ":" IDENTIFIER {$$ = ["initialize_empty_vars",$2,[$4]];}
+	| IDENTIFIER ":" IDENTIFIER {$$ = ["initialize_empty_vars",$1,[$3]]}
+	| "var" IDENTIFIER ":" IDENTIFIER "=" e {$$ = ["initialize_var",$2,$4,$6];}
+	| IDENTIFIER ":" IDENTIFIER "=" e {$$ = ["initialize_var",$1,$3,$5];}
+	| "constraint" e {$$ = ["function_call","constraint",[$2]];}
+	;
 
-statement_with_semicolon
-   :
-   e {$$ = ["return",$1];}
-   ;
 e
     :
-    e '<->' e
+    if_statement
+    |e '<->' e
         {$$ = ['iff',$1,$3];}
     |"forall" "(" e "in" e ")" "(" e ")"
 		{$$ = ["foreach","Object",$3,$5,$8];}
@@ -127,6 +134,8 @@ e
         {$$ = [$2,$1,$3];}
     | e '/' e
         {$$ = [$2,$1,$3];}
+    | e 'div' e
+        {$$ = ["/",$1,$3];}
     | '-' e %prec UMINUS
         {$$ = ["-",$2];}
     | IDENTIFIER "(" args ")"
@@ -134,10 +143,13 @@ e
     | parentheses_expr {$$ = $1;}
     ;
 
+set_operator: "union" | "intersection" | "subset" | "superset";
+
 parentheses_expr:
     "(" e ")" {$$ = $2}
     | "(" parentheses_expr ".." parentheses_expr ")" {$$ = ["inclusive_range",$2,$4]}
     | "[" exprs "]" {$$ = ["initializer_list","Object",$2];}
+    | "(" e set_operator e ")" {$$ = [$3,$2,$4];}
     | NUMBER
         {$$ = yytext;}
     | IDENTIFIER
@@ -151,8 +163,7 @@ parameters: parameter ","  parameters {$$ = [$1].concat($3);} | parameter {$$ =
  [$1];};
 exprs: e "," exprs {$$ = [$1].concat($3);} | e {$$ = [$1];};
 args: e "," args {$$ = [$1].concat($3);} | e {$$ = [$1];};
-elif: "elseif" e "then" statement elif {$$ = ["elif",$2,$4,$5]} | else_statement;
-else_statement: "else" statement {$$ = ["else",$2];};
+elif: "elseif" e "then" e elif {$$ = ["ternary_operator",$2,$4,$5]} | else_statement;
+else_statement: "else" e {$$ = $2;};
 if_statement:
-"if" e "then" statement elif "endif" {$$ = ["if",$2,$4,$5];}
-| "if" e "then" statement "endif" {$$ = ["if",$2,$4];};
+"if" e "then" e elif "endif" {$$ = ["ternary_operator",$2,$4,$5];};

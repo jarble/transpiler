@@ -9,8 +9,10 @@
 "$$"                  return '$$'
 ";"                   return ';'
 ","                   return ','
+":"                   return ':'
 "/"                   return '/'
 "="                   return '='
+"*"                   return '*'
 "("                   return '('
 ")"                   return ')'
 "{"                   return '{'
@@ -34,25 +36,21 @@ expressions
         {return $1;}
     ;
 
-statements_: IDENTIFIER "=" grammar_and statements_ {$$ = [["grammar_statement",$1,$3]].concat($4);} | statement {$$ =
- [$1];};
- 
-statements: statements_ {$$ = ["top_level_statements",$1]};
+statements: grammar_statements {$$ = ["top_level_statements",$1]};
 
-statement:
-    IDENTIFIER "=" grammar_and {$$ = ["grammar_statement",$1,$3]};
+grammar_statements:
+    IDENTIFIER "=" grammar_and_ {$$= [["grammar_statement",$1,$3]]} | IDENTIFIER "=" grammar_and_ grammar_statements {$$= [["grammar_statement",$1,$3]].concat($4)};
 
-parameters: IDENTIFIER "," parameters {$$ = [$1].concat($3);} | IDENTIFIER {$$ =
- [$1];} | {$$ = [];};
+grammar_and_: grammar_and_ "/" e {$$= ["grammar_or",$1,$3]} | grammar_and_ e {
+	if(Array.isArray($1) && $1[0] == "grammar_or"){
+		$$ = ["grammar_or",$1[1],["grammar_and",$1[2],$2]];
+	}
+	else{
+		$$ = ["grammar_and",$1,$2];
+	}
+} | e;
 
-grammar_and:
-    grammar_and e {$$= ["grammar_and",$1,$2]} | e;
-
-grammar_or:
-    grammar_and "/" grammar_or {$$= ["grammar_or",$1,$3]} | grammar_and;
-
-
-e: "*" e {$$= ["grammar_optional", $2];}  | "(" grammar_or ")" {$$= ["parentheses", $2];} | grammar_var | STRING_LITERAL
+e: "*" e {$$= ["grammar_optional", $2];}  | "(" grammar_and_ ")" {$$= ["parentheses", $2];} | grammar_var ":" IDENTIFIER {$$ = ["function_call",$3,[$1]];} | grammar_var | STRING_LITERAL
         {$$ = yytext;};
 
 grammar_var: IDENTIFIER {$$= ["grammar_var",$1];};

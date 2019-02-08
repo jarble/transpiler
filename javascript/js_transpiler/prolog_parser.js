@@ -97,10 +97,10 @@ case 4:
 this.$ = ["top_level_statements",$$[$0]]
 break;
 case 9:
-this.$ = ["function","public","boolean",$$[$0-5],$$[$0-3],["statements",[["semicolon",["return",$$[$0]]]]]]
+this.$ = ["predicate",$$[$0-5],$$[$0-3],$$[$0]]
 break;
 case 10:
-this.$ = ["function","public","boolean",$$[$0-2],[],["statements",[["semicolon",["return",$$[$0]]]]]]
+this.$ = ["predicate",$$[$0-2],[],$$[$0]]
 break;
 case 11:
 this.$ = ["grammar_statement",$$[$0-2],$$[$0]]

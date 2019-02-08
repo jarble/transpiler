@@ -261,6 +261,7 @@ parentheses_expr:
     | access_array
     | parentheses_expr "(" ")" {$$ = ["function_call",$1,[]];}
     | parentheses_expr "(" exprs ")" {$$ = ["function_call",$1,$3];}
+    | "(" e "?" e ":" e ")" {$$ = ["ternary_operator",$2,$4,$6];}
     | NUMBER
         {$$ = yytext;}
     | IDENTIFIER
