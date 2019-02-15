@@ -6564,15 +6564,15 @@ function generate_code(input_lang,lang,indent,arr){
 			to_return = "function var " + type + ":" + name + "("+params+") = "+body;
 		}
 		else if(member(lang,["erlang"])){
-			if(types[name] !== "Object" && member(input_lang,["c","c#","java","c++"])){
-				var types_list = arr[4].map(function(x) {
-					return "is_" + var_type(input_lang,lang,x[0])+"("+var_name(lang,input_lang,x[1])+")";
-				});
-				to_return = name + "("+params+") when " + types_list.join(",") + " ->" +body;
-			}
-			else{
+			//if(types[name] !== "Object" && member(input_lang,["c","c#","java","c++"])){
+			//	var types_list = arr[4].map(function(x) {
+			//		return "is_" + var_type(input_lang,lang,x[0])+"("+var_name(lang,input_lang,x[1])+")";
+			//	});
+			//	to_return = name + "("+params+") when " + types_list.join(",") + " ->" +body;
+			//}
+			//else{
 				to_return = name + "("+params+") -> "+body;
-			}
+			//}
 		}
 		else if(member(lang,["perl"])){
 			to_return = "sub " + name + "{my ("+params+") = @_; "+body+indent+"}";
