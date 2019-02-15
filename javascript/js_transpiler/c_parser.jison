@@ -5,6 +5,7 @@
 (\s+|\/\/+.*\n)        /* skip whitespace and line comments */
 [0-9]+("."[0-9]+)?\b  return 'NUMBER'
 \"([^\\\"]|\\.)*\" return 'STRING_LITERAL'
+"typedef"             return 'typedef'
 "#define"             return '#define'
 "if"                  return "if"
 "do"                  return 'do'
@@ -100,6 +101,7 @@ top_level_statement:
 statement
     :
 	"#define" IDENTIFIER "(" exprs ")" "(" expr ")" {$$ = ["macro",$2,$4,$7];}
+	| "typedef" IDENTIFIER IDENTIFIER ";" {$$ = ["typedef",$2,$3]}
 	| "struct" IDENTIFIER "{" struct_statements "}" ";" {$$ = ["struct",$2,["struct_statements",$4]]}
 	| "enum" IDENTIFIER "{" enum_statements "}" ";" {$$ = ["enum","public",$2,$4];}
 	| type IDENTIFIER "(" parameters ")" "{" statements "}" {$$ = ["function","public",$1,$2,$4,$7];}

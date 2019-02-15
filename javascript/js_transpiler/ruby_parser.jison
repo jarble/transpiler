@@ -59,6 +59,7 @@
 "("                   return '('
 ")"                   return ')'
 [a-zA-Z_][a-zA-Z0-9_]* return 'IDENTIFIER'
+\:[a-zA-Z_][a-zA-Z0-9_]* return 'SYMBOL_LITERAL'
 [0-9]+("."[0-9]+)?\b  return 'NUMBER'
 \"([^\\\"]|\\.)*\"    return 'STRING_LITERAL'
 <<EOF>>               return 'EOF'

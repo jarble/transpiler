@@ -254,6 +254,8 @@ if_statement:
 identifiers: IDENTIFIER "," identifiers {$$ = [$1].concat($3);} | IDENTIFIER {$$ = [$1];};
 bracket_statements: "{" statements "}" {$$= $2;} | statement_with_semicolon ";" {$$ = ["semicolon",$1];};
 
-type:IDENTIFIER;
+typedef: "type" IDENTIFIER "=" IDENTIFIER {$$ = ["typedef",$2,$4]};
 
-types: type "," types {$$ = [$1].concat($3);} | type {$$ = [$1];};
+type_:IDENTIFIER;
+
+types: type_ "," types {$$ = [$1].concat($3);} | type_ {$$ = [$1];};
