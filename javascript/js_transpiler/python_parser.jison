@@ -12,19 +12,19 @@
 "of"                  return 'of'
 "for"                 return 'for'
 "in"                  return "in"
-"let"                 return "let"
 "else"                return "else"
 "elif"                return "elif"
-"then"                return "then"
 "while"               return "while"
-"data"                return "data"
 "return"              return "return"
-"mod"                 return 'mod'
 ","                   return ','
 "."                   return '.'
 ":"                   return ':'
 "and"                 return 'and'
 "or"                  return 'or'
+"+="                  return '+='
+"-="                  return '-='
+"*="                  return '*='
+"/="                  return '/='
 ">="                  return '>='
 ">"                   return '>'
 "<="                  return '<='
@@ -77,19 +77,36 @@ class_statement:
 	"@staticmethod" "def" IDENTIFIER "(" parameters ")" ":" statements {$$ = ["instance_method","public","Object",$3,$5,$8];};
 
 statement_:
+	function
+	| if_statement
+	| "class" IDENTIFIER ":" class_statements {$$ = [$1,"public",$2,$4];}
+	| foreach
+	| "return" e {$$ = ["return",$2];}
+    | IDENTIFIER "=" e {$$ = ["semicolon",["set_var",$1,$3]];}
+    | IDENTIFIER "+=" e {$$ = ["semicolon",[$2,$1,$3]];}
+    | IDENTIFIER "-=" e {$$ = ["semicolon",[$2,$1,$3]];}
+    | IDENTIFIER "*=" e {$$ = ["semicolon",[$2,$1,$3]];}
+    | IDENTIFIER "/=" e {$$ = ["semicolon",[$2,$1,$3]];};
+
+function:
 	"def" IDENTIFIER "(" ")" ":" statements {$$ = ["function","public","Object",$2,[],$6];}
-	|"def" IDENTIFIER "(" parameters ")" ":" statements {$$ = ["function","public","Object",$2,$4,$7];}
-	|"class" IDENTIFIER ":" class_statements {$$ = [$1,"public",$2,$4];};
+	| "def" IDENTIFIER "(" parameters ")" ":" statements {$$ = ["function","public","Object",$2,$4,$7];};
     
 types: IDENTIFIER "->" types {$$ = [$1].concat($3);} | IDENTIFIER {$$ =
  [$1];};
 
 statement:
-    "if" e ":" statements elif_statement {$$ = ["if",$2,$4,$5];}
-    | "while" e ":" statements {$$ = ["while",$2,$4];}
-    | "for" IDENTIFIER "in" e ":" statements {$$ = ["foreach","Object",$2,$4,$6];}
-    | statement_with_semicolon {$$ = ["semicolon",$1];};
+    if_statement
+    | while_loop
+    | foreach
+    | statement_with_semicolon {$$ = ["semicolon",$1];}
+    | function;
 
+if_statement: "if" e ":" statements elif_statement {$$ = ["if",$2,$4,$5];};
+
+while_loop: "while" e ":" statements {$$ = ["while",$2,$4];};
+
+foreach: "for" IDENTIFIER "in" e ":" statements {$$ = ["foreach","Object",$2,$4,$6];};
 
 declare_var: IDENTIFIER "=" e {$$ = ["lexically_scoped_var","Object",$1,$3]};
 declare_vars: declare_var declare_vars {$$ = [$1].concat($2);} | declare_var {$$ =
@@ -97,7 +114,13 @@ declare_vars: declare_var declare_vars {$$ = [$1].concat($2);} | declare_var {$$
 
 statement_with_semicolon
    :
-   "return" e  {$$ = ["return",$2];}
+   "return" e {$$ = ["return",$2];}
+   |IDENTIFIER "=" e {$$ = ["set_var",$1,$3];}
+   | access_array "=" e {$$ = ["set_var",$1,$3];}
+   | IDENTIFIER "+=" e {$$ = [$2,$1,$3];}
+   | IDENTIFIER "-=" e {$$ = [$2,$1,$3];}
+   | IDENTIFIER "*=" e {$$ = [$2,$1,$3];}
+   | IDENTIFIER "/=" e {$$ = [$2,$1,$3];}
    ;
 e
     :
@@ -139,12 +162,15 @@ e
     ;
 
 
-access_array: parentheses_expr "[" e "]" {$$ = ["access_array",$1,[$3]];};
+access_array: parentheses_expr "[" e "]" {$$ = ["access_array",$1,[$3]];} | access_array "[" e "]" {$$ = ["access_array",$1,[$3]];};
 
-parentheses_expr:
+parentheses_expr: access_array | parentheses_expr_;
+parentheses_expr_:
     "(" "lambda" parameters ":" e ")" {$$ = ["anonymous_function","Object",$3,["statements",[["semicolon",["return",$5]]]]];}
-    |"(" access_array ")" {$$ = $2}
+    |"(" access_array ")" {$$ = $2;}
+    |"[" "]" {$$ = ["initializer_list","Object",[]];}
     |"[" exprs "]" {$$ = ["initializer_list","Object",$2];}
+    |"{" "}" {$$ = ["initialize_set","Object",[]];}
     |"{" exprs "}" {$$ = ["initialize_set","Object",$2];}
     |"(" parentheses_expr "in" parentheses_expr ")"  {$$ = ["in",$2,$4];}
     |"[" e "for" e "in" list_comprehensions "]" {$$ = ["list_comprehension",$2,$4,$6];}
@@ -164,8 +190,7 @@ list_comprehensions: e "for" e "in" list_comprehensions {$$ = ["list_comprehensi
 parameter: IDENTIFIER {$$ = ["Object",$1];};
 parameters: parameter "," parameters {$$ = [$1].concat($3);} | parameter {$$ =
  [$1];};
-access_arr: parentheses_expr "!!" access_arr {$$ = [$1].concat($3);} | parentheses_expr {$$ =
- [$1];};
+
 exprs: e "," exprs {$$ = [$1].concat($3);} | e {$$ = [$1];};
 args: parentheses_expr args {$$ = [$1].concat($2);} | parentheses_expr {$$ = [$1];};
 elif_statement: "elif" e ":" statements elif_statement {$$ = ["elif",$2,$4,$5]} | "else" ":" statements {$$ = ["else",$3];};

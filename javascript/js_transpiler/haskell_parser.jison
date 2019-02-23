@@ -169,6 +169,7 @@ access_array: IDENTIFIER "!!" access_arr {$$ = ["access_array",$1,[$3]];};
 parentheses_expr:
     "(" "\\" parameters "->" e ")" {$$ = ["anonymous_function","Object",$3,["statements",[["semicolon",["return",$5]]]]];}
     |"(" access_array ")" {$$ = $2}
+    |"[" "]" {$$ = ["initializer_list","Object",[]];}
     |"[" exprs "]" {$$ = ["initializer_list","Object",$2];}
     |"[" e "|" e "<-" list_comprehensions "]" {$$ = ["list_comprehension",$2,$4,$6];}
     |"[" e "|" e "<-" list_comprehensions "," e "]" {$$ = ["list_comprehension",$2,$4,$6,$8];}

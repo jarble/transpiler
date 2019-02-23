@@ -79,6 +79,7 @@ top_level_statements: top_level_statement "." top_level_statements {$$ = [$1].co
 
 top_level_statement
     : IDENTIFIER "(" exprs ")" "->" statements {$$ = ["function","public","Object",$1,$3,$6]}
+    | IDENTIFIER "(" ")" "->" statements {$$ = ["function","public","Object",$1,[],$5]}
     | IDENTIFIER "->" statements {$$ = ["function","public","Object",$1,[],$3]}
     | function_call
     ;
