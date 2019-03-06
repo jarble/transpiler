@@ -95,7 +95,8 @@ access_modifier: "public" | "private";
 
 statement
     :
-    "function" IDENTIFIER "(" parameters ")" "return" IDENTIFIER "is" "begin" statements "end" IDENTIFIER ";" {$$ = ["function","public",$7,$2,$4,$10];}
+        "function" IDENTIFIER "(" parameters ")" "return" IDENTIFIER "is" "begin" statements "end" "function" IDENTIFIER ";" {$$ = ["function","public",$7,$2,$4,$10];}
+    | "function" IDENTIFIER "(" parameters ")" "return" IDENTIFIER "is" "begin" statements "end" IDENTIFIER ";" {$$ = ["function","public",$7,$2,$4,$10];}
     | statement_with_semicolon ";" {$$ = ["semicolon",$1];}
     | "while" e "loop" statements "end" "loop" ";" {$$ = ["while",$2,$4];}
     | "case" e "is" case_statements "end" "case" ";" {$$ = ["switch",$2,$4];}

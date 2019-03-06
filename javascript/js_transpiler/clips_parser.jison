@@ -6,6 +6,7 @@
 [0-9]+("."[0-9]+)?\b  return 'NUMBER'
 \"([^\\\"]|\\.)*\"    return 'STRING_LITERAL'
 "defrule"             return 'defrule'
+"defclass"            return 'defclass'
 "deffunction"         return 'deffunction'
 "assert"              return 'assert'
 "default"             return 'default'
@@ -79,7 +80,7 @@ top_level_statement:
 
 statements_: statement statements_ {$$ = [$1].concat($2);} | statement {$$ =
  [$1];};
- 
+
 statements:
 	statements_ {$$ = ["statements",$1]}
 	;
@@ -88,6 +89,11 @@ statement:
 	statement_with_semicolon {$$ = ["semicolon",$1]}
 	| "(" "if" e "then" bracket_statements "else" bracket_statements ")" {$$ = ["if",$3,$5,["else",$7]];}
 	| "(" "switch" e case_statements ")" {$$ = ["switch",$3,$4];}
+	;
+
+class:
+	"(" "defclass" IDENTIFIER "(" "is-a" "OBJECT" ")" class_statements ")" {$$ = [$1,"public",$2,$4];}
+	| "(" "defclass" IDENTIFIER "(" "is-a" IDENTIFIER ")" class_statements ")" {$$ = ["class_extends","public",$2,$4,$6];}
 	;
 
 bracket_statements: statement {$$= ["statements",[$1]];};

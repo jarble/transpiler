@@ -9,12 +9,15 @@
 "double precision"    return 'double precision'
 "subroutine"          return "subroutine"
 "function"            return "function"
+"type"                return 'type'
+"dimension"           return "dimension"
 "parameter"           return 'parameter'
 "inout"               return 'inout'
 "enddo"               return "enddo"
 "intent"              return 'intent'
 "end"                 return "end"
 "out"                 return 'out'
+"len"                 return 'len'
 ".true."              return '.true.'
 ".false."             return '.false.'
 ".and."               return '.and.'
@@ -27,7 +30,6 @@
 ".ge."                return '.ge.'
 ".le."                return '.le.'
 "then"                return 'then'
-"type"                return 'type'
 "struct"              return 'struct'
 "elseif"              return 'elseif'
 "select"              return 'select'
@@ -127,8 +129,10 @@ statement
 
 struct_statements: struct_statement struct_statements {$$ = [$1].concat($2);} | struct_statement {$$ =
  [$1];};
- 
-struct_statement: var_type IDENTIFIER {$$ = ["struct_statement",$1,[$2]];};
+
+struct_statement:
+	set_array_size {$$ = ["semicolon",$1];}
+	| var_type "::" IDENTIFIER {$$ = ["struct_statement",$1,[$3]];};
 
 
 case_statement: "case" e statements {$$ = ["case",$2,$3]};
@@ -141,10 +145,16 @@ statement_with_semicolon
    : 
    var_type "::" identifiers {$$ = ["initialize_empty_vars",$1,$3];}
    | var_type identifiers {$$ = ["initialize_empty_vars",$1,[$2]];}
+   | set_array_size
    | IDENTIFIER "=" e {$$ = ["set_var",$1,$3];}
    | "call" function_call {$$ = $2;}
    | "return" {$$ = "return";}
    ;
+
+set_array_size:
+	var_type "," "dimension" "(" "0" ":" e ")" "::" IDENTIFIER {$$ = ["set_array_size",$1,$10,$7];}
+	|var_type "(" "len" "=" e ")" "::" IDENTIFIER {$$ = ["set_array_size",$1,$8,$5];}
+	;
 
 initialize_var1: initialize_var_ {$$ = ["initialize_var"].concat($1);};
 initialize_var: initialize_var_ {$$ = ["lexically_scoped_var"].concat($1);};
@@ -167,7 +177,7 @@ e
         {$$ = [$2,$1,$3];}
     | e ('==') e
         {$$ = [$2,$1,$3];}
-     e ('.eq.') e
+    | e ('.eq.') e
         {$$ = [$2,$1,$3];}
     | e ('/='|'.neq.') e
         {$$ = ["!=",$1,$3];}

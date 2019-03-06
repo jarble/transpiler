@@ -9,7 +9,7 @@
 "function"            return "function"
 "end"                 return "end"
 "then"                return "then"
-"elseif"              return 'elseif'
+"elif"                return 'elif'
 "if"                  return 'if'
 "else"                return 'else'
 "return"              return 'return'
@@ -97,9 +97,9 @@ statement
     | "for" "_" "," IDENTIFIER "in" "pairs" "(" dot_expr ")" "do" statements "end" {$$ = ["foreach","Object",$4,$8,$11];}
     | "for" IDENTIFIER "," IDENTIFIER "in" "pairs" "(" dot_expr ")" "do" statements "end" {$$ = ["foreach_with_index","Object",$2,$4,$8,$11];}
     | "for" IDENTIFIER "," e "," e "do" statements "end" {$$ = ["for",$2,["<",$2,$4],["+=",$2,$6],$8];}
-    | "if" e "then" statements elif "end" {$$ = ["if",$2,$4,$5];}
-	| "if" e "then" statements "end" {$$ = ["if",$2,$4];}
-    | "function" IDENTIFIER "(" parameters ")" statements "end" {$$ = ["function","public","Object",$2,$4,$6];}
+    | "if" e "then" statements elif "fi" {$$ = ["if",$2,$4,$5];}
+	| "if" e "then" statements "fi" {$$ = ["if",$2,$4];}
+    | IDENTIFIER "(" ")" "{" statements "}" {$$ = ["function","public","Object",$1,[],$5];}
     ;
 
 statement_with_semicolon
@@ -201,7 +201,8 @@ parameters: parameter "," parameters {$$ = [$1].concat($3);} | parameter {$$ =
 exprs: e "," exprs {$$ = [$1].concat($3);} | e {$$ = [$1];};
 types: type "," types {$$ = [$1].concat($3);} | type {$$ = [$1];};
 elif:
-	"elseif" e "then" statements elif {$$ = ["elif",$2,$4,$5]} | "elseif" e "then" statements {$$ = ["elif",$2,$4]}
+	"elif" e "then" statements elif {$$ = ["elif",$2,$4,$5]}
+	| "elif" e "then" statements {$$ = ["elif",$2,$4]}
 	| "else" statements {$$ = ["else",$2];};
 identifiers: IDENTIFIER "," identifiers {$$ = [$1].concat($3);} | IDENTIFIER {$$ = [$1];};
 

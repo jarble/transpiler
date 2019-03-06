@@ -278,8 +278,8 @@ parentheses_expr:
 
 
 parameter:
-	IDENTIFIER {$$ = ["Object", $1];};
-parameters: parameter "," parameters {$$ = [$1].concat($3);} | parameter {$$ =
+	type "..." IDENTIFIER {$$ = ["varargs",$1,$3]} | type IDENTIFIER {$$ = [$1,$2];} | "final" type IDENTIFIER {$$ = ["final_parameter",$2,$3];};
+parameters: parameters "," parameter {$$ = $1.concat([$3]);} | parameter {$$ =
  [$1];} | {$$ = [];};
 
 exprs: e "," exprs {$$ = [$1].concat($3);} | e {$$ = [$1];};

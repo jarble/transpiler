@@ -8,6 +8,7 @@
 "@staticmethod"       return '@staticmethod'
 "class"               return 'class'
 "def"                 return "def"
+"dict"                return "dict"
 "if"                  return "if"
 "of"                  return 'of'
 "for"                 return 'for'
@@ -19,6 +20,7 @@
 ","                   return ','
 "."                   return '.'
 ":"                   return ':'
+";"                   return ';'
 "and"                 return 'and'
 "or"                  return 'or'
 "+="                  return '+='
@@ -81,12 +83,7 @@ statement_:
 	| if_statement
 	| "class" IDENTIFIER ":" class_statements {$$ = [$1,"public",$2,$4];}
 	| foreach
-	| "return" e {$$ = ["return",$2];}
-    | IDENTIFIER "=" e {$$ = ["semicolon",["set_var",$1,$3]];}
-    | IDENTIFIER "+=" e {$$ = ["semicolon",[$2,$1,$3]];}
-    | IDENTIFIER "-=" e {$$ = ["semicolon",[$2,$1,$3]];}
-    | IDENTIFIER "*=" e {$$ = ["semicolon",[$2,$1,$3]];}
-    | IDENTIFIER "/=" e {$$ = ["semicolon",[$2,$1,$3]];};
+	| statement_with_semicolon {$$ = ["semicolon",$1];};
 
 function:
 	"def" IDENTIFIER "(" ")" ":" statements {$$ = ["function","public","Object",$2,[],$6];}
@@ -112,11 +109,15 @@ declare_var: IDENTIFIER "=" e {$$ = ["lexically_scoped_var","Object",$1,$3]};
 declare_vars: declare_var declare_vars {$$ = [$1].concat($2);} | declare_var {$$ =
  [$1];};
 
-statement_with_semicolon
+statement_with_semicolon:
+	statement_with_semicolon_ ";" {$$=$1;}	
+	| statement_with_semicolon_;
+
+statement_with_semicolon_
    :
    "return" e {$$ = ["return",$2];}
-   |IDENTIFIER "=" e {$$ = ["set_var",$1,$3];}
-   | access_array "=" e {$$ = ["set_var",$1,$3];}
+   | access_array_ "=" e {$$ = ["set_var",$1,$3];}
+   | IDENTIFIER "=" e {$$ = ["set_var",$1,$3];}
    | IDENTIFIER "+=" e {$$ = [$2,$1,$3];}
    | IDENTIFIER "-=" e {$$ = [$2,$1,$3];}
    | IDENTIFIER "*=" e {$$ = [$2,$1,$3];}
@@ -162,20 +163,33 @@ e
     ;
 
 
-access_array: parentheses_expr "[" e "]" {$$ = ["access_array",$1,[$3]];} | access_array "[" e "]" {$$ = ["access_array",$1,[$3]];};
+access_array: parentheses_expr_ "[" e "]" {$$ = ["access_array",$1,[$3]];};
+access_array_: IDENTIFIER "[" e "]" {$$ = ["access_array",$1,[$3]];};
 
 parentheses_expr: access_array | parentheses_expr_;
+
+named_parameters: named_parameters "," named_parameter {$$ = $1.concat([$3]);} | named_parameter {$$ = [$1];};
+named_parameter: IDENTIFIER "=" e {$$ = ["named_parameter",$1,$3]};
+
+key_values: key_values "," key_value {$$ = $1.concat([$3]);} | key_value {$$ = [$1];};
+key_value: e ":" e {$$ = [$1,$3]};
+
+key_values_: key_values_ "," key_value_ {$$ = $1.concat([$3]);} | key_value_ {$$ = [$1];};
+key_value_: IDENTIFIER "=" e {$$ = ["\""+$1+"\"",$3]};
+
 parentheses_expr_:
     "(" "lambda" parameters ":" e ")" {$$ = ["anonymous_function","Object",$3,["statements",[["semicolon",["return",$5]]]]];}
-    |"(" access_array ")" {$$ = $2;}
     |"[" "]" {$$ = ["initializer_list","Object",[]];}
     |"[" exprs "]" {$$ = ["initializer_list","Object",$2];}
-    |"{" "}" {$$ = ["initialize_set","Object",[]];}
+    |"{" "}" {$$ = ["associative_array","Object","Object",[]];}
+    | "{" key_values "}" {$$ = ["associative_array","Object","Object",$2];}
+    | "dict" "(" key_values_ ")" {$$ = ["associative_array","Object","Object",$3];}
     |"{" exprs "}" {$$ = ["initialize_set","Object",$2];}
     |"(" parentheses_expr "in" parentheses_expr ")"  {$$ = ["in",$2,$4];}
     |"[" e "for" e "in" list_comprehensions "]" {$$ = ["list_comprehension",$2,$4,$6];}
     |"[" e "for" e "in" list_comprehensions "if" e "]" {$$ = ["list_comprehension",$2,$4,$6,$8];}
     | IDENTIFIER "(" ")" {$$= ["function_call",$1,[]];}
+    | IDENTIFIER "(" named_parameters ")" {$$ = ["function_call",$1,$3];}
     | IDENTIFIER "(" exprs ")" {$$= ["function_call",$1,$3];}
     | NUMBER
         {$$ = yytext;}
