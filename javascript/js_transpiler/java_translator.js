@@ -1952,7 +1952,7 @@ function generate_code(input_lang,lang,indent,arr){
 			to_return = a + " " + b + " +";
 			same_var_type(to_return,a);
 		}
-		else if(get_type(a) === "String" || get_type(b) === "String"){
+		else if(get_type(a) === "String" || get_type(b) === "String" || member(lang,["javascript","python","ruby"])){
 			//console.log("doing string concat");
 			//console.log([types[a],types[b]])
 			if(!member(get_type(a),["String","Object"])){
@@ -2026,7 +2026,7 @@ function generate_code(input_lang,lang,indent,arr){
 
 			types[to_return] = "String";
 		}
-		else if((infix_arithmetic_lang(lang) || lang === "tex") && (types[a] !== undefined && var_type(input_lang,"java",types[a]) !== "String") && (types[b] !== undefined && var_type(input_lang,"java",types[b]) !== "String")){
+		else if((infix_arithmetic_lang(lang) || lang === "tex") && (var_type(input_lang,"java",types[a]) !== "String") && (var_type(input_lang,"java",types[b]) !== "String")){
 			to_return = a + "+" + b;
 			same_var_type(to_return,a);
 		}
