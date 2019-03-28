@@ -2026,7 +2026,7 @@ function generate_code(input_lang,lang,indent,arr){
 
 			types[to_return] = "String";
 		}
-		else if((infix_arithmetic_lang(lang) || lang === "tex") && (var_type(input_lang,"java",types[a]) !== "String") && (var_type(input_lang,"java",types[b]) !== "String")){
+		else if((infix_arithmetic_lang(lang) || lang === "tex") && (types[a] !== undefined && var_type(input_lang,"java",types[a]) !== "String") && (types[b] !== undefined && var_type(input_lang,"java",types[b]) !== "String")){
 			to_return = a + "+" + b;
 			same_var_type(to_return,a);
 		}
