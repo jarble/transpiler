@@ -27,8 +27,10 @@
 "and"                 return 'and'
 "or"                  return 'or'
 ">="                  return '>='
+">>"                  return '>>'
 ">"                   return '>'
 "<="                  return '<='
+"<<"                  return '<<'
 "<"                   return '<'
 "~="                  return '~='
 "=="                  return '=='
@@ -61,9 +63,10 @@
 %left 'or'
 %left 'and'
 %left '<' '<=' '>' '>=' '==' '~='
-%left '..' '+' '-'
+%right '..'
+%left '+' '-'
 %left '*' '/' '%'
-%left '^'
+%right '^'
 %left UMINUS
 
 %start expressions
@@ -158,11 +161,9 @@ e
         {$$ = [$2,$1,$3];}
     | '-' e %prec UMINUS
         {$$ = ["-",$2];}
-    | not_expr
+    | "not" dot_expr {$$ = ["!", [".",$2]];} | dot_expr {$$ = [".", $1];}
     ;
 
-
-not_expr: "not" dot_expr {$$ = ["!", [".",$2]];} | dot_expr {$$ = [".", $1];};
 
 
 dot_expr: parentheses_expr "." dot_expr {$$ = [$1].concat($3);} | parentheses_expr {$$ =

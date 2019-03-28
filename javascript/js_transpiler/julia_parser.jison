@@ -7,6 +7,7 @@
 \"([^\\\"]|\\.)*\" return 'STRING_LITERAL'
 "$"                   return "$"
 "function"            return "function"
+"struct"              return "struct"
 "end"                 return "end"
 "elseif"              return 'elseif'
 "if"                  return 'if'
@@ -19,6 +20,7 @@
 ","                   return ','
 ".."                  return '..'
 "."                   return '.'
+"::"                  return "::"
 ":"                   return ':'
 "and"                 return 'and'
 "or"                  return 'or'
@@ -90,7 +92,15 @@ statement
     | "if" e statements elif "end" {$$ = ["if",$2,$3,$4];}
 	|  "if" e statements "end" {$$ = ["if",$2,$3];}
     | "function" IDENTIFIER "(" parameters ")" statements "end" {$$ = ["function","public","Object",$2,$4,$6];}
+    | "struct" IDENTIFIER struct_statements "end" {$$ = ["struct",$2,["struct_statements",$3]]}
+
     ;
+
+
+struct_statements: struct_statement struct_statements {$$ = [$1].concat($2);} | struct_statement {$$ =
+ [$1];};
+ 
+struct_statement: identifiers "::" type {$$ = ["struct_statement",$3,$1];};
 
 statement_with_semicolon
    : 
@@ -165,7 +175,7 @@ parentheses_expr:
         {$$ = yytext;};
 
 type: IDENTIFIER;
-parameter: IDENTIFIER {$$ = ["Object", $1];};
+parameter: IDENTIFIER "::" type {$$ = [$3, $1];} | IDENTIFIER {$$ = ["Object", $1];};
 parameters: parameter "," parameters {$$ = [$1].concat($3);} | parameter {$$ =
  [$1];} | {$$ = [];};
 access_arr: parentheses_expr "][" access_arr {$$ = [$1].concat($3);} | parentheses_expr {$$ =

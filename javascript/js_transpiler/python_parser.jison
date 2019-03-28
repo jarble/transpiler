@@ -28,8 +28,10 @@
 "*="                  return '*='
 "/="                  return '/='
 ">="                  return '>='
+">>"                  return '>>'
 ">"                   return '>'
 "<="                  return '<='
+"<<"                  return '<<'
 "<"                   return '<'
 "!="                  return '!='
 "=="                  return '=='
@@ -56,8 +58,9 @@
 
 /* operator associations and precedence */
 
-%left '||'
-%left '&&'
+%left 'or'
+%left 'and'
+%left '>>' '<<'
 %left '!=' '<' '<=' '>' '>=' '=='
 %left '+' '-' '++'
 %left '*' '/' 'mod'
@@ -125,9 +128,9 @@ statement_with_semicolon_
    ;
 e
     :
-    e '||' e
+    e 'or' e
         {$$ = [$2,$1,$3];}
-    |e '&&' e
+    |e 'and' e
         {$$ = [$2,$1,$3];}
     |e '==' e
         {$$ = [$2,$1,$3];}

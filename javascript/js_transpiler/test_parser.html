@@ -157,13 +157,13 @@ function myFunction() {
     var outputText;
     window.location.hash=encodeURIComponent(JSON.stringify({inputText:inputText,inputLang:inputLang,outputLang:outputLang}));
     //try{
-   
+    //
 				outputText = parse_lang(inputLang,outputLang.trim(), inputText);
 				document.getElementById("outputText").value = outputText;
 				localStorage.setItem("outputText",outputText);
 	//}
 	//catch(e){
-	//	outputText = e;
+		//outputText = e;
 	//}
 			document.getElementById("outputText").value = outputText;
 			localStorage.setItem("outputText",outputText);
