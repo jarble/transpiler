@@ -8,7 +8,7 @@
 "$"                   return "$"
 ":="                  return ':='
 "func"                return "func"
-"type"                return 'type'
+"type"                return "type"
 "range"               return "range"
 "struct"              return "struct"
 "public"              return "public"
@@ -85,7 +85,10 @@ initialize_vars: initialize_vars initialize_var {$$ = $1.concat([$2]);} | initia
  
 
 statements: statements_ {$$ = ["statements",$1]};
-struct_statements: statements_ {$$ = ["struct_statements",$1]};
+struct_statements: struct_statement struct_statements {$$ = [$1].concat($2);} | struct_statement {$$ =
+ [$1];};
+ 
+struct_statement: identifiers type {$$ = ["struct_statement",$2,$1];};
 
 
 

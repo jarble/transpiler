@@ -13,6 +13,9 @@
 "typeof"              return "typeof"
 "class"               return "class"
 "const"               return 'const'
+"static"              return 'static'
+"get"                 return 'get'
+"set"                 return 'set'
 "if"                  return 'if'
 "do"                  return 'do'
 "new"                 return 'new'
@@ -132,6 +135,7 @@ statement
     | "if" "(" e ")" bracket_statements elif {$$ = ["if",$3,$5,$6];}
 	| "if" "(" e ")" bracket_statements {$$ = ["if",$3,$5];}
     | "function" IDENTIFIER "(" parameters ")" "{" statements "}" {$$ = ["function","public","Object",$2,$4,$7];}
+    | "function" IDENTIFIER "*" "(" parameters ")" "{" statements "}" {$$ = ["generator_function","public","Object",$2,$4,$7];}
     ;
 
 statement_with_semicolon_: initialize_var1 | statement_with_semicolon;
@@ -141,7 +145,9 @@ class_statements: class_statements_ {$$ = ["class_statements",$1]};
 class_statements_: class_statement class_statements_ {$$ = [$1].concat($2);} | class_statement {$$ =
  [$1];};
 class_statement:
-	"static" IDENTIFIER "(" parameters ")" "{" statements "}" {$$ = ["static_method","public","Object",$2,$4,$7];}
+	"set" IDENTIFIER "(" parameters ")" "{" statements "}" {$$ = ["setter_method","public","Object",$2,$4,$7];}
+	| "get" IDENTIFIER "(" parameters ")" "{" statements "}" {$$ = ["getter_method","public","Object",$2,$4,$7];}
+	| "static" IDENTIFIER "(" parameters ")" "{" statements "}" {$$ = ["static_method","public","Object",$2,$4,$7];}
 	| IDENTIFIER "(" parameters ")" "{" statements "}" {$$ = ["instance_method","public","Object",$1,$3,$6];}
 	;
 
@@ -226,7 +232,8 @@ access_array: parentheses_expr "[" e "]" {$$ = ["access_array",$1,[$3]];};
 
 
 parentheses_expr:
-    "function" "(" parameters ")" "{" statements "}" {$$ = ["anonymous_function","Object",$3,$6]}
+    "class" "{" statements "}" {$$= ["anonymous_class",$3]}
+    | "function" "(" parameters ")" "{" statements "}" {$$ = ["anonymous_function","Object",$3,$6]}
     | "(" IDENTIFIER "=>" e ")" {$$ = ["anonymous_function","Object",[["Object",$2]],["statements",[["semicolon",["return",$4]]]]]}
     | IDENTIFIER "(" ")" {$$= ["function_call",$1,[]];}
     | IDENTIFIER "(" exprs ")" {$$= ["function_call",$1,$3];}

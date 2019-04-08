@@ -80,7 +80,7 @@ statements_: statement_ statements_ {$$ = [$1].concat($2);} | statement_ {$$ =
 class_statements: class_statement class_statements {$$ = [$1].concat($2);} | class_statement {$$ =
  [$1];};
 class_statement:
-	"@staticmethod" "def" IDENTIFIER "(" parameters ")" ":" statements {$$ = ["instance_method","public","Object",$3,$5,$8];};
+	"@staticmethod" "def" IDENTIFIER "(" parameters ")" ":" statements {$$ = ["static_method","public","Object",$3,$5,$8];};
 
 statement_:
 	function

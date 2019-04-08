@@ -7,8 +7,7 @@
 \"([^\\\"]|\\.)*\" return 'STRING_LITERAL'
 "'("                  return "'("
 "defmacro"            return 'defmacro'
-"define"              return 'define'
-"lambda"              return 'lambda'
+"defun"               return 'defun'
 "while"               return 'while'
 "cond"                return 'cond'
 "loop"                return 'loop'
@@ -17,6 +16,7 @@
 "if"                  return 'if'
 "do"                  return 'do'
 "t"                   return 't'
+"let"                 return 'let'
 "not"                 return 'not'
 "and"                 return 'and'
 "?"                   return '?'
@@ -72,8 +72,8 @@ statements_: statement statements_ {$$ = [$1].concat($2);} | statement {$$ =
 statements: statements_ {$$ = ["statements",$1]};
 
 statement:
-	"(" "define" IDENTIFIER "(" parameters ")" statement ")" {$$ = ["function","public","Object",$3,$5,$7]}
-    | "(" "defmacro" IDENTIFIER "(" exprs ")" statement_with_semicolon ")" {$$ = ["macro",$3,$5,$7];}
+	"(" "defun" IDENTIFIER "(" parameters ")" statement ")" {$$ = ["function","public","Object",$3,$5,$7]}
+    | "(" "defmacro" IDENTIFIER "(" exprs ")" statement ")" {$$ = ["macro",$3,$5,$7];}
     | statement_with_semicolon {$$=["semicolon",$1];}
     | "(" "cond" "(" e bracket_statements ")" elif ")" {$$ = ["if",$4,$5,$7];}
 	| "(" "if" e bracket_statements ")" {$$ = ["if",$3,$4];}
@@ -127,8 +127,8 @@ or_exprs: or_exprs e {$$ = ["logic_or",$1,$2]} | e;
 
 e:
     '(' '=' e equal_exprs ')' {$$ = ["==",$3,$4];}
-    | "(" "lambda" "(" parameters ")" statement ")" {$$ = ["anonymous_function","Object",$4,$["statements",[["semicolon",["return",$6]]]]]}
-	| '(' '*' e times_exprs ')' {$$ = [$2,$3,$4];}
+	| "(" "lambda" IDENTIFIER "(" parameters ")" statement ")" {$$ = ["function","public","Object",$3,$5,$7]}
+    | '(' '*' e times_exprs ')' {$$ = [$2,$3,$4];}
     | '(' '+' e plus_exprs ')' {$$ = [$2,$3,$4];}
 	| '(' '-' e minus_exprs ')' {$$ = [$2,$3,$4];}
     | '(' '/' e divide_exprs ')' {$$ = [$2,$3,$4];}

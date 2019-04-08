@@ -8,6 +8,8 @@
 "typename"            return "typename"
 "template"            return "template"
 "class"               return "class"
+"struct"              return "struct"
+"enum"                return 'enum'
 "cout"                return "cout"
 "switch"              return "switch"
 "case"                return 'case'
@@ -107,15 +109,24 @@ access_modifier: "public" | "private";
 class_:
 	"namespace" IDENTIFIER "{" class_statements "}" {$$ = [$1,"public",$2,$4];}
 	| "class" IDENTIFIER "{" class_statements "}" ";" {$$ = [$1,"public",$2,$4];}
+	| "struct" IDENTIFIER "{" struct_statements "}" ";" {$$ = ["struct",$2,["struct_statements",$4]]}
 	| "template" "<" type_params ">" IDENTIFIER "{" class_statements "}" {$$ = ["generic_class","public",$5,$7,$3];}
-	| "enum" IDENTIFIER "{" identifiers "}" {$$ = ["enum",$1,"public",$2,$4];}
+	| "enum" IDENTIFIER "{" identifiers "}" {$$ = ["enum","public",$2,$4];}
 	| "class" IDENTIFIER ":" "public" IDENTIFIER "{" class_statements "}" {$$ = ["class_extends","public",$2,$5,$7];}
 	| "class" IDENTIFIER "implements" IDENTIFIER "{" class_statements "}" {$$ = ["class_implements","public",$2,$4,$6];};
+
 
 top_level_statement:
 	statement | initialize_var1 ";" {$$ = ["semicolon",$1]};
 top_level_statements: top_level_statements top_level_statement {$$ = $1.concat([$2]);} | top_level_statement {$$ =
  [$1];};
+ 
+struct_statements: struct_statement struct_statements {$$ = [$1].concat($2);} | struct_statement {$$ =
+ [$1];};
+ 
+struct_statement: type identifiers ";" {$$ = ["struct_statement",$1,$2];} | set_array_size ";" {$$ = ["semicolon", $1];};
+
+
 statement
     :
     "template" "<" type_params ">" type IDENTIFIER "(" parameters ")" "{" statements "}" {$$ = ["generic_function","public",$5,$6,$8,$11,$3];}
@@ -245,7 +256,7 @@ parentheses_expr:
         {$$ = yytext;};
 
 type: IDENTIFIER "[" "]" {$$ = [$1,"[]"];} | IDENTIFIER "<" types ">" {$$ = [$1,$3]} | "Object" | "Dictionary" | IDENTIFIER;
-parameter: type "&" IDENTIFIER {$$ = ["ref_parameter",$1,$3]} | type "..." IDENTIFIER {$$ = ["varargs",$1,$3]} | type IDENTIFIER "=" e {$$ = ["optional_arg",$1,$2,$4];} | type IDENTIFIER {$$ = [$1,$2];} | "const" type IDENTIFIER {$$=["final_parameter",$2,$3]};
+parameter: type "&" IDENTIFIER {$$ = ["ref_parameter",$1,$3]} | type "..." IDENTIFIER {$$ = ["varargs",$1,$3]} | type IDENTIFIER "=" e {$$ = ["default_parameter",$1,$2,$4];} | type IDENTIFIER {$$ = [$1,$2];} | "const" type IDENTIFIER {$$=["final_parameter",$2,$3]};
 parameters: parameter "," parameters {$$ = [$1].concat($3);} | parameter {$$ =
  [$1];} | {$$= []};
 access_arr: parentheses_expr "," access_arr {$$ = [$1].concat($3);} | parentheses_expr {$$ =

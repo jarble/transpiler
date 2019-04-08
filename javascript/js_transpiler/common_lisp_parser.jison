@@ -127,6 +127,7 @@ or_exprs: or_exprs e {$$ = ["logic_or",$1,$2]} | e;
 
 e:
     '(' '=' e equal_exprs ')' {$$ = ["==",$3,$4];}
+    | "(" "lambda" "(" parameters ")" statement ")" {$$ = ["anonymous_function","Object",$4,["statements",[["semicolon",["return",$6]]]]]}
     | '(' '*' e times_exprs ')' {$$ = [$2,$3,$4];}
     | '(' '+' e plus_exprs ')' {$$ = [$2,$3,$4];}
 	| '(' '-' e minus_exprs ')' {$$ = [$2,$3,$4];}

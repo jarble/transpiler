@@ -127,7 +127,7 @@ case 22:
 this.$ = ["generic_interface",$$[$0-8],$$[$0-6],$$[$0-1],$$[$0-4]];
 break;
 case 23:
-this.$ = ["enum",$$[$0-4],$$[$0-5],$$[$0-3],$$[$0-1]];
+this.$ = ["enum",$$[$0-5],$$[$0-3],$$[$0-1]];
 break;
 case 24:
 this.$ = ["class_extends",$$[$0-7],$$[$0-5],$$[$0-3],$$[$0-1]];
@@ -846,142 +846,144 @@ case 5:return "await"
 break;
 case 6:return 59
 break;
-case 7:return 61
+case 7:return 32
 break;
-case 8:return "public"
+case 8:return 61
 break;
-case 9:return 65
+case 9:return "public"
 break;
-case 10:return "extends"
+case 10:return 65
 break;
-case 11:return "default"
+case 11:return "extends"
 break;
-case 12:return "import"
+case 12:return "default"
 break;
-case 13:return "implements"
+case 13:return "import"
 break;
-case 14:return "interface"
+case 14:return "implements"
 break;
-case 15:return "Dictionary"
+case 15:return "interface"
 break;
-case 16:return "private"
+case 16:return "Dictionary"
 break;
-case 17:return "static"
+case 17:return "private"
 break;
-case 18:return "if"
+case 18:return "static"
 break;
-case 19:return "do"
+case 19:return "if"
 break;
-case 20:return "in"
+case 20:return "do"
 break;
-case 21:return "ref"
+case 21:return "in"
 break;
-case 22:return "out"
+case 22:return "ref"
 break;
-case 23:return "else"
+case 23:return "out"
 break;
-case 24:return "return"
+case 24:return "else"
 break;
-case 25:return "throw"
+case 25:return "return"
 break;
-case 26:return "while"
+case 26:return "throw"
 break;
-case 27:return "switch"
+case 27:return "while"
 break;
-case 28:return "async"
+case 28:return "switch"
 break;
-case 29:return "foreach"
+case 29:return "async"
 break;
-case 30:return "for"
+case 30:return "foreach"
 break;
-case 31:return "new"
+case 31:return "for"
 break;
-case 32:return 100
+case 32:return "new"
 break;
-case 33:return 84
+case 33:return 100
 break;
-case 34:return 95
+case 34:return 84
 break;
-case 35:return 8
+case 35:return 95
 break;
-case 36:return 91
+case 36:return 8
 break;
-case 37:return 60
+case 37:return 91
 break;
-case 38:return 83
+case 38:return 60
 break;
-case 39:return 75
+case 39:return 83
 break;
-case 40:return 82
+case 40:return 75
 break;
-case 41:return 76
+case 41:return 82
 break;
-case 42:return 74
+case 42:return 76
 break;
-case 43:return 102
+case 43:return 74
 break;
-case 44:return 29
+case 44:return 102
 break;
-case 45:return 73
+case 45:return 29
 break;
-case 46:return 101
+case 46:return 73
 break;
-case 47:return 27
+case 47:return 101
 break;
-case 48:return 77
+case 48:return 27
 break;
-case 49:return 64
+case 49:return 77
 break;
-case 50:return 90
+case 50:return 64
 break;
-case 51:return 103
+case 51:return 90
 break;
-case 52:return 69
+case 52:return 103
 break;
-case 53:return 80
+case 53:return 69
 break;
-case 54:return 70
+case 54:return 80
 break;
-case 55:return 81
+case 55:return 70
 break;
-case 56:return 68
+case 56:return 81
 break;
-case 57:return 72
+case 57:return 68
 break;
-case 58:return 79
+case 58:return 72
 break;
-case 59:return 71
+case 59:return 79
 break;
-case 60:return 67
+case 60:return 71
 break;
-case 61:return 78
+case 61:return 67
 break;
-case 62:return '^'
+case 62:return 78
 break;
-case 63:return 98
+case 63:return '^'
 break;
-case 64:return 24
+case 64:return 98
 break;
-case 65:return 25
+case 65:return 24
 break;
-case 66:return 108
+case 66:return 25
 break;
-case 67:return 109
+case 67:return 108
 break;
-case 68:return 41
+case 68:return 109
 break;
-case 69:return 43
+case 69:return 41
 break;
-case 70:return 23
+case 70:return 43
 break;
-case 71:return 5
+case 71:return 23
 break;
-case 72:return 'INVALID'
+case 72:return 5
+break;
+case 73:return 'INVALID'
 break;
 }
 },
-rules: [/^(?:(\s+|\/\/+.*\n))/,/^(?:[0-9]+(\.[0-9]+)?\b)/,/^(?:"([^\\\"]|\\.)*")/,/^(?:class\b)/,/^(?:yield\b)/,/^(?:await\b)/,/^(?:case\b)/,/^(?:break\b)/,/^(?:public\b)/,/^(?:operator\b)/,/^(?:extends\b)/,/^(?:default\b)/,/^(?:import\b)/,/^(?:implements\b)/,/^(?:interface\b)/,/^(?:Dictionary\b)/,/^(?:private\b)/,/^(?:static\b)/,/^(?:if\b)/,/^(?:do\b)/,/^(?:in\b)/,/^(?:ref\b)/,/^(?:out\b)/,/^(?:else\b)/,/^(?:return\b)/,/^(?:throw\b)/,/^(?:while\b)/,/^(?:switch\b)/,/^(?:async\b)/,/^(?:foreach\b)/,/^(?:for\b)/,/^(?:new\b)/,/^(?:!=)/,/^(?:!)/,/^(?:,)/,/^(?:;)/,/^(?:\.)/,/^(?::)/,/^(?:&=)/,/^(?:&&)/,/^(?:\|=)/,/^(?:\|\|)/,/^(?:>=)/,/^(?:>>)/,/^(?:>)/,/^(?:<=)/,/^(?:<<)/,/^(?:<)/,/^(?:==)/,/^(?:=)/,/^(?:%=)/,/^(?:%)/,/^(?:\*=)/,/^(?:\*)/,/^(?:\/=)/,/^(?:\/)/,/^(?:-=)/,/^(?:--)/,/^(?:-)/,/^(?:\+\+)/,/^(?:\+=)/,/^(?:\+)/,/^(?:\^)/,/^(?:\?)/,/^(?:\{)/,/^(?:\})/,/^(?:\[)/,/^(?:\])/,/^(?:\()/,/^(?:\))/,/^(?:[a-zA-Z_][a-zA-Z0-9_]*)/,/^(?:$)/,/^(?:.)/],
-conditions: {"INITIAL":{"rules":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72],"inclusive":true}}
+rules: [/^(?:(\s+|\/\/+.*\n))/,/^(?:[0-9]+(\.[0-9]+)?\b)/,/^(?:"([^\\\"]|\\.)*")/,/^(?:class\b)/,/^(?:yield\b)/,/^(?:await\b)/,/^(?:case\b)/,/^(?:enum\b)/,/^(?:break\b)/,/^(?:public\b)/,/^(?:operator\b)/,/^(?:extends\b)/,/^(?:default\b)/,/^(?:import\b)/,/^(?:implements\b)/,/^(?:interface\b)/,/^(?:Dictionary\b)/,/^(?:private\b)/,/^(?:static\b)/,/^(?:if\b)/,/^(?:do\b)/,/^(?:in\b)/,/^(?:ref\b)/,/^(?:out\b)/,/^(?:else\b)/,/^(?:return\b)/,/^(?:throw\b)/,/^(?:while\b)/,/^(?:switch\b)/,/^(?:async\b)/,/^(?:foreach\b)/,/^(?:for\b)/,/^(?:new\b)/,/^(?:!=)/,/^(?:!)/,/^(?:,)/,/^(?:;)/,/^(?:\.)/,/^(?::)/,/^(?:&=)/,/^(?:&&)/,/^(?:\|=)/,/^(?:\|\|)/,/^(?:>=)/,/^(?:>>)/,/^(?:>)/,/^(?:<=)/,/^(?:<<)/,/^(?:<)/,/^(?:==)/,/^(?:=)/,/^(?:%=)/,/^(?:%)/,/^(?:\*=)/,/^(?:\*)/,/^(?:\/=)/,/^(?:\/)/,/^(?:-=)/,/^(?:--)/,/^(?:-)/,/^(?:\+\+)/,/^(?:\+=)/,/^(?:\+)/,/^(?:\^)/,/^(?:\?)/,/^(?:\{)/,/^(?:\})/,/^(?:\[)/,/^(?:\])/,/^(?:\()/,/^(?:\))/,/^(?:[a-zA-Z_][a-zA-Z0-9_]*)/,/^(?:$)/,/^(?:.)/],
+conditions: {"INITIAL":{"rules":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73],"inclusive":true}}
 });
 return lexer;
 })();
