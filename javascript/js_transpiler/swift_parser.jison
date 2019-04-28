@@ -106,6 +106,7 @@ statement
     | "while" "(" e ")" bracket_statements {$$ = ["while",$3,$5];}
     | "for" IDENTIFIER "in" parentheses_expr bracket_statements {$$ = ["foreach","Object",$2,$4,$5];}
     | "func" IDENTIFIER "(" parameters ")" "->" IDENTIFIER "{" statements "}" {$$ = ["function","public",$7,$2,$4,$9];}
+    | "func" IDENTIFIER "<" type_params ">" "(" parameters ")" "->" IDENTIFIER "{" statements "}" {$$ = ["generic_function","public",$10,$2,$7,$12];}
     | "if" "(" e ")" bracket_statements elif {$$ = ["if",$3,$5,$6];}
 	| "if" "(" e ")" bracket_statements {$$ = ["if",$3,$5];}
 	| class_

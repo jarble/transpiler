@@ -19,6 +19,7 @@
 "static"              return "static"
 "if"                  return 'if'
 "else"                return 'else'
+"elsif"               return 'elsif'
 "return"              return 'return'
 "sin"                 return "sin"
 "tan"                 return "tan"
@@ -210,7 +211,7 @@ parameters: parameter "," parameters {$$ = [$1].concat($3);} | parameter {$$ =
 exprs: e "," exprs {$$ = [$1].concat($3);} | e {$$ = [$1];};
 types: type "," types {$$ = [$1].concat($3);} | type {$$ = [$1];};
 elif:
-	"else" "if" "(" e ")" bracket_statements elif {$$ = ["elif",$4,$6,$7]}
+	"elsif" "(" e ")" bracket_statements elif {$$ = ["elif",$3,$5,$6]}
 	| "else" bracket_statements {$$ = ["else",$2];};
 
 

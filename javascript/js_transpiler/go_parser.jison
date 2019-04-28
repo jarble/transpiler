@@ -88,7 +88,7 @@ statements: statements_ {$$ = ["statements",$1]};
 struct_statements: struct_statement struct_statements {$$ = [$1].concat($2);} | struct_statement {$$ =
  [$1];};
  
-struct_statement: identifiers type {$$ = ["struct_statement",$2,$1];};
+struct_statement: identifiers type_ {$$ = ["struct_statement",$2,$1];};
 
 
 
@@ -106,8 +106,8 @@ statement
     | "for" "_" "," IDENTIFIER ":=" "range" dot_expr "{" statements "}" {$$ = ["foreach","Object",$4,$7,$9];}
     | "for" IDENTIFIER "," IDENTIFIER ":=" "range" dot_expr "{" statements "}" {$$ = ["foreach_with_index","Object",$2,$4,$7,$9];}
     | if_statement
-    | "func" IDENTIFIER "(" parameters ")" "(" IDENTIFIER type ")" "{" statements "}" {$$ = ["function_with_retval",$7,"public",$8,$2,$4,$11];}
-    | "func" IDENTIFIER "(" parameters ")" type "{" statements "}" {$$ = ["function","public",$6,$2,$4,$8];}
+    | "func" IDENTIFIER "(" parameters ")" "(" IDENTIFIER type_ ")" "{" statements "}" {$$ = ["function_with_retval",$7,"public",$8,$2,$4,$11];}
+    | "func" IDENTIFIER "(" parameters ")" type_ "{" statements "}" {$$ = ["function","public",$6,$2,$4,$8];}
     ;
 
 
@@ -193,14 +193,14 @@ parentheses_expr:
     | STRING_LITERAL
         {$$ = yytext;};
 
-type: IDENTIFIER "[" "]" {$$ = [$1,"[]"];} | IDENTIFIER;
-parameter: IDENTIFIER type {$$ = [$2, $1];};
+type_: IDENTIFIER "[" "]" {$$ = [$1,"[]"];} | IDENTIFIER;
+parameter: IDENTIFIER type_ {$$ = [$2, $1];};
 parameters: parameter "," parameters {$$ = [$1].concat($3);} | parameter {$$ =
  [$1];} | {$$ = []};
 access_arr: parentheses_expr "][" access_arr {$$ = [$1].concat($3);} | parentheses_expr {$$ =
  [$1];};
 exprs: e "," exprs {$$ = [$1].concat($3);} | e {$$ = [$1];};
-types: type "," types {$$ = [$1].concat($3);} | type {$$ = [$1];};
+types: type_ "," types {$$ = [$1].concat($3);} | type_ {$$ = [$1];};
 elif: "else" "if" e "{" statements "}" elif {$$ = ["elif",$3,$5,$7]}| "else" "{" statements "}" {$$ = ["else",$3];};
 if_statement:
 "if" e "{" statements "}" elif {$$ = ["if",$2,$4,$6];}

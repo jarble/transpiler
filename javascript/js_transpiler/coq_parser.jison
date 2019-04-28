@@ -6,17 +6,16 @@
 [0-9]+("."[0-9]+)?\b  return 'NUMBER'
 \"([^\\\"]|\\.)*\" return 'STRING_LITERAL'
 "Fixpoint"            return 'Fixpoint'
-"Lemma"               return 'lemma'
+"Definition"          return 'Definition'
+"Lemma"               return 'Lemma'
 "forall"              return 'forall'
 "if"                  return "if"
 "is"                  return "is"
 ","                   return ','
-"||"                  return '||'
-"&&"                  return '&&'
+"\\/"                  return '\\/'
+"/\\"                 return '/\\'
 "==>"                 return '==>'
 "<=>"                 return '<=>'
-"||"                  return '||'
-"&&"                  return '&&'
 "->"                  return '->'
 ":="                  return ':='
 ":-"                  return ':-'
@@ -54,8 +53,8 @@
 /* operator associations and precedence */
 
 %left '->'
-%left '||'
-%left '&&'
+%left '\\/'
+%left '/\\'
 %left '<' '=<' '>' '>=' '=' '==' 'is'
 %left '+' '-'
 %left '*' '/'
@@ -86,16 +85,17 @@ statement_with_semicolon:
 statements: statement {$$ = ["statements",[$1]];};
 
 predicate:
-    "Fixpoint" IDENTIFIER parameters ":" IDENTIFIER ":=" statements {$$ = ["function","public",$5,$2,$3,$7]};
+    "Fixpoint" IDENTIFIER parameters ":" IDENTIFIER ":=" statements {$$ = ["function","public",$5,$2,$3,$7]}
+    | "Definition" IDENTIFIER parameters ":" IDENTIFIER ":=" statements {$$ = ["function","public",$5,$2,$3,$7]};
 
 
 e
     :
     e '->' e
         {$$ = ["implies",$1,$3]}
-    |e '||' e
+    |e '\\/' e
         {$$ = ['||',$1,$3];}
-    |e '&&' e
+    |e '/\\' e
         {$$ = ['&&',$1,$3];}
     |e '=' e
         {$$ = ['logic_equals',$1,$3];}

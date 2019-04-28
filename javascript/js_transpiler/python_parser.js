@@ -94,7 +94,7 @@ this.$ =
  [$$[$0]];
 break;
 case 6:
-this.$ = ["instance_method","public","Object",$$[$0-5],$$[$0-3],$$[$0]];
+this.$ = ["static_method","public","Object",$$[$0-5],$$[$0-3],$$[$0]];
 break;
 case 9:
 this.$ = [$$[$0-3],"public",$$[$0-2],$$[$0]];
@@ -736,84 +736,86 @@ case 13:return "while"
 break;
 case 14:return "return"
 break;
-case 15:return 65
+case 15:return "lambda"
 break;
-case 16:return '.'
+case 16:return 65
 break;
-case 17:return 15
+case 17:return '.'
 break;
-case 18:return 36
+case 18:return 15
 break;
-case 19:return 44
+case 19:return 36
 break;
-case 20:return 43
+case 20:return 44
 break;
-case 21:return 39
+case 21:return 43
 break;
-case 22:return 40
+case 22:return 39
 break;
-case 23:return 41
+case 23:return 40
 break;
-case 24:return 42
+case 24:return 41
 break;
-case 25:return 48
+case 25:return 42
 break;
-case 26:return '>>'
+case 26:return 48
 break;
-case 27:return 49
+case 27:return '>>'
 break;
-case 28:return 46
+case 28:return 49
 break;
-case 29:return '<<'
+case 29:return 46
 break;
-case 30:return 47
+case 30:return '<<'
 break;
-case 31:return 50
+case 31:return 47
 break;
-case 32:return 45
+case 32:return 50
 break;
-case 33:return 33
+case 33:return 45
 break;
-case 34:return 57
+case 34:return 33
 break;
-case 35:return 41
+case 35:return 57
 break;
-case 36:return 54
+case 36:return 41
 break;
-case 37:return 55
+case 37:return 54
 break;
-case 38:return '%'
+case 38:return 55
 break;
-case 39:return 53
+case 39:return '%'
 break;
-case 40:return 52
+case 40:return 53
 break;
-case 41:return 58
+case 41:return 52
 break;
-case 42:return 73
+case 42:return 58
 break;
-case 43:return 74
+case 43:return 73
 break;
-case 44:return 62
+case 44:return 74
 break;
-case 45:return 63
+case 45:return 62
 break;
-case 46:return 12
+case 46:return 63
 break;
-case 47:return 14
+case 47:return 12
 break;
-case 48:return '_'
+case 48:return 14
 break;
-case 49:return 11
+case 49:return '_'
 break;
-case 50:return 5
+case 50:return 11
 break;
-case 51:return 'INVALID'
+case 51:return 5
+break;
+case 52:return 'INVALID'
 break;
 }
 },
-rules: [/^(?:\s+)/,/^(?:[0-9]+(\.[0-9]+)?\b)/,/^(?:"([^\\\"]|\\.)*")/,/^(?:@staticmethod\b)/,/^(?:class\b)/,/^(?:def\b)/,/^(?:dict\b)/,/^(?:if\b)/,/^(?:of\b)/,/^(?:for\b)/,/^(?:in\b)/,/^(?:else\b)/,/^(?:elif\b)/,/^(?:while\b)/,/^(?:return\b)/,/^(?:,)/,/^(?:\.)/,/^(?::)/,/^(?:;)/,/^(?:and\b)/,/^(?:or\b)/,/^(?:\+=)/,/^(?:-=)/,/^(?:\*=)/,/^(?:\/=)/,/^(?:>=)/,/^(?:>>)/,/^(?:>)/,/^(?:<=)/,/^(?:<<)/,/^(?:<)/,/^(?:!=)/,/^(?:==)/,/^(?:=)/,/^(?:\*\*)/,/^(?:\*=)/,/^(?:\*)/,/^(?:\/)/,/^(?:%)/,/^(?:-)/,/^(?:\+)/,/^(?:\^)/,/^(?:\{)/,/^(?:\})/,/^(?:\[)/,/^(?:\])/,/^(?:\()/,/^(?:\))/,/^(?:_\b)/,/^(?:[a-zA-Z_][a-zA-Z0-9_]*)/,/^(?:$)/,/^(?:.)/],
-conditions: {"INITIAL":{"rules":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51],"inclusive":true}}
+rules: [/^(?:\s+)/,/^(?:[0-9]+(\.[0-9]+)?\b)/,/^(?:"([^\\\"]|\\.)*")/,/^(?:@staticmethod\b)/,/^(?:class\b)/,/^(?:def\b)/,/^(?:dict\b)/,/^(?:if\b)/,/^(?:of\b)/,/^(?:for\b)/,/^(?:in\b)/,/^(?:else\b)/,/^(?:elif\b)/,/^(?:while\b)/,/^(?:return\b)/,/^(?:lambda\b)/,/^(?:,)/,/^(?:\.)/,/^(?::)/,/^(?:;)/,/^(?:and\b)/,/^(?:or\b)/,/^(?:\+=)/,/^(?:-=)/,/^(?:\*=)/,/^(?:\/=)/,/^(?:>=)/,/^(?:>>)/,/^(?:>)/,/^(?:<=)/,/^(?:<<)/,/^(?:<)/,/^(?:!=)/,/^(?:==)/,/^(?:=)/,/^(?:\*\*)/,/^(?:\*=)/,/^(?:\*)/,/^(?:\/)/,/^(?:%)/,/^(?:-)/,/^(?:\+)/,/^(?:\^)/,/^(?:\{)/,/^(?:\})/,/^(?:\[)/,/^(?:\])/,/^(?:\()/,/^(?:\))/,/^(?:_\b)/,/^(?:[a-zA-Z_][a-zA-Z0-9_]*)/,/^(?:$)/,/^(?:.)/],
+conditions: {"INITIAL":{"rules":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52],"inclusive":true}}
 });
 return lexer;
 })();

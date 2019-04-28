@@ -10,6 +10,7 @@
 "define-fun"          return 'define-fun'
 "declare-const"       return 'declare-const'
 "forall"              return 'forall'
+"assert"              return 'assert'
 "not"                 return 'not'
 "ite"                 return 'ite'
 "if"                  return 'if'
@@ -68,10 +69,8 @@ statements: statements_ {$$ = ["top_level_statements",$1]};
 
 statement:
 	"(" "declare-const" IDENTIFIER type ")" {$$ = ["semicolon",["initialize_empty_vars",$4,[$3]]];}
-	| "(" "define-fun" IDENTIFIER "(" parameters ")" type statement ")" {$$ = ["function","public",$7,$3,$5,$8]}
-    | e {$$=["statements",[["semicolon",["return",$1]]]];}
-    | "(" "if" e e e ")" {$$ = ["ternary_operator",$3,$4,$5];}
-    | "(" "ite" e e e ")" {$$ = ["ternary_operator",$3,$4,$5];};
+	| "(" "define-fun" IDENTIFIER "(" parameters ")" type e ")" {$$ = ["function","public",$7,$3,$5,["semicolon",["return",$8]]]}
+	| "(" "assert" e ")" {$$ = ["semicolon",["function_call","assert",[$3]]]};
 
 type:
 	"(" "Array" type type ")" {$$ = ["Array",[$3,$4]];}
@@ -102,6 +101,8 @@ e:
     | '(' 'and' e and_exprs ')' {$$ = ["logic_and",$3,$4];}
     | '(' 'not' e ')' {$$ = ["!",$3];}
     | '(' "forall" '(' forall_parameters ')' e ')' {$$ = ['z3_forall',$4,$6];}
+    | "(" "if" e e e ")" {$$ = ["ternary_operator",$3,$4,$5];}
+    | "(" "ite" e e e ")" {$$ = ["ternary_operator",$3,$4,$5];}
     | function_call
     | NUMBER
         {$$ = yytext;}
@@ -110,7 +111,7 @@ e:
     | STRING_LITERAL
         {$$ = yytext;};
 
-forall_parameter: IDENTIFIER type {$$ = ["forall_parameter", $2,$1];};
+forall_parameter: "(" IDENTIFIER type ")" {$$ = ["forall_parameter", $3,$2];};
 forall_parameters: forall_parameters forall_parameter {$$ = $1.concat([$2]);} | forall_parameter {$$ =
  [$1];};
 

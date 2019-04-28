@@ -128,7 +128,7 @@ parameters: parameter "," parameters {$$ = [$1].concat($3);} | parameter {$$ =
 function_call:
     IDENTIFIER "(" ")" {$$ = ["function_call",$1,[]];} | IDENTIFIER "(" exprs ")" {$$ = ["function_call",$1,$3];};
 
-forall_statement: "forall" "(" e "," e ")" {$$ = ["forall",$3,$5];};
+forall_statement: "forall" "(" e "," e ")" {$$ = ["forall","Object",$3,$5];};
 
 parentheses_expr:
     forall_statement

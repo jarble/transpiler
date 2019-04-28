@@ -8,6 +8,7 @@
 "$"                   return "$"
 "function"            return "function"
 "continue"            return "continue"
+"interface"           return "interface"
 "typeof"              return "typeof"
 "class"               return "class"
 "const"               return 'const'
@@ -106,7 +107,10 @@ class_statements_: class_statement class_statements_ {$$ = [$1].concat($2);} | c
 access_modifier: "public" | "private";
 
 class_:
-	"class" IDENTIFIER "{" class_statements "}" {$$ = [$1,"public",$2,$4];};
+	"class" IDENTIFIER "{" class_statements "}" {$$ = [$1,"public",$2,$4];}
+	| "interface" IDENTIFIER "extends" IDENTIFIER "{" class_statements "}" {$$ = ["interface_extends",$2,$4,$6,$8];}
+	| "interface" IDENTIFIER "{" class_statements "}" {$$ = ["interface","public",$2,$4];}
+	| "interface" IDENTIFIER "<" IDENTIFIER ">" "{" class_statements "}" {$$ = ["generic_interface","public",$2,$4,$7];};
 
 top_level_statement:
 	statement | initialize_var1 ";" {$$ = ["semicolon",$1]};

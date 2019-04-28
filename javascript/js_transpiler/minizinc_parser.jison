@@ -97,6 +97,7 @@ statement_with_semicolon:
 	| "var" IDENTIFIER ":" IDENTIFIER "=" e {$$ = ["initialize_var",$2,$4,$6];}
 	| IDENTIFIER ":" IDENTIFIER "=" e {$$ = ["initialize_var",$1,$3,$5];}
 	| "constraint" e {$$ = ["function_call","constraint",[$2]];}
+	| "constraint" IDENTIFIER "=" e {$$ = ["function_call","constraint",[["logic_equals",$2,$4]]];}
 	;
 
 e

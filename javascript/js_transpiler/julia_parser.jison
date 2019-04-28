@@ -93,6 +93,7 @@ statement
 	|  "if" e statements "end" {$$ = ["if",$2,$3];}
     | "function" IDENTIFIER "(" parameters ")" statements "end" {$$ = ["function","public","Object",$2,$4,$6];}
     | "struct" IDENTIFIER struct_statements "end" {$$ = ["struct",$2,["struct_statements",$3]]}
+    | "struct" IDENTIFIER "{" IDENTIFIER "}" struct_statements "end" {$$ = ["generic_struct",$2,$4,["struct_statements",$6]]}
 
     ;
 

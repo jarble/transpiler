@@ -11,6 +11,7 @@
 "case"                return 'case'
 "enum"                return 'enum'
 "break"               return 'break'
+"struct"              return 'struct'
 "public"              return "public"
 "operator"            return 'operator'
 "extends"             return "extends"
@@ -125,6 +126,12 @@ class_:
 	| access_modifier "class" IDENTIFIER "implements" IDENTIFIER "{" class_statements "}" {$$ = ["class_implements",$1,$3,$5,$7];}
 	;
 
+struct_statements: struct_statement struct_statements {$$ = [$1].concat($2);} | struct_statement {$$ =
+ [$1];};
+ 
+struct_statement: type identifiers ";" {$$ = ["struct_statement",$1,$2];} | set_array_size ";" {$$ = ["semicolon", $1];};
+
+
 top_level_statement:
 	statement | initialize_var1 ";" {$$ = ["semicolon",$1]};
 top_level_statements: top_level_statements top_level_statement {$$ = $1.concat([$2]);} | top_level_statement {$$ =
@@ -134,6 +141,7 @@ statement
     "import" IDENTIFIER  {$$ = ["import",$2];}
     | statement_with_semicolon ";" {$$ = ["semicolon",$1];}
     | class_
+    | "struct" IDENTIFIER "{" struct_statements "}" {$$ = ["struct",$2,["struct_statements",$4]]}
     | "while" "(" e ")" bracket_statements {$$ = ["while",$3,$5];}
     | "do" bracket_statements "while" "(" e ")" ";" {$$ = ["do_while",$2,$5];}
     | "switch" "(" e ")" "{" case_statements "}" {$$ = ["switch",$3,$6];}

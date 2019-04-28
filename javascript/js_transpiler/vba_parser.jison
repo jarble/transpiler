@@ -7,6 +7,7 @@
 \"([^\\\"]|\\.)*\"    return 'STRING_LITERAL'
 "Loop"                return "Loop"
 "As"                  return "As"
+"To"                  return "To"
 "Case"                return 'Case'
 "End"                 return "End"
 "extends"             return "extends"
@@ -133,6 +134,7 @@ statement
     | "Do" statements "While" "(" e ")" {$$ = ["do_while",$2,$5];}
     | "Select" "Case" "(" e ")" case_statements "End" "Select" {$$ = ["switch",$4,$6];}
     | "For" "Each" IDENTIFIER "In" IDENTIFIER statements "Next" {$$ = ["foreach","Object",$3,$5,$6];}
+    | "For" IDENTIFIER "=" IDENTIFIER "To" IDENTIFIER statements "Next" IDENTIFIER {$$ = ["foreach_in_range","Object",$2,$4,$6,$7];}
     | "If" e "Then" statements elif "End" "If" {$$ = ["if",$2,$4,$5];}
     | "If" "(" e ")" statements elif "End" "If" {$$ = ["if",$3,$5,$6];}
     | "If" e "Then" statements "End" "If" {$$ = ["if",$2,$4];}

@@ -117,6 +117,8 @@ statement
     | "while" e "do" statements "enddo" {$$ = ["while",$2,$4];}
     | "type" IDENTIFIER struct_statements "end" "type" IDENTIFIER {$$ = ["struct",$2,["struct_statements",$3]]}
     | "do" "while" e bracket_statements "enddo" {$$ = ["do_while",$3,$4];}
+    | "do" IDENTIFIER "=" IDENTIFIER "," IDENTIFIER statements "end" "do" {$$ = ["foreach_in_range",$2,$3,$5,$7];}
+    | "do" statements "end" "do" {$$ = ["infinite_loop",$2];}
     | "if" e "then" statements elif "end" "if" {$$ = ["if",$2,$4,$5];}
 	| "if" e "then" statements "end" "if" {$$ = ["if",$2,$4];}
 	| "select" "case" e case_statements "end" "select" {$$ = ["switch",$3,$4];}
@@ -167,19 +169,29 @@ e
         {$$ = ['||',$1,$3];}
     |e '.and.' e
         {$$ = ['&&',$1,$3];}
-    |e ('>') e
+    |e '>' e
         {$$ = [$2,$1,$3];}
-    |e ('<') e
+    |e '.gt.' e
+        {$$ = [">=",$1,$3];}
+    |e '<' e
         {$$ = [$2,$1,$3];}
-    |e ('<='|'.le.') e
+    |e '.lt.' e
+        {$$ = ["<=",$1,$3];}
+    |e '<=' e
         {$$ = [$2,$1,$3];}
+    |e '.le.' e
+        {$$ = ["<=",$1,$3];}
     | e ('>='|'.ge.') e
         {$$ = [$2,$1,$3];}
+    | e '.ge.' e
+        {$$ = [">=",$1,$3];}
     | e ('==') e
         {$$ = [$2,$1,$3];}
     | e ('.eq.') e
         {$$ = [$2,$1,$3];}
-    | e ('/='|'.neq.') e
+    | e '/=' e
+        {$$ = ["!=",$1,$3];}
+    | e '.neq.' e
         {$$ = ["!=",$1,$3];}
     | e '+' e
         {$$ = [$2,$1,$3];}

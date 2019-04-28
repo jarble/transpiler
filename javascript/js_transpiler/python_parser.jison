@@ -17,6 +17,7 @@
 "elif"                return "elif"
 "while"               return "while"
 "return"              return "return"
+"lambda"              return "lambda"
 ","                   return ','
 "."                   return '.'
 ":"                   return ':'

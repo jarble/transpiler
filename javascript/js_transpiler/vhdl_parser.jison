@@ -5,12 +5,13 @@
 (\s+|\/\/+.*\n)        /* skip whitespace and line comments */
 [0-9]+("."[0-9]+)?\b  return 'NUMBER'
 \"([^\\\"]|\\.)*\" return 'STRING_LITERAL'
-"fn"                  return 'fn'
-"let"                 return 'let'
-"mut"                 return 'mut'
 "if"                  return "if"
+"is"                  return 'is'
 "else"                return "else"
+"elsif"               return "elsif"
 "loop"                return "loop"
+"function"            return "function"
+"begin"               return "begin"
 "return"              return "return"
 "void"                return "void"
 "case"                return "case"
@@ -20,14 +21,17 @@
 "struct"              return "struct"
 "switch"              return "switch"
 "for"                 return "for"
+"end"                 return "end"
+"when"                return "when"
 ","                   return ','
 ";"                   return ';'
 "."                   return '.'
+":="                  return ':='
 ":"                   return ':'
 "&&"                  return '&&'
 "&"                   return '&'
 "||"                  return '||'
-"!="                  return '!='
+"/="                  return '/='
 '!'                   return '!'
 ">="                  return '>='
 ">>"                  return '>>'
@@ -35,7 +39,7 @@
 "<="                  return '<='
 "<<"                  return '<<'
 "<"                   return '<'
-"=="                  return '=='
+"=>"                  return '=>'
 "="                   return '='
 "*="                  return '*='
 "*"                   return '*'
@@ -67,9 +71,10 @@
 %right '?'
 %left '||'
 %left '&&'
-%left '<' '<=' '>' '>=' '==' '!='
+%left '<' '<=' '>' '>=' '=' '/='
 %left '+' '-'
 %left '*' '/' '%'
+%left '**'
 %left UMINUS
 
 %start expressions
@@ -90,18 +95,17 @@ access_modifier: "public" | "private";
 
 statement
     :
-	"struct" IDENTIFIER "{" statements "}" {$$ = ["struct",$2,$4]}
-	| "struct" IDENTIFIER "<" IDENTIFIER ">" "{" statements "}" {$$ = ["generic_struct",$2,$4,$7];}
-	| "fn" IDENTIFIER "(" parameters ")" "{" statements "}" {$$ = ["function","public","Object",$2,$4,$7];}
+       "function" IDENTIFIER "(" parameters ")" "return" IDENTIFIER "is" "begin" statements "end" "function" IDENTIFIER ";" {$$ = ["function","public",$7,$2,$4,$10];}
+    | "function" IDENTIFIER "(" parameters ")" "return" IDENTIFIER "is" "begin" statements "end" IDENTIFIER ";" {$$ = ["function","public",$7,$2,$4,$10];}
     | statement_with_semicolon ";" {$$ = ["semicolon",$1];}
-    | "while" "(" e ")" bracket_statements {$$ = ["while",$3,$5];}
-    | "switch" "(" e ")" "{" case_statements "}" {$$ = ["switch",$3,$6];}
+    | "for" IDENTIFIER "in" e "to" e "loop" statements "end" "loop" ";" {$$ = ["foreach_in_range",$2,$4,$6,$8];}
+    | "while" e "loop" statements "end" "loop" ";" {$$ = ["while",$2,$4];}
+    | "case" e "is" case_statements "end" "case" ";" {$$ = ["switch",$2,$4];}
     | "for" "(" statement_with_semicolon ";" e ";" statement_with_semicolon ")" bracket_statements {$$ = ["for",$3,$5,$7,$9];}
-    | "if" e "{" statements "}" elif {$$ = ["if",$2,$4,$6];}
-	| "if" e "{" statements "}" {$$ = ["if",$2,$4];}
-	| "loop" "{" statements "}" elif {$$ = ["infinite_loop",$3];};
+    | "if" "(" e ")" bracket_statements elif {$$ = ["if",$3,$5,$6];}
+	| "if" "(" e ")" bracket_statements {$$ = ["if",$3,$5];};
 
-case_statement: "case" e ":" statements "break" ";" {$$ = ["case",$2,$4]};
+case_statement: "when" e "=>" statements {$$ = ["case",$2,$4]};
 case_statements: case_statement case_statements {$$ = [$1].concat($2);} | case_statement {$$ =
  [$1];};
 
@@ -110,12 +114,12 @@ statement_with_semicolon
    IDENTIFIER "(" ")" {$$ = ["function_call",$1,[]];}
    | IDENTIFIER "(" exprs ")" {$$ = ["function_call",$1,$3];}
    |"return" e  {$$ = ["return",$2];}
-   | "let" "mut" IDENTIFIER "=" e {$$ = ["initialize_var","Object",$3,$5];}
-   | "let" IDENTIFIER "=" e {$$ = ["initialize_constant","Object",$2,$4];}
+   | IDENTIFIER ":" type ":=" e {$$ = ["initialize_var",$3,$1,$5];}
+   | "constant" IDENTIFIER ":" type "=" e {$$ = ["initialize_constant",$4,$2,$6];}
    | type access_array {$$ = ["set_array_size",$1,$2[1],$2[2]];}
    | type identifiers {$$ = ["initialize_empty_vars",$1,$2];}
-   | access_array "=" e {$$ = ["set_var",$1,$3];}
-   | IDENTIFIER "=" e {$$ = ["set_var",$1,$3];}
+   | access_array ":=" e {$$ = ["set_var",$1,$3];}
+   | IDENTIFIER ":=" e {$$ = ["set_var",$1,$3];}
    | IDENTIFIER "++" {$$ = [$2,$1];}
    | IDENTIFIER "--" {$$ = [$2,$1];}
    | IDENTIFIER "+=" e {$$ = [$2,$1,$3];}
@@ -138,9 +142,9 @@ e
         {$$ = [$2,$1,$3];}
     |e '>' e
         {$$ = [$2,$1,$3];}
-    | e '==' e
+    | e '=' e
         {$$ = [$2,$1,$3];}
-    | e '!=' e
+    | e '/=' e
         {$$ = [$2,$1,$3];}
     | e '+' e
         {$$ = [$2,$1,$3];}
@@ -151,6 +155,8 @@ e
     | e '*' e
         {$$ = [$2,$1,$3];}
     | e '/' e
+        {$$ = [$2,$1,$3];}
+    | e '**' e
         {$$ = [$2,$1,$3];}
     | '-' e %prec UMINUS
         {$$ = ["-",$2];}
@@ -193,8 +199,9 @@ exprs: expr "," exprs {$$ = [$1].concat($3);} | expr {$$ = [$1];};
 expr: "&" e {$$ = ["function_call_ref",$2];} | e {$$ = [$1];};
 types: type "," types {$$ = [$1].concat($3);} | type {$$ = [$1];};
 elif:
-	"else" "if" e "{" statements "}" elif {$$ = ["elif",$3,$5,$7]}
+	"else" "if" "(" e ")" "{" statements "}" elif {$$ = ["elif",$4,$7,$9]}
 	| "else" "{" statements "}" {$$ = ["else",$3];};
+
 identifiers: IDENTIFIER "," identifiers {$$ = [$1].concat($3);} | IDENTIFIER {$$ = [$1];};
 
 bracket_statements: "{" statements "}" {$$= $2;} | statement_with_semicolon ";" {$$ = ["semicolon",$1];};
