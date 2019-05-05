@@ -135,7 +135,7 @@ statement
     | "if" "(" e ")" bracket_statements elif {$$ = ["if",$3,$5,$6];}
 	| "if" "(" e ")" bracket_statements {$$ = ["if",$3,$5];}
     | "function" IDENTIFIER "(" parameters ")" "{" statements "}" {$$ = ["function","public","Object",$2,$4,$7];}
-    | "function" IDENTIFIER "*" "(" parameters ")" "{" statements "}" {$$ = ["generator_function","public","Object",$2,$4,$7];}
+    | "function" "*" IDENTIFIER "(" parameters ")" "{" statements "}" {$$ = ["generator_function","public","Object",$3,$5,$8];}
     ;
 
 statement_with_semicolon_: initialize_var1 | statement_with_semicolon;
