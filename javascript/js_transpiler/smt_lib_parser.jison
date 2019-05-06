@@ -8,6 +8,7 @@
 "Array"               return 'Array'
 "implies"             return 'implies'
 "define-fun"          return 'define-fun'
+"define-sort"         return 'define-sort'
 "declare-const"       return 'declare-const'
 "forall"              return 'forall'
 "assert"              return 'assert'
@@ -64,13 +65,17 @@ expressions: statements_ EOF {return ["top_level_statements",$1]};
 
 statements_: statement statements_ {$$ = [$1].concat($2);} | statement {$$ =
  [$1];};
+
+data_type_and: IDENTIFIER data_type_and {$$ = ["data_type_and",$1,$2];} | IDENTIFIER {$$ =
+ $1;};
  
 statements: statements_ {$$ = ["top_level_statements",$1]};
 
 statement:
 	"(" "declare-const" IDENTIFIER type ")" {$$ = ["semicolon",["initialize_empty_vars",$4,[$3]]];}
 	| "(" "define-fun" IDENTIFIER "(" parameters ")" type e ")" {$$ = ["function","public",$7,$3,$5,["semicolon",["return",$8]]]}
-	| "(" "assert" e ")" {$$ = ["semicolon",["function_call","assert",[$3]]]};
+	| "(" "assert" e ")" {$$ = ["semicolon",["function_call","assert",[$3]]]}
+	| "(" "define-sort" "(" ")" IDENTIFIER "(" data_type_and ")" ")" {$$ = ["algebraic_data_type",$5,$7]};
 
 type:
 	"(" "Array" type type ")" {$$ = ["Array",[$3,$4]];}

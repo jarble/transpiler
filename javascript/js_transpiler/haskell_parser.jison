@@ -79,6 +79,8 @@ statements_: statement_ statements_ {$$ = [$1].concat($2);} | statement_ {$$ =
  [$1];};
  
 data_type_or: data_type_or "|" IDENTIFIER {$$ = ["data_type_or",$1,$3];} | IDENTIFIER;
+data_type_and: data_type_and IDENTIFIER {$$ = ["data_type_and",$1,$2];} | IDENTIFIER {$$ = $1;};
+
 
 statement_:
 	"data" IDENTIFIER "=" data_type_or {$$ = ["algebraic_data_type",$2,$4];}

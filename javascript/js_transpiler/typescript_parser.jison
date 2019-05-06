@@ -14,6 +14,7 @@
 "const"               return 'const'
 "if"                  return 'if'
 "else"                return 'else'
+"type"                return 'type'
 "case"                return "case"
 "default"             return 'default'
 "return"              return 'return'
@@ -112,8 +113,10 @@ class_:
 	| "interface" IDENTIFIER "{" class_statements "}" {$$ = ["interface","public",$2,$4];}
 	| "interface" IDENTIFIER "<" IDENTIFIER ">" "{" class_statements "}" {$$ = ["generic_interface","public",$2,$4,$7];};
 
+data_type_or: data_type_or "|" IDENTIFIER {$$ = ["data_type_or",$1,$3];} | IDENTIFIER;
+
 top_level_statement:
-	statement | initialize_var1 ";" {$$ = ["semicolon",$1]};
+	statement | "type" IDENTIFIER "=" data_type_or ";" {$$ = ["algebraic_data_type",$2,$4];} | initialize_var1 ";" {$$ = ["semicolon",$1]};
 top_level_statements: top_level_statements top_level_statement {$$ = $1.concat([$2]);} | top_level_statement {$$ =
  [$1];};
 statement
@@ -257,8 +260,6 @@ if_statement:
 |  "if" "(" e ")" bracket_statements {$$ = ["if",$3,$5];};
 identifiers: IDENTIFIER "," identifiers {$$ = [$1].concat($3);} | IDENTIFIER {$$ = [$1];};
 bracket_statements: "{" statements "}" {$$= $2;} | statement_with_semicolon ";" {$$ = ["semicolon",$1];};
-
-typedef: "type" IDENTIFIER "=" IDENTIFIER {$$ = ["typedef",$2,$4]};
 
 type_:IDENTIFIER;
 
