@@ -73,6 +73,7 @@ statements: statements_ {$$ = ["top_level_statements",$1]};
 
 statement:
 	"(" "declare-const" IDENTIFIER type ")" {$$ = ["semicolon",["initialize_empty_vars",$4,[$3]]];}
+	| "(" "define-fun" IDENTIFIER "(" ")" type e ")" {$$ = ["function","public",$6,$3,[],["semicolon",["return",$7]]]}
 	| "(" "define-fun" IDENTIFIER "(" parameters ")" type e ")" {$$ = ["function","public",$7,$3,$5,["semicolon",["return",$8]]]}
 	| "(" "assert" e ")" {$$ = ["semicolon",["function_call","assert",[$3]]]}
 	| "(" "define-sort" "(" ")" IDENTIFIER "(" data_type_and ")" ")" {$$ = ["algebraic_data_type",$5,$7]};
