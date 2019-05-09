@@ -7,6 +7,7 @@
 \"([^\\\"]|\\.)*\" return 'STRING_LITERAL'
 "Array"               return 'Array'
 "implies"             return 'implies'
+"define-fun-rec"      return 'define-fun-rec'
 "define-fun"          return 'define-fun'
 "define-sort"         return 'define-sort'
 "declare-const"       return 'declare-const'
@@ -16,6 +17,7 @@
 "ite"                 return 'ite'
 "if"                  return 'if'
 "and"                 return 'and'
+"or"                  return 'or'
 "?"                   return '?'
 ">="                  return '>='
 ">"                   return '>'
@@ -75,6 +77,8 @@ statement:
 	"(" "declare-const" IDENTIFIER type ")" {$$ = ["semicolon",["initialize_empty_vars",$4,[$3]]];}
 	| "(" "define-fun" IDENTIFIER "(" ")" type e ")" {$$ = ["function","public",$6,$3,[],["semicolon",["return",$7]]]}
 	| "(" "define-fun" IDENTIFIER "(" parameters ")" type e ")" {$$ = ["function","public",$7,$3,$5,["semicolon",["return",$8]]]}
+	| "(" "define-fun-rec" IDENTIFIER "(" ")" type e ")" {$$ = ["function","public",$6,$3,[],["semicolon",["return",$7]]]}
+	| "(" "define-fun-rec" IDENTIFIER "(" parameters ")" type e ")" {$$ = ["function","public",$7,$3,$5,["semicolon",["return",$8]]]}
 	| "(" "assert" e ")" {$$ = ["semicolon",["function_call","assert",[$3]]]}
 	| "(" "define-sort" "(" ")" IDENTIFIER "(" data_type_and ")" ")" {$$ = ["algebraic_data_type",$5,$7]};
 
