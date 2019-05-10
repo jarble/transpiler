@@ -4784,6 +4784,9 @@ function generate_code(input_lang,lang,indent,arr){
 		else if(member(lang,["smt-lib"])){
 			to_return = "(ite "+a+" "+b+" "+c+")";
 		}
+		else if(member(lang,["minizinc"])){
+			to_return = "if "+a+" then "+b+" else "+c+" endif";
+		}
 		else if(member(lang,["alloy"])){
 			to_return = "(("+a+") implies ("+b+") else ("+c+"))";
 		}
