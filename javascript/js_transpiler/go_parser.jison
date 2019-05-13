@@ -11,6 +11,7 @@
 "type"                return "type"
 "range"               return "range"
 "struct"              return "struct"
+"interface"           return 'interface'
 "public"              return "public"
 "extends"             return "extends"
 "implements"          return "implements"
@@ -88,7 +89,8 @@ statements: statements_ {$$ = ["statements",$1]};
 struct_statements: struct_statement struct_statements {$$ = [$1].concat($2);} | struct_statement {$$ =
  [$1];};
  
-struct_statement: identifiers type_ {$$ = ["struct_statement",$2,$1];};
+struct_statement: identifiers type_ {$$ = ["struct_statement",$2,$1];} | IDENTIFIER "(" parameters ")" IDENTIFIER {$$ = ["interface_instance_method","public",$5,$1,$3];}
+;
 
 
 
@@ -102,6 +104,7 @@ statement
     :
     statement_with_semicolon {$$ = ["semicolon",$1];}
     | "type" IDENTIFIER "struct" "{" struct_statements "}" {$$ = ["struct",$1,$5]}
+    | "type" IDENTIFIER "interface" "{" struct_statements "}" {$$ = ["interface","public",$2,$5]}
     | "for" e "{" statements "}" {$$ = ["while",$2,$4];}
     | "for" "_" "," IDENTIFIER ":=" "range" dot_expr "{" statements "}" {$$ = ["foreach","Object",$4,$7,$9];}
     | "for" IDENTIFIER "," IDENTIFIER ":=" "range" dot_expr "{" statements "}" {$$ = ["foreach_with_index","Object",$2,$4,$7,$9];}
@@ -116,7 +119,7 @@ statement_with_semicolon
    : 
    "return" e  {$$ = ["return",$2];}
    | IDENTIFIER ":=" e {$$ = ["initialize_var","Object",$1,$3];}
-   | "var" identifiers {$$ = ["initialize_empty_vars","Object",$2];}
+   | "var" identifiers IDENTIFIER {$$ = ["initialize_empty_vars",$3,$2];}
    | parallel_assignment
    | access_array "=" e {$$ = ["set_var",$1,$3];}
    | IDENTIFIER "=" e {$$ = ["set_var",$1,$3];}
