@@ -145,10 +145,10 @@ class_statements: class_statements_ {$$ = ["class_statements",$1]};
 class_statements_: class_statement class_statements_ {$$ = [$1].concat($2);} | class_statement {$$ =
  [$1];};
 class_statement:
-	"set" IDENTIFIER "(" parameters ")" "{" statements "}" {$$ = ["setter_method","public","Object",$2,$4,$7];}
+	IDENTIFIER "(" parameters ")" "{" statements "}" {$$ = ["instance_method","public","Object",$1,$3,$6];}
+	| "set" IDENTIFIER "(" parameters ")" "{" statements "}" {$$ = ["setter_method","public","Object",$2,$4,$7];}
 	| "get" IDENTIFIER "(" parameters ")" "{" statements "}" {$$ = ["getter_method","public","Object",$2,$4,$7];}
 	| "static" IDENTIFIER "(" parameters ")" "{" statements "}" {$$ = ["static_method","public","Object",$2,$4,$7];}
-	| IDENTIFIER "(" parameters ")" "{" statements "}" {$$ = ["instance_method","public","Object",$1,$3,$6];}
 	;
 
 statement_with_semicolon
@@ -232,7 +232,7 @@ access_array: parentheses_expr "[" e "]" {$$ = ["access_array",$1,[$3]];};
 
 
 parentheses_expr:
-    "class" "{" statements "}" {$$= ["anonymous_class",$3]}
+    "class" "{" class_statements "}" {$$= ["anonymous_class",$3]}
     | "function" "(" parameters ")" "{" statements "}" {$$ = ["anonymous_function","Object",$3,$6]}
     | "(" IDENTIFIER "=>" e ")" {$$ = ["anonymous_function","Object",[["Object",$2]],["statements",[["semicolon",["return",$4]]]]]}
     | IDENTIFIER "(" ")" {$$= ["function_call",$1,[]];}

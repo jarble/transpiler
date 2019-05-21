@@ -150,6 +150,7 @@ parentheses_expr:
     "(" e ")" {$$ = $2}
     | "(" parentheses_expr ".." parentheses_expr ")" {$$ = ["inclusive_range",$2,$4]}
     | "[" exprs "]" {$$ = ["initializer_list","Object",$2];}
+    |"{" exprs "}" {$$ = ["initialize_set","Object",$2];}
     | "(" e set_operator e ")" {$$ = [$3,$2,$4];}
     | NUMBER
         {$$ = yytext;}

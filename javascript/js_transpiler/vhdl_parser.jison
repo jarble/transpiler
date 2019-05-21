@@ -28,11 +28,11 @@
 "."                   return '.'
 ":="                  return ':='
 ":"                   return ':'
-"&&"                  return '&&'
+"and"                 return 'and'
 "&"                   return '&'
-"||"                  return '||'
+"or"                  return 'or'
 "/="                  return '/='
-'!'                   return '!'
+'not'                 return 'not'
 ">="                  return '>='
 ">>"                  return '>>'
 ">"                   return '>'
@@ -43,7 +43,7 @@
 "="                   return '='
 "*="                  return '*='
 "*"                   return '*'
-"%"                   return '%'
+"mod"                 return 'mod'
 "/="                  return '/='
 "/"                   return '/'
 "-="                  return '-='
@@ -69,11 +69,11 @@
 /* operator associations and precedence */
 
 %right '?'
-%left '||'
-%left '&&'
+%left 'or'
+%left 'and'
 %left '<' '<=' '>' '>=' '=' '/='
 %left '+' '-'
-%left '*' '/' '%'
+%left '*' '/' 'mod'
 %left '**'
 %left UMINUS
 
@@ -130,10 +130,10 @@ statement_with_semicolon
 e
     :
     e "?" e ":" e {$$ = ["ternary_operator",$1,$3,$5]}
-    |e '||' e
-        {$$ = [$2,$1,$3];}
-    |e '&&' e
-        {$$ = [$2,$1,$3];}
+    |e 'or' e
+        {$$ = ["||",$1,$3];}
+    |e 'and' e
+        {$$ = ["&&",$1,$3];}
     |e '<=' e
         {$$ = [$2,$1,$3];}
     |e '<' e
@@ -145,13 +145,13 @@ e
     | e '=' e
         {$$ = [$2,$1,$3];}
     | e '/=' e
-        {$$ = [$2,$1,$3];}
+        {$$ = ["!=",$1,$3];}
     | e '+' e
         {$$ = [$2,$1,$3];}
     | e '-' e
         {$$ = [$2,$1,$3];}
-    | e '%' e
-        {$$ = [$2,$1,$3];}
+    | e 'mod' e
+        {$$ = ["%",$1,$3];}
     | e '*' e
         {$$ = [$2,$1,$3];}
     | e '/' e
@@ -164,7 +164,7 @@ e
     ;
 
 
-not_expr: "!" dot_expr {$$ = ["!", [".",$2]];} | dot_expr {$$ = [".", $1];};
+not_expr: "not" dot_expr {$$ = ["!", [".",$2]];} | dot_expr {$$ = [".", $1];};
 
 
 dot_expr: parentheses_expr "." dot_expr {$$ = [$1].concat($3);} | parentheses_expr {$$ =
@@ -199,7 +199,7 @@ exprs: expr "," exprs {$$ = [$1].concat($3);} | expr {$$ = [$1];};
 expr: "&" e {$$ = ["function_call_ref",$2];} | e {$$ = [$1];};
 types: type "," types {$$ = [$1].concat($3);} | type {$$ = [$1];};
 elif:
-	"else" "if" "(" e ")" "{" statements "}" elif {$$ = ["elif",$4,$7,$9]}
+	"elsif" "(" e ")" "{" statements "}" elif {$$ = ["elif",$3,$6,$8]}
 	| "else" "{" statements "}" {$$ = ["else",$3];};
 
 identifiers: IDENTIFIER "," identifiers {$$ = [$1].concat($3);} | IDENTIFIER {$$ = [$1];};

@@ -171,7 +171,8 @@ e
 access_array: parentheses_expr_ "[" e "]" {$$ = ["access_array",$1,[$3]];};
 access_array_: IDENTIFIER "[" e "]" {$$ = ["access_array",$1,[$3]];};
 
-parentheses_expr: access_array | parentheses_expr_;
+parentheses_expr: access_array | IDENTIFIER "." function_call {$$= [".",[$1,$3]];}
+| parentheses_expr_;
 
 named_parameters: named_parameters "," named_parameter {$$ = $1.concat([$3]);} | named_parameter {$$ = [$1];};
 named_parameter: IDENTIFIER "=" e {$$ = ["named_parameter",$1,$3]};
@@ -182,8 +183,11 @@ key_value: e ":" e {$$ = [$1,$3]};
 key_values_: key_values_ "," key_value_ {$$ = $1.concat([$3]);} | key_value_ {$$ = [$1];};
 key_value_: IDENTIFIER "=" e {$$ = ["\""+$1+"\"",$3]};
 
+ternary_operator: e "if" e "else" e {$$ = ["ternary_operator",$3,$1,$5];} | e "if" e "else" ternary_operator {$$ = ["ternary_operator",$3,$1,$5];};
+
 parentheses_expr_:
-    "(" "lambda" parameters ":" e ")" {$$ = ["anonymous_function","Object",$3,["statements",[["semicolon",["return",$5]]]]];}
+    "(" ternary_operator ")" {$$ = $2;}
+    |"(" "lambda" parameters ":" e ")" {$$ = ["anonymous_function","Object",$3,["statements",[["semicolon",["return",$5]]]]];}
     |"[" "]" {$$ = ["initializer_list","Object",[]];}
     |"[" exprs "]" {$$ = ["initializer_list","Object",$2];}
     |"{" "}" {$$ = ["associative_array","Object","Object",[]];}
@@ -193,9 +197,7 @@ parentheses_expr_:
     |"(" parentheses_expr "in" parentheses_expr ")"  {$$ = ["in",$2,$4];}
     |"[" e "for" e "in" list_comprehensions "]" {$$ = ["list_comprehension",$2,$4,$6];}
     |"[" e "for" e "in" list_comprehensions "if" e "]" {$$ = ["list_comprehension",$2,$4,$6,$8];}
-    | IDENTIFIER "(" ")" {$$= ["function_call",$1,[]];}
-    | IDENTIFIER "(" named_parameters ")" {$$ = ["function_call",$1,$3];}
-    | IDENTIFIER "(" exprs ")" {$$= ["function_call",$1,$3];}
+    | function_call
     | NUMBER
         {$$ = yytext;}
     | IDENTIFIER
@@ -203,6 +205,10 @@ parentheses_expr_:
     | STRING_LITERAL
         {$$ = yytext;}
     ;
+
+function_call: IDENTIFIER "(" ")" {$$= ["function_call",$1,[]];}
+    | IDENTIFIER "(" named_parameters ")" {$$ = ["function_call",$1,$3];}
+    | IDENTIFIER "(" exprs ")" {$$= ["function_call",$1,$3];};
 
 list_comprehensions: e "for" e "in" list_comprehensions {$$ = ["list_comprehensions",$1,$3,$5];} | e;
 
