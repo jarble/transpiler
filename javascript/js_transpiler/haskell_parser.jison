@@ -81,9 +81,14 @@ statements_: statement_ statements_ {$$ = [$1].concat($2);} | statement_ {$$ =
 data_type_or: data_type_or "|" IDENTIFIER {$$ = ["data_type_or",$1,$3];} | IDENTIFIER;
 data_type_and: data_type_and IDENTIFIER {$$ = ["data_type_and",$1,$2];} | IDENTIFIER {$$ = $1;};
 
+struct_statements: struct_statement "," struct_statements {$$ = [$1].concat($3);} | struct_statement {$$ =
+ [$1];};
+ 
+struct_statement: identifiers "::" type {$$ = ["struct_statement",$3,$1];};
 
 statement_:
 	"data" IDENTIFIER "=" data_type_or {$$ = ["algebraic_data_type",$2,$4];}
+	| "data" IDENTIFIER "=" IDENTIFIER "{" struct_statements "}" {$$ = ["struct",$2,["struct_statements",$6]]}
 	| IDENTIFIER parameters guard_if_statement {$$ = ["function","public","Object",$1,$2,$3];}
 	| IDENTIFIER "::" types IDENTIFIER parameters "=" statements {
 		var types = $3;
@@ -171,6 +176,7 @@ access_array: IDENTIFIER "!!" access_arr {$$ = ["access_array",$1,[$3]];};
 parentheses_expr:
     "(" "\\" parameters "->" e ")" {$$ = ["anonymous_function","Object",$3,["statements",[["semicolon",["return",$5]]]]];}
     |"(" access_array ")" {$$ = $2}
+    |"(" e "," exprs ")" {$$ = ["initialize_tuple","Object",[$2].concat($4)];}
     |"[" "]" {$$ = ["initializer_list","Object",[]];}
     |"[" exprs "]" {$$ = ["initializer_list","Object",$2];}
     |"[" e "|" e "<-" list_comprehensions "]" {$$ = ["list_comprehension",$2,$4,$6];}

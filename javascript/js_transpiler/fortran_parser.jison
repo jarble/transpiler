@@ -1,5 +1,6 @@
 /* lexical grammar */
 %lex
+%options case-insensitive
 %%
 
 (\s+|\!+.*\n)        /* skip whitespace and line comments */
@@ -254,9 +255,9 @@ parentheses_expr:
 
 var_type: "double precision" | IDENTIFIER;
 parameter:
-	var_type "," "intent" "(" "in" ")" "::" IDENTIFIER {$$ = ["in_parameter",$1, $8];}
-	| var_type "," "intent" "(" "out" ")" "::" IDENTIFIER {$$ = ["out_parameter",$1, $8];}
-	| var_type "," "intent" "(" "inout" ")" "::" IDENTIFIER {$$ = ["ref_parameter",$1, $8];};
+	var_type "," "intent" "(" "in" ")" "::" identifiers {$$ = ["in_parameter",$1, $8];}
+	| var_type "," "intent" "(" "out" ")" "::" identifiers {$$ = ["out_parameter",$1, $8];}
+	| var_type "," "intent" "(" "inout" ")" "::" identifiers {$$ = ["ref_parameter",$1, $8];};
 parameters: parameters parameter {$$ = $1.concat([$2]);} | parameter {$$ =
  [$1];};
 

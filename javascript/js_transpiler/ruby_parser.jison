@@ -109,7 +109,7 @@ OPERATOR: "<="|">="|"<"|">"|"&&"|"||"|"=="|"+"|"-"|"*"|"/";
 
 class_statements_: class_statement class_statements_ {$$ = [$1].concat($2);} | class_statement {$$ =
  [$1];}; 
-class_statements: class_statements_ {$$ = ["class_statements",$1]};
+class_statements: class_statements_ {$$ = ["class_statements",$1]}|";" {$$ = ["class_statements",[]]};
 
 statements: statements_ {$$ = ["statements",$1]};
 
@@ -135,6 +135,9 @@ statement
 	| "if" e statements elif "end" {$$ = ["if",$2,$3,$4];}
 	| "if" e statements "end" {$$ = ["if",$2,$3];}
     | "def" IDENTIFIER "(" parameters ")" statements "end" {$$ = ["function","public","Object",$2,$4,$6];}
+    | "def" IDENTIFIER statements "end" {$$ = ["function","public","Object",$2,[],$3];}
+    | "def" IDENTIFIER "(" parameters ")" ";" "end" {$$ = ["function","public","Object",$2,$4,[]];}
+    | "def" IDENTIFIER ";" "end" {$$ = ["function","public","Object",$2,[],[]];}
     ;
 
 statement_with_semicolon

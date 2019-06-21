@@ -9,6 +9,7 @@
 "class"               return 'class'
 "def"                 return "def"
 "dict"                return "dict"
+"pass"                return "pass"
 "if"                  return "if"
 "of"                  return 'of'
 "for"                 return 'for'
@@ -78,7 +79,8 @@ expressions: statements_ EOF {return ["top_level_statements",$1]};
 statements_: statement_ statements_ {$$ = [$1].concat($2);} | statement_ {$$ =
  [$1];};
 
-class_statements: class_statement class_statements {$$ = [$1].concat($2);} | class_statement {$$ =
+class_statements: class_statements_ {$$ = ["class_statements",$1]} | "pass" {$$ = ["class_statements",[]];};
+class_statements_: class_statement class_statements_ {$$ = [$1].concat($2);} | class_statement {$$ =
  [$1];};
 class_statement:
 	"@staticmethod" "def" IDENTIFIER "(" parameters ")" ":" statements {$$ = ["static_method","public","Object",$3,$5,$8];};
@@ -87,6 +89,7 @@ statement_:
 	function
 	| if_statement
 	| "class" IDENTIFIER ":" class_statements {$$ = [$1,"public",$2,$4];}
+	| "class" IDENTIFIER "(" IDENTIFIER ")" ":" class_statements {$$ = ["class_extends","public",$2,$4,$7];}
 	| foreach
 	| statement_with_semicolon {$$ = ["semicolon",$1];};
 
@@ -194,6 +197,7 @@ parentheses_expr_:
     | "{" key_values "}" {$$ = ["associative_array","Object","Object",$2];}
     | "dict" "(" key_values_ ")" {$$ = ["associative_array","Object","Object",$3];}
     |"{" exprs "}" {$$ = ["initialize_set","Object",$2];}
+    |"(" e "," exprs ")" {$$ = ["initialize_tuple","Object",[$2].concat($4)];}
     |"(" parentheses_expr "in" parentheses_expr ")"  {$$ = ["in",$2,$4];}
     |"[" e "for" e "in" list_comprehensions "]" {$$ = ["list_comprehension",$2,$4,$6];}
     |"[" e "for" e "in" list_comprehensions "if" e "]" {$$ = ["list_comprehension",$2,$4,$6,$8];}
@@ -222,4 +226,4 @@ elif_statement: "elif" e ":" statements elif_statement {$$ = ["elif",$2,$4,$5]} 
 identifiers: IDENTIFIER "," identifiers {$$ = [$1].concat($3);} | IDENTIFIER {$$ = [$1];};
 
 
-statements: statement {$$ = ["statements",[$1]]};
+statements: statement {$$ = ["statements",[$1]]} | "pass" {$$ = ["statements",[]]};

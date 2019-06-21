@@ -9,6 +9,9 @@
 "function"            return "function"
 "continue"            return "continue"
 "interface"           return "interface"
+"export"              return 'export'
+"private"             return 'private'
+"public"              return 'public'
 "typeof"              return "typeof"
 "class"               return "class"
 "const"               return 'const'
@@ -109,6 +112,7 @@ access_modifier: "public" | "private";
 
 class_:
 	"class" IDENTIFIER "{" class_statements "}" {$$ = [$1,"public",$2,$4];}
+	| "export" "class" IDENTIFIER "<" types ">" "{" class_statements "}" {$$ = ["generic_class","public",$3,$8,$5];}
 	| "interface" IDENTIFIER "extends" IDENTIFIER "{" class_statements "}" {$$ = ["interface_extends",$2,$4,$6,$8];}
 	| "interface" IDENTIFIER "{" class_statements "}" {$$ = ["interface","public",$2,$4];}
 	| "interface" IDENTIFIER "<" IDENTIFIER ">" "{" class_statements "}" {$$ = ["generic_interface","public",$2,$4,$7];};
@@ -130,7 +134,7 @@ statement
     | "for" "(" statement_with_semicolon_ ";" e ";" statement_with_semicolon_ ")" bracket_statements {$$ = ["for",$3,$5,$7,$9];}
     | if_statement
     | "function" IDENTIFIER "(" parameters ")" "{" statements "}" {$$ = ["function","public","Object",$2,$4,$7];}
-    | "function" IDENTIFIER "<" types ">" "(" parameters ")" "{" statements "}" {$$ = ["generic_function","public","Object",$2,$7,$10,$3];}
+    | "function" IDENTIFIER "<" types ">" "(" parameters ")" "{" statements "}" {$$ = ["generic_function","public","Object",$2,$7,$10,$4];}
     | "function" IDENTIFIER "(" parameters ")" ":" IDENTIFIER "{" statements "}" {$$ = ["function","public",$7,$2,$4,$9];}
     | "function" IDENTIFIER "<" types ">" "(" parameters ")" ":" IDENTIFIER "{" statements "}" {$$ = ["generic_function","public",$10,$2,$7,$12,$4];}
     ;
@@ -142,6 +146,8 @@ class_statement:
 	| IDENTIFIER "(" parameters ")" "{" statements "}" {$$ = ["instance_method","public","Object",$1,$3,$6];}
 	| "static" IDENTIFIER "(" parameters ")" ":" IDENTIFIER "{" statements "}" {$$ = ["static_method","public",$7,$2,$4,$9];}
 	| IDENTIFIER "(" parameters ")" ":" IDENTIFIER "{" statements "}" {$$ = ["instance_method","public",$6,$1,$3,$8];}
+	| access_modifier IDENTIFIER ":" type_ ";" {$$ = ["initialize_instance_var",$1,$4,$2];}
+
 	;
 
 statement_with_semicolon
@@ -154,6 +160,7 @@ statement_with_semicolon
    | "var" identifiers {$$ = ["initialize_empty_vars","Object",$2];}
    | access_array "=" e {$$ = ["set_var",$1,$3];}
    | IDENTIFIER "=" e {$$ = ["set_var",$1,$3];}
+   | IDENTIFIER "." IDENTIFIER "=" e {$$ = ["set_var",[".",[$1,$3]],$5];}
    | IDENTIFIER "++" {$$ = [$2,$1];}
    | IDENTIFIER "--" {$$ = [$2,$1];}
    | IDENTIFIER "+=" e {$$ = [$2,$1,$3];}

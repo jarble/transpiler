@@ -132,8 +132,9 @@ parentheses_expr:
     |"[" e "||" e "<-" list_comprehensions "]" {$$=["list_comprehension",$2,$4,$6];}
     | "[" "]" {$$ = ["initializer_list","Object",[]];}
     | "[" exprs "]" {$$ = ["initializer_list","Object",$2];}
-    | "[" expr "|" exprs "]" {$$ = ["list_head_tail","Object",$2,["initializer_list","Object",$4]];}
+    | "[" e "|" exprs "]" {$$ = ["list_head_tail","Object",$2,["initializer_list","Object",$4]];}
     |function_call
+    |"(" e "," exprs ")" {$$ = ["initialize_tuple","Object",[$2].concat($4)];}
     | '(' e ')' {$$ = $2;}
     | NUMBER
         {$$ = yytext;}

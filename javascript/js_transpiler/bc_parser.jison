@@ -33,10 +33,8 @@
 "!="                  return '!='
 '!'                   return '!'
 ">="                  return '>='
-">>"                  return '>>'
 ">"                   return '>'
 "<="                  return '<='
-"<<"                  return '<<'
 "<"                   return '<'
 "=="                  return '=='
 "="                   return '='
@@ -72,7 +70,7 @@
 %left '&&'
 %left '^'
 %left '<' '<=' '>' '>=' '==' '!='
-%left '>>' '<<'
+%left ('<' '<') ('>' '>')
 %left '+' '-'
 %left '*' '/' '%'
 %left UMINUS

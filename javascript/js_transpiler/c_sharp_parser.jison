@@ -105,7 +105,7 @@ statements_with_vars: statements_without_vars initialize_var1 ";" {$$ = $1.conca
 initialize_vars: initialize_vars ";" initialize_var {$$ = $1.concat([$3]);} | initialize_var {$$ =
  [$1];};
 
-class_statements: class_statements_ {$$ = ["class_statements",$1]};
+class_statements: class_statements_ {$$ = ["class_statements",$1]} | {$$ = ["class_statements",[]]};
 statements: statements_ {$$ = ["statements",$1]};
 
 
@@ -129,7 +129,7 @@ class_:
 struct_statements: struct_statement struct_statements {$$ = [$1].concat($2);} | struct_statement {$$ =
  [$1];};
  
-struct_statement: type identifiers ";" {$$ = ["struct_statement",$1,$2];} | set_array_size ";" {$$ = ["semicolon", $1];};
+struct_statement: type identifiers ";" {$$ = ["struct_statement",$1,$2];} |  access_modifier type identifiers ";" {$$ = ["struct_statement",$2,$3];} | set_array_size ";" {$$ = ["semicolon", $1];};
 
 
 top_level_statement:
@@ -142,6 +142,8 @@ statement
     | statement_with_semicolon ";" {$$ = ["semicolon",$1];}
     | class_
     | "struct" IDENTIFIER "{" struct_statements "}" {$$ = ["struct",$2,["struct_statements",$4]]}
+	| "struct" IDENTIFIER "<" IDENTIFIER ">" "{" struct_statements "}" {$$ = ["generic_struct",$2,$4,$7];}
+	| access_modifier "struct" IDENTIFIER "<" IDENTIFIER ">" "{" struct_statements "}" {$$ = ["generic_struct",$3,$5,$8];}
     | "while" "(" e ")" bracket_statements {$$ = ["while",$3,$5];}
     | "do" bracket_statements "while" "(" e ")" ";" {$$ = ["do_while",$2,$5];}
     | "switch" "(" e ")" "{" case_statements "}" {$$ = ["switch",$3,$6];}

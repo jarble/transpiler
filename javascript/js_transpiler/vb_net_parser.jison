@@ -1,5 +1,6 @@
 /* lexical grammar */
 %lex
+%options case-insensitive
 %%
 
 (\s+|\/\/+.*\n)        /* skip whitespace and line comments */
@@ -8,6 +9,7 @@
 "Loop"                return "Loop"
 "As"                  return "As"
 "Not"                 return 'Not'
+"Dim"                 return 'Dim'
 "Case"                return 'Case'
 "End"                 return "End"
 "Enum"                return "Enum"
@@ -192,8 +194,8 @@ statement_with_semicolon
 
 initialize_var1: initialize_var_ {$$ = ["initialize_var"].concat($1);};
 initialize_var: initialize_var_ {$$ = ["lexically_scoped_var"].concat($1);};
-initialize_var_: type IDENTIFIER "=" "{" exprs "}" {$$ = [$1,$2,["initializer_list",$1,$5]]}
-   | type IDENTIFIER "=" e {$$ = [$1,$2,$4];};
+initialize_var_: "Dim" IDENTIFIER "(" ")" "As" type "=" "{" exprs "}" {$$ = [$6,$2,["initializer_list",$1,$9]]}
+   | "Dim" IDENTIFIER "As" type "=" e {$$ = [$4,$2,$6];};
 
 key_values: key_values "," key_value {$$ = $1.concat([$3]);} | key_value {$$ = [$1];};
 key_value: "{" STRING_LITERAL "," e "}" {$$ = [$2,$4]};

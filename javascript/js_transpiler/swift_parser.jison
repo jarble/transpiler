@@ -93,7 +93,7 @@ statements_without_vars: statements_without_vars statement {$$ = $1.concat([$2])
 
 statements: statements_ {$$ = ["statements",$1]};
 
-class_statements: class_statements_ {$$ = ["class_statements",$1]};
+class_statements: class_statements_ {$$ = ["class_statements",$1]} | {$$ = ["class_statements",[]]};
 class_statements_: class_statement class_statements_ {$$ = [$1].concat($2);} | class_statement {$$ =
  [$1];};
 
@@ -200,6 +200,7 @@ access_array: IDENTIFIER "[" e "]" {$$ = ["access_array",$1,[$3]];};
 
 function_call:
     IDENTIFIER "(" ")" {$$ = ["function_call",$1,[]];}
+    | IDENTIFIER "(" exprs ")" {$$ = ["function_call",$1,$3];}
     | IDENTIFIER "(" named_parameters ")" {$$ = ["function_call",$1,$3];}
 	;
 parentheses_expr_:

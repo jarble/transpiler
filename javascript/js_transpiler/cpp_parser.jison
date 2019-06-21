@@ -45,6 +45,7 @@
 ">="                  return '>='
 ">"                   return '>'
 "<="                  return '<='
+"<<"                  return '<<'
 "<"                   return '<'
 "=="                  return '=='
 "="                   return '='
@@ -79,7 +80,7 @@
 %left '->'
 %left '&&' '||'
 %left '==' '!=' '<' '<=' '>' '>='
-%left ('>' '>') ( '<' '<' )
+%left '>>' '<<'
 %left '+' '-'
 %left '*' '/' '%'
 %left UMINUS
@@ -97,7 +98,7 @@ initialize_vars: initialize_vars ";" initialize_var {$$ = $1.concat([$3]);} | in
  [$1];};
 
 
-class_statements: class_statements_ {$$ = ["class_statements",$1]};
+class_statements: class_statements_ {$$ = ["class_statements",$1]} | {$$ = ["class_statements",[]]};
 statements: statements_ {$$ = ["statements",$1]};
 
 
@@ -110,7 +111,7 @@ class_:
 	"namespace" IDENTIFIER "{" class_statements "}" {$$ = [$1,"public",$2,$4];}
 	| "class" IDENTIFIER "{" class_statements "}" ";" {$$ = [$1,"public",$2,$4];}
 	| "struct" IDENTIFIER "{" struct_statements "}" ";" {$$ = ["struct",$2,["struct_statements",$4]]}
-	| "template" "<" type_params ">" IDENTIFIER "{" class_statements "}" {$$ = ["generic_class","public",$5,$7,$3];}
+	| "template" "<" type_params ">" "class" IDENTIFIER "{" class_statements "}" {$$ = ["generic_class","public",$6,$8,$3];}
 	| "enum" IDENTIFIER "{" identifiers "}" {$$ = ["enum","public",$2,$4];}
 	| "class" IDENTIFIER ":" "public" IDENTIFIER "{" class_statements "}" {$$ = ["class_extends","public",$2,$5,$7];}
 	| "class" IDENTIFIER "implements" IDENTIFIER "{" class_statements "}" {$$ = ["class_implements","public",$2,$4,$6];};
@@ -172,6 +173,7 @@ statement_with_semicolon
    | type identifiers {$$ = ["initialize_empty_vars",$1,$2];}
    | access_array "=" e {$$ = ["set_var",$1,$3];}
    | IDENTIFIER "=" e {$$ = ["set_var",$1,$3];}
+   | IDENTIFIER "." IDENTIFIER "=" e {$$ = ["set_var",[".",[$1,$3]],$5];}
    | IDENTIFIER "++" {$$ = [$2,$1];}
    | IDENTIFIER "--" {$$ = [$2,$1];}
    | IDENTIFIER "+=" e {$$ = [$2,$1,$3];}
@@ -180,8 +182,8 @@ statement_with_semicolon
    | IDENTIFIER "/=" e {$$ = [$2,$1,$3];}
    | IDENTIFIER "." dot_expr {$$ = [".",[$1].concat($3)]}
    | function_call
-   | "cout" "<" "<" parentheses_expr {$$ = ["<<",$1,$4];}
-   | "cout" "<" "<" e "<" "<" parentheses_expr {$$ = ["<<",["<<",$1,$4],$7];}
+   | "cout" "<<" parentheses_expr {$$ = ["<<",$1,$3];}
+   | "cout" "<<" e "<<" parentheses_expr {$$ = ["<<",["<<",$1,$3],$5];}
    ;
 
 initialize_var1: initialize_var_ {$$ = ["initialize_var"].concat($1);};
@@ -267,7 +269,7 @@ types: type "," types {$$ = [$1].concat($3);} | type {$$ = [$1];};
 
 type_params: type_param "," type_params {$$ = [$1].concat($3);} | type_param {$$ = [$1];};
 
-type_param: "class" type {$$ = $2;} | "typename" type {$$ = $2;};
+type_param: "class" type {$$ = $2;} | "typename" type {$$ = $2;} | type {$$ = $1;};
 
 elif:
 	"else" "if" "(" e ")" bracket_statements elif {$$ = ["elif",$4,$6,$7]}

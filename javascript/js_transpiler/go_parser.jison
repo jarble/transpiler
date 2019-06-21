@@ -197,7 +197,7 @@ parentheses_expr:
         {$$ = yytext;};
 
 type_: IDENTIFIER "[" "]" {$$ = [$1,"[]"];} | IDENTIFIER;
-parameter: IDENTIFIER type_ {$$ = [$2, $1];};
+parameter: identifiers type_ {$$ = [$2, $1];};
 parameters: parameter "," parameters {$$ = [$1].concat($3);} | parameter {$$ =
  [$1];} | {$$ = []};
 access_arr: parentheses_expr "][" access_arr {$$ = [$1].concat($3);} | parentheses_expr {$$ =

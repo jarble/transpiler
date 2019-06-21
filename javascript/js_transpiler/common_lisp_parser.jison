@@ -1,5 +1,6 @@
 /* lexical grammar */
 %lex
+%options case-insensitive
 %%
 
 (\s+|\;+.*\n)        /* skip whitespace and line comments */

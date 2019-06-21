@@ -141,7 +141,7 @@ statement
 statement_with_semicolon_: initialize_var1 | statement_with_semicolon;
 
 
-class_statements: class_statements_ {$$ = ["class_statements",$1]};
+class_statements: class_statements_ {$$ = ["class_statements",$1]} | {$$ = ["class_statements",[]]};
 class_statements_: class_statement class_statements_ {$$ = [$1].concat($2);} | class_statement {$$ =
  [$1];};
 class_statement:

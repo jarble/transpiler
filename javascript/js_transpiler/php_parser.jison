@@ -95,7 +95,7 @@ expressions: statements_ EOF {return ["top_level_statements",$1]};
 statements_: statement statements_ {$$ = [$1].concat($2);} | statement {$$ =
  [$1];};
 
-class_statements: class_statements_ {$$ = ["class_statements",$1]};
+class_statements: class_statements_ {$$ = ["class_statements",$1]} | {$$ = ["class_statements",[]]};
 statements: statements_ {$$ = ["statements",$1]};
 
 
@@ -105,9 +105,9 @@ class_statements_: class_statement class_statements_ {$$ = [$1].concat($2);} | c
 access_modifier: "public" | "private";
 
 class_:
-	access_modifier "class" IDENTIFIER "{" class_statements "}" {$$ = ["class",$1,$2,$3,$5];}
-	| access_modifier "class" IDENTIFIER "extends" IDENTIFIER "{" class_statements "}" {$$ = ["class_extends",$1,$2,$3,$5,$7];}
-	| access_modifier "class" IDENTIFIER "implements" IDENTIFIER "{" class_statements "}" {$$ = ["class_implements",$1,$2,$3,$5,$7];};
+	"class" IDENTIFIER "{" class_statements "}" {$$ = ["class","public",$2,$4];}
+	| "class" IDENTIFIER "extends" IDENTIFIER "{" class_statements "}" {$$ = ["class_extends","public",$2,$4,$6];}
+	| "class" IDENTIFIER "implements" IDENTIFIER "{" class_statements "}" {$$ = ["class_implements","public",$2,$4,$6];};
 
 statement
     :

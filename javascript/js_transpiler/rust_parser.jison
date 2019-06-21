@@ -93,6 +93,7 @@ statement
 	"struct" IDENTIFIER "{" statements "}" {$$ = ["struct",$2,$4]}
 	| "struct" IDENTIFIER "<" IDENTIFIER ">" "{" statements "}" {$$ = ["generic_struct",$2,$4,$7];}
 	| "fn" IDENTIFIER "(" parameters ")" "{" statements "}" {$$ = ["function","public","Object",$2,$4,$7];}
+    | "fn" IDENTIFIER "<" types ">" "(" parameters ")" "{" statements "}" {$$ = ["generic_function","public","Object",$2,$7,$10,$4];}
     | statement_with_semicolon ";" {$$ = ["semicolon",$1];}
     | "while" "(" e ")" bracket_statements {$$ = ["while",$3,$5];}
     | "switch" "(" e ")" "{" case_statements "}" {$$ = ["switch",$3,$6];}

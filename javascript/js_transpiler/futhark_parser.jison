@@ -8,9 +8,12 @@
 "otherwise"           return "otherwise"
 "if"                  return "if"
 "of"                  return 'of'
+"do"                  return 'do'
 "in"                  return "in"
-"let"                  return "let"
+"let"                 return "let"
+"for"                 return 'for'
 "else"                return "else"
+"loop"                return 'loop'
 "case"                return "case"
 "then"                return "then"
 "data"                return "data"
@@ -18,6 +21,7 @@
 "mod"                 return 'mod'
 ","                   return ','
 ";"                   return ';'
+"'"                   return "'"
 "."                   return '.'
 "::"                  return '::'
 ":"                   return ':'
@@ -25,11 +29,13 @@
 "||"                  return '||'
 "|"                   return '|'
 "\\"                  return '\\'
+">>"                  return '>>'
 ">="                  return '>='
 ">"                   return '>'
 "<="                  return '<='
 "<-"                  return '<-'
 "->"                  return '->'
+"<<"                  return '<<'
 "<"                   return '<'
 "=="                  return '=='
 "="                   return '='
@@ -87,19 +93,35 @@ statement_:
 	| "let" IDENTIFIER ":" IDENTIFIER "=" statements {$$ = ["function","public",$4,$2,[],$6];}
 	| "let" IDENTIFIER "=" statements {$$ = ["function","public","Object",$2,[],$4];}
 	| "let" IDENTIFIER parameters ":" IDENTIFIER "=" statements {$$ = ["function","public",$5,$2,$3,$7];}
-	| "let" IDENTIFIER parameters "=" statements {$$ = ["function","public","Object",$2,$3,$5];};
+	| "let" IDENTIFIER parameters "=" statements {$$ = ["function","public","Object",$2,$3,$5];}
+	| "let" IDENTIFIER types parameters ":" type "=" statements {$$ = ["generic_function","public",$6,$2,$4,$8,$3];}
+	| "let" IDENTIFIER types parameters "=" statements {$$ = ["generic_function","public","Object",$2,$4,$6,$3];}
+	| "let" parallel_lhs "=" parallel_rhs {$$ = ["parallel_assignment",["parallel_lhs",$2],["parallel_rhs",$4]]};
+
+types: "'" type types {$$ = [$2].concat($3);} | "'" type {$$ =
+ [$2];};
+
+parallel_lhs: parallel_lhs "," IDENTIFIER {$$ = [$1.concat([$3])];} | IDENTIFIER "," IDENTIFIER {$$ = [$1,$3]};
+parallel_rhs: parallel_rhs "," e {$$ = [$1.concat([$3])];} | e "," e {$$ = [$1,$3]};
 
 
 
 
 statement:
 	statement_with_parentheses {$$ = $1;}
-    | statement_with_semicolon {$$ = ["semicolon",$1];};
+    | statement_with_semicolon {$$ = ["semicolon",$1];}
+    | "loop" e "while" e "do" statements {$$ = ["futhark_while_loop",$2,$4,$6]}
+    | "loop" e "=" e "while" e "do" statements {$$ = ["futhark_while_loop",$2,$4,$6,$8]}
+    | "loop" e "for" e "in" e "do" statements {$$ = ["futhark_foreach",$2,$4,$6,$8]}
+    | "loop" e "=" e "for" e "in" e "do" statements {$$ = ["futhark_foreach",$2,$4,$6,$8,$10]}
+    | "loop" e "for" e "<" e "do" statements {$$ = ["futhark_for_loop",$2,$4,$6,$8]}
+    | "loop" e "=" e "for" e "<" e "do" statements {$$ = ["futhark_for_loop",$2,$4,$6,$8,$10]}
+;
 
 statement_with_parentheses:
     "if" e "then" statements elif {$$ = ["if",$2,$4,$5];}
 	| "case" parentheses_expr "of" case_statements {$$ = ["switch",$2,$4];}
-	| "let" declare_vars "in" statements {$$ = ["lexically_scoped_vars",$2,$4];}
+	| declare_vars "in" statements {$$ = ["lexically_scoped_vars",$1,$3];}
 	| "(" statement_with_parentheses ")" {$$ = $2};
 
 case_statement: parentheses_expr "->" statements {$$ = ["case",$1,$3]};
@@ -109,7 +131,7 @@ case_statements_: case_statement case_statements_ {$$ = [$1].concat($2);} | case
 case_statements: case_statements_ "_" "->" statements {$$ = $1.concat([["default",["statements",$4]]])};
 
 
-declare_var: IDENTIFIER "=" e {$$ = ["lexically_scoped_var","Object",$1,$3]};
+declare_var: "let" IDENTIFIER "=" e {$$ = ["lexically_scoped_var","Object",$2,$4]};
 declare_vars: declare_var declare_vars {$$ = [$1].concat($2);} | declare_var {$$ =
  [$1];};
 
@@ -159,11 +181,18 @@ e
 
 access_array: IDENTIFIER "!!" access_arr {$$ = ["access_array",$1,[$3]];};
 
+key_values: key_values "," key_value {$$ = $1.concat([$3]);} | key_value {$$ = [$1];};
+key_value: IDENTIFIER "=" e {$$ = ["\""+$1+"\"",$3]};
+
+
 parentheses_expr:
     "(" "\\" parameters "->" e ")" {$$ = ["anonymous_function","Object",$3,["statements",[["semicolon",["return",$5]]]]];}
+    | "{" key_values "}" {$$ = ["associative_array","Object","Object",$2];}
+    | "(" "\\" parameters ":" IDENTIFIER "->" e ")" {$$ = ["anonymous_function",$5,$3,["statements",[["semicolon",["return",$7]]]]];}
     |"(" access_array ")" {$$ = $2}
     |"[" "]" {$$ = ["initializer_list","Object",[]];}
     |"[" exprs "]" {$$ = ["initializer_list","Object",$2];}
+    |"(" e "," exprs ")" {$$ = ["initialize_tuple","Object",[$2].concat($4)];}
     |"[" e "|" e "<-" list_comprehensions "]" {$$ = ["list_comprehension",$2,$4,$6];}
     |"[" e "|" e "<-" list_comprehensions "," e "]" {$$ = ["list_comprehension",$2,$4,$6,$8];}
     | NUMBER

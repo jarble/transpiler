@@ -119,8 +119,7 @@ initialize_var_:
    | type IDENTIFIER "=" "{" exprs "}" {$$ = [$1,$2,[".",[["initializer_list","Object",$5]]]];}
    ;
 
-class_statements: class_statements_ {$$ = ["class_statements",$1]};
-
+class_statements: class_statements_ {$$ = ["class_statements",$1]} | {$$ = ["class_statements",[]]};
 class_statements_: class_statement class_statements_ {$$ = [$1].concat($2);} | class_statement {$$ =
  [$1];};
 
@@ -186,6 +185,7 @@ statement_with_semicolon
    | type IDENTIFIER "=" "new" access_array {$$ = ["set_array_size",$1,$2,$5[2]];}
    | access_array "=" e {$$ = ["set_var",$1,$3];}
    | IDENTIFIER "=" e {$$ = ["set_var",$1,$3];}
+   | IDENTIFIER "." IDENTIFIER "=" e {$$ = ["set_var",[".",[$1,$3]],$5];}
    | IDENTIFIER "++" {$$ = [$2,$1];}
    | IDENTIFIER "--" {$$ = [$2,$1];}
    | "++" IDENTIFIER {$$ = [$1,$2];}
