@@ -12,6 +12,7 @@
 "export"              return 'export'
 "private"             return 'private'
 "public"              return 'public'
+"extends"             return 'extends'
 "typeof"              return "typeof"
 "class"               return "class"
 "const"               return 'const'
@@ -111,7 +112,8 @@ class_statements_: class_statement class_statements_ {$$ = [$1].concat($2);} | c
 access_modifier: "public" | "private";
 
 class_:
-	"class" IDENTIFIER "{" class_statements "}" {$$ = [$1,"public",$2,$4];}
+	"class" IDENTIFIER "extends" IDENTIFIER "{" class_statements "}" {$$ = ["class_extends","public",$2,$4,$6];}
+	| "class" IDENTIFIER "{" class_statements "}" {$$ = [$1,"public",$2,$4];}
 	| "export" "class" IDENTIFIER "<" types ">" "{" class_statements "}" {$$ = ["generic_class","public",$3,$8,$5];}
 	| "interface" IDENTIFIER "extends" IDENTIFIER "{" class_statements "}" {$$ = ["interface_extends",$2,$4,$6,$8];}
 	| "interface" IDENTIFIER "{" class_statements "}" {$$ = ["interface","public",$2,$4];}

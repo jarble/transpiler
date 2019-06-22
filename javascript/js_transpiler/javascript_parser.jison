@@ -9,6 +9,7 @@
 "import"              return "import"
 "from"                return "from"
 "function"            return "function"
+"extends"             return "extends"
 "continue"            return "continue"
 "typeof"              return "typeof"
 "class"               return "class"
@@ -120,7 +121,8 @@ case_statements: case_statements_ "default" ":" statements {$$ = $1.concat([["de
 access_modifier: "public" | "private";
 
 class_:
-	"class" IDENTIFIER "{" class_statements "}" {$$ = [$1,"public",$2,$4];} | "class" IDENTIFIER "extends" IDENTIFIER "{" class_statements "}" {$$ = ["class_extends","public",$2,$4,$6];};
+	 "class" IDENTIFIER "extends" IDENTIFIER "{" class_statements "}" {$$ = ["class_extends","public",$2,$4,$6];}
+	 | "class" IDENTIFIER "{" class_statements "}" {$$ = [$1,"public",$2,$4];};
 
 statement
     :

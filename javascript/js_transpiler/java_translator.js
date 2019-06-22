@@ -2625,7 +2625,7 @@ function generate_code(input_lang,lang,indent,arr){
 		types[to_return] = "double";
 	}
 	else if(matching_patterns(pattern_array,input_lang,lang,arr,[
-		[["glsl"],["function_call","atan2",["$a"]]],
+		[["glsl","c","futhark"],["function_call","atan2",["$a"]]],
 		[["javascript"],[".",["Math",["function_call","atan2",["$a"]]]]]
 	],matching_symbols)){
 		var output = generate_code(input_lang,lang,indent,matching_symbols["$a"]);
@@ -5869,12 +5869,22 @@ function generate_code(input_lang,lang,indent,arr){
 			?  "(defclass "+name+" (is-a "+name1+") "+body+")"
 		: member(lang,["common lisp"])
 			?  "(defclass "+name+" ("+name1+") "+body+")"
+		: member(lang, ["futhark"])
+			? "module "+name+" = {"+body+indent+"    open "+name1+indent+"}"
 		: to_return;
 	}
 	else if(arr[0] === "interface_extends"){
 		//return arr.toString();
 		var access_modifier = arr[1];
 		var name = arr[2];
+		if(Array.isArray(arr[3]) && arr[3].length === 1){
+			arr[3] = arr[3][0];
+		}
+		else if(Array.isArray(arr[3]) && arr[3].length > 1){
+			if(lang === "java"){
+				arr[3] = arr[3].join(",");
+			}
+		}
 		var name1 = arr[3];
 		var body = generate_code(input_lang,lang,indent+"    ",arr[4]);
 		
@@ -5888,6 +5898,8 @@ function generate_code(input_lang,lang,indent,arr){
 			?  "service "+name+" extends "+name1+"{"+body+indent+"}"
 		: member(lang,["c"])
 			?  "typedef struct "+name+"{struct "+name1+";"+body+indent+"} "+name+";"
+		: member(lang,["futhark"])
+			?  "module type "+name+" = {"+body+indent+"    include "+name1+indent+"}"
 		: to_return;
 	}
 	else if(arr[0] === "algebraic_data_type"){
@@ -5985,7 +5997,7 @@ function generate_code(input_lang,lang,indent,arr){
 			to_return = "structure "+name+" : "+name1+" = struct "+body+indent+"end";
 		}
 		else if(member(lang,["futhark"])){
-			to_return = "module "+name+" : "+name1+" = {"+body+indent+"}";
+			to_return = "module "+name+":"+name1+" = {"+body+indent+"}";
 		}
 	}
 	else if(arr[0] === "abstract_class"){
@@ -6891,7 +6903,7 @@ function generate_code(input_lang,lang,indent,arr){
 	}
 	else if(arr[0] === "instance_method"){
 		if(lang === "futhark"){
-			alert(JSON.stringify(arr));
+			//alert(JSON.stringify(arr));
 		}
 		types[arr[3]] = arr[2];
 		var temp = parameters(input_lang,lang,indent,arr[4]);
