@@ -121,8 +121,7 @@ class_:
 	| access_modifier "interface" IDENTIFIER "{" class_statements "}" {$$ = [$2,$1,$3,$5];}
 	| access_modifier "interface" IDENTIFIER "<" types ">" "{" class_statements "}" {$$ = ["generic_interface",$1,$3,$8,$5];}	
 	| access_modifier "enum" IDENTIFIER "{" identifiers "}" {$$ = ["enum",$1,$3,$5];}
-	| access_modifier "class" IDENTIFIER ":" IDENTIFIER "{" class_statements "}" {$$ = ["class_extends",$1,$3,$5,$7];}
-	| access_modifier "class" IDENTIFIER "implements" IDENTIFIER "{" class_statements "}" {$$ = ["class_implements",$1,$3,$5,$7];}
+	| access_modifier "class" IDENTIFIER ":" identifiers "{" class_statements "}" {$$ = ["class_extends",$1,$3,$5,$7];}
 	;
 
 struct_statements: struct_statement struct_statements {$$ = [$1].concat($2);} | struct_statement {$$ =
