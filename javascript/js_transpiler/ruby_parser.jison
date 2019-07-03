@@ -100,7 +100,8 @@ class_:
 	"class" IDENTIFIER class_statements "end" {$$ = [$1,"public",$2,$3];};
 
 class_statement:
-	"def" OPERATOR "(" parameters ")" statements "end" {$$ = ["instance_overload_operator","public","Object",$2,$4,$6];}
+	class_
+	| "def" OPERATOR "(" parameters ")" statements "end" {$$ = ["instance_overload_operator","public","Object",$2,$4,$6];}
 	| "def" "self" "." IDENTIFIER "(" parameters ")" statements "end" {$$ = ["static_method","public","Object",$4,$6,$8];}
 	| "def" IDENTIFIER "(" parameters ")" statements "end" {$$ = ["instance_method","public","Object",$2,$4,$6];}
 	;

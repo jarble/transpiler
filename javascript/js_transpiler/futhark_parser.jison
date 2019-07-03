@@ -17,7 +17,9 @@
 "case"                return "case"
 "then"                return "then"
 "data"                return "data"
+"type"                return "type"
 "return"              return "return"
+"module"              return "module"
 "mod"                 return 'mod'
 ","                   return ','
 ";"                   return ';'
@@ -87,6 +89,21 @@ statements_: statement_ statements_ {$$ = [$1].concat($2);} | statement_ {$$ =
 data_type_or: data_type_or "|" IDENTIFIER {$$ = ["data_type_or",$1,$3];} | IDENTIFIER;
 data_type_and: data_type_and IDENTIFIER {$$ = ["data_type_and",$1,$2];} | IDENTIFIER {$$ = $1;};
 
+class_statements_: class_statement class_statements_ {$$ = [$1].concat($2);} | class_statement {$$ =
+ [$1];};
+class_statements: class_statements_ {$$ = ["class_statements",$1]} | {$$ = ["class_statements",[]]};
+class_statement:
+	"let" IDENTIFIER ":" IDENTIFIER "=" statements {$$ = ["instance_method","public",$4,$2,[],$6];}
+	| "let" IDENTIFIER "=" statements {$$ = ["instance_method","public","Object",$2,[],$4];}
+	| "let" IDENTIFIER parameters ":" IDENTIFIER "=" statements {$$ = ["instance_method","public",$5,$2,$3,$7];}
+	| "let" IDENTIFIER parameters "=" statements {$$ = ["instance_method","public","Object",$2,$3,$5];}
+	| "let" IDENTIFIER types parameters ":" type "=" statements {$$ = ["generic_instance_method","public",$6,$2,$4,$8,$3];}
+	| "let" IDENTIFIER types parameters "=" statements {$$ = ["generic_instance_method","public","Object",$2,$4,$6,$3];}
+	;
+
+
+OPERATOR: "<="|">="|"<"|">"|"=="|"+"|"-"|"*"|"/"|"!";
+
 
 statement_:
 	"data" IDENTIFIER "=" data_type_or {$$ = ["algebraic_data_type",$2,$4];}
@@ -96,7 +113,13 @@ statement_:
 	| "let" IDENTIFIER parameters "=" statements {$$ = ["function","public","Object",$2,$3,$5];}
 	| "let" IDENTIFIER types parameters ":" type "=" statements {$$ = ["generic_function","public",$6,$2,$4,$8,$3];}
 	| "let" IDENTIFIER types parameters "=" statements {$$ = ["generic_function","public","Object",$2,$4,$6,$3];}
-	| "let" parallel_lhs "=" parallel_rhs {$$ = ["parallel_assignment",["parallel_lhs",$2],["parallel_rhs",$4]]};
+	| "let" "(" op_or_identifier ")" parameters "=" statements {$$ = ["overload_operator","public","Object",$3,$5,$7];}
+	| "let" "(" op_or_identifier ")" parameters ":" type "=" statements {$$ = ["overload_operator","public",$7,$3,$5,$9];}
+	| "let" parallel_lhs "=" parallel_rhs {$$ = ["parallel_assignment",["parallel_lhs",$2],["parallel_rhs",$4]]}
+	| "module" IDENTIFIER "=" "{" class_statements "}" {$$ = ["class","public",$2,$5];}
+	| "module" IDENTIFIER parameters "=" "{" class_statements "}" {$$ = ["scala_class","public",$2,$3,$6];};
+
+op_or_identifier: OPERATOR|IDENTIFIER;
 
 types: "'" type types {$$ = [$2].concat($3);} | "'" type {$$ =
  [$2];};

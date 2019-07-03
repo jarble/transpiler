@@ -153,7 +153,9 @@ case_statements: case_statements_ "default" ":" statements {$$ = $1.concat([["de
 
 
 class_statement:
-	type IDENTIFIER "=" e ";" {$$ = ["initialize_instance_var_with_value","public",$1,$2,$4];}
+	class_
+	IDENTIFIER "(" parameters ")" "{" statements "}" {$$ = ["constructor","public",$1,$3,$6];}
+	| type IDENTIFIER "=" e ";" {$$ = ["initialize_instance_var_with_value","public",$1,$2,$4];}
 	| type IDENTIFIER ";" {$$ = ["initialize_instance_var","public",$1,$2];}
 	| "static" type IDENTIFIER "=" e ";" {$$ = ["initialize_static_instance_var","public",$2,$3,$5];}
 	| access_modifier "static" type IDENTIFIER "(" parameters ")" ";" {$$ = ["interface_static_method",$1,$3,$4,$6];}

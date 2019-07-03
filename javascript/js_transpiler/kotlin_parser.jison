@@ -9,7 +9,6 @@
 "class"               return 'class'
 "enum"                return 'enum'
 "public"              return 'public'
-"extends"             return 'extends'
 "final"               return 'final'
 "abstract"            return 'abstract'
 "implements"          return 'implements'
@@ -103,8 +102,7 @@ class_:
 	| access_modifier "abstract" "class" IDENTIFIER "{" class_statements "}" {$$ = ["abstract_class",$1,$4,$6];}
 	| access_modifier "interface" IDENTIFIER "{" class_statements "}" {$$ = [$2,$1,$3,$5];}
 	| access_modifier "enum" "class" IDENTIFIER "{" identifiers "}" {$$ = ["enum",$3,$1,$4,$6];}
-	| access_modifier "class" IDENTIFIER "extends" IDENTIFIER "{" class_statements "}" {$$ = ["class_extends",$1,$3,$5,$7];}
-	| access_modifier "class" IDENTIFIER "implements" IDENTIFIER "{" class_statements "}" {$$ = ["class_implements",$1,$3,$5,$7];};
+	| access_modifier "class" IDENTIFIER ":" identifiers "{" class_statements "}" {$$ = ["class_extends",$1,$3,$5,$7];};
 
 statement
     :

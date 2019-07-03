@@ -671,12 +671,9 @@ function recursive_rewrite(output){
 
 function copy_with_symbols(input,symbols){
 	if(typeof(input) === "string"){
-		if(input in symbols && symbols[input] !== undefined){
-			return symbols[input];
-		}
-		else{
-			return input;
-		}
+		return (input in symbols && symbols[input] !== undefined)
+			? symbols[input]
+		: input;
 	}
 	else{
 		var newArr = [];
@@ -1149,12 +1146,9 @@ function var_name(lang,input_lang,var1){
 		}
 	}
 	else if(member(lang,["nearley"])){
-		if(var1 === var1.toUpperCase()){
-			return "$"+var1;
-		}
-		else{
-			return var1;
-		}
+		return  (var1 === var1.toUpperCase())
+			? "$"+var1
+		: var1;
 	}
 	else if(member(lang,["perl","perl 6"])){
 		if(var1.startsWith("$")){
@@ -1358,20 +1352,14 @@ function parameter(input_lang,lang,x){
 			}
 		}
 		if(member(lang,["cython"])){
-			if(x[0] === "Object"){
-				return name;
-			}
-			else{
-				return var_type(input_lang,lang,x[0])+" "+name;
-			}
+			return (x[0] === "Object")
+				? name
+			: var_type(input_lang,lang,x[0])+" "+name;
 		}
 		else if(member(lang,["powershell"])){
-			if(x[0] === "Object"){
-				return var_name(lang,input_lang,x[1]);
-			}
-			else{
-				return "["+var_type(input_lang,lang,x[0])+"] "+var_name(lang,input_lang,x[1]);
-			}
+			return (x[0] === "Object")
+				? var_name(lang,input_lang,x[1])
+			: "["+var_type(input_lang,lang,x[0])+"] "+var_name(lang,input_lang,x[1]);
 		}
 		else if(member(lang,["powershell","transact-sql","mysql","pl/sql"])){
 			if(is_dynamically_typed(input_lang) && is_statically_typed(lang)){
@@ -1384,36 +1372,24 @@ function parameter(input_lang,lang,x){
 			else{
 				type = x[0];
 			}
-			if(lang === "mysql"){
-				return name+" "+var_type(input_lang,lang,type);
-			}
-			else{
-				return "["+var_type(input_lang,lang,type)+"] "+name;
-			}
+			return (lang === "mysql")
+				? name+" "+var_type(input_lang,lang,type)
+			: "["+var_type(input_lang,lang,type)+"] "+name;
 		}
 		else if(member(lang,["rebol"])){
-			if(x[0] === "Object"){
-				return name;
-			}
-			else{
-				return name+" ["+var_type(input_lang,lang,x[0])+"]";
-			}
+			return (x[0] === "Object")
+				? name
+			: name+" ["+var_type(input_lang,lang,x[0])+"]";
 		}
 		else if(member(lang,["julia","lasso"])){
-			if(x[0] === "Object"){
-				return name;
-			}
-			else{
-				return name+"::"+var_type(input_lang,lang,x[0]);
-			}
+			return (x[0] === "Object")
+				? name
+			: name+"::"+var_type(input_lang,lang,x[0]);
 		}
 		else if(member(lang,["parasail"])){
-			if(x[0] === "Object"){
-				return "var " + name;
-			}
-			else{
-				return name+":"+var_type(input_lang,lang,x[0]);
-			}
+			return (x[0] === "Object")
+				? "var " + name
+			: name+":"+var_type(input_lang,lang,x[0]);
 		}
 		else if(member(lang,["smt-lib"])){
 			if(is_dynamically_typed(input_lang) && is_statically_typed(lang)){
@@ -1444,12 +1420,11 @@ function parameter(input_lang,lang,x){
 			return name+":"+type;
 		}
 		else if(member(lang,["coq","lean","whyml","futhark"])){
-			if(is_dynamically_typed(input_lang) && is_statically_typed(lang)){
-				type = var_type(input_lang,lang,types[x[1]]);
-			}
-			else{
-				type = var_type(input_lang,lang,x[0]);
-			}
+			
+			type =(is_dynamically_typed(input_lang) && is_statically_typed(lang))
+				? var_type(input_lang,lang,types[x[1]])
+			: var_type(input_lang,lang,x[0]);
+			
 			return "(" + name+":"+type+ ")";
 		}
 		else if(member(lang,["alt-ergo"])){
@@ -1459,21 +1434,15 @@ function parameter(input_lang,lang,x){
 			return "";
 		}
 		else if(member(lang,["seed7"])){
-			if(is_dynamically_typed(input_lang) && is_statically_typed(lang)){
-				type = var_type(input_lang,lang,types[x[1]]);
-			}
-			else{
-				type = var_type(input_lang,lang,x[0]);
-			}
+			type = (is_dynamically_typed(input_lang) && is_statically_typed(lang))
+				? var_type(input_lang,lang,types[x[1]])
+			: var_type(input_lang,lang,x[0]);
 			return "in " + name+":"+type;
 		}
 		else if(member(lang,["minizinc"])){
-			if(is_dynamically_typed(input_lang) && is_statically_typed(lang)){
-				type = var_type(input_lang,lang,types[x[1]]);
-			}
-			else{
-				type = var_type(input_lang,lang,x[0]);
-			}
+			type =(is_dynamically_typed(input_lang) && is_statically_typed(lang))
+				? var_type(input_lang,lang,types[x[1]])
+			: var_type(input_lang,lang,x[0]);
 			return "var " +type+":"+name;
 		}
 		else if(member(lang,["c","systemverilog","glsl","pike","rascal","c++","castor","d","algol 68","vala","aime"])){
@@ -1544,12 +1513,11 @@ function parameter(input_lang,lang,x){
 			set_var_type(input_lang,lang,name,type);
 		}
 		var body = generate_code(input_lang,lang,"",x[3]);
-		if(is_dynamically_typed(input_lang) && is_statically_typed(lang)){
-			type = var_type(input_lang,lang,types[x[2]]);
-		}
-		else{
-			type = var_type(input_lang,lang,x[1]);
-		}
+		
+		type = (is_dynamically_typed(input_lang) && is_statically_typed(lang))
+			? var_type(input_lang,lang,types[x[2]])
+		: var_type(input_lang,lang,x[1]);
+		
 		if(member(lang,["c#","c++","vala"])){
 			return var_type(input_lang,lang,type) + " "+name+"="+body;
 		}
@@ -1659,12 +1627,11 @@ function parameter(input_lang,lang,x){
 		}
 		else if(member(lang,["php","perl","c","c++"])){
 			//for other languages that don't distinguish input from output parameters
-			if(is_dynamically_typed(input_lang) && is_statically_typed(lang)){
-				type = var_type(input_lang,lang,types[x[2]]);
-			}
-			else{
-				type = var_type(input_lang,lang,x[1]);
-			}
+			
+			type = (is_dynamically_typed(input_lang) && is_statically_typed(lang))
+				? var_type(input_lang,lang,types[x[2]])
+			: var_type(input_lang,lang,x[1]);
+			
 			return parameter(input_lang,lang,["ref_parameter",type,x[2]]);
 		}
 		else if(is_declarative_language(lang) || member(input_lang,["fortran"])){
@@ -1715,19 +1682,13 @@ function parameter(input_lang,lang,x){
 			return var_type(input_lang,lang,type) + " &"+name;
 		}
 		else if(member(lang,["c"])){
-			if(is_dynamically_typed(input_lang) && is_statically_typed(lang)){
-				type = var_type(input_lang,lang,types[x[2]]);
-			}
-			else{
-				type = var_type(input_lang,lang,x[1]);
-			}
+			type = (is_dynamically_typed(input_lang) && is_statically_typed(lang))
+				? var_type(input_lang,lang,types[x[2]])
+			: var_type(input_lang,lang,x[1]);
 			
-			if(input_lang === "fortran"){
-				return "restrict " + var_type(input_lang,lang,type) + " *"+name;
-			}
-			else{
-				return var_type(input_lang,lang,type) + " *"+name;
-			}
+			return (input_lang === "fortran")
+				? "restrict " + var_type(input_lang,lang,type) + " *"+name
+			: var_type(input_lang,lang,type) + " *"+name;
 		}
 		else if(member(lang,["prolog","perl","fortran","kif"])){
 			//in perl, the arguments in a function call should be preceded by
@@ -1909,90 +1870,61 @@ function statements(input_lang,lang,indent,arr){
 }
 
 function get_lang(lang){
-	if(member(lang,["vb .net","vb.net"])){
-		return "visual basic .net";
-	}
-	else if(lang === "mathematica"){
-		return "wolfram";
-	}
-	else if(lang === "pop-11"){
-		return "pop11";
-	}
-	else if(lang === "lisp flavored erlang"){
-		return "lfe";
-	}
-	else if(lang === "object constraint language"){
-		return "ocl";
-	}
-	else if(lang === "gdl"){
-		return "gnu data language";
-	}
-	else if(lang === "spad"){
-		return "spad";
-	}
-	else if(lang === "idl"){
-		return "interactive data language";
-	}
-	else if(lang === "isabelle"){
-		return "isabelle/hol";
-	}
-	else if(lang === "cycl"){
-		return "cyc";
-	}
-	else if(lang === "knowledge interchange format"){
-		return "KIF";
-	}
-	else if(lang === "cyc"){
-		return "cyc";
-	}
-	else if(member(lang,["pascal","object pascal"])){
-		return "delphi";
-	}
-	else if(member(lang,["hol","hol light"])){
-		return "hol light";
-	}
-	else if(member(lang,["scheme"])){
-		return "racket";
-	}
-	else if(lang === "why3"){
-		return "whyml";
-	}
-	else if(lang === "giac"){
-		return "xcas";
-	}
-	else if(lang === "constraint handling rule grammars"){
-		return "chrg";
-	}
-	else if(member(lang,["regular expression","regular expressions"])){
-		return "regex";
-	}
-	else if(member(lang,["syntax definition formalism"])){
-		return "sdf";
-	}
-	else if(member(lang,["bison","yacc"])){
-		return "jison";
-	}
-	else if(lang === "latex"){
-		return "tex";
-	}
-	else if(lang === "gallina"){
-		return "coq";
-	}
-	else if(lang === "apache thrift"){
-		return "thrift";
-	}
-	else if(lang === "protocol buffers"){
-		return "protobuf";
-	}
-	else if(lang === "z3"){
-		return "smt-lib";
-	}
-	else if(lang === "strips"){
-		return "pddl";
-	}
-	else{
-		return lang;
-	}
+	return member(lang,["vb .net","vb.net"])
+		? "visual basic .net"
+	: (lang === "mathematica")
+		? "wolfram"
+	: (lang === "pop-11")
+		? "pop11"
+	: (lang === "lisp flavored erlang")
+		? "lfe"
+	: (lang === "object constraint language")
+		? "ocl"
+	: (lang === "gdl")
+		? "gnu data language"
+	: (lang === "spad")
+		? "spad"
+	: (lang === "idl")
+		? "interactive data language"
+	: (lang === "isabelle")
+		? "isabelle/hol"
+	: (lang === "cycl")
+		? "cyc"
+	: (lang === "knowledge interchange format")
+		? "KIF"
+	: (lang === "cyc")
+		? "cyc"
+	: member(lang,["pascal","object pascal"])
+		? "delphi"
+	: member(lang,["hol","hol light"])
+		? "hol light"
+	: member(lang,["scheme"])
+		? "racket"
+	: (lang === "why3")
+		? "whyml"
+	: (lang === "giac")
+		? "xcas"
+	: (lang === "constraint handling rule grammars")
+		? "chrg"
+	: member(lang,["regular expression","regular expressions"])
+		? "regex"
+	: member(lang,["syntax definition formalism"])
+		? "sdf"
+	: (member(lang,["bison","yacc"]))
+		? "jison"
+	: (lang === "latex")
+		? "tex"
+	: (lang === "gallina")
+		? "coq"
+	: (lang === "apache thrift")
+		? "thrift"
+	: (lang === "protocol buffers")
+		? "protobuf"
+	: (lang === "z3")
+		? "smt-lib"
+	: (lang === "strips")
+		? "pddl"
+	: lang;
 }
 
 function unparse(input_lang,lang,indent,pattern_array,matching_symbols){
@@ -2036,22 +1968,24 @@ function unparse(input_lang,lang,indent,pattern_array,matching_symbols){
 				to_return = "\\frac{"+a+"}{"+b+"}";
 		}
 		else if(lang === "order"){
-			if(pattern_array[0] === "*")
-				to_return = "8mul("+a + "," + b+")";
-			else if(pattern_array[0] === "+")
-				to_return = "8add("+a + "," + b+")";
-			else if(pattern_array[0] === "/")
-				to_return = "8quotient("+a + ", " + b+")";
+			to_return = (pattern_array[0] === "*")
+				? "8mul("+a + "," + b+")"
+			: (pattern_array[0] === "+")
+				? "8add("+a + "," + b+")"
+			: (pattern_array[0] === "/")
+				? "8quotient("+a + ", " + b+")"
+			: to_return;
 		}
 		else if(lang === "postscript"){
-			if(pattern_array[0] === "*")
-				to_return = a + " " + b+ " mul";
-			else if(pattern_array[0] === "+")
-				to_return = a + " " + b+ " add";
-			else if(pattern_array[0] === "-")
-				to_return = a + " " + b+ " sub";
-			else if(pattern_array[0] === "/")
-				to_return = a + " " + b+ " div";
+			to_return = (pattern_array[0] === "*")
+				? a + " " + b+ " mul"
+			: (pattern_array[0] === "+")
+				? a + " " + b+ " add"
+			: (pattern_array[0] === "-")
+				? a + " " + b+ " sub"
+			: (pattern_array[0] === "/")
+				? a + " " + b+ " div"
+			: to_return;
 		}
 		else if(prefix_arithmetic_lang(lang)){
 			to_return =  "("+pattern_array[0] + " " + a + " " + b+")";
@@ -2064,12 +1998,9 @@ function unparse(input_lang,lang,indent,pattern_array,matching_symbols){
 		var a = unparse(input_lang,lang,indent,pattern_array[1],matching_symbols);
 		var b = unparse(input_lang,lang,indent,pattern_array[2],matching_symbols);
 		if(infix_arithmetic_lang(lang)){
-			if(member(lang,["prolog"]) && pattern_array[0] === "<="){
-				to_return = a + "=<" + b;
-			}
-			else{
-				to_return = a + pattern_array[0] + b;
-			}
+			to_return = (member(lang,["prolog"]) && pattern_array[0] === "<=")
+				? a + "=<" + b
+			: a + pattern_array[0] + b;
 		}
 		else if(lang === "tex"){
 			to_return = a + " " + {"<=":"\\leq",">=":"\\geq","<":"<",">":">"}[pattern_array[0]] + " " + b
@@ -2120,19 +2051,15 @@ function unparse(input_lang,lang,indent,pattern_array,matching_symbols){
 		}
 	}
 	else if(pattern_array[0] === "." && pattern_array.length === 2){
-		var dot_separator;
-		if(member(lang,["erlang","prolog","logtalk"])){
-			dot_separator = ":";
-		}
-		else if(lang === "clojure"){
-			dot_separator = "/";
-		}
-		else if(lang === "php"){
-			dot_separator = "->";
-		}
-		else{
-			dot_separator = ".";
-		}
+		
+		var dot_separator = member(lang,["erlang","prolog","logtalk"])
+			? ":"
+		: (lang === "clojure")
+			? "/"
+		:(lang === "php")
+			? "->"
+		: ".";
+		
 		to_return = pattern_array[1].map(function(x){
 			return unparse(input_lang,lang,indent,x,matching_symbols);
 		}).join(dot_separator);
@@ -2360,12 +2287,10 @@ function generate_code(input_lang,lang,indent,arr){
 			types[to_return] = "String";
 		}
 		else if((infix_arithmetic_lang(lang) || member(lang,["tex","postscript","interactive data language"])) && (var_type(input_lang,"java",types[a]) !== "String") && (var_type(input_lang,"java",types[b]) !== "String")){
-			if(lang === "postscript"){
-				to_return = a + " " + b+" add";
-			}
-			else{
-				to_return = a + "+" + b;
-			}
+			to_return = (lang === "postscript")
+				? a + " " + b+" add"
+			: a + "+" + b;
+			
 			same_var_type(to_return,a);
 		}
 		else{
@@ -2382,36 +2307,27 @@ function generate_code(input_lang,lang,indent,arr){
 		}
 	}
 	else if(arr === "true" || matches_pattern(arr,[".",["true"]],{})){
-		if(member(lang,	["java","cuneiform","purescript","boogie","boa","metafont","ocl","kitten","quorum","elena","reasonml","songbird","minikanren.lua","core.logic","axiom","kif","alt-ergo","maxima","standard ml","forth","reverse polish notation","sidef","mercury","coq","tcl","clojure","ruby","lua","constraint handling rules","livecode","gap","dafny","smt-lib","perl 6","chapel","c","frink","elixir","pseudocode","pascal","minizinc","engscript","picat","rust","clojure","nim","hack","ceylon","d","groovy","coffeescript","typescript","octave","prolog","julia","f#","swift","nemerle","vala","c++","dart","javascript","erlang","c#","haxe","go","ocaml","scala","php","rebol","postscript"])){
-			to_return = "true";
-		}
-		else if(member(lang,["python","futhark","qore","isabelle/hol","sage","z3py","coconut","idris","yacas","visual basic .net","pydatalog","hy","cython","autoit","haskell","vbscript","visual basic","monkey x","wolfram","delphi"])){
-			to_return = "True";
-		}
-		else if(member(lang,["clips","r","ada","tla+"])){
-			to_return = "TRUE";
-		}
-		else if(member(lang,["tptp"])){
-			to_return = "$true";
-		}
-		else if(member(lang,["order"])){
-			to_return = "8true";
-		}
-		else if(member(lang,["ocanren"])){
-			to_return = "success";
-		}
-		else if(member(lang,["perl","mumps","mysql","transact-sql","choco","clp(b)"])){
-			to_return = "1";
-		}
-		else if(member(lang,["common lisp"])){
-			to_return = "t";
-		}
-		else if(member(lang,["hol light"])){
-			to_return = "T";
-		}
-		else if(member(lang,["fortran"])){
-			to_return = ".true.";
-		}
+		to_return = member(lang,["java","cuneiform","purescript","boogie","boa","metafont","ocl","kitten","quorum","elena","reasonml","songbird","minikanren.lua","core.logic","axiom","kif","alt-ergo","maxima","standard ml","forth","reverse polish notation","sidef","mercury","coq","tcl","clojure","ruby","lua","constraint handling rules","livecode","gap","dafny","smt-lib","perl 6","chapel","c","frink","elixir","pseudocode","pascal","minizinc","engscript","picat","rust","clojure","nim","hack","ceylon","d","groovy","coffeescript","typescript","octave","prolog","julia","f#","swift","nemerle","vala","c++","dart","javascript","erlang","c#","haxe","go","ocaml","scala","php","rebol","postscript"])
+			? "true"
+		: member(lang,["python","futhark","qore","isabelle/hol","sage","z3py","coconut","idris","yacas","visual basic .net","pydatalog","hy","cython","autoit","haskell","vbscript","visual basic","monkey x","wolfram","delphi"])
+			? "True"
+		: member(lang,["clips","r","ada","tla+"])
+			? "TRUE"
+		: member(lang,["tptp"])
+			? "$true"
+		: member(lang,["order"])
+			? "8true"
+		: member(lang,["ocanren"])
+			? "success"
+		: member(lang,["perl","mumps","mysql","transact-sql","choco","clp(b)"])
+			? "1"
+		: member(lang,["common lisp"])
+			? "t"
+		: member(lang,["hol light"])
+			? "T"
+		: member(lang,["fortran"])
+			? ".true."
+		: undefined;
 		types[to_return] = "boolean";
 	}
 	else if(arr === "undefined" || matches_pattern(arr,[".",["undefined"]],{}) || matches_pattern(arr,[".",["nil"]],{}) || input_lang === "visual basic .net" && matches_pattern(arr,[".",["Nothing"]],{})){
@@ -2437,33 +2353,25 @@ function generate_code(input_lang,lang,indent,arr){
 		}
 	}
 	else if(arr === "false" || matches_pattern(arr,[".",["false"]],{}) || (lang === "common lisp" && (arr === "f" || matches_pattern(arr,[".",["f"]],{})))){
-		if(member(lang,	["java","cuneiform","purescript","boogie","boa","metafont","futhark","postscript","kitten","elena","ocl","quorum","songbird","reasonml","minikanren.lua","core.logic","axiom","alt-ergo","lua","maxima","standard ml","forth","reverse polish notation","sidef","mercury","coq","tcl","clojure","ruby","lua","constraint handling rules","livecode","gap","dafny","smt-lib","perl 6","chapel","c","frink","elixir","pseudocode","pascal","minizinc","engscript","picat","rust","clojure","nim","hack","ceylon","d","groovy","coffeescript","typescript","octave","prolog","julia","f#","swift","nemerle","vala","c++","dart","javascript","erlang","c#","haxe","go","ocaml","scala","php","rebol"])){
-			to_return = "false";
-		}
-		else if(member(lang,["python","qore","isabelle/hol","sage","z3py","coconut","idris","yacas","visual basic .net","pydatalog","hy","cython","autoit","haskell","vbscript","visual basic","monkey x","wolfram","delphi"])){
-			to_return = "False";
-		}
-		else if(member(lang,["clips","r","ada","tla+"])){
-			to_return = "FALSE";
-		}
-		else if(member(lang,["tptp"])){
-			to_return = "$false";
-		}
-		else if(member(lang,["order"])){
-			to_return = "8false";
-		}
-		else if(member(lang,["fortran"])){
-			to_return = ".false.";
-		}
-		else if(member(lang,["ocanren"])){
-			to_return = "failure";
-		}
-		else if(member(lang,["perl","mumps","mysql","transact-sql","clp(b)"])){
-			to_return = "0";
-		}
-		else if(member(lang,["hol light"])){
-			to_return = "F";
-		}
+		to_return = member(lang,	["java","cuneiform","purescript","boogie","boa","metafont","futhark","postscript","kitten","elena","ocl","quorum","songbird","reasonml","minikanren.lua","core.logic","axiom","alt-ergo","lua","maxima","standard ml","forth","reverse polish notation","sidef","mercury","coq","tcl","clojure","ruby","lua","constraint handling rules","livecode","gap","dafny","smt-lib","perl 6","chapel","c","frink","elixir","pseudocode","pascal","minizinc","engscript","picat","rust","clojure","nim","hack","ceylon","d","groovy","coffeescript","typescript","octave","prolog","julia","f#","swift","nemerle","vala","c++","dart","javascript","erlang","c#","haxe","go","ocaml","scala","php","rebol"])
+			? "false"
+		: member(lang,["python","qore","isabelle/hol","sage","z3py","coconut","idris","yacas","visual basic .net","pydatalog","hy","cython","autoit","haskell","vbscript","visual basic","monkey x","wolfram","delphi"])
+			? "False"
+		: member(lang,["clips","r","ada","tla+"])
+			? "FALSE"
+		: member(lang,["tptp"])
+			? "$false"
+		: member(lang,["order"])
+			? "8false"
+		: member(lang,["fortran"])
+			? ".false."
+		: member(lang,["ocanren"])
+			? "failure"
+		: member(lang,["perl","mumps","mysql","transact-sql","clp(b)"])
+			? "0"
+		: member(lang,["hol light"])
+			? "F"
+		: undefined;
 		types[to_return] = "boolean";
 	}
 	else if(matching_patterns(pattern_array,input_lang,lang,arr,[
@@ -2545,12 +2453,11 @@ function generate_code(input_lang,lang,indent,arr){
 		[["c","simit","openscad","modelica","mysql","sage","algebrite","pari/gp","pseudocode","english","standard ml","opencl","glsl","mathematical notation","mathematical notation","reverse polish notation","reverse polish notation","ocaml","r","tcl","reduce","sympy","seed7","picat","mathematical notation","julia","d","php","perl","perl 6","maxima","fortran","minizinc","swift","prolog","octave","dart","haskell","c++","scala"],["function_call","cos",["$a"]]]
 	],matching_symbols)){
 		var output = generate_code(input_lang,lang,indent,matching_symbols["$a"]);
-		if(member(lang,["c"]) && types[output] === "double"){
-				to_return = "cos("+output+")";
-		}
-		else{
-			to_return = unparse(input_lang,lang,indent,pattern_array.value,matching_symbols);
-		}
+		
+		to_return = (member(lang,["c"]) && types[output] === "double")
+			? "cos("+output+")"
+		: unparse(input_lang,lang,indent,pattern_array.value,matching_symbols);
+		
 		types[to_return] = "double";
 	}
 	else if(matching_patterns(pattern_array,input_lang,lang,arr,[
@@ -2563,12 +2470,11 @@ function generate_code(input_lang,lang,indent,arr){
 		[["c","simit","openscad","modelica","mysql","algebrite","pseudocode","pari/gp","english","standard ml","opencl","glsl","reverse polish notation","ocaml","seed7","r","tcl","picat","reduce","mathematical notation","maxima","sympy","julia","d","php","perl","perl 6","maxima","fortran","minizinc","swift","prolog","octave","dart","haskell","c++","scala"],["function_call","tan",["$a"]]]
 	],matching_symbols)){
 		var output = generate_code(input_lang,lang,indent,matching_symbols["$a"]);
-		if(member(lang,["c"]) && types[output] === "double"){
-				to_return = "tan("+output+")";
-		}
-		else{
-			to_return = unparse(input_lang,lang,indent,pattern_array.value,matching_symbols);
-		}
+		
+		to_return = (member(lang,["c"]) && types[output] === "double")
+			? "tan("+output+")"
+		: unparse(input_lang,lang,indent,pattern_array.value,matching_symbols);
+		
 		types[to_return] = "double";
 	}
 	else if(matching_patterns(pattern_array,input_lang,lang,arr,[
@@ -2980,12 +2886,11 @@ function generate_code(input_lang,lang,indent,arr){
 	],matching_symbols)){
 		var a = generate_code(input_lang,lang,indent,matching_symbols["$a"]);
 		var b = generate_code(input_lang,lang,indent,matching_symbols["$b"]);
-		if(lang === "mathematical notation"){
-			to_return = "\u222b("+a+") d"+b;
-		}
-		else{
-			to_return = unparse(input_lang,lang,indent,pattern_array.value,matching_symbols);
-		}
+		
+		to_return = (lang === "mathematical notation")
+			? "\u222b("+a+") d"+b
+		: unparse(input_lang,lang,indent,pattern_array.value,matching_symbols);
+		
 		same_var_type(to_return,a);
 	}
 	else if(matching_patterns(pattern_array,input_lang,lang,arr,[
@@ -3016,30 +2921,23 @@ function generate_code(input_lang,lang,indent,arr){
 		var b = generate_code(input_lang,lang,indent,matching_symbols["$b"]);
 		var c = generate_code(input_lang,lang,indent,matching_symbols["$c"]);
 		var d = generate_code(input_lang,lang,indent,matching_symbols["$d"]);
-		if(lang === "haskell"){
-			return "(sum ["+a+" | "+b+" <- ["+c+".."+d+"]])";
-		}
-		else if(lang === "julia"){
-			return "sum("+b+" -> "+a+", "+c+":"+d+")";
-		}
-		else if(lang === "maple"){
-			return "sum("+a+", "+b+"="+c+".."+d+")";
-		}
-		else if(lang === "common lisp"){
-			return "(loop for "+b+" from "+c+" to "+d+" summing "+a+")";
-		}
-		else if(lang === "erlang"){
-			return "lists:sum(["+a+" || "+b+" <- lists:seq("+c+","+d+")])";
-		}
-		else if(lang === "tex"){
-			return "\sum_{"+b+" ="+c+"}^{"+d+"} "+a;
-		}
-		else if(lang === "ruby"){
-			return "("+c+".."+d+").inject{|sum, "+b+"| sum + "+a+"}";
-		}
-		else{
-			to_return = unparse(input_lang,lang,indent,pattern_array.value,matching_symbols);
-		}
+		
+		to_return = (lang === "haskell")
+			? "(sum ["+a+" | "+b+" <- ["+c+".."+d+"]])"
+		: (lang === "julia")
+			? "sum("+b+" -> "+a+", "+c+":"+d+")"
+		: (lang === "maple")
+			? "sum("+a+", "+b+"="+c+".."+d+")"
+		: (lang === "common lisp")
+			? "(loop for "+b+" from "+c+" to "+d+" summing "+a+")"
+		: (lang === "erlang")
+			? "lists:sum(["+a+" || "+b+" <- lists:seq("+c+","+d+")])"
+		: (lang === "tex")
+			? "\sum_{"+b+" ="+c+"}^{"+d+"} "+a
+		: (lang === "ruby")
+			? "("+c+".."+d+").inject{|sum, "+b+"| sum + "+a+"}"
+		: unparse(input_lang,lang,indent,pattern_array.value,matching_symbols);
+
 		types[to_return] = "double";
 	}
 	else if(matching_patterns(pattern_array,input_lang,lang,arr,[
@@ -3085,18 +2983,15 @@ function generate_code(input_lang,lang,indent,arr){
 	],matching_symbols)){
 		var a = generate_code(input_lang,lang,indent,matching_symbols["$a"]);
 		var b = generate_code(input_lang,lang,indent,matching_symbols["$b"]);
-		if(lang === "haskell"){
-			to_return = a + ":" + b;
-		}
-		else if(lang==="prolog"){
-			to_return = "["+a+"|"+b+"]";
-		}
-		else if(lang==="common prolog"){
-			to_return = "("+a+" . "+b+")";
-		}
-		else{
-			to_return = unparse(input_lang,lang,indent,pattern_array.value,matching_symbols);
-		}
+		
+		to_return = (lang === "haskell")
+			? a + ":" + b
+		: (lang==="prolog")
+			? "["+a+"|"+b+"]"
+		: (lang==="common prolog")
+			? "("+a+" . "+b+")"
+		: unparse(input_lang,lang,indent,pattern_array.value,matching_symbols);
+		
 		types[to_return] = types[b];
 	}
 	//prepend an item to an arraylist (in-place)
@@ -3110,15 +3005,13 @@ function generate_code(input_lang,lang,indent,arr){
 	],matching_symbols)){
 		var a = generate_code(input_lang,lang,indent,matching_symbols["$a"]);
 		var b = generate_code(input_lang,lang,indent,matching_symbols["$b"]);
-		if(lang === "scala"){
-			to_return = a + " :+ " + b;
-		}
-		else if(lang === "wolfram"){
-			to_return = a + " = Prepend["+a+","+b+"]";
-		}
-		else{
-			to_return = unparse(input_lang,lang,indent,pattern_array.value,matching_symbols);
-		}
+		
+		to_return = (lang === "scala")
+			? a + " :+ " + b
+		: (lang === "wolfram")
+			? a + " = Prepend["+a+","+b+"]"
+		: unparse(input_lang,lang,indent,pattern_array.value,matching_symbols);
+
 		types[to_return] = types[b];
 	}
 	//append an item to an arraylist (in-place)
@@ -3171,18 +3064,14 @@ function generate_code(input_lang,lang,indent,arr){
 		[["perl"],["access_array","@_",["$a"]]],
 		[["php"],["access_array",["function_call","func_get_args",[]],["$a"]]]
 	],matching_symbols)){
-		if(lang === "bash"){
-			to_return = "$"+generate_code(input_lang,lang,indent,matching_symbols["$a"])
-		}
-		else if(lang === "wolfram"){
-			to_return = "#"+generate_code(input_lang,lang,indent,matching_symbols["$a"])
-		}
-		else if(lang === "mediawiki"){
-			to_return = "{{{"+(parseInt(generate_code(input_lang,lang,indent,matching_symbols["$a"]))+1)+"}}}"
-		}
-		else{
-			to_return = generate_code(input_lang,lang,indent,pattern_array.value);
-		}
+		to_return = (lang === "bash")
+			? "$"+generate_code(input_lang,lang,indent,matching_symbols["$a"])
+		: (lang === "wolfram")
+			? "#"+generate_code(input_lang,lang,indent,matching_symbols["$a"])
+		: (lang === "mediawiki")
+			? "{{{"+(parseInt(generate_code(input_lang,lang,indent,matching_symbols["$a"]))+1)+"}}}"
+		: generate_code(input_lang,lang,indent,pattern_array.value);
+		
 		types[to_return] = ["Object","[]"];
 	}
 	else if(matching_patterns(pattern_array,input_lang,lang,arr,[
@@ -3291,12 +3180,11 @@ function generate_code(input_lang,lang,indent,arr){
 		[["c","pari/gp","axiom","modelica","asciimath","opl","english","hlsl","symja","maxima","standard ml","octave","haskell","common lisp","reverse polish notation","rebol","c++","julia","tcl","perl","php","python","cython","coconut","erlang","prolog","swift","frink"],["function_call","abs",["$a"]]]
 	],matching_symbols)){
 		var output = generate_code(input_lang,lang,indent,matching_symbols["$a"]);
-		if(member(lang,["mathematical notation"])){
-			to_return = "|"+output+"|";
-		}
-		else{
-			to_return = unparse(input_lang,lang,indent,pattern_array.value,matching_symbols);
-		}
+		
+		to_return = member(lang,["mathematical notation"])
+			? "|"+output+"|"
+		: unparse(input_lang,lang,indent,pattern_array.value,matching_symbols);
+		
 		types[to_return] = "int";
 	}
 	else if(matching_patterns(pattern_array,input_lang,lang,arr,[
@@ -3411,15 +3299,13 @@ function generate_code(input_lang,lang,indent,arr){
 		]
 	,matching_symbols)){
 		var a = function_call_parameters(input_lang,lang,name,matching_symbols["$a"]);
-		if(lang === "perl"){
-			to_return = "__SUB__->("+a+")";
-		}
-		else if(lang === "wolfram"){
-			to_return = "#0["+a+"]";
-		}
-		else{
-			to_return = unparse(input_lang,lang,indent,pattern_array.value,matching_symbols);
-		}
+		
+		to_return = (lang === "perl")
+			? "__SUB__->("+a+")"
+		: (lang === "wolfram")
+			? "#0["+a+"]"
+		: unparse(input_lang,lang,indent,pattern_array.value,matching_symbols);
+		
 		types[to_return] = "Object";
 	}
 	else if(matching_patterns(pattern_array,input_lang,lang,arr,[
@@ -3548,12 +3434,11 @@ function generate_code(input_lang,lang,indent,arr){
 		]
 	,matching_symbols)){
 		var a = generate_code(input_lang,lang,indent,matching_symbols["$a"]);
-		if(member(lang,["maxima","wolfram","algebrite","pari/gp"])){
-			to_return = "("+a + ")!";
-		}
-		else{
-			to_return = unparse(input_lang,lang,indent,pattern_array.value,matching_symbols);
-		}
+		
+		to_return = member(lang,["maxima","wolfram","algebrite","pari/gp"])
+			? "("+a + ")!"
+		: unparse(input_lang,lang,indent,pattern_array.value,matching_symbols);
+		
 		types[to_return] = "int";
 	}
 	else if(matching_patterns(pattern_array,input_lang,lang,arr,[
@@ -3606,31 +3491,24 @@ function generate_code(input_lang,lang,indent,arr){
 		var a = generate_code(input_lang,lang,indent,matching_symbols["$a"]);
 		var b = generate_code(input_lang,lang,indent,matching_symbols["$b"]);
 		var c = generate_code(input_lang,lang,indent,matching_symbols["$c"]);
-		if(lang === "haskell"){
-			to_return = "("+a+"++"+b+" == "+c+")";
-		}
-		else if(lang === "lua"){
+		
+		to_return = (lang === "haskell")
+			? "("+a+"++"+b+" == "+c+")"
+		: (lang === "lua")
 			//only works for strings
-			to_return = "("+a+".."+b+" == "+c+")";
-		}
-		else if(lang === "java"){
+			? "("+a+".."+b+" == "+c+")"
+		: (lang === "java")
 			//only works for strings
-			to_return = "("+a+" + "+b+").equals("+c+")";
-		}
-		else if(member(lang,["ruby"])){
-			to_return = "("+a+" + "+b+" == "+c+")";
-		}
-		else if(member(lang,["javascript"])){
+			? "("+a+" + "+b+").equals("+c+")"
+		: member(lang,["ruby"])
+			? "("+a+" + "+b+" == "+c+")"
+		: member(lang,["javascript"])
 			//only works for strings
-			to_return = "("+a+" + "+b+" === "+c+")";
-		}
-		else if(member(lang,["php","hack","perl"])){
+			? "("+a+" + "+b+" === "+c+")"
+		: member(lang,["php","hack","perl"])
 			//only works for strings
-			to_return = "("+a+"."+b+" == "+c+")";
-		}
-		else{
-			to_return = unparse(input_lang,lang,indent,pattern_array.value,matching_symbols);
-		}
+			? "("+a+"."+b+" == "+c+")"
+		: unparse(input_lang,lang,indent,pattern_array.value,matching_symbols);
 	}
 	else if(matching_patterns(pattern_array,input_lang,lang,arr,[
 		[["prolog"],
@@ -3639,27 +3517,21 @@ function generate_code(input_lang,lang,indent,arr){
 	,matching_symbols)){
 		var a = generate_code(input_lang,lang,indent,matching_symbols["$a"]);
 		var b = generate_code(input_lang,lang,indent,matching_symbols["$b"]);
-		if(lang === "python"){
-			to_return = "("+a+" == int("+b+"))";
-		}
-		else if(lang === "javascript"){
-			to_return = "("+a+" === Number("+b+"))";
-		}
-		else if(lang === "c"){
-			to_return =  "(" + a + " == ((int) strtol("+b+", (char **)NULL, 10)))";
-		}
-		else if(lang === "ruby"){
-			to_return = "("+a+" == ("+b+").to_i)";
-		}
-		else if(lang === "java"){
-			to_return = "("+a+" == Double.parseDouble("+b+"))";
-		}
-		else if(member(lang,["php","hack"])){
-			to_return = "("+a+" === floatval("+b+"))";
-		}
-		else{
-			to_return = unparse(input_lang,lang,indent,pattern_array.value,matching_symbols);
-		}
+		
+		to_return = (lang === "python")
+			? "("+a+" == int("+b+"))"
+		: (lang === "javascript")
+			? "("+a+" === Number("+b+"))"
+		: (lang === "c")
+			?  "(" + a + " == ((int) strtol("+b+", (char **)NULL, 10)))"
+		: (lang === "ruby")
+			? "("+a+" == ("+b+").to_i)"
+		: (lang === "java")
+			? "("+a+" == Double.parseDouble("+b+"))"
+		: member(lang,["php","hack"])
+			? "("+a+" === floatval("+b+"))"
+		: unparse(input_lang,lang,indent,pattern_array.value,matching_symbols);
+		
 		types[to_return] = "boolean";
 	}
 	else if(matching_patterns(pattern_array,input_lang,lang,arr,[
@@ -3689,12 +3561,10 @@ function generate_code(input_lang,lang,indent,arr){
 		var result = generate_code(input_lang,lang,indent,matching_symbols["$b"]);
 		var c = generate_code(input_lang,lang,indent,matching_symbols["$c"]);
 
-		if(member(lang,["haskell"])){
-			to_return = "("+c+" == ["+the_var+" | "+the_var+"->"+result+"])";
-		}
-		else{
-			to_return = unparse(input_lang,lang,indent,pattern_array.value,matching_symbols);
-		}
+		to_return = member(lang,["haskell"])
+			? "("+c+" == ["+the_var+" | "+the_var+"->"+result+"])"
+		: unparse(input_lang,lang,indent,pattern_array.value,matching_symbols);
+		
 		types[to_return] = "boolean";
 	}
 	else if(matching_patterns(pattern_array,input_lang,lang,arr,[
@@ -3707,15 +3577,13 @@ function generate_code(input_lang,lang,indent,arr){
 	]
 	,matching_symbols)){
 		var a = generate_code(input_lang,lang,indent,matching_symbols["$a"]);
-		if(lang==="javascript"){
-			to_return = "(typeof "+a+" === \"number\")";
-		}
-		else if(lang==="lua"){
-			to_return = "(type("+a+") === \"number\")";
-		}
-		else{
-			to_return = unparse(input_lang,lang,indent,pattern_array.value,matching_symbols);
-		}
+		
+		to_return = (lang==="javascript")
+			? "(typeof "+a+" === \"number\")"
+		: (lang==="lua")
+			? "(type("+a+") === \"number\")"
+		: unparse(input_lang,lang,indent,pattern_array.value,matching_symbols);
+
 		types[to_return] = "boolean";
 	}
 	else if(matching_patterns(pattern_array,input_lang,lang,arr,[
@@ -3730,18 +3598,15 @@ function generate_code(input_lang,lang,indent,arr){
 		]
 	,matching_symbols)){
 		var a = generate_code(input_lang,lang,indent,matching_symbols["$a"]);
-		if(member(lang, ["python","coconut","cython","haskell","java"])){
-			to_return = "assert " + a;
-		}
-		else if(member(lang, ["python","coconut","cython","haskell","java"])){
-			to_return = "@constraint(" + a + ")";
-		}
-		else if(member(lang,["reverse polish notation","mathematical notation","prolog"])){
-			to_return = a;
-		}
-		else{
-			to_return = unparse(input_lang,lang,indent,pattern_array.value,matching_symbols);
-		}
+		
+		to_return = member(lang, ["python","coconut","cython","haskell","java"])
+			? "assert " + a
+		: member(lang, ["python","coconut","cython","haskell","java"])
+			? "@constraint(" + a + ")"
+		: member(lang,["reverse polish notation","mathematical notation","prolog"])
+			? a
+		: unparse(input_lang,lang,indent,pattern_array.value,matching_symbols);
+		
 		types[to_return] = "void";
 	}
 	else if(matching_patterns(pattern_array,input_lang,lang,arr,[
@@ -3764,6 +3629,7 @@ function generate_code(input_lang,lang,indent,arr){
 		[["scala"],[".",["console","readLine"]]],
 		]
 	,matching_symbols)){
+		
 		if(member(lang,["lua"])){
 			return "io.stdin:read()";
 		}
@@ -3773,6 +3639,7 @@ function generate_code(input_lang,lang,indent,arr){
 		else{
 			to_return = unparse(input_lang,lang,indent,pattern_array.value,matching_symbols);
 		}
+		
 		types[to_return] = "String";
 	}
 	else if(matching_patterns(pattern_array,input_lang,lang,arr,[
@@ -3846,12 +3713,11 @@ function generate_code(input_lang,lang,indent,arr){
 		[["c","bc","egison","limbo","postscript","axiom","simit","min","coffeequate","algebrite","kif","asciimath","modelica","kotlin","fortran","mysql","english","algebrite","symja","tcl","c++","reduce","sidef","seed7","julia","perl","php","perl 6","maxima","minizinc","prolog","octave","matlab","d","haskell","swift","mathematical notation","dart","picat","reverse polish notation","rebol"],["function_call","sqrt",["$a"]]]
 	],matching_symbols)){
 		var output = generate_code(input_lang,lang,indent,matching_symbols["$a"]);
-		if(lang === "tex"){
-			to_return = "\\sqrt{"+output+"}"
-		}
-		else{
-			to_return = unparse(input_lang,lang,indent,pattern_array.value,matching_symbols);
-		}
+		
+		to_return = (lang === "tex")
+			? "\\sqrt{"+output+"}"
+		: unparse(input_lang,lang,indent,pattern_array.value,matching_symbols);
+		
 		types[to_return] = "double";
 	}
 	else if(matching_patterns(pattern_array,input_lang,lang,arr,[
@@ -5368,20 +5234,18 @@ function generate_code(input_lang,lang,indent,arr){
 			to_return = expr+" \u21d2 "+statements1;
 		}
 		else if(member(lang,["python"])){
-			if(first_case){
-				to_return = "if ("+switch_stack[switch_stack.length-1]+") == ("+expr+"): "+statements1;
-			}
-			else{
-				to_return = "elif ("+switch_stack[switch_stack.length-1]+") == ("+expr+"): "+statements1;
-			}
+			
+			to_return = first_case
+				? "if ("+switch_stack[switch_stack.length-1]+") == ("+expr+"): "+statements1
+			: "elif ("+switch_stack[switch_stack.length-1]+") == ("+expr+"): "+statements1;
+			
 		}
 		else if(member(lang,["perl"])){
-			if(first_case){
-				to_return = "if("+generate_code(input_lang,lang,indent,["==",switch_stack[switch_stack.length-1],expr])+"){"+statements1+indent+"}";
-			}
-			else{
-				to_return = "elsif("+generate_code(input_lang,lang,indent,["==",switch_stack[switch_stack.length-1],expr])+"){"+statements1+indent+"}";
-			}
+			
+			to_return = first_case
+				? "if("+generate_code(input_lang,lang,indent,["==",switch_stack[switch_stack.length-1],expr])+"){"+statements1+indent+"}"
+			: "elsif("+generate_code(input_lang,lang,indent,["==",switch_stack[switch_stack.length-1],expr])+"){"+statements1+indent+"}";
+			
 		}
 		else if(member(lang,["prolog"])){
 			to_return = "(("+switch_stack[switch_stack.length-1]+") == ("+expr+")) -> "+statements1;
@@ -5539,12 +5403,10 @@ function generate_code(input_lang,lang,indent,arr){
 			to_return = "(defrule " + name + " " + condition + " => (assert " + body + "))";
 		}
 		else if(member(lang,["pddl"])){
-			if(member(input_lang,["prolog"])){
-				to_return = "(:action " +name + " :parameters ("+defined_vars.map(function(x){return var_name(lang,input_lang,x)}).join(" ")+") :precondition (" + condition + " :effect "+ condition + " " + body + "))";
-			}
-			else{
-				to_return = "(:action " +name + " :parameters ("+defined_vars.map(function(x){return var_name(lang,input_lang,x)}).join(" ")+") :precondition (" + condition + " :effect " + body + "))";
-			}
+			
+			to_return = (member(input_lang,["prolog"]))
+				? "(:action " +name + " :parameters ("+defined_vars.map(function(x){return var_name(lang,input_lang,x)}).join(" ")+") :precondition (" + condition + " :effect "+ condition + " " + body + "))"
+			: "(:action " +name + " :parameters ("+defined_vars.map(function(x){return var_name(lang,input_lang,x)}).join(" ")+") :precondition (" + condition + " :effect " + body + "))";
 		}
 		defined_vars = [];
 	}
@@ -5822,12 +5684,10 @@ function generate_code(input_lang,lang,indent,arr){
 		var name = arr[2];
 		var name1 = arr[3];
 		var body;
-		if(member(lang,["julia"])){
-			body = generate_code(input_lang,lang,indent,arr[4]);
-		}
-		else{
-			body = generate_code(input_lang,lang,indent+"    ",arr[4]);
-		}
+	
+		body = member(lang,["julia"])
+			? generate_code(input_lang,lang,indent,arr[4])
+		: generate_code(input_lang,lang,indent+"    ",arr[4]);
 		
 		to_return = member(lang,["java","c#"])
 			?  access_modifier + " class "+name+" extends "+name1+"{"+body+indent+"}"
@@ -5877,13 +5737,16 @@ function generate_code(input_lang,lang,indent,arr){
 		//return arr.toString();
 		var access_modifier = arr[1];
 		var name = arr[2];
-		if(Array.isArray(arr[3]) && arr[3].length === 1){
-			arr[3] = arr[3][0];
-		}
-		else if(Array.isArray(arr[3]) && arr[3].length > 1){
-			if(lang === "java"){
-				arr[3] = arr[3].join(",");
-			}
+		if(Array.isArray(arr[3])){
+			arr[3] = (arr[3].length === 1)
+				? arr[3][0]
+			:(member(lang,["java","c#","php","typescript"])
+					? arr[3].join(",")
+				:(lang === "futhark")
+					? arr[3].join("\n    include ")
+				:member(lang,["c++"])
+					? arr[3].join(", virtual public ")
+				:arr[3]);
 		}
 		var name1 = arr[3];
 		var body = generate_code(input_lang,lang,indent+"    ",arr[4]);
@@ -5900,77 +5763,66 @@ function generate_code(input_lang,lang,indent,arr){
 			?  "typedef struct "+name+"{struct "+name1+";"+body+indent+"} "+name+";"
 		: member(lang,["futhark"])
 			?  "module type "+name+" = {"+body+indent+"    include "+name1+indent+"}"
+		: member(lang,["c++"])
+			? "class "+name+": virtual public "+name1+" { public:"+body+indent+"};"
 		: to_return;
 	}
 	else if(arr[0] === "algebraic_data_type"){
 		//return arr.toString();
 		var name = arr[1];
 		var body;
-		if(typeof arr[2] === "string"){
-			body = var_type(input_lang,lang,arr[2]);
-		}
-		else{
-			body = generate_code(input_lang,lang,indent+"    ",arr[2]);
-		}
 		
-		if(member(lang,["haskell","idris"])){
-			to_return = "data "+name+" = "+body;
-		}
-		else if(member(lang,["smt-lib"])){
-			to_return = "(define-sort () "+name+" ("+body+"))";
-		}
-		else if(member(lang,["c"])){
-			to_return = "typedef "+body+" "+name+";";
-		}
-		else if(member(lang,["mercury"])){
-			to_return = ":- type "+name+" --> "+body;
-		}
-		else if(member(lang,["ocaml","f#"])){
-			to_return = "type "+name+" = "+body;
-		}
-		else if(member(lang,["typescript"])){
-			to_return = "type "+name+" = "+body+";";
-		}
-		else if(member(lang,["coq"])){
-			to_return = "Inductive "+name+" := "+body;
-		}
-		else if(member(lang,["isabelle/hol"])){
-			to_return = "datatype "+name+" = "+body;
-		}
-		else if(member(lang,["haxe"])){
-			to_return = "enum "+name+"{"+body+";}";
-		}
-		else if(member(lang,["prolog"])){
-			to_return = name+" ---> "+body;
-		}
-		else if(is_metasyntax(lang)){
-			to_return = generate_code(input_lang,lang,"",["grammar_statement",name,body]);
-		}
+		body = (typeof arr[2] === "string")
+			? var_type(input_lang,lang,arr[2])
+		: generate_code(input_lang,lang,indent+"    ",arr[2]);
+		
+		to_return = member(lang,["haskell","idris"])
+			? "data "+name+" = "+body
+		: member(lang,["smt-lib"])
+			? "(define-sort () "+name+" ("+body+"))"
+		: member(lang,["c"])
+			? "typedef "+body+" "+name+";"
+		: member(lang,["mercury"])
+			? ":- type "+name+" --> "+body
+		: member(lang,["ocaml","f#"])
+			? "type "+name+" = "+body
+		: member(lang,["typescript"])
+			? "type "+name+" = "+body+";"
+		: member(lang,["coq"])
+			? "Inductive "+name+" := "+body
+		: member(lang,["isabelle/hol"])
+			? "datatype "+name+" = "+body
+		: member(lang,["haxe"])
+			? "enum "+name+"{"+body+";}"
+		: member(lang,["prolog"])
+			? name+" ---> "+body
+		: is_metasyntax(lang)
+			? generate_code(input_lang,lang,"",["grammar_statement",name,body])
+		: undefined;
 	}
 	else if(arr[0] === "data_type_or"){
 		//return arr.toString();
 		var a = generate_code(input_lang,lang,"",arr[1]);
 		var b = generate_code(input_lang,lang,"",arr[2]);
-		if(member(lang,["haskell","ocaml","standard ml","idris","coq","f#","typescript"])){
-			to_return = a+" | "+b;
-		}
-		else if(member(lang,["prolog","haxe","mercury","haxe"])){
-			to_return = a +";"+ b;
-		}
-		else if(is_metasyntax(lang)){
-			to_return = generate_code(input_lang,lang,"",["grammar_or",a,b]);
-		}
+		
+		to_return = member(lang,["haskell","ocaml","standard ml","idris","coq","f#","typescript"])
+			? a+" | "+b
+		: member(lang,["prolog","haxe","mercury","haxe"])
+			? a +";"+ b
+		: is_metasyntax(lang)
+			? generate_code(input_lang,lang,"",["grammar_or",a,b])
+		: undefined;
 	}
 	else if(arr[0] === "data_type_and"){
 		//return arr.toString();
 		var a = generate_code(input_lang,lang,"",arr[1]);
 		var b = generate_code(input_lang,lang,"",arr[2]);
-		if(member(lang,["haskell","smt-lib"])){
-			to_return = a+" "+b;
-		}
-		else if(is_metasyntax(lang)){
-			to_return = generate_code(input_lang,lang,"",["grammar_and",a,b]);
-		}
+		
+		to_return = member(lang,["haskell","smt-lib"])
+			? a+" " + b
+		: is_metasyntax(lang)
+			? generate_code(input_lang,lang,"",["grammar_and",a,b])
+		: undefined;
 	}
 	else if(arr[0] === "class_implements"){
 		//return arr.toString();
@@ -5978,39 +5830,38 @@ function generate_code(input_lang,lang,indent,arr){
 		var name = arr[2];
 		var name1 = arr[3];
 		var body = generate_code(input_lang,lang,indent,arr[4]);
-		if(member(lang,["java","c#"])){
-			to_return = access_modifier + " class "+name+" implements "+name1+"{"+body+indent+"}";
-		}
-		else if(member(lang,["typescript","typescript","haxe","php","dart"])){
-			to_return = "class "+name+" implements "+name1+"{"+body+indent+"}";
-		}
-		else if(member(lang,["c++"])){
-			to_return = "class "+name+": public "+name1+"{"+body+indent+"}";
-		}
-		else if(member(lang,["perl 6"])){
-			to_return = "class "+name+" does "+name1+"{"+body+indent+"}";
-		}
-		else if(member(lang,["python"])){
-			to_return = "class "+name+"("+name1+"):"+body;
-		}
-		else if(member(lang,["standard ml"])){
-			to_return = "structure "+name+" : "+name1+" = struct "+body+indent+"end";
-		}
-		else if(member(lang,["futhark"])){
-			to_return = "module "+name+":"+name1+" = {"+body+indent+"}";
-		}
+		
+		to_return = member(lang,["java"])
+			? access_modifier + " class "+name+" implements "+name1+"{"+body+indent+"}"
+		: member(lang,["c#"])
+			? access_modifier + " class "+name+":"+name1+"{"+body+indent+"}"
+		: member(lang,["swift"])
+			? "class "+name+":"+name1+"{"+body+indent+"}"
+		: member(lang,["typescript","typescript","haxe","php","dart"])
+			? "class "+name+" implements "+name1+"{"+body+indent+"}"
+		: member(lang,["c++"])
+			? "class "+name+": public "+name1+"{"+body+indent+"}"
+		: member(lang,["perl 6"])
+			? "class "+name+" does "+name1+"{"+body+indent+"}"
+		: member(lang,["python"])
+			? "class "+name+"("+name1+"):"+body
+		: member(lang,["standard ml"])
+			? "structure "+name+" : "+name1+" = struct "+body+indent+"end"
+		: member(lang,["futhark"])
+			? "module "+name+":"+name1+" = {"+body+indent+"}"
+		: undefined;
 	}
 	else if(arr[0] === "abstract_class"){
 		//return arr.toString();
 		var access_modifier = arr[1];
 		var name = arr[2];
 		var body = generate_code(input_lang,lang,indent,arr[3]);
-		if(member(lang,["java","c#"])){
-			to_return = access_modifier + " abstract class "+name+"{"+body+indent+"}";
-		}
-		else if(member(lang,["php"])){
-			to_return = "abstract class "+name+"{"+body+indent+"}";
-		}
+		
+		to_return = member(lang,["java","c#"])
+			? access_modifier + " abstract class "+name+"{"+body+indent+"}"
+		: member(lang,["php","kotlin","typescript","scala"])
+			? "abstract class "+name+"{"+body+indent+"}"
+		: undefined;
 	}
 	else if(arr[0] === "interface"){
 		//return arr.toString();
@@ -6022,6 +5873,8 @@ function generate_code(input_lang,lang,indent,arr){
 			?  access_modifier + " interface "+name+"{"+body+indent+"}"
 		: member(lang,["go"])
 			?  "type "+name+" interface{"+body+indent+"}"
+		: member(lang,["clojure"])
+			?  "(defprotocol "+name+" "+body+indent+")"
 		: member(lang,["coq"])
 			?  "Class "+name+" (self : Type) := {"+body+indent+"}"
 		: member(lang,["standard ml"])
@@ -6040,7 +5893,7 @@ function generate_code(input_lang,lang,indent,arr){
 			?  "message "+name+"{"+body+indent+"}"
 		: member(lang,["thrift"])
 			?  "service "+name+"{"+body+indent+"}"
-		: member(lang,["swift","haxe","php","typescript"])
+		: member(lang,["swift","haxe","php","typescript","d"])
 			?  "interface "+name+"{"+body+indent+"}"
 		: to_return;
 	}
@@ -6069,12 +5922,10 @@ function generate_code(input_lang,lang,indent,arr){
 		var access_modifier = arr[1];
 		var name = arr[2];
 		var body;
-		if(member(lang,["alt-ergo","haskell","ocaml","coq","reasonml"])){
-			body = indent + "    " + arr[3].map(function(x){types[x] = name; return generate_code(input_lang,lang,"",x)}).join(" | ");
-		}
-		else{
-			body = indent + "    " + arr[3].map(function(x){types[x] = name; return generate_code(input_lang,lang,"",x)}).join(",");
-		}
+		
+		body = member(lang,["alt-ergo","haskell","ocaml","coq","reasonml"])
+			? indent + "    " + arr[3].map(function(x){types[x] = name; return generate_code(input_lang,lang,"",x)}).join(" | ")
+		: indent + "    " + arr[3].map(function(x){types[x] = name; return generate_code(input_lang,lang,"",x)}).join(",");
 		
 		if(member(lang,["java"])){
 			return access_modifier + " enum "+name+"{"+body+indent+"}";
@@ -6108,120 +5959,84 @@ function generate_code(input_lang,lang,indent,arr){
 		//return arr.toString();
 		var name = arr[1];
 		var body = generate_code(input_lang,lang,indent+"    ",arr[2]);
-		if(member(lang,["java"])){
-			to_return = "public class "+name+"{"+body+indent+"}";
-		}
-		else if(member(lang,["python"])){
-			to_return = "@dataclass\nclass "+name+":"+body;
-		}
-		else if(member(lang,["kotlin"])){
-			to_return = "data class "+name+"("+body+indent+")";
-		}
-		else if(member(lang,["php"])){
-			to_return = "class "+name+"{"+body+indent+"}";
-		}
-		else if(member(lang,["coq"])){
-			to_return = "Record "+name+" := {"+body+indent+"}";
-		}
-		else if(member(lang,["futhark"])){
-			to_return = "module "+name+" = {"+body+indent+"}";
-		}
-		else if(member(lang,["smt-lib"])){
-			to_return = "(declare-datatypes () "+name+" ("+body+"))";
-		}
-		else if(member(lang,["vdm-sl"])){
-			to_return = name+"::"+body;
-		}
-		else if(member(lang,["acl2"])){
-			to_return = "(defstructure "+name+" "+body+indent+")";
-		}
-		else if(member(lang,["racket"])){
-			to_return = "(struct "+name+" ("+body+")"+indent+")";
-		}
-		else if(member(lang,["sql","mysql","transact-sql"])){
-			to_return = "CREATE TABLE "+name+"("+body+indent+")";
-		}
-		else if(member(lang,["c++","glsl","hlsl","rust","elena","sidef"])){
-			to_return = "struct "+name+"{"+body+indent+"};";
-		}
-		else if(member(lang,["pascal","delphi"])){
-			to_return = "type "+name+" = record"+body+indent+"end;";
-		}
-		else if(member(lang,["nim"])){
-			to_return = "type "+name+" = tuple["+body+"]";
-		}
-		else if(member(lang,["clean"])){
-			to_return = ":: " + name + " = {" + body + "}";
-		}
-		else if(member(lang,["c","systemverilog"])){
-			to_return = "typedef struct {"+body+indent+"}"+name+";";
-		}
-		else if(member(lang,["common lisp"])){
-			to_return = "(defstruct "+name+" "+body+indent+")";
-		}
-		else if(member(lang,["clojure"])){
-			to_return = "(defrecord "+name+" ["+body+indent+"])";
-		}
-		else if(member(lang,["lfe"])){
-			to_return = "(defrecord "+name+" "+body+indent+")";
-		}
-		else if(member(lang,["protobuf"])){
-			to_return = "message "+name+"{"+body+indent+"}";
-		}
-		else if(member(lang,["thrift","swift","c#","stata","terra"])){
-			to_return = "struct "+name+"{"+body+indent+"}";
-		}
-		else if(member(lang,["erlang"])){
-			to_return = "-record("+name+", {"+body+indent+"})";
-		}
-		else if(member(lang,["icon","unicon"])){
-			to_return = "record "+name+"("+body+")";
-		}
-		else if(member(lang,["vhdl","ada"])){
-			to_return = "type "+name+" is record"+body+indent+"end record "+name+";";
-		}
-		else if(member(lang,["stone"])){
-			to_return = "struct "+name+body;
-		}
-		else if(member(lang,["lean"])){
-			to_return = "inductive "+name+": Type "+body;
-		}
-		else if(member(lang,["haskell","songbird","purescript"])){
-			to_return = "data "+name+" = "+name+"{"+body+indent+"}";
-		}
-		else if(member(lang,["q#"])){
-			to_return = "newtype "+name+" = "+name+"{"+body+indent+"}";
-		}
-		else if(member(lang,["ocaml"])){
-			to_return = "data "+name+" = {"+body+indent+"}";
-		}
-		else if(member(lang,["standard ml","ocaml"])){
-			to_return = "type "+name+" = {"+body+indent+"}";
-		}
-		else if(member(lang,["reasonml"])){
-			to_return = "type "+name+" = {"+body+indent+"};";
-		}
-		else if(member(lang,["haxe"])){
-			to_return = "typedef "+name+" = {"+body+indent+"}";
-		}
-		else if(member(lang,["coffeescript"])){
-			to_return = name+" = "+body;
-		}
-		else if(member(lang,["ruby"])){
-			to_return = name+" = Struct.new("+body+")";
-		}
-		else if(member(lang,["go"])){
-			to_return = "type "+name+" struct{"+body+indent+"}";
-		}
-		else if(member(lang,["fortran"])){
-			to_return = "type "+name+body+indent+"end type "+name;
-		}
-		else if(member(lang,["freebasic","vba"])){
-			to_return = "Type "+name+body+indent+"End Type";
-		}
-		else if(member(lang,["julia"])){
-			to_return = "struct "+name+body+indent+"end";
-		}
+		
+		to_return = member(lang,["java"])
+			? "public class "+name+"{"+body+indent+"}"
+		: member(lang,["python"])
+			? "@dataclass\nclass "+name+":"+body
+		: member(lang,["kotlin"])
+			? "data class "+name+"("+body+indent+")"
+		: member(lang,["php"])
+			? "class "+name+"{"+body+indent+"}"
+		: member(lang,["coq"])
+			? "Record "+name+" := {"+body+indent+"}"
+		: member(lang,["futhark"])
+			? "module "+name+" = {"+body+indent+"}"
+		: member(lang,["smt-lib"])
+			? "(declare-datatypes () "+name+" ("+body+"))"
+		: member(lang,["vdm-sl"])
+			? name+"::"+body
+		: member(lang,["acl2"])
+			? "(defstructure "+name+" "+body+indent+")"
+		: member(lang,["racket"])
+			? "(struct "+name+" ("+body+")"+indent+")"
+		: member(lang,["sql","mysql","transact-sql"])
+			? "CREATE TABLE "+name+"("+body+indent+")"
+		: member(lang,["c++","glsl","hlsl","rust","elena","sidef"])
+			? "struct "+name+"{"+body+indent+"};"
+		: member(lang,["pascal","delphi"])
+			? "type "+name+" = record"+body+indent+"end;"
+		: member(lang,["nim"])
+			? "type "+name+" = tuple["+body+"]"
+		: member(lang,["clean"])
+			? ":: " + name + " = {" + body + "}"
+		: member(lang,["c","systemverilog"])
+			? "typedef struct {"+body+indent+"}"+name+";"
+		: member(lang,["common lisp"])
+			? "(defstruct "+name+" "+body+indent+")"
+		: member(lang,["clojure"])
+			? "(defrecord "+name+" ["+body+indent+"])"
+		: member(lang,["lfe"])
+			? "(defrecord "+name+" "+body+indent+")"
+		: member(lang,["protobuf"])
+			? "message "+name+"{"+body+indent+"}"
+		: member(lang,["thrift","swift","c#","stata","terra"])
+			? "struct "+name+"{"+body+indent+"}"
+		: member(lang,["erlang"])
+			? "-record("+name+", {"+body+indent+"})"
+		: member(lang,["icon","unicon"])
+			? "record "+name+"("+body+")"
+		: member(lang,["vhdl","ada"])
+			? "type "+name+" is record"+body+indent+"end record "+name+";"
+		: member(lang,["stone"])
+			? "struct "+name+body
+		: member(lang,["lean"])
+			? "inductive "+name+": Type "+body
+		: member(lang,["haskell","songbird","purescript"])
+			? "data "+name+" = "+name+"{"+body+indent+"}"
+		: member(lang,["q#"])
+			? "newtype "+name+" = "+name+"{"+body+indent+"}"
+		: member(lang,["ocaml"])
+			? "data "+name+" = {"+body+indent+"}"
+		: member(lang,["standard ml","ocaml"])
+			? "type "+name+" = {"+body+indent+"}"
+		: member(lang,["reasonml"])
+			? "type "+name+" = {"+body+indent+"};"
+		: member(lang,["haxe"])
+			? "typedef "+name+" = {"+body+indent+"}"
+		: member(lang,["coffeescript"])
+			? name+" = "+body
+		: member(lang,["ruby"])
+			? name+" = Struct.new("+body+")"
+		: member(lang,["go"])
+			? "type "+name+" struct{"+body+indent+"}"
+		: member(lang,["fortran"])
+			? "type "+name+body+indent+"end type "+name
+		: member(lang,["freebasic","vba"])
+			? "Type "+name+body+indent+"End Type"
+		: member(lang,["julia"])
+			? "struct "+name+body+indent+"end"
+		: undefined;
 	}
 	else if(arr[0] === "namespace"){
 		//return arr.toString();
@@ -6229,10 +6044,11 @@ function generate_code(input_lang,lang,indent,arr){
 		var name = arr[2];
 		class_name = name;
 		var body = generate_code(input_lang,lang,indent+"    ",arr[3]);
-		member(lang,["c#"])
-			&& (to_return = access_modifier + " interface "+name+"{"+body+indent+"}")
-		|| member(lang,["php"])
-			&& (to_return = access_modifier + " interface "+name+"{"+body+indent+"}");
+		to_return = member(lang,["c#"])
+			? access_modifier + " interface "+name+"{"+body+indent+"}"
+		: member(lang,["php"])
+			? access_modifier + " interface "+name+"{"+body+indent+"}"
+		: undefined;
 	}
 	else if(arr[0] === "generic_interface"){
 		//return arr.toString();
@@ -6245,18 +6061,16 @@ function generate_code(input_lang,lang,indent,arr){
 			type_parameters.push(arr[4][i]);
 		}
 		var type_params = arr[4].join(",");
-		if(member(lang,["java","c#"])){
-			to_return = access_modifier +" interface "+ name+"<"+type_params+">{"+body+indent+"}";
-		}
-		else if(member(lang,["typescript"])){
-			to_return = "interface "+ name+"<"+type_params+">{"+body+indent+"}";
-		}
-		else if(member(lang,["perl 6"])){
-			to_return = "role "+name+"["+type_params+"] {"+body+indent+"}";
-		}
-		else if(member(lang,["visual prolog"])){
-			to_return = "interface "+name+"{"+type_params+"} /n predicates"+body+indent+"end interface "+name;
-		}
+		
+		to_return = member(lang,["java","c#"])
+			? access_modifier +" interface "+ name+"<"+type_params+">{"+body+indent+"}"
+		: member(lang,["typescript"])
+			? "interface "+ name+"<"+type_params+">{"+body+indent+"}"
+		: member(lang,["perl 6"])
+			? "role "+name+"["+type_params+"] {"+body+indent+"}"
+		: member(lang,["visual prolog"])
+			? "interface "+name+"{"+type_params+"} /n predicates"+body+indent+"end interface "+name
+		: to_return;
 	}
 	else if(arr[0] === "generic_class"){
 		//return arr.toString();
@@ -6269,42 +6083,32 @@ function generate_code(input_lang,lang,indent,arr){
 		}
 		var body = generate_code(input_lang,lang,indent+"    ",arr[3]);
 		var type_params;
-		if(lang === "futhark"){
-			type_params = "'"+arr[4].join(" '");
-		}
-		else if(lang === "zig"){
-			type_params = "comptime "+arr[4].join(":type, comptime ")+":type";
-		}
-		else if(lang === "ocaml"){
-			type_params = arr[4].join(" ");
-		}
-		else{
-			type_params = arr[4].join(",");
-		}
-		if(member(lang,["typescript","haxe","swift","ceylon","kotlin"])){
-			to_return = "class "+ name+"<"+type_params+">{"+body+indent+"}";
-		}
-		else if(member(lang,["zig"])){
-			to_return = "fn "+name+"("+type_params+") type {return struct {"+body+indent+"}}";
-		}
-		else if(member(lang,["visual basic .net"])){
-			to_return = "Public Class "+ name+"(of"+type_params+")"+body+indent+"End Class";
-		}
-		else if(member(lang,["scala"])){
-			to_return = "class "+ name+"["+type_params+"]{"+body+indent+"}";
-		}
-		else if(member(lang,["c++"])){
-			to_return = "template<"+type_params+"> class "+ name+"{"+body+indent+"}";
-		}
-		else if(member(lang,["futhark"])){
-			to_return = "module "+type_params+" = "+ name+"{"+body+indent+"}";
-		}
-		else if(member(lang,["ocaml"])){
-			to_return = "name "+name+" "+type_params+" = object"+body+indent+"end";
-		}
-		else if(member(lang,["java","c#"])){
-			to_return = access_modifier +" class "+ name+"<"+type_params+">{"+body+indent+"}";
-		}
+		
+		type_params = (lang === "futhark")
+			? "'"+arr[4].join(" '")
+		:(lang === "zig")
+			? "comptime "+arr[4].join(":type, comptime ")+":type"
+		:(lang === "ocaml")
+			? arr[4].join(" ")
+		:arr[4].join(",");
+		
+		to_return = member(lang,["typescript","haxe","swift","ceylon","kotlin"])
+			?  "class "+ name+"<"+type_params+">{"+body+indent+"}"
+		: member(lang,["zig"])
+			?  "fn "+name+"("+type_params+") type {return struct {"+body+indent+"}}"
+		: member(lang,["visual basic .net"])
+			?  "Public Class "+ name+"(of"+type_params+")"+body+indent+"End Class"
+		: member(lang,["scala"])
+			?  "class "+ name+"["+type_params+"]{"+body+indent+"}"
+		: member(lang,["c++"])
+			?  "template<"+type_params+"> class "+ name+"{"+body+indent+"}"
+		: member(lang,["futhark"])
+			?  "module "+type_params+" = "+ name+"{"+body+indent+"}"
+		: member(lang,["ocaml"])
+			?  "name "+name+" "+type_params+" = object"+body+indent+"end"
+		: member(lang,["java","c#"])
+			?  access_modifier +" class "+ name+"<"+type_params+">{"+body+indent+"}"
+		: to_return;
 	}
 	else if(arr[0] === "scala_class"){
 		//return arr.toString();
@@ -6312,24 +6116,20 @@ function generate_code(input_lang,lang,indent,arr){
 		var name = arr[2];
 		var params = parameters(input_lang,lang,indent,arr[3]);
 		var body = generate_code(input_lang,lang,indent+"    ",arr[4]);
-		if(member(lang,["scala"])){
-			to_return = "class "+name+"("+params+"){"+body+indent+"}";
-		}
-		else if(member(lang,["f#"])){
-			to_return = "type "+name+"("+params+") = "+body;
-		}
-		else if(member(lang,["unicon"])){
-			to_return = "class "+name+"("+params+")"+body+"end";
-		}
-		else if(member(lang,["futhark"])){
-			to_return = "module " + name+" "+params+" = {"+body+indent+"}";
-		}
-		else if(member(lang,["ocaml"])){
-			to_return = "class " + name+" "+params+" = object"+body+indent+"end";
-		}
-		else if(member(lang,["scala"])){
-			to_return = "functor " + name+"("+params+") = struct"+body+indent+"end";
-		}
+		
+		to_return = member(lang,["scala"])
+			?  "class "+name+"("+params+"){"+body+indent+"}"
+		: member(lang,["f#"])
+			?  "type "+name+"("+params+") = "+body
+		: member(lang,["unicon"])
+			?  "class "+name+"("+params+")"+body+"end"
+		: member(lang,["futhark"])
+			?  "module " + name+" "+params+" = {"+body+indent+"}"
+		: member(lang,["ocaml"])
+			?  "class " + name+" "+params+" = object"+body+indent+"end"
+		: member(lang,["scala"])
+			?  "functor " + name+"("+params+") = struct"+body+indent+"end"
+		: to_return;
 	}
 	else if(arr[0] === "class"){
 		//return arr.toString();
@@ -6337,17 +6137,18 @@ function generate_code(input_lang,lang,indent,arr){
 		var name = arr[2];
 		class_name = name;
 		var body;
-		if(member(lang,["julia","glsl","minizinc"])){
-			body = generate_code(input_lang,lang,indent,arr[3]);
-		}
-		else{
-			body = generate_code(input_lang,lang,indent+"    ",arr[3]);
-		}
+		body = member(lang,["julia","glsl","minizinc"])
+			? generate_code(input_lang,lang,indent,arr[3])
+		: generate_code(input_lang,lang,indent+"    ",arr[3]);
 		
 		to_return = member(lang,["java","c#"])
 			?  access_modifier + " class "+name+"{"+body+indent+"}"
 		: member(lang,["mysql"])
 			?  "CREATE TABLE "+name+"("+body+indent+")"
+		: member(lang,["lua"])
+			?  name+" = {"+body+indent+"}"
+		: member(lang,["elixir"])
+			?  "defmodule "+name+" do"+body+indent+"end"
 		: member(lang,["zig"])
 			?  "const "+name+" = struct {"+body+indent+"}"
 		: member(lang,["haskell","idris"])
@@ -6411,21 +6212,32 @@ function generate_code(input_lang,lang,indent,arr){
 	else if(arr[0] === "interface_static_method"){
 		//return arr.toString();
 		var type = arr[2];
-		var name = arr[3][1];
-		var params = parameters(input_lang,lang,indent,arr[4]);
+		var name = arr[3];
+		//alert(JSON.stringify(name))
+		
+		var params = member(lang,["coq","haskell","idris","futhark","ocaml","standard_ml"])
+			? arr[4].map(function(x){return x[0]}).join(" -> ")
+		: parameters(input_lang,lang,indent,arr[4]);
+		
 		var access_modifier = arr[1];
 		types[name] = type;
 		
-		to_return = member(lang,["java","c#"])
+		to_return = member(lang,["java","c#","d"])
 			?  access_modifier + " static " + var_type(input_lang,lang,type) + " " + name + "("+params+")"+";"
 		: member(lang,["thrift"])
 			?  var_type(input_lang,lang,type) + " " + name + "("+params+")"
+		: member(lang,["go"])
+			?  name + "("+params+") "+var_type(input_lang,lang,type)
+		: member(lang,["swift"])
+			?  "static func "+name+"("+params+")"
 		: member(lang,["c++"])
 			?  "static virtual " + var_type(input_lang,lang,type) + " " + name + "("+params+")"+"=0;"
 		: member(lang,["haxe"])
 			?  "static "+access_modifier+" function " + name + "("+params+"): "+var_type(input_lang,lang,type)+";"
 		: member(lang,["php"])
 			?  access_modifier + " static function " + name + "("+params+");"
+		: member(lang,["futhark","ocaml","standard ml"])
+			?  "val " + name + " : "+params+(params === ""?"":"->")+var_type(input_lang,lang,type)
 		: to_return;
 	}
 	else if(arr[0] === "interface_instance_method"){
@@ -6433,14 +6245,15 @@ function generate_code(input_lang,lang,indent,arr){
 		var type = arr[2];
 		var name = arr[3];
 		var params;
-		if(member(lang,["coq","haskell","idris"])){
-			params = arr[4].map(function(x){return parameter(input_lang,lang,x)}).join(" -> ")
-		}
-		else{params = parameters(input_lang,lang,indent,arr[4]);}
+		
+		params = member(lang,["coq","haskell","idris"])
+			? arr[4].map(function(x){return parameter(input_lang,lang,x)}).join(" -> ")
+		: parameters(input_lang,lang,indent,arr[4]);
+		
 		var access_modifier = arr[1];
 		types[name] = type;
 		
-		to_return = member(lang,["java","c#"])
+		to_return = member(lang,["java","c#","d"])
 			?  access_modifier + " " + var_type(input_lang,lang,type) + " " + name + "("+params+")"+";"
 		: member(lang,["go"])
 			?  name + "("+params+") "+type
@@ -6475,12 +6288,19 @@ function generate_code(input_lang,lang,indent,arr){
 		var access_modifier = arr[1];
 		types[name] = type;
 		if(member(lang,["c++"])){
-			type = var_type(input_lang,lang,type);
-			to_return = type +" operator" + name + "("+params+"){"+body+indent+"}";
+			to_return = var_type(input_lang,lang,type) +" operator" + name + "("+params+"){"+body+indent+"}";
 		}
 		else if(member(lang,["futhark"])){
-			type = var_type(input_lang,lang,type);
-			to_return = "let (" + name + ") "+params+":"+type+" = "+body;
+			to_return = "let (" + name + ") "+params+":"+var_type(input_lang,lang,type)+" = "+body;
+		}
+		else if(member(lang,["prolog"])){
+			to_return = ":- op(500, xfy, "+name+")."+indent+name+"("+params+") :- "+body
+		}
+		else if(member(lang,["julia"])){
+			to_return = "function "+name+"("+params+")"+body+indent+"end"
+		}
+		else if(member(lang,["ocaml"])){
+			to_return = "let "+name+" "+params+" = "+body
 		}
 		else if(member(lang,["haskell"])){
 			type = var_type(input_lang,lang,type);
@@ -6531,8 +6351,12 @@ function generate_code(input_lang,lang,indent,arr){
 		if(member(lang,["ruby"])){
 			to_return = "def " + name + "("+params+")"+body+indent+"end";
 		}
+		//in c#, the operator overloading must be static
 		else if(member(lang,["snowscript"])){
 			to_return = "fn " + name + "("+params+"):"+body;
+		}
+		else if(member(lang,["futhark"])){
+			to_return = "let (" + name + ") "+params+" = "+body;
 		}
 		else if(member(lang,["scala"])){
 			type = var_type(input_lang,lang,type);
@@ -6763,23 +6587,20 @@ function generate_code(input_lang,lang,indent,arr){
 			to_return = access_modifier + " static " + type + " " + name + "("+params+"){"+body+indent+"}";
 		}
 		else if(member(lang,["ocaml"])){
-			if(is_recursive){
-				to_return = "let rec "  + name + " " + params+" = "+body;
-			}
-			else{
-				to_return = "let "  + name + " " + params+" = "+body;
-			}
+			to_return = is_recursive
+				? "let rec "  + name + " " + params+" = "+body
+			: "let "  + name + " " + params+" = "+body;
 		}
 		else if(member(lang,["pvs"])){
-			if(is_recursive){
-				to_return = name + "(" + params+"): RECURSIVE "+var_type(input_lang,lang,type)+" = "+body;
-			}
-			else{
-				to_return = name + "(" + params+"):"+var_type(input_lang,lang,type)+" = "+body;
-			}
+			to_return = is_recursive
+				? name + "(" + params+"): RECURSIVE "+var_type(input_lang,lang,type)+" = "+body
+			: name + "(" + params+"):"+var_type(input_lang,lang,type)+" = "+body;
 		}
 		else if(member(lang,["coffeescript"])){
 			to_return ="@" + name + ": ("+params+") ->"+body;
+		}
+		else if(member(lang,["lua"])){
+			to_return =name + " = function("+params+")"+body+indent+"end";
 		}
 		else if(member(lang,["scala"])){
 			type = var_type(input_lang,lang,type);
@@ -6814,12 +6635,9 @@ function generate_code(input_lang,lang,indent,arr){
 			to_return = "static " +  name + "(" + params + ")" +":" +var_type(input_lang,lang,type) + "{"+body+indent+"}";
 		}
 		else if(member(lang,["futhark"])){
-			if(type === "Object"){
-				to_return = "let " +  name + " " + params +  " = "+body;
-			}
-			else{
-				to_return = "let " +  name + " " + params + " " +": " +var_type(input_lang,lang,type) + " = "+body;
-			}
+			to_return = (type === "Object")
+				? "let " +  name + " " + params +  " = "+body
+			: "let " +  name + " " + params + " " +": " +var_type(input_lang,lang,type) + " = "+body;
 		}
 		else if(member(lang,["standard ml"])){
 			to_return = "fun " +  name + " " + params + " " + " = "+body;
@@ -6830,18 +6648,20 @@ function generate_code(input_lang,lang,indent,arr){
 		else if(member(lang,["ruby"])){
 			to_return = "def self." + name + "("+params+") "+body+indent+"end";
 		}
+		else if(member(lang,["elixir"])){
+			to_return = "def " + name + "("+params+") do"+body+indent+"end";
+		}
 	}
 	else if(arr[0] === "constructor"){
 		//return JSON.stringify(arr);
 		var access_modifier = arr[1];
 		var name = arr[2];
 		var params;
-		if(member(lang,["julia"])){
-			params = "    "+arr[3].map(function(x){return parameter(input_lang,lang,x)}).join("\n    ");
-		}
-		else{
-			params = parameters(input_lang,lang,indent,arr[3]);
-		}
+		
+		params = (member(lang,["julia"]))
+			? "    "+arr[3].map(function(x){return parameter(input_lang,lang,x)}).join("\n    ")
+		: parameters(input_lang,lang,indent,arr[3]);
+		
 		var body = generate_code(input_lang,lang,indent+"    ",arr[4]);
 		if(member(lang,["java","c#","vala"])){
 			to_return = "public " + name + "("+params+"){"+body+indent+"}";
@@ -6893,12 +6713,9 @@ function generate_code(input_lang,lang,indent,arr){
 			to_return = "construct("+params+"){"+body+indent+"}";
 		}
 		else if(member(lang,["coffeescript"])){
-			if(params === ""){
-				to_return = "constructor: ->"+body+indent;
-			}
-			else{
-				to_return = "constructor: ("+params+") ->"+body+indent;
-			}
+			to_return = (params === "")
+				? "constructor: ->"+body+indent
+			: "constructor: ("+params+") ->"+body+indent;
 		}
 	}
 	else if(arr[0] === "instance_method"){
@@ -6925,12 +6742,9 @@ function generate_code(input_lang,lang,indent,arr){
 			to_return = access_modifier + " " + type + " " + name + "("+params+"){"+body+indent+"}";
 		}
 		else if(member(lang,["futhark"])){
-			if(type === "Object"){
-				to_return = "let " +  name + " " + params +  " = "+body;
-			}
-			else{
-				to_return = "let " +  name + " " + params + " : " +var_type(input_lang,lang,type) + " = "+body;
-			}
+			to_return = (type === "Object")
+				? "let " +  name + " " + params +  " = "+body
+			: "let " +  name + " " + params + " : " +var_type(input_lang,lang,type) + " = "+body;
 		}
 		else if(member(lang,["logtalk"])){
 			to_return = name+"("+params+") :- "+body+".";
@@ -6965,12 +6779,9 @@ function generate_code(input_lang,lang,indent,arr){
 			to_return = "def " + name + "("+params+"):"+type+" = {"+body+indent+"}";
 		}
 		else if(member(lang,["coffeescript"])){
-			if(params === ""){
-				to_return = name + ": ->"+body;
-			}
-			else{
-				to_return = name + ": ("+params+") ->"+body;
-			}
+			to_return = (params === "")
+				? name + ": ->"+body
+			: name + ": ("+params+") ->"+body;
 		}
 		else if(member(lang,["perl"])){
 			to_return = "sub " + name + "{my ("+params+") = @_; "+body+indent+"}";
@@ -7025,13 +6836,10 @@ function generate_code(input_lang,lang,indent,arr){
 		}
 		else if(member(lang,["haskell"])){
 			if(types[name] !== "Object"){
-				var types_list = arr[4].map(function(x) {
-					return var_type(input_lang,lang,x[0]);
-				});
 				var names_list = arr[4].map(function(x) {
 					return x[1];
 				}).join(",");
-				to_return = name + "::" +"self -> "+ types_list.join(" -> ") + " -> " + var_type(input_lang,lang,type) + indent + name + " self " + parameters(input_lang,lang,indent,arr[4])+" = "+body;
+				to_return = name + "::" +"self -> "+ types_list_(input_lang,lang,arr[4]).join(" -> ") + " -> " + var_type(input_lang,lang,type) + indent + name + " self " + parameters(input_lang,lang,indent,arr[4])+" = "+body;
 			}
 			else{
 				to_return = name + " self "+params+" = "+body;	
@@ -7041,24 +6849,19 @@ function generate_code(input_lang,lang,indent,arr){
 	else if(arr[0] === "access_dict"){
 		var a = generate_code(input_lang,lang,indent,arr[1]);
 		var b = generate_code(input_lang,lang,indent,arr[2]);
-		if(member(lang,["java"])){
-			to_return = a+".get("+b+")";
-		}
-		else if(member(lang,["javascript","c++","c#","haxe","typescript","python","coconut","php","lua","ruby","swift"])){
-			to_return = a+"["+b+"]";
-		}
-		else if(member(lang,["scala","visual basic .net"])){
-			to_return = a+"("+b+")";
-		}
-		else if(member(lang,["perl"])){
-			to_return = a+"{"+b+"}";
-		}
-		else if(member(lang,["haskell"])){
-			to_return = "("+a+" !! "+b+")";
-		}
-		else{
-			to_return = unparse(input_lang,lang,indent,pattern_array.value,matching_symbols);
-		}
+		
+		to_return = member(lang,["java"])
+			? a+".get("+b+")"
+		: member(lang,["javascript","c++","c#","haxe","typescript","python","coconut","php","lua","ruby","swift"])
+			?  a+"["+b+"]"
+		: member(lang,["scala","visual basic .net"])
+			?  a+"("+b+")"
+		: member(lang,["perl"])
+			?  a+"{"+b+"}"
+		: member(lang,["haskell"])
+			?  "("+a+" !! "+b+")"
+		: unparse(input_lang,lang,indent,pattern_array.value,matching_symbols);
+
 		if(to_return !== undefined){
 			console.log("type of dict: " + types[a]);
 			if(types[arr[1]][0] === "HashMap")
@@ -8021,12 +7824,11 @@ function generate_code(input_lang,lang,indent,arr){
 		else if(member(lang,["sidef","tensorlang"]))
 			to_return = "func " + name + "("+params+"){"+body+indent+"}";
 		else if(member(lang,["c","glsl","vala","processing","rascal","aime"])){
-			if(type !== undefined || type === "Object"){
-				type = var_type(input_lang,lang,types[function_name]);
-			}
-			else{
-				type = var_type(input_lang,lang,type)
-			}
+			
+			type = (type !== undefined || type === "Object")
+				 ? var_type(input_lang,lang,types[function_name])
+			: var_type(input_lang,lang,type);
+			
 			to_return = type + " " + name + "("+params+"){"+body+indent+"}";
 		}
 		else if(member(lang,["c++","dart","ceylon","pike","d","pseudocode"])){
@@ -8090,36 +7892,24 @@ function generate_code(input_lang,lang,indent,arr){
 			to_return = "function " + name + "("+params+")\n    return ("+body+indent+"end";
 		}
 		else if(member(lang,["hack"])){
-			if(type === "Object"){
-				to_return = "function " + name + "("+params+"){"+body+indent+"}";
-			}
-			else{
-				to_return = "function " + name + "("+params+"):"+var_type(input_lang,lang,type)+"{"+body+indent+"}";
-			}
+			to_return = (type === "Object")
+				? "function " + name + "("+params+"){"+body+indent+"}"
+			: "function " + name + "("+params+"):"+var_type(input_lang,lang,type)+"{"+body+indent+"}";
 		}
 		else if(member(lang,["typescript"])){
-			if(type === "Object"){
-				to_return = "export function " + name + "("+params+"){"+body+indent+"}";
-			}
-			else{
-				to_return = "export function " + name + "("+params+"):"+var_type(input_lang,lang,type)+"{"+body+indent+"}";
-			}
+			to_return = (type === "Object")
+				? "export function " + name + "("+params+"){"+body+indent+"}"
+			: "export function " + name + "("+params+"):"+var_type(input_lang,lang,type)+"{"+body+indent+"}";
 		}
 		else if(member(lang,["terra"])){
-			if(type === "Object"){
-				to_return = "function " + name + "("+params+")"+body+indent+"end";
-			}
-			else{
-				to_return = "terra " + name + "("+params+"):"+var_type(input_lang,lang,type)+body+indent+"end";
-			}
+			to_return = (type === "Object")
+				? "function " + name + "("+params+")"+body+indent+"end"
+			: "terra " + name + "("+params+"):"+var_type(input_lang,lang,type)+body+indent+"end";
 		}
 		else if(member(lang,["standard ml"])){
-			if(type === "Object"){
-				to_return = "fun " + name + "("+params+") ="+body;
-			}
-			else{
-				to_return = "fun " + name + "("+params+"):"+var_type(input_lang,lang,type)+" = "+body;
-			}
+			to_return = (type === "Object")
+				? "fun " + name + "("+params+") ="+body
+			: "fun " + name + "("+params+"):"+var_type(input_lang,lang,type)+" = "+body;
 		}
 		else if(member(lang,["pony"])){
 			to_return = "fun " + name + "("+params+"):"+var_type(input_lang,lang,type)+" => "+body;
@@ -8132,17 +7922,14 @@ function generate_code(input_lang,lang,indent,arr){
 		}
 		else if(member(lang,["haskell","clean","pure","mizar"])){
 			if(types[name] !== "Object"){
-				var types_list = arr[4].map(function(x) {
-					return var_type(input_lang,lang,x[0]);
-				});
 				var names_list = arr[4].map(function(x) {
 					return x[1];
 				}).join(",");
 				if(member(lang,["haskell"])){
-					to_return = name + "::" + types_list.join(" -> ") + " -> " + var_type(input_lang,lang,type) + indent + name + " " + params+" = "+body;
+					to_return = name + "::" + types_list_(input_lang,lang,arr[4]).join(" -> ") + " -> " + var_type(input_lang,lang,type) + indent + name + " " + params+" = "+body;
 				}
 				else if(member(lang,["clean"])){
-					to_return = name + "::" + types_list.join(" ") + " -> " + var_type(input_lang,lang,type) + indent + name + " " + params+" = "+body;
+					to_return = name + "::" + types_list_(input_lang,lang,arr[4]).join(" ") + " -> " + var_type(input_lang,lang,type) + indent + name + " " + params+" = "+body;
 				}
 				else if(member(lang,["pure"])){
 					to_return = name + " " + params+" = "+body;
@@ -8156,83 +7943,50 @@ function generate_code(input_lang,lang,indent,arr){
 			}
 		}
 		else if(member(lang,["twelf"])){
-			if(types[name] !== "Object"){
-				var types_list = arr[4].map(function(x) {
-					return var_type(input_lang,lang,x[0]);
-				});
-				to_return = name + ":" + types_list.join(" -> ") + " -> " + var_type(input_lang,lang,type) + indent + name + " " + params+" <- "+body;
-			}
-			else{
-				to_return = name + " : " + params+" <- "+body;
-			}
+			to_return = (types[name] !== "Object")
+				? name + ":" + types_list_(input_lang,lang,arr[4]).join(" -> ") + " -> " + var_type(input_lang,lang,type) + indent + name + " " + params+" <- "+body
+			: name + " : " + params+" <- "+body;
 		}
 		else if(member(lang,["isabelle/hol"])){
 			if(types[name] !== "Object"){
-				var types_list = arr[4].map(function(x) {
-					return var_type(input_lang,lang,x[0]);
-				});
-				to_return = "fun " + name + " :: \"" + types_list.join(" \u21d2 ") + " \u21d2 " + var_type(input_lang,lang,type) + "\" where " + indent + "\"" + name + " " + params+" = "+body+"\"";
+				to_return = "fun " + name + " :: \"" + types_list_(input_lang,lang,arr[4]).join(" \u21d2 ") + " \u21d2 " + var_type(input_lang,lang,type) + "\" where " + indent + "\"" + name + " " + params+" = "+body+"\"";
 			}
 		}
 		else if(member(lang,["alt-ergo"])){
-			var types_list = arr[4].map(function(x) {
-				return var_type(input_lang,lang,x[0]);
-			});
 			var function_to_call = name + "(" + arr[4].map(function(x) {
 				return var_name(lang,input_lang,x[1]);
 			}).join(",")+")";
-			to_return = "logic " + name + ":" + types_list.join(",") + " -> " + var_type(input_lang,lang,type) + indent +"axiom "+ name + ": " + params + " " + function_to_call + " = ("+body+")";
+			to_return = "logic " + name + ":" + types_list_(input_lang,lang,arr[4]).join(",") + " -> " + var_type(input_lang,lang,type) + indent +"axiom "+ name + ": " + params + " " + function_to_call + " = ("+body+")";
 		}
 		else if(member(lang,["agda"])){
-			var types_list = arr[4].map(function(x) {
-				return var_type(input_lang,lang,x[0]);
-			});
-			to_return = name + ":" + types_list.join(" \u2192 ") + " \u2192 " + var_type(input_lang,lang,type) + indent + name + " " + params+" = "+body;
+			to_return = name + ":" + types_list_(input_lang,lang,arr[4]).join(" \u2192 ") + " \u2192 " + var_type(input_lang,lang,type) + indent + name + " " + params+" = "+body;
 		}
 		else if(member(lang,["mercury"])){
-			var types_list = arr[4].map(function(x) {
-				return var_type(input_lang,lang,x[0]);
-			});
-			to_return = ":- func " + name + "(" + types_list.join(",") + ") = " + var_type(input_lang,lang,type) + "." + indent + name + "(" + params+") = "+body;
+			to_return = ":- func " + name + "(" + types_list_(input_lang,lang,arr[4]).join(",") + ") = " + var_type(input_lang,lang,type) + "." + indent + name + "(" + params+") = "+body;
 		}
 		else if(member(lang,["idris"])){
-			var types_list = arr[4].map(function(x) {
-				return var_type(input_lang,lang,x[0]);
-			});
-			to_return = name + ":" + types_list.join(" -> ") + " -> " + var_type(input_lang,lang,type) + indent + name + " " + params+" = "+body;
+			to_return = name + ":" + types_list_(input_lang,lang,arr[4]).join(" -> ") + " -> " + var_type(input_lang,lang,type) + indent + name + " " + params+" = "+body;
 		}
 		else if(member(lang,["elm"])){
-			var types_list = arr[4].map(function(x) {
-				return var_type(input_lang,lang,x[0]);
-			});
-			to_return = name + ":" + types_list.join(" -> ") + " -> " + var_type(input_lang,lang,type) + indent + name + " " + params+" = "+body;
+			to_return = name + ":" + types_list_(input_lang,lang,arr[4]).join(" -> ") + " -> " + var_type(input_lang,lang,type) + indent + name + " " + params+" = "+body;
 		}
 		else if(member(lang,["ocaml",'f#',"eff"])){
-			if(is_recursive){
-				to_return = "let rec "  + name + " " + params+" = "+body;
-			}
-			else{
-				to_return = "let "  + name + " " + params+" = "+body;
-			}
+			to_return = is_recursive
+				? "let rec "  + name + " " + params+" = "+body
+			: "let "  + name + " " + params+" = "+body;
 		}
 		else if(member(lang,["reasonml"])){
-			if(is_recursive){
-				to_return = "let rec "  + name + " = (" + params+") => "+body;
-			}
-			else{
-				to_return = "let "  + name + " = (" + params+") => "+body;
-			}
+			to_return = is_recursive
+				? "let rec "  + name + " = (" + params+") => "+body
+			: "let "  + name + " = (" + params+") => "+body;
 		}
 		else if(member(lang,["purescript"])){
 			to_return = "let "  + name + " " + params+" = "+body;
 		}
 		else if(member(lang,["whyml"])){
-			if(is_recursive){
-				to_return = "let rec " + name + " " + params+":"+var_type(input_lang,lang,type)+"="+body+indent+"end";
-			}
-			else{
-				to_return = "let " + name + " " + params+":"+var_type(input_lang,lang,type)+"="+body+indent+"end";
-			}
+			return is_recursive
+				? "let rec " + name + " " + params+":"+var_type(input_lang,lang,type)+"="+body+indent+"end"
+			: "let " + name + " " + params+":"+var_type(input_lang,lang,type)+"="+body+indent+"end";
 		}
 		else if(member(lang,["lua","julia"])){
 			to_return = "function " + name + "("+params+") "+body+indent+"end";
@@ -9853,15 +9607,12 @@ function generate_code(input_lang,lang,indent,arr){
 		var a = generate_code(input_lang,lang,indent,matching_symbols["$a"]);
 		var b = generate_code(input_lang,lang,indent,matching_symbols["$b"]);
 		var c = generate_code(input_lang,lang,indent,matching_symbols["$c"]);
-		if(lang === "prolog"){
-			to_return = a+"= ["+b+"|"+c+"]";
-		}
-		else if(member(lang, ["core.logic","hs-logic"])){
-			to_return = "(conso "+a+" "+b+" "+c+")";
-		}
-		else{
-			to_return = unparse(input_lang,lang,indent,pattern_array.value,matching_symbols);
-		}
+		
+		return (lang === "prolog")
+			? a+"= ["+b+"|"+c+"]"
+		: member(lang, ["core.logic","hs-logic"])
+			? "(conso "+a+" "+b+" "+c+")"
+		: unparse(input_lang,lang,indent,pattern_array.value,matching_symbols);
 	}
 	else if(arr[0] === "=="){
 		var a = generate_code(input_lang,lang,indent,arr[1]);
@@ -10571,6 +10322,7 @@ function generate_code(input_lang,lang,indent,arr){
 		[["picolisp"],["function_call","prin",["$a"]]],
 		[["parasail"],["function_call","Println",["$a"]]],
 		[["c++"],["<<",["<<","cout","$a"],"endl"]],
+		[["c++"],["<<",["<<","cout","$a"],"\"\\n\""]],
 		[["openscad"],["function_call","echo",["$a"]]],
 		[["haxe","pseudocode"],["function_call","trace",["$a"]]],
 		[["octave","pseudocode"],["function_call","disp",["$a"]]],
@@ -11824,25 +11576,20 @@ function generate_code(input_lang,lang,indent,arr){
 		var a = arr[1].map(function(a){
 			return generate_code(input_lang,lang,indent,a);
 		});
-		if(member(lang,["mysql","sql","thrift","erlang","haskell","kotlin","sidef","ruby","purescript"])){
-			return a.join(",");
-		}
-		else if(member(lang,["rust"])){
-			return a.join(",")+",";
-		}
-		else if(member(lang,["smt-lib"])){
-			return a.join(" ");
-		}
-		else if(member(lang,["ocaml","pascal","delphi","vhdl","coq","php"])){
-			return a.join(";")+";";
-		}
-		else{
-			return a.join("");
-		}
+		
+		return member(lang,["mysql","sql","thrift","erlang","haskell","kotlin","sidef","ruby","purescript"])
+			? a.join(",")
+		: member(lang,["rust"])
+			? a.join(",")+","
+		: member(lang,["smt-lib"])
+			? a.join(" ")
+		: member(lang,["ocaml","pascal","delphi","vhdl","coq","php"])
+			? a.join(";")+";"
+		: a.join("");
 	}
 	else if(arr[0] === "class_statements"){
 		//console.log("class statements: " + JSON.stringify(arr));
-		if(member(lang,["sql","transact-sql","mysql"])){
+		if(member(lang,["sql","transact-sql","mysql","lua"])){
 			//for "CREATE TABLE" statements
 			return arr[1].map(function(a){
 				return generate_code(input_lang,lang,indent,a);
@@ -11914,7 +11661,7 @@ function generate_code(input_lang,lang,indent,arr){
 		return arr;
 	}
 	else{
-		return unparse(arr);
+		//return unparse(arr);
 		throw ("Can't generate code for:\n"+JSON.stringify(arr)+" in "+lang);
 	}
 }
@@ -12554,4 +12301,10 @@ function ternary_operator(lang,a,b,c){
 		: member(lang,["coffeescript","kotlin","r","scala"])
 			? "(if ("+a+") "+b+" else "+c+")"
 		: undefined;
+}
+
+function types_list_(input_lang,lang,a){
+	return a.map(function(x) {
+		return var_type(input_lang,lang,x[0]);
+	});	
 }

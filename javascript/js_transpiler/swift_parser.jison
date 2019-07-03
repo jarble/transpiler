@@ -7,6 +7,7 @@
 \"([^\\\"]|\\.)*\" return 'STRING_LITERAL'
 "$"                   return "$"
 "func"                return "func"
+"init"                return "init"
 "inout"               return "inout"
 "out"                 return 'out'
 "end"                 return "end"
@@ -17,6 +18,7 @@
 "if"                  return 'if'
 "class"               return 'class'
 "struct"              return 'struct'
+"protocol"            return 'protocol'
 "else"                return 'else'
 "return"              return 'return'
 "while"               return 'while'
@@ -114,6 +116,7 @@ statement
 
 class_:
 	"class" IDENTIFIER "{" class_statements "}" {$$ = [$1,"public",$2,$4];}
+	| "protocol" IDENTIFIER "{" class_statements "}" {$$ = ["interface","public",$2,$4];}
 	| "enum" IDENTIFIER "{" "case" identifiers "}" {$$ = ["enum",$2,$5];}
 	| "struct" IDENTIFIER "{" struct_statements "}" {$$ = ["struct",$2,["struct_statements",$4]];};
 
@@ -125,10 +128,15 @@ struct_statement:
 	;
 
 class_statement:
-	initialize_var_ {$$ = ["initialize_instance_var_with_value","public"].concat($1);}
+	class_
+	| "init" "(" parameters ")" "{" statements "}" {$$ = ["constructor","public",$3,$6];}
+	| "func" IDENTIFIER "(" parameters ")" {$$ = ["interface_instance_method","public","Object",$2,$4];}
+	| "var" IDENTIFIER ":" type {$$ = ["initialize_instance_var","public",$4,$2];}
 	| "var" IDENTIFIER {$$ = ["initialize_instance_var","public","Object",$2];}
+	| initialize_var_ {$$ = ["initialize_instance_var_with_value","public"].concat($1);}
 	| "func" IDENTIFIER "(" parameters ")" "->" IDENTIFIER "{" statements "}" {$$ = ["instance_method","public",$7,$2,$4,$9];}
-	| "class" "func" IDENTIFIER "(" parameters ")" "->" IDENTIFIER "{" statements "}" {$$ = ["instance_method","public",$8,$3,$5,$10];};
+	| "class" "func" IDENTIFIER "(" parameters ")" "->" IDENTIFIER "{" statements "}" {$$ = ["instance_method","public",$8,$3,$5,$10];}
+	;
 
 
 statement_with_semicolon
@@ -140,6 +148,7 @@ statement_with_semicolon
    | IDENTIFIER "*=" e {$$ = [$2,$1,$3];}
    | IDENTIFIER "/=" e {$$ = [$2,$1,$3];}
    | access_array "=" e {$$ = ["set_var",$1,$3];}
+   | IDENTIFIER "." IDENTIFIER "=" e {$$ = ["set_var",[".",[$1,$3]],$5];}
    | IDENTIFIER "=" e {$$ = ["set_var",$1,$3];}
    | IDENTIFIER "." dot_expr {$$ = [".",[$1].concat($3)]}
    | "let" IDENTIFIER "=" e {$$ = ["initialize_constant","Object",$2,$4];}

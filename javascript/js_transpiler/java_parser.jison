@@ -160,7 +160,8 @@ case_statements_: case_statement case_statements_ {$$ = [$1].concat($2);} | case
 case_statements: case_statements_ "default" ":" statements {$$ = $1.concat([["default",$4]])} | case_statements_;
 
 class_statement:
-	access_modifier IDENTIFIER "(" parameters ")" "{" statements "}" {$$ = ["constructor",$1,$2,$4,$7];}
+	class_
+	| access_modifier IDENTIFIER "(" parameters ")" "{" statements "}" {$$ = ["constructor",$1,$2,$4,$7];}
 	| access_modifier type IDENTIFIER "=" e ";" {$$ = ["initialize_instance_var_with_value",$1,$2,$3,$5];}
 	| access_modifier type IDENTIFIER ";" {$$ = ["initialize_instance_var",$1,$2,$3];}
 	| access_modifier "static" type IDENTIFIER ";" {$$ = ["initialize_static_instance_var",$1,$3,$4];}

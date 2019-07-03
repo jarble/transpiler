@@ -107,7 +107,7 @@ access_modifier: "public" | "private";
 class_:
 	"class" IDENTIFIER "{" class_statements "}" {$$ = ["class","public",$2,$4];}
 	| "class" IDENTIFIER "extends" IDENTIFIER "{" class_statements "}" {$$ = ["class_extends","public",$2,$4,$6];}
-	| "class" IDENTIFIER "implements" IDENTIFIER "{" class_statements "}" {$$ = ["class_implements","public",$2,$4,$6];};
+	| "class" IDENTIFIER "implements" identifiers "{" class_statements "}" {$$ = ["class_implements","public",$2,$4,$6];};
 
 statement
     :
@@ -124,6 +124,7 @@ statement
     | "function" IDENTIFIER "(" parameters ")" "{" statements "}" {$$ = ["function","public","Object",$2,$4,$7];}
     ;
 
+identifiers: IDENTIFIER "," identifiers {$$ = [$1].concat($3);} | IDENTIFIER {$$ = [$1];};
 statement_with_semicolon_: initialize_var1 | statement_with_semicolon;
 
 case_statement: "case" e ":" statements "break" ";" {$$ = ["case",$2,$4]};

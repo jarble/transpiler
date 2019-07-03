@@ -89,7 +89,8 @@ class_statements: class_statements_ {$$ = ["class_statements",$1]};
 class_statements_: class_statement class_statements_ {$$ = [$1].concat($2);} | class_statement {$$ =
  [$1];};
 class_statement:
-	"def" IDENTIFIER "(" parameters ")" ":" IDENTIFIER "=" "{" statements "}" {$$ = ["instance_method","public",$7,$2,$4,$10];}
+	class_
+	|"def" IDENTIFIER "(" parameters ")" ":" IDENTIFIER "=" "{" statements "}" {$$ = ["instance_method","public",$7,$2,$4,$10];}
 	| "def" IDENTIFIER "(" parameters ")" "=" "{" statements "}" {$$ = ["instance_method","public","Object",$2,$4,$8];}
 	| "def" IDENTIFIER "(" parameters ")" "=" statement {$$ = ["instance_method","public","Object",$2,$4,["statements",[$7]]];}
 	;

@@ -15,6 +15,7 @@
 "extends"             return 'extends'
 "typeof"              return "typeof"
 "class"               return "class"
+"static"              return "static"
 "const"               return 'const'
 "if"                  return 'if'
 "else"                return 'else'
@@ -115,7 +116,7 @@ class_:
 	"class" IDENTIFIER "extends" IDENTIFIER "{" class_statements "}" {$$ = ["class_extends","public",$2,$4,$6];}
 	| "class" IDENTIFIER "{" class_statements "}" {$$ = [$1,"public",$2,$4];}
 	| "export" "class" IDENTIFIER "<" types ">" "{" class_statements "}" {$$ = ["generic_class","public",$3,$8,$5];}
-	| "interface" IDENTIFIER "extends" IDENTIFIER "{" class_statements "}" {$$ = ["interface_extends",$2,$4,$6,$8];}
+	| "interface" IDENTIFIER "extends" identifiers "{" class_statements "}" {$$ = ["interface_extends",$2,$4,$6,$8];}
 	| "interface" IDENTIFIER "{" class_statements "}" {$$ = ["interface","public",$2,$4];}
 	| "interface" IDENTIFIER "<" IDENTIFIER ">" "{" class_statements "}" {$$ = ["generic_interface","public",$2,$4,$7];};
 
