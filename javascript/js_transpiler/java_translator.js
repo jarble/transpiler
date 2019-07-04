@@ -6586,6 +6586,10 @@ function generate_code(input_lang,lang,indent,arr){
 			type = var_type(input_lang,lang,type);
 			to_return = access_modifier + " static " + type + " " + name + "("+params+"){"+body+indent+"}";
 		}
+		else if(member(lang,["glsl"])){
+			type = var_type(input_lang,lang,type);
+			to_return = type+" " + name + "("+class_name+" self"+((params==="")?"":",")+params+"){"+body+indent+"}";
+		}
 		else if(member(lang,["ocaml"])){
 			to_return = is_recursive
 				? "let rec "  + name + " " + params+" = "+body
