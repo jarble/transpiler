@@ -2,30 +2,96 @@
 
 # Universal-transpiler
 
-*Universal-transpiler* is a source-to-source compiler that translates a subset of several programming languages into several others.
-It is also able to translate several metasyntax notations, such as EBNF and ABNF. The translation is not yet 100% accurate in all languages, but it is able to translate some languages fairly accurately.
+*Universal-transpiler* is a source-to-source compiler that translates a small subset of several programming languages into several others.
+It is also able to translate several metasyntax notations, such as EBNF and ABNF. The translation is not always 100% accurate, but I hope it will still be useful.
 
 The [online version of this translator](https://jarble.github.io/transpiler/javascript/js_transpiler/test_parser.html#%7B%22inputText%22%3A%22function%20add(a%2Cb)%7B%5Cn%5Ctvar%20g%20%3D%20%5B3%2C4%2C5%5D%3B%5Cn%5Ctreturn%20a%2Bb%2B(g%5B0%5D)%2B(g.length)%3B%5Cn%7D%5Cn%5Cnfunction%20divide(a%2Cb)%7B%5Cn%5Ctreturn%20a%2Fb%3B%5Cn%7D%22%2C%22inputLang%22%3A%22javascript%22%2C%22outputLang%22%3A%22python%22%7D) is written in JavaScript, but an experimental version is also being written in Prolog.
 
-This is some JavaScript code:
+Universal-transpiler is designed to translate simple "wrapper classes," like this one for Python in Java:
 
-	function add(a,b){
-		var g = [3,4,5];
-		return a+b+(g[0])+(g.length);
+	public class Python{
+
+		public static int round(double a){
+		return Math.round(a+0.5);
+		}
+		public static int floor(double a){
+		return Math.floor(a);
+		}
+		public static int ceil(double a){
+		return Math.ceil(0.5);
+		}
+
+		public class math{
+		public static double sin(double a){
+		return Math.sin(a);
+		}
+		public static double pow(double a,double b){
+		return Math.pow(a,b);
+		}
+		public static double cos(double a){
+		return Math.cos(a);
+		}
+		public static double tan(double a){
+		return Math.tan(a);
+		}
+		public static double asin(double a){
+		return Math.asin(a);
+		}
+		public static double acos(double a){
+		return Math.acos(a);
+		}
+		public static double atan(double a){
+		return Math.atan(a);
+		}
+		}
 	}
 
-	function divide(a,b){
-		return a/b;
-	}
+This is its output in C#:
 
-and this is the Java code that it generates:
-
-	public static Object add(Object a,Object b){
-		Object g=new ArrayList<>(Arrays.asList(3,4,5));
-		return a+b+(g.get(0))+(g.length);
-	}
-	public static Object divide(Object a,Object b){
-		return a/b;
+	public class Python{
+		
+		public static int round(double a){
+			return Math.Round(a+0.5);
+		}
+		
+		public static int floor(double a){
+			return Math.Floor(a);
+		}
+		
+		public static int ceil(double a){
+			return Math.Ceiling(0.5);
+		}
+		
+		public class math{
+		
+			public static double sin(double a){
+				return Math.Sin(a);
+			}
+		
+			public static double pow(double a,double b){
+				return Math.Pow(a,b);
+			}
+		
+			public static double cos(double a){
+				return Math.Cos(a);
+			}
+		
+			public static double tan(double a){
+				return Math.Tan(a);
+			}
+		
+			public static double asin(double a){
+				return Math.Asin(a);
+			}
+		
+			public static double acos(double a){
+				return Math.Acos(a);
+			}
+		
+			public static double atan(double a){
+				return Math.Atan(a);
+			}
+		}
 	}
 
 The translator also includes a proof-of-concept implementation of a [natural language programming](file:///C:/Users/jarbl/Dropbox/All%20source%20code%20goes%20here%20-%20don't%20put%20this%20folder%20inside%20any%20other%20folder/Prolog%20projects/universal-transpiler/javascript/js_transpiler/to_do_list.html#%7B%22inputText%22%3A%22product%20of%20A%20and%20B%20means%20A%20*%20B.%5Cnquotient%20of%20A%20and%20B%20means%20A%20%2F%20B.%5Cnbigger%20means%20greater.%5Cngreater%20means%20more.%5CnA%20is%20no%20B%20than%20C%20means%20A%20is%20not%20B%20than%20C.%5CnA%20is%20more%20than%20B%20means%20A%20%3E%20B.%5CnA%20is%20less%20than%20B%20means%20A%20%3C%20B.%5CnA%20plus%20B%20means%20A%20%2B%20B.%5CnA%20or%20B%20means%20A%20%7C%7C%20B.%5CnA%20and%20B%20means%20A%20%26%26%20B.%5CnA%20is%20equal%20to%20B%20means%20A%20equals%20B.%5CnA%20equals%20B%20means%20A%20%3D%3D%20B.%5CnA%20minus%20B%20means%20A%20-%20B.%5CnA%20is%20not%20equal%20to%20B%20means%20A%20!%3D%20B.%5CnX%20is%20a%20Y%20means%20isa%7BX%2CY%7D.%5CnA%20is%20B%20means%20A%20%3D%3D%20B.%5CnA%20is%20not%20a%20B%20means%20(A%20is%20a%20B)%20is%20false.%5CnA%20is%20not%20more%20than%20B%20means%20A%20%3C%3D%20B.%5CnA%20is%20not%20less%20than%20B%20means%20A%20%3E%3D%20B.%5Cna%20%3D%201.%5Cnb%20%3D%202.%5Cn%5Cna4%20%3D%20(the%20quotient%20of%20a%20and%20b)%20plus%20(the%20product%20of%20a%20and%20b)%20is%20not%20less%20%20than%20100.%22%2C%22inputLang%22%3A%22english%22%2C%22outputLang%22%3A%22python%22%7D) system.
@@ -105,4 +171,4 @@ There are several other source-to-source compilers and code generators that are 
 
 This [universal code generator](http://codeworker.free.fr/) is one example.
 
-[1]: https://jarble.github.io/transpiler/javascript/js_transpiler/test_parser.html#%7B%22inputText%22%3A%22public%20class%20Rectangle%7B%5Cn%20%20%20%20public%20double%20width%3B%5Cn%20%20%20%20public%20double%20height%3B%5Cn%20%20%20%20public%20Example(double%20width%2C%20double%20height)%7B%5Cn%20%20%20%20%20%20%20%20this.width%20%3D%20width%3B%5Cn%20%20%20%20%20%20%20%20this.height%20%3D%20height%3B%5Cn%20%20%20%20%7D%5Cn%20%20%20%20public%20double%20area()%7B%5Cn%20%20%20%20%20%20%20%20return%20this.width*this.height%3B%5Cn%20%20%20%20%7D%5Cn%20%20%20%20public%20double%20perimeter()%7B%5Cn%20%20%20%20%20%20%20%20return%20(this.width%2Bthis.height)*2.0%3B%5Cn%20%20%20%20%7D%5Cn%7D%22%2C%22inputLang%22%3A%22java%22%2C%22outputLang%22%3A%22glsl%22%7D
+[1]: https://jarble.github.io/transpiler/javascript/js_transpiler/test_parser.html#%7B%22inputText%22%3A%22public%20class%20Rectangle%7B%5Cn%20%20%20%20public%20double%20width%3B%5Cn%20%20%20%20public%20double%20height%3B%5Cn%20%20%20%20public%20Rectangle(double%20width%2C%20double%20height)%7B%5Cn%20%20%20%20%20%20%20%20this.width%20%3D%20width%3B%5Cn%20%20%20%20%20%20%20%20this.height%20%3D%20height%3B%5Cn%20%20%20%20%7D%5Cn%20%20%20%20public%20double%20area()%7B%5Cn%20%20%20%20%20%20%20%20return%20this.width*this.height%3B%5Cn%20%20%20%20%7D%5Cn%20%20%20%20public%20double%20perimeter()%7B%5Cn%20%20%20%20%20%20%20%20return%20(this.width%2Bthis.height)*2.0%3B%5Cn%20%20%20%20%7D%5Cn%7D%22%2C%22inputLang%22%3A%22java%22%2C%22outputLang%22%3A%22glsl%22%7D

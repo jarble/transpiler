@@ -35,4 +35,9 @@ module Php = {
 	include Python.math
 }
 
+module GLSL = {
+	let fract a = (Python.abs a) - (Python.math.floor a)
+	include Python.math
+}
+
 let main = Python.map(Python.math.floor,[3.1,4.2,5.3])

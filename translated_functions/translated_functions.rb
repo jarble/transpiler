@@ -11,6 +11,9 @@ class Python
   def self.print(a)
     puts(a)
   end
+  def self.map(a,b)
+	return array.map { |n| n * 2 }
+  end
    def self.str(item)
 	return item.to_s
    end

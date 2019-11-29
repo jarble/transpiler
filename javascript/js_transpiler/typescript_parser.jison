@@ -256,7 +256,8 @@ parameter:
 	IDENTIFIER "=" e {$$ = ["default_parameter","Object",$1,$3];}
 	| IDENTIFIER {$$ = ["Object", $1];}
 	| IDENTIFIER ":" IDENTIFIER "=" e {$$ = ["default_parameter",$3,$1,$5];}
-	| IDENTIFIER ":" IDENTIFIER {$$ = [$3, $1];};
+	| IDENTIFIER ":" IDENTIFIER {$$ = [$3, $1];}
+	| "(" IDENTIFIER ":" IDENTIFIER ")" "=>" IDENTIFIER {$$ = ["function_parameter",$4,$3,$7];};
 parameters: parameter "," parameters {$$ = [$1].concat($3);} | parameter {$$ =
  [$1];} | {$$ = []};
 exprs: e "," exprs {$$ = [$1].concat($3);} | e {$$ = [$1];};

@@ -1,10 +1,11 @@
 var pampy = require('pampy');
-var Algebrite = require('algebrite');
-var logicjs = require('logicjs');
-var mathjs = require('mathjs');
-var lp_solver = require('javascript-lp-solver');
-var randexp = require('javascript-lp-solver');
-var lzma = require('lzma');
+const randexp = require('randexp');
+//var Algebrite = require('algebrite');
+//var logicjs = require('logicjs');
+//var mathjs = require('mathjs');
+//var lp_solver = require('javascript-lp-solver');
+//var lzma = require('lzma');
+
 
 class C_math{
 	static sin(a){
@@ -54,6 +55,9 @@ class Php{
   static array_merge(arr1,arr2){
 	return arr1.concat(arr2);  
   }
+  static array_map(fun,iter){
+	return Python.map(fun,iter);
+  }
   static JSON_decode(a){
 	return JSON.parse(a);  
   }
@@ -70,13 +74,28 @@ class Python {
   any(variable){
 	return this.self.includes(variable);  
   }
+  static print(a){
+	console.log(a);  
+  }
   append(variable){
 	this.self.push(variable);  
+  }
+  static map(fun,iter){
+	return iter.map(fun);
   }
   static type(a){
 	if(Array.isArray(a)){
 		return "list"
-	}  
+	}
+	else if(typeof(a) === "boolean"){
+		return "bool";
+	}
+	else if(typeof(a) === "string"){
+		return "str";
+	}
+  }
+  static is_instance(a,b){
+	return A instanceof B;
   }
   split(separator){
 	return this.self.split(separator);  
@@ -164,4 +183,12 @@ Ruby.JSON = class{
 		}
 	}
 
-console.log(lzma.compress("What is this?"));
+function replaceAll(str,mapObj){
+    var re = new RegExp(Object.keys(mapObj).join("|"),"gi");
+
+    return str.replace(re, function(matched){
+        return mapObj[matched.toLowerCase()];
+    });
+}
+
+Python.print(replaceAll("This person is here",{"person":"GUY"}))

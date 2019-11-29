@@ -8,7 +8,6 @@ import binascii
 import sympy
 import kanren
 import gekko
-import pyomo
 
 class c_math:
 	@staticmethod
@@ -353,3 +352,11 @@ to_sort = [3,2,1]
 php.sort(to_sort)
 print(to_sort)
 print(php.mt_rand(0,3))
+
+def assign_if_not_exist(myVar):
+	try:
+		myVar
+	except NameError:
+		myVar = []
+		
+assign_if_not_exist(var1)

@@ -95,4 +95,4 @@ class SQL{
 		return strrev($a);
 	}
 }
-Python::print(3);
+Python::print(Python::type(3.0));

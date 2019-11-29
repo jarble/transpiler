@@ -112,10 +112,10 @@ case 15:
 this.$ = ["lexically_scoped_var"].concat($$[$0]);
 break;
 case 16:
-this.$ = ["initialize_var",$$[$0-3],$$[$0-2],$$[$0]];
+this.$ = [$$[$0-3],$$[$0-2],$$[$0]];
 break;
 case 17:
-this.$ = ["initialize_var",[$$[$0-5],"[]"],$$[$0-4],$$[$0]];
+this.$ = [[$$[$0-5],"[]"],$$[$0-4],$$[$0]];
 break;
 case 18:
 this.$ = ["macro",$$[$0-6],$$[$0-4],$$[$0-1]];

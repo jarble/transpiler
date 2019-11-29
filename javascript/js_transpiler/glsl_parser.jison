@@ -100,8 +100,8 @@ top_level_statement:
 initialize_var1: initialize_var_ {$$ = ["initialize_var"].concat($1);};
 initialize_var: initialize_var_ {$$ = ["lexically_scoped_var"].concat($1);};
 initialize_var_:
-      type IDENTIFIER "=" e {$$ = ["initialize_var",$1,$2,$4];}
-      | type IDENTIFIER "[" "]" "=" e {$$ = ["initialize_var",[$1,"[]"],$2,$6];};
+      type IDENTIFIER "=" e {$$ = [$1,$2,$4];}
+      | type IDENTIFIER "[" "]" "=" e {$$ = [[$1,"[]"],$2,$6];};
 statement
     :
 	"#define" IDENTIFIER "(" exprs ")" "(" expr ")" {$$ = ["macro",$2,$4,$7];}
