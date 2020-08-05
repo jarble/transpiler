@@ -1,11 +1,19 @@
 :- module('transpiler', [translate/2,translate/3,translate/4,translate_langs/1]).
 :- use_module(library(chr)).
+:- set_prolog_flag('double_quotes','chars').
 :- multifile parse/5.
 :- use_module(optimized_java_parser/java_transpiler).
 :- use_module(optimized_javascript_parser/javascript_transpiler).
 :- use_module(optimized_python_parser/python_transpiler).
 :- chr_constraint var_type/3.
 :- chr_constraint unique_var/1.
+
+:- initialization(main).
+
+main :- 
+	translate("function add(a,b){return a + b;}",javascript,lua,X),
+	atom_chars(Y,X),
+	writeln(Y).
 
 var_type(Namespace,Var,Type) \ var_type(Namespace,Var,Type) <=> true.
 unique_var(A) \ unique_var(A) <=> true.
