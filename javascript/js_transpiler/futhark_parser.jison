@@ -11,6 +11,7 @@
 "do"                  return 'do'
 "in"                  return "in"
 "let"                 return "let"
+"val"                 return "val"
 "for"                 return 'for'
 "else"                return "else"
 "loop"                return 'loop'
@@ -99,6 +100,7 @@ class_statement:
 	| "let" IDENTIFIER parameters "=" statements {$$ = ["instance_method","public","Object",$2,$3,$5];}
 	| "let" IDENTIFIER types parameters ":" type "=" statements {$$ = ["generic_instance_method","public",$6,$2,$4,$8,$3];}
 	| "let" IDENTIFIER types parameters "=" statements {$$ = ["generic_instance_method","public","Object",$2,$4,$6,$3];}
+	| "val" IDENTIFIER ":" type {$$ = ["initialize_instance_var","public",$4,$2]}
 	;
 
 

@@ -10,6 +10,8 @@
 "As"                  return "As"
 "Not"                 return 'Not'
 "Dim"                 return 'Dim'
+"Public"               return 'Public'
+"Class"               return 'Class'
 "Case"                return 'Case'
 "End"                 return "End"
 "Enum"                return "Enum"
@@ -20,7 +22,8 @@
 "interface"           return "interface"
 "Function"            return "Function"
 "private"             return "private"
-"static"              return "static"
+"Shared"              return "Shared"
+"Property"            return "Property"
 "If"                  return "If"
 "Do"                  return "Do"
 "In"                  return "In"
@@ -109,18 +112,10 @@ statements: statements_ {$$ = ["statements",$1]};
 class_statements_: class_statement class_statements_ {$$ = [$1].concat($2);} | class_statement {$$ =
  [$1];};
 
-access_modifier: "public" | "private";
+access_modifier: "Public" | "Private";
 
 class_:
-	access_modifier "namespace" IDENTIFIER "{" class_statements "}" {$$ = [$2,$1,$3,$5];}
-	| access_modifier "class" IDENTIFIER "<" types ">" "{" class_statements "}" {$$ = ["generic_class",$1,$3,$8,$5];}
-	| "Class" IDENTIFIER class_statements "End" "Class" {$$ = ["class","public",$2,$3];}
-	| "MustInherit" "Class" IDENTIFIER class_statements "End" "Class" {$$ = ["abstract_class","public",$3,$4];}
-	| "Interface" IDENTIFIER class_statements "End" "Interface" {$$ = ["interface","public",$2,$3];}
-	| access_modifier "interface" IDENTIFIER "<" types ">" "{" class_statements "}" {$$ = ["generic_interface",$1,$3,$8,$5];}	
-	| "Enum" IDENTIFIER identifiers "End" "Enum" {$$ = ["enum","public",$2,$3];}
-	| "Class" IDENTIFIER "Inherits" IDENTIFIER class_statements "End" "Class" {$$ = ["class_extends",$1,$3,$5,$7];}
-	| "Class" IDENTIFIER "Implements" IDENTIFIER class_statements "End" "Class" {$$ = ["class_implements",$1,$3,$5,$7];}
+	"Public" "Class" IDENTIFIER class_statements "End" "Class" {$$ = ["class","public",$3,$4];}
 	;
 
 top_level_statement:
@@ -155,17 +150,8 @@ case_statements: case_statements_;
 
 
 class_statement:
-	access_modifier type IDENTIFIER "=" e ";" {$$ = ["initialize_instance_var_with_value",$1,$2,$3,$5];}
-	| access_modifier type IDENTIFIER ";" {$$ = ["initialize_instance_var",$1,$2,$3];}
-	| access_modifier "static" type IDENTIFIER "=" e ";" {$$ = ["initialize_static_instance_var",$1,$3,$4,$6];}
-	| access_modifier "static" type IDENTIFIER "(" parameters ")" ";" {$$ = ["interface_static_method",$1,$3,$4,$6];}
-	| access_modifier type IDENTIFIER "(" parameters ")" ";" {$$ = ["interface_instance_method",$1,$2,$3,$5];}
-	| access_modifier "static" type IDENTIFIER "(" parameters ")" "{" statements "}" {$$ = ["static_method",$1,$3,$4,$6,$9];}
-	| access_modifier "static" type IDENTIFIER "<" types ">" "(" parameters ")" "{" statements "}" {$$ = ["generic_static_method",$1,$3,$4,$9,$12,$6];}
-	| access_modifier type IDENTIFIER "(" parameters ")" "{" statements "}" {$$ = ["instance_method",$1,$2,$3,$5,$8];}
-	| access_modifier type IDENTIFIER "<" types ">" "(" parameters ")" "{" statements "}" {$$ = ["generic_instance_method",$1,$2,$3,$8,$11,$5];}
-	| access_modifier "static" type "operator" OPERATOR "(" parameters ")" "{" statements "}" {$$ = ["static_overload_operator","public",$3,$5,$7,$10];}
-;
+	access_modifier "Shared" "Sub" IDENTIFIER "(" parameters ")" statements "End" "Sub" {$$ = ["static_method",$1,"void",$4,$6,$9];}
+	| access_modifier "Property" IDENTIFIER "As" type {$$ = ["initialize_instance_var",$1,$5,$3];};
 
 
 statement_with_semicolon
