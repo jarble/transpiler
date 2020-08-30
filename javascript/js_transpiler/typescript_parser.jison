@@ -18,6 +18,7 @@
 "static"              return "static"
 "const"               return 'const'
 "if"                  return 'if'
+"new"                 return 'new'
 "else"                return 'else'
 "type"                return 'type'
 "case"                return "case"
