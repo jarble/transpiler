@@ -3,9 +3,9 @@
 # Universal-transpiler
 
 *Universal-transpiler* is a source-to-source compiler that translates a small subset of several programming languages into several others.
-It is also able to translate several metasyntax notations, such as EBNF and ABNF. The translation is not always 100% accurate, but I hope it will still be useful.
-
-As of 2020, this compiler appears to be mostly obsolete: there are some newer "bi-directional" compilers that may be much more accurate and useful, such as [SPIRV-LLVM-Translator](https://github.com/KhronosGroup/SPIRV-LLVM-Translator) and [SPIRV-Cross](https://github.com/KhronosGroup/SPIRV-Cross).
+It is also able to translate several metasyntax notations, such as EBNF and ABNF. 
+ 
+Universal-transpiler was written as an experimental "proof-of-concept," so it can only translate relatively simple programs. The translation is not always 100% accurate, but I hope it will still be useful.
 
 The [online version of this translator](https://jarble.github.io/transpiler/javascript/js_transpiler/test_parser.html#%7B%22inputText%22%3A%22public%20class%20Python%7B%5Cn%5Cn%5Ctpublic%20static%20int%20round(double%20a)%7B%5Cn%5Ctreturn%20Math.round(a%2B0.5)%3B%5Cn%5Ct%7D%5Cn%5Ctpublic%20static%20int%20floor(double%20a)%7B%5Cn%5Ctreturn%20Math.floor(a)%3B%5Cn%5Ct%7D%5Cn%5Ctpublic%20static%20int%20ceil(double%20a)%7B%5Cn%5Ctreturn%20Math.ceil(0.5)%3B%5Cn%5Ct%7D%5Cn%5Cn%5Ctpublic%20class%20math%7B%5Cn%5Ctpublic%20static%20double%20sin(double%20a)%7B%5Cn%5Ctreturn%20Math.sin(a)%3B%5Cn%5Ct%7D%5Cn%5Ctpublic%20static%20double%20pow(double%20a%2Cdouble%20b)%7B%5Cn%5Ctreturn%20Math.pow(a%2Cb)%3B%5Cn%5Ct%7D%5Cn%5Ctpublic%20static%20double%20cos(double%20a)%7B%5Cn%5Ctreturn%20Math.cos(a)%3B%5Cn%5Ct%7D%5Cn%5Ctpublic%20static%20double%20tan(double%20a)%7B%5Cn%5Ctreturn%20Math.tan(a)%3B%5Cn%5Ct%7D%5Cn%5Ctpublic%20static%20double%20asin(double%20a)%7B%5Cn%5Ctreturn%20Math.asin(a)%3B%5Cn%5Ct%7D%5Cn%5Ctpublic%20static%20double%20acos(double%20a)%7B%5Cn%5Ctreturn%20Math.acos(a)%3B%5Cn%5Ct%7D%5Cn%5Ctpublic%20static%20double%20atan(double%20a)%7B%5Cn%5Ctreturn%20Math.atan(a)%3B%5Cn%5Ct%7D%5Cn%5Ct%7D%5Cn%7D%22%2C%22inputLang%22%3A%22java%22%2C%22outputLang%22%3A%22c%23%22%7D) is written in JavaScript, but an experimental version is also being written in Prolog.
 
