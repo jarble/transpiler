@@ -178,6 +178,7 @@ statement_with_semicolon
    "import" IDENTIFIER  {$$ = ["import",$2];}
    | "return" e  {$$ = ["return",$2];}
    | "return"  {$$ = ["return"];}
+   | "continue"  {$$ = ["continue"];}
    | "assert" e  {$$ = ["function_call","assert",[$2]];}
    | "final" type IDENTIFIER "=" e {$$ = ["initialize_constant",$2,$3,$5];}
    | "final" type identifiers {$$ = ["initialize_empty_constants",$2,$3];}

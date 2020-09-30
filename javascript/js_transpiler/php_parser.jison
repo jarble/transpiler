@@ -29,7 +29,9 @@
 "default"             return "default"
 "case"                return "case"
 "foreach"             return "foreach"
+"continue"            return "continue"
 "for"                 return "for"
+"!"                   return '!'
 ","                   return ','
 "=>"                  return '=>'
 "->"                  return '->'
@@ -52,6 +54,7 @@
 "*"                   return '*'
 "/="                  return '/='
 "/"                   return '/'
+"%"                   return '%'
 "-="                  return '-='
 "--"                  return '--'
 "-"                   return '-'
@@ -83,7 +86,7 @@
 %left '<' '<=' '>' '>=' '===' '!=='
 %left '<<' '>>'
 %left '+' '-' '.'
-%left '*' '/'
+%left '*' '/' '%'
 %left UMINUS
 
 %start expressions
@@ -141,6 +144,7 @@ statement_with_semicolon
    "System.out.println" "(" e ")" {$$ = ["println",$3];}
    | "return" e  {$$ = ["return",$2];}
    | "return"  {$$ = ["return"];}
+   | "continue"  {$$ = ["continue"];}
    | type var_name "=" e {$$ = ["initialize_var",$1,$2,$4];}
    | parallel_assignment
    | var_name "[" "]" "=" e {$$ = ["function_call","array_push",[$1,$5]];}
@@ -201,10 +205,14 @@ e
         {$$ = [$2,$1,$3];}
     | e '/' e
         {$$ = [$2,$1,$3];}
+    | e '%' e
+        {$$ = [$2,$1,$3];}
     | '-' e %prec UMINUS
         {$$ = ["-",$2];}
-    | dot_expr {$$ = [".", $1];}
+    | not_expr
     ;
+
+not_expr: "!" dot_expr {$$ = ["!", [".",$2]];} | dot_expr {$$ = [".", $1];};
 
 dot_expr: parentheses_expr "->" dot_expr {$$ = [$1].concat($3);} | parentheses_expr {$$ =
  [$1];};

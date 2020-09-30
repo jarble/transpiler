@@ -184,6 +184,8 @@ statement_with_semicolon
    : 
    "yield" "return" e  {$$ = ["yield",$3];}
    | "return" e  {$$ = ["return",$2];}
+   | "return" {$$ = ["return"];}
+   | "continue"  {$$ = ["continue"];}
    | "throw" e  {$$ = ["throw",$2];}
    | "final" type IDENTIFIER "=" e {$$ = ["initialize_constant",$2,$3,$5];}
    | "final" type identifiers {$$ = ["initialize_empty_constants",$2,$3];}

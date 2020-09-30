@@ -21,6 +21,7 @@
 "const"               return "const"
 "struct"              return "struct"
 "switch"              return "switch"
+"continue"            return "continue"
 "for"                 return "for"
 ","                   return ','
 ";"                   return ';'
@@ -133,6 +134,7 @@ statement_with_semicolon
    | IDENTIFIER "(" exprs ")" {$$ = ["function_call",$1,$3];}
    |"return" e  {$$ = ["return",$2];}
    |"return" {$$ = ["return"];}
+   |"continue" {$$ = ["continue"];}
    | "const" type IDENTIFIER "=" e {$$ = ["initialize_constant",$2,$3,$5];}
    | "const" type IDENTIFIER "[" "]" "=" e {$$ = ["initialize_constant",[$2,"[]"],$3,$7];}
    | set_array_size
