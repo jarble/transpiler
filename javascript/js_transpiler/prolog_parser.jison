@@ -2,7 +2,8 @@
 %lex
 %%
 
-\s+                   /* skip whitespace */
+\s+                                   /* IGNORE */
+"%".*                                /* IGNORE */
 [0-9]+("."[0-9]+)?\b  return 'NUMBER'
 \"([^\\\"]|\\.)*\" return 'STRING_LITERAL'
 "forall"              return 'forall'

@@ -681,104 +681,106 @@ pushState:function pushState(condition) {
 stateStackSize:function stateStackSize() {
         return this.conditionStack.length;
     },
-options: {},
+options: {"case-insensitive":true},
 performAction: function anonymous(yy,yy_,$avoiding_name_collisions,YY_START) {
 var YYSTATE=YY_START;
 switch($avoiding_name_collisions) {
-case 0:/* skip whitespace and line comments */
+case 0:/* IGNORE */
 break;
-case 1:return 54
+case 1:/* IGNORE */
 break;
-case 2:return 56
+case 2:return 54
 break;
-case 3:return "'("
+case 3:return 56
 break;
-case 4:return 13
+case 4:return "'("
 break;
-case 5:return 9
+case 5:return 13
 break;
-case 6:return 24
+case 6:return 9
 break;
-case 7:return 16
+case 7:return 24
 break;
-case 8:return 23
+case 8:return 16
 break;
-case 9:return 27
+case 9:return 23
 break;
-case 10:return 28
+case 10:return 27
 break;
-case 11:return 20
+case 11:return 28
 break;
-case 12:return 25
+case 12:return 20
 break;
-case 13:return 29
+case 13:return 25
 break;
-case 14:return 21
+case 14:return 29
 break;
-case 15:return 31
+case 15:return 21
 break;
-case 16:return 33
+case 16:return 31
 break;
-case 17:return '?'
+case 17:return 33
 break;
-case 18:return 39
+case 18:return '?'
 break;
-case 19:return 40
+case 19:return 39
 break;
-case 20:return 41
+case 20:return 40
 break;
-case 21:return 42
+case 21:return 41
 break;
-case 22:return '=>'
+case 22:return 42
 break;
-case 23:return '=='
+case 23:return '=>'
 break;
-case 24:return 50
+case 24:return '=='
 break;
-case 25:return '*='
+case 25:return 50
 break;
-case 26:return 34
+case 26:return '*='
 break;
-case 27:return '/='
+case 27:return 34
 break;
-case 28:return 35
+case 28:return '/='
 break;
-case 29:return '-='
+case 29:return 35
 break;
-case 30:return '--'
+case 30:return '-='
 break;
-case 31:return 37
+case 31:return '--'
 break;
-case 32:return '++'
+case 32:return 37
 break;
-case 33:return '+='
+case 33:return '++'
 break;
-case 34:return 36
+case 34:return '+='
 break;
-case 35:return '^'
+case 35:return 36
 break;
-case 36:return '{'
+case 36:return '^'
 break;
-case 37:return '}'
+case 37:return '{'
 break;
-case 38:return '['
+case 38:return '}'
 break;
-case 39:return ']'
+case 39:return '['
 break;
-case 40:return 8
+case 40:return ']'
 break;
-case 41:return 12
+case 41:return 8
 break;
-case 42:return 10
+case 42:return 12
 break;
-case 43:return 5
+case 43:return 10
 break;
-case 44:return 'INVALID'
+case 44:return 5
+break;
+case 45:return 'INVALID'
 break;
 }
 },
-rules: [/^(?:(\s+|;+.*\n))/,/^(?:[0-9]+(\.[0-9]+)?\b)/,/^(?:"([^\\\"]|\\.)*")/,/^(?:'\()/,/^(?:defmacro\b)/,/^(?:defun\b)/,/^(?:while\b)/,/^(?:cond\b)/,/^(?:loop\b)/,/^(?:setf\b)/,/^(?:setq\b)/,/^(?:if\b)/,/^(?:do\b)/,/^(?:t\b)/,/^(?:let\b)/,/^(?:not\b)/,/^(?:and\b)/,/^(?:\?)/,/^(?:>=)/,/^(?:>)/,/^(?:<=)/,/^(?:<)/,/^(?:=>)/,/^(?:==)/,/^(?:=)/,/^(?:\*=)/,/^(?:\*)/,/^(?:\/=)/,/^(?:\/)/,/^(?:-=)/,/^(?:--)/,/^(?:-)/,/^(?:\+\+)/,/^(?:\+=)/,/^(?:\+)/,/^(?:\^)/,/^(?:\{)/,/^(?:\})/,/^(?:\[)/,/^(?:\])/,/^(?:\()/,/^(?:\))/,/^(?:[a-zA-Z_][a-zA-Z0-9_]*)/,/^(?:$)/,/^(?:.)/],
-conditions: {"INITIAL":{"rules":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44],"inclusive":true}}
+rules: [/^(?:\s+)/i,/^(?:;.*)/i,/^(?:[0-9]+(\.[0-9]+)?\b)/i,/^(?:"([^\\\"]|\\.)*")/i,/^(?:'\()/i,/^(?:defmacro\b)/i,/^(?:defun\b)/i,/^(?:while\b)/i,/^(?:cond\b)/i,/^(?:loop\b)/i,/^(?:setf\b)/i,/^(?:setq\b)/i,/^(?:if\b)/i,/^(?:do\b)/i,/^(?:t\b)/i,/^(?:let\b)/i,/^(?:not\b)/i,/^(?:and\b)/i,/^(?:\?)/i,/^(?:>=)/i,/^(?:>)/i,/^(?:<=)/i,/^(?:<)/i,/^(?:=>)/i,/^(?:==)/i,/^(?:=)/i,/^(?:\*=)/i,/^(?:\*)/i,/^(?:\/=)/i,/^(?:\/)/i,/^(?:-=)/i,/^(?:--)/i,/^(?:-)/i,/^(?:\+\+)/i,/^(?:\+=)/i,/^(?:\+)/i,/^(?:\^)/i,/^(?:\{)/i,/^(?:\})/i,/^(?:\[)/i,/^(?:\])/i,/^(?:\()/i,/^(?:\))/i,/^(?:[a-zA-Z_][a-zA-Z0-9_]*)/i,/^(?:$)/i,/^(?:.)/i],
+conditions: {"INITIAL":{"rules":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45],"inclusive":true}}
 });
 return lexer;
 })();

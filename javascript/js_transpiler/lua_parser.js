@@ -715,116 +715,118 @@ options: {},
 performAction: function anonymous(yy,yy_,$avoiding_name_collisions,YY_START) {
 var YYSTATE=YY_START;
 switch($avoiding_name_collisions) {
-case 0:/* skip whitespace and line comments */
+case 0:/* IGNORE */
 break;
-case 1:return 72
+case 1:/* IGNORE */
 break;
-case 2:return 73
+case 2:return 72
 break;
-case 3:return "$"
+case 3:return 73
 break;
-case 4:return "function"
+case 4:return "$"
 break;
-case 5:return "end"
+case 5:return "function"
 break;
-case 6:return "then"
+case 6:return "end"
 break;
-case 7:return 77
+case 7:return "then"
 break;
-case 8:return 33
+case 8:return 77
 break;
-case 9:return 78
+case 9:return 33
 break;
-case 10:return 38
+case 10:return 78
 break;
-case 11:return 17
+case 11:return 38
 break;
-case 12:return 24
+case 12:return 17
 break;
-case 13:return 39
+case 13:return 24
 break;
-case 14:return 21
+case 14:return 39
 break;
-case 15:return 23
+case 15:return 21
 break;
-case 16:return 'of'
+case 16:return 23
 break;
-case 17:return 63
+case 17:return 'of'
 break;
-case 18:return 26
+case 18:return 63
 break;
-case 19:return 58
+case 19:return 26
 break;
-case 20:return 44
+case 20:return 58
 break;
-case 21:return ':'
+case 21:return 44
 break;
-case 22:return 49
+case 22:return ':'
 break;
-case 23:return 48
+case 23:return 49
 break;
-case 24:return 52
+case 24:return 48
 break;
-case 25:return '>>'
+case 25:return 52
 break;
-case 26:return 55
+case 26:return '>>'
 break;
-case 27:return 50
+case 27:return 55
 break;
-case 28:return '<<'
+case 28:return 50
 break;
-case 29:return 51
+case 29:return '<<'
 break;
-case 30:return 54
+case 30:return 51
 break;
-case 31:return 53
+case 31:return 54
 break;
-case 32:return 43
+case 32:return 53
 break;
-case 33:return '*='
+case 33:return 43
 break;
-case 34:return 59
+case 34:return '*='
 break;
-case 35:return 60
+case 35:return 59
 break;
-case 36:return 61
+case 36:return 60
 break;
-case 37:return 57
+case 37:return 61
 break;
-case 38:return 56
+case 38:return 57
 break;
-case 39:return 62
+case 39:return 56
 break;
-case 40:return 69
+case 40:return 62
 break;
-case 41:return 70
+case 41:return 69
 break;
-case 42:return 66
+case 42:return 70
 break;
-case 43:return 67
+case 43:return 66
 break;
-case 44:return 30
+case 44:return 67
 break;
-case 45:return 32
+case 45:return 30
 break;
-case 46:return 25
+case 46:return 32
 break;
-case 47:return 29
+case 47:return 25
 break;
-case 48:return 28
+case 48:return 29
 break;
-case 49:return 19
+case 49:return 28
 break;
-case 50:return 27
+case 50:return 19
 break;
-case 51:return 5
+case 51:return 27
 break;
-case 52:return 'INVALID'
+case 52:return 5
+break;
+case 53:return 'INVALID'
 break;
 }
 },
-rules: [/^(?:(\s+|--+.*\n))/,/^(?:[0-9]+(\.[0-9]+)?\b)/,/^(?:"([^\\\"]|\\.)*")/,/^(?:\$)/,/^(?:function\b)/,/^(?:end\b)/,/^(?:then\b)/,/^(?:elseif\b)/,/^(?:if\b)/,/^(?:else\b)/,/^(?:return\b)/,/^(?:while\b)/,/^(?:for\b)/,/^(?:local\b)/,/^(?:repeat\b)/,/^(?:until\b)/,/^(?:of\b)/,/^(?:not\b)/,/^(?:,)/,/^(?:\.\.)/,/^(?:\.)/,/^(?::)/,/^(?:and\b)/,/^(?:or\b)/,/^(?:>=)/,/^(?:>>)/,/^(?:>)/,/^(?:<=)/,/^(?:<<)/,/^(?:<)/,/^(?:~=)/,/^(?:==)/,/^(?:=)/,/^(?:\*=)/,/^(?:\*)/,/^(?:\/)/,/^(?:%)/,/^(?:-)/,/^(?:\+)/,/^(?:\^)/,/^(?:\{)/,/^(?:\})/,/^(?:\[)/,/^(?:\])/,/^(?:\()/,/^(?:\))/,/^(?:_\b)/,/^(?:pairs\b)/,/^(?:in\b)/,/^(?:do\b)/,/^(?:[a-zA-Z_][a-zA-Z0-9_]*)/,/^(?:$)/,/^(?:.)/],
-conditions: {"INITIAL":{"rules":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52],"inclusive":true}}
+rules: [/^(?:\s+)/,/^(?:--.*)/,/^(?:[0-9]+(\.[0-9]+)?\b)/,/^(?:"([^\\\"]|\\.)*")/,/^(?:\$)/,/^(?:function\b)/,/^(?:end\b)/,/^(?:then\b)/,/^(?:elseif\b)/,/^(?:if\b)/,/^(?:else\b)/,/^(?:return\b)/,/^(?:while\b)/,/^(?:for\b)/,/^(?:local\b)/,/^(?:repeat\b)/,/^(?:until\b)/,/^(?:of\b)/,/^(?:not\b)/,/^(?:,)/,/^(?:\.\.)/,/^(?:\.)/,/^(?::)/,/^(?:and\b)/,/^(?:or\b)/,/^(?:>=)/,/^(?:>>)/,/^(?:>)/,/^(?:<=)/,/^(?:<<)/,/^(?:<)/,/^(?:~=)/,/^(?:==)/,/^(?:=)/,/^(?:\*=)/,/^(?:\*)/,/^(?:\/)/,/^(?:%)/,/^(?:-)/,/^(?:\+)/,/^(?:\^)/,/^(?:\{)/,/^(?:\})/,/^(?:\[)/,/^(?:\])/,/^(?:\()/,/^(?:\))/,/^(?:_\b)/,/^(?:pairs\b)/,/^(?:in\b)/,/^(?:do\b)/,/^(?:[a-zA-Z_][a-zA-Z0-9_]*)/,/^(?:$)/,/^(?:.)/],
+conditions: {"INITIAL":{"rules":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53],"inclusive":true}}
 });
 return lexer;
 })();
