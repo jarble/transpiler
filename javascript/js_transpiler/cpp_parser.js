@@ -823,148 +823,152 @@ options: {},
 performAction: function anonymous(yy,yy_,$avoiding_name_collisions,YY_START) {
 var YYSTATE=YY_START;
 switch($avoiding_name_collisions) {
-case 0:/* skip whitespace and line comments */
+case 0:/* IGNORE */
 break;
-case 1:return 104
+case 1:/* IGNORE */
 break;
-case 2:return 96
+case 2:/* IGNORE */
 break;
-case 3:return "typename"
+case 3:return 104
 break;
-case 4:return "template"
+case 4:return 96
 break;
-case 5:return "class"
+case 5:return "typename"
 break;
-case 6:return "struct"
+case 6:return "template"
 break;
-case 7:return 32
+case 7:return "class"
 break;
-case 8:return "cout"
+case 8:return "struct"
 break;
-case 9:return "switch"
+case 9:return 32
 break;
-case 10:return 57
+case 10:return "cout"
 break;
-case 11:return "break"
+case 11:return "switch"
 break;
-case 12:return 60
+case 12:return 57
 break;
-case 13:return "public"
+case 13:return "break"
 break;
-case 14:return "extends"
+case 14:return 60
 break;
-case 15:return "operator"
+case 15:return "public"
 break;
-case 16:return "implements"
+case 16:return "extends"
 break;
-case 17:return "Dictionary"
+case 17:return "operator"
 break;
-case 18:return "private"
+case 18:return "implements"
 break;
-case 19:return "static"
+case 19:return "Dictionary"
 break;
-case 20:return "if"
+case 20:return "private"
 break;
-case 21:return 49
+case 21:return "static"
 break;
-case 22:return "in"
+case 22:return "if"
 break;
-case 23:return "else"
+case 23:return 49
 break;
-case 24:return "return"
+case 24:return "in"
 break;
-case 25:return "while"
+case 25:return "else"
 break;
-case 26:return "foreach"
+case 26:return "return"
 break;
-case 27:return "const"
+case 27:return "while"
 break;
-case 28:return "for"
+case 28:return "foreach"
 break;
-case 29:return "new"
+case 29:return "const"
 break;
-case 30:return 94
+case 30:return "for"
 break;
-case 31:return 8
+case 31:return "new"
 break;
-case 32:return 84
+case 32:return 94
 break;
-case 33:return 34
+case 33:return 8
 break;
-case 34:return 98
+case 34:return 84
 break;
-case 35:return 80
+case 35:return 34
 break;
-case 36:return 73
+case 36:return 98
 break;
-case 37:return 108
+case 37:return 80
 break;
-case 38:return 74
+case 38:return 73
 break;
-case 39:return '>>'
+case 39:return 108
 break;
-case 40:return 72
+case 40:return 74
 break;
-case 41:return 31
+case 41:return '>>'
 break;
-case 42:return 71
+case 42:return 72
 break;
-case 43:return 88
+case 43:return 31
 break;
-case 44:return 29
+case 44:return 71
 break;
-case 45:return 75
+case 45:return 88
 break;
-case 46:return 61
+case 46:return 29
 break;
-case 47:return 67
+case 47:return 75
 break;
-case 48:return 78
+case 48:return 61
 break;
-case 49:return 68
+case 49:return 67
 break;
-case 50:return 79
+case 50:return 78
 break;
-case 51:return 99
+case 51:return 68
 break;
-case 52:return 66
+case 52:return 79
 break;
-case 53:return 70
+case 53:return 99
 break;
-case 54:return 77
+case 54:return 66
 break;
-case 55:return 69
+case 55:return 70
 break;
-case 56:return 65
+case 56:return 77
 break;
-case 57:return 76
+case 57:return 69
 break;
-case 58:return '^'
+case 58:return 65
 break;
-case 59:return 97
+case 59:return 76
 break;
-case 60:return 23
+case 60:return '^'
 break;
-case 61:return 24
+case 61:return 97
 break;
-case 62:return 91
+case 62:return 23
 break;
-case 63:return 92
+case 63:return 24
 break;
-case 64:return 42
+case 64:return 91
 break;
-case 65:return 44
+case 65:return 92
 break;
-case 66:return 22
+case 66:return 42
 break;
-case 67:return 5
+case 67:return 44
 break;
-case 68:return 'INVALID'
+case 68:return 22
+break;
+case 69:return 5
+break;
+case 70:return 'INVALID'
 break;
 }
 },
-rules: [/^(?:(\s+|\/\/+.*\n))/,/^(?:[0-9]+(\.[0-9]+)?\b)/,/^(?:"([^\\\"]|\\.)*")/,/^(?:typename\b)/,/^(?:template\b)/,/^(?:class\b)/,/^(?:struct\b)/,/^(?:enum\b)/,/^(?:cout\b)/,/^(?:switch\b)/,/^(?:case\b)/,/^(?:break\b)/,/^(?:default\b)/,/^(?:public\b)/,/^(?:extends\b)/,/^(?:operator\b)/,/^(?:implements\b)/,/^(?:Dictionary\b)/,/^(?:private\b)/,/^(?:static\b)/,/^(?:if\b)/,/^(?:do\b)/,/^(?:in\b)/,/^(?:else\b)/,/^(?:return\b)/,/^(?:while\b)/,/^(?:foreach\b)/,/^(?:const\b)/,/^(?:for\b)/,/^(?:new\b)/,/^(?:,)/,/^(?:;)/,/^(?:\.)/,/^(?::)/,/^(?:!=)/,/^(?:!)/,/^(?:&&)/,/^(?:&)/,/^(?:\|\|)/,/^(?:>>)/,/^(?:>=)/,/^(?:>)/,/^(?:<=)/,/^(?:<<)/,/^(?:<)/,/^(?:==)/,/^(?:=)/,/^(?:\*=)/,/^(?:\*)/,/^(?:\/=)/,/^(?:\/)/,/^(?:%)/,/^(?:-=)/,/^(?:--)/,/^(?:-)/,/^(?:\+\+)/,/^(?:\+=)/,/^(?:\+)/,/^(?:\^)/,/^(?:\?)/,/^(?:\{)/,/^(?:\})/,/^(?:\[)/,/^(?:\])/,/^(?:\()/,/^(?:\))/,/^(?:[a-zA-Z_][a-zA-Z0-9_]*)/,/^(?:$)/,/^(?:.)/],
-conditions: {"INITIAL":{"rules":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68],"inclusive":true}}
+rules: [/^(?:\s+)/,/^(?:\/\/.*)/,/^(?:[\/][*][^*]*[*]+([^\/*][^*]*[*]+)*[\/])/,/^(?:[0-9]+(\.[0-9]+)?\b)/,/^(?:"([^\\\"]|\\.)*")/,/^(?:typename\b)/,/^(?:template\b)/,/^(?:class\b)/,/^(?:struct\b)/,/^(?:enum\b)/,/^(?:cout\b)/,/^(?:switch\b)/,/^(?:case\b)/,/^(?:break\b)/,/^(?:default\b)/,/^(?:public\b)/,/^(?:extends\b)/,/^(?:operator\b)/,/^(?:implements\b)/,/^(?:Dictionary\b)/,/^(?:private\b)/,/^(?:static\b)/,/^(?:if\b)/,/^(?:do\b)/,/^(?:in\b)/,/^(?:else\b)/,/^(?:return\b)/,/^(?:while\b)/,/^(?:foreach\b)/,/^(?:const\b)/,/^(?:for\b)/,/^(?:new\b)/,/^(?:,)/,/^(?:;)/,/^(?:\.)/,/^(?::)/,/^(?:!=)/,/^(?:!)/,/^(?:&&)/,/^(?:&)/,/^(?:\|\|)/,/^(?:>>)/,/^(?:>=)/,/^(?:>)/,/^(?:<=)/,/^(?:<<)/,/^(?:<)/,/^(?:==)/,/^(?:=)/,/^(?:\*=)/,/^(?:\*)/,/^(?:\/=)/,/^(?:\/)/,/^(?:%)/,/^(?:-=)/,/^(?:--)/,/^(?:-)/,/^(?:\+\+)/,/^(?:\+=)/,/^(?:\+)/,/^(?:\^)/,/^(?:\?)/,/^(?:\{)/,/^(?:\})/,/^(?:\[)/,/^(?:\])/,/^(?:\()/,/^(?:\))/,/^(?:[a-zA-Z_][a-zA-Z0-9_]*)/,/^(?:$)/,/^(?:.)/],
+conditions: {"INITIAL":{"rules":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70],"inclusive":true}}
 });
 return lexer;
 })();

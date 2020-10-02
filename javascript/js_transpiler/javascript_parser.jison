@@ -2,7 +2,10 @@
 %lex
 %%
 
-(\s+|\/\/+.*\n)        /* skip whitespace and line comments */
+\s+                                   /* IGNORE */
+"//".*                                /* IGNORE */
+[/][*][^*]*[*]+([^/*][^*]*[*]+)*[/]   /* IGNORE */
+
 [0-9]+("."[0-9]+)?\b  return 'NUMBER'
 \"([^\\\"]|\\.)*\"    return 'STRING_LITERAL'
 "$"                   return "$"
