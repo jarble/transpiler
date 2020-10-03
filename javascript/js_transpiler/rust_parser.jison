@@ -22,6 +22,7 @@
 "struct"              return "struct"
 "switch"              return "switch"
 "for"                 return "for"
+"enum"                return "enum"
 ","                   return ','
 ";"                   return ';'
 "."                   return '.'
@@ -99,10 +100,17 @@ statement
     | statement_with_semicolon ";" {$$ = ["semicolon",$1];}
     | "while" "(" e ")" bracket_statements {$$ = ["while",$3,$5];}
     | "switch" "(" e ")" "{" case_statements "}" {$$ = ["switch",$3,$6];}
+    | "struct" IDENTIFIER "{" struct_statements "}" {$$ = ["struct",$2,["struct_statements",$4]]}
+    | "enum" IDENTIFIER "{" identifiers "}" {$$ = ["enum","public",$2,$4];}
     | "for" "(" statement_with_semicolon ";" e ";" statement_with_semicolon ")" bracket_statements {$$ = ["for",$3,$5,$7,$9];}
     | "if" e "{" statements "}" elif {$$ = ["if",$2,$4,$6];}
 	| "if" e "{" statements "}" {$$ = ["if",$2,$4];}
 	| "loop" "{" statements "}" elif {$$ = ["infinite_loop",$3];};
+
+struct_statements: struct_statement "," struct_statements {$$ = [$1].concat($2);} | struct_statement {$$ =
+ [$1];};
+ 
+struct_statement: IDENTIFIER ":" type {$$ = ["struct_statement",$3,[$1]];};
 
 case_statement: "case" e ":" statements "break" ";" {$$ = ["case",$2,$4]};
 case_statements: case_statement case_statements {$$ = [$1].concat($2);} | case_statement {$$ =

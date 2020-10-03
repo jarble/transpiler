@@ -6062,7 +6062,7 @@ function generate_code(input_lang,lang,indent,arr){
 		else if(member(lang,["haskell"])){
 			return "data "+name+" = "+body+" deriving (Enum)";
 		}
-		else if(member(lang,["haxe","typescript","thrift","protobuf"])){
+		else if(member(lang,["rust","haxe","typescript","thrift","protobuf"])){
 			return "enum "+name+"{"+body+indent+"}";
 		}
 		else if(member(lang,["vhdl"])){
@@ -6224,6 +6224,8 @@ function generate_code(input_lang,lang,indent,arr){
 		
 		to_return = member(lang,["typescript","dart","haxe","swift","ceylon","kotlin"])
 			?  "class "+ name+"<"+type_params+">{"+body+indent+"}"
+		: member(lang,["rust"])
+			?  "trait "+ name+"<"+type_params+">{"+body+indent+"}"
 		: member(lang,["zig"])
 			?  "fn "+name+"("+type_params+") type {return struct {"+body+indent+"}}"
 		: member(lang,["visual basic .net"])
@@ -6671,7 +6673,7 @@ function generate_code(input_lang,lang,indent,arr){
 		}
 		else if(member(lang,["java"])){
 			type = var_type(input_lang,lang,type);
-			to_return = "public <"+type_params+"> static" + name + " " +type+ "("+params+")"+"{"+body+indent+"}";
+			to_return = "public <"+type_params+"> static" + type + " " +name+ "("+params+")"+"{"+body+indent+"}";
 		}
 		else if(member(lang,["c#"])){
 			type = var_type(input_lang,lang,type);
@@ -7986,7 +7988,7 @@ function generate_code(input_lang,lang,indent,arr){
 			}
 		}
 		else if(member(lang,["rust"]))
-			to_return = "fn " + name + "("+params+"){"+body+indent+"}";
+			to_return = "fn " + name + "("+params+") -> "+var_type(input_lang,lang,type)+"{"+body+indent+"}";
 		else if(member(lang,["go"])){
 			if(type !== undefined || type === "Object"){
 				type = types[function_name];
@@ -11179,6 +11181,9 @@ function generate_code(input_lang,lang,indent,arr){
 		
 	}
 	else if(arr[0] === "initialize_empty_vars"){
+		if(typeof arr[2] === "string"){
+			arr[2] = [arr[2]];
+		}
 		for(var i of arr[2]){
 			if(arr[1] !== "Object"){
 				set_var_type(input_lang,lang,i,arr[1]);

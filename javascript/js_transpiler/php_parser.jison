@@ -111,6 +111,7 @@ access_modifier: "public" | "private";
 
 class_:
 	"class" IDENTIFIER "{" class_statements "}" {$$ = ["class","public",$2,$4];}
+	| "trait" IDENTIFIER "{" class_statements "}" {$$ = ["trait","public",$2,$4];}
 	| "class" IDENTIFIER "extends" IDENTIFIER "{" class_statements "}" {$$ = ["class_extends","public",$2,$4,$6];}
 	| "class" IDENTIFIER "implements" identifiers "{" class_statements "}" {$$ = ["class_implements","public",$2,$4,$6];};
 
