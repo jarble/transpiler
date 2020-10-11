@@ -18,6 +18,7 @@ A major goal of this project is to translate TypeScript and JavaScript to other 
 	return a + b;
 	};
 This is the compiler's output:
+
 	var a=.{.a1=1,.b=2};
 	var b=struct{fn function(a1:f64,b:f64)f64{
 	    return a+b;}}.function;
