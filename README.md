@@ -9,92 +9,20 @@ Universal-transpiler was written as an experimental "proof-of-concept," so it ca
 
 The [online version of this translator](https://jarble.github.io/transpiler/javascript/js_transpiler/test_parser.html#%7B%22inputText%22%3A%22public%20class%20Python%7B%5Cn%5Cn%5Ctpublic%20static%20int%20round(double%20a)%7B%5Cn%5Ctreturn%20Math.round(a%2B0.5)%3B%5Cn%5Ct%7D%5Cn%5Ctpublic%20static%20int%20floor(double%20a)%7B%5Cn%5Ctreturn%20Math.floor(a)%3B%5Cn%5Ct%7D%5Cn%5Ctpublic%20static%20int%20ceil(double%20a)%7B%5Cn%5Ctreturn%20Math.ceil(0.5)%3B%5Cn%5Ct%7D%5Cn%5Cn%5Ctpublic%20class%20math%7B%5Cn%5Ctpublic%20static%20double%20sin(double%20a)%7B%5Cn%5Ctreturn%20Math.sin(a)%3B%5Cn%5Ct%7D%5Cn%5Ctpublic%20static%20double%20pow(double%20a%2Cdouble%20b)%7B%5Cn%5Ctreturn%20Math.pow(a%2Cb)%3B%5Cn%5Ct%7D%5Cn%5Ctpublic%20static%20double%20cos(double%20a)%7B%5Cn%5Ctreturn%20Math.cos(a)%3B%5Cn%5Ct%7D%5Cn%5Ctpublic%20static%20double%20tan(double%20a)%7B%5Cn%5Ctreturn%20Math.tan(a)%3B%5Cn%5Ct%7D%5Cn%5Ctpublic%20static%20double%20asin(double%20a)%7B%5Cn%5Ctreturn%20Math.asin(a)%3B%5Cn%5Ct%7D%5Cn%5Ctpublic%20static%20double%20acos(double%20a)%7B%5Cn%5Ctreturn%20Math.acos(a)%3B%5Cn%5Ct%7D%5Cn%5Ctpublic%20static%20double%20atan(double%20a)%7B%5Cn%5Ctreturn%20Math.atan(a)%3B%5Cn%5Ct%7D%5Cn%5Ct%7D%5Cn%7D%22%2C%22inputLang%22%3A%22java%22%2C%22outputLang%22%3A%22c%23%22%7D) is written in JavaScript, but an experimental version is also being written in Prolog.
 
-Universal-transpiler is designed to translate simple "wrapper classes," like this one for Python in Java:
+A major goal of this project is to translate TypeScript and JavaScript to other languages that compile to native code. For example, it's possible to translate [a subset of TypeScript to Zig](https://jarble.github.io/transpiler/javascript/js_transpiler/test_parser.html#%7B%22inputText%22%3A%22var%20a%20%3D%20%7Ba1%3A1%2Cb%3A2%7D%3B%5Cn%5Cnvar%20b%20%3D%20function(a1%3Anumber%2Cb%3Anumber)%3Anumber%7B%5Cnreturn%20a%20%2B%20b%3B%5Cn%7D%3B%22%2C%22inputLang%22%3A%22typescript%22%2C%22outputLang%22%3A%22zig%22%7D):
 
-	public class Python{
 
-		public static int round(double a){
-		return Math.round(a+0.5);
-		}
-		public static int floor(double a){
-		return Math.floor(a);
-		}
-		public static int ceil(double a){
-		return Math.ceil(0.5);
-		}
+	var a = {a1:1,b:2};
 
-		public class math{
-		public static double sin(double a){
-		return Math.sin(a);
-		}
-		public static double pow(double a,double b){
-		return Math.pow(a,b);
-		}
-		public static double cos(double a){
-		return Math.cos(a);
-		}
-		public static double tan(double a){
-		return Math.tan(a);
-		}
-		public static double asin(double a){
-		return Math.asin(a);
-		}
-		public static double acos(double a){
-		return Math.acos(a);
-		}
-		public static double atan(double a){
-		return Math.atan(a);
-		}
-		}
-	}
+	var b = function(a1:number,b:number):number{
+	return a + b;
+	};
+This is the compiler's output:
+	var a=.{.a1=1,.b=2};
+	var b=struct{fn function(a1:f64,b:f64)f64{
+	    return a+b;}}.function;
 
-This is its output in C#:
 
-	public class Python{
-		
-		public static int round(double a){
-			return Math.Round(a+0.5);
-		}
-		
-		public static int floor(double a){
-			return Math.Floor(a);
-		}
-		
-		public static int ceil(double a){
-			return Math.Ceiling(0.5);
-		}
-		
-		public class math{
-		
-			public static double sin(double a){
-				return Math.Sin(a);
-			}
-		
-			public static double pow(double a,double b){
-				return Math.Pow(a,b);
-			}
-		
-			public static double cos(double a){
-				return Math.Cos(a);
-			}
-		
-			public static double tan(double a){
-				return Math.Tan(a);
-			}
-		
-			public static double asin(double a){
-				return Math.Asin(a);
-			}
-		
-			public static double acos(double a){
-				return Math.Acos(a);
-			}
-		
-			public static double atan(double a){
-				return Math.Atan(a);
-			}
-		}
-	}
 
 The translator also includes a proof-of-concept implementation of a [natural language programming](file:///C:/Users/jarbl/Dropbox/All%20source%20code%20goes%20here%20-%20don't%20put%20this%20folder%20inside%20any%20other%20folder/Prolog%20projects/universal-transpiler/javascript/js_transpiler/to_do_list.html#%7B%22inputText%22%3A%22product%20of%20A%20and%20B%20means%20A%20*%20B.%5Cnquotient%20of%20A%20and%20B%20means%20A%20%2F%20B.%5Cnbigger%20means%20greater.%5Cngreater%20means%20more.%5CnA%20is%20no%20B%20than%20C%20means%20A%20is%20not%20B%20than%20C.%5CnA%20is%20more%20than%20B%20means%20A%20%3E%20B.%5CnA%20is%20less%20than%20B%20means%20A%20%3C%20B.%5CnA%20plus%20B%20means%20A%20%2B%20B.%5CnA%20or%20B%20means%20A%20%7C%7C%20B.%5CnA%20and%20B%20means%20A%20%26%26%20B.%5CnA%20is%20equal%20to%20B%20means%20A%20equals%20B.%5CnA%20equals%20B%20means%20A%20%3D%3D%20B.%5CnA%20minus%20B%20means%20A%20-%20B.%5CnA%20is%20not%20equal%20to%20B%20means%20A%20!%3D%20B.%5CnX%20is%20a%20Y%20means%20isa%7BX%2CY%7D.%5CnA%20is%20B%20means%20A%20%3D%3D%20B.%5CnA%20is%20not%20a%20B%20means%20(A%20is%20a%20B)%20is%20false.%5CnA%20is%20not%20more%20than%20B%20means%20A%20%3C%3D%20B.%5CnA%20is%20not%20less%20than%20B%20means%20A%20%3E%3D%20B.%5Cna%20%3D%201.%5Cnb%20%3D%202.%5Cn%5Cna4%20%3D%20(the%20quotient%20of%20a%20and%20b)%20plus%20(the%20product%20of%20a%20and%20b)%20is%20not%20less%20%20than%20100.%22%2C%22inputLang%22%3A%22english%22%2C%22outputLang%22%3A%22python%22%7D) system.
 
