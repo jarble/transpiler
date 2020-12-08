@@ -1040,6 +1040,9 @@ function var_type(input_lang,lang,type){
 		else if(member(lang,["c"])){
 			return "char*";
 		}
+		else if(member(lang,["rust"])){
+			return "&str";
+		}
 		else if(member(lang,["hy","python","coconut","cython"])){
 			return "str";
 		}
