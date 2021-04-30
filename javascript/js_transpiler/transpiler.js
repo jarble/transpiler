@@ -4503,7 +4503,8 @@ function generate_code(input_lang,lang,indent,arr){
 	}
 	else if(matching_patterns(pattern_array,input_lang,lang,arr,[
 		[["java"],[".",[".",[[".",["$a","getClass"]],["function_call","isArray",[]]]]]],
-		[["javascript"],[".",["Array",["function_call","isArray",["$a"]]]]]
+		[["javascript"],[".",["Array",["function_call","isArray",["$a"]]]]],
+		[["php"],["function_call","is_array",["$a"]]],
 	],matching_symbols)){
 		var a = generate_code(input_lang,lang,indent,matching_symbols["$a"]);
 		if(member(lang,["javascript"])){
@@ -4908,6 +4909,9 @@ function generate_code(input_lang,lang,indent,arr){
 		else if(type === "number"){
 			if(member(lang,["php"])){
 				to_return = "is_numeric("+expr+")";
+			}
+			else if(member(lang,["julia"])){
+				to_return = "("+expr+" isa Number)";
 			}
 		}
 		types[to_return] = "boolean";
@@ -5915,7 +5919,7 @@ function generate_code(input_lang,lang,indent,arr){
 		: member(lang,["smt-lib"])
 			? "(define-sort () "+name+" ("+body+"))"
 		: member(lang,["c"])
-			? "typedef "+body+" "+name+";"
+			? (arr[2][0] === "data_type_or" ? ("union " +name+"{"+body+";};") : "typedef "+body+" "+name+";")
 		: member(lang,["mercury"])
 			? ":- type "+name+" --> "+body
 		: member(lang,["ocaml","f#"])
@@ -5935,13 +5939,14 @@ function generate_code(input_lang,lang,indent,arr){
 		: undefined;
 	}
 	else if(arr[0] === "data_type_or"){
+		//this is somewhat like a union type
 		//return arr.toString();
 		var a = generate_code(input_lang,lang,"",arr[1]);
 		var b = generate_code(input_lang,lang,"",arr[2]);
 		
 		to_return = member(lang,["haskell","ocaml","standard ml","idris","coq","f#","typescript"])
 			? a+" | "+b
-		: member(lang,["prolog","haxe","mercury","haxe"])
+		: member(lang,["prolog","haxe","mercury","haxe","c"])
 			? a +";"+ b
 		: is_metasyntax(lang)
 			? generate_code(input_lang,lang,"",["grammar_or",a,b])
@@ -11571,7 +11576,7 @@ function generate_code(input_lang,lang,indent,arr){
 		[["c#","visual basic .net","go"],[".",["Math",["function_call","Round",["$a"]]]]],
 		[["yacas","gap"],["function_call","Round",["$a"]]],
 		[["fortran"],["function_call","nint",["$a"]]],
-		[["prolog","glsl","postscript","axiom","mediawiki","standard ml","reverse polish notation","julia","tcl","minizinc","php","c","c++","perl","haskell","python","coconut","octave","yacas","rebol","frink"],["function_call","round",["$a"]]],
+		[["prolog","clips","erlang","glsl","postscript","axiom","mediawiki","standard ml","reverse polish notation","julia","tcl","minizinc","php","c","c++","perl","haskell","python","coconut","octave","yacas","rebol","frink"],["function_call","round",["$a"]]],
 		[["ruby","perl 6"],[".",["$a","round"]]],
 		[["lua"],[".",["Math",["function_call","floor",[["+","$a",[".",["0.5"]]]]]]]]
 	],matching_symbols)){
