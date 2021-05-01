@@ -29,7 +29,8 @@ This is the compiler's output:
 ## Some supported features
 * [Mathematical functions](https://jarble.github.io/transpiler/javascript/js_transpiler/test_parser.html#%7B%22inputText%22%3A%22float%20math_example()%7B%5Cnfloat%20a%20%3D%20cos(1.0)%2Bsin(1.0)%2Btan(1.0)%2Bsqrt(2.0)%2Babs(-4.0)%3B%5Cnreturn%20log10(a)%3B%5Cn%7D%22%2C%22inputLang%22%3A%22c%22%2C%22outputLang%22%3A%22java%22%7D)
 * [Interfaces](https://jarble.github.io/transpiler/javascript/js_transpiler/test_parser.html#%7B%22inputText%22%3A%22public%20interface%20Animal%20%7B%5Cn%20%20public%20String%20Name()%3B%5Cn%20%20public%20String%20Age%20()%3B%5Cn%7D%22%2C%22inputLang%22%3A%22java%22%2C%22outputLang%22%3A%22c%23%22%7D)
-* [Boolean operators](https://jarble.github.io/transpiler/javascript/js_transpiler/test_parser.html#%7B%22inputText%22%3A%22float%20bool_example(bool%20a%2C%20bool%20b%2Cbool%20c)%7B%5Cnreturn%20a%20%7C%7C%20b%20%26%26%20c%3B%5Cn%7D%22%2C%22inputLang%22%3A%22c%22%2C%22outputLang%22%3A%22java%22%7D)
+* [Boolean operators](https://jarble.github.io/transpiler/javascript/js_transpiler/test_parser.html#%7B%22inputText%22%3A%22bool%20bool_example(bool%20a%2C%20bool%20b%2Cbool%20c)%7B%5Cnif(a%20!%3D%20true%20%7C%7C%20b%20%3D%3D%20false)%7B%5Cnreturn%20!a%3B%5Cn%7D%5Cnelse%7B%5Cnreturn%20a%20%7C%7C%20b%20%26%26%20c%3B%5Cn%7D%5Cn%7D%22%2C%22inputLang%22%3A%22c%22%2C%22outputLang%22%3A%22MiniZinc%22%7D)
+* [Generics and templates](https://jarble.github.io/transpiler/javascript/js_transpiler/test_parser.html#%7B%22inputText%22%3A%22template%20%3Ctypename%20T%3E%20T%20myMax(T%20x%2C%20T%20y)%5Cn%7B%5Cn%20%20%20%20return%20(x%20%3E%20y)%20%3F%20x%20%3A%20y%3B%5Cn%7D%22%2C%22inputLang%22%3A%22c%2B%2B%22%2C%22outputLang%22%3A%22typescript%22%7D) (in several languages)
 
 This translator can convert many languages into many others:
 
