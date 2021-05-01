@@ -1988,6 +1988,9 @@ function unparse(input_lang,lang,indent,pattern_array,matching_symbols){
 	if(pattern_array.length === 1 && typeof(pattern_array[0]) === "string"){
 		to_return = generate_code(input_lang,lang,indent,pattern_array[0]);
 	}
+	else if(pattern_array.length === 1 && Array.isArray(pattern_array[0])){
+		to_return = unparse(input_lang,lang,indent,pattern_array[0]);
+	}
 	else if(pattern_array[0] === "parentheses"){
 		if(infix_arithmetic_lang(lang) || member(lang,["tex","regex","antlr","jison","clp(fd)","interactive data language"])){
 			to_return = "("+unparse(input_lang,lang,indent,pattern_array[1],matching_symbols)+")";
@@ -2211,7 +2214,7 @@ function unparse(input_lang,lang,indent,pattern_array,matching_symbols){
 		var b = unparse(input_lang,lang,indent,pattern_array[2],matching_symbols)
 		to_return = "("+a+") ^ ("+b+")";
 	}
-	else if(pattern_array in matching_symbols){
+	else if(matching_symbols !== undefined && pattern_array in matching_symbols){
 		to_return = generate_code(input_lang,lang,indent,matching_symbols[pattern_array]);
 	}
 	else if(typeof pattern_array === 'string'){
@@ -3235,7 +3238,7 @@ function generate_code(input_lang,lang,indent,arr){
 			[["c#"],[".",["Math",["function_call","Log10",["$a"]]]]],
 			[["java","javascript"],[".",["Math",["function_call","log10",["$a"]]]]],
 			[["lua","python","cython","coconut","erlang"],[".",["math",["function_call","log10",["$a"]]]]],
-			[["perl"],["/",[".",[["function_call","log",[["$a"]]]]],[".",[["function_call","log",[[[".",["10.0"]]]]]]]]]
+			[["perl"],["parentheses",["/",[".",[["function_call","log",[["$a"]]]]],[".",[["function_call","log",[[[".",["10.0"]]]]]]]]]]
 		],matching_symbols)){
 		var output = generate_code(input_lang,lang,indent,matching_symbols["$a"]);
 		to_return = unparse(input_lang,lang,indent,pattern_array.value,matching_symbols);
