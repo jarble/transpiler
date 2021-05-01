@@ -27,7 +27,7 @@ This is the compiler's output:
 # How to use the online translator
 
 ## Some supported features
-* [Mathematical functions](file:///C:/Users/jarbl/Dropbox/All%20source%20code%20goes%20here%20-%20don't%20put%20this%20folder%20inside%20any%20other%20folder/Prolog%20projects/universal-transpiler/javascript/js_transpiler/test_parser.html#%7B%22inputText%22%3A%22float%20math_example()%7B%5Cnfloat%20a%20%3D%20cos(1.0)%2Bsin(1.0)%2Btan(1.0)%2Bsqrt(2.0)%2Babs(-4.0)%3B%5Cnreturn%20log10(a)%3B%5Cn%7D%22%2C%22inputLang%22%3A%22c%22%2C%22outputLang%22%3A%22perl%22%7D)
+* [Mathematical functions](https://jarble.github.io/transpiler/javascript/js_transpiler/test_parser.html#%7B%22inputText%22%3A%22float%20math_example()%7B%5Cnfloat%20a%20%3D%20cos(1.0)%2Bsin(1.0)%2Btan(1.0)%2Bsqrt(2.0)%2Babs(-4.0)%3B%5Cnreturn%20log10(a)%3B%5Cn%7D%22%2C%22inputLang%22%3A%22c%22%2C%22outputLang%22%3A%22java%22%7D)
 
 This translator can convert many languages into many others:
 
