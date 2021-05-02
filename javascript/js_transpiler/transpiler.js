@@ -1989,7 +1989,7 @@ function unparse(input_lang,lang,indent,pattern_array,matching_symbols){
 		to_return = generate_code(input_lang,lang,indent,pattern_array[0]);
 	}
 	else if(pattern_array.length === 1 && Array.isArray(pattern_array[0])){
-		to_return = unparse(input_lang,lang,indent,pattern_array[0]);
+		to_return = unparse(input_lang,lang,indent,pattern_array[0],matching_symbols);
 	}
 	else if(pattern_array[0] === "parentheses"){
 		if(infix_arithmetic_lang(lang) || member(lang,["tex","regex","antlr","jison","clp(fd)","interactive data language"])){
