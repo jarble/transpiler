@@ -1862,6 +1862,9 @@ function access_array_parameters(input_lang,lang,name,indent,params){
 	else if(member(lang,["haskell"])){
 		return params.join("!!");
 	}
+	else if(member(lang,["oz"])){
+		return params.join(".");
+	}
 	else if(member(lang,["c","futhark","glsl","coffeescript","cython","javascript","go","julia","python","coconut","java","swift","typescript","c++","lua","ruby","perl","php","haxe"])){
 		return params.join("][");
 	}
@@ -7135,6 +7138,9 @@ function generate_code(input_lang,lang,indent,arr){
 		else if(member(lang,["smt-lib"])){
 			to_return = name + "(select "+name+" "+params+")";
 		}
+		else if(member(lang,["oz"])){
+			to_return = name + name+"."+params;
+		}
 		else if(member(lang,["scala","visual basic .net","vba"])){
 			to_return = name + "("+params+")";
 		}
@@ -10947,7 +10953,7 @@ function generate_code(input_lang,lang,indent,arr){
 	}
 	else if(arr[0] === "return" && arr.length === 2){
 		var a = generate_code(input_lang,lang,indent,arr[1]);
-		if(member(lang,	["pseudocode","squirrel","zephir","phix","hlsl","whlsl","cuda","zig","unicon","ooc","terra","aime","asymptote","hs-logic","rascal","q#","euphoria","tensorlang","x10","processing","io","whiley","songbird","alloy","castor","parasail","nearley",'xquery',"gdscript","sentient","scriptol","setl","gnu setl","inform 6","picolisp","lush","english","matlab","glsl","applescript","sidef","reasoned-php","logicjs","coconut","cython","kotlin","coffeescript","vhdl","lua","ruby","java","seed7",'xl','e',"livecode","englishscript","gap","kal","engscript","pawn","ada","powershell","rust","d","ceylon","typescript","hack","autohotkey","gosu","swift","pike","objective-c","c","groovy","scala","julia","dart","c#","javascript","go","haxe","php","c++","perl","vala","rebol","awk","bc","chapel","perl 6","python"])){
+		if(member(lang,	["halide","pseudocode","squirrel","zephir","phix","hlsl","whlsl","cuda","zig","unicon","ooc","terra","aime","asymptote","hs-logic","rascal","q#","euphoria","tensorlang","x10","processing","io","whiley","songbird","alloy","castor","parasail","nearley",'xquery',"gdscript","sentient","scriptol","setl","gnu setl","inform 6","picolisp","lush","english","matlab","glsl","applescript","sidef","reasoned-php","logicjs","coconut","cython","kotlin","coffeescript","vhdl","lua","ruby","java","seed7",'xl','e',"livecode","englishscript","gap","kal","engscript","pawn","ada","powershell","rust","d","ceylon","typescript","hack","autohotkey","gosu","swift","pike","objective-c","c","groovy","scala","julia","dart","c#","javascript","go","haxe","php","c++","perl","vala","rebol","awk","bc","chapel","perl 6","python"])){
 			to_return = "return " + a;
 		}
 		else if(member(lang,["r","zkl","maxima","harbour"])){
