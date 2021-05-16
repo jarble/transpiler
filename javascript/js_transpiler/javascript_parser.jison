@@ -16,6 +16,7 @@
 "continue"            return "continue"
 "typeof"              return "typeof"
 "class"               return "class"
+"constructor"         return "constructor"
 "const"               return 'const'
 "static"              return 'static'
 "get"                 return 'get'
@@ -151,7 +152,8 @@ class_statements: class_statements_ {$$ = ["class_statements",$1]} | {$$ = ["cla
 class_statements_: class_statement class_statements_ {$$ = [$1].concat($2);} | class_statement {$$ =
  [$1];};
 class_statement:
-	IDENTIFIER "(" parameters ")" "{" statements "}" {$$ = ["instance_method","public","Object",$1,$3,$6];}
+	constructor "(" parameters ")" "{" statements "}" {$$ = ["constructor","public","",$3,$6];}
+	| IDENTIFIER "(" parameters ")" "{" statements "}" {$$ = ["instance_method","public","Object",$1,$3,$6];}
 	| "set" IDENTIFIER "(" parameters ")" "{" statements "}" {$$ = ["setter_method","public","Object",$2,$4,$7];}
 	| "get" IDENTIFIER "(" parameters ")" "{" statements "}" {$$ = ["getter_method","public","Object",$2,$4,$7];}
 	| "static" IDENTIFIER "(" parameters ")" "{" statements "}" {$$ = ["static_method","public","Object",$2,$4,$7];}
@@ -159,23 +161,23 @@ class_statement:
 
 statement_with_semicolon
    : 
-   "import" IDENTIFIER "from" STRING_LITERAL {$$ = ["import_from",$2,$4];}
-   | "continue" {$$ = [$1];}
+   "continue" {$$ = [$1];}
    | "return" e  {$$ = ["return",$2];}
-   | "return"  {$$ = ["return"];}
    | "yield" e  {$$ = ["yield",$2];}
-   | "const" IDENTIFIER "=" e {$$ = ["initialize_constant","Object",$2,$4];}
+   | "const" IDENTIFIER "=" e {$$ = ["initialize_constant","Object",$3,$5];}
+   | "const" IDENTIFIER ":" IDENTIFIER "=" e {$$ = ["initialize_constant",$4,$2,$6];}
    | "var" identifiers {$$ = ["initialize_empty_vars","Object",$2];}
    | access_array "=" e {$$ = ["set_var",$1,$3];}
    | IDENTIFIER "=" e {$$ = ["set_var",$1,$3];}
+   | IDENTIFIER "." IDENTIFIER "=" e {$$ = ["set_var",[".",[$1,$3]],$5];}
    | IDENTIFIER "++" {$$ = [$2,$1];}
    | IDENTIFIER "--" {$$ = [$2,$1];}
-   | IDENTIFIER "%=" e {$$ = [$2,$1,$3];}
    | IDENTIFIER "+=" e {$$ = [$2,$1,$3];}
    | IDENTIFIER "-=" e {$$ = [$2,$1,$3];}
    | IDENTIFIER "*=" e {$$ = [$2,$1,$3];}
    | IDENTIFIER "/=" e {$$ = [$2,$1,$3];}
-   | dot_expr {$$ = [".",$1]}
+   | IDENTIFIER "%=" e {$$ = [$2,$1,$3];}
+   | IDENTIFIER "." dot_expr {$$ = [".",[$1].concat($3)]}
    ;
 
 initialize_var1: initialize_var_ {$$ = ["initialize_var"].concat($1);};

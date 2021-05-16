@@ -17,6 +17,7 @@
 "extends"             return 'extends'
 "typeof"              return "typeof"
 "class"               return "class"
+"constructor"         return "constructor"
 "static"              return "static"
 "const"               return 'const'
 "if"                  return 'if'
@@ -148,7 +149,8 @@ statement
 statement_with_semicolon_: initialize_var1 | statement_with_semicolon;
 
 class_statement:
-	"static" IDENTIFIER "(" parameters ")" "{" statements "}" {$$ = ["static_method","public","Object",$2,$4,$7];}
+	"constructor" "(" parameters ")" "{" statements "}" {$$ = ["constructor","public","",$3,$6];}
+	| "static" IDENTIFIER "(" parameters ")" "{" statements "}" {$$ = ["static_method","public","Object",$2,$4,$7];}
 	| IDENTIFIER "(" parameters ")" "{" statements "}" {$$ = ["instance_method","public","Object",$1,$3,$6];}
 	| "static" IDENTIFIER "(" parameters ")" ":" IDENTIFIER "{" statements "}" {$$ = ["static_method","public",$7,$2,$4,$9];}
 	| IDENTIFIER "(" parameters ")" ":" IDENTIFIER "{" statements "}" {$$ = ["instance_method","public",$6,$1,$3,$8];}
