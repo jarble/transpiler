@@ -2432,6 +2432,9 @@ function generate_code(input_lang,lang,indent,arr){
 		else if(member(lang,["visual basic .net"])){
 			return "Nothing";
 		}
+		else if(member(lang,["mysql"])){
+			return "NULL";
+		}
 		else if(member(lang,["wolfram"])){
 			return "Undefined";
 		}
@@ -2815,6 +2818,9 @@ function generate_code(input_lang,lang,indent,arr){
 		else if(lang === "ocaml"){
 			to_return = "(Some " + a + ")";
 		}
+		else if(member(lang,["mysql"])){
+			to_return = "(" + a + ")";
+		}
 		else{
 			to_return = unparse(input_lang,lang,indent,pattern_array.value,matching_symbols);
 		}
@@ -2842,8 +2848,8 @@ function generate_code(input_lang,lang,indent,arr){
 		else if(lang === "julia"){
 			to_return = "!isdefined("+a+")";
 		}
-		else if(lang === "julia"){
-			to_return = "!isdefined("+a+")";
+		else if(member(lang,["mysql"])){
+			to_return = "("+a+" IS NULL)";
 		}
 		else{
 			to_return = unparse(input_lang,lang,indent,pattern_array.value,matching_symbols);

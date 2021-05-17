@@ -97,13 +97,16 @@
 
 expressions: top_level_statements EOF {return ["top_level_statements",$1]};
 
-statements_: statements_without_vars | statements_with_vars | initialize_var_ ";" {$$ = [["semicolon",["initialize_var"].concat($1)]]} | initialize_var_ ";" statements_with_vars {$$ = [["lexically_scoped_vars",[["lexically_scoped_var"].concat($1)],["statements",$3]]]};
-statements_without_vars: statement statements_without_vars {$$ = [$1].concat($2);} | statement {$$ =
+class_statements: class_statements_ {$$ = ["class_statements",$1]};
+
+statements_: statements_with_vars | initialize_var_ ";" {$$ = [["semicolon",["initialize_var"].concat($1)]]} | initialize_var_ ";" statements_ {$$ = [["lexically_scoped_vars",[["lexically_scoped_var"].concat($1)],["statements",$3]]]};
+statements_without_vars: statements_without_vars statement {$$ = $1.concat([$2]);} | statement {$$ =
  [$1];};
+statements_with_vars: statements_without_vars initialize_var1 ";" {$$ = $1.concat([["semicolon",$2]]);} | statements_without_vars;
+ 
 initialize_vars: initialize_vars ";" initialize_var {$$ = $1.concat([$3]);} | initialize_var {$$ =
  [$1];};
- 
-class_statements: class_statements_ {$$ = ["class_statements",$1]};
+
 statements: statements_ {$$ = ["statements",$1]};
 
 case_statement: "case" e ":" statements "break" ";" {$$ = ["case",$2,$4]};
