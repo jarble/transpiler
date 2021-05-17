@@ -973,7 +973,7 @@ function var_type(input_lang,lang,type){
 		if(member(lang,["go"])){
 			return "float32";
 		}
-		else if(member(lang,["c#","hlsl","whlsl","c","java","glsl","coffeescript","python","coconut","haxe","minizinc","seed7"])){
+		else if(member(lang,["c#","vala","hlsl","whlsl","c","java","glsl","coffeescript","python","coconut","haxe","minizinc","seed7"])){
 			return "float";
 		}
 		else if(member(lang,["mysql"])){
@@ -5897,6 +5897,8 @@ function generate_code(input_lang,lang,indent,arr){
 			?  "struct "+name+" extends "+name1+body
 		: member(lang,["coffeescript",'moonscript'])
 			?  "class "+name+" extends "+name1+body
+		: member(lang,["fortran"])
+			?  "type, extends("+name1+") "+name+" "+body+" end type "+name
 		: member(lang,['alloy'])
 			?  "sig "+name+" extends "+name1+"{"+body+indent+"}"
 		: member(lang,["c++"])
@@ -5921,6 +5923,8 @@ function generate_code(input_lang,lang,indent,arr){
 			?  "(defclass "+name+" (is-a "+name1+") "+body+")"
 		: member(lang,["common lisp"])
 			?  "(defclass "+name+" ("+name1+") "+body+")"
+		: member(lang,["postgresql"])
+			?  "CREATE TABLE "+name+" "+body+" INHERITS ("+name1+")"
 		: member(lang, ["futhark"])
 			? "module "+name+" = {"+body+indent+"    open "+name1+indent+"}"
 		: to_return;
@@ -6163,6 +6167,8 @@ function generate_code(input_lang,lang,indent,arr){
 			? "public class "+name+"{"+body+indent+"}"
 		: member(lang,["python"])
 			? "@dataclass\nclass "+name+":"+body
+		: member(lang,["Visual Basic .NET"])
+			? "Public Structure "+name+" "+body+" End Structure"
 		: member(lang,["alloy"])
 			? "sig "+name+"{"+body+indent+"}"
 		: member(lang,["zig"])
