@@ -955,7 +955,7 @@ function var_type(input_lang,lang,type){
 		else if(member(lang,["xquery"])){
 			return "decimal";
 		}
-		else if(member(lang,["javascript","simit","coffeescript","python","coconut","haxe","minizinc","seed7"])){
+		else if(member(lang,["python","cython","simit","coffeescript","python","coconut","haxe","minizinc","seed7"])){
 			return "float";
 		}
 		else if(member(lang,["rust","zig","futhark","webassembly"])){
@@ -6148,6 +6148,9 @@ function generate_code(input_lang,lang,indent,arr){
 		else if(member(lang,["rust","haxe","typescript","thrift","protobuf"])){
 			return "enum "+name+"{"+body+indent+"}";
 		}
+		else if(member(lang,["cython"])){
+			return "cdef enum "+name+": "+body+indent;
+		}
 		else if(member(lang,["vhdl"])){
 			return "type "+name+"is ("+body+indent+");";
 		}
@@ -6183,6 +6186,8 @@ function generate_code(input_lang,lang,indent,arr){
 			? "data class "+name+"("+body+indent+")"
 		: member(lang,["php"])
 			? "class "+name+"{"+body+indent+"}"
+		: member(lang,["cython"])
+			? "cdef struct "+name+": "+body+indent
 		: member(lang,["coq"])
 			? "Record "+name+" := {"+body+indent+"}"
 		: member(lang,["futhark"])
@@ -8169,7 +8174,7 @@ function generate_code(input_lang,lang,indent,arr){
 		else if(member(lang,["lasso"])){
 			to_return = "define " + name + "("+params+") => {"+body+indent+"}";
 		}
-		else if(member(lang,["python","jq","coconut","cython"])){
+		else if(member(lang,["python","jq","coconut"])){
 			to_return = "def " + name + "("+params+"):"+body;
 		}
 		else if(member(lang,["mumps"])){
@@ -8194,6 +8199,11 @@ function generate_code(input_lang,lang,indent,arr){
 			to_return = (type === "Object")
 				? "function " + name + "("+params+"){"+body+indent+"}"
 			: "function " + name + "("+params+"):"+var_type(input_lang,lang,type)+"{"+body+indent+"}";
+		}
+		else if(member(lang,["cython"])){
+			to_return = (type === "Object")
+				? "def " + name + "("+params+"):"+body
+			: "cdef " +var_type(input_lang,lang,type) +" "+ name + "("+params+"):"+body;
 		}
 		else if(member(lang,["typescript"])){
 			to_return = (type === "Object")
@@ -11211,7 +11221,7 @@ function generate_code(input_lang,lang,indent,arr){
 		if(Array.isArray(arr[2]) && arr[2].length === 1){
 			arr[2] = arr[2][0];
 		}
-		if(member(lang, ["c","vala","cuda","c++","glsl","hlsl","whlsl","haskell","swift","c#"])){
+		if(member(lang, ["c","cython","vala","cuda","c++","glsl","hlsl","whlsl","haskell","swift","c#"])){
 			to_return = indent + semicolon(lang,generate_code(input_lang,lang,indent,["initialize_empty_vars",arr[1],arr[2]]));
 		}
 		else if(member(lang, ["stone","go"])){
@@ -11359,7 +11369,10 @@ function generate_code(input_lang,lang,indent,arr){
 		if(member(lang, ["java","metafont","sentient","c","vala","pike","glsl","hlsl","whlsl","c++","cuda","c#","algol 68","simula"])){
 			to_return = var_type(input_lang,lang,arr[1]) + " " + arr[2];
 		}
-		if(member(lang, ["visual basic .net"])){
+		else if(member(lang,["cython"])){
+			to_return = "cdef "+var_type(input_lang,lang,arr[1]) + " " + arr[2];
+		}
+		else if(member(lang, ["visual basic .net"])){
 			to_return = "Dim " + arr[2] + " As " + var_type(input_lang,lang,arr[1]);
 		}
 		else if(member(lang, ["maude"])){
@@ -11427,7 +11440,7 @@ function generate_code(input_lang,lang,indent,arr){
 		else if(member(lang, ["smalltalk"])){
 			to_return = "| " + arr[2] + " |";
 		}
-		else if(member(lang, ["python","cython","coconut"])){
+		else if(member(lang, ["python","coconut"])){
 			to_return = "";
 		}
 	}
