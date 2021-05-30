@@ -82,15 +82,6 @@
 
 /* operator associations and precedence */
 
-%left '?'
-%left '||' 'or'
-%left '&&' 'and'
-%left '<' '<=' '>' '>=' '===' '!=='
-%left '<<' '>>'
-%left '+' '-' '.'
-%left '*' '/' '%'
-%left UMINUS
-
 %start expressions
 
 %% /* language grammar */
@@ -140,28 +131,25 @@ case_statements: case_statements_ "default" ":" statements {$$ = $1.concat([["de
 
 
 class_statement:
-	access_modifier "static" type IDENTIFIER "(" parameters ")" "{" statements "}" {$$ = ["static_method",$1,$3,$4,$6,$8];};
+	access_modifier "static" "function" IDENTIFIER "(" parameters ")" "{" statements "}" {$$ = ["static_method",$1,"Object",$4,$6,$9];}
+	| access_modifier "function" IDENTIFIER "(" parameters ")" "{" statements "}" {$$ = ["instance_method",$1,"Object",$3,$5,$8];}
+	;
 
 statement_with_semicolon
    : 
-   "System.out.println" "(" e ")" {$$ = ["println",$3];}
    | "return" e  {$$ = ["return",$2];}
    | "return"  {$$ = ["return"];}
    | "continue"  {$$ = ["continue"];}
-   | type var_name "=" e {$$ = ["initialize_var",$1,$2,$4];}
    | parallel_assignment
-   | var_name "[" "]" "=" e {$$ = ["function_call","array_push",[$1,$5]];}
-   | access_array "=" e {$$ = ["set_var",$1,$3];}
-   | var_name "=" e {$$ = ["set_var",$1,$3];}
-   | var_name "++" {$$ = [$2,$1];}
-   | var_name "--" {$$ = [$2,$1];}
-   | var_name "+=" e {$$ = [$2,$1,$3];}
-   | var_name "%=" e {$$ = [$2,$1,$3];}
-   | var_name "-=" e {$$ = [$2,$1,$3];}
-   | var_name "*=" e {$$ = [$2,$1,$3];}
-   | var_name "/=" e {$$ = [$2,$1,$3];}
-   | function_call
-   | var_name "." dot_expr
+   | dot_expr "=" e {$$ = ["set_var",$1,$3];}
+   | dot_expr "++" {$$ = [$2,$1];}
+   | dot_expr "--" {$$ = [$2,$1];}
+   | dot_expr "+=" e {$$ = [$2,$1,$3];}
+   | dot_expr "%=" e {$$ = [$2,$1,$3];}
+   | dot_expr "-=" e {$$ = [$2,$1,$3];}
+   | dot_expr "*=" e {$$ = [$2,$1,$3];}
+   | dot_expr "/=" e {$$ = [$2,$1,$3];}
+   | dot_expr
    ;
    
 parallel_assignment:
@@ -172,82 +160,93 @@ parallel_rhs: parallel_rhs "," e {$$ = [$1.concat([$3])];} | e "," e {$$ = [$1,$
 
 e
     :
-    e "?" e ":" e {$$ = ["ternary_operator",$1,$3,$5]}
-    |"..." parentheses_expr {$$ = ["unpack_array",$2]}
-    |e '||' e
+     e6 "?" e6 ":" e {$$ = ["ternary_operator",$1,$3,$5]}
+    | "..." e6 {$$=["unpack_array",$2]}
+    |e6;
+
+e6: e5 '||' e6
         {$$ = [$2,$1,$3];}
-    |e 'or' e
-        {$$ = ["||",$1,$3];}
-    |e '&&' e
+    |e5 'or' e6
         {$$ = [$2,$1,$3];}
-    |e 'and' e
-        {$$ = ['&&',$1,$3];}
-    |e '!==' e
+    |e5;
+
+e5:
+    e4 '&&' e5
+        {$$ = [$2,$1,$3];}
+    |e4 'and' e5
+        {$$ = [$2,$1,$3];}
+    | e4;
+
+e4:
+    e3 '!==' e4
         {$$ = ['!=',$1,$3];}
-    |e '===' e
+    |e3 '===' e4
         {$$ = ['==',$1,$3];}
-    |e '<=' e
+    |e3 '<=' e4
         {$$ = [$2,$1,$3];}
-    |e '<<' e
+    |e3 '<' e4
         {$$ = [$2,$1,$3];}
-    |e '<' e
+    |e3 '>=' e4
         {$$ = [$2,$1,$3];}
-    | e '>=' e
+    |e3 '>' e4
         {$$ = [$2,$1,$3];}
-    |e '>>' e
-        {$$ = [$2,$1,$3];}
-    |e '>' e
-        {$$ = [$2,$1,$3];}
-    | e '+' e
-        {$$ = [$2,$1,$3];}
-    | e '-' e
-        {$$ = [$2,$1,$3];}
-    | e '.' e
-        {$$ = [$2,$1,$3];}
-    | e '*' e
-        {$$ = [$2,$1,$3];}
-    | e '/' e
-        {$$ = [$2,$1,$3];}
-    | e '%' e
-        {$$ = [$2,$1,$3];}
-    | '-' e %prec UMINUS
-        {$$ = ["-",$2];}
-    | not_expr
+    | e3
     ;
+
+e3: 
+    e2 '>>' e3
+        {$$ = [$2,$1,$3];}
+    |e2 '<<' e3
+        {$$ = [$2,$1,$3];}
+    | e2;
+
+e2: e1 '+' e2
+        {$$ = [$2,$1,$3];}
+    | e1 '-' e2
+        {$$ = [$2,$1,$3];}
+    | e1;
+
+e1: not_expr '*' e1
+        {$$ = [$2,$1,$3];}
+    | not_expr '/' e1
+        {$$ = [$2,$1,$3];}
+    | not_expr '%' e1
+        {$$ = [$2,$1,$3];}
+    | '-' e1 %prec UMINUS
+        {$$ = ["-",$2];}
+    | not_expr;
 
 not_expr: "!" dot_expr {$$ = ["!", [".",$2]];} | dot_expr {$$ = [".", $1];};
 
-dot_expr: parentheses_expr "->" dot_expr {$$ = [$1].concat($3);} | parentheses_expr {$$ =
+dot_expr: parentheses_expr "->" parentheses_expr {$$ = [$1].concat($3);} | parentheses_expr {$$ =
  [$1];};
-
-access_array: var_name "[" access_arr "]" {$$ = ["access_array",$1,$3];};
-
-function_call:
-	IDENTIFIER "(" exprs ")" {$$ = ["function_call",$1,$3];}
-    | IDENTIFIER "(" ")" {$$ = ["function_call",$1,[]];};
 
 parentheses_expr:
     "new" "class" "{" statements "}" {$$= ["anonymous_class",$4]}
-    | "function" "(" parameters ")" "{" statements "}" {$$ = ["anonymous_function","Object",$3,$6]}
-    | access_array
-    | function_call
-    | "[" "]" {$$ = ["initializer_list","Object",[]];} | "[" exprs "]" {$$ = ["initializer_list","Object",$2];}
-    | '(' e ')'} {$$ = $2;}
-    | NUMBER
+    | callable
+    ;
+
+callable:
+	callable "[" exprs "]" {$$ = ["access_array",$1,$3];}
+	| callable "(" exprs ")" {$$ = ["function_call",$1,$3];}
+    | callable "(" ")" {$$ = ["function_call",$1,[]];}
+	| "function" "(" parameters ")" "{" statements "}" {$$ = ["anonymous_function","Object",$3,$6]}
+	| var_name
         {$$ = yytext;}
-    | var_name
+    | IDENTIFIER
         {$$ = yytext;}
     | STRING_LITERAL
-        {$$ = yytext;};
+        {$$ = yytext;}
+    | '(' e ')'} {$$ = $2;}
+    | "[" "]" {$$ = ["initializer_list","Object",[]];} | "[" exprs "]" {$$ = ["initializer_list","Object",$2];}
+    | NUMBER {$$ = yytext;}
+    ;
 
-type: IDENTIFIER "[" "]" {$$ = [$1,"[]"];} | IDENTIFIER "<" types ">" {$$ = [$1,$3]} | IDENTIFIER;
 parameter: var_name {$$ = ["Object", $1];} |"&" var_name {$$ = ["ref_parameter","Object", $2];} | var_name "=" e {$$ = ["default_parameter","Object", $1,$3];};
 parameters: parameter "," parameters {$$ = [$1].concat($3);} | parameter {$$ =
  [$1];}| {$$ = [];};
-access_arr: e "][" access_arr {$$ = [$1].concat($3);} | e {$$ =
- [$1];};
+
 exprs: e "," exprs {$$ = [$1].concat($3);} | e {$$ = [$1];};
-types: type "," types {$$ = [$1].concat($3);} | type {$$ = [$1];};
 else_if: "else" "if" | "elseif";
 elif: else_if "(" e ")" bracket_statements elif {$$ = ["elif",$3,$5,$6]} | else_if "(" e ")" bracket_statements {$$ = ["elif",$3,$5]} | "else" bracket_statements {$$ = ["else",$2];};
 var_name: "$" IDENTIFIER {$$ = $2;};

@@ -141,14 +141,20 @@ statement_with_semicolon
    | "const" type IDENTIFIER "[" "]" "=" e {$$ = ["initialize_constant",[$2,"[]"],$3,$7];}
    | set_array_size
    | type identifiers {$$ = ["initialize_empty_vars",$1,$2];}
-   | access_array "=" e {$$ = ["set_var",$1,$3];}
    | IDENTIFIER "=" e {$$ = ["set_var",$1,$3];}
+   | access_array "=" e {$$ = ["set_var",$1,$3];}
    | IDENTIFIER "++" {$$ = [$2,$1];}
+   | access_array "++" {$$ = [$2,$1];}
    | IDENTIFIER "--" {$$ = [$2,$1];}
+   | access_array "--" {$$ = [$2,$1];}
    | IDENTIFIER "+=" e {$$ = [$2,$1,$3];}
+   | access_array "+=" e {$$ = [$2,$1,$3];}
    | IDENTIFIER "-=" e {$$ = [$2,$1,$3];}
+   | access_array "-=" e {$$ = [$2,$1,$3];}
    | IDENTIFIER "*=" e {$$ = [$2,$1,$3];}
+   | access_array "*=" e {$$ = [$2,$1,$3];}
    | IDENTIFIER "/=" e {$$ = [$2,$1,$3];}
+   | access_array "/=" e {$$ = [$2,$1,$3];}
    ;
 
 initialize_var1: initialize_var_ {$$ = ["initialize_var"].concat($1);};
@@ -216,10 +222,7 @@ parentheses_expr:
     access_array
     | function_call
     | '(' e ')' {$$ = ["parentheses",$2];}
-    | parentheses_expr_;
-
-parentheses_expr_:
-	"{" "}" {$$ = ["initializer_list","Object",[]];}
+    | "{" "}" {$$ = ["initializer_list","Object",[]];}
 	| "{" initialize_struct "}" {$$ = ["initialize_struct","Object",$2];}
 	| "{" exprs "}" {$$ = ["initializer_list","Object",$2];}
 	| NUMBER

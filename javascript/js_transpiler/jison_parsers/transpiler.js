@@ -6373,6 +6373,8 @@ function generate_code(input_lang,lang,indent,arr){
 			?  "defmodule "+name+" do"+body+indent+"end"
 		: member(lang,["zig"])
 			?  "const "+name+" = struct {"+body+indent+"}"
+		: member(lang,["erlang"])
+			?  name+"() -> receive "+body+" end,"+name+"()"
 		: member(lang,["rust"])
 			?  "trait "+name+"{"+body+indent+"}"
 		: member(lang,["haskell","idris"])
@@ -6838,6 +6840,9 @@ function generate_code(input_lang,lang,indent,arr){
 		else if(member(lang,["coffeescript"])){
 			to_return ="@" + name + ": ("+params+") ->"+body;
 		}
+		else if(member(lang,["erlang"])){
+			to_return ="{" + name + ", "+params+"} ->"+body;
+		}
 		else if(member(lang,["lua"])){
 			to_return =name + " = function("+params+")"+body+indent+"end";
 		}
@@ -6984,6 +6989,9 @@ function generate_code(input_lang,lang,indent,arr){
 		if(member(lang,["java","c#","vala"])){
 			type = var_type(input_lang,lang,type);
 			to_return = access_modifier + " " + type + " " + name + "("+params+"){"+body+indent+"}";
+		}
+		else if(member(lang,["erlang"])){
+			to_return ="{" + name + ((params === "")?"":(", "+params))+"} ->"+body;
 		}
 		else if(member(lang,["futhark"])){
 			to_return = (type === "Object")
@@ -8376,7 +8384,7 @@ function generate_code(input_lang,lang,indent,arr){
 		else if(member(lang,["minizinc"])){
 			to_return = a+"[self]";
 		}
-		else if(member(lang,["futhark","ocaml","standard ml"])){
+		else if(member(lang,["futhark","ocaml","standard ml","erlang"])){
 			to_return = a;
 		}
 		else if(member(lang,["coffeescript","ruby"])){
@@ -11946,8 +11954,9 @@ function generate_code(input_lang,lang,indent,arr){
 				return generate_code(input_lang,lang,indent,a);
 			}).join(",");
 		}
-		else if(member(lang,["coq"])){
-			//for typeclasses
+		else if(member(lang,["coq","erlang"])){
+			//for typeclasses in coq
+			//for processes in erlang
 			return arr[1].map(function(a){
 				return indent+generate_code(input_lang,lang,indent,a);
 			}).join(";");
