@@ -12508,15 +12508,6 @@ function function_call(lang, name, params){
 }
 
 function inputs_to_outputs(lang,keys,arrays){
-	for(var i = 0; i < arrays.length;i++){
-		if(member(lang,arrays[i][0])){
-			return replaceAll(arrays[i][1],keys);
-		}
-	}
-	return undefined;
-}
-
-function inputs_to_outputs(lang,keys,arrays){
 	var lang = arguments[0];
 	var keys = arguments[1];
 	for(var i = 2; i < arguments.length;i += 2){
