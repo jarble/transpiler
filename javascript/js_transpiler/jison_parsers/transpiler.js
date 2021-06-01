@@ -11727,7 +11727,7 @@ function is_semicolon_statement(the_statement){
 	return member(the_statement,["initialize_var","protobuf_parameter","interface_static_method","generic_class","generic_interface","struct_statement","initialize_empty_constants","yield","initialize_static_instance_var","initialize_instance_var","initialize_instance_var_with_value","initialize_static_instance_var_with_value","++","--","+=","-=","*=","/=","return","set_var","set_array_size","initialize_empty_constants","throw","continue","break","import","initialize_empty_vars","return"])
 }
 
-function parse_lang(input_lang,output_lang,input_text){
+export function parse_lang(input_lang,output_lang,input_text){
 	input_lang = input_lang.trim().toLowerCase();
 	output_lang = output_lang.trim().toLowerCase();
 	if (!(is_statically_typed(get_lang(output_lang)) || is_dynamically_typed(get_lang(output_lang)))){
