@@ -1,5 +1,5 @@
 "use strict";
-import ternary_operator from '../modules/code_generator.mjs';
+import ternary_operator from '../code_generator.mjs';
 
 var types = {};
 var defined_vars = [];
