@@ -1,24 +1,39 @@
-''
-expressions = statements_
+// Use this code to make it work offline:
+//     https://gist.github.com/kosamari/7c5d1e8449b2fbc97d372675f16b566e
 
-statements_ = a1:statement _ a2:statements_ {return a1+a2;} / statement
+{var var_number = 0; var to_append = []; var last_parsed = ""; var return_types = {};}
 
-class_statements = class_statements_ / "" {return "";}
-statements= statements_
+expressions = _ a:statements _ {return a;}
 
+statements = head:statement tail:(_ statement)* {
+      return tail.reduce(function(result, element) {
+        return result + element[1];
+      }, head);
+    }
 
-class_statements_= a1:class_statement _ a2:class_statements_ {return a1 + a2;} / class_statement
+interface_statements = head:parameter ";" tail:(_ parameter _ ";")* {
+      return tail.reduce(function(result, element) {
+        return result + element[1] + ";";
+      }, head);
+    }
+
 access_modifier= "public" / "private"
 
 class_=
-	"class" __ a2:IDENTIFIER _ "{" _ a4:class_statements _ "}" {return ["class ",a2,"{",a4,"}"].join("");}
-	/ "trait" __ a2:IDENTIFIER _ "{" _ a4:class_statements _ "}" {return ["trait","public",a2,a4];}
-	/ "class" __ a2:IDENTIFIER __ "extends" __ a4:IDENTIFIER _ "{" _ class_statements _ "}" {return ["class ",a2," extends ",a4,"{",a6,"}"].join();}
-	/ "class" __ a2:IDENTIFIER __ "implements" __ a4:identifiers _ "{" _ a6:class_statements _ "}" {return ["class_implements","public",a2,a4,a6];}
+	"type" __ a:var_name _ "=" _ b:type ";" {return "#define "+a+" "+b+"\n";}
+	/ ("interface" / "class") __ a2:var_name _ "{" _ a4:interface_statements _ "}" {return ["struct ",a2,"{",a4,"};"].join("");}
 
-statement
+statement =
+	a1:statement_ {return a1;}
+	/ a1:statement_with_semicolon _ ";" {const to_be_appended = to_append.map(function(x){
+		let function_name = x.substr(0, x.indexOf('('));
+		let var_name = "temp_" + (to_append.indexOf(x)+var_number)
+		return return_types[function_name] +" "+ var_name + ";" + x.substring(0,x.length-1)+","+var_name+");"
+	}).join(""); var_number += to_append.length; to_append = []; return to_be_appended + a1+";";}
+
+statement_
     =
-    a1:statement_with_semicolon _ ";" {return a1+";";}
+    ("const" / "let" / "var") __ name:var_name _ "=" _ val:e ";" {return "#define "+name+" ("+val+")\n";}
     / class_
     / "while" _ "(" _ a3:e _ ")" _ a5:bracket_statements {return ["while(",a3,"){",a5,"}"].join("");}
     / "do" _ a2:bracket_statements _ "while" _ "(" _ a5:e _ ")" _ ";" {return ["do ",a2," while(",a5,");"].join("");}
@@ -28,100 +43,168 @@ statement
     / "foreach" _ "(" _ a3:var_name __ "as" __ a5:var_name _ ")" _ a7:bracket_statements {return ["for(",a3," in ",a5,"){",a7,"}"].join("");}
     / "if" _ "(" _ a3:e _ ")" _ a5:bracket_statements _ a6:elif {return ["if(",a3,"){",a5,"}",a6].join("");}
 	/ "if" _ "(" _ a3:e _ ")" _ a5:bracket_statements {return ["if(",a3,"){",a5,"}"].join("");}
-    / "function" __ a2:IDENTIFIER _ "(" _ a4:parameters _ ")" "{" a7:statements "}" {return ["function ",a2,"(",a4,"){",a7,"}"].join("");}
+    / "function" __ a:var_name "(" _ b:identifiers _ ")" _ "{" _ "return" __ c:e ";" _ "}" {return "#define "+a+"("+b+") ("+c+")\n"}
     
+    // #define add(param_a,param_b,returned) {int a = param_a; int b = param_b; returned = a+b;}
+    
+    / "function" __ name:var_name _ "(" _ params:function_parameters _ ")" _ ":" _ type1:type _ "{" _ body:statements _ "}" {return_types[name] = type1; return "#define "+name+"("+params[0]+",returned) {"+params[1]+body+"}\n";}
+    / "function" __ name:var_name _ "<" _ type_parameters:identifiers _ ">" _ "(" _ params:parameters _ ")" _ ":" _ type1:type _ "{" _ body:statements _ "}" {return ["#define generic_",name,"("+type_parameters+") ",type1," ",name,"(",params,"){",body,"}\n"].join("");}
 
-identifiers= a1:IDENTIFIER _ "," _ a3:identifiers {return [a1].concat(a3);} / IDENTIFIER
+identifiers = head:var_name tail:(_ (',') _ var_name)* {
+      return tail.reduce(function(result, element) {
+        return result + element[1] + element[3];
+      }, head);
+    }
 
 case_statement= "case" __ a2:e _ ":" _ a4:statements _ "break" _ ";" {return ["case ",a2,":",a4].join("")}
-case_statements_= a1:case_statement _ a2:case_statements_ {return a1+a2;} / case_statement
-case_statements= a1:case_statements_ _ "default" _ ":" _ a4:statements {return a1+["default:",a4].join("")} / case_statements_;
 
-class_statement=
-	a1:access_modifier _ "static" __ "function" _ a4:IDENTIFIER _ "(" _ a6:parameters _ ")" _ "{" _ a9:statements _ "}" {return ["static ",a4,"(",a6,"){",a9,"}"].join("");}
-	/ a1:access_modifier _ "function" _ a3:IDENTIFIER _ "(" _ a5:parameters _ ")" _ "{" _ a8:statements _ "}" {return [a3,"(",a5,"){",a8,"}"].join("");}
+case_statements_ = head:case_statement tail:(_ case_statement)* {
+      return tail.reduce(function(result, element) {
+        return result + element[1];
+      }, head);
+    }
+
+case_statements= a1:case_statements_ a2:(_ default_statement / "") {return a1+a2};
+
+default_statement = "default" _ ":" _ a4:statements {return ["default:",a4].join("")}
 
 statement_with_semicolon
    = 
-   "return" _ a2:e  {return ["return ",a2].join("");}
+   "return" __ a2:e  {return ["returned = ",a2].join("");}
    / "return"  {return "return";}
-   / a1:dot_expr _ a2:"=" _ a3:e {return [a1,a2,a3].join("");}
-   / a1:dot_expr _ a2:("++" / "--") {return [a1,a2].join("");}
-   / a1:dot_expr _ a2:("+=" / "%=" / "-=" / "*=" / "/=") _ a3:e {return [a1,a2,a3].join("");}
-   / dot_expr
+   / ("let" / "var") __ name:var_name _ ":" type1:type_  _ "=" _ val:e {return type1+" "+name+"="+val;}
+   / "const" _ name:var_name _ ":" type1:type_  _ "=" _ val:e {return "const "+type1+" "+name+"="+val;}
+   / ("let" / "var") __ name:var_name _ ":" type1:type_ "[" "]"  _ "=" _ "[" val:exprs "]" {return type1+"[] "+name+"="+type1+"[]("+val+")";}
+   / "const" __ name:var_name _ ":" type1:type_ "[" "]"  _ "=" _ "[" val:exprs "]" {return "const "+type1+"[] "+name+"="+type1+"[]("+val+")";}
+   / a1:var_name _ a2:"=" _ a3:e {return [a1,a2,a3].join("");}
+   / a1:var_name _ a2:("++" / "--") {return [a1,a2].join("");}
+   / a1:var_name _ a2:("+=" / "%=" / "-=" / "*=" / "/=") _ a3:e {return [a1,a2,a3].join("");}
+   / var_name
+
+
+type = type_ / t1:type_ "[" "]" {return type+"[]";} / "Array" "<" t1:type_ ">" {return type+"[]";}
+type_ = "number" {return "float";} / "boolean" {return "bool";}
 
 e
     =
      a1:e6 _ "?" _ a3:e6 _ ":" _ a5:e {return a1+"?"+a3+":"+a5;}
     /e6
 
-e6= a1:e5 _ a2:('||') _ a3:e6
-        {return [a1,a2,a3].join("");}
-    /e5
 
-e5=
-    a1:e4 _ a2:('&&') _ a3:e5
-        {return [a1,a2,a3].join("");}
-    / e4
+e6
+  = head:e5 tail:(_ ("||") _ e5)* {
+      return tail.reduce(function(result, element) {
+        return result + element[1] + element[3];
+      }, head);
+    }
+
+e5
+  = head:e4 tail:(_ ("&&") _ e4)* {
+      return tail.reduce(function(result, element) {
+        return result + element[1] + element[3];
+      }, head);
+    }
 
 e4_op= '!==' {return "!=";} / "===" {return "==";}
-e4=
-    a1:e3 _ a2:e4_op _ a3:e4
-        {return [a1,a2,a3].join("");}
-    /a1:e3 _ a2:('<='/'<'/'>='/'>') _ a3:e4
-        {return [a1,a2,a3].join("");}
-    / e3
 
-e3=
-    a1:e2 _ a2:('>>'/'<<') _ a3:e3
-        {return [a1,a2,a3].join("");}
-    / e2
+e4
+  = head:e3 tail:(_ ('<='/'<'/'>='/'>'/e4_op) _ e3)* {
+      return tail.reduce(function(result, element) {
+        return result + element[1] + element[3];
+      }, head);
+    }
 
-e2= a1:e1 _ a2:('+'/'-') _ a3:e2
-        {return [a1,a2,a3].join("");}
-    / e1
+e3
+  = head:e2 tail:(_ ('>>'/'<<') _ e2)* {
+      return tail.reduce(function(result, element) {
+        return result + element[1] + element[3];
+      }, head);
+    }
 
-e1= a1:not_expr _ a2:('*' / '/' / '%') _ a3:e1
-        {return [a1,a2,a3].join("");}
+e2
+  = head:e1 tail:(_ ('+'/'-') _ e1)* {
+      return tail.reduce(function(result, element) {
+        return result + element[1] + element[3];
+      }, head);
+    }
+    
+e1= head:not_expr tail:(_ ('*' / '/' / '%') _ not_expr)* {
+      return tail.reduce(function(result, element) {
+        return result + element[1] + element[3];
+      }, head);
+    }
     / '-' _ a2:e1
         {return ["-",a2].join("");}
-    / not_expr
 
-not_expr= a1:"!" _ a2:dot_expr {return "!"+a2;} / dot_expr
+function_call
+  = head:callable tail:(_ function_call_ / "") {
+      let to_return = head;
+      if(tail !== ""){
+      to_return += tail[1];
+      if(to_append.indexOf(to_return) === -1){
+		//to_append.push(var_number);
+		to_append.push(to_return);
+		//var_number += 1.;
+		
+      }
+      return "temp_"+(to_append.indexOf(to_return)+var_number);
+      }
+	  return to_return;
+      
+    }
 
-dot_expr= a1:parentheses_expr _ a2:"->" _ a3:parentheses_expr {return a1+"->"+a3} / parentheses_expr
-parentheses_expr =
-    "new" _ "class" _ "{" _ a4:statements _ "}" {return ["new class{",a4,"}"].join("")}
-    / function_call
-    / callable
+function_call_ = "(" _ a2:exprs _ ")" {return "("+a2+")";}
 
-function_call = a1:callable _ a2:function_call_ {return a1+a2;}
-function_call_ = a1:function_call__ _ a2:function_call_ {return a1+a2;} / function_call__
-function_call__ = "[" _ a2:exprs _ "]" {return "["+a2+"]";} / "(" _ a2:exprs _ ")" {return "("+a2+")";} / "(" _ ")" {return "()"}
+not_expr= a1:"!" _ a2:function_call {return "!"+a2;} / function_call
 
 callable=
-	"function" "(" _ a3:parameters _ ")" _ "{" _ a6:statements _ "}" {return ["function(",a3,"){",a6,"}"].join("")}
-	/ var_name
-    / IDENTIFIER
-    / STRING_LITERAL
-    / '(' _ a2:e _ ')' {return "("+a2+")";}
+	"(" _ a2:e _ ")" {return "("+a2+")";}
+	/ "new" __ a:var_name _ "(" _ b:exprs _ ")" {return a+"("+b+")"}
     / "[" _ "]" {return "[]";} / "[" a2:exprs "]" {return "["+a2+"]";}
+	/ var_name
+    / STRING_LITERAL
     / NUMBER
 
-parameter= a1:var_name {return a1;} / a1:var_name _ "=" _ a3:e {return [a1,"=",a3].join("");}
-parameters= a1:parameter _ "," _ a3:parameters {return [a1].concat(a3);} / parameter / "" {return "";}
+parameter= a1:var_name ":" t1:type {return t1 + " " + a1;}
 
-exprs= a1:e _ "," _ a3:exprs {return a1+","+a3;} / e
-else_if= "else" _ "if" / "elseif";
-elif= a1:else_if _ "(" _ a3:e _ ")" _ a5:bracket_statements _ a6:elif {return ["else if(",a3,"){",a5,"}",a6].join("")} / a1:else_if "(" a3:e ")" bracket_statements {return ["elif",a3,a5]} / "else" bracket_statements {return ["else ",a2].join("");}
+parameters = head:parameter tail:(_ (',') _ parameter)* {
+      return tail.reduce(function(result, element) {
+        return result + element[1] + element[3];
+      }, head);
+    } / "" {return "";}
+
+function_parameter = a1:var_name ":" t1:type {return ["param_"+a1,t1 + " " + a1+"=param_"+a1+";"];}
+
+function_parameters = head:function_parameter tail:(_ (',') _ function_parameter)* {
+      return tail.reduce(function(result, element) {
+        return result + element[1] + element[3];
+      }, head);
+    } / "" {return "";}
+
+exprs = head:e tail:(_ (',') _ e)* {
+      return tail.reduce(function(result, element) {
+        return result + element[1] + element[3];
+      }, head);
+    }
+
+else_if= "else" __ "if" / "elseif";
+elif = head:elif_ tail:(_ elif_)* {
+      return tail.reduce(function(result, element) {
+        return result + element[1] + element[3];
+      }, head);
+    } / "else" a2:bracket_statements {return ["else {",a2,"}"].join("");}
+
+elif_ = a1:else_if _ "(" _ a3:e _ ")" _ a5:bracket_statements {return ["else if(",a3,"){",a5,"}"].join("")}
+
 var_name= IDENTIFIER
-var_names= a1:var_name _ "," _ a3:var_names {return a1+","+a3;} / var_name
+
 bracket_statements= "{" _ a2:statements _ "}" {return a2;} / a1:statement_with_semicolon _ ";" {return a1+";";}
 
 IDENTIFIER = [a-zA-Z_][a-zA-Z0-9_]* {return text();}
 STRING_LITERAL = '"' @$([^"\\] / "\\" .)* '"'
 
-NUMBER = args:(Integer "." Integer) {$$ = args[0]+"."+args[2]} / Integer
+NUMBER = a:Integer b:NUMBER_ {return a+"."+b;}
+NUMBER_ = "." a:Integer {return a;} / "" {return "";}
 
 Integer "integer"
   = _ [0-9]+ { return text(); }

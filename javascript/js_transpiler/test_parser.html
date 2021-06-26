@@ -74,9 +74,15 @@
 <script src="jison_parsers/c_parser.js"></script>
 <script src="jison_parsers/c_sharp_parser.js"></script>
 <script src="jison_parsers/transpiler.js"></script>
+<script src="code_generators.js"></script>
 
 <script>
 "use strict";
+
+  // register ServiceWorker, remember to use absolute path!
+  if (navigator.serviceWorker) {
+    navigator.serviceWorker.register('https://jarble.github.io/transpiler/sw.js', {scope: 'https://jarble.github.io/transpiler/'})
+  }
 
 function readSingleFile(e) {
   var file = e.target.files[0];
