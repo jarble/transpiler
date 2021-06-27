@@ -133,7 +133,7 @@ function persistence(){
 		textInput.style.width = ""; /* Reset the height*/
 		textInput.style.width = Math.min(textInput.scrollWidth, 500) + "px";
 		timeout = setTimeout(function () {
-			myFunction();
+			display_output();
 		}, 500);
 	};
 
@@ -145,7 +145,7 @@ function persistence(){
 		var parsed_hash = JSON.parse(decodeURIComponent(window.location.hash.substring(1)));
 		//alert(window.location.hash.substring(1));
 	}
-	myFunction();
+	display_output();
 }
 
 function switch_langs(){
@@ -158,7 +158,7 @@ function switch_langs(){
 	
 }
 
-function myFunction() {
+function display_output() {
     var inputLang = document.getElementById("inputLang").value;
     var outputLang = document.getElementById("outputLang").value;
     var inputText = document.getElementById("inputText").value;
