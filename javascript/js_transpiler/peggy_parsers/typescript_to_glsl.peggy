@@ -28,7 +28,8 @@ statement =
 	/ a1:statement_with_semicolon _ ";" {const to_be_appended = to_append.map(function(x){
 		let function_name = x.substr(0, x.indexOf('('));
 		let var_name = "temp_" + (to_append.indexOf(x)+var_number)
-		return return_types[function_name] +" "+ var_name + ";" + x.substring(0,x.length-1)+","+var_name+");"
+		let subs = x.substring(0,x.length-1)
+		return return_types[function_name] +" "+ var_name + ";" + subs+(subs.endsWith("(")?"":",")+var_name+");"
 	}).join(""); var_number += to_append.length; to_append = []; return to_be_appended + a1+";";}
 
 statement_
@@ -47,7 +48,7 @@ statement_
     
     // #define add(param_a,param_b,returned) {int a = param_a; int b = param_b; returned = a+b;}
     
-    / "function" __ name:var_name _ "(" _ params:function_parameters _ ")" _ ":" _ type1:type _ "{" _ body:statements _ "}" {return_types[name] = type1; return "#define "+name+"("+params[0]+",returned) {"+params[1]+body+"}\n";}
+    / "function" __ name:var_name _ "(" _ params:function_parameters _ ")" _ ":" _ type1:type _ "{" _ body:statements _ "}" {return_types[name] = type1; return "#define "+name+"("+(params[0]===undefined?"":(params[0]+","))+"returned) {"+(params[1]===undefined?"":"")+body+"}\n";}
     / "function" __ name:var_name _ "<" _ type_parameters:identifiers _ ">" _ "(" _ params:parameters _ ")" _ ":" _ type1:type _ "{" _ body:statements _ "}" {return ["#define generic_",name,"("+type_parameters+") ",type1," ",name,"(",params,"){",body,"}\n"].join("");}
 
 identifiers = head:var_name tail:(_ (',') _ var_name)* {
@@ -83,7 +84,7 @@ statement_with_semicolon
 
 
 type = type_ / t1:type_ "[" "]" {return type+"[]";} / "Array" "<" t1:type_ ">" {return type+"[]";}
-type_ = "number" {return "float";} / "boolean" {return "bool";}
+type_ = "number" {return "float";} / "boolean" {return "bool";} / "void" {return "void";}
 
 e
     =
@@ -160,7 +161,7 @@ not_expr= a1:"!" _ a2:function_call {return "!"+a2;} / function_call
 callable=
 	"(" _ a2:e _ ")" {return "("+a2+")";}
 	/ "new" __ a:var_name _ "(" _ b:exprs _ ")" {return a+"("+b+")"}
-    / "[" _ "]" {return "[]";} / "[" a2:exprs "]" {return "["+a2+"]";}
+    / "[" a2:exprs "]" {return "["+a2+"]";}
 	/ var_name
     / STRING_LITERAL
     / NUMBER
@@ -185,7 +186,7 @@ exprs = head:e tail:(_ (',') _ e)* {
       return tail.reduce(function(result, element) {
         return result + element[1] + element[3];
       }, head);
-    }
+    } / "";
 
 else_if= "else" __ "if" / "elseif";
 elif = head:elif_ tail:(_ elif_)* {
