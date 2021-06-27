@@ -143,17 +143,8 @@ function persistence(){
   .addEventListener('change', readSingleFile, false);
 	if(window.location.hash){
 		var parsed_hash = JSON.parse(decodeURIComponent(window.location.hash.substring(1)));
-		localStorage.setItem("inputText",parsed_hash["inputText"]);
-		localStorage.setItem("inputLang",parsed_hash["inputLang"]);
-		localStorage.setItem("outputLang",parsed_hash["outputLang"]);
 		//alert(window.location.hash.substring(1));
 	}
-	
-	["inputText","inputLang","outputLang"].forEach(function(element) {
-    	if(localStorage.getItem(element) !== undefined){
-			document.getElementById(element).value = localStorage.getItem(element);
-		}
-	});
 	myFunction();
 }
 
@@ -177,17 +168,11 @@ function myFunction() {
     //
 				outputText = parse_lang(inputLang,outputLang.trim(), inputText);
 				document.getElementById("outputText").value = outputText;
-				localStorage.setItem("outputText",outputText);
 	//}
 	//catch(e){
 		//outputText = e;
 	//}
 			document.getElementById("outputText").value = outputText;
-			localStorage.setItem("outputText",outputText);
-			localStorage.setItem("outputLang",outputLang);
-			localStorage.setItem("inputText",inputText);
-			localStorage.setItem("inputLang",inputLang);
-
 }
 
 /*
