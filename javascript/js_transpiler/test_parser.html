@@ -144,6 +144,7 @@ function persistence(){
   .addEventListener('change', readSingleFile, false);
 	if(window.location.hash){
 		var parsed_hash = JSON.parse(decodeURIComponent(window.location.hash.substring(1)));
+		document.getElementById("inputText").value = parsed_hash;
 		//alert(window.location.hash.substring(1));
 	}
 	display_output();
@@ -189,15 +190,10 @@ function display_output() {
 <body onload = "persistence()">
   <h1><a href = "https://jarble.github.io/transpiler/">Universal Transpiler</a></h1>
   Code to translate:<br/>
-  <textarea id="inputText" wrap="off" cols="40" rows="5" value="int i = 0+1;">public class Example{
-    private int age;
-    public Example(){
-        this.age = 1;
-        return add(3,4);
-    }
-    public static int add(int a, int b){
-        return a + b;
-    }
+  <textarea id="inputText" wrap="off" cols="40" rows="5" value="int i = 0+1;">
+int add(int a, int b){
+	return a + b;  
+}
 }</textarea>
   <br/><input type="file" id="file-input" />
   <br/>Input language:
