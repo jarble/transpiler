@@ -3,13 +3,11 @@
 <html>
 <head>
 	<link rel="icon" href="data:;base64,="><link rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAADElEQVQI12P4//8/AAX+Av7czFnnAAAAAElFTkSuQmCC">
-	<title>Universal Transpiler</title>
-<script src="typescript_to_zig.js"></script>
-
+	<title>TypeScript to Zig</title>
 
 <script type="module">
 "use strict";
-import {parse} from './peggy_parsers/typescript-to-zig.js';
+import {parse} from './peggy_parsers/typescript_to_zig.js';
 
 
 function readSingleFile(e) {
@@ -112,7 +110,7 @@ function display_output() {
 </script>
 </head>
 <body onload="persistence()">
-  <h1><a href = "https://jarble.github.io/transpiler/">Universal Transpiler</a></h1>
+  <h1><a href = "https://jarble.github.io/transpiler/javascript/js_transpiler/typescript_to_zig.html/">Typescript to Zig</a></h1>
   Code to translate:<br/>
   <textarea id="inputText" wrap="off" cols="40" rows="5" value="int i = 0+1;">
 int add(int a, int b){
