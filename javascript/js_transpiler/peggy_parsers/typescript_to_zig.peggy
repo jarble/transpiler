@@ -80,7 +80,7 @@ class_=
 	/ "enum" _ name:var_name _ "{" _ a:enum_members (_ "," / _) _ "}" {
 	  return "const "+name+"= enum {"+a+"};"
 	}
-	/ "class" __ name:var_name super_class:( _ "extends" _ var_name / "") _ "{" _ a4:class_statements _ "}" {
+	/ "class" __ name:var_name type_params:(_ "<" _ types _ ">" _ / "")  super_class:( _ "extends" _ var_name / "") _ "{" _ a4:class_statements _ "}" {
 		class_name = name;
 		if(super_class.length > 0){
 			return "const "+name+" = struct{usingnamespace "+super_class[3]+";"+a4(name)+"};";
@@ -269,7 +269,7 @@ access_array = head:function_call tail:(_ access_array_)* {
 access_array_ = "[" _ a:e _ "]" {expression_types[a] = "float"; return "[int("+a+")]";}
 
 function_call
-  = head:callable type_params:("<" types ">" / "") tail:(_ function_call_ / "") {
+  = head:callable type_params:("<" _ types _ ">" / "") tail:(_ function_call_ / "") {
 	  var split_head = head.split(".");
       if(split_head.length === 2 && split_head[0] === "compiled_Math" && (["compiled_sin","compiled_cos","compiled_tan","compiled_sinh","compiled_cosh","compiled_tanh","compiled_abs","compiled_floor","compiled_ceil","compiled_exp","compiled_pow","compiled_log","compiled_log2","compiled_sqrt","compiled_trunc","compiled_sign"].indexOf(split_head[1]) !== -1)){
 	      let to_return = "@"+split_head[1].substring("compiled_".length,split_head[1].length) + tail[1];

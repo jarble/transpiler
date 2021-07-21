@@ -1,3 +1,6 @@
-//const zig = require('./typescript_to_zig.js');
-import parse from './typescript_to_zig.js';
-console.log(parse("var i = 1;"));
+var zig = require('./typescript_to_zig.js');
+
+function parse(a){
+	return zig.parse(a);
+}
+window.parse = parse;

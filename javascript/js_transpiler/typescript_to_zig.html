@@ -1,133 +1,50 @@
-
-<!doctype html>
+<!DOCTYPE html>
 <html>
-<head>
-	<link rel="icon" href="data:;base64,="><link rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAADElEQVQI12P4//8/AAX+Av7czFnnAAAAAElFTkSuQmCC">
-	<title>TypeScript to Zig</title>
-
-<script src = "./peggy_parsers/typescript_to_zig.js" type="module">
-"use strict";
-import {parse} from './peggy_parsers/typescript_to_zig.js';
-
-
-function readSingleFile(e) {
-  var file = e.target.files[0];
-  if (!file) {
-    return;
-  }
-  var reader = new FileReader();
-  reader.onload = function(e) {
-    var contents = e.target.result;
-    displayContents(contents);
-  };
-  reader.readAsText(file);
-}
-
-function displayContents(contents) {
-  document.getElementById("inputText").value = contents;
-  myFunction();
-}
-
-
-
-function save_file(){
-	var output_lang = document.getElementById("outputLang").value.trim();
-	var input_lang = document.getElementById("inputLang").value.trim();
-	var output_text = parse_lang(input_lang,output_lang, document.getElementById("inputText").value);
-	var extension = file_extension(output_lang);
-	var file_name = window.prompt("Choose a name for the file","output");
-	if(extension !== undefined){
-		download_file(file_name+"."+extension,output_text);
-	}
-}
-
-function persistence(){
-	// Get the input box
-	var textInput = document.getElementById('inputText');
-	var inputLang = document.getElementById('inputLang');
-	var outputLang = document.getElementById('outputLang');
-
-
-	var timeout = null;
-	textInput.oninput = function (e) {
-		clearTimeout(timeout);
-		textInput.style.height = ""; /* Reset the height*/
-		textInput.style.height = Math.min(textInput.scrollHeight, 500) + "px";
-		textInput.style.width = ""; /* Reset the height*/
-		textInput.style.width = Math.min(textInput.scrollWidth, 500) + "px";
-		timeout = setTimeout(function () {
-			display_output();
-		}, 500);
-	};
-
-	inputLang.oninput = textInput.oninput;
-	outputLang.oninput = textInput.oninput;
-	document.getElementById('file-input')
-  .addEventListener('change', readSingleFile, false);
-	if(window.location.hash){
-		var parsed_hash = JSON.parse(decodeURIComponent(window.location.hash.substring(1)));
-		document.getElementById("inputText").value = parsed_hash;
-		//alert(window.location.hash.substring(1));
-	}
-	display_output();
-}
-
-function switch_langs(){
-	var temp = document.getElementById("outputLang").value;
-	document.getElementById("outputLang").value = document.getElementById("inputLang").value;
-	document.getElementById("inputLang").value = temp;
-	temp = document.getElementById("outputText").value;
-	document.getElementById("outputText").value = document.getElementById("inputText").value;
-	document.getElementById("inputText").value = temp;
+	<head>
+	 <script src="peggy_parsers/test_peggy_parsers_bundle.js"></script>
+	</head>
+<body onload>
 	
+<h1>TypeScript to Zig</h1>
+<h2>TypeScript input:</h2>
+<textarea id="my-input" cols="40" rows="5" placeholder="Type something here"></textarea>
+<h2>Zig output:</h2>
+<textarea id="outputText" readonly cols="40" rows="5" placeholder="See output here"></textarea>
+</label>
+<script>
+		// Get the input box
+(function () {
+
+const tx = document.getElementsByTagName("textarea");
+for (let i = 0; i < tx.length; i++) {
+  tx[i].setAttribute("style", "height:" + (tx[i].scrollHeight) + "px;overflow-y:hidden;");
+  tx[i].addEventListener("input", OnInput, false);
 }
 
-function display_output() {
-    var inputLang = document.getElementById("inputLang").value;
-    var outputLang = document.getElementById("outputLang").value;
-    var inputText = document.getElementById("inputText").value;
-    var outputText;
-    window.location.hash=encodeURIComponent(JSON.stringify({inputText:inputText,inputLang:inputLang,outputLang:outputLang}));
-    //try{
-    //
-				outputText = parse(inputText);
-				document.getElementById("outputText").value = outputText;
-	//}
-	//catch(e){
-		//outputText = e;
-	//}
-			document.getElementById("outputText").value = outputText;
+function OnInput() {
+  this.style.height = "auto";
+  this.style.height = (this.scrollHeight) + "px";
 }
+	
+let input = document.getElementById('my-input');
 
-/*
- * PEG.js 0.9.0
- *
- * http://pegjs.org/
- *
- * Copyright (c) 2010-2015 David Majda
- * Licensed under the MIT license.
- */
-</script>
-</head>
-<body onload="persistence()">
-  <h1><a href = "https://jarble.github.io/transpiler/javascript/js_transpiler/typescript_to_zig.html">Typescript to Zig</a></h1>
-  Code to translate:<br/>
-  <textarea id="inputText" wrap="off" cols="40" rows="5" value="int i = 0+1;">
-int add(int a, int b){
-	return a + b;  
-}
-}</textarea>
-  <br/><input type="file" id="file-input" />
-  <br/>Input language:
-  <input type="text" id="inputLang" value="Detect language">
-  <br/>Output language:
-  <input type="text" id="outputLang" value="C">
-  <br/>
-  <button type="button" onclick = "save_file()">Download file</button>
-  <button type="button" onclick = "switch_langs()">Switch languages</button>
+// Init a timeout variable to be used below
+let timeout = null;
 
+// Listen for keystroke events
+input.addEventListener('keyup', function (e) {
+    // Clear the timeout if it has already been set.
+    // This will prevent the previous task from executing
+    // if it has been less than <MILLISECONDS>
+    clearTimeout(timeout);
 
-<textarea id="outputText" cols="40" rows="5"></textarea>
+    // Make a new timeout set to go off in 1000ms (1 second)
+    timeout = setTimeout(function () {
+        document.getElementById("outputText").value = parse(input.value);
+    }, 1000);
+});
+})();
 
+		</script>
 </body>
 </html>
