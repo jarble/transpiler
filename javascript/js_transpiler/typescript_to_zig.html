@@ -1,0 +1,135 @@
+
+<!doctype html>
+<html>
+<head>
+	<link rel="icon" href="data:;base64,="><link rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAADElEQVQI12P4//8/AAX+Av7czFnnAAAAAElFTkSuQmCC">
+	<title>Universal Transpiler</title>
+<script src="typescript_to_zig.js"></script>
+
+
+<script type="module">
+"use strict";
+import {parse} from '/typescript-to-zig.js';
+
+
+function readSingleFile(e) {
+  var file = e.target.files[0];
+  if (!file) {
+    return;
+  }
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    var contents = e.target.result;
+    displayContents(contents);
+  };
+  reader.readAsText(file);
+}
+
+function displayContents(contents) {
+  document.getElementById("inputText").value = contents;
+  myFunction();
+}
+
+
+
+function save_file(){
+	var output_lang = document.getElementById("outputLang").value.trim();
+	var input_lang = document.getElementById("inputLang").value.trim();
+	var output_text = parse_lang(input_lang,output_lang, document.getElementById("inputText").value);
+	var extension = file_extension(output_lang);
+	var file_name = window.prompt("Choose a name for the file","output");
+	if(extension !== undefined){
+		download_file(file_name+"."+extension,output_text);
+	}
+}
+
+function persistence(){
+	// Get the input box
+	var textInput = document.getElementById('inputText');
+	var inputLang = document.getElementById('inputLang');
+	var outputLang = document.getElementById('outputLang');
+
+
+	var timeout = null;
+	textInput.oninput = function (e) {
+		clearTimeout(timeout);
+		textInput.style.height = ""; /* Reset the height*/
+		textInput.style.height = Math.min(textInput.scrollHeight, 500) + "px";
+		textInput.style.width = ""; /* Reset the height*/
+		textInput.style.width = Math.min(textInput.scrollWidth, 500) + "px";
+		timeout = setTimeout(function () {
+			display_output();
+		}, 500);
+	};
+
+	inputLang.oninput = textInput.oninput;
+	outputLang.oninput = textInput.oninput;
+	document.getElementById('file-input')
+  .addEventListener('change', readSingleFile, false);
+	if(window.location.hash){
+		var parsed_hash = JSON.parse(decodeURIComponent(window.location.hash.substring(1)));
+		document.getElementById("inputText").value = parsed_hash;
+		//alert(window.location.hash.substring(1));
+	}
+	display_output();
+}
+
+function switch_langs(){
+	var temp = document.getElementById("outputLang").value;
+	document.getElementById("outputLang").value = document.getElementById("inputLang").value;
+	document.getElementById("inputLang").value = temp;
+	temp = document.getElementById("outputText").value;
+	document.getElementById("outputText").value = document.getElementById("inputText").value;
+	document.getElementById("inputText").value = temp;
+	
+}
+
+function display_output() {
+    var inputLang = document.getElementById("inputLang").value;
+    var outputLang = document.getElementById("outputLang").value;
+    var inputText = document.getElementById("inputText").value;
+    var outputText;
+    window.location.hash=encodeURIComponent(JSON.stringify({inputText:inputText,inputLang:inputLang,outputLang:outputLang}));
+    //try{
+    //
+				outputText = parse(inputText);
+				document.getElementById("outputText").value = outputText;
+	//}
+	//catch(e){
+		//outputText = e;
+	//}
+			document.getElementById("outputText").value = outputText;
+}
+
+/*
+ * PEG.js 0.9.0
+ *
+ * http://pegjs.org/
+ *
+ * Copyright (c) 2010-2015 David Majda
+ * Licensed under the MIT license.
+ */
+</script>
+</head>
+<body onload = "persistence()">
+  <h1><a href = "https://jarble.github.io/transpiler/">Universal Transpiler</a></h1>
+  Code to translate:<br/>
+  <textarea id="inputText" wrap="off" cols="40" rows="5" value="int i = 0+1;">
+int add(int a, int b){
+	return a + b;  
+}
+}</textarea>
+  <br/><input type="file" id="file-input" />
+  <br/>Input language:
+  <input type="text" id="inputLang" value="Detect language">
+  <br/>Output language:
+  <input type="text" id="outputLang" value="C">
+  <br/>
+  <button type="button" onclick = "save_file()">Download file</button>
+  <button type="button" onclick = "switch_langs()">Switch languages</button>
+
+
+<textarea id="outputText" cols="40" rows="5"></textarea>
+
+</body>
+</html>

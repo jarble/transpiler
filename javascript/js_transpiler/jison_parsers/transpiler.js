@@ -8764,7 +8764,7 @@ function generate_code(input_lang,lang,indent,arr){
 		//console.log("initialize_var: "+ name + " "+arr[1]);
 		types[name] = arr[2];
 		types[arr[3]] = arr[2];
-		if(member(lang, ["java","protobuf","c#"])){
+		if(member(lang, ["java","vala","protobuf","c#"])){
 			to_return = arr[1] + " " + var_type(input_lang,lang,types[name]) + " " + name + ";";
 		}
 		else if(member(lang, ["thrift"])){

@@ -31,21 +31,8 @@ if(expression_types[b] == undefined) expression_types[b] = expression_types[a];
 }
 
 expressions = _ a:statements _ {
-	let anonymous_functions = functions_to_append.map(function(x){
-		return "\n#define "+"func_" + (functions_to_append.indexOf(x)+function_number)+x;
-	}).join("");
-	let structs_to_append = anonymous_structs.map(function(x){
-		return "struct "+"struct_" + anonymous_structs.indexOf(x)+x+";";
-	}).join("");
-	let macros_to_append = `#define function_body(a) \{for(int is_returned = 0; is_returned < 1; is_returned++)\{a\}\}
-#define for_loop(a,b) for a b if(is_returned == 1) break;
-#define while_loop(a,b) for a b if(is_returned == 1) break;
-#define return_statement(returned,a) returned = a;is_returned = 1;break
-#define foreach(type,item,array,body) for(int count = 0; count < array.length(); count++)\{type item = array[count];body\} if(is_returned == 1) break;
-#define map(function,input1,output1) for(int i = 0; i < input1.length(); i++){output1[i] = function(input1[i]);}
-`;
-	function_number += functions_to_append.length; to_append = []; functions_to_append = [];
-	return macros_to_append+structs_to_append + anonymous_functions + a;
+	
+	return a;
 }
 
 statements = head:statement tail:(_ statement)* {
@@ -153,9 +140,9 @@ statement =
 statement_
     =
     class_
-    / "while" _ "(" _ a3:e _ ")" _ a5:bracket_statements {return ["while(",a3,"){",a5,"}",break_if_returned].join("");}
+    / "while" _ "(" _ a3:e _ ")" _ a5:bracket_statements {return ["while ",a3,"{",a5,"}",break_if_returned].join("");}
     / "do" _ a2:bracket_statements _ "while" _ "(" _ a5:e _ ")" _ ";" {return ["do ",a2," while(",a5,");",break_if_returned].join("");}
-    / "switch" _ "(" _ a3:e _ ")" _ "{" _ a6:case_statements _ "}" {return ["switch(",a3,"){",a6,"}",break_if_returned].join("");}
+    / "switch" _ "(" _ a3:e _ ")" _ "{" _ a6:case_statements _ "}" {return ["match ",a3," {",a6,"}",break_if_returned].join("");}
     / "for" _ "(" _ a3:statement_with_semicolon _ ";" _ a5:e _ ";" _ a7:statement_with_semicolon _ ")" _ a9:bracket_statements {return ["for(",a3,";",a5,";",a7,"){",a9,"}",break_if_returned].join("");}
     / "for" _ "(" _ ("let" / "var") _ item:var_name __ "of" __ the_arr:var_name _ ")" _ body:bracket_statements {
 		if(expression_types[item] !== undefined){
@@ -166,19 +153,14 @@ statement_
 		}
 		return "foreach("+expression_types[the_arr].substring(0,expression_types[the_arr].length-2)+","+item+","+the_arr+",{"+body+"})";
 	}
-    / "if" _ "(" _ a3:e _ ")" _ a5:bracket_statements _ a6:elif {expression_types[a3] = "bool"; return ["if(",a3,"){",a5,"}",a6].join("");}
-	/ "if" _ "(" _ a3:e _ ")" _ a5:bracket_statements {expression_types[a3] = "bool"; return ["if(",a3,"){",a5,"}"].join("");}
+    / "if" _ "(" _ a3:e _ ")" _ a5:bracket_statements _ a6:elif {expression_types[a3] = "bool"; return ["if ",a3,"{",a5,"}",a6].join("");}
+	/ "if" _ "(" _ a3:e _ ")" _ a5:bracket_statements {expression_types[a3] = "bool"; return ["if ",a3,"{",a5,"}"].join("");}
     / "function" __ name:var_name _ "(" _ b:identifiers _ ")" _ "{" _ c:statements _ "}" {
-		if(current_return_type === undefined){current_return_type = "void"}; return_types[name] = current_return_type; current_return_type = undefined; return "\n#define "+name+"("+(b===""?"":(b+","))+"returned) function_body({"+c+"})\n"
+		let b1 = b.split(",");
+		return "macro_rules! "+name+"{("+b1.map(function(a){return "$"+a+":expr";}).join(",")+") => {{"+b1.map(function(a){return "let "+a+"=$"+a+";";})+c+"}}}";
 	}
     
-    // #define add(param_a,param_b,returned) {int a = param_a; int b = param_b; returned = a+b;}
-    
-    / "function" __ name:var_name _ type_params:("<" _ identifiers _ ">" _ / "") "(" _ params:function_parameters _ ")" _ type1:(":" _ type _ / "") "{" _ body:statements _ "}" {
-		if(type1.length > 0) return_types[name] = type1[2]; else return_types[name] = current_return_type; current_return_type = undefined; if(params[1] === undefined){params[1] = "";}
-		if(type_params.length > 0){type_parameters[name+"<"+type_params[2]+">"] = return_types[name]; return "\n#define "+name+"("+type_params[2]+","+(params===""?"":(params[0]+","))+"returned) function_body({"+params[1]+body+"})\n";}
-		else return "\n#define "+name+"("+(params===""?"":(params[0]+","))+"returned) function_body({"+params[1]+body+"})\n";
-	}
+
 identifiers = head:var_name tail:(_ (',') _ var_name)* {
       return tail.reduce(function(result, element) {
         return result + element[1] + element[3];
@@ -200,7 +182,6 @@ default_statement = "default" _ ":" _ a4:statements {return ["default:",a4].join
 statement_with_semicolon
    = 
    "return" __ a2:e  {
-		current_return_type = expression_types[a2];
 		if(temp_vars.indexOf(a2) !== -1){declared_redundant_vars[a2] = "returned"; return "";}
 		else{
 		return "returned = "+a2+";is_returned = 1;break";
@@ -208,37 +189,12 @@ statement_with_semicolon
 		}
 		
    / "return"  {return "return";}
-   / ("const" / "let" / "var") __ name:var_name _ "=" _ val:e {
-		unify_expression_types(name,val);
-		let type1 = expression_types[val];
-		if(temp_vars.indexOf(val) !== -1){redundant_vars[val] = name; return "";}
-		else{
-		return type1+" "+name+" = "+val;
-		}
-	}
-   / ("let" / "const" / "var") __ name:var_name _ ":" type1:type_  _ "=" _ val:e {
-		expression_types[name] = type1;
-		expression_types[val] = type1;
-		if(temp_vars.indexOf(val) !== -1){redundant_vars[val] = name; return "";}
-		else{
-		return type1+" "+name+" = "+val;
-		}
-	}
-   / ("let" / "const" / "var") __ name:var_name _ ":" type1:type_ {
-		expression_types[name] = type1;
-		return type1+" "+name;
-	}
-   / ("let" / "const" / "var") __ name:var_name _ ":" type1:type_ "[" "]"  _ "=" _ "[" val:exprs "]" {
-		type1 = type1 + "[]";
-		expression_types[name] = type1;
-		val = type1+"("+val+")";
-		expression_types[val] = type1;
-		if(temp_vars.indexOf(val) !== -1){redundant_vars[val] = name; return "";}
-		else{
-		return type1+" "+name+" = "+val;
-		}
-	}
-   / "const" __ name:var_name _ ":" type1:type_ "[" "]"  _ "=" _ "[" val:exprs "]" {expression_types[name] = type1+"[]"; return "const "+type1+"[] "+name+"="+type1+"[]("+val+")";}
+   / "let" __ name:var_name _ "=" _ val:e {
+		return "let mut " + name+" = "+val;
+   }
+   / "const" __ name:var_name _ "=" _ val:e {
+		return "let " + name+" = "+val;
+   }
    / name:assignable _ a2:"=" _ val:e {
    		if(temp_vars.indexOf(val) !== -1){declared_redundant_vars[val] = name; return "";}
 		else{
