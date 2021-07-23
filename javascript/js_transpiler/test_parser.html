@@ -80,13 +80,6 @@
 <script>
 "use strict";
 
-  // register ServiceWorker, remember to use absolute path!
-  if (navigator.serviceWorker) {
-    navigator.serviceWorker.register('https://jarble.github.io/transpiler/sw.js', {scope: 'https://jarble.github.io/transpiler/'})
-  }
-  else{
-	console.log("serviceworker not registered");  
-  }
 
 function readSingleFile(e) {
   var file = e.target.files[0];
