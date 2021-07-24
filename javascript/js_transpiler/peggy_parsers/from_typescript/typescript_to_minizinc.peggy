@@ -14,7 +14,7 @@ class_=
 	/ "trait" __ a2:IDENTIFIER _ "{" _ a4:class_statements _ "}" {return ["trait","public",a2,a4];}
 	/ "class" __ a2:IDENTIFIER __ "extends" __ a4:IDENTIFIER _ "{" _ class_statements _ "}" {return ["class ",a2," extends ",a4,"{",a6,"}"].join();}
 	/ "class" __ a2:IDENTIFIER __ "implements" __ a4:identifiers _ "{" _ a6:class_statements _ "}" {return ["class_implements","public",a2,a4,a6];}
-	/ "enum" _ name:var_name _ "{" _ a:enum_members (_ "," / _) _ "}" {
+	/ "public enum" _ name:var_name _ "{" _ a:enum_members (_ "," / _) _ "}" {
 	  return "enum "+name+"{"+a+"};"
 	}
 
@@ -23,12 +23,6 @@ enum_member = a1:var_name e1:(_ "=" _ e1:e / "") {
 	return +a1+"="+e1[3];
 	else return a1;
 }
-
-enum_members = head:enum_member tail:(_ (',') _ enum_member)* {
-      return tail.reduce(function(result, element) {
-        return result+","+element[3];
-      }, head);
-    } / "" {return "";}
 
 statement
     =
@@ -149,3 +143,4 @@ _
   
 __
   = [ \t\n\r] [ \t\n\r]*
+
