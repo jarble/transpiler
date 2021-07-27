@@ -1,5 +1,5 @@
 var APP_PREFIX = 'ApplicationName_'     // Identifier for this app (this needs to be consistent across every cache update)
-var VERSION = 'version_04'              // Version of the off-line cache (change this value everytime you want to update cache)
+var VERSION = 'version_05'              // Version of the off-line cache (change this value everytime you want to update cache)
 var CACHE_NAME = APP_PREFIX + VERSION
 var URLS = [                            // Add URL you want to cache in this list.
 'https://jarble.github.io/transpiler/javascript/js_transpiler/peggy_parsers/typescript-to-zig.js',
@@ -15,7 +15,6 @@ var URLS = [                            // Add URL you want to cache in this lis
 'https://jarble.github.io/transpiler/javascript/js_transpiler/jison_parsers/ada_parser.js',
 'https://jarble.github.io/transpiler/javascript/js_transpiler/jison_parsers/vhdl_parser.js',
 'https://jarble.github.io/transpiler/javascript/js_transpiler/jison_parsers/go_parser.js',
-'https://jarble.github.io/transpiler/javascript/js_transpiler/jison_parsers/javascript_parser.js',
 'https://jarble.github.io/transpiler/javascript/js_transpiler/jison_parsers/python_parser.js',
 'https://jarble.github.io/transpiler/javascript/js_transpiler/jison_parsers/webassembly_parser.js',
 'https://jarble.github.io/transpiler/javascript/js_transpiler/jison_parsers/core_logic_parser.js',
