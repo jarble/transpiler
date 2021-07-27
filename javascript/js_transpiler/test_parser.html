@@ -16,7 +16,6 @@
 <script src="jison_parsers/ada_parser.js"></script>
 <script src="jison_parsers/vhdl_parser.js"></script>
 <script src="jison_parsers/go_parser.js"></script>
-<script src="jison_parsers/javascript_parser.js"></script>
 <script src="jison_parsers/python_parser.js"></script>
 <script src="jison_parsers/webassembly_parser.js"></script>
 <script src="jison_parsers/core_logic_parser.js"></script>
@@ -138,7 +137,7 @@ function persistence(){
 	if(window.location.hash){
 		var parsed_hash = JSON.parse(decodeURIComponent(window.location.hash.substring(1)));
 		console.log("Parsed hash: "+JSON.stringify(parsed_hash));
-		document.getElementById("inputText").value = parsed_hash;
+		document.getElementById("inputText").value = parsed_hash.inputText;
 		//alert(window.location.hash.substring(1));
 	}
 	display_output();

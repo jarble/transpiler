@@ -25,7 +25,7 @@ var parsers =
 			"java":java_parser,
 			"tex":tex_parser,
 			"kotlin":kotlin_parser,
-			"javascript":javascript_parser,
+			"javascript":typescript_parser,
 			"python":python_parser,
 			"core.logic":core_logic_parser,
 			"sympy":python_parser,
