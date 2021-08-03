@@ -11184,6 +11184,7 @@ function generate_code(input_lang,lang,indent,arr){
 		[["php","hack"],["function_call","array_filter",["$a","$b"]]],
 		[["pari/gp"],["function_call","select",["$b","$a"]]],
 		[["octave"],["function_call","$a",["$b"]]],
+		[["php"],["function_call","array_filter",["$a","$b"]]]
 	],matching_symbols)){
 		var arr = generate_code(input_lang,lang,indent,matching_symbols["$a"]);
 		var callback = generate_code(input_lang,lang,indent,matching_symbols["$b"]);
