@@ -1,3 +1,5 @@
+**This transpiler is no longer maintained; you should probably use [Extism](https://extism.org/) instead.**
+
 [![Build Status](https://api.travis-ci.org/jarble/transpiler.svg)](https://travis-ci.org/jarble/transpiler)
 
 # Universal-transpiler
